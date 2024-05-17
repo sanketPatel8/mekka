@@ -68,13 +68,13 @@ export default function Header1() {
                 Home
               </Link>
               <Link href="/tour-list-1" className=" mx-3">
-                tour
+                Tour
               </Link>
               <Link href="/tour-single-4/3" className=" mx-3">
-                singleTour
+                Single Tour
               </Link>
               <Link href="/booking-pages" className=" mx-3">
-                BookingTour
+                Booking Tour
               </Link>
               <Link href="/db-main" className=" mx-3">
                 Dashboard
