@@ -1,11 +1,122 @@
-import React from 'react'
+"use client";
 
-const Hajj = () => {
+import { useEffect, useState } from "react";
+// import HeaderSerch from "../components/HeaderSerch";
+import HeaderSerch from "@/components/layout/components/HeaderSerch";
+import Destinations from "@/components/layout/components/Destinations";
+import Activities from "@/components/layout/components/Activities";
+import Currency from "@/components/layout/components/Currency";
+import MobileMenu from "@/components/layout/components/MobileMenu";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import "@/public/css/hajj.css"
+
+
+export default function Header1() {
+  const router = useRouter();
+  const pageNavigate = (pageName) => {
+    router.push(pageName);
+  };
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [addClass, setAddClass] = useState(false);
+
+  // Add a class to the element when scrolled 50px
+  const handleScroll = () => {
+    if (window.scrollY >= 50) {
+      setAddClass(true);
+    } else {
+      setAddClass(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-    <h1>this page is Hajj page</h1>
-    </>
-  )
-}
+      <header
+        className={`header -type-1 js-header ${addClass ? "-is-sticky" : ""}`}
+      >
+        <div className="header__container container">
+          <div className="headerMobile__left">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="header__menuBtn js-menu-button"
+            >
+              <i className="icon-main-menu"></i>
+            </button>
+          </div>
 
-export default Hajj
+          <div className="header__logo">
+            <Link href="/" className="header__logo mx-3">
+              <Image
+                width="167"
+                height="32"
+                src="/img/general/logo-1.svg"
+                alt="logo icon"
+                priority
+              />
+            </Link>
+          
+           
+          </div>
+
+          <div className="headerMobile__right">
+            <button
+              onClick={() => pageNavigate("/tour-list-1")}
+              className="d-flex"
+            >
+              <i className="icon-search text-18"></i>
+            </button>
+
+            <button
+              onClick={() => pageNavigate("/login")}
+              className="d-flex ml-20"
+            >
+              <i className="icon-person text-18"></i>
+            </button>
+          </div>
+
+          <div className="header__right">
+          <div className="xl:d-none ml-10">
+              <HeaderSerch />
+            </div>
+            
+            <Currency />
+
+            <Link href="/register" className="ml-10">
+              Sign up
+            </Link>
+
+            <Link
+              href="/login"
+              className="button -sm -dark-1 bg-accent-1 rounded-200 text-white ml-20"
+            >
+              Log in
+            </Link>
+
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="header__menuBtn ml-30 js-menu-button d-none d-sm-block"
+            >
+              <i className="icon-main-menu"></i>
+            </button>
+          </div>
+        </div>
+
+      </header>
+      <MobileMenu
+        setMobileMenuOpen={setMobileMenuOpen}
+        mobileMenuOpen={mobileMenuOpen}
+      />
+    </>
+  );
+}

@@ -9,7 +9,11 @@ import MobileMenu from "../components/MobileMenu";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+
+
 export default function Header1() {
+
   const router = useRouter();
   const pageNavigate = (pageName) => {
     router.push(pageName);
@@ -56,29 +60,29 @@ export default function Header1() {
               <Image
                 width="167"
                 height="32"
-                src="/img/general/logo-1.svg"
+                src="/img/general/logo-1.png"
                 alt="logo icon"
                 priority
               />
             </Link>
-            <Link href="/" className="ml-10 mx-3">
-              Home
-            </Link>
-            <Link href="/tour-list-1" className="ml-10 mx-3">
-              tour
-            </Link>
-            <Link href="/tour-single-4/3" className="ml-10 mx-3">
-              singleTour
-            </Link>
-            <Link href="/booking-pages" className="ml-10 mx-3">
-              BookingTour
-            </Link>
-            <Link href="/db-main" className="ml-10 mx-3">
-              Dashboard
-            </Link>
-            <Link href="/contact" className="ml-10 mx-3">
-              Contect
-            </Link>
+            <Link href="/" className="ml-10 mx-3 d-none d-lg-block">
+                Home
+              </Link>
+              <Link href="/tour-list-1" className="ml-10 mx-3 d-none d-lg-block">
+                tour
+              </Link>
+              <Link href="/tour-single-4/3" className="ml-10 mx-3 d-none d-lg-block">
+                singleTour
+              </Link>
+              <Link href="/booking-pages" className="ml-10 mx-3 d-none d-lg-block">
+                BookingTour
+              </Link>
+              <Link href="/db-main" className="ml-10 mx-3 d-none d-lg-block">
+                Dashboard
+              </Link>
+              <Link href="/contact" className="ml-10 mx-3 d-none d-lg-block">
+                Contect
+              </Link>
            
           </div>
 
@@ -105,20 +109,13 @@ export default function Header1() {
             
             <Currency />
 
-            <Link href="/register" className="ml-10">
-              Sign up
-            </Link>
+            <Link href="/register" className="ml-10">Sign up</Link>
 
-            <Link
-              href="/login"
-              className="button -sm -dark-1 bg-accent-1 rounded-200 text-white ml-20"
-            >
-              Log in
-            </Link>
+            <Link href="/login" className="button -sm -dark-1 bg-accent-1 rounded-200 text-white ml-20">Log in</Link>
 
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="header__menuBtn ml-30 js-menu-button"
+              className="header__menuBtn ml-30 js-menu-button d-block d-sm-none"
             >
               <i className="icon-main-menu"></i>
             </button>

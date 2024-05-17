@@ -54,11 +54,7 @@
     opacity: 1;
     visibility: visible;
   }
-  .modal .fadein {
-    /* animation: fadeInImage 0.3s linear 0s 1  ; */
 
-  }
-  /* Modal Content */
   .modal .modal-content {
     position: relative;
     background-color: #fefefe;
