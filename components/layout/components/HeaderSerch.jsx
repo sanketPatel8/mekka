@@ -85,7 +85,6 @@ export default function HeaderSerch({ white }) {
           ref={inputRef}
           onClick={() => setDdActive((pre) => !pre)}
           type="text"
-          style={{border : "2px solid black "}}
           placeholder="Search destinations or activities"
           className={`js-search ${white ? "text-white" : ""}`}
         />

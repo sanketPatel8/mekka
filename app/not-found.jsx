@@ -38,7 +38,7 @@ export default function NotFound() {
                     again or use the go to.
                   </p>
 
-                  <button className="button -md -dark-1 bg-accent-1 text-white mt-25">
+                  <button className="button -md -info-2 bg-accent-1 text-white mt-25">
                     Go back to homepage
                     <i className="icon-arrow-top-right ml-10"></i>
                   </button>
