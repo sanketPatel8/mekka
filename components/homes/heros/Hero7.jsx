@@ -331,7 +331,7 @@ export default function Hero7() {
               onClick={() => router.push("/tour-list-5")}
               className="searchForm__button"
             >
-              <button className="button -dark-1 bg-accent-1 rounded-200 text-white">
+              <button className="button -info-2 bg-accent-1 rounded-200 text-white">
                 <i className="icon-search text-16 mr-10"></i>
                 Search
               </button>

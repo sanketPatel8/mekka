@@ -111,7 +111,7 @@ export default function Header1() {
 
             <Link href="/register" className="ml-10">Sign up</Link>
 
-            <Link href="/login" className="button -sm -dark-1 bg-accent-1 rounded-200 text-white ml-20">Log in</Link>
+            <Link href="/login" className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20 ">Log in</Link>
 
             <button
               onClick={() => setMobileMenuOpen(true)}

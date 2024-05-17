@@ -49,11 +49,11 @@ export default function Banner() {
                 <button
                   data-aos="fade-right"
                   data-aos-delay=""
-                  className="button -md -dark-1 bg-accent-1 text-white"
+                  className="button -md -info-2 bg-accent-1 text-white"
                 >
                   <Link href="/tour-list-1">
                     Book Now
-                    <i className="icon-arrow-top-right ml-10 text-16"></i>
+                    <i className="icon-arrow-top-right ml-10 text-16 text-white"></i>
                   </Link>
                 </button>
               </div>

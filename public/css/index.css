@@ -6,6 +6,10 @@
     display: none;
 }
 
+.header__menuBtn:hover{
+    /* background-color: #0a58ca; */
+    background-color: #0a58ca;
+}
 
 
 @media only screen and (max-width: 1399px) {
