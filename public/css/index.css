@@ -1,0 +1,20 @@
+.media {
+    display: block;
+}
+
+#menuhide {
+    display: none;
+}
+
+
+
+@media only screen and (max-width: 1399px) {
+    .media {
+        display: none;
+    }
+
+    #menuhide{
+        display: block;
+    }
+  }
+

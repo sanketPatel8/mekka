@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import HeaderSerch from "../components/HeaderSerch";
-import Destinations from "../components/Destinations";
-import Activities from "../components/Activities";
 import Currency from "../components/Currency";
 import MobileMenu from "../components/MobileMenu";
 import Image from "next/image";
@@ -56,7 +54,7 @@ export default function Header1() {
           </div>
 
           <div className="header__logo">
-            <Link href="/" className="header__logo mx-3">
+            <Link href="/" className="header__logo mx-2">
               <Image
                 width="167"
                 height="32"
@@ -65,24 +63,26 @@ export default function Header1() {
                 priority
               />
             </Link>
-            <Link href="/" className="ml-10 mx-3 d-none d-lg-block">
+           <div className="media">
+           <Link href="/" className=" mx-3">
                 Home
               </Link>
-              <Link href="/tour-list-1" className="ml-10 mx-3 d-none d-lg-block">
+              <Link href="/tour-list-1" className=" mx-3">
                 tour
               </Link>
-              <Link href="/tour-single-4/3" className="ml-10 mx-3 d-none d-lg-block">
+              <Link href="/tour-single-4/3" className=" mx-3">
                 singleTour
               </Link>
-              <Link href="/booking-pages" className="ml-10 mx-3 d-none d-lg-block">
+              <Link href="/booking-pages" className=" mx-3">
                 BookingTour
               </Link>
-              <Link href="/db-main" className="ml-10 mx-3 d-none d-lg-block">
+              <Link href="/db-main" className=" mx-3">
                 Dashboard
               </Link>
-              <Link href="/contact" className="ml-10 mx-3 d-none d-lg-block">
+              <Link href="/contact" className=" mx-3">
                 Contect
               </Link>
+           </div>
            
           </div>
 
@@ -115,7 +115,8 @@ export default function Header1() {
 
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="header__menuBtn ml-30 js-menu-button d-block d-sm-none"
+              className="header__menuBtn ml-30 js-menu-button "
+              id="menuhide"
             >
               <i className="icon-main-menu"></i>
             </button>
