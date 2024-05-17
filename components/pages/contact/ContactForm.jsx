@@ -30,7 +30,7 @@ export default function ContactForm() {
                 <div className="col-12">
                   <button
                     type="submit"
-                    className="button -md -dark-1 bg-accent-1 text-white col-12"
+                    className="button -md -info-2 bg-accent-1 text-white col-12"
                   >
                     Send Message
                   </button>

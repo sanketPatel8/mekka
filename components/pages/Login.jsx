@@ -72,7 +72,7 @@ export default function Login() {
 
               <button
                 type="submit"
-                className="button -md -dark-1 bg-accent-1 text-white col-12 mt-30"
+                className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
               >
                 Log In
                 <i className="icon-arrow-top-right ml-10"></i>

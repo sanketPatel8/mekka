@@ -410,7 +410,7 @@ export default function BookingPages() {
                       </button>
 
                     
-                      <button onClick={()=>setBookingStage(pre=>pre+1)} style={{alignSelf:'end'}}  className={`button -md -dark-1 bg-accent-1 text-white ${bookingStage == 3 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
+                      <button onClick={()=>setBookingStage(pre=>pre+1)} style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white ${bookingStage == 3 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
                         Next
                         <i className="icon-arrow-top-right text-16 ml-10"></i>
                       </button>
@@ -537,7 +537,7 @@ export default function BookingPages() {
               </div>
 
               <div className="mt-30">
-                <button className="button -md -dark-1 bg-accent-1 text-white col-12">
+                <button className="button -md -info-2 bg-accent-1 text-white col-12">
                   Complete My Order
                   <i className="icon-arrow-top-right text-16 ml-10"></i>
                 </button>

@@ -283,7 +283,7 @@ export default function TourSingleSidebar() {
         </div>
       </div>
 
-      <button className="button -md -dark-1 col-12 bg-accent-1 text-white mt-20">
+      <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
         Book Now
         <i className="icon-arrow-top-right ml-10"></i>
       </button>

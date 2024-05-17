@@ -18,9 +18,9 @@ export default function page({ params }) {
 
   return (
     <>
+
       <Header1 />
       <PageHeader />
-
       <SingleFour tour={tour} />
       <TourSlider />
       <FooterOne />
