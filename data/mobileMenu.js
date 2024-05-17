@@ -3,7 +3,7 @@ export const menuData = [
     id: 1,
     label: "Home",
     submenu: [
-      { id: 11, label: "Home 01", href: "/" },
+      { id: 11, label: "Home", href: "/" },
       // { id: 12, label: "Home 02", href: "/home-2" },
       // { id: 13, label: "Home 03", href: "/home-3" },
       // { id: 14, label: "Home 04", href: "/home-4" },
@@ -19,7 +19,7 @@ export const menuData = [
     id: 2,
     label: "Tour",
     submenu: [
-      { id: 21, label: "Tour list 1", href: "/tour-list-1" },
+      { id: 21, label: "Tour List ", href: "/tour-list-1" },
       // { id: 22, label: "Tour list 2", href: "/tour-list-2" },
       // { id: 23, label: "Tour list 3", href: "/tour-list-3" },
       // { id: 24, label: "Tour list 4", href: "/tour-list-4" },
@@ -54,7 +54,7 @@ export const menuData = [
     id: 4,
     label: "Blog",
     submenu: [
-      { id: 41, label: "Blog list 1", href: "/blog-list-1" },
+      { id: 41, label: "Blog List ", href: "/blog-list-1" },
       // { id: 42, label: "Blog list 2", href: "/blog-list-2" },
       // { id: 43, label: "Blog list 3", href: "/blog-list-3" },
       // { id: 44, label: "Blog single", href: "/blog-single/2" },
