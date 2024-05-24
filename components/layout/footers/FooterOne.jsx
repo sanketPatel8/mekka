@@ -53,11 +53,9 @@ export default function FooterOne() {
                 <h4 className="text-20 fw-500">Contact</h4>
 
                 <div className="y-gap-10 mt-20">
+                  
                   <a className="d-block" href="#">
-                    328 Queensberry Street, North Melbourne VIC3051, Australia.
-                  </a>
-                  <a className="d-block" href="#">
-                    hi@viatours.com
+                  +49 (0)6196 204 72 40
                   </a>
                 </div>
               </div>
@@ -75,9 +73,9 @@ export default function FooterOne() {
                   <button>Send</button>
                 </div>
 
-                <h4 className="text-20 fw-500 mt-30">Mobile Apps</h4>
+                {/* <h4 className="text-20 fw-500 mt-30">Mobile Apps</h4> */}
 
-                <div className="mt-10">
+                {/* <div className="mt-10">
                   <a className="d-flex items-center" href="#">
                     <i className="icon-apple text-16 mr-10"></i>
                     iOS App
@@ -87,7 +85,7 @@ export default function FooterOne() {
                     <i className="icon-android text-16 mr-10"></i>
                     Android App
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -98,7 +96,7 @@ export default function FooterOne() {
         <div className="footer__bottom">
           <div className="row y-gap-5 justify-between items-center">
             <div className="col-auto">
-              <div>© Copyright Viatours {new Date().getFullYear()}</div>
+              <div>© Copyright MekkaBooking.com {new Date().getFullYear()}</div>
             </div>
 
             <div className="col-auto">

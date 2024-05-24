@@ -7,6 +7,7 @@ import MobileMenu from "../components/MobileMenu";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import LangaugeSwitcher from "@/components/LanSwitcher/LangaugeSwitcher";
 
 
 
@@ -43,7 +44,7 @@ export default function Header1() {
       <header
         className={`header -type-1 js-header ${addClass ? "-is-sticky" : ""}`}
       >
-        <div className="header__container container">
+        <div className="header__container container-fluid">
           <div className="headerMobile__left">
             <button
               onClick={() => setMobileMenuOpen(true)}
@@ -64,23 +65,23 @@ export default function Header1() {
               />
             </Link>
            <div className="media">
-           <Link href="/" className=" mx-3">
+           <Link href="/" className=" mx-2">
                 Home
               </Link>
-              <Link href="/tour-list-1" className=" mx-3">
+              <Link href="/tour-list-1" className=" mx-2">
                 Tour
               </Link>
-              <Link href="/tour-single-4/3" className=" mx-3">
+              <Link href="/tour-single-4/3" className=" mx-2">
                 Single Tour
               </Link>
-              <Link href="/booking-pages" className=" mx-3">
+              <Link href="/booking-pages" className=" mx-2">
                 Booking Tour
               </Link>
-              <Link href="/db-main" className=" mx-3">
+              <Link href="/db-main" className=" mx-2">
                 Dashboard
               </Link>
-              <Link href="/contact" className=" mx-3">
-                Contect
+              <Link href="/contact" className=" mx-2">
+                Contact
               </Link>
            </div>
            
@@ -96,7 +97,7 @@ export default function Header1() {
 
             <button
               onClick={() => pageNavigate("/login")}
-              className="d-flex ml-20"
+              className="d-flex ml-10"
             >
               <i className="icon-person text-18"></i>
             </button>
@@ -108,6 +109,8 @@ export default function Header1() {
             </div>
             
             <Currency />
+
+            {/* <LangaugeSwitcher /> */}
 
             <Link href="/register" className="ml-10">Sign up</Link>
 

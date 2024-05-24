@@ -4,6 +4,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { useEffect, useState } from "react";
+import { LiaKaabaSolid } from "react-icons/lia";
 import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
 import Image from "next/image";
@@ -95,14 +96,15 @@ export default function TourSlderOne() {
                             />
                           </div>
 
-                          <button className="tourCard__favorite">
+                          {/* <button className="tourCard__favorite">
                             <i className="icon-heart"></i>
-                          </button>
+                          </button> */}
                         </div>
 
                         <div className="tourCard__content px-10 pt-10">
                           <div className="tourCard__location d-flex items-center text-13 text-light-2">
-                            <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                            {/* <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i> */}
+                            <LiaKaabaSolid color="#dabf4f" size={25} />
                             {elm.location}
                           </div>
 
@@ -129,7 +131,7 @@ export default function TourSlderOne() {
                             <div>
                               From{" "}
                               <span className="text-16 fw-500">
-                                ${elm.price}
+                              € {elm.price}
                               </span>
                             </div>
                           </div>

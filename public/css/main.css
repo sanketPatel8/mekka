@@ -1981,7 +1981,7 @@ h1, h2, h3, h4, h5, h6 {
 .header.-type-1 .header__container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 88px;
 }
 
@@ -1994,6 +1994,7 @@ h1, h2, h3, h4, h5, h6 {
 .header.-type-1 .header__logo {
   display: flex;
   align-items: center;
+  gap: 2.5rem;
 }
 
 .header.-type-1 .header__right {
@@ -4088,7 +4089,7 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  width: 850px;
+  width: 70vw;
   max-width: calc(100% - 40px);
   z-index: 10;
 }
@@ -4484,6 +4485,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 10px;
   border-radius: 12px;
   height: 80px;
+  width: 70vw;
 }
 
 @media (max-width: 767px) {
@@ -4497,9 +4499,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .searchForm.-type-1 .searchForm__form {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   width: 100%;
-  padding: 5px 10px;
+  gap: 10px;
+  /* padding: 5px 10px; */
 }
 
 @media (max-width: 767px) {
@@ -4682,7 +4685,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   width: 100%;
   height: 60px;
-  border-radius: 12px;
+  border-radius: 50%;
   padding: 0 20px;
   transition: 0.2s;
 }
@@ -4692,6 +4695,20 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 15px;
   font-weight: 500;
   line-height: 186.667%;
+}
+
+.membar_name_count{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.member_choose_counter{
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__item button:hover {

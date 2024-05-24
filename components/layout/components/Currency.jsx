@@ -3,19 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 
 const currencies = [
-  "USD",
   "Euro",
-  "British Pound",
-  "Turkish Lira",
-  "Canadian Dollar",
-  "Australian Dollar",
-  "Swiss Franc",
-  "Singapore Dollar",
+  "USD",
 ];
 
 export default function Currency({ parentClass }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [selectedCurrency, setSelectedCurrency] = useState("Euro");
   const dropDownContainer = useRef();
   useEffect(() => {
     const handleClick = (event) => {
@@ -64,7 +58,7 @@ export default function Currency({ parentClass }) {
                 key={i}
                 className="headerDropdown__item"
               >
-                <button className="">{elm}</button>
+                <button className="currencyhov">{elm}</button>
               </div>
             ))}
           </div>

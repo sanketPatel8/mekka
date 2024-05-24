@@ -22,7 +22,7 @@ export default function Home() {
       {/* <DestinationsOne /> */}
       <Tour1 />
       <Banner />
-      <TourTypeOne />
+      {/* <TourTypeOne /> */}
       <TourSlderOne />
       <TestimonialOne />
       <BannerOne />

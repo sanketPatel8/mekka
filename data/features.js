@@ -1,27 +1,39 @@
 export const features = [
   {
     id: 1,
-    iconSrc: "/img/icons/1/ticket.svg",
-    title: "Ultimate flexibility",
-    text: "You're in control, with free cancellation and payment options to satisfy any plan or budget.",
+    iconSrc: "/img/icons/1/right.png",
+    title: "Fast & easy processing!",
+    text: "All booking processes are handled directly by mekkabooking! mekkabooking is at your side until the end of the trip!",
   },
   {
     id: 2,
-    iconSrc: "/img/icons/1/hot-air-balloon.svg",
-    title: "Memorable experiences",
-    text: "Browse and book tours and activities so incredible, you'll want to tell your friends.",
+    iconSrc: "/img/icons/1/right.png",
+    title: "Safe & Serious!",
+    text: "Through fiduciary processing, we offer security and at the same time ensure that everything runs smoothly!",
   },
   {
     id: 3,
-    iconSrc: "/img/icons/1/diamond.svg",
-    title: "Quality at our core",
-    text: "High-quality standards. Millions of reviews. A tourz company.",
+    iconSrc: "/img/icons/1/right.png",
+    title: "Transparent booking process",
+    text: "You will receive a written confirmation by email about each booking step!",
   },
   {
     id: 4,
-    iconSrc: "/img/icons/1/medal.svg",
-    title: "Award-winning support",
-    text: "New price? New plan? No problem. We're here to help, 24/7.",
+    iconSrc: "/img/icons/1/right.png",
+    title: "Call Center!",
+    text: "Guaranteed availability! Monday - Friday, 09:00 - 18:00",
+  },
+  {
+    id: 5,
+    iconSrc: "/img/icons/1/right.png",
+    title: "Multilingual staff!",
+    text: "German, English, Turkish, Arabic, Italian",
+  },
+  {
+    id: 6,
+    iconSrc: "/img/icons/1/right.png",
+    title: "Special offers for groups!",
+    text: "We plan & put together group offers for mosques, clubs, families, etc.",
   },
 ];
 export const featuresFour = [

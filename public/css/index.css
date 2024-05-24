@@ -11,6 +11,10 @@
     background-color: #0a58ca;
 }
 
+.currencyhov:hover{
+    color: green;
+}
+
 
 @media only screen and (max-width: 1399px) {
     .media {

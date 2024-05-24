@@ -9,7 +9,7 @@ export default function FeaturesOne() {
         <div className="row">
           <div className="col-auto">
             <h2 data-aos="fade-up" className="text-30 md:text-24">
-              Why choose Tourz
+              Why choose MekkaBooking ?
             </h2>
           </div>
         </div>
@@ -19,7 +19,7 @@ export default function FeaturesOne() {
           className="row md:x-gap-20 pt-40 sm:pt-20 mobile-css-slider -w-280"
         >
           {features.map((elm, i) => (
-            <div key={i} className="col-lg-3 col-sm-6">
+            <div key={i} className="col-lg-4 col-sm-4 my-4">
               <div className="featureIcon -type-1 pr-40 md:pr-0">
                 <div className="featureIcon__icon">
                   <Image width={60} height={60} src={elm.iconSrc} alt="icon" />

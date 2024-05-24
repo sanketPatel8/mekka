@@ -1,8 +1,8 @@
 export const tourData = [
   {
     id: 1,
-    imageSrc: "/img/tourCards/1/1.png",
-    location: "Paris, France",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title: "Centipede Tour - Guided Arizona Desert Tour by ATV",
     ratingCount: 243,
     rating: 4.8,
@@ -13,8 +13,8 @@ export const tourData = [
   },
   {
     id: 2,
-    imageSrc: "/img/tourCards/1/2.png",
-    location: "New York, USA",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title: "Molokini and Turtle Town Snorkeling Adventure Aboard",
     ratingCount: 243,
     rating: 4.8,
@@ -25,8 +25,8 @@ export const tourData = [
   },
   {
     id: 3,
-    imageSrc: "/img/tourCards/1/3.png",
-    location: "London, UK",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title: "Westminster Walking Tour & Westminster Abbey Entry",
     ratingCount: 243,
     rating: 4.8,
@@ -37,8 +37,8 @@ export const tourData = [
   },
   {
     id: 4,
-    imageSrc: "/img/tourCards/1/4.png",
-    location: "New York, USA",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     ratingCount: 243,
     rating: 4.8,
@@ -49,8 +49,8 @@ export const tourData = [
   },
   {
     id: 5,
-    imageSrc: "/img/tourCards/1/5.png",
-    location: "Paris, France",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title: "Space Center Houston Admission Ticket",
     ratingCount: 243,
     rating: 4.8,
@@ -61,8 +61,8 @@ export const tourData = [
   },
   {
     id: 6,
-    imageSrc: "/img/tourCards/1/6.png",
-    location: "New York, USA",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title: "Clear Kayak Tour of Shell Key Preserve and Tampa Bay Area",
     ratingCount: 243,
     rating: 4.8,
@@ -73,8 +73,8 @@ export const tourData = [
   },
   {
     id: 7,
-    imageSrc: "/img/tourCards/1/7.png",
-    location: "London, UK",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title: "History and Hauntings of Salem Guided Walking Tour",
     ratingCount: 243,
     rating: 4.8,
@@ -85,8 +85,8 @@ export const tourData = [
   },
   {
     id: 8,
-    imageSrc: "/img/tourCards/1/9.png",
-    location: "New York, USA",
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    location: "zu Kaaba 500 m",
     title:
       "Mauna Kea Summit Sunset and Stars Free Astro Photos Hilo Kona Waikoloa Pick Up",
     ratingCount: 243,

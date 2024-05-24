@@ -10,6 +10,7 @@ import { Navigation, Pagination } from "swiper/modules";
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
 const slides = [
   {
     id: 1,
@@ -51,9 +52,12 @@ const slides = [
 export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
+  const [TourLocation, setTourLocation] = useState("");
   const [location, setLocation] = useState("");
   const [calender, setCalender] = useState("");
   const [tourType, setTourType] = useState("");
+  const [TourMambar, setTourMambar] = useState('')
+
   useEffect(() => {
     setCurrentActiveDD("");
   }, [location, calender, tourType, setCurrentActiveDD]);
@@ -247,7 +251,7 @@ export default function Hero7() {
         <div className="hero__filter">
           <div
             ref={dropDownContainer}
-            className="searchForm -type-1 shadow-1 rounded-200"
+            className="searchForm -type-1 shadow-1  rounded-200"
           >
             <div className="searchForm__form">
               <div className="searchFormItem js-select-control js-form-dd">
@@ -325,6 +329,30 @@ export default function Hero7() {
                   active={currentActiveDD === "tourType"}
                 />
               </div>
+
+              <div className="searchFormItem js-select-control js-form-dd">
+                <div
+                  className="searchFormItem__button"
+                  onClick={() =>
+                    setTourLocation((pre) =>
+                      pre == "tourType" ? "" : "tourType",
+                    )
+                  }
+                >
+                  <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
+                    <i className="text-20 icon-flag"></i>
+                  </div>
+                  <div className="searchFormItem__content">
+                    <h5>Number of travelers</h5>
+                    {/* <div className="js-select-control-chosen">
+                      {tourType ? tourType : "All tour"}
+                    </div> */}
+                  </div>
+                </div>
+                
+                <NumberOfTravellers  setTourType={setTourMambar} active={TourLocation === "tourType"} />
+              </div>
+
             </div>
 
             <div
