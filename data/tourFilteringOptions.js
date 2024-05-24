@@ -1,18 +1,14 @@
 export const toursTypes = [
-  "Nature Tours",
-  "Adventure Tours",
-  "Cultural Tours",
-  "Food Tours",
-  "City Tours",
-  "Cruises Tours",
+  "All",
+  "Hajj",
+  "Umrah",
+  "Cultural Trips",
 ];
 
 export const durations = [
-  "0-3 hours",
-  "3-5 hours",
-  "5-7 hours",
-  "Full day (7+ hours)",
-  "Multi-day",
+  "5 star",
+  "4 Star",
+  "3 stars",
 ];
 
 export const languages = ["English", "Dutch", "German", "French", "Italian"];

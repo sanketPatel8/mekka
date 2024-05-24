@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { speedFeatures } from "@/data/tourFilteringOptions";
+import { LiaKaabaSolid } from "react-icons/lia";
 import { tourDataTwo } from "@/data/tours";
 import Stars from "../common/Stars";
 import Pagination from "../common/Pagination";
@@ -79,7 +80,7 @@ export default function TourList4() {
                   } `}
                   data-main-value=""
                 >
-                  <div
+                  {/* <div
                     className="dropdown__button js-button"
                     onClick={() => setDdActives((pre) => !pre)}
                   >
@@ -88,7 +89,7 @@ export default function TourList4() {
                       {sortOption ? sortOption : "Featured"}
                     </span>
                     <i className="icon-chevron-down"></i>
-                  </div>
+                  </div> */}
 
                   <div className="dropdown__menu js-menu-items">
                     {speedFeatures.map((elm, i) => (
@@ -137,16 +138,17 @@ export default function TourList4() {
                         </div>
                       )}
 
-                      <div className="tourCard__favorite">
+                      {/* <div className="tourCard__favorite">
                         <button className="button -accent-1 size-35 bg-white rounded-full flex-center">
                           <i className="icon-heart text-15"></i>
                         </button>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div className="tourCard__content">
                       <div className="tourCard__location">
-                        <i className="icon-pin"></i>
+                        {/* <i className="icon-pin"></i> */}
+                        <LiaKaabaSolid color="#dabf4f" size={25} />
                         {elm.location}
                       </div>
 
@@ -187,12 +189,12 @@ export default function TourList4() {
                         </div>
 
                         <div className="tourCard__price">
-                          <div>${elm.price}</div>
+                          <div>€ {elm.price}</div>
 
                           <div className="d-flex items-center">
                             From{" "}
                             <span className="text-20 fw-500 ml-5">
-                              ${elm.fromPrice}
+                            € {elm.fromPrice}
                             </span>
                           </div>
                         </div>

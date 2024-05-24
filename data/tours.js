@@ -102,7 +102,7 @@ export const tourData = [
 export const tourDataTwo = [
   {
     id: 9,
-    imageSrc: "/img/tourCards/3/1.png",
+    imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
     location: "Paris, France",
     title:
@@ -128,7 +128,7 @@ export const tourDataTwo = [
   },
   {
     id: 10,
-    imageSrc: "/img/tourCards/3/2.png",
+    imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "",
     location: "Paris, France",
     title:
@@ -154,7 +154,7 @@ export const tourDataTwo = [
   },
   {
     id: 11,
-    imageSrc: "/img/tourCards/3/3.png",
+    imageSrc: "/img/tourCards/1/13.jpeg",
     featured: true,
     location: "Paris, France",
     title:
@@ -180,7 +180,7 @@ export const tourDataTwo = [
   },
   {
     id: 12,
-    imageSrc: "/img/tourCards/3/4.png",
+    imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "",
     location: "Paris, France",
     title:
@@ -206,7 +206,7 @@ export const tourDataTwo = [
   },
   {
     id: 13,
-    imageSrc: "/img/tourCards/3/5.png",
+    imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "",
     location: "Paris, France",
     title:
@@ -232,7 +232,7 @@ export const tourDataTwo = [
   },
   {
     id: 14,
-    imageSrc: "/img/tourCards/3/6.png",
+    imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "",
     location: "Paris, France",
     title:

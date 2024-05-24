@@ -142,7 +142,7 @@ export default function Sidebar2() {
                   )
                 }
               >
-                <h5 className="text-18 fw-500">Duration</h5>
+                <h5 className="text-18 fw-500">Hotel Stars</h5>
 
                 <div className="accordion__icon flex-center">
                   <i className="icon-chevron-down"></i>
@@ -186,7 +186,7 @@ export default function Sidebar2() {
           </div>
         </div>
 
-        <div className="sidebar__item">
+        {/* <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item js-accordion-item-active ${
@@ -245,7 +245,7 @@ export default function Sidebar2() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
@@ -324,7 +324,7 @@ export default function Sidebar2() {
                   )
                 }
               >
-                <h5 className="text-18 fw-500">Specials</h5>
+                <h5 className="text-18 fw-500">Amenities</h5>
 
                 <div className="accordion__icon flex-center">
                   <i className="icon-chevron-down"></i>

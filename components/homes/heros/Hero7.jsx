@@ -14,35 +14,35 @@ import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTrave
 const slides = [
   {
     id: 1,
-    imageSrc: "/img/hero/7/1.jpg",
+    imageSrc: "/img/hero/7/mekkabookingBg.png",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 2,
-    imageSrc: "/img/hero/7/1.jpg",
+    imageSrc: "/img/hero/7/mekkabookingBg.png",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 3,
-    imageSrc: "/img/hero/7/1.jpg",
+    imageSrc: "/img/hero/7/mekkabookingBg.png",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 4,
-    imageSrc: "/img/hero/7/1.jpg",
+    imageSrc: "/img/hero/7/mekkabookingBg.png",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 5,
-    imageSrc: "/img/hero/7/1.jpg",
+    imageSrc: "/img/hero/7/mekkabookingBg.png",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
