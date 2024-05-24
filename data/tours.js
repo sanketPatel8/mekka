@@ -104,158 +104,183 @@ export const tourDataTwo = [
     id: 9,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
-    location: "Paris, France",
+    location: "zu Kaaba 500 m",
     title:
-      "Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine Tour",
+      "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
     duration: `2 Days 1 Nights`,
     description:
-      "The Phi Phi archipelago is a must-visit while in Phuket, and this speedboat trip.",
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
     price: 114.0,
-    fromPrice: 1200.0,
+    fromPrice: "1.799,00",
     badgeClass: "bg-accent-1",
     features: [
       {
-        icon: `icon-price-tag`,
-        name: `Best Price Guarantee`,
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       {
         icon: `icon-check`,
-        name: `Free Cancellation`,
+        name: ` Free Cancellation`,
       },
     ],
   },
   {
     id: 10,
     imageSrc: "/img/tourCards/1/13.jpeg",
-    badgeText: "",
-    location: "Paris, France",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
     title:
-      "Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine Tour",
+      "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
     duration: `2 Days 1 Nights`,
     description:
-      "The Phi Phi archipelago is a must-visit while in Phuket, and this speedboat trip.",
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
     price: 114.0,
-    fromPrice: 1200.0,
-    badgeClass: "",
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
     features: [
       {
-        icon: `icon-price-tag`,
-        name: `Best Price Guarantee`,
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       {
         icon: `icon-check`,
-        name: `Free Cancellation`,
+        name: ` Free Cancellation`,
       },
     ],
   },
   {
     id: 11,
     imageSrc: "/img/tourCards/1/13.jpeg",
-    featured: true,
-    location: "Paris, France",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
     title:
-      "Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine Tour",
+      "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
     duration: `2 Days 1 Nights`,
     description:
-      "The Phi Phi archipelago is a must-visit while in Phuket, and this speedboat trip.",
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
     price: 114.0,
-    fromPrice: 1200.0,
-    badgeClass: "bg-accent-2",
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
     features: [
       {
-        icon: `icon-price-tag`,
-        name: `Best Price Guarantee`,
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       {
         icon: `icon-check`,
-        name: `Free Cancellation`,
+        name: ` Free Cancellation`,
       },
     ],
   },
   {
     id: 12,
     imageSrc: "/img/tourCards/1/13.jpeg",
-    badgeText: "",
-    location: "Paris, France",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
     title:
-      "Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine Tour",
+      "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
     duration: `2 Days 1 Nights`,
     description:
-      "The Phi Phi archipelago is a must-visit while in Phuket, and this speedboat trip.",
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
     price: 114.0,
-    fromPrice: 1200.0,
-    badgeClass: "",
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
     features: [
       {
-        icon: `icon-price-tag`,
-        name: `Best Price Guarantee`,
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       {
         icon: `icon-check`,
-        name: `Free Cancellation`,
+        name: ` Free Cancellation`,
       },
     ],
   },
   {
     id: 13,
     imageSrc: "/img/tourCards/1/13.jpeg",
-    badgeText: "",
-    location: "Paris, France",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
     title:
-      "Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine Tour",
+      "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
     duration: `2 Days 1 Nights`,
     description:
-      "The Phi Phi archipelago is a must-visit while in Phuket, and this speedboat trip.",
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
     price: 114.0,
-    fromPrice: 1200.0,
-    badgeClass: "",
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
     features: [
       {
-        icon: `icon-price-tag`,
-        name: `Best Price Guarantee`,
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       {
         icon: `icon-check`,
-        name: `Free Cancellation`,
+        name: ` Free Cancellation`,
       },
     ],
   },
   {
     id: 14,
     imageSrc: "/img/tourCards/1/13.jpeg",
-    badgeText: "",
-    location: "Paris, France",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
     title:
-      "Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine Tour",
+      "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
     duration: `2 Days 1 Nights`,
     description:
-      "The Phi Phi archipelago is a must-visit while in Phuket, and this speedboat trip.",
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
     price: 114.0,
-    fromPrice: 1200.0,
-    badgeClass: "",
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
     features: [
       {
-        icon: `icon-price-tag`,
-        name: `Best Price Guarantee`,
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       {
         icon: `icon-check`,
-        name: `Free Cancellation`,
+        name: ` Free Cancellation`,
       },
     ],
   },
+  
 ];
 
 export const tourDataThree = [

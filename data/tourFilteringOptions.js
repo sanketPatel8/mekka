@@ -8,7 +8,7 @@ export const toursTypes = [
 export const durations = [
   "5 star",
   "4 Star",
-  "3 stars",
+  "3 Star",
 ];
 
 export const languages = ["English", "Dutch", "German", "French", "Italian"];

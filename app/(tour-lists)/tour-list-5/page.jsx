@@ -1,4 +1,4 @@
-import Hero7 from "@/components/homes/heros/Hero7";
+import Hero1 from "@/components/homes/heros/Hero1";
 import FooterOne from "@/components/layout/footers/FooterOne";
 import Header1 from "@/components/layout/header/Header1";
 import TourList4 from "@/components/tours/TourList4";
@@ -14,7 +14,7 @@ export default function page() {
     <>
       <main>
         <Header1 />
-        <Hero7 />
+        <Hero1 />
 
         <div className="mt-50">
           <TourList4 />

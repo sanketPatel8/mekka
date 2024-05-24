@@ -4,6 +4,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { speedFeatures } from "@/data/tourFilteringOptions";
 import { LiaKaabaSolid } from "react-icons/lia";
 import { tourDataTwo } from "@/data/tours";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
+import { faQuoteRight } from '@fortawesome/free-regular-svg-icons';
+import { faHotel } from '@fortawesome/free-solid-svg-icons';
 import Stars from "../common/Stars";
 import Pagination from "../common/Pagination";
 import Sidebar2 from "./Sidebar2";
@@ -156,7 +160,11 @@ export default function TourList4() {
                         <span>{elm.title}</span>
                       </h3>
 
-                      <div className="d-flex items-center mt-5">
+                      <p className="tourCard__text mt-5"><FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} /> {elm.description}</p>
+                        <p className="tourCard__text mt-5"><FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} /> {elm.description2}</p>
+                        <p className="tourCard__text mt-5"><FontAwesomeIcon icon={faQuoteRight} style={{ color: "#dabf4f" }}/> {elm.description3}</p>
+
+                      <div className="d-flex items-center mt-5">  
                         <div className="d-flex items-center x-gap-5">
                           <Stars star={elm.rating} font={12} />
                         </div>
@@ -167,13 +175,14 @@ export default function TourList4() {
                         </div>
                       </div>
 
-                      <p className="tourCard__text mt-5">{elm.description}</p>
+                      
 
                       <div className="row x-gap-20 y-gap-5 pt-30">
                         {elm.features?.map((elm2, i2) => (
                           <div key={i2} className="col-auto">
-                            <div className="text-14 text-accent-1">
-                              <i className={`${elm2.icon} mr-10`}></i>
+                            <div className="text-14 ">  {/*color `${elm2.icon} mr-10`*/ }
+                              {/* <i className={`${elm2.icon} mr-10`}></i> */}
+                                <FontAwesomeIcon icon={`${elm2.icon}`} />
                               {elm2.name}
                             </div>
                           </div>
@@ -196,13 +205,15 @@ export default function TourList4() {
                             <span className="text-20 fw-500 ml-5">
                             € {elm.fromPrice}
                             </span>
+                            
                           </div>
+                          <p>inklusive Steuern und Gebühren</p>
                         </div>
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
                         <Link href={`/tour-single-1/${elm.id}`}>
-                          View Details
+                        VERFÜGBARKEIT ANZEIGEN
                           <i className="icon-arrow-top-right ml-10"></i>
                         </Link>
                       </button>

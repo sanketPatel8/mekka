@@ -6,12 +6,15 @@ import TourType from "@/components/common/dropdownSearch/TourType";
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
 export default function Hero1() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [location, setLocation] = useState("");
   const [calender, setCalender] = useState("");
   const [tourType, setTourType] = useState("");
+  const [TourMambar, setTourMambar] = useState('')
+  const [TourLocation, setTourLocation] = useState("");
   useEffect(() => {
     setCurrentActiveDD("");
   }, [location, calender, tourType, setCurrentActiveDD]);
@@ -37,7 +40,7 @@ export default function Hero1() {
   return (
     <section className="hero -type-1">
       <div className="hero__bg">
-        <Image width={1800} height={560} src="/img/hero/1/1.png" alt="image" />
+        <Image width={1800} height={560} src="/img/hero/1/mekkabookingBg.png" alt="image" />
         <Image
           width="1800"
           height="40"
@@ -49,7 +52,7 @@ export default function Hero1() {
 
       <div className="container">
         <div className="row justify-center">
-          <div className="col-xl-8 col-lg-10">
+          <div className="col-xl-10 col-lg-10">
             <div className="hero__content">
               <h1
                 data-aos={"fade-up"}
@@ -152,6 +155,29 @@ export default function Hero1() {
                         setTourType={setTourType}
                         active={currentActiveDD === "tourType"}
                       />
+                    </div>
+
+                    <div className="searchFormItem js-select-control js-form-dd">
+                 <div
+                  className="searchFormItem__button"
+                  onClick={() =>
+                    setTourLocation((pre) =>
+                      pre == "tourType" ? "" : "tourType",
+                    )
+                  }
+                >
+                  <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
+                    <i className="text-20 icon-flag"></i>
+                  </div>
+                  <div className="searchFormItem__content">
+                    <h5>Number of travelers</h5>
+                    {/* <div className="js-select-control-chosen">
+                      {tourType ? tourType : "All tour"}
+                    </div> */}
+                  </div>
+                </div>
+                
+                <NumberOfTravellers  setTourType={setTourMambar} active={TourLocation === "tourType"} />
                     </div>
                   </div>
 

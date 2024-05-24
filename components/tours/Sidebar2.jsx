@@ -74,12 +74,6 @@ export default function Sidebar2() {
                     ))}
                   </div>
 
-                  <a
-                    href="#"
-                    className="d-flex text-15 fw-500 text-accent-2 mt-15"
-                  >
-                    See More
-                  </a>
                 </div>
               </div>
             </div>
@@ -142,7 +136,7 @@ export default function Sidebar2() {
                   )
                 }
               >
-                <h5 className="text-18 fw-500">Hotel Stars</h5>
+                <h5 className="text-18 fw-500">Hotel Star</h5>
 
                 <div className="accordion__icon flex-center">
                   <i className="icon-chevron-down"></i>

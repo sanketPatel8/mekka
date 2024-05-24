@@ -4481,11 +4481,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .searchForm.-type-1 {
   display: flex;
-  background-color: white;
+  /* align-items: center; */
+  /* border: 2px solid red; */
+  background-color: rgb(255, 255, 255);
   padding: 10px;
   border-radius: 12px;
   height: 80px;
   width: 70vw;
+  margin: auto;
 }
 
 @media (max-width: 767px) {
@@ -4499,10 +4502,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .searchForm.-type-1 .searchForm__form {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
   gap: 10px;
-  /* padding: 5px 10px; */
+  padding: 5px 10px;
 }
 
 @media (max-width: 767px) {
@@ -5903,7 +5907,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .tourCard.-type-2 .tourCard__info > *:nth-child(2) {
   width: 100%;
-  padding: 15px 0;
+  padding: 5px 0;
   margin-top: 20px;
 }
 

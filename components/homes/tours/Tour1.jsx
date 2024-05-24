@@ -16,7 +16,7 @@ export default function Tour1() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Find Latest Package
+              Find Latest Packages
             </h2>
           </div>
 
