@@ -40,7 +40,7 @@ export default function TourSingleSidebar() {
         <div className="text-20 fw-500 ml-10">$1,200</div>
       </div>
 
-      <div className="searchForm -type-1 -sidebar mt-20">
+      {/* <div className="searchForm -type-1 -sidebar mt-20">
         <div className="searchForm__form">
           <div className="searchFormItem js-select-control js-form-dd js-calendar">
             <div className="searchFormItem__button" data-x-click="calendar">
@@ -110,7 +110,7 @@ export default function TourSingleSidebar() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <h5 className="text-18 fw-500 mb-20 mt-20">Tickets</h5>
 

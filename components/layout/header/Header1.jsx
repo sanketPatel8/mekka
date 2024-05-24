@@ -68,7 +68,7 @@ export default function Header1() {
            <Link href="/" className=" mx-2">
                 Home
               </Link>
-              <Link href="/tour-list-1" className=" mx-2">
+              <Link href="/tour-list-5" className=" mx-2">
                 Tour
               </Link>
               <Link href="/tour-single-4/3" className=" mx-2">

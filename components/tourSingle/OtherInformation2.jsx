@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-export default function OthersInformation() {
+const OtherInformation2 = () => {
   return (
     <>
       <div className="col-lg-3 col-6">
@@ -10,8 +10,8 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Duration</div>
-            <div className="text-14 text-light-2 lh-16">8 days</div>
+            <div className="lh-16">Visa processing</div>
+            <div className="text-14 text-light-2 lh-16">Included</div>
           </div>
         </div>
       </div>
@@ -23,8 +23,8 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Travel</div>
-            <div className="text-14 text-light-2 lh-16">Umrah</div>
+            <div className="lh-16">Flight included</div>
+            <div className="text-14 text-light-2 lh-16"> Included</div>
           </div>
         </div>
       </div>
@@ -36,8 +36,8 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Release date</div>
-            <div className="text-14 text-light-2 lh-16">23 Apr 2024</div>
+            <div className="lh-16">Hotels included</div>
+            <div className="text-14 text-light-2 lh-16">Included</div>
           </div>
         </div>
       </div>
@@ -49,11 +49,13 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Languages</div>
-            <div className="text-14 text-light-2 lh-16">German, Turkish, Arabic</div>
+            <div className="lh-16">Free cancellation (up to 14 days before travel date)</div>
+            <div className="text-14 text-light-2 lh-16">Not included</div>
           </div>
         </div>
       </div>
     </>
-  );
+  )
 }
+
+export default OtherInformation2

@@ -86,7 +86,7 @@ export default function Hero7() {
 
         <div className="hero__slider js-section-slider">
           <div className="swiper-wrapper">
-            {/* <Swiper
+            <Swiper
               className="w-100"
               modules={[Navigation]}
               navigation={{
@@ -107,7 +107,7 @@ export default function Hero7() {
                   slidesPerView: 1,
                 },
               }}
-            > */}
+            >
               {slides.map((elm, i) => (
                 <SwiperSlide key={i}>
                   <div className="hero__bg">
@@ -237,10 +237,10 @@ export default function Hero7() {
                   </div>
                 </SwiperSlide>
               ))}
-            {/* </Swiper> */}
+            </Swiper>
           </div>
 
-          {/* <div className="hero__nav d-flex mt-40">
+          <div className="hero__nav d-flex mt-40">
             <button className="button -outline-white rounded-full size-72 flex-center text-white js-sliderHero-prev">
               <i className="icon-arrow-left text-20"></i>
             </button>
@@ -248,7 +248,7 @@ export default function Hero7() {
             <button className="button -outline-white rounded-full size-72 flex-center text-white ml-10 js-sliderHero-next">
               <i className="icon-arrow-right text-20"></i>
             </button>
-          </div> */}
+          </div>
         </div>
 
         <div className="hero__filter">

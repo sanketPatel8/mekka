@@ -52,7 +52,7 @@ export default function Hero1() {
 
       <div className="container">
         <div className="row justify-center">
-          <div className="col-xl-10 col-lg-10">
+          <div className="col-xl-12 col-lg-12">
             <div className="hero__content">
               <h1
                 data-aos={"fade-up"}

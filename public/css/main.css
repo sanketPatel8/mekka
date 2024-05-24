@@ -4487,7 +4487,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 10px;
   border-radius: 12px;
   height: 80px;
-  width: 70vw;
+  /* width: 70vw; */
   margin: auto;
 }
 

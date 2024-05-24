@@ -44,9 +44,10 @@ export default function MainInformation({ tour }) {
             </div>
 
             <div className="col-auto">
-              <div className="d-flex items-center">
+              <div className="d-flex items-center" style={{color : "red"}}>
                 <i className="icon-reservation text-16 mr-5"></i>
-                30K+ booked
+                {/* <i className="fa-regular fa-users"></i> */}
+                Noch 10 Plätze verfügbar
               </div>
             </div>
           </div>
@@ -57,11 +58,6 @@ export default function MainInformation({ tour }) {
             <a href="#" className="d-flex items-center">
               <i className="icon-share flex-center text-16 mr-10"></i>
               Share
-            </a>
-
-            <a href="#" className="d-flex items-center">
-              <i className="icon-heart flex-center text-16 mr-10"></i>
-              Wishlist
             </a>
           </div>
         </div>
