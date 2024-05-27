@@ -4042,8 +4042,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero.-type-7 .hero__content {
-  padding-top: 300px;
-  padding-bottom: 440px;
+  padding-top: 150px;
+  padding-bottom: 150px;
+  /* border: 5px solid red; */
+  padding-left: 100px;
 }
 
 @media (max-width: 1199px) {

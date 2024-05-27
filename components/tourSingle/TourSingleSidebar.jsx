@@ -35,10 +35,10 @@ export default function TourSingleSidebar() {
 
   return (
     <div className="tourSingleSidebar">
-      <div className="d-flex items-center">
+      {/* <div className="d-flex items-center">
         <div>From</div>
         <div className="text-20 fw-500 ml-10">$1,200</div>
-      </div>
+      </div> */}
 
       {/* <div className="searchForm -type-1 -sidebar mt-20">
         <div className="searchForm__form">
@@ -119,7 +119,7 @@ export default function TourSingleSidebar() {
           <div className="text-14">
             Adult (18+ years){" "}
             <span className="fw-500">
-              ${(prices.adultPrice * adultNumber).toFixed(2)}
+            €{(prices.adultPrice * adultNumber).toFixed(2)}
             </span>
           </div>
 
@@ -150,7 +150,7 @@ export default function TourSingleSidebar() {
           <div className="text-14">
             Youth (13-17 years){" "}
             <span className="fw-500">
-              ${(prices.youthPrice * youthNumber).toFixed(2)}
+            €{(prices.youthPrice * youthNumber).toFixed(2)}
             </span>
           </div>
 
@@ -181,7 +181,7 @@ export default function TourSingleSidebar() {
           <div className="text-14">
             Children (0-12 years){" "}
             <span className="fw-500">
-              ${(prices.childrenPrice * childrenNumber).toFixed(2)}
+            €{(prices.childrenPrice * childrenNumber).toFixed(2)}
             </span>
           </div>
 
@@ -209,7 +209,9 @@ export default function TourSingleSidebar() {
         </div>
       </div>
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">Add Extra</h5>
+      <hr />
+
+      <h5 className="text-18 fw-500 mb-20 mt-20">Additional Service</h5>
 
       <div className="d-flex items-center justify-between">
         <div className="d-flex items-center">
@@ -233,7 +235,7 @@ export default function TourSingleSidebar() {
           <div className="ml-10">Add Service per booking</div>
         </div>
 
-        <div className="text-14">$40</div>
+        <div className="text-14">€40</div>
       </div>
 
       <div className="d-flex justify-between mt-20">
@@ -259,13 +261,74 @@ export default function TourSingleSidebar() {
           <div className="ml-10">
             Add Service per person
             <div className="lh-16">
-              Adult: <span className="fw-500">$17.00</span> - Youth:{" "}
-              <span className="fw-500">$14.00</span>
+              Adult: <span className="fw-500">€17.00</span> - Youth:{" "}
+              <span className="fw-500">€14.00</span>
             </div>
           </div>
         </div>
 
-        <div className="text-14">$40</div>
+        <div className="text-14">€40</div>
+      </div>
+
+      <hr />
+
+      <h5 className="text-18 fw-500 mb-20 mt-20">Flight Booking</h5>
+
+      <div className="d-flex items-center justify-between">
+        <div className="d-flex items-center">
+          <div className="form-checkbox">
+            <input
+              checked={isExtraService ? true : false}
+              onChange={() => setisExtraService((pre) => !pre)}
+              type="checkbox"
+            />
+            <div className="form-checkbox__mark">
+              <div className="form-checkbox__icon">
+                <Image
+                  width="10"
+                  height="8"
+                  src="/img/icons/check.svg"
+                  alt="icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="ml-10">Add Service per booking</div>
+        </div>
+
+        <div className="text-14">€40</div>
+      </div>
+
+      <div className="d-flex justify-between mt-20">
+        <div className="d-flex">
+          <div className="form-checkbox mt-5">
+            <input
+              checked={isServicePerPerson ? true : false}
+              onChange={() => setIsServicePerPerson((pre) => !pre)}
+              type="checkbox"
+            />
+            <div className="form-checkbox__mark">
+              <div className="form-checkbox__icon">
+                <Image
+                  width="10"
+                  height="8"
+                  src="/img/icons/check.svg"
+                  alt="icon"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="ml-10">
+            Add Service per person
+            <div className="lh-16">
+              Adult: <span className="fw-500">€17.00</span> - Youth:{" "}
+              <span className="fw-500">€14.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-14">€40</div>
       </div>
 
       <div className="line mt-20 mb-20"></div>
@@ -273,7 +336,7 @@ export default function TourSingleSidebar() {
       <div className="d-flex items-center justify-between">
         <div className="text-18 fw-500">Total:</div>
         <div className="text-18 fw-500">
-          $
+        €
           {(
             prices.adultPrice * adultNumber +
             prices.youthPrice * youthNumber +

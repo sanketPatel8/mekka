@@ -111,7 +111,7 @@ export default function SingleFour({ tour }) {
                       className="accordion__content"
                       style={
                         activeAcorditions.includes("roadmap")
-                          ? { maxHeight: "500px" }
+                          ? { maxHeight: "2000px" }
                           : {}
                       }
                     >
@@ -121,7 +121,7 @@ export default function SingleFour({ tour }) {
                     </div>
                   </div>
 
-                  <div
+                  {/* <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("roadmap") ? "is-active" : ""
                     }`}
@@ -158,11 +158,11 @@ export default function SingleFour({ tour }) {
                         <RoadMap />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   
 
-                  <div
+                  {/* <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("calender") ? "is-active" : ""
                     }`}
@@ -199,7 +199,7 @@ export default function SingleFour({ tour }) {
                         <DateCalender />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
@@ -274,7 +274,7 @@ export default function SingleFour({ tour }) {
                       }
                     >
                       <div className="pt-20">
-                        <Rating />
+                        {/* <Rating /> */}
                         <Reviews />
 
                         <button className="button -md -outline-accent-1 text-accent-1 mt-30">
@@ -291,7 +291,7 @@ export default function SingleFour({ tour }) {
                       activeAcorditions.includes("roadmap") ? "is-active" : ""
                     }`}
                   >
-                    <div
+                    {/* <div
                       onClick={() =>
                         setActiveAcorditions((pre) =>
                           pre.includes("roadmap")
@@ -309,7 +309,7 @@ export default function SingleFour({ tour }) {
                         <i className="icon-chevron-down"></i>
                         <i className="icon-chevron-up"></i>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div
                       className="accordion__content"

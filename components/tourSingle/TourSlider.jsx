@@ -70,9 +70,9 @@ export default function TourSlider() {
                           />
                         </div>
 
-                        <button className="tourCard__favorite">
+                        {/* <button className="tourCard__favorite">
                           <i className="icon-heart"></i>
-                        </button>
+                        </button> */}
                       </div>
 
                       <div className="tourCard__content px-10 pt-10">
@@ -103,7 +103,7 @@ export default function TourSlider() {
 
                           <div>
                             From{" "}
-                            <span className="text-16 fw-500">${elm.price}</span>
+                            <span className="text-16 fw-500">€ {elm.price}</span>
                           </div>
                         </div>
                       </div>

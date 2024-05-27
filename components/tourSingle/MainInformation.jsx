@@ -32,7 +32,7 @@ export default function MainInformation({ tour }) {
                 <div className="d-flex x-gap-5 pr-10">
                   <Stars star={tour?.rating} font={12} />
                 </div>
-                {tour?.rating} ({tour.ratingCount})
+                {tour?.rating} ({tour.ratingCount}) - Agent Name
               </div>
             </div>
 

@@ -198,13 +198,13 @@ export default function TourList4() {
                         </div>
 
                         <div className="tourCard__price">
-                          <div>€ {elm.price}</div>
+                          <div>€ {elm.price}  </div>
 
-                          <div className="d-flex items-center">
-                            From{" "}
-                            <span className="text-20 fw-500 ml-5">
-                            € {elm.fromPrice}
-                            </span>
+                          <div className="d-flex items-center justify-content-center">
+                            
+                            <p className="text-20 fw-500 ml-5 text-center">
+                            € {elm.fromPrice}  
+                            </p>
                             
                           </div>
                           <p>inklusive Steuern und Gebühren</p>

@@ -3,13 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 
 const currencies = [
-  "Euro",
-  "USD",
+  "DE",
+  "EN",
 ];
 
-export default function Currency({ parentClass } ) {
+export default function Langauge({ parentClass } ) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("Euro");
+  const [selectedCurrency, setSelectedCurrency] = useState("DE");
   const dropDownContainer = useRef();
   useEffect(() => {
     const handleClick = (event) => {

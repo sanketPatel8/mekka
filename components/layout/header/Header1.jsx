@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import LangaugeSwitcher from "@/components/LanSwitcher/LangaugeSwitcher";
+import Langauge from "../components/Langauge";
 
 
 
@@ -109,6 +110,8 @@ export default function Header1() {
             </div>
             
             <Currency />
+
+            <Langauge />
 
             {/* <LangaugeSwitcher /> */}
 

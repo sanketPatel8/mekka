@@ -113,7 +113,7 @@ export default function Hero7() {
                   <div className="hero__bg">
                     <Image
                       width={1920}
-                      height={960}
+                      height={160}
                       src={elm.imageSrc}
                       alt="background"
                     />
@@ -136,104 +136,16 @@ export default function Hero7() {
                             data-aos-delay="300"
                             className="hero__title text--color-accent-1"
                           >
-                            <span style={{fontSize : "7vw", fontWeight : "bold" , color : "#DAC04F "}}><b>{elm.title.split(",")[0]}</b></span>
+                            <span style={{fontSize : "5vw", fontWeight : "bold" , color : "#DAC04F "}}><b>{elm.title.split(",")[0]}</b></span>
                             <br className="md:d-none" />
-                            <span style={{fontSize : "5vw", fontWeight : "700" , color : "#4198BA ", textAlign : "center"}}><b>{elm.title.split(",")[1]}</b></span>
+                            <span style={{fontSize : "4vw", fontWeight : "700" , color : "#4198BA ", textAlign : "center"}}><b>{elm.title.split(",")[1]}</b></span>
                             <br className="md:d-none" />
-                            <span style={{fontSize : "4vw", fontWeight : "700" , color : "black " , textAlign : "right"}}>{elm.title.split(",")[2]}</span>
+                            <span style={{fontSize : "3vw", fontWeight : "700" , color : "black " , textAlign : "right"}}>{elm.title.split(",")[2]}</span>
                           </h1>
                          
                         </div>
                       </div>
                     </div>
-                    {/* <div className="searchForm -type-1">
-                  <div className="searchForm__form">
-                    <div className="searchFormItem js-select-control js-form-dd">
-                      <div
-                        className="searchFormItem__button"
-                        onClick={() =>
-                          setCurrentActiveDD((pre) =>
-                            pre == "location" ? "" : "location",
-                          )
-                        }
-                      >
-                        <div className="searchFormItem__content">
-                          <h5>Where</h5>
-                          <div className="js-select-control-chosen">
-                            {location ? location : "Search destinations"}
-                          </div>
-                        </div>
-                      </div>
-
-                      <Location
-                        setLocation={setLocation}
-                        active={currentActiveDD === "location"}
-                      />
-                    </div>
-
-                    <div className="searchFormItem js-select-control js-form-dd js-calendar">
-                      <div
-                        className="searchFormItem__button"
-                        onClick={() =>
-                          setCurrentActiveDD((pre) =>
-                            pre == "calender" ? "" : "calender",
-                          )
-                        }
-                      >
-                        <div className="searchFormItem__icon size-50 rounded-12 border-1 flex-center">
-                          <i className="text-20 icon-calendar"></i>
-                        </div>
-                        <div className="searchFormItem__content">
-                          <h5>When</h5>
-                          <div>
-                            <span className="js-first-date">
-                              <Calender
-                                active={currentActiveDD === "calender"}
-                              />
-                            </span>
-                            <span className="js-last-date"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="searchFormItem js-select-control js-form-dd">
-                      <div
-                        className="searchFormItem__button"
-                        onClick={() =>
-                          setCurrentActiveDD((pre) =>
-                            pre == "tourType" ? "" : "tourType",
-                          )
-                        }
-                      >
-                        <div className="searchFormItem__icon size-50 rounded-12 border-1 flex-center">
-                          <i className="text-20 icon-flag"></i>
-                        </div>
-                        <div className="searchFormItem__content">
-                          <h5>Tour Type</h5>
-                          <div className="js-select-control-chosen">
-                            {tourType ? tourType : "All tour"}
-                          </div>
-                        </div>
-                      </div>
-
-                      <TourType
-                        setTourType={setTourType}
-                        active={currentActiveDD === "tourType"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="searchForm__button">
-                    <button
-                      onClick={() => router.push("/tour-list-1")}
-                      className="button -dark-1 bg-accent-1 text-white"
-                    >
-                      <i className="icon-search text-16 mr-10"></i>
-                      Search
-                    </button>
-                  </div>
-                </div> */}
                   </div>
                 </SwiperSlide>
               ))}
@@ -332,6 +244,7 @@ export default function Hero7() {
                   active={currentActiveDD === "tourType"}
                 />
               </div>
+
 
               <div className="searchFormItem js-select-control js-form-dd">
                 <div

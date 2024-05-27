@@ -40,10 +40,10 @@ export default function RangeSlider() {
 
         <div className="d-flex justify-between mt-20">
           <div className="">
-            <span className="">Price:</span>
-            <span className="fw-500 js-lower">{value[0]}</span>
+            <span className="">Price: </span>
+            <span className="fw-500 js-lower">{value[0]} €</span>
             <span> - </span>
-            <span className="fw-500 js-upper">{value[1]}</span>
+            <span className="fw-500 js-upper">{value[1]} €</span>
           </div>
         </div>
       </div>
