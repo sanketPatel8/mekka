@@ -335,6 +335,7 @@ export default function TourSingleSidebar() {
 
       <div className="d-flex items-center justify-between">
         <div className="text-18 fw-500">Total:</div>
+        <div>
         <div className="text-18 fw-500">
         €
           {(
@@ -343,6 +344,8 @@ export default function TourSingleSidebar() {
             prices.childrenPrice * childrenNumber +
             extraCharge * 1
           ).toFixed(2)}
+        </div>
+          <span className="text-center">included</span>
         </div>
       </div>
 
