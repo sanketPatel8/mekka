@@ -18,6 +18,12 @@ export default function TourSingleSidebar() {
   const [youthNumber, setYouthNumber] = useState(2);
   const [childrenNumber, setChildrenNumber] = useState(4);
   const [isExtraService, setisExtraService] = useState(false);
+  const [SingBed, setSingBed] = useState(false);
+  const [twoBed, setTwoBed] = useState(false);
+  const [ThreeBad, setThreeBad] = useState(false);
+  const [fourbad, setFourbad] = useState(false);
+  const [Flight, setFlight] = useState(false);
+
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
   useEffect(() => {
@@ -35,83 +41,6 @@ export default function TourSingleSidebar() {
 
   return (
     <div className="tourSingleSidebar">
-      {/* <div className="d-flex items-center">
-        <div>From</div>
-        <div className="text-20 fw-500 ml-10">$1,200</div>
-      </div> */}
-
-      {/* <div className="searchForm -type-1 -sidebar mt-20">
-        <div className="searchForm__form">
-          <div className="searchFormItem js-select-control js-form-dd js-calendar">
-            <div className="searchFormItem__button" data-x-click="calendar">
-              <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
-                <i className="text-20 icon-calendar"></i>
-              </div>
-              <div className="searchFormItem__content">
-                <h5>From</h5>
-                <div>
-                  <span className="js-first-date">
-                    <Calender />
-                  </span>
-                  <span className="js-last-date"></span>
-                </div>
-              </div>
-              <div className="searchFormItem__icon_chevron">
-                <i className="icon-chevron-down d-flex text-18"></i>
-              </div>
-            </div>
-          </div>
-
-          <div className="searchFormItem js-select-control js-form-dd">
-            <div
-              className="searchFormItem__button"
-              onClick={() => setActiveTimeDD((pre) => !pre)}
-              data-x-click="time"
-            >
-              <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
-                <i className="text-20 icon-clock"></i>
-              </div>
-              <div className="searchFormItem__content">
-                <h5>Time</h5>
-                <div className="js-select-control-chosen">
-                  {selectedTime ? selectedTime : "Choose time"}
-                </div>
-              </div>
-              <div className="searchFormItem__icon_chevron">
-                <i className="icon-chevron-down d-flex text-18"></i>
-              </div>
-            </div>
-
-            <div
-              className={`searchFormItemDropdown -tour-type ${
-                activeTimeDD ? "is-active" : ""
-              }`}
-              data-x="time"
-              data-x-toggle="is-active"
-            >
-              <div className="searchFormItemDropdown__container">
-                <div className="searchFormItemDropdown__list sroll-bar-1">
-                  {times.map((elm, i) => (
-                    <div
-                      key={i}
-                      onClick={() => {
-                        setSelectedTime((pre) => (pre == elm ? "" : elm));
-                        setActiveTimeDD(false);
-                      }}
-                      className="searchFormItemDropdown__item"
-                    >
-                      <button className="js-select-control-button">
-                        <span className="js-select-control-choice">{elm}</span>
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <h5 className="text-18 fw-500 mb-20 mt-20">Tickets</h5>
 
       <div>
@@ -211,14 +140,75 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">Additional Service</h5>
+      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel selection</h5>
+
+<div className="d-flex items-center justify-between">
+  <div className="d-flex items-center">
+    <div className="form-checkbox">
+      <input
+        checked={isExtraService ? true : false}
+        onChange={() => setisExtraService((pre) => !pre)}
+        type="checkbox"
+      />
+      <div className="form-checkbox__mark">
+        <div className="form-checkbox__icon">
+          <Image
+            width="10"
+            height="8"
+            src="/img/icons/check.svg"
+            alt="icon"
+          />
+        </div>
+      </div>
+    </div>
+    <div className="ml-10">Hotel For Mekka (3 star)</div>
+  </div>
+
+  <div className="text-14">€40</div>
+</div>
+
+<div className="d-flex justify-between mt-20">
+  <div className="d-flex">
+    <div className="form-checkbox mt-5">
+      <input
+        checked={isServicePerPerson ? true : false}
+        onChange={() => setIsServicePerPerson((pre) => !pre)}
+        type="checkbox"
+      />
+      <div className="form-checkbox__mark">
+        <div className="form-checkbox__icon">
+          <Image
+            width="10"
+            height="8"
+            src="/img/icons/check.svg"
+            alt="icon"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div className="ml-10">
+      Hotel for Madina (5 star)
+      {/* <div className="lh-16">
+        Adult: <span className="fw-500">€17.00</span> - Youth:{" "}
+        <span className="fw-500">€14.00</span>
+      </div> */}
+    </div>
+  </div>
+
+  <div className="text-14">€40</div>
+</div>
+
+<hr />
+
+      <h5 className="text-18 fw-500 mb-20 mt-20">Possible additional services per person:</h5>
 
       <div className="d-flex items-center justify-between">
         <div className="d-flex items-center">
           <div className="form-checkbox">
             <input
-              checked={isExtraService ? true : false}
-              onChange={() => setisExtraService((pre) => !pre)}
+              checked={fourbad ? true : false}
+              onChange={() => setFourbad((pre) => !pre)}
               type="checkbox"
             />
             <div className="form-checkbox__mark">
@@ -232,18 +222,17 @@ export default function TourSingleSidebar() {
               </div>
             </div>
           </div>
-          <div className="ml-10">Add Service per booking</div>
+          <div className="ml-10">4 Bettzimmer (Standard)</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">+0,00€</div>
       </div>
-
-      <div className="d-flex justify-between mt-20">
-        <div className="d-flex">
-          <div className="form-checkbox mt-5">
+      <div className="d-flex items-center justify-between">
+        <div className="d-flex items-center">
+          <div className="form-checkbox">
             <input
-              checked={isServicePerPerson ? true : false}
-              onChange={() => setIsServicePerPerson((pre) => !pre)}
+              checked={SingBed ? true : false}
+              onChange={() => setSingBed((pre) => !pre)}
               type="checkbox"
             />
             <div className="form-checkbox__mark">
@@ -257,18 +246,61 @@ export default function TourSingleSidebar() {
               </div>
             </div>
           </div>
-
-          <div className="ml-10">
-            Add Service per person
-            <div className="lh-16">
-              Adult: <span className="fw-500">€17.00</span> - Youth:{" "}
-              <span className="fw-500">€14.00</span>
-            </div>
-          </div>
+          <div className="ml-10">3 Bettzimmer</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">+100,00€</div>
       </div>
+      <div className="d-flex items-center justify-between">
+        <div className="d-flex items-center">
+          <div className="form-checkbox">
+            <input
+              checked={ThreeBad ? true : false}
+              onChange={() => setThreeBad((pre) => !pre)}
+              type="checkbox"
+            />
+            <div className="form-checkbox__mark">
+              <div className="form-checkbox__icon">
+                <Image
+                  width="10"
+                  height="8"
+                  src="/img/icons/check.svg"
+                  alt="icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="ml-10">2 Bettzimmer</div>
+        </div>
+
+        <div className="text-14">+230,00€</div>
+      </div>
+      <div className="d-flex items-center justify-between">
+        <div className="d-flex items-center">
+          <div className="form-checkbox">
+            <input
+              checked={twoBed ? true : false}
+              onChange={() => setTwoBed((pre) => !pre)}
+              type="checkbox"
+            />
+            <div className="form-checkbox__mark">
+              <div className="form-checkbox__icon">
+                <Image
+                  width="10"
+                  height="8"
+                  src="/img/icons/check.svg"
+                  alt="icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="ml-10">1 Bettzimmer</div>
+        </div>
+
+        <div className="text-14">+450,00€</div>
+      </div>
+
+      
 
       <hr />
 
@@ -278,8 +310,8 @@ export default function TourSingleSidebar() {
         <div className="d-flex items-center">
           <div className="form-checkbox">
             <input
-              checked={isExtraService ? true : false}
-              onChange={() => setisExtraService((pre) => !pre)}
+              checked={Flight ? true : false}
+              onChange={() => setFlight((pre) => !pre)}
               type="checkbox"
             />
             <div className="form-checkbox__mark">
@@ -293,43 +325,12 @@ export default function TourSingleSidebar() {
               </div>
             </div>
           </div>
-          <div className="ml-10">Add Service per booking</div>
+          <div className="ml-10">Is flight included?</div>
         </div>
 
         <div className="text-14">€40</div>
       </div>
 
-      <div className="d-flex justify-between mt-20">
-        <div className="d-flex">
-          <div className="form-checkbox mt-5">
-            <input
-              checked={isServicePerPerson ? true : false}
-              onChange={() => setIsServicePerPerson((pre) => !pre)}
-              type="checkbox"
-            />
-            <div className="form-checkbox__mark">
-              <div className="form-checkbox__icon">
-                <Image
-                  width="10"
-                  height="8"
-                  src="/img/icons/check.svg"
-                  alt="icon"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="ml-10">
-            Add Service per person
-            <div className="lh-16">
-              Adult: <span className="fw-500">€17.00</span> - Youth:{" "}
-              <span className="fw-500">€14.00</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-14">€40</div>
-      </div>
 
       <div className="line mt-20 mb-20"></div>
 
