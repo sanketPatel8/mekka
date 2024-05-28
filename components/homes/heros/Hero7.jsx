@@ -169,6 +169,7 @@ export default function Hero7() {
             className="searchForm -type-1 shadow-1  rounded-200"
           >
             <div className="searchForm__form">
+
               <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
@@ -182,9 +183,9 @@ export default function Hero7() {
                     <i className="text-20 icon-pin"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5>Where</h5>
+                    <h5>Alle</h5>
                     <div className="js-select-control-chosen">
-                      {location ? location : "Search destinations"}
+                      {location ? location : "All Tour"}
                     </div>
                   </div>
                 </div>
@@ -220,55 +221,29 @@ export default function Hero7() {
               </div>
 
               <div className="searchFormItem js-select-control js-form-dd">
-                <div
-                  className="searchFormItem__button"
-                  onClick={() =>
-                    setCurrentActiveDD((pre) =>
-                      pre == "tourType" ? "" : "tourType",
-                    )
-                  }
-                >
-                  <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                    <i className="text-20 icon-flag"></i>
-                  </div>
-                  <div className="searchFormItem__content">
-                    <h5>Alle</h5>
-                    <div className="js-select-control-chosen">
-                      {tourType ? tourType : "All tour"}
-                    </div>
-                  </div>
-                </div>
-
-                <TourType
-                  setTourType={setTourType}
-                  active={currentActiveDD === "tourType"}
-                />
-              </div>
-
-
-              <div className="searchFormItem js-select-control js-form-dd">
-                <div
+                 <div
                   className="searchFormItem__button"
                   onClick={() =>
                     setTourLocation((pre) =>
+                      // console.log(pre)
                       pre == "tourType" ? "" : "tourType",
                     )
                   }
+
+                  
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-flag"></i>
                   </div>
                   <div className="searchFormItem__content">
                     <h5>Anzahl Reisende</h5>
-                    {/* <div className="js-select-control-chosen">
+                    <div className="js-select-control-chosen">
                       {tourType ? tourType : "All tour"}
-                    </div> */}
+                    </div>
                   </div>
                 </div>
-                
                 <NumberOfTravellers  setTourType={setTourMambar} active={TourLocation === "tourType"} />
               </div>
-
             </div>
 
             <div

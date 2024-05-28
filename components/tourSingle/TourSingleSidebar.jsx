@@ -172,7 +172,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">€40</div>
       </div>
 
-      <div className="d-flex justify-between mt-20">
+      <div className="d-flex justify-between mt-1">
         <div className="d-flex">
           <div className="form-radio mt-5">
             <input
@@ -201,7 +201,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">€40</div>
       </div>
 
-      <div className="d-flex justify-between mt-20">
+      <div className="d-flex justify-between mt-1">
         <div className="d-flex">
           <div className="form-radio mt-5">
             <input
@@ -262,7 +262,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">€40</div>
       </div>
 
-      <div className="d-flex justify-between mt-20">
+      <div className="d-flex justify-between mt-1">
         <div className="d-flex">
           <div className="form-radio mt-5">
             <input
@@ -291,7 +291,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">€40</div>
       </div>
 
-      <div className="d-flex justify-between mt-20">
+      <div className="d-flex justify-between mt-1">
         <div className="d-flex">
           <div className="form-radio mt-5">
             <input
@@ -324,7 +324,7 @@ export default function TourSingleSidebar() {
 
       <h5 className="text-18 fw-500 mb-20 mt-20">Possible additional services per person:</h5>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between pt-1">
         <div className="d-flex items-center">
           <div className="form-radio">
             <input
@@ -352,7 +352,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">+0,00€</div>
       </div>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between pt-1">
         <div className="d-flex items-center">
           <div className="form-radio">
             <input
@@ -380,7 +380,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">+100,00€</div>
       </div>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between pt-1">
         <div className="d-flex items-center">
           <div className="form-radio">
             <input
@@ -408,7 +408,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">+230,00€</div>
       </div>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between pt-1">
         <div className="d-flex items-center">
           <div className="form-radio">
             <input
@@ -440,7 +440,7 @@ export default function TourSingleSidebar() {
 
       <h5 className="text-18 fw-500 mb-20 mt-20">Flight Booking</h5>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between pt-1">
         <div className="d-flex items-center">
           <div className="form-checkbox">
             <input
@@ -467,7 +467,7 @@ export default function TourSingleSidebar() {
 
       <div className="line mt-20 mb-20"></div>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between pt-1">
         <div className="text-18 fw-500">Total:</div>
         <div>
           <div className="text-18 fw-500">

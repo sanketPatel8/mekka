@@ -4505,9 +4505,9 @@ h1, h2, h3, h4, h5, h6 {
 .searchForm.-type-1 .searchForm__form {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   width: 100%;
-  gap: 10px;
+  gap: 5px;
   padding: 5px 10px;
 }
 
@@ -6680,7 +6680,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .accordion__content {
   overflow: auto;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
   max-height: 0;
   transition: max-height 0.2s ease-out;
 }

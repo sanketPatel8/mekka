@@ -26,7 +26,8 @@ const RoadMap = () => {
         <br />
         <p>Food included: </p>
         <p className="text-danger">Not included</p>
-        <HotelGallary img1='/img/hotel photo/makka-1.jpeg' img2='/img/hotel photo/makka-2.jpeg' img3='/img/hotel photo/makka-3.jpeg' img4='/img/hotel photo/makka-4.jpeg' img5='/img/hotel photo/makka-5.jpeg' img6='/img/hotel photo/makka-6.jpeg'/> 
+
+        <HotelGallary name='makka' /> 
 
         <br />
         <div>
@@ -78,7 +79,8 @@ const RoadMap = () => {
         <br />
         <p>Food included: </p>
         <p className="text-danger">Breakfast</p>
-        <HotelGallary img1='/img/hotel photo/madina-1.jpeg' img2='/img/hotel photo/madina-2.jpeg' img3='/img/hotel photo/madina-3.jpeg' img4='/img/hotel photo/madina-4.jpeg' img5='/img/hotel photo/madina-5.jpeg' img6='/img/hotel photo/madina-6.jpeg'/> 
+        
+        <HotelGallary name='madina' /> 
         <div>
           <br />
           <h3>Hotel Options</h3>
