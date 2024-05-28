@@ -225,7 +225,6 @@ export default function Hero7() {
                   className="searchFormItem__button"
                   onClick={() =>
                     setTourLocation((pre) =>
-                      // console.log(pre)
                       pre == "tourType" ? "" : "tourType",
                     )
                   }
