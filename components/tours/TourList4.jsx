@@ -5,7 +5,7 @@ import { speedFeatures } from "@/data/tourFilteringOptions";
 import { LiaKaabaSolid } from "react-icons/lia";
 import { tourDataTwo } from "@/data/tours";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
+// import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { faQuoteRight } from '@fortawesome/free-regular-svg-icons';
 import { faHotel } from '@fortawesome/free-solid-svg-icons';
 import Stars from "../common/Stars";
@@ -84,17 +84,6 @@ export default function TourList4() {
                   } `}
                   data-main-value=""
                 >
-                  {/* <div
-                    className="dropdown__button js-button"
-                    onClick={() => setDdActives((pre) => !pre)}
-                  >
-                    <span>Sort by: </span>
-                    <span className="js-title">
-                      {sortOption ? sortOption : "Featured"}
-                    </span>
-                    <i className="icon-chevron-down"></i>
-                  </div> */}
-
                   <div className="dropdown__menu js-menu-items">
                     {speedFeatures.map((elm, i) => (
                       <div
