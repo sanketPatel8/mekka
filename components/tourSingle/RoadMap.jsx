@@ -1,13 +1,9 @@
-import React, { useState } from "react";
-import PhotoAlbum from "react-photo-album";
-// import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css"; // Import the lightbox styles
+import React from "react";
+import "react-image-lightbox/style.css"; 
 import { MdVerified } from "react-icons/md";
 import HotelGallary from "./Galleries/HotelGallary";
 
 const RoadMap = () => {
-
-
   return (
     <>
       <div>
@@ -31,26 +27,7 @@ const RoadMap = () => {
         <p>Food included: </p>
         <p className="text-danger">Not included</p>
         <HotelGallary img1='/img/hotel photo/makka-1.jpeg' img2='/img/hotel photo/makka-2.jpeg' img3='/img/hotel photo/makka-3.jpeg' img4='/img/hotel photo/makka-4.jpeg' img5='/img/hotel photo/makka-5.jpeg' img6='/img/hotel photo/makka-6.jpeg'/> 
-        {/* <div className="row my-3">
-          <img
-            src="/img/hotel photo/makka-4.jpeg"
-            alt=""
-            className="col-sm-4 rounded my-3"
-            style={{ maxHeight: "200px", objectFit: "cover" }}
-          />
-          <img
-            src="/img/hotel photo/makka-5.jpeg"
-            alt=""
-            className="col-sm-4 rounded my-3"
-            style={{ maxHeight: "200px", objectFit: "cover" }}
-          />
-          <img
-            src="/img/hotel photo/makka-6.jpeg"
-            alt=""
-            className="col-sm-4 rounded my-3"
-            style={{ maxHeight: "200px", objectFit: "cover" }}
-          />
-        </div> */}
+
         <br />
         <div>
           <h4>Hotel Options</h4>
