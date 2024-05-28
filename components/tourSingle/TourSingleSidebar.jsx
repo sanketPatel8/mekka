@@ -479,7 +479,7 @@ export default function TourSingleSidebar() {
               extraCharge * 1
             ).toFixed(2)}
           </div>
-          <span className="text-center">Tax included</span>
+          <span className="text-center">inklusive Steuern und Gebühren</span>
         </div>
       </div>
 
