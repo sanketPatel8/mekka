@@ -6679,7 +6679,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .accordion__content {
-  overflow: hidden;
+  overflow: auto;
+  /* overflow-x: hidden; */
   max-height: 0;
   transition: max-height 0.2s ease-out;
 }
@@ -12411,6 +12412,13 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 12px;
 }
 
+.tourSingleGrid.-type-1 .tourSingleGrid__grid_hotels {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-radius: 12px;
+}
+
 .tourSingleGrid.-type-1 .tourSingleGrid__grid > *:nth-child(1) {
   grid-row: 2 span;
 }
@@ -12426,9 +12434,17 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@media (max-width: 767px) {
+  .tourSingleGrid.-type-1 .tourSingleGrid__grid_hotels {
+    overflow-x: hidden;
+    /* display: flex; */
+    grid-template-columns: 1fr;
+  }
+}
+
 .tourSingleGrid.-type-1 img {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   -o-object-fit: cover;
      object-fit: cover;
 }

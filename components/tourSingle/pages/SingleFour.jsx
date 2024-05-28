@@ -117,89 +117,10 @@ export default function SingleFour({ tour }) {
                     >
                       <div className="pt-20">
                         <RoadMap />
+                        {/* <Gallery1 /> */}
                       </div>
                     </div>
                   </div>
-
-                  {/* <div
-                    className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("roadmap") ? "is-active" : ""
-                    }`}
-                  >
-                    <div
-                      onClick={() =>
-                        setActiveAcorditions((pre) =>
-                          pre.includes("roadmap")
-                            ? [...pre.filter((elm) => elm != "roadmap")]
-                            : [...pre, "roadmap"],
-                        )
-                      }
-                      className="accordion__button d-flex items-center justify-between"
-                    >
-                      <div className="text-30 md:text-20 lh-13 fw-700">
-                        Itinerary
-                      </div>
-
-                      <div className="accordion__icon size-30 text-24 flex-center">
-                        <i className="icon-chevron-down"></i>
-                        <i className="icon-chevron-up"></i>
-                      </div>
-                    </div>
-
-                    <div
-                      className="accordion__content"
-                      style={
-                        activeAcorditions.includes("roadmap")
-                          ? { maxHeight: "500px" }
-                          : {}
-                      }
-                    >
-                      <div className="pt-20">
-                        <RoadMap />
-                      </div>
-                    </div>
-                  </div> */}
-
-                  
-
-                  {/* <div
-                    className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("calender") ? "is-active" : ""
-                    }`}
-                  >
-                    <div
-                      onClick={() =>
-                        setActiveAcorditions((pre) =>
-                          pre.includes("calender")
-                            ? [...pre.filter((elm) => elm != "calender")]
-                            : [...pre, "calender"],
-                        )
-                      }
-                      className="accordion__button d-flex items-center justify-between"
-                    >
-                      <div className="text-30 md:text-20 lh-13 fw-700">
-                        Availability Calendar
-                      </div>
-
-                      <div className="accordion__icon size-30 text-24 flex-center">
-                        <i className="icon-chevron-down"></i>
-                        <i className="icon-chevron-up"></i>
-                      </div>
-                    </div>
-
-                    <div
-                      className="accordion__content"
-                      style={
-                        activeAcorditions.includes("calender")
-                          ? { maxHeight: "500px" }
-                          : {}
-                      }
-                    >
-                      <div className="pt-20">
-                        <DateCalender />
-                      </div>
-                    </div>
-                  </div> */}
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
@@ -291,26 +212,6 @@ export default function SingleFour({ tour }) {
                       activeAcorditions.includes("roadmap") ? "is-active" : ""
                     }`}
                   >
-                    {/* <div
-                      onClick={() =>
-                        setActiveAcorditions((pre) =>
-                          pre.includes("roadmap")
-                            ? [...pre.filter((elm) => elm != "roadmap")]
-                            : [...pre, "roadmap"],
-                        )
-                      }
-                      className="accordion__button d-flex items-center justify-between"
-                    >
-                      <div className="text-30 md:text-20 lh-13 fw-700">
-                        Extras
-                      </div>
-
-                      <div className="accordion__icon size-30 text-24 flex-center">
-                        <i className="icon-chevron-down"></i>
-                        <i className="icon-chevron-up"></i>
-                      </div>
-                    </div> */}
-
                     <div
                       className="accordion__content"
                       style={

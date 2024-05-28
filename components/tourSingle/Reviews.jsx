@@ -42,7 +42,7 @@ export default function Reviews() {
           <div className="row x-gap-20 y-gap-20 pt-20">
             {elm.images.map((elm2, i2) => (
               <div key={i2} className="col-auto">
-                <div className="size-130">
+                {/* <div className="size-130">
                   <Image
                     width={195}
                     height={195}
@@ -50,12 +50,12 @@ export default function Reviews() {
                     alt="image"
                     className="img-cover rounded-12"
                   />
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
 
-          <div className="d-flex x-gap-30 items-center mt-20">
+          {/* <div className="d-flex x-gap-30 items-center mt-20">
             <div>
               <a href="#" className="d-flex items-center">
                 <i className="icon-like text-16 mr-10"></i>
@@ -68,7 +68,7 @@ export default function Reviews() {
                 Not helpful
               </a>
             </div>
-          </div>
+          </div> */}
         </div>
       ))}
     </>
