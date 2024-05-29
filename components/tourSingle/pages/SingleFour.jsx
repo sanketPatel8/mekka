@@ -202,9 +202,11 @@ export default function SingleFour({ tour }) {
                           See more reviews
                           <i className="icon-arrow-top-right text-16 ml-10"></i>
                         </button>
-                        <CommentBox />
+                        {/* <CommentBox /> */}
                       </div>
+
                     </div>
+                      
                   </div>
 
                   <div
@@ -226,9 +228,13 @@ export default function SingleFour({ tour }) {
                       </div>
                     </div>
                   </div>
+
+                  
                 </div>
               </div>
             </div>
+
+                      
 
             <div className="col-lg-4">
               <div
@@ -238,7 +244,11 @@ export default function SingleFour({ tour }) {
                 <TourSingleSidebar />
               </div>
             </div>
+
           </div>
+            <div>
+            <hr />
+            </div>
         </div>
       </section>
     </>

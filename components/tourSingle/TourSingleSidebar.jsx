@@ -39,6 +39,9 @@ export default function TourSingleSidebar() {
   const [selectedTime, setSelectedTime] = useState("");
   const [activeTimeDD, setActiveTimeDD] = useState(false);
 
+  const handleChange = (e) => {
+    setHotelMakka(e.target.value)
+  }
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">Tickets</h5>
@@ -153,7 +156,7 @@ export default function TourSingleSidebar() {
               value="3Star"
               className="radio-label"
               checked={hotelMakka === "3Star"}
-              onChange={(e) => setHotelMakka(e.target.value)}
+              onChange={handleChange}
             />
             <div className="form-radio__mark">
               <div className="form-radio__icon">
@@ -166,10 +169,10 @@ export default function TourSingleSidebar() {
               </div>
             </div>
           </div>
-          <div className="ml-10">3 Star</div>
+          <div className="ml-10">Hotel-name ( 3 Star )</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">40 €</div>
       </div>
 
       <div className="d-flex justify-between mt-1">
@@ -181,7 +184,7 @@ export default function TourSingleSidebar() {
               value="4Star"
               className="radio-label"
               checked={hotelMakka === "4Star"}
-              onChange={(e) => setHotelMakka(e.target.value)}
+              onChange={handleChange}
             />
             <div className="form-radio__mark">
               <div className="form-radio__icon">
@@ -195,10 +198,10 @@ export default function TourSingleSidebar() {
             </div>
           </div>
 
-          <div className="ml-10">4 Star</div>
+          <div className="ml-10">Hotel-name ( 4 Star )</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">40 €</div>
       </div>
 
       <div className="d-flex justify-between mt-1">
@@ -210,7 +213,7 @@ export default function TourSingleSidebar() {
               value="5Star"
               className="radio-label"
               checked={hotelMakka === "5Star"}
-              onChange={(e) => setHotelMakka(e.target.value)}
+              onChange={handleChange}
             />
             <div className="form-radio__mark">
               <div className="form-radio__icon">
@@ -224,10 +227,10 @@ export default function TourSingleSidebar() {
             </div>
           </div>
 
-          <div className="ml-10">5 Star</div>
+          <div className="ml-10">Hotel-name ( 5 Star )</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">40 €</div>
       </div>
 
       <hr />
@@ -256,10 +259,10 @@ export default function TourSingleSidebar() {
               </div>
             </div>
           </div>
-          <div className="ml-10">3 Star</div>
+          <div className="ml-10">Hotel-name ( 3 Star )</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">40 €</div>
       </div>
 
       <div className="d-flex justify-between mt-1">
@@ -285,10 +288,10 @@ export default function TourSingleSidebar() {
             </div>
           </div>
 
-          <div className="ml-10">4 Star</div>
+          <div className="ml-10">Hotel-name ( 4 Star )</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">40 €</div>
       </div>
 
       <div className="d-flex justify-between mt-1">
@@ -314,10 +317,10 @@ export default function TourSingleSidebar() {
             </div>
           </div>
 
-          <div className="ml-10">5 Star</div>
+          <div className="ml-10">Hotel-name ( 5 Star )</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">40 €</div>
       </div>
 
       <hr />
@@ -462,7 +465,7 @@ export default function TourSingleSidebar() {
           <div className="ml-10">Is flight included?</div>
         </div>
 
-        <div className="text-14">€40</div>
+        <div className="text-14">40 €</div>
       </div>
 
       <div className="line mt-20 mb-20"></div>

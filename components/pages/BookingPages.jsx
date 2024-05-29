@@ -1,11 +1,27 @@
 'use client'
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { FaUser } from "react-icons/fa";
+import { MdError } from "react-icons/md";
+import '@/public/css/index.css';
+
 
 export default function BookingPages() {
-
+  const [roomType, setRoomType] = useState("");
+  const [hotelMakka, setHotelMakka] = useState("");
   const [bookingStage, setBookingStage] = useState(1)
+
+//   const handleChange = (e) => {
+//     const selectedRoomType = e.target.value;
+//     setRoomType(selectedRoomType);
+//     alert(`Selected room type:  € {selectedRoomType}`);
+// };
+
+useEffect(() => {
+    console.log('Selected room type:', roomType);
+}, [roomType]);
+
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
       <div className="container">
@@ -22,118 +38,885 @@ export default function BookingPages() {
               </Link>{" "}
               to manage your bookings on the go!
             </div>
-
-            <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 mt-30">
-
-              {bookingStage == 1 &&
-              <div>
-              <h2 className="text-30 md:text-24 fw-700">
-                Let us know who you are
+            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-10">
+              Steps to reserve
               </h2>
 
-              <div className="row y-gap-30 contactForm pt-30">
-                <div className="col-12">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      Full Name
-                    </label>
-                  </div>
-                </div>
+            <div className="bg-white rounded-12  py-30 px-30 md:py-20 md:px-20 mt-30">
 
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Email</label>
-                  </div>
-                </div>
+              {bookingStage == 1 &&
+                                      <div style={{ borderRadius : "20px" , overflow : "hidden"}} className="shadow-3">
+                                    
+                                            <div className="form_1" >
+                                            <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                              <p><span><FaUser /></span><span> <b>1. Adult information</b></span></p>
+                                              <p><span><MdError /></span><span> Is also the contact person for the reservation.</span></p>
+                                            </div>
 
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      Phone Number
-                    </label>
-                  </div>
-                </div>
+                                            <div className="row y-gap-30 contactForm px-50 py-40 ">
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Name
+                                                  </label>
+                                                </div>
+                                              </div>
 
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Country</label>
-                  </div>
-                </div>
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                </div>
+                                              </div>
 
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">City</label>
-                  </div>
-                </div>
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">Email</label>
+                                                </div>
+                                              </div>
 
-                <div className="col-12">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      Address 1
-                    </label>
-                  </div>
-                </div>
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Phone
+                                                  </label>
+                                                </div>
+                                              </div>
 
-                <div className="col-12">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      Address 2
-                    </label>
-                  </div>
-                </div>
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">City</label>
+                                                </div>
+                                              </div>
 
-                <div className="col-lg-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      State/Province/Region
-                    </label>
-                  </div>
-                </div>
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Gender (dd)
+                                                  </label> 
+                                                </div>
+                                              </div>
 
-                <div className="col-lg-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      ZIP code/Postal code
-                    </label>
-                  </div>
-                </div>
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Birthday
+                                                  </label>
+                                                </div>
+                                              </div>
 
-                <div className="col-12">
-                  <div className="form-input ">
-                    <textarea required rows="8"></textarea>
-                    <label className="lh-1 text-16 text-light-1">
-                      Tour Content
-                    </label>
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="row y-gap-20 items-center justify-between">
-                    <div className="col-auto">
-                      <div className="text-14">
-                        By proceeding with this booking, I agree to tourz Terms
-                        of Use and Privacy Policy.
-                      </div>
-                    </div>
+                                              <div className="col-lg-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Nationality (dd)
+                                                  </label>
+                                                </div>
+                                              </div>
 
-                   
-                  </div>
-                </div>
-                
-              </div>
-              
-              </div>
- }
+                                              <div className="col-lg-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    House No
+                                                  </label>
+                                                </div>
+                                              </div>
 
-{bookingStage == 2 &&
+                                              <div className="col-lg-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    ZIP code
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-lg-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Street
+                                                  </label>
+                                                </div>
+                                              </div>
+
+
+
+                                              <div className="col-lg-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    From (dd)
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            
+                                              <div className="col-12">
+                                                <div className="row y-gap-20 items-center justify-between">
+                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                    <div className="text-14 ">
+                                                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                    </div>
+                                                  </div>
+                              
+                                                </div>
+                                              </div>
+
+                                              <div style={{borderBottom : "2px solid black"}}>
+                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+
+                                              <div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="4Bettzimmer"
+                                                                  // checked={roomType === "4Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                      </div>
+                                                      <div className="text-14">0,00 €</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="3Bettzimmer"
+                                                                  // checked={roomType === "3Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">3 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+100,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="2Bettzimmer"
+                                                                  // checked={roomType === "2Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">2 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+230,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="1Bettzimmer"
+                                                                  // checked={roomType === "1Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">1 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+450,00€</div>
+                                                  </div>
+                                                  
+                                              </div>
+                                                 
+                                              </div>
+
+                                              <div>
+                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                <p className="text-right text-15">including taxes and fee</p>
+                                              </div>
+                                            </div>
+                                            </div>
+                                            
+                                            <div className="form_2">
+                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                  <p><span><FaUser /></span><span> <b>2 . Adult Information</b></span></p>
+                                                </div>
+                                                <div className="row y-gap-30 contactForm px-50 py-40 ">
+                                                  
+                                                <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Name
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Gender (dd)
+                                                  </label> 
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Birthday
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-lg-12">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Nationality (dd)
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-12">
+                                                <div className="row y-gap-20 items-center justify-between">
+                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                    <div className="text-14 ">
+                                                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                    </div>
+                                                  </div>
+                              
+                                                </div>
+                                              </div>
+
+                                              <div style={{borderBottom : "2px solid black"}}>
+                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+
+                                              <div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="4Bettzimmer"
+                                                                  // checked={roomType === "4Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                      </div>
+                                                      <div className="text-14">0,00 €</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="3Bettzimmer"
+                                                                  // checked={roomType === "3Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">3 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+100,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="2Bettzimmer"
+                                                                  // checked={roomType === "2Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">2 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+230,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="1Bettzimmer"
+                                                                  // checked={roomType === "1Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">1 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+450,00€</div>
+                                                  </div>
+
+                                                  </div>
+                                              </div>
+
+                                              <div>
+                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                <p className="text-right text-15">including taxes and fee</p>
+                                              </div>
+
+                                                </div> 
+                                            </div>
+
+                                            <div className="form_3">
+                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                  <p><span><FaUser /></span><span> <b>3 . Adult Information</b></span></p>
+                                                </div>
+                                                <div className="row y-gap-30 contactForm px-50 py-40 ">
+                                                  
+                                                <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Name
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Gender (dd)
+                                                  </label> 
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Birthday
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-lg-12">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Nationality (dd)
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-12">
+                                                <div className="row y-gap-20 items-center justify-between">
+                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                    <div className="text-14 ">
+                                                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                    </div>
+                                                  </div>
+                              
+                                                </div>
+                                              </div>
+
+                                              <div style={{borderBottom : "2px solid black"}}>
+                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+
+                                              <div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="4Bettzimmer"
+                                                                  // checked={roomType === "4Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                      </div>
+                                                      <div className="text-14">0,00 €</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="3Bettzimmer"
+                                                                  // checked={roomType === "3Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">3 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+100,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="2Bettzimmer"
+                                                                  // checked={roomType === "2Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">2 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+230,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="1Bettzimmer"
+                                                                  // checked={roomType === "1Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">1 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+450,00€</div>
+                                                  </div>
+
+                                              </div>
+                                              </div>
+
+                                              <div>
+                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                <p className="text-right text-15">including taxes and fee</p>
+                                              </div>
+
+                                                </div> 
+                                            </div>
+
+                                            <div className="form_4">
+                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                  <p><span><FaUser /></span><span> <b>1 . Child Information</b></span></p>
+                                                </div>
+                                                <div className="row y-gap-30 contactForm px-50 py-40 ">
+                                                  
+                                                <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Name
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Gender (dd)
+                                                  </label> 
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Birthday
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-lg-12">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Nationality (dd)
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-12">
+                                                <div className="row y-gap-20 items-center justify-between">
+                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                    <div className="text-14 ">
+                                                    <p className="d-flex justify-content-between"><span>Tour price per child</span> <span>1.339,00 €</span></p>
+                                                    </div>
+                                                  </div>
+                              
+                                                </div>
+                                              </div>
+
+                                              <div style={{borderBottom : "2px solid black"}}>
+                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+
+                                              <div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="4Bettzimmer"
+                                                                  // checked={roomType === "4Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                      </div>
+                                                      <div className="text-14">0,00 €</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="3Bettzimmer"
+                                                                  // checked={roomType === "3Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">3 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+100,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="2Bettzimmer"
+                                                                  // checked={roomType === "2Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">2 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+230,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between pt-1">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="1Bettzimmer"
+                                                                  // checked={roomType === "1Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">1 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+450,00€</div>
+                                                  </div>
+
+                                              </div>
+
+                                              </div>
+
+                                              <div>
+                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                <p className="text-right text-15">including taxes and fee</p>
+                                              </div>
+
+                                                </div> 
+                                            </div>
+
+                                            <div className="form_5">
+                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                  <p><span><FaUser /></span><span> <b>1 . Baby Information</b></span></p>
+                                                </div>
+                                                <div className="row y-gap-30 contactForm px-50 py-40 ">
+                                                  
+                                                <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Name
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Gender (dd)
+                                                  </label> 
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Birthday
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-lg-12">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Nationality (dd)
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-12">
+                                                <div className="row y-gap-20 items-center justify-between">
+                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                    <div className="text-14 ">
+                                                    <p className="d-flex justify-content-between"><span>Tour price per Baby</span> <span>1.339,00 €</span></p>
+                                                    <p className="text-right text-15">including taxes and fee</p>
+                                                    </div>
+                                                  </div>
+                              
+                                                </div>
+                                              </div>
+
+                                            
+
+                                            
+                                                </div> 
+                                            </div>
+
+                                      </div>
+              }
+
+              {bookingStage == 2 &&
               <div >
               <h2 className="text-30 md:text-24 fw-700 mb-30">
                 How do you want to pay?
@@ -236,7 +1019,7 @@ export default function BookingPages() {
                         to the PayPal website to proceed with this transaction.
                       </li>
                       <li>
-                        The total amount you will be charged is: $2,338.01
+                        The total amount you will be charged is:  € 2,338.01
                       </li>
                     </ul>
 
@@ -314,7 +1097,7 @@ export default function BookingPages() {
 
                   <div className="col-md-3 col-6">
                     <div>Total</div>
-                    <div className="text-accent-2">$40.10</div>
+                    <div className="text-accent-2"> € 40.10</div>
                   </div>
 
                   <div className="col-md-3 col-6">
@@ -332,7 +1115,7 @@ export default function BookingPages() {
                 <div className="text-18 fw-500">
                   Westminster Walking Tour & Westminster Abbey Entry
                 </div>
-                <div className="text-18 fw-500">$382</div>
+                <div className="text-18 fw-500"> 182 € </div>
               </div>
 
               <div className="mt-25">
@@ -354,7 +1137,7 @@ export default function BookingPages() {
                 <div className="d-flex items-center justify-between">
                   <div className="fw-500">Tickets:</div>
                   <div className="">
-                    Adult x2 = $98 - Youth x3 = $383 - Children x6 = $394
+                    Adult x2 =  98 € - Youth x3 =  383 € - Children x6 =  394 €
                   </div>
                 </div>
               </div>
@@ -363,7 +1146,7 @@ export default function BookingPages() {
 
               <div className="d-flex item-center justify-between y-gap-5">
                 <div className="text-18 fw-500">Service per booking</div>
-                <div className="text-18 fw-500">$43</div>
+                <div className="text-18 fw-500"> € 43</div>
               </div>
 
               <div className="line mt-30 mb-30"></div>
@@ -372,7 +1155,7 @@ export default function BookingPages() {
                 <div className="text-18 fw-500">
                   Service per person 1 Adult, 2 Youth, 4 Children
                 </div>
-                <div className="text-18 fw-500">$125</div>
+                <div className="text-18 fw-500"> € 125</div>
               </div>
 
               <div className="line mt-30 mb-30"></div>
@@ -381,22 +1164,22 @@ export default function BookingPages() {
                 <div className="col-md-4">
                   <div className="d-flex items-center justify-between">
                     <div className="text-18 fw-500">Subtotal</div>
-                    <div className="text-18 fw-500">$382</div>
+                    <div className="text-18 fw-500"> 182 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="text-18 fw-500">Total</div>
-                    <div className="text-18 fw-500">$23</div>
+                    <div className="text-18 fw-500"> 23 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="text-18 fw-500">Amount Paid</div>
-                    <div className="text-18 fw-500">$3.482</div>
+                    <div className="text-18 fw-500"> 3.482 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="text-18 fw-500">Amount Due</div>
-                    <div className="text-18 fw-500">$43.242</div>
+                    <div className="text-18 fw-500"> 43,242 € </div>
                   </div>
                 </div>
               </div>
@@ -404,26 +1187,18 @@ export default function BookingPages() {
 }
             <div className="container d-flex items-center justify-between w-100 mt-60" style={{maxWidth:'400px'}} >
            
-                      <button onClick={()=>setBookingStage(pre=>pre-1)} className={`button -md -dark-1 bg-accent-1 text-white ${bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `} >
+                      <button onClick={()=>setBookingStage(pre=>pre-1)} className={`button -md -dark-1 bg-accent-1 text-white  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `} >
                        Previous
                         {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                       </button>
 
                     
-                      <button onClick={()=>setBookingStage(pre=>pre+1)} style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white ${bookingStage == 3 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
+                      <button onClick={()=>setBookingStage(pre=>pre+1)} style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white  € {bookingStage == 3 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
                         Next
                         <i className="icon-arrow-top-right text-16 ml-10"></i>
                       </button>
                     </div>
             </div>
-
-           
-
-          
-
-         
-
-           
           </div>
 
           <div className="col-lg-4">
@@ -463,17 +1238,17 @@ export default function BookingPages() {
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Tickets:</div>
-                    <div className="">Adult x2 = $98</div>
+                    <div className="">Adult x2 =  98 €</div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"></div>
-                    <div className="">Youth x3 = $383</div>
+                    <div className="">Youth x3 =  383 €</div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"></div>
-                    <div className="">Children x6 = $394</div>
+                    <div className="">Children x6 =  394 €</div>
                   </div>
                 </div>
 
@@ -482,14 +1257,14 @@ export default function BookingPages() {
                 <div className="y-gap-15">
                   <div className="d-flex justify-between">
                     <div className="fw-500">Service per booking</div>
-                    <div className="">$30.00</div>
+                    <div className="">30,00 € </div>
                   </div>
 
                   <div className="d-flex justify-between">
                     <div className="fw-500">
                       Service per person 1 Adult, 2 Youth, 4 Children
                     </div>
-                    <div className="">$179.00</div>
+                    <div className="">179,00 € </div>
                   </div>
                 </div>
 
@@ -498,22 +1273,22 @@ export default function BookingPages() {
                 <div className="">
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Subtotal</div>
-                    <div className="">$382</div>
+                    <div className=""> 182 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Total</div>
-                    <div className="">$23</div>
+                    <div className=""> 23 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Paid</div>
-                    <div className="">$3.482</div>
+                    <div className=""> 3.482 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Due</div>
-                    <div className="">$43.242</div>
+                    <div className=""> 43,242 € </div>
                   </div>
                 </div>
               </div>

@@ -16,13 +16,10 @@ export default function Home() {
   return (
     <main>
       <Header1 />
-      {/* <Hero1 /> */}
       <Hero7 />
       <FeaturesOne />
-      {/* <DestinationsOne /> */}
       <Tour1 />
       <Banner />
-      {/* <TourTypeOne /> */}
       <TourSlderOne />
       <TestimonialOne />
       <BannerOne />

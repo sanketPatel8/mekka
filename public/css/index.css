@@ -25,30 +25,31 @@
         display: block;
     }
   }
-
+/* 
   .radio-label {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     z-index: 999;
-  }
+    width: 100%;
+  } */
   
-  .radio-label + .form-radio__mark {
+  /* .radio-label + .form-radio__mark {
     position: relative;
     padding-left: 30px;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
-  }
+  } */
   
-  .radio-label + .form-radio__mark:before,
+  /* .radio-label + .form-radio__mark:before,
   .radio-label + .form-radio__mark:after {
     content: '';
     position: absolute;
     border-radius: 50%;
-  }
+  } */
   
-  .radio-label + .form-radio__mark:before {
+  /* .radio-label + .form-radio__mark:before {
     width: 20px;
     height: 20px;
     border: 2px solid #ccc;
@@ -56,22 +57,31 @@
     top: 50%;
     transform: translateY(-50%);
     transition: all 0.3s ease;
-  }
+  } */
   
-  .radio-label + .form-radio__mark:after {
+  /* .radio-label + .form-radio__mark:after {
     width: 10px;
     height: 10px;
-    background: #DAC04F ; /* Color of the dot inside */
+    background: #DAC04F ; 
     left: 5px;
     top: 50%;
     transform: translateY(-50%) scale(0);
     transition: all 0.3s ease;
-  }
+  } */
   
-  .radio-label:checked + .form-radio__mark:before {
-    border-color: #DAC04F ; /* Border color when checked */
-  }
+  /* .radio-label:checked + .form-radio__mark:before {
+    border-color: #DAC04F ;
+  } */
   
-  .radio-label:checked + .form-radio__mark:after {
+  /* .radio-label:checked + .form-radio__mark:after {
     transform: translateY(-50%) scale(1);
+  } */
+
+  .radio-label{
+    cursor: pointer;
+    height: 20px;
   }
+
+
+
+

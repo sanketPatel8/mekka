@@ -131,7 +131,7 @@ export default function TourSlderOne() {
                             <div>
                               From{" "}
                               <span className="text-16 fw-500">
-                              € {elm.price}
+                              {elm.price} €
                               </span>
                             </div>
                           </div>

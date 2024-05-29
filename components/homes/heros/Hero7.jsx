@@ -140,7 +140,7 @@ export default function Hero7() {
                             <br className="md:d-none" />
                             <span style={{fontSize : "4vw", fontWeight : "700" , color : "#4198BA ", textAlign : "center"}}><b>{elm.title.split(",")[1]}</b></span>
                             <br className="md:d-none" />
-                            <span style={{fontSize : "3vw", fontWeight : "700" , color : "black " , textAlign : "right"}}>{elm.title.split(",")[2]}</span>
+                            <span style={{fontSize : "3vw", fontWeight : "700" , color : "white " , textAlign : "right"}}>{elm.title.split(",")[2]}</span>
                           </h1>
                          
                         </div>

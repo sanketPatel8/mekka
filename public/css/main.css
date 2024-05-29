@@ -1234,12 +1234,12 @@ button:focus {
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.contactForm select:focus,
+/* .contactForm select:focus,
 .contactForm input:not([type="range"]):focus,
 .contactForm textarea:focus {
   outline: 1px solid #05073C;
   border: 1px solid #05073C;
-}
+} */
 
 .contactForm textarea {
   height: auto;
@@ -10117,7 +10117,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .layout-pt-xl {
-  padding-top: 120px;
+  padding-top: 70px;
 }
 
 .layout-pb-xl {
@@ -11156,6 +11156,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .shadow-1 {
   box-shadow: 0px 10px 40px 0px #0000000D;
+}
+
+.shadow-3 {
+  box-shadow: 2px 2px 20px 0px #7c7878;
 }
 
 .shadow-2 {
