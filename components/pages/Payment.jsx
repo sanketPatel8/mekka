@@ -213,7 +213,7 @@ Payment instalment is possible.</div>
 
                   <div className="col-md-3 col-6">
                     <div>Total</div>
-                    <div className="text-accent-2"> € 40.10</div>
+                    <div className="text-accent-2">40.10 €</div>
                   </div>
 
                   <div className="col-md-3 col-6">
@@ -464,16 +464,16 @@ Payment instalment is possible.</div>
                   </div>
                 </div>
 
+                <Link href='/booking-pages'>
                 <button className="button -md -outline-accent-1 text-accent-1 mt-30">
-                  Apply
-                  <i className="icon-arrow-top-right text-16 ml-10"></i>
+                  Back
                 </button>
+                </Link>
               </div>
 
               <div className="mt-30">
                 <button className="button -md -info-2 bg-accent-1 text-white col-12">
-                  Complete My Order
-                  <i className="icon-arrow-top-right text-16 ml-10"></i>
+                  Complete Reservation
                 </button>
               </div>
             </div>

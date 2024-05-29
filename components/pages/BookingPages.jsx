@@ -1325,10 +1325,12 @@ useEffect(() => {
               </div>
 
               <div className="mt-30">
+                <Link href='/payment'>
                 <button className="button -md -info-2 bg-accent-1 text-white col-12">
-                  Complete My Order
-                  <i className="icon-arrow-top-right text-16 ml-10"></i>
+                  Complete Reservation 
+                  {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                 </button>
+                </Link>
               </div>
             </div>
           </div>
