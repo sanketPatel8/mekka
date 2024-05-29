@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import { FaUser } from "react-icons/fa";
-import { MdError } from "react-icons/md";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdFlightLand } from "react-icons/md"
@@ -16,19 +15,24 @@ import '@/public/css/index.css';
 
 export default function Payment() {
   const [roomType, setRoomType] = useState("");
-  const [hotelMakka, setHotelMakka] = useState("");
   const [bookingStage, setBookingStage] = useState(1)
   const [adPay, setAdPay] = useState(false);
   const [onlinePayment, setOnlinePayment] = useState(false);
   const [Flight, setFlight] = useState(false);
   const [check, setCheck] = useState(false);
-  const [installMent, setInstallMent] = useState(false);
+  const [InstallMent, setInstallMent] = useState(false);
+
 
 //   const handleChange = (e) => {
 //     const selectedRoomType = e.target.value;
 //     setRoomType(selectedRoomType);
 //     alert(`Selected room type:  € {selectedRoomType}`);
 // };
+
+const checkInstallment = () => {
+     setInstallMent(!InstallMent)
+    //  console.log(InstallMent);
+}
 
 useEffect(() => {
     console.log('Selected room type:', roomType);
@@ -111,8 +115,9 @@ Payment instalment is possible.</div>
                 <div className="d-flex items-center">
                 <div className="form-checkbox">
                     <input
-                    checked={installMent ? true : false}
-                    onChange={() => setInstallMent((pre) => !pre)}
+                    checked={InstallMent ? true : false}
+                    // onChange={() => setInstallMent((pre) => !pre)}
+                    onChange={checkInstallment}
                     type="checkbox"
                     />
                     <div className="form-checkbox__mark">
@@ -131,6 +136,79 @@ Payment instalment is possible.</div>
 
                     {/* <div className="text-14">40 €</div> */}
                 </div>
+
+                                        <div className={`${InstallMent === false ? 'd-none' : 'd-block'}`}>
+                                                <div className="row y-gap-30 contactForm px-50 py-10 ">
+                                                  
+                                                <div className="col-md-12">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    Total Amount
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                                <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    1st Amount
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {/* Birthday */}
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">2nd Amount</label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {/* Birthday */}
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="text" required />
+                                                  <label className="lh-1 text-16 text-light-1">3rd Amount</label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-6">
+                                                <div className="form-input ">
+                                                  <input type="date" required />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {/* Birthday */}
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-md-12">
+                                               <div className="mt-0">
+                                                    <button className="button -md -info-2 bg-accent-1 text-white col-12">
+                                                    Save And Share
+                                                    </button>
+                                               </div>
+                                              </div>
+                                            
+                                                </div> 
+                                            </div>
 
                 <div className="d-flex items-center justify-between py-1">
                 <div className="d-flex items-center">

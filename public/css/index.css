@@ -35,5 +35,52 @@
     height: 35px;
   }
 
+/* Style for the form input container */
+.form-input {
+    position: relative;
+    margin: 20px 0;
+}
+
+/* Style for the select field */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    appearance: none; /* Remove default dropdown arrow */
+    background-color: white;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIuMDE3IDE1LjQxNmwtNi00Ljg5NkwwIDEwaDI0bC02IDUuNDE2eiIvPjwvc3ZnPg==');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+/* Style for the floating label */
+.floating-label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 16px;
+    transition: 0.2s ease all;
+    pointer-events: none;
+}
+
+/* Change the label position when select is focused or has value */
+.form-control:focus + .floating-label,
+.form-control:not([value=""]) + .floating-label {
+    top: 0;
+    left: 10px;
+    font-size: 12px;
+    color: #333;
+}
+
+/* Style for the select field when focused */
+.form-control:focus {
+    border-color: #333;
+}
 
 

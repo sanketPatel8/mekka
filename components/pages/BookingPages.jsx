@@ -17,6 +17,9 @@ export default function BookingPages() {
   const [roomType, setRoomType] = useState("");
   const [hotelMakka, setHotelMakka] = useState("");
   const [bookingStage, setBookingStage] = useState(1)
+  const [gender, setGender] = useState('Gender');
+  const [Nationality, setNationality] = useState('Nationality');
+  const [From, setFrom] = useState('Frankfurt(FRA)');
 
 //   const handleChange = (e) => {
 //     const selectedRoomType = e.target.value;
@@ -44,11 +47,11 @@ useEffect(() => {
               </Link>{" "}
               to manage your bookings on the go!
             </div> */}
-            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-40">
+            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-30">
               Steps to reserve
               </h2>
 
-            <div className="bg-white rounded-12  py-30 px-30 md:py-20 md:px-20 mt-30">
+            <div className="bg-white rounded-12  py-30 px-30 md:py-20 md:px-20 mt-10">
 
               {bookingStage == 1 &&
                                       <div style={{ borderRadius : "20px" , overflow : "hidden" , border : "1px solid black"}} >
@@ -99,14 +102,24 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Gender (dd)
-                                                  </label> 
-                                                </div>
-                                              </div>
+                                          <div className="col-md-6">
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={gender} 
+                                                              onChange={(e) => {setGender(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Select Gender</option> */}
+                                                              <option value="male">Male</option>
+                                                              <option value="female">Female</option>
+                                                              <option value="other">Other</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                              {gender}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-md-6">
                                                 <div className="form-input ">
@@ -117,14 +130,24 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div className="col-lg-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Nationality (dd)
-                                                  </label>
-                                                </div>
-                                              </div>
+                                                  <div className="col-md-6">
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={Nationality} 
+                                                              onChange={(e)=>{setNationality(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Nationality</option> */}
+                                                              <option value="indian">Indian</option>
+                                                              <option value="german">German</option>
+                                                              <option value="canadian">Canadian</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                          {Nationality}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-lg-6">
                                                 <div className="form-input ">
@@ -153,16 +176,23 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
+                                              <div className="col-md-6">
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={From} 
+                                                              onChange={(e)=>{setFrom(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Nationality</option> */}
+                                                              <option value="Frankfurt">Frankfurt(FRA)</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                          {From}
+                                                          </label>
+                                                      </div>
+                                                  </div>  
 
-
-                                              <div className="col-lg-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    From (dd)
-                                                  </label>
-                                                </div>
-                                              </div>
                                             
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
@@ -322,13 +352,23 @@ useEffect(() => {
                                               </div>
 
                                               <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Gender (dd)
-                                                  </label> 
-                                                </div>
-                                              </div>
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={gender} 
+                                                              onChange={(e) => {setGender(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Select Gender</option> */}
+                                                              <option value="male">Male</option>
+                                                              <option value="female">Female</option>
+                                                              <option value="other">Other</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                              {gender}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-md-6">
                                                 <div className="form-input ">
@@ -339,14 +379,24 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div className="col-lg-12">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Nationality (dd)
-                                                  </label>
-                                                </div>
-                                              </div>
+                                              <div className="col-md-6">
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={Nationality} 
+                                                              onChange={(e)=>{setNationality(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Nationality</option> */}
+                                                              <option value="indian">Indian</option>
+                                                              <option value="german">German</option>
+                                                              <option value="canadian">Canadian</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                          {Nationality}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
@@ -506,13 +556,23 @@ useEffect(() => {
                                               </div>
 
                                               <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Gender (dd)
-                                                  </label> 
-                                                </div>
-                                              </div>
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={gender} 
+                                                              onChange={(e) => {setGender(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Select Gender</option> */}
+                                                              <option value="male">Male</option>
+                                                              <option value="female">Female</option>
+                                                              <option value="other">Other</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                              {gender}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-md-6">
                                                 <div className="form-input ">
@@ -523,14 +583,24 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div className="col-lg-12">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Nationality (dd)
-                                                  </label>
-                                                </div>
-                                              </div>
+                                              <div className="col-md-6">
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={Nationality} 
+                                                              onChange={(e)=>{setNationality(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Nationality</option> */}
+                                                              <option value="indian">Indian</option>
+                                                              <option value="german">German</option>
+                                                              <option value="canadian">Canadian</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                          {Nationality}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
@@ -690,13 +760,23 @@ useEffect(() => {
                                               </div>
 
                                               <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Gender (dd)
-                                                  </label> 
-                                                </div>
-                                              </div>
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={gender} 
+                                                              onChange={(e) => {setGender(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Select Gender</option> */}
+                                                              <option value="male">Male</option>
+                                                              <option value="female">Female</option>
+                                                              <option value="other">Other</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                              {gender}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-md-6">
                                                 <div className="form-input ">
@@ -707,14 +787,24 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div className="col-lg-12">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Nationality (dd)
-                                                  </label>
-                                                </div>
-                                              </div>
+                                              <div className="col-md-6">
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={Nationality} 
+                                                              onChange={(e)=>{setNationality(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Nationality</option> */}
+                                                              <option value="indian">Indian</option>
+                                                              <option value="german">German</option>
+                                                              <option value="canadian">Canadian</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                          {Nationality}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
@@ -875,13 +965,23 @@ useEffect(() => {
                                               </div>
 
                                               <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Gender (dd)
-                                                  </label> 
-                                                </div>
-                                              </div>
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={gender} 
+                                                              onChange={(e) => {setGender(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Select Gender</option> */}
+                                                              <option value="male">Male</option>
+                                                              <option value="female">Female</option>
+                                                              <option value="other">Other</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                              {gender}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-md-6">
                                                 <div className="form-input ">
@@ -892,14 +992,24 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div className="col-lg-12">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Nationality (dd)
-                                                  </label>
-                                                </div>
-                                              </div>
+                                              <div className="col-md-6">
+                                                      <div className="form-input">
+                                                          <select 
+                                                              value={Nationality} 
+                                                              onChange={(e)=>{setNationality(e.target.value)}} 
+                                                              required 
+                                                              className="form-control"
+                                                          >
+                                                              {/* <option value="" disabled>Nationality</option> */}
+                                                              <option value="indian">Indian</option>
+                                                              <option value="german">German</option>
+                                                              <option value="canadian">Canadian</option>
+                                                          </select>
+                                                          <label className="lh-1 text-16 text-light-1">
+                                                          {Nationality}
+                                                          </label>
+                                                      </div>
+                                                  </div>
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
