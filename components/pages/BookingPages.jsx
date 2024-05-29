@@ -174,7 +174,7 @@ useEffect(() => {
 
                                               <div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -201,7 +201,7 @@ useEffect(() => {
                                                       <div className="text-14">0,00 €</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -228,7 +228,7 @@ useEffect(() => {
                                                       <div className="text-14">+100,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -255,7 +255,7 @@ useEffect(() => {
                                                       <div className="text-14">+230,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -358,7 +358,7 @@ useEffect(() => {
 
                                               <div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -385,7 +385,7 @@ useEffect(() => {
                                                       <div className="text-14">0,00 €</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -412,7 +412,7 @@ useEffect(() => {
                                                       <div className="text-14">+100,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -439,7 +439,7 @@ useEffect(() => {
                                                       <div className="text-14">+230,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -542,7 +542,7 @@ useEffect(() => {
 
                                               <div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -569,7 +569,7 @@ useEffect(() => {
                                                       <div className="text-14">0,00 €</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -596,7 +596,7 @@ useEffect(() => {
                                                       <div className="text-14">+100,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -623,7 +623,7 @@ useEffect(() => {
                                                       <div className="text-14">+230,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -726,7 +726,7 @@ useEffect(() => {
 
                                               <div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -753,7 +753,7 @@ useEffect(() => {
                                                       <div className="text-14">0,00 €</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -780,7 +780,7 @@ useEffect(() => {
                                                       <div className="text-14">+100,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
@@ -807,7 +807,7 @@ useEffect(() => {
                                                       <div className="text-14">+230,00€</div>
                                                   </div>
 
-                                                  <div className="d-flex items-center justify-between pt-1">
+                                                  <div className="d-flex items-center justify-between radio_hight">
                                                       <div className="d-flex items-center">
                                                           <div className="form-radio">
                                                               <input
