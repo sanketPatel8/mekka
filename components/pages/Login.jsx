@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import React from "react";
+import { FaFacebookF } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
 
 export default function Login() {
   return (
@@ -82,18 +85,29 @@ export default function Login() {
                 <div className="line__word fw-500">OR</div>
               </div>
 
-              <div className="row y-gap-15">
+               <div className="row y-gap-15">
                 <div className="col">
-                  <button className="button -md -outline-blue-1 text-blue-1 col-12">
-                    <i className="icon-facebook mr-10"></i>
+                  <button
+                    type="submit"
+                    className="button -md -outline-blue-1 text-blue-1 col-12"
+                  >
+                   <FaFacebookF size={15} className="mx-1"/>
                     Continue Facebook
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
-                    <i className="icon-google mr-10"></i>
+                  <FaGoogle size={15} className="mx-1" />
                     Continue Google
+                  </button>
+                </div>
+              </div><br />
+              <div className="row y-gap-15">
+                <div className="col">
+                  <button className="button -md -outline-dark-1 text-dark-1 col-12">
+                  <FaApple size={15} className="mx-1" />
+                    Sign in With Apple
                   </button>
                 </div>
               </div>
