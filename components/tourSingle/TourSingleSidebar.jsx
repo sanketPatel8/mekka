@@ -51,7 +51,7 @@ export default function TourSingleSidebar() {
           <div className="text-14">
             Adult (18+ years){" "}
             <span className="fw-500">
-              €{(prices.adultPrice * adultNumber).toFixed(2)}
+              {(prices.adultPrice * adultNumber).toFixed(2)} €
             </span>
           </div>
 
@@ -82,7 +82,7 @@ export default function TourSingleSidebar() {
           <div className="text-14">
             Youth (13-17 years){" "}
             <span className="fw-500">
-              €{(prices.youthPrice * youthNumber).toFixed(2)}
+              {(prices.youthPrice * youthNumber).toFixed(2)} €
             </span>
           </div>
 
@@ -113,7 +113,7 @@ export default function TourSingleSidebar() {
           <div className="text-14">
             Children (0-12 years){" "}
             <span className="fw-500">
-              €{(prices.childrenPrice * childrenNumber).toFixed(2)}
+              {(prices.childrenPrice * childrenNumber).toFixed(2)} €
             </span>
           </div>
 
