@@ -198,14 +198,6 @@ Payment instalment is possible.</div>
                                                   </label>
                                                 </div>
                                               </div>
-
-                                              <div className="col-md-12">
-                                               <div className="mt-0">
-                                                    <button className="button -md -info-2 bg-accent-1 text-white col-12">
-                                                    Save And Share
-                                                    </button>
-                                               </div>
-                                              </div>
                                             
                                                 </div> 
                                             </div>

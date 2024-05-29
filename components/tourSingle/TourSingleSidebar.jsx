@@ -143,9 +143,7 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel selection</h5>
-
-      <h6 className="text-12 fw-500 mb-20 mt-20"><b>Hotel For Makka</b></h6>
+      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Makka</h5>
 
       <div className="d-flex items-center justify-between">
         <div className="d-flex items-center">
@@ -235,7 +233,7 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h6 className="text-12 fw-500 mb-20 mt-20"><b>Hotel For Madina</b></h6>
+      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Madina</h5>
 
       <div className="d-flex items-center justify-between">
         <div className="d-flex items-center">

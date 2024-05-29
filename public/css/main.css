@@ -9733,10 +9733,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: -15px;
 }
 
-.y-gap-30 > * {
+/* .y-gap-30 > * {
   padding-top: 15px;
   padding-bottom: 15px;
-}
+} */
 
 .x-gap-40 {
   margin-left: -20px;

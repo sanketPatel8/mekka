@@ -1,15 +1,16 @@
 "use client";
 
-import { sidebarItemsAgentDB } from "@/data/dashboard";
+import { sidebarItems, sidebarItemsCustomerDB } from "@/data/dashboard";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-export default function SidebarAgent({ setSideBarOpen }) {
-  const pathname = usePathname();
+const CustomerDBsideBar = () => {
+    const pathname = usePathname();
   return (
-    <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
+    <div>
+        <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
       <div className="dashboard__sidebar_header">
         <span
           onClick={() => setSideBarOpen(false)}
@@ -29,7 +30,7 @@ export default function SidebarAgent({ setSideBarOpen }) {
       </div>
 
       <div className="sidebar -dashboard text-black">
-        {sidebarItemsAgentDB.map((elm, i) => (
+        {sidebarItemsCustomerDB.map((elm, i) => (
           <div
             key={i}
             className={`sidebar__item ${
@@ -44,5 +45,8 @@ export default function SidebarAgent({ setSideBarOpen }) {
         ))}
       </div>
     </div>
-  );
+    </div>
+  )
 }
+
+export default CustomerDBsideBar

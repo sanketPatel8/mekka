@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function TourSlider() {
   return (
-    <section className="layout-pt-xl layout-pb-xl">
+    <section className="">
       <div className="container">
         <div className="row">
           <div className="col-auto">

@@ -246,7 +246,7 @@ export default function SingleFour({ tour }) {
             </div>
 
           </div>
-            <div>
+            <div className="py-40">
             <hr />
             </div>
         </div>

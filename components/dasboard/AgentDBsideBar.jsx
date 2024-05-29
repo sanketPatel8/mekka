@@ -6,10 +6,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-export default function SidebarAgent({ setSideBarOpen }) {
-  const pathname = usePathname();
+const AgentDBsideBar = ({ setSideBarOpen }) => {
+    const pathname = usePathname();
   return (
-    <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
+    <div>
+        <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
       <div className="dashboard__sidebar_header">
         <span
           onClick={() => setSideBarOpen(false)}
@@ -44,5 +45,8 @@ export default function SidebarAgent({ setSideBarOpen }) {
         ))}
       </div>
     </div>
-  );
+    </div>
+  )
 }
+
+export default AgentDBsideBar

@@ -1301,11 +1301,11 @@ useEffect(() => {
               </div>
             </div>
 }
-            <div className="container d-flex items-center justify-between w-100 mt-60" style={{maxWidth:'400px'}} >
+            {/* <div className="container d-flex items-center justify-between w-100 mt-60" style={{maxWidth:'400px'}} >
            
                       <button onClick={()=>setBookingStage(pre=>pre-1)} className={`button -md -dark-1 bg-accent-1 text-white  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `} >
                        Previous
-                        {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
+                        <i className="icon-arrow-top-right text-16 ml-10"></i>
                       </button>
 
                     
@@ -1313,7 +1313,7 @@ useEffect(() => {
                         Next
                         <i className="icon-arrow-top-right text-16 ml-10"></i>
                       </button>
-                    </div>
+            </div> */}
             </div>
           </div>
 
