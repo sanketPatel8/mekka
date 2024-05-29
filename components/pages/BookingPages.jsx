@@ -4,6 +4,12 @@ import Link from "next/link";
 import React, { useState, useEffect } from 'react';
 import { FaUser } from "react-icons/fa";
 import { MdError } from "react-icons/md";
+import { FaTelegramPlane } from "react-icons/fa";
+import { MdFlightTakeoff } from "react-icons/md";
+import { MdFlightLand } from "react-icons/md"
+import { TbWorld } from "react-icons/tb";
+import { FaLuggageCart } from "react-icons/fa";
+import { FaHotel } from "react-icons/fa6";
 import '@/public/css/index.css';
 
 
@@ -27,7 +33,7 @@ useEffect(() => {
       <div className="container">
         <div className="row">
           <div className="col-lg-8">
-            <div className="bg-white rounded-12 shadow-2 py-15 px-20">
+            {/* <div className="bg-white rounded-12 shadow-2 py-15 px-20">
               <Link href="/login" className="text-accent-1">
                 Sign in
               </Link>{" "}
@@ -37,15 +43,15 @@ useEffect(() => {
                 register
               </Link>{" "}
               to manage your bookings on the go!
-            </div>
-            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-10">
+            </div> */}
+            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-40">
               Steps to reserve
               </h2>
 
             <div className="bg-white rounded-12  py-30 px-30 md:py-20 md:px-20 mt-30">
 
               {bookingStage == 1 &&
-                                      <div style={{ borderRadius : "20px" , overflow : "hidden"}} className="shadow-3">
+                                      <div style={{ borderRadius : "20px" , overflow : "hidden" , border : "1px solid black"}} >
                                     
                                             <div className="form_1" >
                                             <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
@@ -1204,71 +1210,76 @@ useEffect(() => {
           <div className="col-lg-4">
             <div className="pl-50 md:pl-0">
               <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20">
-                <h2 className="text-20 fw-500">Your booking details</h2>
+                <h2 className="text-20 fw-500">Reservation Details</h2>
 
                 <div className="d-flex mt-30">
                      <Image
                     width={90}
                     height={84}
-                    src="/img/tourSingle/booking/1.png"
+                    src="/img/tourCards/1/13.jpeg"
                     alt="image"
                   />
                   <div className="ml-20">
-                    Zipline 18 Platform and ATV Adventure Tour From Phuket
+                  Umrah - SOMMER
                   </div>
                 </div>
 
                 <div className="line mt-20 mb-20"></div>
 
-                <div className="">
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Date:</div>
-                    <div className="">06 April 2023</div>
+                <div className="px-1">
+                  <div className="d-flex items-center justify-content-space-arround ">
+                    <div className="mr-5"><FaTelegramPlane size={25} color="#DAC04F"/></div>
+                    <div className="text-start">Airline: Saudia, Turkish Airlines</div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Time:</div>
-                    <div className="">10:00 am</div>
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><MdFlightTakeoff size={25} color="#DAC04F" /></div>
+                    <div className="text-start">From: Berlin (BER)</div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Duration:</div>
-                    <div className="">12 Days</div>
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><MdFlightLand  htTakeoff size={25} color="#DAC04F" /></div>
+                    <div className="text-start">Ankunft: Medina</div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Tickets:</div>
-                    <div className="">Adult x2 =  98 €</div>
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><MdFlightTakeoff size={25} color="#DAC04F" /></div>
+                    <div className="text-start">Date of departure: 08.09.2024</div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"></div>
-                    <div className="">Youth x3 =  383 €</div>
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><MdFlightLand   size={25} color="#DAC04F" /></div>
+                    <div className="text-start">Date of return flight: 16.09.2024</div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"></div>
-                    <div className="">Children x6 =  394 €</div>
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><TbWorld  size={25} color="#DAC04F" /></div>
+                    <div className="text-start">Offered languages: German, Turkish, Arabic</div>
                   </div>
+
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><FaLuggageCart   size={25} color="#DAC04F" /></div>
+                    <div className="text-start">max. Gepäck pro Person: 30 kg</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><FaHotel size={20} color="#DAC04F" /></div>
+                    <div className="text-start">Makka - (hotel name)</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><FaUser size={20} color="#DAC04F" /></div>
+                    <div className="text-start flex items-center justify-between"><span> 1 Adult / Multi-bed Room - </span><span><b>1.339,00 €</b></span></div>
+                  </div>
+
+                  <p>(The standard offer may include a multi-bed room.)</p>
+
+                 
                 </div>
 
                 <div className="line mt-20 mb-20"></div>
 
-                <div className="y-gap-15">
-                  <div className="d-flex justify-between">
-                    <div className="fw-500">Service per booking</div>
-                    <div className="">30,00 € </div>
-                  </div>
-
-                  <div className="d-flex justify-between">
-                    <div className="fw-500">
-                      Service per person 1 Adult, 2 Youth, 4 Children
-                    </div>
-                    <div className="">179,00 € </div>
-                  </div>
-                </div>
-
-                <div className="line mt-20 mb-20"></div>
+                {/* <div className="line mt-20 mb-20"></div> */}
 
                 <div className="">
                   <div className="d-flex items-center justify-between">
@@ -1305,10 +1316,12 @@ useEffect(() => {
                   </div>
                 </div>
 
+                <Link href='/payment'>
                 <button className="button -md -outline-accent-1 text-accent-1 mt-30">
                   Apply
                   <i className="icon-arrow-top-right text-16 ml-10"></i>
                 </button>
+                </Link>
               </div>
 
               <div className="mt-30">

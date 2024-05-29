@@ -180,67 +180,6 @@ export default function Sidebar2() {
           </div>
         </div>
 
-        {/* <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item js-accordion-item-active ${
-                ddActives.includes("language") ? "is-active" : ""
-              } `}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((pre) =>
-                    pre.includes("language")
-                      ? [...pre.filter((elm) => elm != "language")]
-                      : [...pre, "language"],
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">Language</h5>
-
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
-                </div>
-              </div>
-
-              <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("language") ? { maxHeight: "300px" } : {}
-                }
-              >
-                <div className="pt-15">
-                  <div className="d-flex flex-column y-gap-15">
-                    {languages.map((elm, i) => (
-                      <div key={i}>
-                        <div className="d-flex items-center">
-                          <div className="form-checkbox ">
-                            <input type="checkbox" name="name" />
-                            <div className="form-checkbox__mark">
-                              <div className="form-checkbox__icon">
-                                <Image
-                                  width="10"
-                                  height="8"
-                                  src="/img/icons/check.svg"
-                                  alt="icon"
-                                />
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="lh-11 ml-10">{elm}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
             <div
