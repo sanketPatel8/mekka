@@ -459,6 +459,13 @@ Payment instalment is possible.</div>
                   <div className="line mt-5 mb-5"></div>
 
                   <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5"><FaHotel size={20} color="#DAC04F" /></div>
+                    <div className="text-start">madina - (hotel name)</div>
+                  </div>
+
+                  <div className="line mt-5 mb-5"></div>
+
+                  <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaUser size={20} color="#DAC04F" /></div>
                     <div className="text-start flex items-center justify-between"><span> 1 Adult / Multi-bed Room - </span><span><b>1.339,00 €</b></span></div>
                   </div>
