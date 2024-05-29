@@ -15,45 +15,45 @@ export default function HeaderSerch({ white }) {
     {
       id: 1, // Unique ID
       iconClass: "icon-pin text-20",
-      title: "Phuket",
-      location: "Thailand, Asia",
+      title: "Alle",
+      location: "Saudi Arabia",
     },
     {
       id: 2, // Unique ID
-      iconClass: "icon-price-tag text-20",
-      title: "London Day Trips",
-      location: "England",
+      iconClass: "icon-pin text-20",
+      title: "hajj",
+      location: "Saudi Arabia",
     },
     {
       id: 3, // Unique ID
-      iconClass: "icon-flag text-20",
-      title: "Europe",
-      location: "Country",
+      iconClass: "icon-pin text-20",
+      title: "umrah",
+      location: "Saudi Arabia",
     },
     {
       id: 7, // Unique ID
       img: `/img/misc/icon.png`,
-      title: "Centipede Tour - Guided Arizona Desert Tour by ATV",
-      location: "Country",
+      title: "cultural-trips",
+      location: "Saudi Arabia",
     },
-    {
-      id: 4, // Unique ID
-      iconClass: "icon-pin text-20",
-      title: "Istanbul",
-      location: "Turkey",
-    },
-    {
-      id: 5, // Unique ID
-      iconClass: "icon-pin text-20",
-      title: "Berlin",
-      location: "Germany, Europe",
-    },
-    {
-      id: 6, // Unique ID
-      iconClass: "icon-pin text-20",
-      title: "London",
-      location: "England, Europe",
-    },
+    // {
+    //   id: 4, // Unique ID
+    //   iconClass: "icon-pin text-20",
+    //   title: "Istanbul",
+    //   location: "Turkey",
+    // },
+    // {
+    //   id: 5, // Unique ID
+    //   iconClass: "icon-pin text-20",
+    //   title: "Berlin",
+    //   location: "Germany, Europe",
+    // },
+    // {
+    //   id: 6, // Unique ID
+    //   iconClass: "icon-pin text-20",
+    //   title: "London",
+    //   location: "England, Europe",
+    // },
   ];
   const dropDownContainer = useRef();
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function HeaderSerch({ white }) {
           ref={inputRef}
           onClick={() => setDdActive((pre) => !pre)}
           type="text"
-          placeholder="Search destinations or activities"
+          placeholder="Search Latest Package"
           className={`js-search ${white ? "text-white" : ""}`}
         />
 
