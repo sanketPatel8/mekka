@@ -132,7 +132,7 @@ Payment instalment is possible.</div>
                     {/* <div className="text-14">40 €</div> */}
                 </div>
 
-                <div className="d-flex items-center justify-between py-3">
+                <div className="d-flex items-center justify-between py-1">
                 <div className="d-flex items-center">
                 <div className="form-checkbox">
                     <input
@@ -155,7 +155,7 @@ Payment instalment is possible.</div>
                 </div>
                 </div>
 
-                <div className="d-flex items-center justify-between py-3">
+                <div className="d-flex items-center justify-between py-1">
                 <div className="d-flex items-center">
                 <div className="form-checkbox">
                     <input
@@ -396,8 +396,8 @@ Payment instalment is possible.</div>
 
                   <div className="row">
                     <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-7">4 Bettzimmer (Standard)</p>
-                    <p className="col-lg-3">+0,00 € x1</p>
+                    <p className="col-lg-6">4 Bettzimmer (Standard)</p>
+                    <p className="col-lg-4">+0,00 € x1</p>
                     <p className="col-lg-1">0,0€</p>
                   </div>
 
