@@ -92,7 +92,7 @@ export default function Hero1() {
                           <i className="text-20 icon-pin"></i>
                         </div>
                         <div className="searchFormItem__content">
-                          <h5>Where</h5>
+                          <h5>Alle</h5>
                           <div className="js-select-control-chosen">
                             {location ? location : "Search destinations"}
                           </div>
@@ -132,32 +132,6 @@ export default function Hero1() {
                     </div>
 
                     <div className="searchFormItem js-select-control js-form-dd">
-                      <div
-                        className="searchFormItem__button"
-                        onClick={() =>
-                          setCurrentActiveDD((pre) =>
-                            pre == "tourType" ? "" : "tourType",
-                          )
-                        }
-                      >
-                        <div className="searchFormItem__icon size-50 rounded-12 border-1 flex-center">
-                          <i className="text-20 icon-flag"></i>
-                        </div>
-                        <div className="searchFormItem__content">
-                          <h5>Alle</h5>
-                          <div className="js-select-control-chosen">
-                            {tourType ? tourType : "All tour"}
-                          </div>
-                        </div>
-                      </div>
-
-                      <TourType
-                        setTourType={setTourType}
-                        active={currentActiveDD === "tourType"}
-                      />
-                    </div>
-
-                    <div className="searchFormItem js-select-control js-form-dd">
                  <div
                   className="searchFormItem__button"
                   onClick={() =>
@@ -165,20 +139,22 @@ export default function Hero1() {
                       pre == "tourType" ? "" : "tourType",
                     )
                   }
+
+                  
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-flag"></i>
                   </div>
                   <div className="searchFormItem__content">
                     <h5>Anzahl Reisende</h5>
-                    {/* <div className="js-select-control-chosen">
+                    <div className="js-select-control-chosen">
                       {tourType ? tourType : "All tour"}
-                    </div> */}
+                    </div>
                   </div>
                 </div>
-                
                 <NumberOfTravellers  setTourType={setTourMambar} active={TourLocation === "tourType"} />
-                    </div>
+              </div>
+
                   </div>
 
                   <div className="searchForm__button">
