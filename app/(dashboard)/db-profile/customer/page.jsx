@@ -42,29 +42,13 @@ export default function Profile() {
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 
               <div className="contactForm row y-gap-30">
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <div className="form-input ">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">Name</label>
                   </div>
                 </div>
-
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      Last Name
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input ">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Phone</label>
-                  </div>
-                </div>
-
+                
                 <div className="col-md-6">
                   <div className="form-input ">
                     <input type="text" required />
@@ -74,10 +58,29 @@ export default function Profile() {
 
                 <div className="col-md-6">
                   <div className="form-input ">
-                    <textarea required rows="8"></textarea>
-                    <label className="lh-1 text-16 text-light-1">Info</label>
+                    <input type="text" required />
+                    <label className="lh-1 text-16 text-light-1">Phone</label>
                   </div>
                 </div>
+                
+                <div className="col-md-6">
+                  <div className="form-input ">
+                    <input type="text" required />
+                    <label className="lh-1 text-16 text-light-1">
+                      Location
+                    </label>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-input ">
+                    <input type="date" required />
+                    <label className="lh-1 text-16 text-light-1">
+                      {/* Location */}
+                    </label>
+                  </div>
+                </div>
+
 
                 <div className="col-12">
                   <h4 className="text-18 fw-500 mb-20">Your photo</h4>
@@ -128,7 +131,7 @@ export default function Profile() {
                         />
                       </div>
                     )}
-                    {image2 ? (
+                    {/* {image2 ? (
                       <div className="col-auto my-3">
                         <div className="relative">
                           <Image
@@ -173,7 +176,7 @@ export default function Profile() {
                           style={{ display: "none" }}
                         />
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   <div className="text-14 mt-20">
