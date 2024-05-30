@@ -8,8 +8,6 @@ const RoadMap = () => {
     <>
       <div>
         <h4>Hotel for Makkah</h4>
-        <br />
-        <br />
         <p>
           Dieses elegante Hotel befindet sich in einem Hochhaus an einer
           belebten Einkaufsstraße, 21 Gehminuten von der Großen Moschee von
@@ -59,7 +57,6 @@ const RoadMap = () => {
       <br />
       <div>
         <h2>Hotel for Madina</h2>
-        <br />
         <p>
           In idealer Lage in Al Madinah bietet das View Al Madinah Hotel einen
           Concierge-Service und kostenfreie Privatparkplätze. Die Unterkunft

@@ -197,7 +197,7 @@ export default function Sidebar2() {
                   )
                 }
               >
-                <h5 className="text-18 fw-500">Rating</h5>
+                <h5 className="text-18 fw-500">Tour-Agent-Rating</h5>
 
                 <div className="accordion__icon flex-center">
                   <i className="icon-chevron-down"></i>

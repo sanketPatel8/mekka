@@ -109,7 +109,7 @@ export const tourDataTwo = [
       "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
-    duration: `2 Days 1 Nights`,
+    duration: `3 Days 2 Nights`,
     description:
       "Mekka Hotel: ALEBAA HOTEL",
     description2:
@@ -139,7 +139,7 @@ export const tourDataTwo = [
       "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
-    duration: `2 Days 1 Nights`,
+    duration: `3 Days 2 Nights`,
     description:
       "Mekka Hotel: ALEBAA HOTEL",
     description2:
@@ -169,7 +169,7 @@ export const tourDataTwo = [
       "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
-    duration: `2 Days 1 Nights`,
+    duration: `3 Days 2 Nights`,
     description:
       "Mekka Hotel: ALEBAA HOTEL",
     description2:
@@ -199,7 +199,7 @@ export const tourDataTwo = [
       "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
-    duration: `2 Days 1 Nights`,
+    duration: `3 Days 2 Nights`,
     description:
       "Mekka Hotel: ALEBAA HOTEL",
     description2:
@@ -229,7 +229,7 @@ export const tourDataTwo = [
       "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
-    duration: `2 Days 1 Nights`,
+    duration: `3 Days 2 Nights`,
     description:
       "Mekka Hotel: ALEBAA HOTEL",
     description2:
@@ -259,7 +259,7 @@ export const tourDataTwo = [
       "Umrah - SOMMER",
     rating: 4.8,
     ratingCount: 269,
-    duration: `2 Days 1 Nights`,
+    duration: `3 Days 2 Nights`,
     description:
       "Mekka Hotel: ALEBAA HOTEL",
     description2:

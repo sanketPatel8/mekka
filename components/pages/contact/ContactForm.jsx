@@ -15,7 +15,7 @@ export default function ContactForm() {
                 onSubmit={(e) => e.preventDefault()}
                 className="row y-gap-30"
               >
-                <div className="col-md-6">
+                <div className="col-md-6 ">
                   <input type="text" placeholder="Name" required />
                 </div>
                 <div className="col-md-6">

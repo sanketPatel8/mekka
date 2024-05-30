@@ -6,7 +6,7 @@ export const toursTypes = [
 ];
 
 export const durations = [
-  "5 star",
+  "5 Star",
   "4 Star",
   "3 Star",
 ];

@@ -36,7 +36,7 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Release date</div>
+            <div className="lh-16">Start Date</div>
             <div className="text-14 text-light-2 lh-16">23 Apr 2024</div>
           </div>
         </div>

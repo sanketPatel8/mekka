@@ -38,7 +38,7 @@ export default function ArticlesThree() {
           className="row y-gap-30 pt-40 sm:pt-20"
         >
           {blogs.slice(0, 3).map((elm, i) => (
-            <div key={i} className="col-lg-4 col-md-6">
+            <div key={i} className="col-lg-4 col-md-6 my-3">
               <Link
                 href={`/blog-single/${elm.id}`}
                 className="blogCard -type-1"

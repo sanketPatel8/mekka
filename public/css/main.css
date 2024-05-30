@@ -1227,6 +1227,7 @@ button:focus {
 .contactForm textarea {
   font-size: 15px;
   line-height: 1.4;
+  margin: 1rem 0rem;
   height: 55px;
   border: 1px solid #E7E6E6;
   border-radius: 12px;
@@ -1266,7 +1267,7 @@ button:focus {
 
 .contactForm .form-input label {
   position: absolute;
-  top: 20px;
+  top: 35px;
   left: 15px;
   color: black;
   z-index: 10;

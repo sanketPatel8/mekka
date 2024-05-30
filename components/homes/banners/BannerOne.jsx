@@ -19,7 +19,7 @@ export default function BannerOne() {
               >
                 Get 5% off your 1st
                 <br className="lg:d-none" />
-                app booking
+                booking
               </h2>
 
               <p

@@ -73,13 +73,15 @@ export default function Login() {
                 </div>
               </div>
 
+              <Link href='/db-main/customer'>
               <button
                 type="submit"
                 className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
               >
                 Log In
-                <i className="icon-arrow-top-right ml-10"></i>
               </button>
+
+              </Link>
 
               <div className="relative line mt-50 mb-30">
                 <div className="line__word fw-500">OR</div>

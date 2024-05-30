@@ -11,7 +11,7 @@ export default function PageHeader() {
         </div>
 
         <div className="col-auto">
-          <div className="text-14">THE 10 BEST Phuket Tours & Excursions</div>
+          <div className="text-14">THE 10 BEST Phuket Tours & Excursions</div>  
         </div>
       </div>
     </div>

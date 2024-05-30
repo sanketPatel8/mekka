@@ -5,6 +5,7 @@ import Calender from "../common/dropdownSearch/Calender";
 import Image from "next/image";
 import { times } from "@/data/tourSingleContent";
 import "@/public/css/index.css"
+import Link from "next/link";
 
 export default function TourSingleSidebar() {
   const prices = {
@@ -174,7 +175,7 @@ export default function TourSingleSidebar() {
       </div>
 
       <div className="d-flex justify-between mt-1">
-        <div className="d-flex">
+        <div className="d-flex items-center">
           <div className="form-radio mt-5">
             <input
               type="radio"
@@ -264,7 +265,7 @@ export default function TourSingleSidebar() {
       </div>
 
       <div className="d-flex justify-between mt-1">
-        <div className="d-flex">
+        <div className="d-flex items-center">
           <div className="form-radio mt-5">
             <input
               type="radio"
@@ -323,7 +324,7 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">Possible additional services per person:</h5>
+      {/* <h5 className="text-18 fw-500 mb-20 mt-20">Possible additional services per person:</h5>
 
       <div className="d-flex items-center justify-between pt-1">
         <div className="d-flex items-center">
@@ -437,7 +438,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">+450,00€</div>
       </div>
 
-      <hr />
+      <hr /> */}
 
       <h5 className="text-18 fw-500 mb-20 mt-20">Flight Booking</h5>
 
@@ -460,7 +461,7 @@ export default function TourSingleSidebar() {
               </div>
             </div>
           </div>
-          <div className="ml-10">Is flight included?</div>
+          <div className="ml-10">Exclude Flight Booking</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -484,10 +485,12 @@ export default function TourSingleSidebar() {
         </div>
       </div>
 
-      <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
-        Book Now
-        <i className="icon-arrow-top-right ml-10"></i>
-      </button>
+      <Link href='/booking-pages'>
+          <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
+            Book Now
+            <i className="icon-arrow-top-right ml-10"></i>
+          </button>
+      </Link>
     </div>
   );
 }

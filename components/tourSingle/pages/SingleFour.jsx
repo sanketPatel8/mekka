@@ -20,7 +20,7 @@ export default function SingleFour({ tour }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   return (
     <>
-      <section className="">
+      <section className="py-30 mt-80">
         <div className="container">
           <MainInformation tour={tour} />
 
@@ -32,10 +32,10 @@ export default function SingleFour({ tour }) {
         <div className="container">
           <div className="row y-gap-30 justify-between">
             <div className="col-lg-8">
-              <div className="row y-gap-20 justify-between items-center layout-pb-md">
+              <div className="row y-gap-2 justify-between items-center layout-pb-sm">
                 <OthersInformation />
               </div>
-              <div className="row y-gap-20 justify-between items-center layout-pb-md">
+              <div className="row y-gap-20 justify-between items-center layout-pb-sm">
                 <OtherInformation2 />
               </div>
 
@@ -224,7 +224,7 @@ export default function SingleFour({ tour }) {
                     >
                       <div className="pt-20">
                         {/* <RoadMap /> */}
-                        <Extras />
+                        {/* <Extras /> */}
                       </div>
                     </div>
                   </div>

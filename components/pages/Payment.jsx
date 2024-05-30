@@ -16,23 +16,31 @@ import '@/public/css/index.css';
 export default function Payment() {
   const [roomType, setRoomType] = useState("");
   const [bookingStage, setBookingStage] = useState(1)
-  const [adPay, setAdPay] = useState(false);
-  const [onlinePayment, setOnlinePayment] = useState(false);
   const [Flight, setFlight] = useState(false);
-  const [check, setCheck] = useState(false);
+  const [Check, setCheck] = useState(false);
   const [InstallMent, setInstallMent] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false); 
+  const [selectedOption, setSelectedOption] = useState("");
 
 
-//   const handleChange = (e) => {
-//     const selectedRoomType = e.target.value;
-//     setRoomType(selectedRoomType);
-//     alert(`Selected room type:  € {selectedRoomType}`);
-// };
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
 
 const checkInstallment = () => {
      setInstallMent(!InstallMent)
     //  console.log(InstallMent);
 }
+
+// const handleDateChange = (e) => {
+//   setSelectedDate(e.target.value);
+//   setIsDisabled(true); 
+// };
 
 useEffect(() => {
     console.log('Selected room type:', roomType);
@@ -44,7 +52,7 @@ useEffect(() => {
         <div className="row">
           <div className="col-lg-7">
 
-            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-40">
+            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-30">
             Payment options
               </h2>
 
@@ -52,47 +60,160 @@ useEffect(() => {
 
               {bookingStage == 1 &&
             <div style={{ borderRadius : "10px" , overflow : "hidden" , border : "1px solid black"}} className="" >
-             <p className="text-center py-3 bg -color-blue-1" style={{backgroundColor : "#163749" , color:"white"}}><b>Payment Methods</b></p>
+             <p className="text-center py-3 bg -color-blue-1" style={{backgroundColor : "#4198BA" , color:"white"}}><b>Payment Methods</b></p>
             <div className="px-3">
 
-                <div className="d-flex items-center justify-between py-3">
-                <div className="d-flex items-center">
-                <div className="form-checkbox">
-                    <input
-                    checked={adPay ? true : false}
-                    onChange={() => setAdPay((pre) => !pre)}
-                    type="checkbox"
-                    />
-                    <div className="form-checkbox__mark">
-                    <div className="form-checkbox__icon">
-                        <Image
-                        width="10"
-                        height="8"
-                        src="/img/icons/check.svg"
-                        alt="icon"
-                        />
-                    </div>
-                    </div>
-                </div>
-                <div className="ml-10"> Payment in advance (you will also find these bank details in your reservation confirmation)
-Payment instalment is possible.</div>
-                </div>
-                </div>
+            <div className="d-flex items-center justify-between py-3">
+        <div className="d-flex items-center">
+          <div className="form-checkbox">
+            <input
+              name="payment"
+              checked={selectedOption === "adPay"}
+              onChange={() => handleOptionChange("adPay")}
+              type="radio"
+            />
+            <div className="form-checkbox__mark">
+              <div className="form-checkbox__icon">
+                <Image
+                  width="10"
+                  height="8"
+                  src="/img/icons/check.svg"
+                  alt="icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="ml-10">
+            Payment in advance (you will also find these bank details in your
+            reservation confirmation) Payment instalment is possible.
+          </div>
+        </div>
+            </div>
 
-                <div className="p-2" style={{backgroundColor:'#80808075' , display:"inline-block"}}>
-                    <p><span><b>Kontoinhaber:</b></span>Mekka Booking GmbH</p>
-                    <p><span><b>IBAN:</b></span>DE71 5125 0000 0002 2282 11</p>
-                    <p><span><b>BIC:</b></span>HELADEF1TSK</p>
-                    <p><span><b>Bank:</b></span>Taunus Sparkasse</p>
-                </div>
+      <div className="p-2" style={{ backgroundColor: "#80808075", display: "inline-block" }}>
+          <p><span><b>Kontoinhaber:</b></span>Mekka Booking GmbH</p>
+          <p><span><b>IBAN:</b></span>DE71 5125 0000 0002 2282 11</p>
+          <p><span><b>BIC:</b></span>HELADEF1TSK</p>
+          <p><span><b>Bank:</b></span>Taunus Sparkasse</p>
+        </div>
 
-                <div className="d-flex items-center justify-between py-3">
+      <div className="d-flex items-center justify-between py-3">
+        <div className="d-flex items-center">
+          <div className="form-checkbox">
+            <input
+              name="payment"
+              checked={selectedOption === "Flight"}
+              onChange={() => handleOptionChange("Flight")}
+              type="radio"
+            />
+            <div className="form-checkbox__mark">
+              <div className="form-checkbox__icon">
+                <Image
+                  width="10"
+                  height="8"
+                  src="/img/icons/check.svg"
+                  alt="icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="ml-10">
+            Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)
+          </div>
+        </div>
+      </div>
+
+      <div className="d-flex items-center justify-between py-3">
+        <div className="d-flex items-center">
+          <div className="form-checkbox">
+            <input
+              name="payment"
+              checked={selectedOption === "InstallMent"}
+              onChange={() => handleOptionChange("InstallMent")}
+              type="radio"
+            />
+            <div className="form-checkbox__mark">
+              <div className="form-checkbox__icon">
+                <Image
+                  width="10"
+                  height="8"
+                  src="/img/icons/check.svg"
+                  alt="icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="ml-10">Click for Installment Payment</div>
+        </div>
+      </div>
+
+      {selectedOption === "InstallMent" && (
+        <div className="row y-gap-30 contactForm px-50 py-10">
+          <div className="col-md-12">
+            <h5 className="text-center">Total Amount - <b>2,55.50 €</b></h5>
+          </div>
+
+          <div className="row my-3">
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="text" required />
+              <label className="lh-1 text-16 text-light-1">1st Amount</label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="date" required />
+              <label className="lh-1 text-16 text-light-1"></label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="text" required />
+              <label className="lh-1 text-16 text-light-1">2nd Amount</label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="date" required />
+              <label className="lh-1 text-16 text-light-1"></label>
+            </div>
+          </div>
+
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="text" required />
+              <label className="lh-1 text-16 text-light-1">3rd Amount</label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input
+                type="date"
+                required
+                value={selectedDate}
+                onChange={handleDateChange}
+                disabled={isDisabled}
+              />
+              <label className="lh-1 text-16 text-light-1"></label>
+            </div>
+          </div>
+        </div>
+      )}
+
+<div className="d-flex items-center justify-between py-3">
                 <div className="d-flex items-center">
                 <div className="form-checkbox">
                     <input
                     checked={Flight ? true : false}
                     onChange={() => setFlight((pre) => !pre)}
-                    type="checkbox"
+                    type="radio"
                     />
                     <div className="form-checkbox__mark">
                     <div className="form-checkbox__icon">
@@ -105,7 +226,7 @@ Payment instalment is possible.</div>
                     </div>
                     </div>
                 </div>
-                <div className="ml-10"> Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)</div>
+                <div className="ml-10"> Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH</div>
                 </div>
 
                     {/* <div className="text-14">40 €</div> */}
@@ -118,120 +239,7 @@ Payment instalment is possible.</div>
                     checked={InstallMent ? true : false}
                     // onChange={() => setInstallMent((pre) => !pre)}
                     onChange={checkInstallment}
-                    type="checkbox"
-                    />
-                    <div className="form-checkbox__mark">
-                    <div className="form-checkbox__icon">
-                        <Image
-                        width="10"
-                        height="8"
-                        src="/img/icons/check.svg"
-                        alt="icon"
-                        />
-                    </div>
-                    </div>
-                </div>
-                <div className="ml-10">Click for Installment Payment</div>
-                </div>
-
-                    {/* <div className="text-14">40 €</div> */}
-                </div>
-
-                                        <div className={`${InstallMent === false ? 'd-none' : 'd-block'}`}>
-                                                <div className="row y-gap-30 contactForm px-50 py-10 ">
-                                                  
-                                                <div className="col-md-12">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Total Amount
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                                <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    1st Amount
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {/* Birthday */}
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">2nd Amount</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {/* Birthday */}
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">3rd Amount</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input ">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {/* Birthday */}
-                                                  </label>
-                                                </div>
-                                              </div>
-                                            
-                                                </div> 
-                                            </div>
-
-                <div className="d-flex items-center justify-between py-1">
-                <div className="d-flex items-center">
-                <div className="form-checkbox">
-                    <input
-                    checked={onlinePayment ? true : false}
-                    onChange={() => setOnlinePayment((pre) => !pre)}
-                    type="checkbox"
-                    />
-                    <div className="form-checkbox__mark">
-                    <div className="form-checkbox__icon">
-                        <Image
-                        width="10"
-                        height="8"
-                        src="/img/icons/check.svg"
-                        alt="icon"
-                        />
-                    </div>
-                    </div>
-                </div>
-                <div className="ml-10">  Yes, I declare my consent to the <Link href='https://uat.mekkabooking.com/Datenschutz'>data protection</Link> and accept the Declaration of Consent of mekkabooking GmbH</div>
-                </div>
-                </div>
-
-                <div className="d-flex items-center justify-between py-1">
-                <div className="d-flex items-center">
-                <div className="form-checkbox">
-                    <input
-                    checked={check ? true : false}
-                    onChange={() => setCheck((pre) => !pre)}
-                    type="checkbox"
+                    type="radio"
                     />
                     <div className="form-checkbox__mark">
                     <div className="form-checkbox__icon">
@@ -246,15 +254,19 @@ Payment instalment is possible.</div>
                 </div>
                 <div className="ml-10">I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE.</div>
                 </div>
+
+                    {/* <div className="text-14">40 €</div> */}
                 </div>
 
             </div>
+
+
          </div>
               }
 
 
 
-{bookingStage == 3 &&
+{bookingStage == 2 &&
               <div >
               <div className="d-flex flex-column items-center text-center">
                 <div className="size-80 rounded-full flex-center bg-accent-1 text-white">
@@ -332,7 +344,7 @@ Payment instalment is possible.</div>
 
               <div className="d-flex item-center justify-between y-gap-5">
                 <div className="text-18 fw-500">Service per booking</div>
-                <div className="text-18 fw-500"> € 43</div>
+                <div className="text-18 fw-500">43 € </div>
               </div>
 
               <div className="line mt-30 mb-30"></div>
@@ -341,7 +353,7 @@ Payment instalment is possible.</div>
                 <div className="text-18 fw-500">
                   Service per person 1 Adult, 2 Youth, 4 Children
                 </div>
-                <div className="text-18 fw-500"> € 125</div>
+                <div className="text-18 fw-500">125 € </div>
               </div>
 
               <div className="line mt-30 mb-30"></div>
@@ -509,22 +521,22 @@ Payment instalment is possible.</div>
                 <div className="">
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Subtotal</div>
-                    <div className=""> 182 € </div>
+                    <div className=""> 182€ </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Total</div>
-                    <div className=""> 23 € </div>
+                    <div className=""> 23€ </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Paid</div>
-                    <div className=""> 3.482 € </div>
+                    <div className=""> 3.482€ </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Due</div>
-                    <div className=""> 43,242 € </div>
+                    <div className=""> 43,242€ </div>
                   </div>
                 </div>
               </div>
@@ -549,9 +561,8 @@ Payment instalment is possible.</div>
               </div>
 
               <div className="mt-30">
-                <button className="button -md -info-2 bg-accent-1 text-white col-12">
-                  Complete Reservation
-                </button>
+                <button onClick={()=>setBookingStage(pre=>pre+1) } style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
+                Complete Reservation</button>
               </div>
             </div>
           </div>
