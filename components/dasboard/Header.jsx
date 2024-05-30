@@ -100,7 +100,7 @@ export default function Header({ setSideBarOpen }) {
           <Image
             width={50}
             height={50}
-            src="/img/dashboard/header/1.png"
+            src="/img/dashboard/header/1.jpg"
             alt="image"
           />
         </div>

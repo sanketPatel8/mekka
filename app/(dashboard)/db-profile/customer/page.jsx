@@ -42,29 +42,30 @@ export default function Profile() {
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 
               <div className="contactForm row y-gap-30">
+                <div className="row my-3">
                 <div className="col-md-12">
-                  <div className="form-input ">
+                  <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">Name</label>
                   </div>
                 </div>
                 
                 <div className="col-md-6">
-                  <div className="form-input ">
+                  <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">Email</label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
-                  <div className="form-input ">
+                  <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">Phone</label>
                   </div>
                 </div>
                 
                 <div className="col-md-6">
-                  <div className="form-input ">
+                  <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       Location
@@ -73,13 +74,16 @@ export default function Profile() {
                 </div>
 
                 <div className="col-md-6">
-                  <div className="form-input ">
+                  <div className="form-input spacing">
                     <input type="date" required />
                     <label className="lh-1 text-16 text-light-1">
                       {/* Location */}
                     </label>
                   </div>
                 </div>
+                </div>
+
+                
 
 
                 <div className="col-12">
@@ -197,7 +201,7 @@ export default function Profile() {
               <div className="contactForm y-gap-30">
                 <div className="row y-gap-30">
                   <div className="col-md-6">
-                    <div className="form-input ">
+                    <div className="form-input spacing">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
                         Old password
@@ -208,7 +212,7 @@ export default function Profile() {
 
                 <div className="row">
                   <div className="col-md-6">
-                    <div className="form-input ">
+                    <div className="form-input spacing">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
                         New password
@@ -219,7 +223,7 @@ export default function Profile() {
 
                 <div className="row">
                   <div className="col-md-6">
-                    <div className="form-input ">
+                    <div className="form-input spacing">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
                         Confirm new password
@@ -240,7 +244,7 @@ export default function Profile() {
             </div>
 
             <div className="text-center pt-30">
-              © Copyright Viatours {new Date().getFullYear()}
+              © Copyright MekkaBooking.com {new Date().getFullYear()}
             </div>
           </div>
         </div>
