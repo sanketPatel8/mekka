@@ -77,7 +77,7 @@ export default function Tour1() {
                     </div>
 
                     <span className="text-dark-1 ml-10">
-                      {elm.rating} ({elm.ratingCount})
+                      {elm.rating} ({elm.ratingCount}) - IDEALGATE 
                     </span>
                   </div>
 

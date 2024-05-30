@@ -12,6 +12,8 @@ const socialMediaLinks = [
 ];
 export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
   const [activeSub, setActiveSub] = useState("");
+  // const [Sidebar, setSideBarOpen] = useState(true);
+
   const pathname = usePathname();
   return (
     <div

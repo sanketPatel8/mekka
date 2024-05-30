@@ -118,8 +118,8 @@ export default function TourSlderOne() {
                             </div>
 
                             <span className="text-dark-1 ml-10">
-                              {elm.rating} ({elm.ratingCount})
-                            </span>
+                              {elm.rating} ({elm.ratingCount}) 
+                            </span> - IDEALGATE 
                           </div>
 
                           <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">

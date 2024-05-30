@@ -91,7 +91,7 @@ export default function TourSlider() {
                           </div>
 
                           <span className="text-dark-1 ml-10">
-                            {elm.rating} ({elm.ratingCount})
+                            {elm.rating} ({elm.ratingCount}) - IDEALGATE 
                           </span>
                         </div>
 
