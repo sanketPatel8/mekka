@@ -319,7 +319,7 @@ useEffect(() => {
               <div className="mt-25">
                 <div className="d-flex items-center justify-between">
                   <div className="fw-500">Date:</div>
-                  <div className="">06 April 2023</div>
+                  <div className="">06.04.2023</div>
                 </div>
 
                 <div className="d-flex items-center justify-between">
