@@ -3,7 +3,7 @@
 export const sidebarItemsAgentDB = [
   {
     id: 1,
-    href: "/db-main/customer",
+    href: "/db-main/agent",
     iconClass: "icon-dashboard text-26",
     label: "Dashboard",
   },
@@ -11,7 +11,7 @@ export const sidebarItemsAgentDB = [
     id: 2,
     href: "/db-booking",
     iconClass: "icon-calendar text-26",
-    label: "My Booking",
+    label: "Bookings",
   },
   {
     id: 3,
@@ -47,18 +47,18 @@ export const sidebarItemsCustomerDB = [
     iconClass: "icon-calendar text-26",
     label: "My Booking",
   },
-  {
-    id: 3,
-    href: "/db-listing",
-    iconClass: "icon-menu text-26",
-    label: "My Listings",
-  },
-  {
-    id: 4,
-    href: "/db-add-tour",
-    iconClass: "icon-clipboard text-26",
-    label: "Add Tour",
-  },
+  // {
+  //   id: 3,
+  //   href: "/db-listing",
+  //   iconClass: "icon-menu text-26",
+  //   label: "My Listings",
+  // },
+  // {
+  //   id: 4,
+  //   href: "/db-add-tour",
+  //   iconClass: "icon-clipboard text-26",
+  //   label: "Add Tour",
+  // },
   {
     id: 5,
     href: "/db-profile",
