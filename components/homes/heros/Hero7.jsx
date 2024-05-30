@@ -16,8 +16,8 @@ const slides = [
     id: 1,
     imageSrc: "/img/hero/7/mekkabookingBg.png",
     subtitle:
-      "das unabhängige",
-    title: "Vergleichsportal , günstige Angebote , finden & sparen",
+      "the independent",
+    title: "comparison portal , find cheap , offers & save",
   },
   {
     id: 2,
@@ -126,7 +126,7 @@ export default function Hero7() {
                           <h1
                             data-aos="fade-up"
                             data-aos-delay="100"
-                            className="hero__subtitle text-white mb-20 md:mb-10"
+                            className="hero__subtitle text-white mb-15 md:mb-10"
                           >
                             {elm.subtitle}
                           </h1>
@@ -136,11 +136,11 @@ export default function Hero7() {
                             data-aos-delay="300"
                             className="hero__title text--color-accent-1"
                           >
-                            <span style={{fontSize : "5vw", fontWeight : "bold" , color : "#DAC04F "}}><b>{elm.title.split(",")[0]}</b></span>
+                            <span style={{fontSize : "11vh", fontWeight : "900" , color : "#DAC04F "}}>{elm.title.split(",")[0]}</span>
                             <br className="md:d-none" />
-                            <span style={{fontSize : "4vw", fontWeight : "700" , color : "#4198BA ", textAlign : "center"}}><b>{elm.title.split(",")[1]}</b></span>
+                            <span style={{fontSize : "6vw", fontWeight : "700" , color : "#4198BA ", textAlign : "center"}}><b>{elm.title.split(",")[1]}</b></span>
                             <br className="md:d-none" />
-                            <span style={{fontSize : "3vw", fontWeight : "700" , color : "white " , textAlign : "right"}}>{elm.title.split(",")[2]}</span>
+                            <span style={{fontSize : "4vw", fontWeight : "700" , color : "white " , textAlign : "right"}}>{elm.title.split(",")[2]}</span>
                           </h1>
                          
                         </div>
@@ -183,7 +183,7 @@ export default function Hero7() {
                     <i className="text-20 icon-pin"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5>Alle</h5>
+                    <h5>All</h5>
                     <div className="js-select-control-chosen">
                       {location ? location : "All Tour"}
                     </div>
@@ -209,7 +209,7 @@ export default function Hero7() {
                     <i className="text-20 icon-calendar"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5>Reisebeginn to Reiseende</h5>
+                    <h5>Start of trip to end of trip</h5>
                     <div>
                       <span className="js-first-date">
                         <Calender active={currentActiveDD === "calender"} />
@@ -235,7 +235,7 @@ export default function Hero7() {
                     <i className="text-20 icon-flag"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5>Anzahl Reisende</h5>
+                    <h5>Passenger</h5>
                     <div className="js-select-control-chosen">
                       {tourType ? tourType : "All tour"}
                     </div>

@@ -9,14 +9,7 @@ const RoadMap = () => {
       <div>
         <h4>Hotel for Makkah</h4>
         <p>
-          Dieses elegante Hotel befindet sich in einem Hochhaus an einer
-          belebten Einkaufsstraße, 21 Gehminuten von der Großen Moschee von
-          Mekka, 6 km vom Hochgeschwindigkeitsbahnhof Makkah Haramain und 9 km
-          vom berühmten Zamzam-Brunnen entfernt. Die 900 gemütlich eingerichteten
-          Zimmer und Suiten sind mit Flachbildfernseher und Minikühlschrank
-          ausgestattet. WLAN-Internetzugang und 24-Stunden-Zimmerservice sind
-          ebenfalls verfügbar. Das Hotel verfügt über 2 zwanglose Restaurants und
-          ein Café.
+        Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe des Masjid Al Haram King Abdul Aziz Gate und des Masjid Al Haram King Abdullah Expension Gate. Zu den Einrichtungen dieser Unterkunft gehören ein Restaurant, Zimmerservice und eine 24-Stunden-Rezeption sowie kostenfreies WLAN. Private Parkplätze stehen vor Ort zur Verfügung. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem Kleiderschrank, einem Wasserkocher, einem Safe, einem Flachbi
         </p>
         <br />
         <p>Distance to the Kaaba</p>
@@ -58,17 +51,7 @@ const RoadMap = () => {
       <div>
         <h2>Hotel for Madina</h2>
         <p>
-          In idealer Lage in Al Madinah bietet das View Al Madinah Hotel einen
-          Concierge-Service und kostenfreie Privatparkplätze. Die Unterkunft
-          befindet sich 3,7 km von der Quba-Moschee, 7,3 km von der
-          Qiblatain-Moschee und 7,5 km vom Jabal Ahad Garden Park entfernt. Das
-          Hotel verfügt über ein Restaurant und die Al-Masjid an-Nabawi ist 700
-          m entfernt. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem
-          Kleiderschrank, einem Wasserkocher, einem Kühlschrank, einem Safe,
-          einem Flachbild-TV und einem eigenen Bad mit Bidet. Im View Al
-          Madinah Hotel genießen Sie ein Buffet oder ein kontinentales
-          Frühstück. Die Mitarbeiter an der Rezeption sprechen Arabisch,
-          Englisch, Türkisch und Urdu und sind Ihnen rund um die Uhr behilflich.
+        In idealer Lage in Al Madinah bietet das View Al Madinah Hotel einen Concierge-Service und kostenfreie Privatparkplätze. Die Unterkunft befindet sich 3,7 km von der Quba-Moschee, 7,3 km von der Qiblatain-Moschee und 7,5 km vom Jabal Ahad Garden Park entfernt. Das Hotel verfügt über ein Restaurant und die Al-Masjid an-Nabawi ist 700 m entfernt. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem Kleiderschrank, einem Wasserkocher, einem Kühlschrank, einem Safe, einem Flachbild-TV und einem eigenen Bad mit Bidet. Im View Al Madinah Hotel genießen Sie ein Buffet oder ein kontinentales Frühstück. Die Mitarbeiter an der Rezeption sprechen Arabisch, Englisch, Türkisch und Urdu und sind Ihnen rund um die Uhr be
         </p>
         <br />
         <p>Distance to the Mescid</p>

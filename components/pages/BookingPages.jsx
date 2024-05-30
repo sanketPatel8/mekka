@@ -1074,37 +1074,37 @@ useEffect(() => {
                 <div className="px-1">
                   <div className="d-flex items-center justify-content-space-arround ">
                     <div className="mr-5"><FaTelegramPlane size={25} color="#DAC04F"/></div>
-                    <div className="text-start">Airline: Saudia, Turkish Airlines</div>
+                    <div className="text-start">Airline: Royal Jordanian, Egyptair</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><MdFlightTakeoff size={25} color="#DAC04F" /></div>
-                    <div className="text-start">From: Berlin (BER)</div>
+                    <div className="text-start">From: Frankfurt (FRA)</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><MdFlightLand  htTakeoff size={25} color="#DAC04F" /></div>
-                    <div className="text-start">Ankunft: Medina</div>
+                    <div className="text-start">To: Medina</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><MdFlightTakeoff size={25} color="#DAC04F" /></div>
-                    <div className="text-start">Date of departure: 08.09.2024</div>
+                    <div className="text-start">Date of departure: 26.06.2024</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><MdFlightLand   size={25} color="#DAC04F" /></div>
-                    <div className="text-start">Date of return flight: 16.09.2024</div>
+                    <div className="text-start">Date of return flight: 05.07.2024</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><TbWorld  size={25} color="#DAC04F" /></div>
-                    <div className="text-start">Offered languages: German, Turkish, Arabic</div>
+                    <div className="text-start">Offered languages: German, Arabic</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaLuggageCart   size={25} color="#DAC04F" /></div>
-                    <div className="text-start">max. Gepäck pro Person: 30 kg</div>
+                    <div className="text-start">max. luggage per person: 30 kg</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
@@ -1180,7 +1180,7 @@ useEffect(() => {
               <div className="mt-30">
               <Link href='/payment'>
                 <button  style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12 } `}>
-                Complete Reservation</button>
+                further</button>
                 </Link>
               </div>
               </div>

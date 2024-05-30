@@ -167,7 +167,7 @@ export default function TourList4() {
 
                         <div className="text-14 ml-10">
                           <span className="fw-500">{elm.rating}</span> (
-                          {elm.ratingCount}) - Tour Agent Name
+                          {elm.ratingCount}) - IDEALGATE
                         </div>
                       </div>
 

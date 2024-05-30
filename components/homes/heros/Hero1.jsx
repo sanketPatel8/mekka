@@ -92,7 +92,7 @@ export default function Hero1() {
                           <i className="text-20 icon-pin"></i>
                         </div>
                         <div className="searchFormItem__content">
-                          <h5>Alle</h5>
+                          <h5>All</h5>
                           <div className="js-select-control-chosen">
                             {location ? location : "Search destinations"}
                           </div>
@@ -118,7 +118,7 @@ export default function Hero1() {
                           <i className="text-20 icon-calendar"></i>
                         </div>
                         <div className="searchFormItem__content">
-                          <h5>Reisebeginn to Reiseende</h5>
+                          <h5>Start of trip to end of trip</h5>
                           <div>
                             <span className="js-first-date">
                               <Calender
@@ -146,7 +146,7 @@ export default function Hero1() {
                     <i className="text-20 icon-flag"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5>Anzahl Reisende</h5>
+                    <h5>Passenger</h5>
                     <div className="js-select-control-chosen">
                       {tourType ? tourType : "All tour"}
                     </div>
