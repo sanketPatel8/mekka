@@ -39,7 +39,7 @@ export default function Tour1() {
           className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300"
         >
           {tourData.map((elm, i) => (
-            <div key={i} className="col-lg-3 col-md-6">
+            <div key={i} className="col-lg-3 col-md-6 my-2">
               <Link
                 href={`/tour-single-1/${elm.id}`}
                 className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow"
