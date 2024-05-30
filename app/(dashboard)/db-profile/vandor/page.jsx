@@ -83,7 +83,7 @@ export default function Profile() {
                   <h4 className="text-18 fw-500 mb-20">Your photo</h4>
                   <div className="row x-gap-20 y-gap">
                     {image1 ? (
-                      <div className="col-auto">
+                      <div className="col-auto my-3">
                         <div className="relative">
                           <Image
                             width={200}
@@ -129,7 +129,7 @@ export default function Profile() {
                       </div>
                     )}
                     {image2 ? (
-                      <div className="col-auto">
+                      <div className="col-auto my-3">
                         <div className="relative">
                           <Image
                             width={200}

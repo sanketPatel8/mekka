@@ -60,31 +60,31 @@ export const states = [
   {
     id: 1,
     title: "Total Earnings",
-    amount: "$10,800",
-    today: "$50",
+    amount: "10,800 €",
+    today: "50 €",
     iconClass: "icon-wallet text-accent-1",
   },
   {
     id: 2,
     title: "Total Pending",
-    amount: "$12,800",
+    amount: "12,800 €",
     today: "40+",
     iconClass: "icon-payment text-accent-1",
   },
   {
     id: 3,
     title: "Total Booking",
-    amount: "$54,800",
+    amount: "54,800 €",
     today: "90+",
     iconClass: "icon-booking text-accent-1",
   },
-  {
-    id: 4,
-    title: "Wishlist",
-    amount: "1834",
-    today: "290+",
-    iconClass: "icon-heart text-accent-1",
-  },
+  // {
+  //   id: 4,
+  //   title: "Wishlist",
+  //   amount: "1834",
+  //   today: "290+",
+  //   iconClass: "icon-heart text-accent-1",
+  // },
 ];
 
 export const notificationData = [
@@ -181,7 +181,7 @@ export const bookingData = [
     startDate: "11 April 2023",
     endDate: "11 April 2023",
     numberOfPeople: "2 People",
-    cost: "$392.89",
+    cost: "€392.89",
     status: "Approved",
   },
   {
@@ -192,7 +192,7 @@ export const bookingData = [
     startDate: "12 April 2023",
     endDate: "12 April 2023",
     numberOfPeople: "3 People",
-    cost: "$412.50",
+    cost: "€412.50",
     status: "Pending",
   },
   {
@@ -203,7 +203,7 @@ export const bookingData = [
     startDate: "13 April 2023",
     endDate: "13 April 2023",
     numberOfPeople: "4 People",
-    cost: "$550.00",
+    cost: "€550.00",
     status: "Cancelled",
   },
   {
@@ -214,7 +214,7 @@ export const bookingData = [
     startDate: "14 April 2023",
     endDate: "14 April 2023",
     numberOfPeople: "2 People",
-    cost: "$420.99",
+    cost: "€420.99",
     status: "Pending",
   },
   {
@@ -225,7 +225,7 @@ export const bookingData = [
     startDate: "15 April 2023",
     endDate: "15 April 2023",
     numberOfPeople: "3 People",
-    cost: "$380.00",
+    cost: "€380.00",
     status: "Approved",
   },
   // Add more entries as needed
