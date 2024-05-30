@@ -473,15 +473,15 @@ export default function TourSingleSidebar() {
         <div className="text-18 fw-500">Total:</div>
         <div>
           <div className="text-18 fw-500">
-            €
+            
             {(
               prices.adultPrice * adultNumber +
               prices.youthPrice * youthNumber +
               prices.childrenPrice * childrenNumber +
               extraCharge * 1
-            ).toFixed(2)}
+            ).toFixed(2)} €
           </div>
-          <span className="text-center">inklusive Steuern und Gebühren</span>
+          <span className="text-center">including taxes and fees</span>
         </div>
       </div>
 

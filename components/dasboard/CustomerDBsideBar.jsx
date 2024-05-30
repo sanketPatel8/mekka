@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
-const CustomerDBsideBar = () => {
+const CustomerDBsideBar = ({ setSideBarOpen }) => {
     const pathname = usePathname();
 
     // const [setSideBarOpen, setSideBarOpen] = useState(true)

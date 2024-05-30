@@ -6,10 +6,10 @@
     display: none;
 }
 
-.header__menuBtn:hover{
-    /* background-color: #0a58ca; */
+/* .header__menuBtn:hover{
     background-color: #0a58ca;
-}
+    background-color: #0a58ca;
+} */
 
 .currencyhov:hover{
     color: green;

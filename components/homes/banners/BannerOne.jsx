@@ -17,7 +17,7 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="text-40 md:text-24 lh-13 text-white"
               >
-                Get 5% off your 1st
+                Get 10% off your 1st
                 <br className="lg:d-none" />
                 booking
               </h2>
@@ -27,9 +27,9 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="mt-10 text-white"
               >
-                Booking's better on the app. Use promo code
+                To get a discount, use promo code
                 <br className="lg:d-none" />
-                "TourBooking" to save!
+                "NEW10" to get!
               </p>
 
               <div
