@@ -226,7 +226,7 @@ export default function DbBooking() {
                           {elm.duration}
                         </div>
 
-                        <div className="tourCard__price">
+                        {/* <div className="tourCard__price">
                           <div>{elm.price} €</div>
 
                           <div className="d-flex items-center justify-content-center">
@@ -237,7 +237,7 @@ export default function DbBooking() {
                             
                           </div>
                           <p>including taxes and fee</p>
-                        </div>
+                        </div> */}
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
