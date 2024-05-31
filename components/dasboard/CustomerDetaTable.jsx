@@ -9,14 +9,21 @@ import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData } from
 
 const customStyles = {
   content: {
-    // top: '50%',
-    // left: '50%',
-    // right: 'auto',
-    // bottom: 'auto',
     marginLeft: '20%',
-    // transform: 'translate(-50%, -50%)',
+    // other styles here
+  },
+  '@media (max-width: 768px)': {
+    content: {
+      marginLeft: '0%',
+    },
+  },
+  '@media (max-width: 480px)': {
+    content: {
+      marginLeft: '0%',
+    },
   },
 };
+
 
 // Assuming you have an element with ID 'root' in your main HTML file
 Modal.setAppElement('#root');
@@ -181,14 +188,135 @@ const CustomerDetaTable = () => {
                 <div className="col-12" style={{ borderTop: "2px solid black", borderBottom: "2px solid black" }}>
                   <div className="text-14">
                     <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
-                    <p className="text-right text-15">including taxes and fee</p>
+                    {/* <p className="text-right text-15">including taxes and fee</p> */}
                   </div>
                 </div>
               </div>
             </div>
 
+            <div style={{borderBottom : "2px solid black"}}>
+                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+
+                                              <div>
+
+                                                  <div className="d-flex items-center justify-between radio_hight">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="4Bettzimmer"
+                                                                  // checked={roomType === "4Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                      </div>
+                                                      <div className="text-14">0,00 €</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between radio_hight">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="3Bettzimmer"
+                                                                  // checked={roomType === "3Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">3 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+100,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between radio_hight">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="2Bettzimmer"
+                                                                  // checked={roomType === "2Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">2 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+230,00€</div>
+                                                  </div>
+
+                                                  <div className="d-flex items-center justify-between radio_hight">
+                                                      <div className="d-flex items-center">
+                                                          <div className="form-radio">
+                                                              <input
+                                                                  type="radio"
+                                                                  name="roomType"
+                                                                  className="radio-label"
+                                                                  value="1Bettzimmer"
+                                                                  // checked={roomType === "1Bettzimmer"}
+                                                                  // onChange={handleChange}
+                                                              />
+                                                              <div className="form-radio__mark">
+                                                                  <div className="form-radio__icon">
+                                                                      <Image
+                                                                          width="10"
+                                                                          height="8"
+                                                                          src="/img/icons/check.svg"
+                                                                          alt="icon"
+                                                                      />
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div className="ml-10">1 Bettzimmer</div>
+                                                      </div>
+                                                      <div className="text-14">+450,00€</div>
+                                                  </div>
+
+                                                  </div>
+                                              </div>
+
+                                              <div>
+                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                <p className="text-right text-15">including taxes and fee</p>
+                                              </div>
+
             <div className="col-12">
-            <button className="button -md -info-2 bg-accent-1 text-white col-lg-2 my-4" onClick={() => {alert('person added'); setTimeout(()=>{
+            <button className="button -md -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6" onClick={() => {alert('person added'); setTimeout(()=>{
               closeModal()
             },2000)}}>
                 ADD PERSON
