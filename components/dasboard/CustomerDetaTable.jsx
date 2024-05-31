@@ -1,14 +1,12 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import Modal from 'react-modal';
 import { IoClose } from "react-icons/io5";
 import Image from 'next/image';
 import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData } from '@/data/CustomerBookingData';
-Modal.setAppElement('#modelopen');
 
-  Modal.setAppElement('#pendingpayment');
 const customStyles = {
   content: {
     marginLeft: '20%',
@@ -35,6 +33,12 @@ const CustomerDetaTable = () => {
   const [Nationality, setNationality] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    Modal.setAppElement('#modelopen');
+    Modal.setAppElement('#pendingpayment');
+  }, [])
+  
 
   const ColumnReservation_details = [
     { name: 'Airline', selector: (row) => row.Airline },
