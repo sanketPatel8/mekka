@@ -26,7 +26,7 @@ const customStyles = {
 
 
 // Assuming you have an element with ID 'root' in your main HTML file
-Modal.setAppElement('#root');
+Modal.setAppElement('#ModelOpen');
 
 const CustomerDetaTable = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -99,7 +99,7 @@ const CustomerDetaTable = () => {
   }
 
   return (
-    <div id="root">
+    <div id="ModelOpen">
       <div className="row px-3 py-3">
         <h3 className='col-lg-10'>Per Person Details and Price</h3>
         <button className="button -md -info-2 bg-accent-1 text-white col-lg-2" onClick={openModal}>
