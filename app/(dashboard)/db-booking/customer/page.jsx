@@ -241,7 +241,7 @@ export default function DbBooking() {
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
-                        <Link href={`/db-booking/booking-details`}>
+                        <Link href="/db-booking/booking-details">
                         VIEW DETAILS
                         </Link>
                       </button>

@@ -114,13 +114,13 @@ const CustomerDetaTable = () => {
 
   Modal.setAppElement('#modelopen');
 
-  Modal.setAppElement('#pandingPayment');
+  Modal.setAppElement('#pendingpayment');
   return (
     <div>
       <div className="row px-0 py-3 ">
         <h3 className='col-lg-7'>Per Person Details and Price</h3>
         <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openPaymentModal}>
-          PANDING PAYMENT
+          PENDING PAYMENT
         </button>
         <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
           ADD PERSON
@@ -358,7 +358,7 @@ const CustomerDetaTable = () => {
       </Modal>
       </div>
 
-      <div id="pandingPayment">
+      <div id="pendingpayment">
       <Modal
         isOpen={paymentModalIsOpen}
         onRequestClose={closePaymentModal}
