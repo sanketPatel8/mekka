@@ -6,7 +6,9 @@ import Modal from 'react-modal';
 import { IoClose } from "react-icons/io5";
 import Image from 'next/image';
 import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData } from '@/data/CustomerBookingData';
+Modal.setAppElement('#modelopen');
 
+  Modal.setAppElement('#pendingpayment');
 const customStyles = {
   content: {
     marginLeft: '20%',
@@ -112,9 +114,7 @@ const CustomerDetaTable = () => {
     setSelectedDate(event.target.value);
   };
 
-  Modal.setAppElement('#modelopen');
-
-  Modal.setAppElement('#pendingpayment');
+  
   return (
     <div>
       <div className="row px-0 py-3 ">
