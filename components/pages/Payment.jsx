@@ -183,8 +183,6 @@ useEffect(() => {
             </div>
           </div>
 
-          </div>
-
           <div className="col-md-6">
             <div className="form-input spacing">
               <input type="text" required />
@@ -204,6 +202,10 @@ useEffect(() => {
               <label className="lh-1 text-16 text-light-1"></label>
             </div>
           </div>
+          
+          </div>
+
+          
         </div>
       )}
 
