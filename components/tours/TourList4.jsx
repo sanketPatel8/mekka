@@ -5,8 +5,7 @@ import { speedFeatures } from "@/data/tourFilteringOptions";
 import { LiaKaabaSolid } from "react-icons/lia";
 import { tourDataTwo } from "@/data/tours";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
-import { faQuoteRight } from '@fortawesome/free-regular-svg-icons';
+import { FaQuoteRight } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa6";
 import { faHotel } from '@fortawesome/free-solid-svg-icons';
 import Stars from "../common/Stars";
@@ -156,7 +155,7 @@ export default function TourList4() {
                         <p className="tourCard__text mt-5 items-center d-flex "><FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1" />
                          {elm.description2} (5 <FaStar color="#dabf4f" className="mx-1" />)
                          </p>
-                        <p className="tourCard__text mt-5"><FontAwesomeIcon icon={faQuoteRight} style={{ color: "#dabf4f" }} className="px-1" />
+                        <p className="tourCard__text mt-5"><FaQuoteRight color="#dabf4f" size={20} className="mx-1"/> 
                          {elm.description3}
                          </p>
 
