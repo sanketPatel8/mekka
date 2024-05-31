@@ -60,6 +60,18 @@ export const  Adult2InfoData = [
    
 ]
 
+export const  BabyData = [
+    {
+        name : 'Test',
+        surname : 'Test',
+        city : 'ahemdabad',
+        gender : 'male',
+        DOB : '12.03.2002',
+        Nationality : 'indian',
+    },
+   
+]
+
 export const TotalData = [
     {
         Subtotal : '182 €',

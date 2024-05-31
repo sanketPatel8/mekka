@@ -2,7 +2,7 @@
 
 import React from 'react'
 import DataTable from 'react-data-table-component'
-import { Adult1Data  , ReservationData , Adult2InfoData , TotalData } from '@/data/CustomerBookingData'
+import { Adult1Data  , ReservationData , Adult2InfoData , TotalData , BabyData } from '@/data/CustomerBookingData'
 
 const CustomerDetaTable = () => {
 
@@ -131,6 +131,29 @@ const CustomerDetaTable = () => {
         },
     ]
 
+    const Baby = [
+        {
+            name : 'name',
+            selector : (row) => row.name
+        },
+        {
+            name : 'surname',
+            selector : (row) => row.surname
+        },
+        {
+            name : 'gender',
+            selector : (row) => row.gender
+        },
+        {
+            name : 'DOB',
+            selector : (row) => row.DOB
+        },
+        {
+            name : 'Nationality',
+            selector : (row) => row.Nationality
+        },
+    ]
+
     const Total = [
         {
             name : 'Subtotal',
@@ -164,6 +187,8 @@ const CustomerDetaTable = () => {
     <DataTable title='Adult-3' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader selectableRows highlightOnHover/>
         <br />
     <DataTable title='child' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader selectableRows highlightOnHover/>
+        <br />
+    <DataTable title='baby' columns={Baby} data={BabyData}  fixedHeader selectableRows highlightOnHover/>
         <br />
     <DataTable title='Total' columns={Total} data={TotalData}  fixedHeader selectableRows highlightOnHover/>
     </div>
