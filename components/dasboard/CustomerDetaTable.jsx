@@ -378,45 +378,65 @@ const CustomerDetaTable = () => {
             <h5 className="text-center">Total Amount - <b>2,55.50 €</b></h5>
           </div>
 
-          <div className="row my-3">
-
-          <div className="col-md-6">
+          <div className="row">
+          <div className="col-md-5">
             <div className="form-input spacing">
-              <input type="text" required />
+              <input type="text"  />
               <label className="lh-1 text-16 text-light-1">1st Amount</label>
             </div>
           </div>
 
-          <div className="col-md-6">
-            <div className="form-input spacing">
-              <input type="date" required />
-              <label className="lh-1 text-16 text-light-1"></label>
+          <div className="col-md-5">
+           <div className="form-input spacing">
+              <input type="date" disabled value="31-05-2024" placeholder='31-05-2024' />
+              <label className="lh-1 text-16 text-light-1 "></label>
             </div>
           </div>
 
-          <div className="col-md-6">
+          <div className="col-md-2">
+          <button className="button -sm -green-2 bg-green-1 text-dark my-4 mx-3 "  disabled>
+                PAID
+            </button>
+          </div>
+
+          </div>
+
+          <div className="row">
+
+          <div className="col-md-5">
             <div className="form-input spacing">
               <input type="text" required />
               <label className="lh-1 text-16 text-light-1">2nd Amount</label>
             </div>
           </div>
 
-          <div className="col-md-6">
-            <div className="form-input spacing">
+          <div className="col-md-5">
+           <div className="row">
+           <div className="form-input spacing">
               <input type="date" required />
               <label className="lh-1 text-16 text-light-1"></label>
             </div>
+           </div>
           </div>
 
-          <div className="col-md-6">
+          <div className="col-md-2">
+          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                PAY
+            </button>
+          </div>
+          </div>
+
+          <div className="row">
+          <div className="col-md-5">
             <div className="form-input spacing">
               <input type="text" required />
               <label className="lh-1 text-16 text-light-1">3rd Amount</label>
             </div>
           </div>
 
-          <div className="col-md-6">
-            <div className="form-input spacing">
+          <div className="col-md-5">
+           <div className="row">
+           <div className="form-input spacing">
               <input
                 type="date"
                 required
@@ -426,9 +446,26 @@ const CustomerDetaTable = () => {
               />
               <label className="lh-1 text-16 text-light-1"></label>
             </div>
+           
+           </div>
           </div>
+
+          <div className="col-md-2">
+          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                PAY
+            </button>
+          </div>
+
           
           </div>
+
+         
+
+          
+
+         
+          
+        
 
           
         </div>
