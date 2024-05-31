@@ -28,8 +28,11 @@ const customStyles = {
 
 const CustomerDetaTable = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false);
   const [gender, setGender] = useState('');
   const [Nationality, setNationality] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const ColumnReservation_details = [
     { name: 'Airline', selector: (row) => row.Airline },
@@ -92,16 +95,31 @@ const CustomerDetaTable = () => {
     // No need to change subtitle color as it's not being used in this context
   }
 
+  function openPaymentModal() {
+    setPaymentModalIsOpen(true);
+  }
+
+  function closePaymentModal() {
+    setPaymentModalIsOpen(false);
+  }
+
   function closeModal() {
     setIsOpen(false);
+    
   }
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
   Modal.setAppElement('#modelopen');
+
   Modal.setAppElement('#pandingPayment');
   return (
     <div>
       <div className="row px-0 py-3 ">
         <h3 className='col-lg-7'>Per Person Details and Price</h3>
-        <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
+        <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openPaymentModal}>
           PANDING PAYMENT
         </button>
         <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
@@ -121,6 +139,8 @@ const CustomerDetaTable = () => {
       <DataTable title='Baby' columns={Baby} data={BabyData} highlightOnHover />
       <br />
       <DataTable title='Total' columns={Total} data={TotalData} highlightOnHover />
+
+      
       <div id="modelopen">
       <Modal
         isOpen={modalIsOpen}
@@ -318,11 +338,16 @@ const CustomerDetaTable = () => {
                                               </div>
 
             <div className="col-12">
-            <button className="button -md -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6" onClick={() => {alert('person added'); setTimeout(()=>{
+           <div className="row">
+           <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-3" onClick={() => {alert('person added'); setTimeout(()=>{
               closeModal()
             },2000)}}>
                 ADD PERSON
             </button>
+            <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-3" onClick={closeModal} >
+                CANCEL
+            </button>
+           </div>
             </div>
             {/* <div className='my-3'>
               <p className="text-right text-20">Subtotal <span style={{ color: "#DAC04F" }}><b>1.789,00 €</b></span></p>
@@ -332,19 +357,77 @@ const CustomerDetaTable = () => {
         </div>
       </Modal>
       </div>
+
       <div id="pandingPayment">
       <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
+        isOpen={paymentModalIsOpen}
+        onRequestClose={closePaymentModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Pending Payment Modal"
       >
-        <div className="d-flex justify-content-between" id="">
-          <h2 className='ml-50'>Pending Payment</h2>
-          <button onClick={closeModal}><IoClose size={25} /></button>
+        <div className="d-flex justify-content-between" id="modelopen">
+          <h2 className='ml-50'>PENDING PAYMENT</h2>
+          <button onClick={closePaymentModal}><IoClose size={25} /></button>
         </div>
-        
+        <div className="row y-gap-30 contactForm px-50 py-10">
+          <div className="col-md-12">
+            <h5 className="text-center">Total Amount - <b>2,55.50 €</b></h5>
+          </div>
+
+          <div className="row my-3">
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="text" required />
+              <label className="lh-1 text-16 text-light-1">1st Amount</label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="date" required />
+              <label className="lh-1 text-16 text-light-1"></label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="text" required />
+              <label className="lh-1 text-16 text-light-1">2nd Amount</label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="date" required />
+              <label className="lh-1 text-16 text-light-1"></label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="text" required />
+              <label className="lh-1 text-16 text-light-1">3rd Amount</label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input
+                type="date"
+                required
+                value={selectedDate}
+                onChange={handleDateChange}
+                disabled={isDisabled}
+              />
+              <label className="lh-1 text-16 text-light-1"></label>
+            </div>
+          </div>
+          
+          </div>
+
+          
+        </div>
       </Modal>
       </div>
 
