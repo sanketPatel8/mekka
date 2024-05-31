@@ -25,8 +25,6 @@ const customStyles = {
 };
 
 
-// Assuming you have an element with ID 'root' in your main HTML file
-Modal.setAppElement('#ModelOpen');
 
 const CustomerDetaTable = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -97,12 +95,16 @@ const CustomerDetaTable = () => {
   function closeModal() {
     setIsOpen(false);
   }
-
+  Modal.setAppElement('#modelopen');
+  Modal.setAppElement('#pandingPayment');
   return (
-    <div id="ModelOpen">
-      <div className="row px-3 py-3">
-        <h3 className='col-lg-10'>Per Person Details and Price</h3>
-        <button className="button -md -info-2 bg-accent-1 text-white col-lg-2" onClick={openModal}>
+    <div>
+      <div className="row px-0 py-3 ">
+        <h3 className='col-lg-7'>Per Person Details and Price</h3>
+        <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
+          PANDING PAYMENT
+        </button>
+        <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
           ADD PERSON
         </button>
       </div>
@@ -119,7 +121,7 @@ const CustomerDetaTable = () => {
       <DataTable title='Baby' columns={Baby} data={BabyData} highlightOnHover />
       <br />
       <DataTable title='Total' columns={Total} data={TotalData} highlightOnHover />
-
+      <div id="modelopen">
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -127,7 +129,7 @@ const CustomerDetaTable = () => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between" id="">
           <h2 className='ml-50'>ADD PERSON</h2>
           <button onClick={closeModal}><IoClose size={25} /></button>
         </div>
@@ -329,6 +331,23 @@ const CustomerDetaTable = () => {
           </div>
         </div>
       </Modal>
+      </div>
+      <div id="pandingPayment">
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div className="d-flex justify-content-between" id="">
+          <h2 className='ml-50'>Pending Payment</h2>
+          <button onClick={closeModal}><IoClose size={25} /></button>
+        </div>
+        
+      </Modal>
+      </div>
+
     </div>
   );
 }

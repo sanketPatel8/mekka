@@ -12,11 +12,11 @@ const TermsofUse = () => {
     <div className='container'>
       <br /><br /><br /><br />
     <h1 className='text-start'>AGB</h1>    
-    <p class="text-center">Allgemeine Geschäftsbedingungen der Mekka Booking GmbH.</p>
+    <p className="text-center">Allgemeine Geschäftsbedingungen der Mekka Booking GmbH.</p>
 
-    <p class="text-start"><b>§ 1 Geltungsbereich</b></p><br/>
+    <p className="text-start"><b>§ 1 Geltungsbereich</b></p><br/>
 
-    <p class="text-start">(1) Die vorliegenden Geschäftsbedingungen finden in ihrer zum Zeitpunkt des Vertragsschlusses geltenden Fassung Anwendung auf die zwischen Ihnen (nachfolgend: Kunden) und uns, der Mekka Booking GmbH (Frankfurter Str. 92, 65760 Eschborn, HRB 116404, Umsatzsteuer-Id.Nr. DE4022834347) (nachfolgend: Mekkabooking), vertreten durch Herrn Kagan Kahraman, über unsere Website (<Link href='/' className='text-primary'>https://mekkabooking.dehttps://mekkabooking.de</Link>) geschlossenen Verträge.</p>
+    <p className="text-start">(1) Die vorliegenden Geschäftsbedingungen finden in ihrer zum Zeitpunkt des Vertragsschlusses geltenden Fassung Anwendung auf die zwischen Ihnen (nachfolgend: Kunden) und uns, der Mekka Booking GmbH (Frankfurter Str. 92, 65760 Eschborn, HRB 116404, Umsatzsteuer-Id.Nr. DE4022834347) (nachfolgend: Mekkabooking), vertreten durch Herrn Kagan Kahraman, über unsere Website (<Link href='/' className='text-primary'>https://mekkabooking.dehttps://mekkabooking.de</Link>) geschlossenen Verträge.</p>
 
     <p className="text-start">(2) Diese Geschäftsbedingungen gelten stets und ausschließlich. Abweichende, ergänzende oder diesen AGB entgegenstehende Bedingungen des Kunden werden nur dann und insoweit Vertragsbestandteil, als wir ihrer Geltung ausdrücklich schriftlich zugestimmt haben.</p>
 
@@ -26,7 +26,7 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p class="text-start"><b>§ 2 Zustandekommen des Vertrages mit Drittanbietern</b></p><br/>
+    <p className="text-start"><b>§ 2 Zustandekommen des Vertrages mit Drittanbietern</b></p><br/>
 
     <p className="text-start">(1) Die Darstellung der Drittanbieterleistungen auf unserer Website sowie die fernmündlich oder per E-Mail von uns vorgestellten Drittanbieterleistungen stellen kein rechtlich bindendes Angebot, sondern eine Aufforderung zur Buchung (invitatio ad offerendum) dar.</p>
 
@@ -42,7 +42,7 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p class="text-start"><b>§ 3 Technische Schritte des Bestellprozesses</b></p><br/>
+    <p className="text-start"><b>§ 3 Technische Schritte des Bestellprozesses</b></p><br/>
 
     <p className="text-start">(1) Im Rahmen des Buchungsprozesses können Sie auf unserer Website durch Anklicken des „Verfügbarkeit anzeigen“-Buttons verschiedene Touristikleistungen der Drittanbieter auswählen. Anschließend öffnet sich eine Übersichtsseite, auf der die Details der Touristikleistung angezeigt werden. Durch Klick auf den „Buchung abschließen“-Button gelangen Sie auf eine Seite, auf der Sie Ihre Daten eingeben und die Bezahlart auswählen können.</p>
 
@@ -50,7 +50,7 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p class="text-start"><b>§ 4 Vertragsgegenstand</b></p><br/>
+    <p className="text-start"><b>§ 4 Vertragsgegenstand</b></p><br/>
 
     <p className="text-start">(1) Wir vermitteln auf unserer Website Reise-, Flug-, Hotelleistungen und sonstige touristische Dienstleistungen (nachfolgend: Touristikleistungen) verschiedener Reiseveranstalter, Fluggesellschaften und anderer Drittanbieter. Dabei wird Mekkabooking ausschließlich als Vermittlerin tätig und vermittelt Verträge über Touristikleistungen im Namen und auf Rechnung des jeweiligen Anbieters.</p>
     
@@ -66,7 +66,7 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p class="text-start"><b>§ 5 Reiseunterlagen</b></p><br/>
+    <p className="text-start"><b>§ 5 Reiseunterlagen</b></p><br/>
 
     <p className="text-start">(1) Hinsichtlich der Übermittlung der Reiseunterlagen verweisen wir auf die entsprechenden Regelungen in den Reisebedingungen des jeweiligen Drittanbieters, die Ihnen vor der Buchung zur Verfügung gestellt werden.</p>
 
@@ -80,19 +80,19 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p class="text-start"><b>§ 6 Service Center</b></p><br/>
+    <p className="text-start"><b>§ 6 Service Center</b></p><br/>
 
     <p className="text-start">Ihnen steht bei allen Fragen rund um die angebotenen Touristikleistungen unser Service Center zur Verfügung. Dieses erreichen Sie über die Kontakt-Seite im Servicebereich auf unserer Website oder über die im Impressum angegebenen Rufnummern täglich zu den dort angegebenen Zeiten.</p>
 
     <hr />
 
-    <p class="text-start"><b>§ 7 Widerrufsrecht</b></p><br/>
+    <p className="text-start"><b>§ 7 Widerrufsrecht</b></p><br/>
 
     <p className="text-start">Als Verbraucher steht Ihnen nach Maßgabe der im Anhang aufgeführten Belehrung ein Widerrufsrecht zu. Verbraucher ist jede natürliche Person, die ein Rechtsgeschäft zu Zwecken abschließt, die überwiegend weder ihrer gewerblichen noch ihrer selbständigen beruflichen Tätigkeit zugerechnet werden können.</p>
 
     <hr />
 
-    <p class="text-start"><b>§ 8 Mitwirkungspflichten des Kunden</b></p><br/>
+    <p className="text-start"><b>§ 8 Mitwirkungspflichten des Kunden</b></p><br/>
 
     <p className="text-start">(1) Für die Vollständigkeit und Richtigkeit sämtlicher von Ihnen im Rahmen des Buchungsprozesses eingegebenen oder sonst übermittelten Daten sind ausschließlich Sie verantwortlich. Änderungen der eingegebenen oder sonst übermittelten Daten haben Sie uns unverzüglich mitzuteilen.</p>
 
@@ -102,13 +102,13 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p class="text-start"><b>§ 9 Verarbeitung personenbezogener Daten</b></p><br/>
+    <p className="text-start"><b>§ 9 Verarbeitung personenbezogener Daten</b></p><br/>
 
     <p className="text-start">Wir dürfen die betreffenden Daten zur Erfüllung unserer vertraglichen Pflichten im Rahmen der geltenden gesetzlichen Vorschriften verarbeiten und speichern. Für Informationen zur Verarbeitung Ihrer Daten lesen Sie bitte unsere Datenschutzinformation, die Sie unter folgendem Link <Link rel="stylesheet" href="" >https://mekkabooking.de/Datenschutz</Link> abrufen können.</p>
 
     <hr />
 
-    <p class="text-start"><b>§ 10 Preise und Zahlungsbedingungen</b></p><br/>
+    <p className="text-start"><b>§ 10 Preise und Zahlungsbedingungen</b></p><br/>
 
     <p className="text-start">(1) Sämtliche Preisangaben auf unserer Website sind Bruttopreise inklusive der gesetzlichen Umsatzsteuer.</p>
 
@@ -126,7 +126,7 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p class="text-start"><b>§ 11 Zahlungsbedingungen der Drittanbieter</b></p><br/>
+    <p className="text-start"><b>§ 11 Zahlungsbedingungen der Drittanbieter</b></p><br/>
 
     <p className="text-start">(1) Die Vergütung und Zahlung der gebuchten Touristikleistungen bestimmt sich nach den Vereinbarungen mit dem jeweiligen Drittanbieter.</p>
 
