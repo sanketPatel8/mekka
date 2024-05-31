@@ -32,7 +32,7 @@ const CustomerDetaTable = () => {
             selector : (row) => row.Offered_languages
         },
         {
-            name : 'max. luggage per person',
+            name : 'Max. Luggage Per Person',
             selector : (row) => row.max_luggage
         },
         {
@@ -55,23 +55,23 @@ const CustomerDetaTable = () => {
             selector : (row) => row.name
         },
         {
-            name : 'surname',
+            name : 'Surname',
             selector : (row) => row.surname
         },
         {
-            name : 'email',
+            name : 'Email',
             selector : (row) => row.email
         },
         {
-            name : 'phone',
+            name : 'Phone',
             selector : (row) => row.phone
         },
         {
-            name : 'city',
+            name : 'City',
             selector : (row) => row.city
         },
         {
-            name : 'gender',
+            name : 'Gender',
             selector : (row) => row.gender
         },
         {
@@ -99,22 +99,22 @@ const CustomerDetaTable = () => {
             selector : (row) => row.FRA
         },
         {
-            name : 'additional_services',
+            name : 'Additional_services',
             selector : (row) => row.additional_services
         },
     ]
 
     const columnAduInfo_2 = [
         {
-            name : 'name',
+            name : 'Name',
             selector : (row) => row.name
         },
         {
-            name : 'surname',
+            name : 'Surname',
             selector : (row) => row.surname
         },
         {
-            name : 'gender',
+            name : 'Gender',
             selector : (row) => row.gender
         },
         {
@@ -126,22 +126,22 @@ const CustomerDetaTable = () => {
             selector : (row) => row.Nationality
         },
         {
-            name : 'additional services',
+            name : 'Additional services',
             selector : (row) => row.additional_services
         },
     ]
 
     const Baby = [
         {
-            name : 'name',
+            name : 'Name',
             selector : (row) => row.name
         },
         {
-            name : 'surname',
+            name : 'Surname',
             selector : (row) => row.surname
         },
         {
-            name : 'gender',
+            name : 'Gender',
             selector : (row) => row.gender
         },
         {
@@ -176,21 +176,21 @@ const CustomerDetaTable = () => {
   return (
     <div>
         <h3 className='py-3'>Reservation Details</h3>
-    <DataTable title='Reservation Details' columns={ColumnReservation_details} data={ReservationData}  fixedHeader selectableRows highlightOnHover/>
+    <DataTable title='Reservation Details' columns={ColumnReservation_details} data={ReservationData}  fixedHeader  highlightOnHover/>
         {/* <h3 className='py-3'></h3> */}
         <br />
-    <DataTable title='Adult-1' columns={columnAdu_1} data={Adult1Data}  fixedHeader selectableRows highlightOnHover/>
+    <DataTable title='Adult-1' columns={columnAdu_1} data={Adult1Data}  fixedHeader  highlightOnHover/>
         {/* <h3 className='py-3'></h3> */}
         <br />
-    <DataTable title='Adult-2' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader selectableRows highlightOnHover/>
+    <DataTable title='Adult-2' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader  highlightOnHover/>
         <br />
-    <DataTable title='Adult-3' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader selectableRows highlightOnHover/>
+    <DataTable title='Adult-3' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader  highlightOnHover/>
         <br />
-    <DataTable title='child' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader selectableRows highlightOnHover/>
+    <DataTable title='Child' columns={columnAduInfo_2} data={Adult2InfoData}  fixedHeader  highlightOnHover/>
         <br />
-    <DataTable title='baby' columns={Baby} data={BabyData}  fixedHeader selectableRows highlightOnHover/>
+    <DataTable title='Baby' columns={Baby} data={BabyData}  fixedHeader  highlightOnHover/>
         <br />
-    <DataTable title='Total' columns={Total} data={TotalData}  fixedHeader selectableRows highlightOnHover/>
+    <DataTable title='Total' columns={Total} data={TotalData}  fixedHeader  highlightOnHover/>
     </div>
   )
 }
