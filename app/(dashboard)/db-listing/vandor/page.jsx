@@ -30,9 +30,9 @@ export default function DBListing() {
               <div className="row y-gap-30">
                 {tourData.slice(0, 6).map((elm, i) => (
                   <div key={i} className="col-lg-6">
-                    <div className="border-1 rounded-12 px-20 py-20">
-                      <div className="row x-gap-20 y-gap-20 items-center">
-                        <div className="col-xxl-auto">
+                    <div className="border-1 rounded-12 px-20 py-20 my-3">
+                      <div className="row items-center">
+                        <div className="col-6">
                           <Image
                             width={421}
                             height={301}
@@ -42,7 +42,7 @@ export default function DBListing() {
                           />
                         </div>
 
-                        <div className="col">
+                        <div className="col-6">
                           <div className="d-flex items-center">
                             <i className="icon-pin mr-5"></i>
                             {elm.location}
@@ -71,10 +71,10 @@ export default function DBListing() {
 
                             <div className="col-auto">
                               <div className="text-right md:text-left">
-                                <div className="lh-14">${elm.price}</div>
+                                <div className="lh-14">{elm.price} €</div>
                                 From{" "}
                                 <span className="text-20 fw-500">
-                                  ${elm.price + 1000}
+                                  {elm.price + 1000} €
                                 </span>
                               </div>
                             </div>
@@ -96,7 +96,7 @@ export default function DBListing() {
             </div>
 
             <div className="text-center pt-30">
-              © Copyright Viatours {new Date().getFullYear()}
+              © Copyright MekkaBooking.com {new Date().getFullYear()}
             </div>
           </div>
         </div>

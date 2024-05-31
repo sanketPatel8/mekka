@@ -241,9 +241,8 @@ export default function DbBooking() {
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
-                        <Link href={`/tour-single-4/${elm.id}`}>
-                        SHOW AVAILABILITY
-                          {/* <i className="icon-arrow-top-right ml-10"></i> */}
+                        <Link href={`/db-booking/booking-details`}>
+                        VIEW DETAILS
                         </Link>
                       </button>
                     </div>

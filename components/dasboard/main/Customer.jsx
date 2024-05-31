@@ -27,7 +27,7 @@ export default function CustomerDb() {
 
             <States />
 
-            <div className="row pt-30 y-gap-30">
+            {/* <div className="row pt-30 y-gap-30">
               <Statistics />
 
               <div className="col-xl-4 col-lg-12 col-md-6">
@@ -46,7 +46,7 @@ export default function CustomerDb() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}

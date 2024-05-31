@@ -98,7 +98,7 @@ export default function Favorites() {
             </div>
 
             <div className="text-center pt-30">
-              © Copyright Viatours {new Date().getFullYear()}
+              © Copyright MekkaBooking.com {new Date().getFullYear()}
             </div>
           </div>
         </div>

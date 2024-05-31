@@ -1109,7 +1109,7 @@ useEffect(() => {
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaHotel size={20} color="#DAC04F" /></div>
-                    <div className="text-start">Makka - (hotel name)</div>
+                    <div className="text-start">Mekka - (hotel name)</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
