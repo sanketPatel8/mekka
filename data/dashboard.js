@@ -35,17 +35,17 @@ export const sidebarItemsAgentDB = [
 ];
 
 export const sidebarItemsCustomerDB = [
-  {
-    id: 1,
-    href: "/db-main/customer",
-    iconClass: "icon-dashboard text-26",
-    label: "Dashboard",
-  },
+  // {
+  //   id: 1,
+  //   href: "/db-main/customer",
+  //   iconClass: "icon-dashboard text-26",
+  //   label: "Dashboard",
+  // },
   {
     id: 2,
     href: "/db-booking/customer",
     iconClass: "icon-calendar text-26",
-    label: "My Booking",
+    label: "Bookings",
   },
   {
     id: 5,

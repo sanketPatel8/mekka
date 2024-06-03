@@ -39,7 +39,7 @@ useEffect(() => {
 
         
 
-          <div className="col-lg-8">
+          <div className="col-lg-8 ">
             <div className="bg-white rounded-12 shadow-2 py-15 px-30">
               <Link href="/login" className="text-accent-1">
                 Sign in
@@ -58,7 +58,7 @@ useEffect(() => {
             <div className="bg-white rounded-12  py-30 px-30 md:py-20 md:px-20 mt-10">
 
               {bookingStage == 1 &&
-                                      <div style={{ borderRadius : "20px" , overflow : "hidden" , border : "1px solid black"}} >
+                                      <div className="border-1 rounded-12 overflow-hidden">
                                     
                                             <div className="form_1" >
                                             <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
@@ -204,7 +204,7 @@ useEffect(() => {
                                             
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                  <div className="col-12 tb-border">
                                                     <div className="text-14 ">
                                                     <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
                                                     </div>
@@ -213,8 +213,8 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div style={{borderBottom : "2px solid black"}}>
-                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+                                              <div className="my-3">
+                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                               <div>
 
@@ -410,8 +410,8 @@ useEffect(() => {
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
-                                                    <div className="text-14 ">
+                                                  <div className="col-12 tb-border">
+                                                    <div className="text-14">
                                                     <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
                                                     </div>
                                                   </div>
@@ -419,8 +419,8 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div style={{borderBottom : "2px solid black"}}>
-                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+                                              <div className="my-3">
+                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                               <div>
 
@@ -616,7 +616,7 @@ useEffect(() => {
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                  <div className="col-12 tb-border">
                                                     <div className="text-14 ">
                                                     <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
                                                     </div>
@@ -625,8 +625,8 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div style={{borderBottom : "2px solid black"}}>
-                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+                                              <div className="my-3">
+                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                               <div>
 
@@ -822,7 +822,7 @@ useEffect(() => {
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                  <div className="col-12 tb-border">
                                                     <div className="text-14 ">
                                                     <p className="d-flex justify-content-between"><span>Tour price per child</span> <span>1.339,00 €</span></p>
                                                     </div>
@@ -831,8 +831,8 @@ useEffect(() => {
                                                 </div>
                                               </div>
 
-                                              <div style={{borderBottom : "2px solid black"}}>
-                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+                                              <div className="my-3">
+                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                               <div>
 
@@ -1029,7 +1029,7 @@ useEffect(() => {
 
                                               <div className="col-12">
                                                 <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12" style={{borderTop : "2px solid black", borderBottom : "2px solid black"}}>
+                                                  <div className="col-12 tb-border">
                                                     <div className="text-14 ">
                                                     <p className="d-flex justify-content-between"><span>Tour price per Baby</span> <span>1.339,00 €</span></p>
                                                     <p className="text-right text-15">including taxes and fee</p>
@@ -1054,7 +1054,7 @@ useEffect(() => {
 
           <div className="col-lg-4 ">
             <div className="pl-50 md:pl-0 ">
-              <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 tourSingleSidebar">
+              <div className="bg-white border-1 rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 tourSingleSidebar">
                 <h2 className="text-20 fw-500">Reservation Details</h2>
 
                 <div className="d-flex mt-30">
@@ -1104,7 +1104,7 @@ useEffect(() => {
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaLuggageCart   size={25} color="#DAC04F" /></div>
-                    <div className="text-start">max. luggage per person: 30 kg</div>
+                    <div className="text-start">Max Luggage per person: 30 kg</div>
                   </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
@@ -1117,12 +1117,12 @@ useEffect(() => {
                     <div className="text-start">Madina - (hotel name)</div>
                   </div>
 
-                  <div className="d-flex items-center justify-content-space-arround">
+                  {/* <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaUser size={20} color="#DAC04F" /></div>
                     <div className="text-start flex items-center justify-between"><span> 1 Adult / Multi-bed Room - </span><span><b>1.339,00 €</b></span></div>
-                  </div>
+                  </div> */}
 
-                  <p>(The standard offer may include a multi-bed room.)</p>
+                  <p className="text-12">(The standard offer may include a multi-bed room.)</p>
 
                  
                 </div>
@@ -1142,23 +1142,23 @@ useEffect(() => {
                     <div className=""> 23 € </div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
+                  {/* <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Paid</div>
                     <div className=""> 3.482 € </div>
-                  </div>
+                  </div> */}
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Due</div>
                     <div className=""> 43,242 € </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-30">
-                <h2 className="text-20 fw-500">Do you have a promo code?</h2>
+                <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-30 ">
+                <h2 className="text-20 fw-500 ">Do you have a promo code?</h2>
 
                 <div className="contactForm mt-25">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-2 text-16 text-light-1">
+                    <label className="lh-2 text-16 text-light-1 top-29">
                       Promo code
                     </label>
                   </div>
@@ -1180,7 +1180,7 @@ useEffect(() => {
               <div className="mt-30">
               <Link href='/payment'>
                 <button  style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12 } `}>
-                further</button>
+                Proceed to Payment</button>
                 </Link>
               </div>
               </div>

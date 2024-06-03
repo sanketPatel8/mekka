@@ -29,14 +29,14 @@ export default function Login() {
               onSubmit={(e) => e.preventDefault()}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
-              <div className="form-input ">
+              <div className="form-input spacing">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">
                   Email Address
                 </label>
               </div>
 
-              <div className="form-input mt-30">
+              <div className="form-input mt-10 spacing">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">Password</label>
               </div>
@@ -73,15 +73,29 @@ export default function Login() {
                 </div>
               </div>
 
-              <Link href='/db-main/vandor'>
-              <button
-                type="submit"
-                className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
-              >
-                Log In
-              </button>
+             <div className="row y-gap-15">
+                <div className="col">
+                <Link href='/db-booking/customer'>
+                      <button
+                        type="submit"
+                        className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
+                      >
+                        Customer Log In
+                      </button>
+                  </Link>
+                </div>
 
-              </Link>
+                <div className="col">
+                <Link href='/db-main/vandor'>
+                      <button
+                        type="submit"
+                        className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
+                      >
+                        Ajent Log in
+                      </button>
+                  </Link>
+                </div>
+              </div>
 
               <div className="relative line mt-50 mb-30">
                 <div className="line__word fw-500">OR</div>

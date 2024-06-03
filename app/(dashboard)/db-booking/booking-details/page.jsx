@@ -25,7 +25,7 @@ export default function CustomerDb() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <p className="text-30 text-center">Customer - Details</p>
+            {/* <p className="text-30 text-center">Customer - Details</p> */}
 
             <CustomerDetaTable />
 

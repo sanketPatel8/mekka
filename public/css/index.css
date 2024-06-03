@@ -94,3 +94,27 @@
 .spacing{
     margin: 0px 0px;
 }
+.tb-border{
+    border-top: 2px solid #E7E6E6;
+    border-bottom: 2px solid #E7E6E6;
+}
+
+.top-29{
+    top: 29px;
+}
+
+.text-red{
+    color: red;
+}
+
+.text-orange{
+    color: orange;
+}
+
+.text-green{
+    color: green;
+}
+
+.text-12{
+    font-size: 13px;
+}

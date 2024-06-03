@@ -29,6 +29,7 @@ const customStyles = {
 const CustomerDetaTable = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false);
+  const [CanclePopUp, setCanclePopUp] = useState(false);
   const [gender, setGender] = useState('');
   const [Nationality, setNationality] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
@@ -37,6 +38,7 @@ const CustomerDetaTable = () => {
   useEffect(() => {
     Modal.setAppElement('#modelopen');
     Modal.setAppElement('#pendingpayment');
+    Modal.setAppElement('#CanclePop_up');
   }, [])
   
 
@@ -89,16 +91,16 @@ const CustomerDetaTable = () => {
   const Total = [
     { name: 'Subtotal', selector: (row) => row.Subtotal },
     { name: 'Total', selector: (row) => row.Total },
-    { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
+    // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
     { name: 'Amount Due', selector: (row) => row.Amount_Due },
   ];
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
+  }
+
+  function openModal() {
+    setIsOpen(true);
   }
 
   function openPaymentModal() {
@@ -118,17 +120,30 @@ const CustomerDetaTable = () => {
     setSelectedDate(event.target.value);
   };
 
+  function openCancelPopUp() {
+    setCanclePopUp(true);
+  }
+
+  function CloseCancelPopUp() {
+    setCanclePopUp(false);
+  }
+
   
   return (
     <div>
       <div className="row px-0 py-3 ">
-        <h3 className='col-lg-7'>Per Person Details and Price</h3>
-        <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openPaymentModal}>
-          PENDING PAYMENT
+        <div className='col-lg-7'>
+            <h3>Booking Details : #123216</h3>
+            <p>Booking Date : 12.08.2024</p>
+        </div>
+
+        <button className="button -sm -accent-1 bg-info-2 text-white col-lg-2 mx-2" onClick={openPaymentModal}>
+          PENDING PAYMENT (AMOUNT)
         </button>
         <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
           ADD PERSON
         </button>
+        <p className='text-right pr-60 text-red'>Available 10 seats</p>
       </div>
       <DataTable title='Reservation Details' columns={ColumnReservation_details} data={ReservationData} highlightOnHover />
       <br />
@@ -143,8 +158,11 @@ const CustomerDetaTable = () => {
       <DataTable title='Baby' columns={Baby} data={BabyData} highlightOnHover />
       <br />
       <DataTable title='Total' columns={Total} data={TotalData} highlightOnHover />
+      <br />
+      <button className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2" onClick={openCancelPopUp}>
+      Cancel
+        </button>
 
-      
       <div id="modelopen">
       <Modal
         isOpen={modalIsOpen}
@@ -375,7 +393,7 @@ const CustomerDetaTable = () => {
         </div>
         <div className="row y-gap-30 contactForm px-50 py-10">
           <div className="col-md-12">
-            <h5 className="text-center">Total Amount - <b>2,55.50 €</b></h5>
+            <h5 className="text-center">Total Amount : <b>2,55.50 €</b></h5>
           </div>
 
           <div className="row">
@@ -394,7 +412,7 @@ const CustomerDetaTable = () => {
           </div>
 
           <div className="col-md-2">
-          <button className="button -sm -green-2 bg-green-1 text-dark my-4 mx-3 "  disabled>
+          <button className="button -sm -green-2 bg-green-3 text-dark my-4 mx-3 text-white " disabled>
                 PAID
             </button>
           </div>
@@ -458,17 +476,23 @@ const CustomerDetaTable = () => {
 
           
           </div>
-
-         
-
-          
-
-         
-          
-        
-
           
         </div>
+      </Modal>
+      </div>
+
+      <div id="CanclePop_up">
+      <Modal
+        isOpen={CanclePopUp}
+        onRequestClose={CloseCancelPopUp}
+        style={customStyles}
+        contentLabel="Pending Payment Modal"
+      >
+        <div className="d-flex justify-content-between" id="modelopen">
+          <h2 className='ml-50'>Cancle Trip</h2>
+          <button onClick={CloseCancelPopUp}><IoClose size={25} /></button>
+        </div>
+        
       </Modal>
       </div>
 

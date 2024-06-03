@@ -37,7 +37,8 @@ export default function DbBooking() {
 <div className="row y-gap-30 pt-30">
               {tourDataTwo.map((elm, i) => (
                 <div className="col-12 my-2" key={i}>
-                  <div className="tourCard -type-2">
+
+                  <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
                       <Image
                         width={420}
@@ -98,8 +99,10 @@ export default function DbBooking() {
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}
                         </div>
-
-                      
+                        <lable className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : ''}><b>{elm.arriving}</b></lable>
+                        {/* <lable className="text-green">Compleated</lable> */}
+                        <lable>{elm.panding}</lable>
+                        <lable>10% Off</lable>
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">

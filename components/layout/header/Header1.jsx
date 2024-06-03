@@ -78,7 +78,7 @@ export default function Header1() {
               <Link href="/booking-pages" className=" mx-2">
                 Booking Tour
               </Link>
-              <Link href="/db-main/customer" className=" mx-2">
+              <Link href="/db-booking/customer" className=" mx-2">
                 Dashboard
               </Link>
               <Link href="/contact" className=" mx-2">

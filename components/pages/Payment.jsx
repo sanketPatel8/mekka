@@ -50,7 +50,7 @@ useEffect(() => {
     <section className="layout-pt-md layout-pb-lg mt-header">
       <div className="container">
         <div className="row">
-          <div className="col-lg-7">
+          <div className="col-lg-7 ">
 
             <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-30">
             Payment options
@@ -59,8 +59,8 @@ useEffect(() => {
             <div className="bg-white rounded  py-30 px-30 md:py-20 md:px-20 mt-30">
 
               {bookingStage == 1 &&
-            <div style={{ borderRadius : "10px" , overflow : "hidden" , border : "1px solid black"}} className="" >
-             <p className="text-center py-3 bg -color-blue-1" style={{backgroundColor : "#4198BA" , color:"white"}}><b>Payment Methods</b></p>
+            <div  className="border-1 rounded-12 overflow-hidden" >
+             <p className="text-center py-3 bg -color-accent-1 bg-accent-1"><b>Payment Methods</b></p>
             <div className="px-3">
 
             <div className="d-flex items-center justify-between py-3">
@@ -150,7 +150,7 @@ useEffect(() => {
       {selectedOption === "InstallMent" && (
         <div className="row y-gap-30 contactForm px-50 py-10">
           <div className="col-md-12">
-            <h5 className="text-center">Total Amount - <b>2,55.50 €</b></h5>
+            <h5 className="text-center">Total Amount : <b>2,55.50 €</b></h5>
           </div>
 
           <div className="row my-3">
@@ -276,10 +276,10 @@ useEffect(() => {
                 </div>
 
                 <h2 className="text-30 md:text-24 fw-700 mt-20">
-                  System, your order was submitted successfully!
+                  your order was submitted successfully!
                 </h2>
                 <div className="mt-10">
-                  Booking details has been sent to: booking@tourz.com
+                  Booking details has been sent to: mekkabooking.com
                 </div>
               </div>
 
@@ -343,7 +343,7 @@ useEffect(() => {
               </div>
 
               <div className="line mt-30 mb-30"></div>
-
+{/* 
               <div className="d-flex item-center justify-between y-gap-5">
                 <div className="text-18 fw-500">Service per booking</div>
                 <div className="text-18 fw-500">43 € </div>
@@ -382,7 +382,7 @@ useEffect(() => {
                     <div className="text-18 fw-500"> 43,242 € </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 }
             </div>
@@ -390,7 +390,7 @@ useEffect(() => {
 
           <div className="col-lg-5">
             <div className="pl-50 md:pl-0">
-              <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20">
+              <div className="bg-white rounded-12 border-1 shadow-2 py-30 px-40 md:py-20 md:px-20">
                 <h2 className="text-20 fw-500">Reservation Details</h2>
 
                 <div className="d-flex mt-30">
@@ -452,7 +452,7 @@ useEffect(() => {
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaLuggageCart   size={25} color="#DAC04F" /></div>
-                    <div className="text-start">max. Gepäck pro Person: 30 kg</div>
+                    <div className="text-start">Max Luggage  per Person: 30 kg</div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -466,24 +466,22 @@ useEffect(() => {
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaHotel size={20} color="#DAC04F" /></div>
-                    <div className="text-start">madina - (hotel name)</div>
+                    <div className="text-start">Madina - (hotel name)</div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
 
-                  <div className="d-flex items-center justify-content-space-arround">
+                  {/* <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><FaUser size={20} color="#DAC04F" /></div>
                     <div className="text-start flex items-center justify-between"><span> 1 Adult / Multi-bed Room - </span><span><b>1.339,00 €</b></span></div>
-                  </div>
+                  </div> */}
 
-                  <br />
+                  {/* <br /> */}
 
-                  <p className="my-1">(The standard offer may include a multi-bed room.)</p>
-
+                  <p className="my-1 fs-6 my-3">(The standard offer may include a multi-bed room.)</p>
 
                     <p><b>Selected additional services per person:</b></p>
-
-                  <div className="line mt-20 mb-20"></div>
+                  <div className="line my-2"></div>
 
                   <div className="row">
                     <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
@@ -527,23 +525,33 @@ useEffect(() => {
                   </div>
 
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Total</div>
+                    <p className="fw-500">Total</p>
                     <div className=""> 23€ </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
+                    <div className="fw-500">Add Discount</div>
+                    <div className="">-23 € </div>
+                  </div>
+
+                  {/* <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Paid</div>
                     <div className=""> 3.482€ </div>
-                  </div>
+                  </div> */}
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Amount Due</div>
                     <div className=""> 43,242€ </div>
                   </div>
                 </div>
+
+                <div className="mt-30">
+                <button onClick={()=>setBookingStage(pre=>pre+1) } style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
+                Complete Reservation</button>
+              </div>
               </div>
 
-              <div className="bg-white rounded-12 shadow-2 py-5 px-10 md:py-20 md:px-20 mt-30">
+              {/* <div className="bg-white rounded-12 shadow-2 py-5 px-10 md:py-20 md:px-20 mt-30">
                 <h2 className="text-20 fw-500">Do you have a promo code?</h2>
 
                 <div className="contactForm mt-25">
@@ -560,12 +568,9 @@ useEffect(() => {
                   Back
                 </button>
                 </Link>
-              </div>
+              </div> */}
 
-              <div className="mt-30">
-                <button onClick={()=>setBookingStage(pre=>pre+1) } style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
-                Complete Reservation</button>
-              </div>
+              
             </div>
           </div>
         </div>

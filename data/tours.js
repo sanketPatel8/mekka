@@ -105,9 +105,11 @@ export const tourDataTwo = [
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
+    arriving : 'Upcoming' ,
     title:
       "Umrah - SOMMER",
     rating: 4.8,
+    panding:'Panding',
     ratingCount: 269,
     duration: `3 Days 2 Nights`,
     description:
@@ -127,6 +129,10 @@ export const tourDataTwo = [
       {
         icon: `icon-check`,
         name: ` Free Cancellation`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` 29.05.2024`,
       },
     ],
   },
@@ -135,6 +141,7 @@ export const tourDataTwo = [
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
+    arriving : 'Completed' ,
     title:
       "Umrah - SOMMER",
     rating: 4.8,
@@ -157,6 +164,10 @@ export const tourDataTwo = [
       {
         icon: `icon-check`,
         name: ` Free Cancellation`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` 29.05.2024`,
       },
     ],
   },
@@ -188,6 +199,10 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` Free Cancellation`,
       },
+      {
+        icon: `icon-check`,
+        name: ` 29.05.2024`,
+      },
     ],
   },
   {
@@ -217,6 +232,10 @@ export const tourDataTwo = [
       {
         icon: `icon-check`,
         name: ` Free Cancellation`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` 29.05.2024`,
       },
     ],
   },
@@ -248,6 +267,10 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` Free Cancellation`,
       },
+      {
+        icon: `icon-check`,
+        name: ` 29.05.2024`,
+      },
     ],
   },
   {
@@ -277,6 +300,10 @@ export const tourDataTwo = [
       {
         icon: `icon-check`,
         name: ` Free Cancellation`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` 29.05.2024`,
       },
     ],
   },
