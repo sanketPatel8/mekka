@@ -11,45 +11,72 @@ import { TbWorld } from "react-icons/tb";
 import { FaLuggageCart } from "react-icons/fa";
 import { FaHotel } from "react-icons/fa6";
 import '@/public/css/index.css';
+import Modal from 'react-modal';
+import { FaFacebookF } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+   
+  },
+};
 
 
 export default function BookingPages() {
+
   const [roomType, setRoomType] = useState("");
-  const [hotelMakka, setHotelMakka] = useState("");
   const [bookingStage, setBookingStage] = useState(1)
   const [gender, setGender] = useState('Gender');
   const [Nationality, setNationality] = useState('Nationality');
   const [From, setFrom] = useState('Frankfurt(FRA)');
+  const [modalIsOpen, setIsOpen] = useState(false);
   
-
-//   const handleChange = (e) => {
-//     const selectedRoomType = e.target.value;
-//     setRoomType(selectedRoomType);
-//     alert(`Selected room type:  € {selectedRoomType}`);
-// };
+  let subtitle;
 
 useEffect(() => {
     console.log('Selected room type:', roomType);
 }, [roomType]);
 
+useEffect(() => {
+  Modal.setAppElement('#openSignIn');
+}, []);
+
+
+
+
+
+function openModal() {
+  setIsOpen(true);
+}
+
+function afterOpenModal() {
+
+}
+
+function closeModal() {
+  setIsOpen(false);
+}
+
+
+
+
   return (
+    <>
     <section className="layout-pt-md layout-pb-lg mt-header">
       <div className="container">
         <div className="row">
-
-        
-
           <div className="col-lg-8 ">
             <div className="bg-white rounded-12 shadow-2 py-15 px-30">
-              <Link href="/login" className="text-accent-1">
-                Sign in
-              </Link>{" "}
-              to book with your saved details or
-              <Link href="/register" className="text-accent-1">
-                {" "}
-                register
-              </Link>{" "}
-              to manage your bookings on the go!
+             <button  onClick={()=>{
+              openModal()
+             }}><a className="text-accent-1 px-1">Sign in </a> </button>book with your saved details or continue as a guest to book your travel.
             </div>
             <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-30">
               Steps to reserve
@@ -58,998 +85,996 @@ useEffect(() => {
             <div className="bg-white rounded-12  py-30 px-30 md:py-20 md:px-20 mt-10">
 
               {bookingStage == 1 &&
-                                      <div className="border-1 rounded-12 overflow-hidden">
-                                    
-                                            <div className="form_1" >
-                                            <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
-                                              <p><span><FaUser /></span><span> <b>1. Adult information</b></span></p>
-                                              <p><span><MdError /></span><span> Is also the contact person for the reservation.</span></p>
-                                            </div>
-
-                                            <div className="row y-gap-30 contactForm px-50 py-20  ">
-                                              <div className="my-3 row">
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Name
-                                                  </label>
+            <div className="border-1 rounded-12 overflow-hidden">
+                                        
+                                                <div className="form_1" >
+                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                  <p><span><FaUser /></span><span> <b>1. Adult information</b></span></p>
+                                                  <p><span><MdError /></span><span> Is also the contact person for the reservation.</span></p>
                                                 </div>
-                                              </div>
 
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
-                                                </div>
-                                              </div>
+                                                <div className="row y-gap-30 contactForm px-50 py-20  ">
+                                                  <div className="my-3 row">
 
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">Email</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Phone
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">City</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={gender} 
-                                                              onChange={(e) => {setGender(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Select Gender</option> */}
-                                                              <option value="male">Male</option>
-                                                              <option value="female">Female</option>
-                                                              <option value="other">Other</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                              {gender}
-                                                          </label>
-                                                      </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {/* Birthday */}
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={Nationality} 
-                                                              onChange={(e)=>{setNationality(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Nationality</option> */}
-                                                              <option value="indian">Indian</option>
-                                                              <option value="german">German</option>
-                                                              <option value="canadian">Canadian</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                          {Nationality}
-                                                          </label>
-                                                      </div>
-                                              </div>
-
-                                              <div className="col-lg-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    House No
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-lg-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    ZIP code
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-lg-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Street
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={From} 
-                                                              onChange={(e)=>{setFrom(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Nationality</option> */}
-                                                              <option value="Frankfurt">Frankfurt(FRA)</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                          {From}
-                                                          </label>
-                                                      </div>
-                                              </div> 
-
-                                              </div> 
-
-                                            
-                                              <div className="col-12">
-                                                <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12 tb-border">
-                                                    <div className="text-14 ">
-                                                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Name
+                                                      </label>
                                                     </div>
                                                   </div>
-                              
-                                                </div>
-                                              </div>
 
-                                              <div className="my-3">
-                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
-
-                                              <div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="4Bettzimmer"
-                                                                  // checked={roomType === "4Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
-                                                      </div>
-                                                      <div className="text-14">0,00 €</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="3Bettzimmer"
-                                                                  // checked={roomType === "3Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">3 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+100,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="2Bettzimmer"
-                                                                  // checked={roomType === "2Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">2 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+230,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="1Bettzimmer"
-                                                                  // checked={roomType === "1Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">1 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+450,00€</div>
-                                                  </div>
-                                                  
-                                              </div>
-                                                 
-                                              </div>
-
-                                              <div>
-                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
-                                                <p className="text-right text-15">including taxes and fee</p>
-                                              </div>
-                                            </div>
-                                            </div>
-                                            
-                                            <div className="form_2">
-                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
-                                                  <p><span><FaUser /></span><span> <b>2 . Adult Information</b></span></p>
-                                                </div>
-                                                <div className="row y-gap-30 contactForm px-50 py-20 ">
-                                                  
-                                             <div className="row my-3">
-                                             <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Name
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={gender} 
-                                                              onChange={(e) => {setGender(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Select Gender</option> */}
-                                                              <option value="male">Male</option>
-                                                              <option value="female">Female</option>
-                                                              <option value="other">Other</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                              {gender}
-                                                          </label>
-                                                      </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Birthday
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={Nationality} 
-                                                              onChange={(e)=>{setNationality(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Nationality</option> */}
-                                                              <option value="indian">Indian</option>
-                                                              <option value="german">German</option>
-                                                              <option value="canadian">Canadian</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                          {Nationality}
-                                                          </label>
-                                                      </div>
-                                              </div>
-                                             </div>
-
-                                              <div className="col-12">
-                                                <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12 tb-border">
-                                                    <div className="text-14">
-                                                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">Surname</label>
                                                     </div>
                                                   </div>
-                              
-                                                </div>
-                                              </div>
 
-                                              <div className="my-3">
-                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
-
-                                              <div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="4Bettzimmer"
-                                                                  // checked={roomType === "4Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
-                                                      </div>
-                                                      <div className="text-14">0,00 €</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="3Bettzimmer"
-                                                                  // checked={roomType === "3Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">3 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+100,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="2Bettzimmer"
-                                                                  // checked={roomType === "2Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">2 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+230,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="1Bettzimmer"
-                                                                  // checked={roomType === "1Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">1 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+450,00€</div>
-                                                  </div>
-
-                                                  </div>
-                                              </div>
-
-                                              <div>
-                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
-                                                <p className="text-right text-15">including taxes and fee</p>
-                                              </div>
-
-                                                </div> 
-                                            </div>
-
-                                            <div className="form_3">
-                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
-                                                  <p><span><FaUser /></span><span> <b>3 . Adult Information</b></span></p>
-                                                </div>
-                                                <div className="row y-gap-30 contactForm px-50 py-20 ">
-                                                  
-                                               <div className="row my-3">
-                                               <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Name
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={gender} 
-                                                              onChange={(e) => {setGender(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Select Gender</option> */}
-                                                              <option value="male">Male</option>
-                                                              <option value="female">Female</option>
-                                                              <option value="other">Other</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                              {gender}
-                                                          </label>
-                                                      </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Birthday
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={Nationality} 
-                                                              onChange={(e)=>{setNationality(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Nationality</option> */}
-                                                              <option value="indian">Indian</option>
-                                                              <option value="german">German</option>
-                                                              <option value="canadian">Canadian</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                          {Nationality}
-                                                          </label>
-                                                      </div>
-                                              </div>
-                                               </div>
-
-                                              <div className="col-12">
-                                                <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12 tb-border">
-                                                    <div className="text-14 ">
-                                                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">Email</label>
                                                     </div>
                                                   </div>
-                              
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Phone
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">City</label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={gender} 
+                                                                  onChange={(e) => {setGender(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Select Gender</option> */}
+                                                                  <option value="male">Male</option>
+                                                                  <option value="female">Female</option>
+                                                                  <option value="other">Other</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                                  {gender}
+                                                              </label>
+                                                          </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="date" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        {/* Birthday */}
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={Nationality} 
+                                                                  onChange={(e)=>{setNationality(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Nationality</option> */}
+                                                                  <option value="indian">Indian</option>
+                                                                  <option value="german">German</option>
+                                                                  <option value="canadian">Canadian</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                              {Nationality}
+                                                              </label>
+                                                          </div>
+                                                  </div>
+
+                                                  <div className="col-lg-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        House No
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-lg-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        ZIP code
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-lg-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Street
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={From} 
+                                                                  onChange={(e)=>{setFrom(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Nationality</option> */}
+                                                                  <option value="Frankfurt">Frankfurt(FRA)</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                              {From}
+                                                              </label>
+                                                          </div>
+                                                  </div> 
+
+                                                  </div> 
+
+                                                
+                                                  <div className="col-12">
+                                                    <div className="row y-gap-20 items-center justify-between">
+                                                      <div className="col-12 tb-border">
+                                                        <div className="text-14 ">
+                                                        <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                        </div>
+                                                      </div>
+                                  
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="my-3 border_b">
+                                                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+
+                                                  <div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="4Bettzimmer"
+                                                                      // checked={roomType === "4Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                          </div>
+                                                          <div className="text-14">0,00 €</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="3Bettzimmer"
+                                                                      // checked={roomType === "3Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">3 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+100,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="2Bettzimmer"
+                                                                      // checked={roomType === "2Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">2 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+230,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="1Bettzimmer"
+                                                                      // checked={roomType === "1Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">1 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+450,00€</div>
+                                                      </div>
+                                                      
+                                                  </div>
+                                                    
+                                                  </div>
+
+                                                  <div>
+                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-15">including taxes and fee</p>
+                                                  </div>
                                                 </div>
-                                              </div>
-
-                                              <div className="my-3">
-                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
-
-                                              <div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="4Bettzimmer"
-                                                                  // checked={roomType === "4Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
-                                                      </div>
-                                                      <div className="text-14">0,00 €</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="3Bettzimmer"
-                                                                  // checked={roomType === "3Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">3 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+100,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="2Bettzimmer"
-                                                                  // checked={roomType === "2Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">2 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+230,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="1Bettzimmer"
-                                                                  // checked={roomType === "1Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">1 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+450,00€</div>
-                                                  </div>
-
-                                              </div>
-                                              </div>
-
-                                              <div>
-                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
-                                                <p className="text-right text-15">including taxes and fee</p>
-                                              </div>
-
-                                                </div> 
-                                            </div>
-
-                                            <div className="form_4">
-                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
-                                                  <p><span><FaUser /></span><span> <b>1 . Child Information</b></span></p>
                                                 </div>
-                                                <div className="row y-gap-30 contactForm px-50 py-20 ">
-                                                  
+                                                
+                                                <div className="form_2">
+                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                      <p><span><FaUser /></span><span> <b>2 . Adult Information</b></span></p>
+                                                    </div>
+                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                      
                                                 <div className="row my-3">
                                                 <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Name
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={gender} 
-                                                              onChange={(e) => {setGender(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Select Gender</option> */}
-                                                              <option value="male">Male</option>
-                                                              <option value="female">Female</option>
-                                                              <option value="other">Other</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                              {gender}
-                                                          </label>
-                                                      </div>
-                                                  </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Birthday
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={Nationality} 
-                                                              onChange={(e)=>{setNationality(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Nationality</option> */}
-                                                              <option value="indian">Indian</option>
-                                                              <option value="german">German</option>
-                                                              <option value="canadian">Canadian</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                          {Nationality}
-                                                          </label>
-                                                      </div>
-                                                  </div>
-                                                </div>
-
-                                              <div className="col-12">
-                                                <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12 tb-border">
-                                                    <div className="text-14 ">
-                                                    <p className="d-flex justify-content-between"><span>Tour price per child</span> <span>1.339,00 €</span></p>
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Name
+                                                      </label>
                                                     </div>
                                                   </div>
-                              
-                                                </div>
-                                              </div>
 
-                                              <div className="my-3">
-                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
-
-                                              <div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="4Bettzimmer"
-                                                                  // checked={roomType === "4Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
-                                                      </div>
-                                                      <div className="text-14">0,00 €</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="3Bettzimmer"
-                                                                  // checked={roomType === "3Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">3 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+100,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="2Bettzimmer"
-                                                                  // checked={roomType === "2Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">2 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+230,00€</div>
-                                                  </div>
-
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="1Bettzimmer"
-                                                                  // checked={roomType === "1Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">1 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+450,00€</div>
-                                                  </div>
-
-                                              </div>
-
-                                              </div>
-
-                                              <div>
-                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
-                                                <p className="text-right text-15">including taxes and fee</p>
-                                              </div>
-
-                                                </div> 
-                                            </div>
-
-                                            <div className="form_5">
-                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
-                                                  <p><span><FaUser /></span><span> <b>1 . Baby Information</b></span></p>
-                                                </div>
-                                                <div className="row y-gap-30 contactForm px-50 py-20 ">
-                                                  
-                                                <div className="row my-3">
                                                   <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Name
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="text" required />
-                                                  <label className="lh-1 text-16 text-light-1">Surname</label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={gender} 
-                                                              onChange={(e) => {setGender(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Select Gender</option> */}
-                                                              <option value="male">Male</option>
-                                                              <option value="female">Female</option>
-                                                              <option value="other">Other</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                              {gender}
-                                                          </label>
-                                                      </div>
-                                                  </div>
-
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input type="date" required />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    Birthday
-                                                  </label>
-                                                </div>
-                                              </div>
-
-                                              <div className="col-md-6">
-                                                      <div className="form-input spacing">
-                                                          <select 
-                                                              value={Nationality} 
-                                                              onChange={(e)=>{setNationality(e.target.value)}} 
-                                                              required 
-                                                              className="form-control"
-                                                          >
-                                                              {/* <option value="" disabled>Nationality</option> */}
-                                                              <option value="indian">Indian</option>
-                                                              <option value="german">German</option>
-                                                              <option value="canadian">Canadian</option>
-                                                          </select>
-                                                          <label className="lh-1 text-16 text-light-1">
-                                                          {Nationality}
-                                                          </label>
-                                                      </div>
-                                                  </div>
-                                                </div>
-
-                                              <div className="col-12">
-                                                <div className="row y-gap-20 items-center justify-between">
-                                                  <div className="col-12 tb-border">
-                                                    <div className="text-14 ">
-                                                    <p className="d-flex justify-content-between"><span>Tour price per Baby</span> <span>1.339,00 €</span></p>
-                                                    <p className="text-right text-15">including taxes and fee</p>
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">Surname</label>
                                                     </div>
                                                   </div>
-                              
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={gender} 
+                                                                  onChange={(e) => {setGender(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Select Gender</option> */}
+                                                                  <option value="male">Male</option>
+                                                                  <option value="female">Female</option>
+                                                                  <option value="other">Other</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                                  {gender}
+                                                              </label>
+                                                          </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="date" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Birthday
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={Nationality} 
+                                                                  onChange={(e)=>{setNationality(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Nationality</option> */}
+                                                                  <option value="indian">Indian</option>
+                                                                  <option value="german">German</option>
+                                                                  <option value="canadian">Canadian</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                              {Nationality}
+                                                              </label>
+                                                          </div>
+                                                  </div>
                                                 </div>
-                                              </div>
 
-                                            
+                                                  <div className="col-12">
+                                                    <div className="row y-gap-20 items-center justify-between">
+                                                      <div className="col-12 tb-border">
+                                                        <div className="text-14">
+                                                        <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                        </div>
+                                                      </div>
+                                  
+                                                    </div>
+                                                  </div>
 
-                                            
-                                                </div> 
-                                            </div>
+                                                  <div className="my-3 border_b">
+                                                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
-                                      </div>
+                                                  <div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="4Bettzimmer"
+                                                                      // checked={roomType === "4Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                          </div>
+                                                          <div className="text-14">0,00 €</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="3Bettzimmer"
+                                                                      // checked={roomType === "3Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">3 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+100,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="2Bettzimmer"
+                                                                      // checked={roomType === "2Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">2 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+230,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="1Bettzimmer"
+                                                                      // checked={roomType === "1Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">1 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+450,00€</div>
+                                                      </div>
+
+                                                      </div>
+                                                  </div>
+
+                                                  <div>
+                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-15">including taxes and fee</p>
+                                                  </div>
+
+                                                    </div> 
+                                                </div>
+
+                                                <div className="form_3">
+                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                      <p><span><FaUser /></span><span> <b>3 . Adult Information</b></span></p>
+                                                    </div>
+                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                      
+                                                  <div className="row my-3">
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Name
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={gender} 
+                                                                  onChange={(e) => {setGender(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Select Gender</option> */}
+                                                                  <option value="male">Male</option>
+                                                                  <option value="female">Female</option>
+                                                                  <option value="other">Other</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                                  {gender}
+                                                              </label>
+                                                          </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="date" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Birthday
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={Nationality} 
+                                                                  onChange={(e)=>{setNationality(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Nationality</option> */}
+                                                                  <option value="indian">Indian</option>
+                                                                  <option value="german">German</option>
+                                                                  <option value="canadian">Canadian</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                              {Nationality}
+                                                              </label>
+                                                          </div>
+                                                  </div>
+                                                  </div>
+
+                                                  <div className="col-12">
+                                                    <div className="row y-gap-20 items-center justify-between">
+                                                      <div className="col-12 tb-border">
+                                                        <div className="text-14 ">
+                                                        <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
+                                                        </div>
+                                                      </div>
+                                  
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="my-3 border_b">
+                                                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+
+                                                  <div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="4Bettzimmer"
+                                                                      // checked={roomType === "4Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                          </div>
+                                                          <div className="text-14">0,00 €</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="3Bettzimmer"
+                                                                      // checked={roomType === "3Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">3 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+100,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="2Bettzimmer"
+                                                                      // checked={roomType === "2Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">2 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+230,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="1Bettzimmer"
+                                                                      // checked={roomType === "1Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">1 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+450,00€</div>
+                                                      </div>
+
+                                                  </div>
+                                                  </div>
+
+                                                  <div>
+                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-15">including taxes and fee</p>
+                                                  </div>
+
+                                                    </div> 
+                                                </div>
+
+                                                <div className="form_4">
+                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                      <p><span><FaUser /></span><span> <b>1 . Child Information</b></span></p>
+                                                    </div>
+                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                      
+                                                    <div className="row my-3">
+                                                    <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Name
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={gender} 
+                                                                  onChange={(e) => {setGender(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Select Gender</option> */}
+                                                                  <option value="male">Male</option>
+                                                                  <option value="female">Female</option>
+                                                                  <option value="other">Other</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                                  {gender}
+                                                              </label>
+                                                          </div>
+                                                      </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="date" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Birthday
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={Nationality} 
+                                                                  onChange={(e)=>{setNationality(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Nationality</option> */}
+                                                                  <option value="indian">Indian</option>
+                                                                  <option value="german">German</option>
+                                                                  <option value="canadian">Canadian</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                              {Nationality}
+                                                              </label>
+                                                          </div>
+                                                      </div>
+                                                    </div>
+
+                                                  <div className="col-12">
+                                                    <div className="row y-gap-20 items-center justify-between">
+                                                      <div className="col-12 tb-border">
+                                                        <div className="text-14 ">
+                                                        <p className="d-flex justify-content-between"><span>Tour price per child</span> <span>1.339,00 €</span></p>
+                                                        </div>
+                                                      </div>
+                                  
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="my-3 border_b">
+                                                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+
+                                                  <div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="4Bettzimmer"
+                                                                      // checked={roomType === "4Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">4 Bettzimmer (Standard)</div>
+                                                          </div>
+                                                          <div className="text-14">0,00 €</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="3Bettzimmer"
+                                                                      // checked={roomType === "3Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">3 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+100,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="2Bettzimmer"
+                                                                      // checked={roomType === "2Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">2 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+230,00€</div>
+                                                      </div>
+
+                                                      <div className="d-flex items-center justify-between radio_hight">
+                                                          <div className="d-flex items-center">
+                                                              <div className="form-radio">
+                                                                  <input
+                                                                      type="radio"
+                                                                      name="roomType"
+                                                                      className="radio-label"
+                                                                      value="1Bettzimmer"
+                                                                      // checked={roomType === "1Bettzimmer"}
+                                                                      // onChange={handleChange}
+                                                                  />
+                                                                  <div className="form-radio__mark">
+                                                                      <div className="form-radio__icon">
+                                                                          <Image
+                                                                              width="10"
+                                                                              height="8"
+                                                                              src="/img/icons/check.svg"
+                                                                              alt="icon"
+                                                                          />
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className="ml-10">1 Bettzimmer</div>
+                                                          </div>
+                                                          <div className="text-14">+450,00€</div>
+                                                      </div>
+
+                                                  </div>
+
+                                                  </div>
+
+                                                  <div>
+                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-15">including taxes and fee</p>
+                                                  </div>
+
+                                                    </div> 
+                                                </div>
+
+                                                <div className="form_5">
+                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                      <p><span><FaUser /></span><span> <b>1 . Baby Information</b></span></p>
+                                                    </div>
+                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                      
+                                                    <div className="row my-3">
+                                                      <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Name
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="text" required />
+                                                      <label className="lh-1 text-16 text-light-1">Surname</label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={gender} 
+                                                                  onChange={(e) => {setGender(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Select Gender</option> */}
+                                                                  <option value="male">Male</option>
+                                                                  <option value="female">Female</option>
+                                                                  <option value="other">Other</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                                  {gender}
+                                                              </label>
+                                                          </div>
+                                                      </div>
+
+                                                  <div className="col-md-6">
+                                                    <div className="form-input spacing">
+                                                      <input type="date" required />
+                                                      <label className="lh-1 text-16 text-light-1">
+                                                        Birthday
+                                                      </label>
+                                                    </div>
+                                                  </div>
+
+                                                  <div className="col-md-6">
+                                                          <div className="form-input spacing">
+                                                              <select 
+                                                                  value={Nationality} 
+                                                                  onChange={(e)=>{setNationality(e.target.value)}} 
+                                                                  required 
+                                                                  className="form-control"
+                                                              >
+                                                                  {/* <option value="" disabled>Nationality</option> */}
+                                                                  <option value="indian">Indian</option>
+                                                                  <option value="german">German</option>
+                                                                  <option value="canadian">Canadian</option>
+                                                              </select>
+                                                              <label className="lh-1 text-16 text-light-1">
+                                                              {Nationality}
+                                                              </label>
+                                                          </div>
+                                                      </div>
+                                                    </div>
+
+                                                  <div className="col-12">
+                                                    <div className="row y-gap-20 items-center justify-between">
+                                                      <div className="col-12 tb-border">
+                                                        <div className="text-14 ">
+                                                        <p className="d-flex justify-content-between"><span>Tour price per Baby</span> <span>1.339,00 €</span></p>
+                                                        <p className="text-right text-15">including taxes and fee</p>
+                                                        </div>
+                                                      </div>
+                                  
+                                                    </div>
+                                                  </div>
+
+                                                
+
+                                                
+                                                    </div> 
+                                                </div>
+
+          </div>
               }
-
-
-            </div>
+      </div>
           </div>
 
           <div className="col-lg-4 ">
@@ -1138,7 +1163,7 @@ useEffect(() => {
                   </div>
 
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Total</div>
+                    <div className="fw-500">Tax</div>
                     <div className=""> 23 € </div>
                   </div>
 
@@ -1165,9 +1190,9 @@ useEffect(() => {
                 </div>
 
                 <Link href='/payment'>
-                <button className="button -md -outline-accent-1 text-accent-1 mt-30">
+                <button className="button -sm -outline-accent-1 text-accent-1 mt-30 text-center mx-auto">
                   Apply
-                  <i className="icon-arrow-top-right text-16 ml-10"></i>
+                  {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                 </button>
                 </Link>
               </div>
@@ -1190,6 +1215,139 @@ useEffect(() => {
           </div>
         </div>
       </div>
+      
     </section>
+    <div id="openSignIn">
+    <Modal
+      isOpen={modalIsOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      //style={customStyles}
+      contentLabel="Example Modal"
+      style={{
+        overlay: {
+          backgroundColor: 'papayawhip'
+        },
+        content: {
+          color: 'lightsteelblue'
+        }
+      }}
+    >
+
+<section className="mt-header layout-pt-lg layout-pb-lg">
+
+              <h1 className="text-30">Log In</h1>
+            
+       
+
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
+            >
+              <div className="form-input spacing">
+                <input type="email" required />
+                <label className="lh-1 text-16 text-light-1">
+                  Email Address
+                </label>
+              </div>
+
+              <div className="form-input spacing">
+                <input type="email" required />
+                <label className="lh-1 text-16 text-light-1">Password</label>
+              </div>
+
+              <div className="row y-ga-10 justify-between items-center pt-30 spacing">
+                <div className="col-auto">
+                  <div className="d-flex items-center">
+                    <div className="form-checkbox ">
+                      <input type="checkbox" name="name" />
+                      <div className="form-checkbox__mark">
+                        <div className="form-checkbox__icon">
+                          <svg
+                            width="10"
+                            height="8"
+                            viewBox="0 0 10 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="lh-11 ml-10">Remember me</div>
+                  </div>
+                </div>
+
+                <div className="col-auto">
+                  <a href="#">Lost your password?</a>
+                </div>
+              </div>
+
+             <div className="row y-gap-15">
+                <div className="col">
+                <Link href='/db-booking/customer'>
+                      <button
+                        type="submit"
+                        className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
+                      >
+                        Customer Log In
+                      </button>
+                  </Link>
+                </div>
+
+                <div className="col">
+                <Link href='/db-main/vandor'>
+                      <button
+                        type="submit"
+                        className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
+                      >
+                        Agent Log in
+                      </button>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="relative line mt-50 mb-30">
+                <div className="line__word fw-500">OR</div>
+              </div>
+
+               <div className="row y-gap-15">
+                <div className="col">
+                  <button
+                    type="submit"
+                    className="button -md -outline-blue-1 text-blue-1 col-12"
+                  >
+                   <FaFacebookF size={15} className="mx-1"/>
+                    Continue Facebook
+                  </button>
+                </div>
+
+                <div className="col">
+                  <button className="button -md -outline-red-1 text-red-1 col-12">
+                  <FaGoogle size={15} className="mx-1" />
+                    Continue Google
+                  </button>
+                </div>
+              </div><br />
+              <div className="row y-gap-15">
+                <div className="col">
+                  <button className="button -md -outline-dark-1 text-dark-1 col-12">
+                  <FaApple size={15} className="mx-1" />
+                    Sign in With Apple
+                  </button>
+                </div>
+              </div>
+            </form>
+        
+    </section>
+
+    </Modal>
+    </div>
+    </>
   );
 }

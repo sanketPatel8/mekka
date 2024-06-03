@@ -5,7 +5,7 @@ export default function BannerOne() {
   return (
     <section className="cta -type-1">
       <div className="cta__bg">
-        <Image width={1530} height={500} src="/img/cta/1/bg.png" alt="image" />
+        <Image width={1530} height={500} src="/img/cta/1/bg.jpg" alt="image" />
       </div>
 
       <div className="container">
@@ -59,7 +59,7 @@ export default function BannerOne() {
             </div>
           </div>
 
-          <div className="col-lg-6">
+          {/* <div className="col-lg-6">
             <div className="cta__image">
               <Image
                 width={667}
@@ -68,7 +68,7 @@ export default function BannerOne() {
                 alt="image"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

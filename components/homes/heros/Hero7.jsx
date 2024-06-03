@@ -14,35 +14,35 @@ import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTrave
 const slides = [
   {
     id: 1,
-    imageSrc: "/img/hero/7/mekkabookingBg.png",
+    imageSrc: "/img/hero/7/image 1.jpg",
     subtitle:
       "the independent",
     title: "comparison portal , find cheap , offers & save",
   },
   {
     id: 2,
-    imageSrc: "/img/hero/7/mekkabookingBg.png",
+    imageSrc: "/img/hero/7/image 2.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 3,
-    imageSrc: "/img/hero/7/mekkabookingBg.png",
+    imageSrc: "/img/hero/7/image 3.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 4,
-    imageSrc: "/img/hero/7/mekkabookingBg.png",
+    imageSrc: "/img/hero/7/image 4.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 5,
-    imageSrc: "/img/hero/7/mekkabookingBg.png",
+    imageSrc: "/img/hero/7/pxfuel 1.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
@@ -126,7 +126,7 @@ export default function Hero7() {
                           <h1
                             data-aos="fade-up"
                             data-aos-delay="100"
-                            className="hero__subtitle text-white mb-15 md:mb-10"
+                            className="hero__subtitle text-white mb-10 md:mb-10"
                           >
                             {elm.subtitle}
                           </h1>
@@ -136,11 +136,11 @@ export default function Hero7() {
                             data-aos-delay="300"
                             className="hero__title text--color-accent-1"
                           >
-                            <span style={{fontSize : "11vh", fontWeight : "900" , color : "#DAC04F "}}>{elm.title.split(",")[0]}</span>
+                            <span className="text_50">{elm.title.split(",")[0]}</span>
                             <br className="md:d-none" />
-                            <span style={{fontSize : "6vw", fontWeight : "700" , color : "#4198BA ", textAlign : "center"}}><b>{elm.title.split(",")[1]}</b></span>
+                            <span className="text_30"><b>{elm.title.split(",")[1]}</b></span>
                             <br className="md:d-none" />
-                            <span style={{fontSize : "4vw", fontWeight : "700" , color : "white " , textAlign : "right"}}>{elm.title.split(",")[2]}</span>
+                            <span className="text_10">{elm.title.split(",")[2]}</span>
                           </h1>
                          
                         </div>

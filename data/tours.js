@@ -109,7 +109,6 @@ export const tourDataTwo = [
     title:
       "Umrah - SOMMER",
     rating: 4.8,
-    panding:'Panding',
     ratingCount: 269,
     duration: `3 Days 2 Nights`,
     description:
@@ -130,10 +129,7 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` Free Cancellation`,
       },
-      {
-        icon: `icon-check`,
-        name: ` 29.05.2024`,
-      },
+      
     ],
   },
   {
@@ -142,6 +138,167 @@ export const tourDataTwo = [
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
     arriving : 'Completed' ,
+    pending:'Pending',
+    title:
+      "Umrah - SOMMER",
+    rating: 4.8,
+    ratingCount: 269,
+    duration: `3 Days 2 Nights`,
+    description:
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
+    price: 114.0,
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
+    features: [
+      {
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` Free Cancellation`,
+      },
+      
+    ],
+  },
+  {
+    id: 11,
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
+    title:
+      "Umrah - SOMMER",
+    rating: 4.8,
+    ratingCount: 269,
+    duration: `3 Days 2 Nights`,
+    description:
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
+    price: 114.0,
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
+    features: [
+      {
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` Free Cancellation`,
+      },
+      
+    ],
+  },
+  {
+    id: 12,
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
+    title:
+      "Umrah - SOMMER",
+    rating: 4.8,
+    ratingCount: 269,
+    duration: `3 Days 2 Nights`,
+    description:
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
+    price: 114.0,
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
+    features: [
+      {
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` Free Cancellation`,
+      },
+      
+    ],
+  },
+  {
+    id: 13,
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
+    title:
+      "Umrah - SOMMER",
+    rating: 4.8,
+    ratingCount: 269,
+    duration: `3 Days 2 Nights`,
+    description:
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
+    price: 114.0,
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
+    features: [
+      {
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` Free Cancellation`,
+      },
+      
+    ],
+  },
+  {
+    id: 14,
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
+    title:
+      "Umrah - SOMMER",
+    rating: 4.8,
+    ratingCount: 269,
+    duration: `3 Days 2 Nights`,
+    description:
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
+    price: 114.0,
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
+    features: [
+      {
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` Free Cancellation`,
+      },
+      
+    ],
+  },
+  
+];
+
+export const tourDataTwoOne = [
+  {
+    id: 9,
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
+    arriving : 'Upcoming' ,
     title:
       "Umrah - SOMMER",
     rating: 4.8,
@@ -169,6 +326,44 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` 29.05.2024`,
       },
+      
+    ],
+  },
+  {
+    id: 10,
+    imageSrc: "/img/tourCards/1/13.jpeg",
+    badgeText: "20 % OFF",
+    location: "zu Kaaba 500 m",
+    arriving : 'Completed' ,
+    pending:'Pending',
+    title:
+      "Umrah - SOMMER",
+    rating: 4.8,
+    ratingCount: 269,
+    duration: `3 Days 2 Nights`,
+    description:
+      "Mekka Hotel: ALEBAA HOTEL",
+    description2:
+      "Medina Hotel: VIEW AL-MADINA",
+    description3:
+      "Medine und Mekka",
+    price: 114.0,
+    fromPrice: "1.799,00",
+    badgeClass: "bg-accent-1",
+    features: [
+      {
+        icon: `faCalendarDays`,
+        name: ` 26. Jun. 2024 - 05. Jul. 2024`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` Free Cancellation`,
+      },
+      {
+        icon: `icon-check`,
+        name: ` 29.05.2024`,
+      },
+      
     ],
   },
   {
@@ -203,6 +398,7 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` 29.05.2024`,
       },
+      
     ],
   },
   {
@@ -237,6 +433,7 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` 29.05.2024`,
       },
+      
     ],
   },
   {
@@ -271,6 +468,7 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` 29.05.2024`,
       },
+      
     ],
   },
   {
@@ -305,6 +503,7 @@ export const tourDataTwo = [
         icon: `icon-check`,
         name: ` 29.05.2024`,
       },
+      
     ],
   },
   

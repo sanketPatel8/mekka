@@ -103,6 +103,11 @@ const CustomerDetaTable = () => {
     setIsOpen(true);
   }
 
+  function closeModal() {
+    setIsOpen(false);
+    
+  }
+
   function openPaymentModal() {
     setPaymentModalIsOpen(true);
   }
@@ -111,10 +116,7 @@ const CustomerDetaTable = () => {
     setPaymentModalIsOpen(false);
   }
 
-  function closeModal() {
-    setIsOpen(false);
-    
-  }
+
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
@@ -138,7 +140,7 @@ const CustomerDetaTable = () => {
         </div>
 
         <button className="button -sm -accent-1 bg-info-2 text-white col-lg-2 mx-2" onClick={openPaymentModal}>
-          PENDING PAYMENT (AMOUNT)
+          PENDING PAYMENT (10,00 €)
         </button>
         <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
           ADD PERSON
@@ -229,7 +231,7 @@ const CustomerDetaTable = () => {
             </div>
             <div className="col-12">
               <div className="row y-gap-20 items-center justify-between">
-                <div className="col-12" style={{ borderTop: "2px solid black", borderBottom: "2px solid black" }}>
+                <div className="col-12 tb-border">
                   <div className="text-14">
                     <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
                     {/* <p className="text-right text-15">including taxes and fee</p> */}
@@ -238,8 +240,8 @@ const CustomerDetaTable = () => {
               </div>
             </div>
 
-            <div style={{borderBottom : "2px solid black"}}>
-                                              <h5 className="text-18 fw-500 mb-20 mt-10">Possible additional services per person:</h5>
+            <div className='border_b my-3'>
+                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                               <div>
 
@@ -393,13 +395,14 @@ const CustomerDetaTable = () => {
         </div>
         <div className="row y-gap-30 contactForm px-50 py-10">
           <div className="col-md-12">
-            <h5 className="text-center">Total Amount : <b>2,55.50 €</b></h5>
+            <h5 className="mb-3">Total Amount : <b>2,55.50 €</b></h5>
           </div>
+          
 
           <div className="row">
           <div className="col-md-5">
             <div className="form-input spacing">
-              <input type="text"  />
+              <input type="text"  value='Amount-1'/>
               <label className="lh-1 text-16 text-light-1">1st Amount</label>
             </div>
           </div>
@@ -423,7 +426,7 @@ const CustomerDetaTable = () => {
 
           <div className="col-md-5">
             <div className="form-input spacing">
-              <input type="text" required />
+              <input type="text" required value='Amount-2' />
               <label className="lh-1 text-16 text-light-1">2nd Amount</label>
             </div>
           </div>
@@ -447,7 +450,7 @@ const CustomerDetaTable = () => {
           <div className="row">
           <div className="col-md-5">
             <div className="form-input spacing">
-              <input type="text" required />
+              <input type="text" required value='Amount-3' />
               <label className="lh-1 text-16 text-light-1">3rd Amount</label>
             </div>
           </div>
@@ -489,33 +492,11 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='ml-50'>Cancle Trip</h2>
+          <h2 className='ml-50'>Cancel Trip</h2>
           <button onClick={CloseCancelPopUp}><IoClose size={25} /></button>
         </div>
         
         <div className="row y-gap-30 contactForm px-50 py-10">
-          <div className="row">
-          <div className="col-md-6">
-            <div className="form-input spacing">
-              <input type="text"  />
-              <label className="lh-1 text-16 text-light-1">Agent Payment Amount:</label>
-            </div>
-          </div>
-
-          <div className="col-md-6">
-           <div className="form-input spacing">
-              <input type="date" disabled value="31-05-2024" placeholder='31-05-2024' />
-              <label className="lh-1 text-16 text-light-1 "></label>
-            </div>
-          </div>
-          </div>
-
-          <div className='ml-3'>
-          <p><span className=''><b>Agency :</b></span>   Almishkah</p>
-          <p><span className=''><b>Bank Name :</b></span>   Postbank</p>
-          <p><span className=''><b>Bank details :</b></span>   DE09 1001 0010 0594 9871 38</p>
-          <p><span className=''><b>Transaction :</b></span>   1709631873</p>
-          </div>
 
           <table className="table table-success table-striped my-3">
               <thead>
@@ -544,15 +525,38 @@ const CustomerDetaTable = () => {
               </tbody>
           </table>
 
-          <br />
+          <hr />
 
-          <button className="button -sm -red-2 bg-red-3 text-white col-lg-2 ml-3" onClick={()=> {alert('Your Booking Is Cancled');setTimeout(()=>{
-              CloseCancelPopUp()
-            },2000)}}>
-                Cancel Booking
+          <table className="table table-success table-striped my-3">
+              <thead>
+                <tr>
+                  <th scope="col"><b>Time frame</b></th>
+                  <th scope="col"><b>MekkaBooking Fee</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0 hours to 3 hours*</td>
+                  <td>ADULT : Non Refundable</td>
+                </tr>
+                <tr>
+                  <td>3 hours to 4 days*</td>
+                  <td>ADULT : 3,500 € + 300 € </td>
+                </tr>
+                <tr>
+                  <td>4 days to 365 days*</td>
+                  <td>ADULT : 3,000 € + 300 €</td>
+                </tr>
+              </tbody>
+          </table>
+
+        <div className="col-lg-12 d-flex justify-content-center">
+          <button className="button -sm -red-2 bg-red-3 text-white" onClick={()=> {alert('Your Booking Is canceled !!');setTimeout(()=>{
+            CloseCancelPopUp()
+          },2000)}}>
+            Cancel Booking
           </button>
-
-
+        </div>
         </div>
 
       </Modal>

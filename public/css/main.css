@@ -1287,7 +1287,7 @@ button:focus {
 }
 
 .contactForm .form-input textarea:focus + label,
-.contactForm .form-input input:focus + label {
+.contactForm .form-input input + label {
   transform: translateY(-29px);
 }
 
@@ -11044,7 +11044,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .border-1 {
-  border: 2px solid #E7E6E6;
+  border: 1px solid #E7E6E6;
 }
 
 .border-dark-1 {

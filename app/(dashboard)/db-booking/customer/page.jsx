@@ -2,11 +2,9 @@
 
 import React, { useState } from "react";
 import Header from "@/components/dasboard/Header";
-import Pagination from "@/components/common/Pagination";
-import { bookingData } from "@/data/dashboard";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
-import { tourDataTwo } from "@/data/tours";
+import { tourDataTwo, tourDataTwoOne } from "@/data/tours";
 import { LiaKaabaSolid } from "react-icons/lia";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaStar } from "react-icons/fa";
@@ -35,7 +33,7 @@ export default function DbBooking() {
           <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 
 <div className="row y-gap-30 pt-30">
-              {tourDataTwo.map((elm, i) => (
+              {tourDataTwoOne.map((elm, i) => (
                 <div className="col-12 my-2" key={i}>
 
                   <div className="tourCard -type-2 bg-white">
@@ -85,7 +83,7 @@ export default function DbBooking() {
                         {elm.features?.map((elm2, i2) => (
                           <div key={i2} className="col-auto">
                             <div className="text-14 ">  
-                                <FontAwesomeIcon icon={`${elm2.icon}`} />
+                                {/* <FontAwesomeIcon icon={`${elm2.icon}`} /> */}
                               {elm2.name}
                             </div>
                           </div>
@@ -99,10 +97,9 @@ export default function DbBooking() {
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}
                         </div>
-                        <lable className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : ''}><b>{elm.arriving}</b></lable>
-                        {/* <lable className="text-green">Compleated</lable> */}
-                        <lable>{elm.panding}</lable>
-                        <lable>10% Off</lable>
+                        <label className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : '' }><b>{elm.arriving}</b></label>
+                        <label className="badge bg-secondary">{elm.pending}</label>
+                        {/* <h1> <span class="badge bg-secondary">New</span></h1> */}
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">

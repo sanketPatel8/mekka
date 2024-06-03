@@ -29,27 +29,27 @@ export default function Register() {
               onSubmit={(e) => e.preventDefault()}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
-              <div className="form-input">
+              <div className="form-input spacing">
                 <input type="text" required />
                 <label className="lh-1 text-16 text-light-1">Username</label>
               </div>
 
-              <div className="form-input">
+              <div className="form-input spacing">
                 <input type="text" required />
                 <label className="lh-1 text-16 text-light-1">First Name</label>
               </div>
 
-              <div className="form-input mt-10">
+              <div className="form-input mt-10 spacing">
                 <input type="text" required />
                 <label className="lh-1 text-16 text-light-1">Last Name</label>
               </div>
 
-              <div className="form-input">
+              <div className="form-input spacing">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">Your Email</label>
               </div>
 
-              <div className="form-input">
+              <div className="form-input spacing">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">
                   Confirm email

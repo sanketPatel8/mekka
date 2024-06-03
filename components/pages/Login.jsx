@@ -36,12 +36,12 @@ export default function Login() {
                 </label>
               </div>
 
-              <div className="form-input mt-10 spacing">
+              <div className="form-input spacing">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">Password</label>
               </div>
 
-              <div className="row y-ga-10 justify-between items-center pt-30">
+              <div className="row y-ga-10 justify-between items-center pt-30 spacing">
                 <div className="col-auto">
                   <div className="d-flex items-center">
                     <div className="form-checkbox ">

@@ -157,7 +157,7 @@ useEffect(() => {
 
           <div className="col-md-6">
             <div className="form-input spacing">
-              <input type="text" value="Test" required/>
+              <input type="text"  required/>
               <label className="lh-1 text-16 text-light-1">1st Amount</label>
             </div>
           </div>
@@ -171,7 +171,7 @@ useEffect(() => {
 
           <div className="col-md-6">
             <div className="form-input spacing">
-              <input type="text" value="Test" required />
+              <input type="text"  required />
               <label className="lh-1 text-16 text-light-1">2nd Amount</label>
             </div>
           </div>
@@ -185,7 +185,7 @@ useEffect(() => {
 
           <div className="col-md-6">
             <div className="form-input spacing">
-              <input type="text" value="Test" required />
+              <input type="text"  required />
               <label className="lh-1 text-16 text-light-1">3rd Amount</label>
             </div>
           </div>
@@ -521,16 +521,16 @@ useEffect(() => {
                 <div className="">
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500">Subtotal</div>
-                    <div className=""> 182€ </div>
+                    <div className=""> 182 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
-                    <p className="fw-500">Total</p>
-                    <div className=""> 23€ </div>
+                    <p className="fw-500">Tax</p>
+                    <div className=""> 23 € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Add Discount</div>
+                    <div className="fw-500">Discount</div>
                     <div className="">-23 € </div>
                   </div>
 
