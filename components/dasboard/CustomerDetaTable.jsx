@@ -143,7 +143,7 @@ const CustomerDetaTable = () => {
         <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
           ADD PERSON
         </button>
-        <p className='text-right pr-60 text-red'>Available 10 seats</p>
+        <p className='text-red'>Available 10 seats</p>
       </div>
       <DataTable title='Reservation Details' columns={ColumnReservation_details} data={ReservationData} highlightOnHover />
       <br />
@@ -493,6 +493,68 @@ const CustomerDetaTable = () => {
           <button onClick={CloseCancelPopUp}><IoClose size={25} /></button>
         </div>
         
+        <div className="row y-gap-30 contactForm px-50 py-10">
+          <div className="row">
+          <div className="col-md-6">
+            <div className="form-input spacing">
+              <input type="text"  />
+              <label className="lh-1 text-16 text-light-1">Agent Payment Amount:</label>
+            </div>
+          </div>
+
+          <div className="col-md-6">
+           <div className="form-input spacing">
+              <input type="date" disabled value="31-05-2024" placeholder='31-05-2024' />
+              <label className="lh-1 text-16 text-light-1 "></label>
+            </div>
+          </div>
+          </div>
+
+          <div className='ml-3'>
+          <p><span className=''><b>Agency :</b></span>   Almishkah</p>
+          <p><span className=''><b>Bank Name :</b></span>   Postbank</p>
+          <p><span className=''><b>Bank details :</b></span>   DE09 1001 0010 0594 9871 38</p>
+          <p><span className=''><b>Transaction :</b></span>   1709631873</p>
+          </div>
+
+          <table className="table table-success table-striped my-3">
+              <thead>
+                <tr>
+                  <th scope="col"><b>Type of fee</b></th>
+                  <th scope="col"><b>Fee (gross)</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Total Package Fees</td>
+                  <td>300.00 €</td>
+                </tr>
+                <tr>
+                  <td>Mekka Fees</td>
+                  <td>0.00 €</td>
+                </tr>
+                <tr>
+                  <td>Total Tax Amount</td>
+                  <td>-13.00 €</td>
+                </tr>
+                <tr>
+                  <td>Agent Payable</td>
+                  <td>1.000,00 €</td>
+                </tr>
+              </tbody>
+          </table>
+
+          <br />
+
+          <button className="button -sm -red-2 bg-red-3 text-white col-lg-2 ml-3" onClick={()=> {alert('Your Booking Is Cancled');setTimeout(()=>{
+              CloseCancelPopUp()
+            },2000)}}>
+                Cancel Booking
+          </button>
+
+
+        </div>
+
       </Modal>
       </div>
 

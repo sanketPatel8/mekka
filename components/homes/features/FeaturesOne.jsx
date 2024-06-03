@@ -22,7 +22,8 @@ export default function FeaturesOne() {
             <div key={i} className="col-lg-4 col-sm-4 my-4">
               <div className="featureIcon -type-1 pr-40 md:pr-0">
                 <div className="featureIcon__icon">
-                  <Image width={60} height={60} src={elm.iconSrc} alt="icon" />
+                  {/* <Image width={60} height={60} src={elm.iconSrc} alt="icon" /> */}
+                  {elm.iconSrc}
                 </div>
 
                 <h3 className="featureIcon__title text-18 fw-500 mt-30">

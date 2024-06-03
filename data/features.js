@@ -1,37 +1,42 @@
+import { FiShield ,  FiShieldOff , FiPhoneCall } from 'react-icons/fi';
+import { FaBolt , FaUsers } from 'react-icons/fa';
+import { AiOutlineEye } from 'react-icons/ai';
+import { MdLanguage } from 'react-icons/md';
+
 export const features = [
   {
     id: 1,
-    iconSrc: "/img/icons/1/right.png",
+    iconSrc: <FaBolt  size={50} color='#4780aa'/>,
     title: "Fast & easy processing!",
     text: "All booking processes are handled directly via mekkabooking! mekkabooking is at your side until the end of the trip!",
   },
   {
     id: 2,
-    iconSrc: "/img/icons/1/right.png",
+    iconSrc: <FiShieldOff size={50} color='#4780aa'/> ,
     title: "Safe & Reputable!",
     text: "Through fiduciary processing, we offer security and at the same time ensure that everything runs smoothly!",
   },
   {
     id: 3,
-    iconSrc: "/img/icons/1/right.png",
+    iconSrc: <AiOutlineEye  size={50} color='#4780aa'/>,
     title: "Transparent booking process",
     text: "You will receive a written confirmation by email about every booking step!",
   },
   {
     id: 4,
-    iconSrc: "/img/icons/1/right.png",
+    iconSrc: <FiPhoneCall size={50} color='#4780aa'/>,
     title: "Call Center!",
     text: "Guaranteed accessibility! Monday - Friday, 9:00 a.m. - 6:00 p.m",
   },
   {
     id: 5,
-    iconSrc: "/img/icons/1/right.png",
+    iconSrc: <MdLanguage  size={50} color='#4780aa'/>,
     title: "Multilingual staff!",
     text: "German, English, Turkish, Arabic, Italian",
   },
   {
     id: 6,
-    iconSrc: "/img/icons/1/right.png",
+    iconSrc: <FaUsers size={50} color='#4780aa'/>,
     title: "Special offers for groups!",
     text: "We plan and put together group offers for mosques, clubs, families, etc",
   },
