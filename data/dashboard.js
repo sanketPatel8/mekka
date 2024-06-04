@@ -3,31 +3,31 @@
 export const sidebarItemsAgentDB = [
   {
     id: 1,
-    href: "/db-main/vandor",
+    href: "/db-main/vendor",
     iconClass: "icon-dashboard text-26",
     label: "Dashboard",
   },
   {
     id: 2,
-    href: "/db-booking/vandor",
+    href: "/db-booking/vendor",
     iconClass: "icon-calendar text-26",
     label: "Bookings",
   },
   {
     id: 3,
-    href: "/db-listing/vandor",
+    href: "/db-listing/vendor",
     iconClass: "icon-menu text-26",
     label: "My Listings",
   },
   {
     id: 4,
-    href: "/db-add-tour/vandor",
+    href: "/db-add-tour/vendor",
     iconClass: "icon-clipboard text-26",
     label: "Add Tour",
   },
   {
     id: 5,
-    href: "/db-profile/vandor",
+    href: "/db-profile/vendor",
     iconClass: "icon-account text-26",
     label: "My Profile",
   },

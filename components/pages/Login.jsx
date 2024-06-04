@@ -86,7 +86,7 @@ export default function Login() {
                 </div>
 
                 <div className="col">
-                <Link href='/db-main/vandor'>
+                <Link href='/db-main/vendor'>
                       <button
                         type="submit"
                         className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
