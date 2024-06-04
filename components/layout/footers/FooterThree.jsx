@@ -47,7 +47,7 @@ export default function FooterThree() {
                     328 Queensberry Street, North Melbourne VIC3051, Australia.
                   </a>
                   <a className="d-block" href="#">
-                    hi@viatours.com
+                    hi@mekkaBookings.com
                   </a>
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function FooterThree() {
         <div className="footer__bottom">
           <div className="row y-gap-5 justify-between items-center">
             <div className="col-auto">
-              <div>© Copyright Viatours {new Date().getFullYear()}</div>
+              <div>© Copyright mekkaBookings {new Date().getFullYear()}</div>
             </div>
 
             <div className="col-auto">

@@ -5,7 +5,7 @@ import React from "react";
 
 export const metadata = {
   title: "Register || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "ViaTour - Travel & Tour React NextJS Template",
+  description: "mekkaBooking - Travel & Tour React NextJS Template",
 };
 
 export default function page() {

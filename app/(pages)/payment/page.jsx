@@ -5,8 +5,8 @@ import Payment from "@/components/pages/Payment";
 import React from "react";
 
 export const metadata = {
-  title: "Booking-page || ViaTour - Travel & Tour React NextJS Template",
-  description: "ViaTour - Travel & Tour React NextJS Template",
+  title: "Booking-page || mekkaBooking - Travel & Tour React NextJS Template",
+  description: "mekkaBooking - Travel & Tour React NextJS Template",
 };
 
 export default function payment() {

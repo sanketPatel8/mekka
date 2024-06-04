@@ -8,8 +8,8 @@ import TourSlder from "@/components/tours/TourSlider";
 import React from "react";
 
 export const metadata = {
-  title: "Tour-list-7 || ViaTour - Travel & Tour React NextJS Template",
-  description: "ViaTour - Travel & Tour React NextJS Template",
+  title: "Tour-list-7 || mekkaBooking - Travel & Tour React NextJS Template",
+  description: "mekkaBooking - Travel & Tour React NextJS Template",
 };
 
 export default function page() {

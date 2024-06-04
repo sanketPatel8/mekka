@@ -53,7 +53,7 @@ export default function FooterSix() {
                       Australia.
                     </a>
                     <a className="d-block" href="#">
-                      hi@viatours.com
+                      hi@mekkaBookings.com
                     </a>
                   </div>
                 </div>
@@ -101,7 +101,7 @@ export default function FooterSix() {
           <div className="footer__bottom">
             <div className="row y-gap-5 justify-between items-center">
               <div className="col-auto text-white">
-                <div>© Copyright Viatours {new Date().getFullYear()}</div>
+                <div>© Copyright mekkaBookings {new Date().getFullYear()}</div>
               </div>
 
               <div className="col-auto">

@@ -3,8 +3,8 @@ import TourList7 from "@/components/tours/TourList7";
 import React from "react";
 
 export const metadata = {
-  title: "Tour-list-9 || ViaTour - Travel & Tour React NextJS Template",
-  description: "ViaTour - Travel & Tour React NextJS Template",
+  title: "Tour-list-9 || mekkaBooking - Travel & Tour React NextJS Template",
+  description: "mekkaBooking - Travel & Tour React NextJS Template",
 };
 
 export default function page() {

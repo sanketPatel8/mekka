@@ -8,8 +8,8 @@ import { allTour } from "@/data/tours";
 import React from "react";
 
 export const metadata = {
-  title: "Tour-single-1 || ViaTour - Travel & Tour React NextJS Template",
-  description: "ViaTour - Travel & Tour React NextJS Template",
+  title: "Tour-single-1 || mekkaBooking - Travel & Tour React NextJS Template",
+  description: "mekkaBooking - Travel & Tour React NextJS Template",
 };
 
 export default function page({ params }) {

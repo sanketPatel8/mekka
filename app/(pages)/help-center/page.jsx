@@ -6,8 +6,8 @@ import Hero from "@/components/pages/helpCenter/Hero";
 import React from "react";
 
 export const metadata = {
-  title: "Help center || ViaTour - Travel & Tour React NextJS Template",
-  description: "ViaTour - Travel & Tour React NextJS Template",
+  title: "Help center || mekkaBooking - Travel & Tour React NextJS Template",
+  description: "mekkaBooking - Travel & Tour React NextJS Template",
 };
 
 export default function page() {
