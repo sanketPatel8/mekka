@@ -75,7 +75,7 @@ export default function Login() {
 
              <div className="row y-gap-15">
                 <div className="col">
-                <Link href='/db-booking/customer'>
+                <Link href='/customer/db-booking/'>
                       <button
                         type="submit"
                         className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
@@ -86,7 +86,7 @@ export default function Login() {
                 </div>
 
                 <div className="col">
-                <Link href='/db-main/vendor'>
+                <Link href='/vendor/db-main/'>
                       <button
                         type="submit"
                         className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"

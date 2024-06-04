@@ -3,31 +3,31 @@
 export const sidebarItemsAgentDB = [
   {
     id: 1,
-    href: "/db-main/vendor",
+    href: "/vendor/db-main",
     iconClass: "icon-dashboard text-26",
     label: "Dashboard",
   },
   {
     id: 2,
-    href: "/db-booking/vendor",
+    href: "/vendor/db-booking",
     iconClass: "icon-calendar text-26",
     label: "Bookings",
   },
   {
     id: 3,
-    href: "/db-listing/vendor",
+    href: "/vendor/db-listing",
     iconClass: "icon-menu text-26",
     label: "My Listings",
   },
   {
     id: 4,
-    href: "/db-add-tour/vendor",
+    href: "/vendor/db-add-tour",
     iconClass: "icon-clipboard text-26",
     label: "Add Tour",
   },
   {
     id: 5,
-    href: "/db-profile/vendor",
+    href: "/vendor/db-profile",
     iconClass: "icon-account text-26",
     label: "My Profile",
   },
@@ -43,13 +43,13 @@ export const sidebarItemsCustomerDB = [
   // },
   {
     id: 2,
-    href: "/db-booking/customer",
+    href: "/customer/db-booking",
     iconClass: "icon-calendar text-26",
     label: "Bookings",
   },
   {
     id: 5,
-    href: "/db-profile/customer",
+    href: "/customer/db-profile",
     iconClass: "icon-account text-26",
     label: "My Profile",
   },
