@@ -19,7 +19,7 @@ export const menuData = [
     id: 2,
     label: "Tour",
     submenu: [
-      { id: 21, label: "Tour List ", href: "/tour-list-1" },
+      { id: 21, label: "Tour List ", href: "/tourlist" },
       // { id: 22, label: "Tour list 2", href: "/tour-list-2" },
       // { id: 23, label: "Tour list 3", href: "/tour-list-3" },
       // { id: 24, label: "Tour list 4", href: "/tour-list-4" },
@@ -41,7 +41,7 @@ export const menuData = [
     id: 3,
     label: "Dashboard",
     submenu: [
-      { id: 31, label: "Dashboard", href: "/db-main/customer" },
+      { id: 31, label: "Dashboard", href: "/customer/db-booking" },
       // { id: 32, label: "Booking", href: "/db-booking" },
       // { id: 33, label: "Listing", href: "/db-listing" },
       // { id: 34, label: "Add tour", href: "/db-add-tour" },
@@ -54,7 +54,7 @@ export const menuData = [
     id: 4,
     label: "Booking Tour",
     submenu: [
-      { id: 41, label: "booking page ", href: "/booking-pages" },
+      { id: 41, label: "booking page ", href: "/booking" },
       // { id: 42, label: "Blog list 2", href: "/blog-list-2" },
       // { id: 43, label: "Blog list 3", href: "/blog-list-3" },
       // { id: 44, label: "Blog single", href: "/blog-single/2" },
