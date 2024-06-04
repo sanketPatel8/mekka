@@ -45,7 +45,7 @@ export default function Header1() {
       <header
         className={`header -type-1 js-header ${addClass ? "-is-sticky" : ""}`}
       >
-        <div className="header__container container-fluid">
+        <div className="header__container container px-0">
           <div className="headerMobile__left">
             <button
               onClick={() => setMobileMenuOpen(true)}

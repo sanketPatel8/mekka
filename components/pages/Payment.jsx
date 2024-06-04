@@ -46,11 +46,11 @@ useEffect(() => {
         <div className="row">
           <div className="col-lg-7 ">
 
-            <h2 className={`text-30 md:text-24 fw-700 bg-Primary ml-30 ${bookingStage == 2 ? `d-none` : `d-block`}`}>
+            <h2 className={`text-30 md:text-24 fw-700 bg-Primary  ${bookingStage == 2 ? `d-none` : `d-block`}`}>
             Payment options
               </h2>
 
-            <div className="bg-white rounded  py-30 px-30 md:py-20 md:px-20 mt-30">
+            <div className="bg-white rounded  py-30">
 
               {bookingStage == 1 &&
             <div  className="border-1 rounded-12 shadow-1 overflow-hidden" >
@@ -360,7 +360,7 @@ useEffect(() => {
                   </div>
                 </div>
 
-                <div className="line mt-20 mb-20"></div>
+                <div className="line mt-20 mb-2"></div>
 
                 <div className="px-1">
                   <div className="d-flex items-center justify-content-space-arround ">
@@ -426,7 +426,7 @@ useEffect(() => {
 
                   <div className="line mt-5 mb-5"></div>
 
-                  <p className="my-1 fs-6 my-3">(The standard offer may include a multi-bed room.)</p>
+                  <p className="my-1 fs-6 my-2">(The standard offer may include a multi-bed room.)</p>
 
                     <p><b>Selected additional services per person:</b></p>
                   <div className="line my-2"></div>
@@ -462,7 +462,7 @@ useEffect(() => {
 
                 </div>
 
-                <div className="line mt-20 mb-20"></div>
+                <div className="line mt-10 mb-10"></div>
 
 
 
@@ -488,8 +488,8 @@ useEffect(() => {
                   </div>
                 </div>
 
-                <div className="mt-30">
-                <button onClick={()=>setBookingStage(pre=>pre+1) } style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'}  ${bookingStage == 2 ? `d-none` : `d-block`}`}>
+                <div className="mt-10">
+                <button onClick={()=>setBookingStage(pre=>pre+1) }   className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'}  ${bookingStage == 2 ? `d-none` : `d-block`}`}>
                 Complete Reservation</button>
               </div>
               </div>

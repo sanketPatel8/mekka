@@ -23,18 +23,19 @@ const customStyles = {
     zIndex: 1000 
   },
   content: {
-    marginLeft: '20%',
-    // other styles here
-  },
-  '@media (max-width: 768px)': {
-    content: {
-      marginLeft: '0%',
-    },
-  },
-  '@media (max-width: 480px)': {
-    content: {
-      marginLeft: '0%',
-    },
+    top: '50%',
+    left: '40%',
+    right: 'auto',
+    bottom: 'auto',
+    marginLeft: '10%',
+    transform: 'translate(-50%, -50%)',
+    padding: '20px',
+    // borderRadius: '10px',
+    width: '40%', // Adjust width as needed
+    maxWidth: '80%', // Adjust max-width as needed
+    height: '80vh', // Set a specific height for the modal
+    overflowY: 'auto', // Make content scrollable if it exceeds the height
+    backgroundColor: '#fff' 
   },
 };
 
@@ -1104,7 +1105,7 @@ function closeModal() {
                   </div>
                 </div>
 
-                <div className="line mt-20 mb-20"></div>
+                <div className="line mt-10 mb-2"></div>
 
                 <div className="px-1">
                   <div className="d-flex items-center justify-content-space-arround ">
@@ -1162,7 +1163,7 @@ function closeModal() {
                  
                 </div>
 
-                <div className="line mt-20 mb-20"></div>
+                <div className="line mt-10 mb-10"></div>
 
                 {/* <div className="line mt-20 mb-20"></div> */}
 
@@ -1187,10 +1188,10 @@ function closeModal() {
                     <div className=""> 43,242 € </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-30 ">
+                <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-10 ">
                 <h2 className="text-20 fw-500 ">Do you have a promo code?</h2>
 
-                <div className="contactForm mt-25">
+                <div className="contactForm mt-10">
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-2 text-16 text-light-1 top-29">
@@ -1199,17 +1200,14 @@ function closeModal() {
                   </div>
                 </div>
 
-                <Link href='/payment'>
-                <button className="button -sm -outline-accent-1 text-accent-1 mt-30 text-center mx-auto">
-                  Apply
-                  {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
-                </button>
-                </Link>
               </div>
 
+              {/* <div className="mt-30">
+                <button onClick={()=>setBookingStage(pre=>pre+1)} style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 2 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
+                Complete Reservation</button>
+              </div> */}
 
-
-              <div className="mt-30">
+              <div className="mt-2">
               <Link href='/payment'>
                 <button className={`button -md -info-2 bg-accent-1 text-white col-12 text-end} `}>
                 Proceed to Payment</button>

@@ -163,7 +163,8 @@
 
 .flex{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    justify-content: end;
+    gap: 1rem;
+    /* align-items: center; */
+    /* flex-direction: column; */
 }

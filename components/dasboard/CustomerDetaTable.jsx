@@ -164,16 +164,18 @@ const CustomerDetaTable = () => {
             <p>Booked Date : 12.08.2024</p>
         </div>
 
-        <div className="col-lg-2 flex">
+       <div className="col-lg-5 flex">
+       <div className="">
           <button className="button -sm -accent-1 bg-info-2 text-white  " onClick={openPaymentModal}>
             PAY
           </button>
           <span>(10,00 €)</span>
         </div>
-       <div className="col-lg-2 ">
+       <div className="">
         <button className="button -sm -info-2 bg-accent-1 text-white" onClick={openModal}>
             ADD PERSON
           </button>
+       </div>
        </div>
         <p className='text-red'>Available 10 seats</p>
       </div>
