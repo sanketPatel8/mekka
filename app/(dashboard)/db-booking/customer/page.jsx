@@ -34,7 +34,7 @@ export default function DbBooking() {
 
 <div className="row y-gap-30 pt-30">
               {tourDataTwoOne.map((elm, i) => (
-                <div className="col-12 my-2" key={i}>
+                <div className="col-12 my-2 " key={i}>
 
                   <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
@@ -56,13 +56,13 @@ export default function DbBooking() {
                         <span>{elm.title}</span>
                       </h3>
 
-                      <p className="tourCard__text mt-5 items-center d-flex"><FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1"/>
+                      <p className="tourCard__text mt-5 items-center d-flex"><FontAwesomeIcon icon={faHotel} className="px-1 text-accent-1"/>
                        {elm.description} (3 <FaStar color="#dabf4f" className="mx-1" />)
                       </p>
-                        <p className="tourCard__text mt-5 items-center d-flex "><FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1" />
-                         {elm.description2} (5 <FaStar color="#dabf4f" className="mx-1" />)
+                        <p className="tourCard__text mt-5 items-center d-flex "><FontAwesomeIcon icon={faHotel}  className="px-1 text-accent-1" />
+                         {elm.description2} (5 <FaStar color="#dabf4f" className="mx-1 text-accent-1" />)
                          </p>
-                        <p className="tourCard__text mt-5"><FontAwesomeIcon icon={faQuoteRight} style={{ color: "#dabf4f" }} className="px-1" />
+                        <p className="tourCard__text mt-5"><FontAwesomeIcon icon={faQuoteRight}  className="px-1 text-accent-1" />
                          {elm.description3}
                          </p>
 
@@ -91,18 +91,24 @@ export default function DbBooking() {
                       </div>
                     </div>
 
-                    <div className="tourCard__info">
-                      <div className="h-60">
-                        <div className="d-flex items-center text-14">
+                    <div className="tourCard__info tourCard__info_Dash ">
+                      <div className="">
+                      <label className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : '' }><b>{elm.arriving}</b></label>
+                      <div className="d-flex items-center text-14 ">
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}
-                        </div>
-                        <label className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : '' }><b>{elm.arriving}</b></label>
-                        <label className="badge bg-secondary">{elm.pending}</label>
-                        {/* <h1> <span class="badge bg-secondary">New</span></h1> */}
+                      </div>
+                        <p className="text-left">Order : #09889</p>
+                        <p className="text-left">Total : {elm.price} €</p>
+                        <p className="text-left">{elm.pending}</p>
+                        
                       </div>
 
-                      <button className="button -outline-accent-1 text-accent-1">
+                      
+                        
+                        <label className="badge bg-secondary"></label>
+
+                      <button className="button -sm -outline-accent-1 text-accent-1">
                         <Link href="/db-booking/booking-details">
                         VIEW DETAILS
                         </Link>

@@ -5908,6 +5908,13 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
 }
 
+.tourCard__info_Dash  {
+ height: 0%;
+}
+
+
+
+
 .tourCard.-type-2 .tourCard__info > *:nth-child(2) {
   width: 100%;
   padding: 5px 0;
@@ -11064,7 +11071,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .border-dashed-1 {
-  border: 1px dashed var(--color-primary, #EB662B);
+  border: 1px dashed var(--color-primary, #DAC04F);
 }
 
 .border-accent-1 {

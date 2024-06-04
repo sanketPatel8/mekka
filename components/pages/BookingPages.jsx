@@ -15,16 +15,26 @@ import Modal from 'react-modal';
 import { FaFacebookF } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 const customStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)', 
+    zIndex: 1000 
+  },
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-   
+    marginLeft: '20%',
+    // other styles here
+  },
+  '@media (max-width: 768px)': {
+    content: {
+      marginLeft: '0%',
+    },
+  },
+  '@media (max-width: 480px)': {
+    content: {
+      marginLeft: '0%',
+    },
   },
 };
 
@@ -73,27 +83,27 @@ function closeModal() {
       <div className="container">
         <div className="row">
           <div className="col-lg-8 ">
-            <div className="bg-white rounded-12 shadow-2 py-15 px-30">
+            <div className="bg-white rounded-12  py-15">
              <button  onClick={()=>{
               openModal()
              }}><a className="text-accent-1 px-1">Sign in </a> </button>book with your saved details or continue as a guest to book your travel.
             </div>
-            <h2 className="text-30 md:text-24 fw-700 bg-Primary ml-30">
+            <h2 className="text-30 md:text-24 fw-700 bg-Primary">
               Steps to reserve
               </h2>
 
-            <div className="bg-white rounded-12  py-30 px-30 md:py-20 md:px-20 mt-10">
+            <div className="bg-white rounded-12 md:py-20 md:px-20 mt-10">
 
               {bookingStage == 1 &&
-            <div className="border-1 rounded-12 overflow-hidden">
+            <div className="border-1 rounded-12 overflow-hidden shadow-1">
                                         
                                                 <div className="form_1" >
-                                                <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                <div  className="px-50 py-5 yellow_bg">
                                                   <p><span><FaUser /></span><span> <b>1. Adult information</b></span></p>
                                                   <p><span><MdError /></span><span> Is also the contact person for the reservation.</span></p>
                                                 </div>
 
-                                                <div className="row y-gap-30 contactForm px-50 py-20  ">
+                                                <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
                                                   <div className="my-3 row">
 
                                                   <div className="col-md-6">
@@ -229,8 +239,8 @@ function closeModal() {
                                                   </div> 
 
                                                 
-                                                  <div className="col-12">
-                                                    <div className="row y-gap-20 items-center justify-between">
+                                                  <div className="col-12 px-40">
+                                                    <div className="row y-gap-20 items-center justify-between ">
                                                       <div className="col-12 tb-border">
                                                         <div className="text-14 ">
                                                         <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
@@ -240,7 +250,7 @@ function closeModal() {
                                                     </div>
                                                   </div>
 
-                                                  <div className="my-3 border_b">
+                                                  <div className="my-3 border_b px-40">
                                                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                                   <div>
@@ -358,17 +368,17 @@ function closeModal() {
                                                   </div>
 
                                                   <div>
-                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
                                                     <p className="text-right text-15">including taxes and fee</p>
                                                   </div>
                                                 </div>
                                                 </div>
                                                 
                                                 <div className="form_2">
-                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                    <div className="px-50 py-5 yellow_bg">
                                                       <p><span><FaUser /></span><span> <b>2 . Adult Information</b></span></p>
                                                     </div>
-                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
                                                       
                                                 <div className="row my-3">
                                                 <div className="col-md-6">
@@ -435,7 +445,7 @@ function closeModal() {
                                                   </div>
                                                 </div>
 
-                                                  <div className="col-12">
+                                                  <div className="col-12 px-40">
                                                     <div className="row y-gap-20 items-center justify-between">
                                                       <div className="col-12 tb-border">
                                                         <div className="text-14">
@@ -446,7 +456,7 @@ function closeModal() {
                                                     </div>
                                                   </div>
 
-                                                  <div className="my-3 border_b">
+                                                  <div className="my-3 border_b px-40">
                                                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                                   <div>
@@ -563,7 +573,7 @@ function closeModal() {
                                                   </div>
 
                                                   <div>
-                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
                                                     <p className="text-right text-15">including taxes and fee</p>
                                                   </div>
 
@@ -571,10 +581,10 @@ function closeModal() {
                                                 </div>
 
                                                 <div className="form_3">
-                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                    <div  className="px-50 py-5 yellow_bg">
                                                       <p><span><FaUser /></span><span> <b>3 . Adult Information</b></span></p>
                                                     </div>
-                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
                                                       
                                                   <div className="row my-3">
                                                   <div className="col-md-6">
@@ -641,7 +651,7 @@ function closeModal() {
                                                   </div>
                                                   </div>
 
-                                                  <div className="col-12">
+                                                  <div className="col-12 px-40">
                                                     <div className="row y-gap-20 items-center justify-between">
                                                       <div className="col-12 tb-border">
                                                         <div className="text-14 ">
@@ -652,7 +662,7 @@ function closeModal() {
                                                     </div>
                                                   </div>
 
-                                                  <div className="my-3 border_b">
+                                                  <div className="my-3 border_b px-40">
                                                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                                   <div>
@@ -769,7 +779,7 @@ function closeModal() {
                                                   </div>
 
                                                   <div>
-                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
                                                     <p className="text-right text-15">including taxes and fee</p>
                                                   </div>
 
@@ -777,10 +787,10 @@ function closeModal() {
                                                 </div>
 
                                                 <div className="form_4">
-                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                    <div  className="px-50 py-5 yellow_bg">
                                                       <p><span><FaUser /></span><span> <b>1 . Child Information</b></span></p>
                                                     </div>
-                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
                                                       
                                                     <div className="row my-3">
                                                     <div className="col-md-6">
@@ -847,7 +857,7 @@ function closeModal() {
                                                       </div>
                                                     </div>
 
-                                                  <div className="col-12">
+                                                  <div className="col-12 px-40">
                                                     <div className="row y-gap-20 items-center justify-between">
                                                       <div className="col-12 tb-border">
                                                         <div className="text-14 ">
@@ -858,7 +868,7 @@ function closeModal() {
                                                     </div>
                                                   </div>
 
-                                                  <div className="my-3 border_b">
+                                                  <div className="my-3 border_b px-40">
                                                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                                                   <div>
@@ -976,7 +986,7 @@ function closeModal() {
                                                   </div>
 
                                                   <div>
-                                                    <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
                                                     <p className="text-right text-15">including taxes and fee</p>
                                                   </div>
 
@@ -984,10 +994,10 @@ function closeModal() {
                                                 </div>
 
                                                 <div className="form_5">
-                                                    <div style={{backgroundColor : "#DAC04F"}} className="px-50 py-5">
+                                                    <div className="px-50 py-5 yellow_bg">
                                                       <p><span><FaUser /></span><span> <b>1 . Baby Information</b></span></p>
                                                     </div>
-                                                    <div className="row y-gap-30 contactForm px-50 py-20 ">
+                                                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
                                                       
                                                     <div className="row my-3">
                                                       <div className="col-md-6">
@@ -1054,7 +1064,7 @@ function closeModal() {
                                                       </div>
                                                     </div>
 
-                                                  <div className="col-12">
+                                                  <div className="col-12 px-40">
                                                     <div className="row y-gap-20 items-center justify-between">
                                                       <div className="col-12 tb-border">
                                                         <div className="text-14 ">
@@ -1197,14 +1207,11 @@ function closeModal() {
                 </Link>
               </div>
 
-              {/* <div className="mt-30">
-                <button onClick={()=>setBookingStage(pre=>pre+1)} style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 2 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>
-                Complete Reservation</button>
-              </div> */}
+
 
               <div className="mt-30">
               <Link href='/payment'>
-                <button  style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12 } `}>
+                <button className={`button -md -info-2 bg-accent-1 text-white col-12 text-end} `}>
                 Proceed to Payment</button>
                 </Link>
               </div>
@@ -1222,28 +1229,22 @@ function closeModal() {
       isOpen={modalIsOpen}
       onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
-      //style={customStyles}
+      style={customStyles}
       contentLabel="Example Modal"
-      style={{
-        overlay: {
-          backgroundColor: 'papayawhip'
-        },
-        content: {
-          color: 'lightsteelblue'
-        }
-      }}
     >
 
-<section className="mt-header layout-pt-lg layout-pb-lg">
+          <section className="">
 
-              <h1 className="text-30">Log In</h1>
+          <div className="d-flex justify-content-between my-3 px-2" id="">
+          <h2 className='ml-10'></h2>
+          <button onClick={closeModal}><IoClose size={25} /></button>
+        </div>
             
-       
-
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
+              className="contactForm border-1  rounded-12 px-40 py-3 "
             >
+          <h2 className='text-center'>LOG IN</h2>
               <div className="form-input spacing">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">

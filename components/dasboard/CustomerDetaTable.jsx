@@ -8,6 +8,10 @@ import Image from 'next/image';
 import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData } from '@/data/CustomerBookingData';
 
 const customStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)', 
+    zIndex: 1000 
+  },
   content: {
     marginLeft: '20%',
     // other styles here
@@ -24,6 +28,27 @@ const customStyles = {
   },
 };
 
+const customStylesForPendingPayment = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)', 
+    zIndex: 1000 
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginLeft: '10%',
+    transform: 'translate(-50%, -50%)',
+    padding: '20px',
+    // borderRadius: '10px',
+    width: '70%', // Adjust width as needed
+    maxWidth: '70%', // Adjust max-width as needed
+    height: '80vh', // Set a specific height for the modal
+    overflowY: 'auto', // Make content scrollable if it exceeds the height
+    backgroundColor: '#fff' 
+  },
+};
 
 
 const CustomerDetaTable = () => {
@@ -46,12 +71,12 @@ const CustomerDetaTable = () => {
     { name: 'Airline', selector: (row) => row.Airline },
     { name: 'From', selector: (row) => row.From },
     { name: 'To', selector: (row) => row.To },
-    { name: 'Date of departure', selector: (row) => row.Date_of_departure },
-    { name: 'Date of return flight', selector: (row) => row.Date_of_return_flight },
-    { name: 'Offered languages', selector: (row) => row.Offered_languages },
-    { name: 'Max. Luggage Per Person', selector: (row) => row.max_luggage },
-    { name: 'Mekka - (hotel name)', selector: (row) => row.Mekka_hotel },
-    { name: 'Madina - (hotel name)', selector: (row) => row.Madina_hotel },
+    { name: 'Departure', selector: (row) => row.Date_of_departure },
+    { name: 'Return', selector: (row) => row.Date_of_return_flight },
+    // { name: 'Offered languages', selector: (row) => row.Offered_languages },
+    // { name: 'Max Luggage', selector: (row) => row.max_luggage },
+    { name: 'Mekka', selector: (row) => row.Mekka_hotel },
+    { name: 'Madina', selector: (row) => row.Madina_hotel },
     { name: 'Adult', selector: (row) => row.Adult },
   ];
 
@@ -64,8 +89,8 @@ const CustomerDetaTable = () => {
     { name: 'Gender', selector: (row) => row.gender },
     { name: 'DOB', selector: (row) => row.DOB },
     { name: 'Nationality', selector: (row) => row.Nationality },
-    { name: 'House_No', selector: (row) => row.House_No },
-    { name: 'Zip_code', selector: (row) => row.Zip_code },
+    { name: 'House No', selector: (row) => row.House_No },
+    { name: 'Zip Code', selector: (row) => row.Zip_code },
     { name: 'Strect', selector: (row) => row.Strect },
     { name: 'FRA', selector: (row) => row.FRA },
     { name: 'Additional_services', selector: (row) => row.additional_services },
@@ -136,15 +161,20 @@ const CustomerDetaTable = () => {
       <div className="row px-0 py-3 ">
         <div className='col-lg-7'>
             <h3>Booking Details : #123216</h3>
-            <p>Booking Date : 12.08.2024</p>
+            <p>Booked Date : 12.08.2024</p>
         </div>
 
-        <button className="button -sm -accent-1 bg-info-2 text-white col-lg-2 mx-2" onClick={openPaymentModal}>
-          PENDING PAYMENT (10,00 €)
-        </button>
-        <button className="button -sm -info-2 bg-accent-1 text-white col-lg-2 mx-2" onClick={openModal}>
-          ADD PERSON
-        </button>
+        <div className="col-lg-2 flex">
+          <button className="button -sm -accent-1 bg-info-2 text-white  " onClick={openPaymentModal}>
+            PAY
+          </button>
+          <span>(10,00 €)</span>
+        </div>
+       <div className="col-lg-2 ">
+        <button className="button -sm -info-2 bg-accent-1 text-white" onClick={openModal}>
+            ADD PERSON
+          </button>
+       </div>
         <p className='text-red'>Available 10 seats</p>
       </div>
       <DataTable title='Reservation Details' columns={ColumnReservation_details} data={ReservationData} highlightOnHover />
@@ -357,7 +387,7 @@ const CustomerDetaTable = () => {
                                               </div>
 
                                               <div>
-                                                <p className="text-right text-20">Subtotal <span style={{color : "#DAC04F"}}><b>1.789,00 €</b></span></p>
+                                                <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
                                                 <p className="text-right text-15">including taxes and fee</p>
                                               </div>
 
@@ -386,7 +416,7 @@ const CustomerDetaTable = () => {
       <Modal
         isOpen={paymentModalIsOpen}
         onRequestClose={closePaymentModal}
-        style={customStyles}
+        style={customStylesForPendingPayment}
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
@@ -402,15 +432,15 @@ const CustomerDetaTable = () => {
           <div className="row">
           <div className="col-md-5">
             <div className="form-input spacing">
-              <input type="text"  value='Amount-1'/>
+              <input type="text"  value='85,17 €'/>
               <label className="lh-1 text-16 text-light-1">1st Amount</label>
             </div>
           </div>
 
           <div className="col-md-5">
            <div className="form-input spacing">
-              <input type="date" disabled value="31-05-2024" placeholder='31-05-2024' />
-              <label className="lh-1 text-16 text-light-1 "></label>
+              <input type="text"  value="31.05.2024" placeholder='' disabled/>
+              <label className="lh-1 text-16 text-light-1 ">Date</label>
             </div>
           </div>
 
@@ -426,7 +456,7 @@ const CustomerDetaTable = () => {
 
           <div className="col-md-5">
             <div className="form-input spacing">
-              <input type="text" required value='Amount-2' />
+              <input type="text" required value='85,17 €' />
               <label className="lh-1 text-16 text-light-1">2nd Amount</label>
             </div>
           </div>
@@ -434,8 +464,8 @@ const CustomerDetaTable = () => {
           <div className="col-md-5">
            <div className="row">
            <div className="form-input spacing">
-              <input type="date" required />
-              <label className="lh-1 text-16 text-light-1"></label>
+              <input type="text" value="31.05.2024" placeholder='' required />
+              <label className="lh-1 text-16 text-light-1 ">Date</label>
             </div>
            </div>
           </div>
@@ -450,7 +480,7 @@ const CustomerDetaTable = () => {
           <div className="row">
           <div className="col-md-5">
             <div className="form-input spacing">
-              <input type="text" required value='Amount-3' />
+              <input type="text" required value='85,17 €' />
               <label className="lh-1 text-16 text-light-1">3rd Amount</label>
             </div>
           </div>
@@ -458,14 +488,8 @@ const CustomerDetaTable = () => {
           <div className="col-md-5">
            <div className="row">
            <div className="form-input spacing">
-              <input
-                type="date"
-                required
-                value={selectedDate}
-                onChange={handleDateChange}
-                disabled={isDisabled}
-              />
-              <label className="lh-1 text-16 text-light-1"></label>
+              <input type="text" value="31.05.2024" placeholder='' required />
+              <label className="lh-1 text-16 text-light-1 ">Date</label>
             </div>
            
            </div>

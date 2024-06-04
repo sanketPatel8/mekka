@@ -112,15 +112,17 @@
 .text-orange{
     color: black;
     background-color: orange;
-    padding: 0.5rem 1rem;
+    padding: 0.1rem 2rem;
     border-radius: 10px;
+    font-size: 13px;
 }
 
 .text-green{
     color: white;
     background-color: green;
-    padding: 0.5rem 1rem;
+    padding: 0.1rem 2rem;
     border-radius: 10px;
+    font-size: 13px;
 }
 
 .text-12{
@@ -155,6 +157,13 @@
     color: white;
 }
 
-#openSignIn{
-    border: 2px solid red;
+.yellow_bg{
+    background-color: #DAC04F;
+}
+
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

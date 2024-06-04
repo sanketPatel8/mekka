@@ -30,21 +30,7 @@ export const  Adult1Data = [
         FRA : 'Test',
         additional_services : '2 Bettzimmer',
     },
-    {
-        name : 'Test',
-        surname : 'Test',
-        email : 'Test@gmail.com',
-        phone : '9898988998',
-        city : 'Ahemdabad',
-        gender : 'Male',
-        DOB : '12.03.2002',
-        Nationality : 'Indian',
-        House_No : '212',
-        Zip_code : '232110test',
-        Strect : 'Test',
-        FRA : 'Test',
-        additional_services : '2 Bettzimmer',
-    },
+   
 ]
 
 export const  Adult2InfoData = [

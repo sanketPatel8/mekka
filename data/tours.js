@@ -299,6 +299,7 @@ export const tourDataTwoOne = [
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
     arriving : 'Upcoming' ,
+    pending:'Due : 14.00 €',
     title:
       "Umrah - SOMMER",
     rating: 4.8,
@@ -324,7 +325,7 @@ export const tourDataTwoOne = [
       },
       {
         icon: `icon-check`,
-        name: ` 29.05.2024`,
+        name: `Booked Date : 29.05.2024`,
       },
       
     ],
@@ -335,7 +336,7 @@ export const tourDataTwoOne = [
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
     arriving : 'Completed' ,
-    pending:'Pending',
+    pending:'Due : 12.00 €',
     title:
       "Umrah - SOMMER",
     rating: 4.8,
@@ -361,7 +362,7 @@ export const tourDataTwoOne = [
       },
       {
         icon: `icon-check`,
-        name: ` 29.05.2024`,
+        name: `Booked Date : 29.05.2024`,
       },
       
     ],
@@ -373,6 +374,7 @@ export const tourDataTwoOne = [
     location: "zu Kaaba 500 m",
     title:
       "Umrah - SOMMER",
+      pending:'Due : 18.00 €',
     rating: 4.8,
     ratingCount: 269,
     duration: `3 Days 2 Nights`,
@@ -396,7 +398,7 @@ export const tourDataTwoOne = [
       },
       {
         icon: `icon-check`,
-        name: ` 29.05.2024`,
+        name: `Booked Date : 29.05.2024`,
       },
       
     ],
@@ -406,6 +408,7 @@ export const tourDataTwoOne = [
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
+    pending:'Due : 22.00 €',
     title:
       "Umrah - SOMMER",
     rating: 4.8,
@@ -431,7 +434,7 @@ export const tourDataTwoOne = [
       },
       {
         icon: `icon-check`,
-        name: ` 29.05.2024`,
+        name: `Booked Date : 29.05.2024`,
       },
       
     ],
@@ -441,6 +444,7 @@ export const tourDataTwoOne = [
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
+    pending:'Due : 12.00 €',
     title:
       "Umrah - SOMMER",
     rating: 4.8,
@@ -466,7 +470,7 @@ export const tourDataTwoOne = [
       },
       {
         icon: `icon-check`,
-        name: ` 29.05.2024`,
+        name: `Booked Date : 29.05.2024`,
       },
       
     ],
@@ -476,6 +480,7 @@ export const tourDataTwoOne = [
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
+    pending:'Due : 13.00 €',
     title:
       "Umrah - SOMMER",
     rating: 4.8,
@@ -501,7 +506,7 @@ export const tourDataTwoOne = [
       },
       {
         icon: `icon-check`,
-        name: ` 29.05.2024`,
+        name: `Booked Date : 29.05.2024`,
       },
       
     ],
