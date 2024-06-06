@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Calender from "../common/dropdownSearch/Calender";
 import Image from "next/image";
-import { times } from "@/data/tourSingleContent";
+import { State} from "@/data/tourSingleContent";
 import "@/public/css/index.css"
 import Link from "next/link";
 
@@ -324,122 +324,6 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      {/* <h5 className="text-18 fw-500 mb-20 mt-20">Possible additional services per person:</h5>
-
-      <div className="d-flex items-center justify-between pt-1">
-        <div className="d-flex items-center">
-          <div className="form-radio">
-            <input
-              type="radio"
-              name="roomType"
-              className="radio-label"
-              value="4Bettzimmer"
-              checked={roomType === "4Bettzimmer"}
-              onChange={(e) => setRoomType(e.target.value)}
-            />
-            <div className="form-radio__mark">
-              <div className="form-radio__icon">
-                <Image
-                  width="10"
-                  height="8"
-                  src="/img/icons/check.svg"
-                  alt="icon"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="ml-10">4 Bettzimmer (Standard)</div>
-        </div>
-
-        <div className="text-14">+0,00€</div>
-      </div>
-
-      <div className="d-flex items-center justify-between pt-1">
-        <div className="d-flex items-center">
-          <div className="form-radio">
-            <input
-              type="radio"
-              name="roomType"
-              value="3Bettzimmer"
-              className="radio-label"
-              checked={roomType === "3Bettzimmer"}
-              onChange={(e) => setRoomType(e.target.value)}
-            />
-            <div className="form-radio__mark">
-              <div className="form-radio__icon">
-                <Image
-                  width="10"
-                  height="8"
-                  src="/img/icons/check.svg"
-                  alt="icon"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="ml-10">3 Bettzimmer</div>
-        </div>
-
-        <div className="text-14">+100,00€</div>
-      </div>
-
-      <div className="d-flex items-center justify-between pt-1">
-        <div className="d-flex items-center">
-          <div className="form-radio">
-            <input
-              type="radio"
-              name="roomType"
-              value="2Bettzimmer"
-              className="radio-label"
-              checked={roomType === "2Bettzimmer"}
-              onChange={(e) => setRoomType(e.target.value)}
-            />
-            <div className="form-radio__mark">
-              <div className="form-radio__icon">
-                <Image
-                  width="10"
-                  height="8"
-                  src="/img/icons/check.svg"
-                  alt="icon"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="ml-10">2 Bettzimmer</div>
-        </div>
-
-        <div className="text-14">+230,00€</div>
-      </div>
-
-      <div className="d-flex items-center justify-between pt-1">
-        <div className="d-flex items-center">
-          <div className="form-radio">
-            <input
-              type="radio"
-              name="roomType"
-              value="1Bettzimmer"
-              className="radio-label"
-              checked={roomType === "1Bettzimmer"}
-              onChange={(e) => setRoomType(e.target.value)}
-            />
-            <div className="form-radio__mark">
-              <div className="form-radio__icon">
-                <Image
-                  width="10"
-                  height="8"
-                  src="/img/icons/check.svg"
-                  alt="icon"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="ml-10">1 Bettzimmer</div>
-        </div>
-
-        <div className="text-14">+450,00€</div>
-      </div>
-
-      <hr /> */}
-
       <h5 className="text-18 fw-500 mb-20 mt-20">Flight Booking</h5>
 
       <div className="d-flex items-center justify-between pt-1">
@@ -465,6 +349,61 @@ export default function TourSingleSidebar() {
         </div>
 
         <div className="text-14">40 €</div>
+      </div>
+
+      {/* <hr /> */}
+
+      <div className={`searchForm -type-1 -sidebar mt-20 ${Flight === false ? 'd-none' : 'd-block'}`}>
+
+        <div className="searchForm__form">
+          <div className="searchFormItem js-select-control js-form-dd">
+            <div
+              className="searchFormItem__button"
+              onClick={() => setActiveTimeDD((pre) => !pre)}
+              data-x-click="time"
+            >
+              {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
+                <i className="text-20 icon-clock"></i>
+              </div> */}
+              <div className="searchFormItem__content">
+                <h5>What is Departure </h5>
+                <div className="js-select-control-chosen">
+                  {selectedTime ? selectedTime : "Choose State"}
+                </div>
+              </div>
+              <div className="searchFormItem__icon_chevron">
+                <i className="icon-chevron-down d-flex text-18"></i>
+              </div>
+            </div>
+
+            <div
+              className={`searchFormItemDropdown -tour-type ${
+                activeTimeDD ? "is-active" : ""
+              }`}
+              data-x="time"
+              data-x-toggle="is-active"
+            >
+              <div className="searchFormItemDropdown__container">
+                <div className="searchFormItemDropdown__list sroll-bar-1">
+                  {State.map((elm, i) => (
+                    <div
+                      key={i}
+                      onClick={() => {
+                        setSelectedTime((pre) => (pre == elm ? "" : elm));
+                        setActiveTimeDD(false);
+                      }}
+                      className="searchFormItemDropdown__item"
+                    >
+                      <button className="js-select-control-button">
+                        <span className="js-select-control-choice">{elm}</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="line mt-20 mb-20"></div>

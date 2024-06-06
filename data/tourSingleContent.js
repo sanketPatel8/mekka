@@ -210,12 +210,8 @@ export const reviews = [
   // More review objects can be added to this array
 ];
 
-export const times = [
-  "12:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
-  "18:00",
+export const State = [
+  "Berlin (BER)",
+  "Frankfurt (FRA)",
+  "Altenburg (AOC)",
 ];

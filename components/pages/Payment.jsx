@@ -77,19 +77,29 @@ useEffect(() => {
               </div>
             </div>
           </div>
-          <div className="ml-10">
-            Payment in advance (you will also find these bank details in your
-            reservation confirmation) Payment instalment is possible.
-          </div>
-        </div>
+            <div className="ml-10">
+              Payment in advance Payment instalment is possible.
             </div>
-
-      <div className="p-2" style={{ backgroundColor: "#80808075", display: "inline-block" }}>
-          <p><span><b>Kontoinhaber:</b></span>Mekka Booking GmbH</p>
-          <p><span><b>IBAN:</b></span>DE71 5125 0000 0002 2282 11</p>
-          <p><span><b>BIC:</b></span>HELADEF1TSK</p>
-          <p><span><b>Bank:</b></span>Taunus Sparkasse</p>
         </div>
+        </div>
+
+            <div className="row ">
+              <div className="col-6 ">
+              <div className={`p-2 ${selectedOption === `adPay` ? `bg_dark` : `bg_dark_1`} d-inline-block`}>
+                  <p><span><b>Kontoinhaber:</b></span>Mekka Booking GmbH</p>
+                  <p><span><b>IBAN:</b></span>DE71 5125 0000 0002 2282 11</p>
+                  <p><span><b>BIC:</b></span>HELADEF1TSK</p>
+                  <p><span><b>Bank:</b></span>Taunus Sparkasse</p>
+              </div>
+              </div>
+              <div className="col-6">
+              <div className="p-2 bg_dark d-inline-block">
+                  <p>
+                  You will get an order number after you completed the reservation.  The Order number you will need to enter in the “Purpose Code” when you make the payment via bank.  You will also get email with all the detail as well.
+                  </p>
+              </div>
+              </div>
+            </div>
 
       <div className="d-flex items-center justify-between py-3">
         <div className="d-flex items-center">
@@ -345,7 +355,7 @@ useEffect(() => {
 
           <div className="col-lg-5">
             <div className="pl-50 md:pl-0">
-              <div className="bg-white rounded-12 border-1 shadow-2 py-30 px-40 md:py-20 md:px-20">
+              <div className="bg-white rounded-12 border-1 shadow-2 py-20 px-20 md:py-20 md:px-20">
                 <h2 className="text-20 fw-500">Reservation Details</h2>
 
                 <div className="d-flex mt-30">
@@ -386,14 +396,14 @@ useEffect(() => {
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><MdFlightTakeoff size={25} color="#DAC04F" /></div>
-                    <div className="text-start">Date of departure: 08.09.2024</div>
+                    <div className="text-start">Departure : 08.09.2024 : 18:00</div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5"><MdFlightLand   size={25} color="#DAC04F" /></div>
-                    <div className="text-start">Date of return flight: 16.09.2024</div>
+                    <div className="text-start">Return : 16.09.2024 23:00</div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -433,30 +443,30 @@ useEffect(() => {
 
                   <div className="row">
                     <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-6">4 Bettzimmer (Standard)</p>
+                    <p className="col-lg-5">4 Bettzimmer (Standard)</p>
                     <p className="col-lg-4">+0,00 € x1</p>
-                    <p className="col-lg-1">0,0€</p>
+                    <p className="col-lg-2">0,0€</p>
                   </div>
 
                   <div className="row">
                     <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-6">3 Bettzimmer</p>
+                    <p className="col-lg-5">3 Bettzimmer</p>
                     <p className="col-lg-4">+ 100,00 € x0 </p>
-                    <p className="col-lg-1">0,0€</p>
+                    <p className="col-lg-2">0,0€</p>
                   </div>
 
                   <div className="row">
                     <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-6">2 Bettzimmer</p>
+                    <p className="col-lg-5">2 Bettzimmer</p>
                     <p className="col-lg-4">+ 230,00 € x0</p>
-                    <p className="col-lg-1">0,0€</p>
+                    <p className="col-lg-2">0,0€</p>
                   </div>
 
                   <div className="row">
                     <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-6">1 Bettzimmer</p>
+                    <p className="col-lg-5">1 Bettzimmer</p>
                     <p className="col-lg-4">+ 450,00 € x0</p>
-                    <p className="col-lg-1">0,0€</p>
+                    <p className="col-lg-2">0,0€</p>
                   </div>
 
 

@@ -177,3 +177,15 @@
     box-shadow: 0px 10px 40px 0px #0000000D;
     transition: 0.2s;
 }
+
+.bg_dark{
+    background-color: #80808075;   
+}
+
+.bg_dark_1{
+    background-color: #c3b5b581;   
+}
+
+.d-inline-block{
+    display: inline-block;
+}
