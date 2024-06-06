@@ -78,7 +78,7 @@ useEffect(() => {
             </div>
           </div>
             <div className="ml-10">
-              Payment in advance Payment instalment is possible.
+              Payment in advance. Payment instalment is possible.
             </div>
         </div>
         </div>
