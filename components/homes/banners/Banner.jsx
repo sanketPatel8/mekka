@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import TourSliderTwo from "../tours/TourSliderTwo";
 
 export default function Banner() {
   return (
-    <section className="cta -type-2">
+    <section className="cta -type-3">
       <div className="cta__bg">
-        <Image width={1530} height={600} src="/img/cta/2/bg.png" alt="image" />
+        <Image width={1530} height={100} src="/img/cta/2/bg.png" alt="image" />
 
-        <div className="cta__image">
+        {/* <div className="cta__image">
           <Image width={100} height={600} src="/img/cta/2/bg.png" alt="image" />
           <Image
             width="40"
@@ -22,13 +23,22 @@ export default function Banner() {
             src="/img/cta/2/shape2.svg"
             alt="image"
           />
-        </div>
+        </div> */}
       </div>
 
-      <div className="container">
-        <div className="row">
+    {/* <div className="container">
+      <div className="row">
           <div className="col-xxl-4 col-xl-5 col-lg-6 col-md-7">
-            <div className="cta__content">
+              
+          
+          </div>
+      </div>
+    </div> */}
+
+    <div className="container">
+    <div className="row">
+          <div className="col-md-5">
+              <div className="cta__content">
               <h2
                 data-aos="fade-up"
                 data-aos-delay=""
@@ -57,10 +67,13 @@ export default function Banner() {
                   </Link>
                 </button>
               </div>
-            </div>
+              </div>
           </div>
-        </div>
-      </div>
+          <div className="col-md-7">
+            <TourSliderTwo />
+          </div>
+    </div>
+    </div>
     </section>
   );
 }

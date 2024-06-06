@@ -1,6 +1,6 @@
 import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
-import { LiaKaabaSolid } from "react-icons/lia";
+import { FaPersonWalking } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -63,7 +63,7 @@ export default function Tour1() {
                 <div className="tourCard__content px-10 pt-10">
                   <div className="tourCard__location d-flex items-center text-13 text-light-2">
                     {/* <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i> */}
-                    <LiaKaabaSolid color="#dabf4f" size={25} />
+                    <FaPersonWalking  color="#dabf4f" size={18} />
                     {elm.location}
                   </div>
 

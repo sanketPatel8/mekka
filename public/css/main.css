@@ -4114,6 +4114,9 @@ h1, h2, h3, h4, h5, h6 {
 .hero.-type-7 .hero__slider .swiper-wrapper {
   height: 100%;
 }
+.swiper-wrapper_for_banner{
+  display: grid;
+}
 
 .hero.-type-7 .hero__slider .swiper-slide {
   height: 100%;
@@ -6140,6 +6143,13 @@ h1, h2, h3, h4, h5, h6 {
 .cta.-type-2 .cta__bg > img {
 
   height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.cta.-type-3 .cta__bg > img {
+
+  height: 0%;
   -o-object-fit: cover;
      object-fit: cover;
 }

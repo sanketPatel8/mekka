@@ -26,10 +26,10 @@ export default function FeaturesOne() {
                   {elm.iconSrc}
                 </div>
 
-                <h3 className="featureIcon__title text-18 fw-500 mt-30">
+                <h3 className="featureIcon__title text-18 fw-500 mt-30 text-center">
                   {elm.title}
                 </h3>
-                <p className="featureIcon__text mt-10">{elm.text}</p>
+                <p className="featureIcon__text mt-10 text-center">{elm.text}</p>
               </div>
             </div>
           ))}

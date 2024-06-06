@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { speedFeatures } from "@/data/tourFilteringOptions";
-import { LiaKaabaSolid } from "react-icons/lia";
+import { FaPersonWalking } from "react-icons/fa6";
 import { tourDataTwo } from "@/data/tours";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaQuoteRight } from "react-icons/fa6";
@@ -114,34 +114,12 @@ export default function TourList4() {
                         src={elm.imageSrc}
                         alt="image"
                       />
-
-                      {/* {elm.badgeText && (
-                        <div className="tourCard__badge">
-                          <div className="bg-accent-1 rounded-12 text-white lh-11 text-13 px-15 py-10">
-                            {elm.badgeText}
-                          </div>
-                        </div>
-                      )} */}
-
-                      {/* {elm.featured && (
-                        <div className="tourCard__badge">
-                          <div className="bg-accent-2 rounded-12 text-white lh-11 text-13 px-15 py-10">
-                            FEATURED
-                          </div>
-                        </div>
-                      )} */}
-
-                      {/* <div className="tourCard__favorite">
-                        <button className="button -accent-1 size-35 bg-white rounded-full flex-center">
-                          <i className="icon-heart text-15"></i>
-                        </button>
-                      </div> */}
                     </div>
 
                     <div className="tourCard__content">
                       <div className="tourCard__location">
                         {/* <i className="icon-pin"></i> */}
-                        <LiaKaabaSolid color="#dabf4f" size={25} />
+                        <FaPersonWalking  color="#dabf4f" size={18} />
                         {elm.location}
                       </div>
 
@@ -175,8 +153,7 @@ export default function TourList4() {
                       <div className="row x-gap-20 y-gap-5 pt-30">
                         {elm.features?.map((elm2, i2) => (
                           <div key={i2} className="col-auto">
-                            <div className="text-14 ">  {/*color `${elm2.icon} mr-10`*/ }
-                              {/* <i className={`${elm2.icon} mr-10`}></i> */}
+                            <div className="text-14 ">
                                 <FontAwesomeIcon icon={`${elm2.icon}`} />
                               {elm2.name}
                             </div>
@@ -187,10 +164,22 @@ export default function TourList4() {
 
                     <div className="tourCard__info">
                       <div className="h-60">
-                        <div className="d-flex items-center text-14">
+                        <p className="d-flex items-center text-14">
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}
-                        </div>
+                        </p>
+                        <p className="d-flex items-center text-14 direct-flight">
+                          {/* <i className="icon-clock mr-10"></i> */}
+                          {elm.flight}
+                        </p>
+                        <p className="d-flex items-center text-14 bedrooms">
+                          {/* <i className="icon-clock mr-10"></i> */}
+                          {elm.bedrooms}
+                        </p>
+                        <p className="d-flex items-center text-14 free-cancellation">
+                          {/* <i className="icon-clock mr-10"></i> */}
+                          {elm.cancel}
+                        </p>
 
                         <div className="tourCard__price">
                           <div>{elm.price} €</div>
@@ -207,7 +196,7 @@ export default function TourList4() {
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
-                        <Link href={`/tour-single-4/${elm.id}`}>
+                        <Link href={`/toursingle/${elm.id}`}>
                         SHOW AVAILABILITY
                           {/* <i className="icon-arrow-top-right ml-10"></i> */}
                         </Link>

@@ -8,16 +8,20 @@ import {
   toursTypes,
   features,
   rating,
+  LangaugeType,
 } from "@/data/tourFilteringOptions";
 import RangeSlider from "../common/RangeSlider";
 import Stars from "../common/Stars";
 import Image from "next/image";
+import PriceRangeBar from "../common/PriceRangeBar";
 
 export default function Sidebar2() {
   const [ddActives, setDdActives] = useState(["tourtype"]);
+  const [LanActives, setLanActives] = useState([]);
   return (
     <div className="sidebar -type-1 rounded-12">
       <div className="sidebar__content">
+
         <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
             <div
@@ -81,6 +85,67 @@ export default function Sidebar2() {
         </div>
 
         <div className="sidebar__item">
+      <div className="accordion -simple-2 js-accordion">
+        <div
+          className={`accordion__item ${
+            LanActives.includes("Langauge") ? "is-active" : ""
+          } `}
+        >
+          <div
+            className="accordion__button d-flex items-center justify-between"
+            onClick={() =>
+              setLanActives((prev) =>
+                prev.includes("Langauge")
+                  ? prev.filter((elm) => elm !== "Langauge")
+                  : [...prev, "Langauge"]
+              )
+            }
+          >
+            <h5 className="text-18 fw-500">Languages</h5>
+
+            <div className="accordion__icon flex-center">
+              <i className="icon-chevron-down"></i>
+              <i className="icon-chevron-down"></i>
+            </div>
+          </div>
+
+          <div
+            className="accordion__content"
+            style={
+              LanActives.includes("Langauge") ? { maxHeight: "300px" } : {}
+            }
+          >
+            <div className="pt-15">
+              <div className="d-flex flex-column y-gap-15">
+                {LangaugeType.map((elm, i) => (
+                  <div key={i}>
+                    <div className="d-flex items-center">
+                      <div className="form-checkbox ">
+                        <input type="checkbox" name="name" />
+                        <div className="form-checkbox__mark">
+                          <div className="form-checkbox__icon">
+                            <Image
+                              width="10"
+                              height="8"
+                              src="/img/icons/check.svg"
+                              alt="icon"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="lh-11 ml-10">{elm}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item js-accordion-item-active ${
@@ -103,6 +168,8 @@ export default function Sidebar2() {
                   <i className="icon-chevron-down"></i>
                   <i className="icon-chevron-down"></i>
                 </div>
+
+                
               </div>
 
               <div
@@ -113,6 +180,47 @@ export default function Sidebar2() {
               >
                 <div className="pt-15">
                   <RangeSlider />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="sidebar__item">
+          <div className="accordion -simple-2 js-accordion">
+            <div
+              className={`accordion__item js-accordion-item-active ${
+                ddActives.includes("Distance") ? "is-active" : ""
+              } `}
+            >
+              <div
+                className="accordion__button mb-10 d-flex items-center justify-between"
+                onClick={() =>
+                  setDdActives((pre) =>
+                    pre.includes("Distance")
+                      ? [...pre.filter((elm) => elm != "Distance")]
+                      : [...pre, "Distance"],
+                  )
+                }
+              >
+                <h5 className="text-18 fw-500">Distance</h5>
+
+                <div className="accordion__icon flex-center">
+                  <i className="icon-chevron-down"></i>
+                  <i className="icon-chevron-down"></i>
+                </div>
+
+                
+              </div>
+
+              <div
+                className="accordion__content"
+                style={
+                  ddActives.includes("Distance") ? { maxHeight: "300px" } : {}
+                }
+              >
+                <div className="pt-15">
+                  <PriceRangeBar />
                 </div>
               </div>
             </div>
@@ -197,7 +305,7 @@ export default function Sidebar2() {
                   )
                 }
               >
-                <h5 className="text-18 fw-500">Tour-Agent-Rating</h5>
+                <h5 className="text-18 fw-500">Agent Rating</h5>
 
                 <div className="accordion__icon flex-center">
                   <i className="icon-chevron-down"></i>

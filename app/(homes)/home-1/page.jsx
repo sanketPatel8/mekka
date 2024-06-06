@@ -6,7 +6,8 @@ import Hero7 from "@/components/homes/heros/Hero7";
 import TestimonialOne from "@/components/homes/testimonials/TestimonialOne";
 import Tour1 from "@/components/homes/tours/Tour1";
 import TourSlderOne from "@/components/homes/tours/TourSlderOne";
-import FooterOne from "@/components/layout/footers/FooterOne";
+// import FooterOne from "@/components/layout/footers/FooterOne";
+import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 
 export default function Home() {
@@ -21,7 +22,7 @@ export default function Home() {
       <TestimonialOne />
       <BannerOne />
       <ArticlesThree />
-      <FooterOne />
+      <FooterTwo />
     </main>
   );
 }

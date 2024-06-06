@@ -27,6 +27,21 @@ export const roadmapData = [
   { id: 6, img: "/img/hotel photo/makka-6.jpeg" },
 ];
 
+export const roadmapData1 = [
+  { id: 1, icon: "icon-pin", title: "Day 1: Airport Pick Up" },
+  {
+    id: 2,
+    title: "Day 2: Temples & River Cruise",
+    content:
+      "Like on all of our trips, we can collect you from the airport when you land and take you directly to your hotel. The first Day is just a check-in Day so you have this freedom to explore the city and get settled in.",
+  },
+  { id: 3, title: "Day 3: Massage & Overnight Train" },
+  { id: 4, title: "Day 4: Khao Sok National Park" },
+  { id: 5, title: "Day 5: Travel to Koh Phangan" },
+  { id: 6, title: "Day 6: Morning Chill & Muay Thai Lesson" },
+  { id: 7, icon: "icon-flag", title: "Day 7: Island Boat Trip" },
+];
+
 export const roadmapData2 = [
   {
     id: 1,

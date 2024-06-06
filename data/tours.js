@@ -104,6 +104,9 @@ export const tourDataTwo = [
     id: 9,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
+    flight:'Direct Flight',
+    bedrooms : '4 Bedrooms',
+    cancel : "Free cancellation",
     location: "zu Kaaba 500 m",
     arriving : 'Upcoming' ,
     title:
@@ -125,10 +128,7 @@ export const tourDataTwo = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       
     ],
   },
@@ -136,6 +136,9 @@ export const tourDataTwo = [
     id: 10,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
+    flight:'Direct Flight',
+    bedrooms : '4 Bedrooms',
+    cancel : "Free cancellation",
     location: "zu Kaaba 500 m",
     arriving : 'Completed' ,
     pending:'Pending',
@@ -158,10 +161,7 @@ export const tourDataTwo = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       
     ],
   },
@@ -169,6 +169,9 @@ export const tourDataTwo = [
     id: 11,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
+    flight:'Direct Flight',
+    bedrooms : '4 Bedrooms',
+    cancel : "Free cancellation",
     location: "zu Kaaba 500 m",
     title:
       "Umrah - SOMMER",
@@ -189,10 +192,7 @@ export const tourDataTwo = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       
     ],
   },
@@ -200,6 +200,9 @@ export const tourDataTwo = [
     id: 12,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
+    flight:'Direct Flight',
+    bedrooms : '4 Bedrooms',
+    cancel : "Free cancellation",
     location: "zu Kaaba 500 m",
     title:
       "Umrah - SOMMER",
@@ -220,10 +223,7 @@ export const tourDataTwo = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       
     ],
   },
@@ -231,6 +231,9 @@ export const tourDataTwo = [
     id: 13,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
+    flight:'Direct Flight',
+    bedrooms : '4 Bedrooms',
+    cancel : "Free cancellation",
     location: "zu Kaaba 500 m",
     title:
       "Umrah - SOMMER",
@@ -251,10 +254,7 @@ export const tourDataTwo = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       
     ],
   },
@@ -262,6 +262,9 @@ export const tourDataTwo = [
     id: 14,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
+    flight:'Direct Flight',
+    bedrooms : '4 Bedrooms',
+    cancel : "Free cancellation",
     location: "zu Kaaba 500 m",
     title:
       "Umrah - SOMMER",
@@ -282,10 +285,7 @@ export const tourDataTwo = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       
     ],
   },
@@ -297,6 +297,7 @@ export const tourDataTwoOne = [
     id: 9,
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
+    
     location: "zu Kaaba 500 m",
     arriving : 'Upcoming' ,
     pending:'Due : 14.00 €',
@@ -319,10 +320,7 @@ export const tourDataTwoOne = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       {
         icon: `icon-check`,
         name: `Booked Date : 29.05.2024`,
@@ -356,10 +354,7 @@ export const tourDataTwoOne = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       {
         icon: `icon-check`,
         name: `Booked Date : 29.05.2024`,
@@ -392,10 +387,7 @@ export const tourDataTwoOne = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       {
         icon: `icon-check`,
         name: `Booked Date : 29.05.2024`,
@@ -428,10 +420,7 @@ export const tourDataTwoOne = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       {
         icon: `icon-check`,
         name: `Booked Date : 29.05.2024`,
@@ -464,10 +453,7 @@ export const tourDataTwoOne = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       {
         icon: `icon-check`,
         name: `Booked Date : 29.05.2024`,
@@ -500,10 +486,7 @@ export const tourDataTwoOne = [
         icon: `faCalendarDays`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
-      {
-        icon: `icon-check`,
-        name: ` Free Cancellation`,
-      },
+      
       {
         icon: `icon-check`,
         name: `Booked Date : 29.05.2024`,

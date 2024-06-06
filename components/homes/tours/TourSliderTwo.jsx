@@ -9,59 +9,41 @@ import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
 import Image from "next/image";
 import Link from "next/link";
+import '@/public/css/index.css'
 
-export default function TourSlderOne() {
+export default function TourSliderTwo() {
   const [showSwiper, setShowSwiper] = useState(false);
   useEffect(() => {
     setShowSwiper(true);
   }, []);
+
   return (
-    <section className="layout-pt-sm layout-pb-sm relative">
-      <div className="sectionBg -w-1530 rounded-12 bg-light-1"></div>
+    <section className="relative">
+      <div className="sectionBg -w-1530 rounded-12 "></div>
 
       <div className="container">
         <div className="row justify-between items-end y-gap-10">
-          <div className="col-auto">
-            <h2
-              data-aos="fade-up"
-              data-aos-delay=""
-              className="text-30 md:text-24"
-            >
-              Top Trending
-            </h2>
-          </div>
-
-          <div className="col-auto">
-            <Link
-              href={"/tour-list-4"}
-              data-aos="fade-right"
-              data-aos-delay=""
-              className="buttonArrow d-flex items-center "
-            >
-              <span>See all</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
-            </Link>
-          </div>
         </div>
 
         <div className="relative pt-40 sm:pt-20">
-          <div className="overflow-hidden pb-10 js-section-slider">
+          <div className="overflow-hidden pb-30 js-section-slider">
             <div
               data-aos="fade-up"
               data-aos-delay=""
-              className="swiper-wrapper"
+              className="swiper-wrapper "
+              
             >
               {showSwiper && (
                 <Swiper
                   spaceBetween={30}
-                  className="w-100"
+                  className="w-50"
                   pagination={{
                     el: ".pbutton1",
                     clickable: true,
                   }}
                   navigation={{
-                    prevEl: ".prev1",
-                    nextEl: ".next1",
+                    prevEl: ".prev",
+                    nextEl: ".next",
                   }}
                   modules={[Navigation, Pagination]}
                   breakpoints={{
@@ -69,13 +51,13 @@ export default function TourSlderOne() {
                       slidesPerView: 1,
                     },
                     768: {
-                      slidesPerView: 2,
+                      slidesPerView: 1,
                     },
                     1024: {
-                      slidesPerView: 3,
+                      slidesPerView: 2,
                     },
                     1200: {
-                      slidesPerView: 4,
+                      slidesPerView: 2,
                     },
                   }}
                 >
@@ -96,15 +78,13 @@ export default function TourSlderOne() {
                             />
                           </div>
 
-                          {/* <button className="tourCard__favorite">
-                            <i className="icon-heart"></i>
-                          </button> */}
+                         
                         </div>
 
                         <div className="tourCard__content px-10 pt-10">
                           <div className="tourCard__location d-flex items-center text-13 text-light-2">
                             {/* <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i> */}
-                            <FaPersonWalking  color="#dabf4f" size={18} className="mr-2" />
+                            <FaPersonWalking  color="#dabf4f" size={18} />
                             {elm.location}
                           </div>
 
@@ -117,15 +97,9 @@ export default function TourSlderOne() {
                               <Stars star={elm.rating} />
                             </div>
 
-                            <p className="text-dark-1 ml-10">
+                            <span className="text-dark-1 ml-10">
                               {elm.rating} ({elm.ratingCount}) 
-                            </p> - IDEALGATE 
-                            
-                          </div>
-                          <div className="Location">
-                          <span>
-                              Departure : (London)
-                            </span>
+                            </span> - IDEALGATE 
                           </div>
 
                           <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
@@ -151,11 +125,11 @@ export default function TourSlderOne() {
           </div>
 
           <div className="navAbsolute">
-            <button className="navAbsolute__button bg-white js-slider1-prev prev1">
+            <button className="navAbsolute__button bg-white js-slider1-prev prev">
               <i className="icon-arrow-left text-14"></i>
             </button>
 
-            <button className="navAbsolute__button bg-white js-slider1-next next1">
+            <button className="navAbsolute__button bg-white js-slider1-next next">
               <i className="icon-arrow-right text-14"></i>
             </button>
           </div>

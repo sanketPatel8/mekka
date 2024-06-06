@@ -3,6 +3,7 @@ import { blogs } from "@/data/blogs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import '@/public/css/index.css'
 
 export default function ArticlesThree() {
   return (
@@ -35,10 +36,10 @@ export default function ArticlesThree() {
         <div
           data-aos="fade-up"
           data-aos-delay=""
-          className="row y-gap-30 pt-40 sm:pt-20"
+          className="row justify-content-center mb-10"
         >
           {blogs.slice(0, 3).map((elm, i) => (
-            <div key={i} className="col-lg-4 col-md-6 my-3">
+            <div key={i} className="col-lg-3 col-md-5 my-5 border-1 -hover-shadow rounded-12 mx-2 py-3 shadow">
               <Link
                 href={`/blog-single/${elm.id}`}
                 className="blogCard -type-1"

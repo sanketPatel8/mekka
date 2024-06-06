@@ -27,9 +27,9 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="mt-10 text-white"
               >
-                To get a discount, use promo code
+                To get a discount enter your email address and you will 
                 <br className="lg:d-none" />
-                "NEW10" to get!
+                get code on your email.
               </p>
 
               <div

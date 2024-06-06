@@ -15,6 +15,7 @@ import CommentBox from "../CommentBox";
 import TourSingleSidebar from "../TourSingleSidebar";
 import OtherInformation2 from "../OtherInformation2";
 import Extras from "../Extras";
+import RoadMap1 from "../RoadMap1";
 
 export default function SingleFour({ tour }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
@@ -43,6 +44,7 @@ export default function SingleFour({ tour }) {
 
               <div className="accordion -tour-single row y-gap-20 pt-60 md:pt-30 js-accordion">
                 <div className="col-12">
+
                   <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("included") ? "is-active" : ""
@@ -84,6 +86,45 @@ export default function SingleFour({ tour }) {
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
+                      activeAcorditions.includes("f_included") ? "is-active" : ""
+                    }`}
+                  >
+                    <div
+                      onClick={() =>
+                        setActiveAcorditions((pre) =>
+                          pre.includes("f_included")
+                            ? [...pre.filter((elm) => elm != "f_included")]
+                            : [...pre, "f_included"],
+                        )
+                      }
+                      className="accordion__button d-flex items-center justify-between"
+                    >
+                      <div className="text-30 md:text-20 lh-13 fw-700">
+                       Flight Information
+                      </div>
+
+                      <div className="accordion__icon size-30 text-24 flex-center">
+                        <i className="icon-chevron-down"></i>
+                        <i className="icon-chevron-up"></i>
+                      </div>
+                    </div>
+
+                    <div
+                      className="accordion__content"
+                      style={
+                        activeAcorditions.includes("f_included")
+                          ? { maxHeight: "500px" }
+                          : {}
+                      }
+                    >
+                      <div className="pt-20">
+                        <Included />
+                      </div>
+                    </div>
+                  </div>
+
+                   <div
+                    className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("roadmap") ? "is-active" : ""
                     }`}
                   >
@@ -93,6 +134,45 @@ export default function SingleFour({ tour }) {
                           pre.includes("roadmap")
                             ? [...pre.filter((elm) => elm != "roadmap")]
                             : [...pre, "roadmap"],
+                        )
+                      }
+                      className="accordion__button d-flex items-center justify-between"
+                    >
+                      <div className="text-30 md:text-20 lh-13 fw-700">
+                        Itinerary
+                      </div>
+
+                      <div className="accordion__icon size-30 text-24 flex-center">
+                        <i className="icon-chevron-down"></i>
+                        <i className="icon-chevron-up"></i>
+                      </div>
+                    </div>
+
+                    <div
+                      className="accordion__content"
+                      style={
+                        activeAcorditions.includes("roadmap")
+                          ? { maxHeight: "500px" }
+                          : {}
+                      }
+                    >
+                      <div className="pt-20">
+                        <RoadMap1 />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`accordion__item py-30 border-1-top ${
+                      activeAcorditions.includes("HotelInfo") ? "is-active" : ""
+                    }`}
+                  >
+                    <div
+                      onClick={() =>
+                        setActiveAcorditions((pre) =>
+                          pre.includes("HotelInfo")
+                            ? [...pre.filter((elm) => elm != "HotelInfo")]
+                            : [...pre, "HotelInfo"],
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
@@ -110,7 +190,7 @@ export default function SingleFour({ tour }) {
                     <div
                       className="accordion__content"
                       style={
-                        activeAcorditions.includes("roadmap")
+                        activeAcorditions.includes("HotelInfo")
                           ? { maxHeight: "2000px" }
                           : {}
                       }

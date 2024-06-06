@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function FooterTwo() {
   return (
-    <footer className="footer -type-1 -dark bg-dark-1 text-white">
+    <footer className="footer -type-1 -dark bg-info-2 text-white">
       <div className="footer__main">
         <div className="footer__bg">
           <Image
@@ -29,7 +29,7 @@ export default function FooterTwo() {
                   <div className="col-auto">
                     <div className="text-20 fw-500">
                       Speak to our expert at
-                      <span className="">1-800-453-6744</span>
+                      <span className="text-accent-1"> +49 (0)6196 204 72 40</span>
                     </div>
                   </div>
                 </div>
@@ -53,11 +53,9 @@ export default function FooterTwo() {
                 <h4 className="text-20 fw-500">Contact</h4>
 
                 <div className="y-gap-10 mt-20">
+                  
                   <a className="d-block" href="#">
-                    328 Queensberry Street, North Melbourne VIC3051, Australia.
-                  </a>
-                  <a className="d-block" href="#">
-                    hi@mekkaBookings.com
+                  +49 (0)6196 204 72 40
                   </a>
                 </div>
               </div>
@@ -75,9 +73,9 @@ export default function FooterTwo() {
                   <button>Send</button>
                 </div>
 
-                <h4 className="text-20 fw-500 mt-30">Mobile Apps</h4>
+                {/* <h4 className="text-20 fw-500 mt-30">Mobile Apps</h4> */}
 
-                <div className="mt-10">
+                {/* <div className="mt-10">
                   <a className="d-flex items-center" href="#">
                     <i className="icon-apple text-16 mr-10"></i>
                     iOS App
@@ -87,7 +85,7 @@ export default function FooterTwo() {
                     <i className="icon-android text-16 mr-10"></i>
                     Android App
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
