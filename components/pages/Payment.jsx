@@ -21,7 +21,7 @@ export default function Payment() {
   const [InstallMent, setInstallMent] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isDisabled, setIsDisabled] = useState(false); 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("adPay");
 
 
   const handleOptionChange = (option) => {
@@ -93,7 +93,7 @@ useEffect(() => {
               </div>
               </div>
               <div className="col-6">
-              <div className="p-2 bg_dark d-inline-block">
+              <div className="p-2 border-5 d-inline-block">
                   <p className="py-2">
                   You will get an order number after you completed the reservation.  The Order number you will need to enter in the “Purpose Code” when you make the payment via bank.  You will also get email with all the detail as well.
                   </p>

@@ -41,7 +41,7 @@ export default function Tour1() {
           {tourData.map((elm, i) => (
             <div key={i} className="col-lg-3 col-md-6 my-2">
               <Link
-                href={`/tour-single-4/${elm.id}`}
+                href={`/toursingle/${elm.id}`}
                 className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow"
               >
                 <div className="tourCard__header">
@@ -55,9 +55,7 @@ export default function Tour1() {
                     />
                   </div>
 
-                  {/* <button className="tourCard__favorite">
-                    <i className="icon-heart"></i>
-                  </button> */}
+                  <button className="tourCard__favorite">Direct Flight</button>
                 </div>
 
                 <div className="tourCard__content px-10 pt-10">
@@ -80,6 +78,11 @@ export default function Tour1() {
                       {elm.rating} ({elm.ratingCount}) - IDEALGATE 
                     </span>
                   </div>
+                  <div className="Location">
+                          <span>
+                              Departure : London
+                            </span>
+                          </div>
 
                   <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                     <div className="d-flex items-center">

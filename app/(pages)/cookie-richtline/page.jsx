@@ -1,4 +1,5 @@
 import FooterOne from '@/components/layout/footers/FooterOne'
+import FooterTwo from '@/components/layout/footers/FooterTwo'
 import Header1 from '@/components/layout/header/Header1'
 import React from 'react'
 
@@ -34,7 +35,7 @@ const cookierichtline = () => {
         Der Nutzer kann der Verwendung von Funktionalen Cookies jederzeit widersprechen, indem er seine Cookie-Einstellungen entsprechend anpasst.</p><br /><p><b>Performance Cookies</b></p><br />
         <p>Performance-Cookies sammeln Informationen darüber, wie unsere Webseiten genutzt werden, um darauf basierend deren Attraktivität, Inhalt und Funktionalität zu verbessern. Diese Cookies helfen uns beispielsweise festzustellen, ob und welche Unterseiten unserer Webseite besucht werden und für welche Inhalte sich die Nutzer besonders interessieren. Wir erfassen die Anzahl der Zugriffe auf eine Seite, die Anzahl der aufgerufenen Unterseiten, die auf unserer Webseite verbrachte Zeit, die Reihenfolge der besuchten Seiten, welche Suchbegriffe unsere Nutzer zu uns geführt haben, das Land, die Region und gegebenenfalls die Stadt aus der der Zugriff erfolgt, sowie den Anteil von mobilen Endgeräten, die auf unsere Webseiten zugreifen. Die aus technischen Gründen übermittelte IP-Adresse eines Rechners wird automatisch anonymisiert und ermöglicht uns keinen Rückschluss auf den einzelnen Nutzer.</p>
     </div>
-    <FooterOne />
+    <FooterTwo />
     </>
   )
 }

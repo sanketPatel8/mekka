@@ -1,4 +1,5 @@
 import FooterOne from '@/components/layout/footers/FooterOne'
+import FooterTwo from '@/components/layout/footers/FooterTwo'
 import Header1 from '@/components/layout/header/Header1'
 import React from 'react'
 
@@ -76,7 +77,7 @@ const Datenschutz = () => {
             <li><p><span><b>Permanente Cookies:</b></span>DPermanente Cookies bleiben auch nach dem Schließen des Browsers gespeichert. Dadurch erkennt unsere Webseite Ihren Rechner wieder, wenn Sie auf unsere Webseite zurückkehren. In diesen Cookies werden beispielsweise Informationen zu Spracheinstellungen oder Log-In-Informationen gespeichert. Außerdem kann mit diesen Cookies Ihr Surfverhalten dokumentiert und gespeichert werden. Diese Daten können zu Statistik-, Marketing- und Personalisierungs-Zwecken verwendet werden.</p></li>
             </ul>
     </div>
-    <FooterOne />
+    <FooterTwo />
     </>
   )
 }

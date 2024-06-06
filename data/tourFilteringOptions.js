@@ -11,14 +11,13 @@ export const durations = [
   "3 Star",
 ];
 
-export const LangaugeType = [
-  "Departure",
-  "Distance to Mosque"
-]
+
 
 export const languages = ["English", "Dutch", "German", "French", "Italian"];
 
 export const rating = [5, 4, 3, 2, 1];
+
+export const city = ['London' , 'Dubai' , 'India' , 'Germany']
 
 export const features = [
   "Deals & Discounts",

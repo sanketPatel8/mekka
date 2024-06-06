@@ -82,7 +82,7 @@ export default function TourSlderOne() {
                   {tourData.map((elm, i) => (
                     <SwiperSlide key={i}>
                       <Link
-                        href={`/tour-single-4/${elm.id}`}
+                        href={`/toursingle/${elm.id}`}
                         className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                       >
                         <div className="tourCard__header">
@@ -95,6 +95,8 @@ export default function TourSlderOne() {
                               className="img-ratio rounded-12"
                             />
                           </div>
+
+                          <button className="tourCard__favorite">Direct Flight</button>
 
                           {/* <button className="tourCard__favorite">
                             <i className="icon-heart"></i>
@@ -124,7 +126,7 @@ export default function TourSlderOne() {
                           </div>
                           <div className="Location">
                           <span>
-                              Departure : (London)
+                              Departure : London
                             </span>
                           </div>
 

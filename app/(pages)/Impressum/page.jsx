@@ -6,6 +6,7 @@ import { MdOutlineCurtainsClosed } from "react-icons/md";
 import { FaUserTie } from "react-icons/fa";
 import Header1 from '@/components/layout/header/Header1';
 import FooterOne from '@/components/layout/footers/FooterOne';
+import FooterTwo from '@/components/layout/footers/FooterTwo';
 
 
 const Impressum = () => {
@@ -60,7 +61,7 @@ const Impressum = () => {
        <p>Alle Texte, Illustrationen und Fotos stehen im geistigen Eigentum von www.mekkabooking.de und dürfen nicht kopiert oder vervielfältigt werden.</p><br />
         
     </div>
-    <FooterOne />
+    <FooterTwo />
     </>
   ) 
 }

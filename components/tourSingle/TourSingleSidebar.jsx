@@ -353,7 +353,7 @@ export default function TourSingleSidebar() {
 
       {/* <hr /> */}
 
-      <div className={`searchForm -type-1 -sidebar mt-20 ${Flight === false ? 'd-none' : 'd-block'}`}>
+      <div className={`searchForm -type-1 -sidebar mt-20 ${Flight === true ? 'd-none' : 'd-block'}`}>
 
         <div className="searchForm__form">
           <div className="searchFormItem js-select-control js-form-dd">
@@ -366,9 +366,9 @@ export default function TourSingleSidebar() {
                 <i className="text-20 icon-clock"></i>
               </div> */}
               <div className="searchFormItem__content">
-                <h5>What is Departure </h5>
+                <h5>Departure </h5>
                 <div className="js-select-control-chosen">
-                  {selectedTime ? selectedTime : "Choose State"}
+                  {selectedTime ? selectedTime : "Choose City"}
                 </div>
               </div>
               <div className="searchFormItem__icon_chevron">

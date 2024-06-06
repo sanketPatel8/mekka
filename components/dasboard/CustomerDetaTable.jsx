@@ -5,7 +5,7 @@ import DataTable from 'react-data-table-component';
 import Modal from 'react-modal';
 import { IoClose } from "react-icons/io5";
 import Image from 'next/image';
-import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData } from '@/data/CustomerBookingData';
+import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData, documentData, documentDataFile } from '@/data/CustomerBookingData';
 
 const customStyles = {
   overlay: {
@@ -54,6 +54,9 @@ const CustomerDetaTable = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [selectedTime, setSelectedTime] = useState("");
+  const [activeTimeDD, setActiveTimeDD] = useState(false);
+  const [image1, setImage1] = useState("");
 
   useEffect(() => {
     Modal.setAppElement('#modelopen');
@@ -149,6 +152,11 @@ const CustomerDetaTable = () => {
     { name: 'Amount Due', selector: (row) => row.Amount_Due },
   ];
 
+  const FileDeta = [
+    { name: 'name', selector: (row) => row.Name },
+    { name: 'file name', selector: (row) => <img src={row.fileUrl} alt={row.fileName} style={{ width: '50px', height: '50px' }} />},
+  ];
+
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
   }
@@ -235,8 +243,11 @@ const CustomerDetaTable = () => {
       <br />
       <DataTable title='Baby' columns={Baby} data={BabyData} highlightOnHover />
       <br />
+      <DataTable title='Documents' columns={FileDeta} data={documentDataFile} highlightOnHover />
+      <br />
       <DataTable title='Total' columns={Total} data={TotalData} highlightOnHover />
       <br />
+      
       <button className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2" onClick={openCancelPopUp}>
       Cancel
         </button>
@@ -640,10 +651,351 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='ml-50'>PENDING PAYMENT</h2>
+          <h2 className='ml-50'>UPLOAD DOCUMENT</h2>
           <button onClick={closeUploadFileModal}><IoClose size={25} /></button>
         </div>
-        
+            <div className="">
+
+              <div className="row item-center my-3">
+                <div className="col-md-5">
+                <div className="searchForm -type-1 -sidebar my-2">
+                <div className="searchForm__form">
+                <div className="searchFormItem js-select-control js-form-dd">
+                <div
+                  className="searchFormItem__button"
+                  onClick={() => setActiveTimeDD((pre) => !pre)}
+                  data-x-click="time"
+                >
+                  {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
+                    <i className="text-20 icon-clock"></i>
+                  </div> */}
+                  <div className="searchFormItem__content">
+                    <h5>Document</h5>
+                    <div className="js-select-control-chosen">
+                      {selectedTime ? selectedTime : "Choose time"}
+                    </div>
+                  </div>
+                  <div className="searchFormItem__icon_chevron">
+                    <i className="icon-chevron-down d-flex text-18"></i>
+                  </div>
+                </div>
+
+                <div
+                  className={`searchFormItemDropdown -tour-type ${
+                    activeTimeDD ? "is-active" : ""
+                  }`}
+                  data-x="time"
+                  data-x-toggle="is-active"
+                >
+                  <div className="searchFormItemDropdown__container">
+                    <div className="searchFormItemDropdown__list sroll-bar-1">
+                      {documentData.map((elm, i) => (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            setSelectedTime((pre) => (pre == elm ? "" : elm));
+                            setActiveTimeDD(false);
+                          }}
+                          className="searchFormItemDropdown__item"
+                        >
+                          <button className="js-select-control-button">
+                            <span className="js-select-control-choice">{elm}</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+                  </div>
+                  </div>
+                  
+                </div>
+                <div className="col-md-4">
+                <div className="row my-2">
+                    {image1 ? (
+                      <div className="col-auto my-3">
+                        <div className="relative">
+                          <Image
+                            width={200}
+                            height={200}
+                            src={image1}
+                            alt="image"
+                            className="size-200 rounded-12 object-cover my-3"
+                          />
+                          <button
+                            onClick={() => {
+                              setImage1("");
+                            }}
+                            className="absoluteIcon1 button -dark-1"
+                          >
+                            <i className="icon-delete text-18"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="col-auto">
+                        <label
+                          htmlFor="imageInp1"
+                          className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
+                        >
+                          <div className="text-16 fw-500 text-accent-1 mt-10">
+                            Upload Document
+                          </div>
+                        </label>
+                        <input
+                          onChange={(e) => handleImageChange(e, setImage1)}
+                          accept="image/*"
+                          id="imageInp1"
+                          type="file"
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+               <div className="col-md-1">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                +
+            </button>
+               </div>
+               <div className="col-md-1">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                -
+            </button>
+               </div>
+              </div>
+
+              <div className="row item-center my-3">
+                <div className="col-md-5">
+                <div className="searchForm -type-1 -sidebar my-2">
+                <div className="searchForm__form">
+                <div className="searchFormItem js-select-control js-form-dd">
+                <div
+                  className="searchFormItem__button"
+                  onClick={() => setActiveTimeDD((pre) => !pre)}
+                  data-x-click="time"
+                >
+                  {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
+                    <i className="text-20 icon-clock"></i>
+                  </div> */}
+                  <div className="searchFormItem__content">
+                    <h5>Document</h5>
+                    <div className="js-select-control-chosen">
+                      {selectedTime ? selectedTime : "Choose time"}
+                    </div>
+                  </div>
+                  <div className="searchFormItem__icon_chevron">
+                    <i className="icon-chevron-down d-flex text-18"></i>
+                  </div>
+                </div>
+
+                <div
+                  className={`searchFormItemDropdown -tour-type ${
+                    activeTimeDD ? "is-active" : ""
+                  }`}
+                  data-x="time"
+                  data-x-toggle="is-active"
+                >
+                  <div className="searchFormItemDropdown__container">
+                    <div className="searchFormItemDropdown__list sroll-bar-1">
+                      {documentData.map((elm, i) => (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            setSelectedTime((pre) => (pre == elm ? "" : elm));
+                            setActiveTimeDD(false);
+                          }}
+                          className="searchFormItemDropdown__item"
+                        >
+                          <button className="js-select-control-button">
+                            <span className="js-select-control-choice">{elm}</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+                  </div>
+                  </div>
+                  
+                </div>
+                <div className="col-md-4">
+                <div className="row my-2">
+                    {image1 ? (
+                      <div className="col-auto my-3">
+                        <div className="relative">
+                          <Image
+                            width={200}
+                            height={200}
+                            src={image1}
+                            alt="image"
+                            className="size-200 rounded-12 object-cover my-3"
+                          />
+                          <button
+                            onClick={() => {
+                              setImage1("");
+                            }}
+                            className="absoluteIcon1 button -dark-1"
+                          >
+                            <i className="icon-delete text-18"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="col-auto">
+                        <label
+                          htmlFor="imageInp1"
+                          className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
+                        >
+                          <div className="text-16 fw-500 text-accent-1 mt-10">
+                            Upload Document
+                          </div>
+                        </label>
+                        <input
+                          onChange={(e) => handleImageChange(e, setImage1)}
+                          accept="image/*"
+                          id="imageInp1"
+                          type="file"
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+               <div className="col-md-1">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                +
+            </button>
+               </div>
+               <div className="col-md-1">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                -
+            </button>
+               </div>
+              </div>
+
+              <div className="row item-center my-3">
+                <div className="col-md-5">
+                <div className="searchForm -type-1 -sidebar my-2">
+                <div className="searchForm__form">
+                <div className="searchFormItem js-select-control js-form-dd">
+                <div
+                  className="searchFormItem__button"
+                  onClick={() => setActiveTimeDD((pre) => !pre)}
+                  data-x-click="time"
+                >
+                  {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
+                    <i className="text-20 icon-clock"></i>
+                  </div> */}
+                  <div className="searchFormItem__content">
+                    <h5>Document</h5>
+                    <div className="js-select-control-chosen">
+                      {selectedTime ? selectedTime : "Choose time"}
+                    </div>
+                  </div>
+                  <div className="searchFormItem__icon_chevron">
+                    <i className="icon-chevron-down d-flex text-18"></i>
+                  </div>
+                </div>
+
+                <div
+                  className={`searchFormItemDropdown -tour-type ${
+                    activeTimeDD ? "is-active" : ""
+                  }`}
+                  data-x="time"
+                  data-x-toggle="is-active"
+                >
+                  <div className="searchFormItemDropdown__container">
+                    <div className="searchFormItemDropdown__list sroll-bar-1">
+                      {documentData.map((elm, i) => (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            setSelectedTime((pre) => (pre == elm ? "" : elm));
+                            setActiveTimeDD(false);
+                          }}
+                          className="searchFormItemDropdown__item"
+                        >
+                          <button className="js-select-control-button">
+                            <span className="js-select-control-choice">{elm}</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+                  </div>
+                  </div>
+                  
+                </div>
+                <div className="col-md-4">
+                <div className="row my-2">
+                    {image1 ? (
+                      <div className="col-auto my-3">
+                        <div className="relative">
+                          <Image
+                            width={200}
+                            height={200}
+                            src={image1}
+                            alt="image"
+                            className="size-200 rounded-12 object-cover my-3"
+                          />
+                          <button
+                            onClick={() => {
+                              setImage1("");
+                            }}
+                            className="absoluteIcon1 button -dark-1"
+                          >
+                            <i className="icon-delete text-18"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="col-auto">
+                        <label
+                          htmlFor="imageInp1"
+                          className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
+                        >
+                          <div className="text-16 fw-500 text-accent-1 mt-10">
+                            Upload Document
+                          </div>
+                        </label>
+                        <input
+                          onChange={(e) => handleImageChange(e, setImage1)}
+                          accept="image/*"
+                          id="imageInp1"
+                          type="file"
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+               <div className="col-md-1">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                +
+            </button>
+               </div>
+               <div className="col-md-1">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                -
+            </button>
+               </div>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                
+                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                  SUBMIT
+              </button>
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                    CANCEL
+              </button>
+              </div>
+            </div>
       </Modal>
       </div>
 

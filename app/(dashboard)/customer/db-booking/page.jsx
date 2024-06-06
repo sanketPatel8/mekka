@@ -44,7 +44,10 @@ export default function DbBooking() {
                         src={elm.imageSrc}
                         alt="image"
                       />
+                      <button className="tourCard__favorite"  >Direct Flight</button>
                     </div>
+
+                    
 
                     <div className="tourCard__content">
                       <div className="tourCard__location">
@@ -76,6 +79,12 @@ export default function DbBooking() {
                           {elm.ratingCount}) - IDEALGATE
                         </div>
                       </div>
+
+                      <div className="Location">
+                          <span>
+                              Departure : London
+                            </span>
+                          </div>
 
                       
 

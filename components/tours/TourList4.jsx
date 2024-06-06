@@ -6,6 +6,9 @@ import { FaPersonWalking } from "react-icons/fa6";
 import { tourDataTwo } from "@/data/tours";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaQuoteRight } from "react-icons/fa6";
+import { MdFlight } from "react-icons/md";
+import { MdBed } from "react-icons/md";
+import { FaCheck } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
 import { faHotel } from '@fortawesome/free-solid-svg-icons';
 import Stars from "../common/Stars";
@@ -114,6 +117,7 @@ export default function TourList4() {
                         src={elm.imageSrc}
                         alt="image"
                       />
+                      <button className="tourCard__favorite" desabled >Direct Flight</button>
                     </div>
 
                     <div className="tourCard__content">
@@ -146,7 +150,14 @@ export default function TourList4() {
                           <span className="fw-500">{elm.rating}</span> (
                           {elm.ratingCount}) - IDEALGATE
                         </div>
+                        
                       </div>
+
+                      <div className="Location">
+                          <span>
+                              Departure : London
+                            </span>
+                          </div>
 
                       
 
@@ -168,16 +179,18 @@ export default function TourList4() {
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}
                         </p>
-                        <p className="d-flex items-center text-14 direct-flight">
-                          {/* <i className="icon-clock mr-10"></i> */}
+                        {/* <p className="d-flex items-center text-14 direct-flight">
+                          <MdFlight className="mx-2" color="#DAC04F" size={15} />
                           {elm.flight}
-                        </p>
+                        </p> */}
                         <p className="d-flex items-center text-14 bedrooms">
                           {/* <i className="icon-clock mr-10"></i> */}
+                          <MdBed className="mx-2" color="#DAC04F" size={20}/>
                           {elm.bedrooms}
                         </p>
                         <p className="d-flex items-center text-14 free-cancellation">
                           {/* <i className="icon-clock mr-10"></i> */}
+                          <FaCheck className="mx-2" color="#DAC04F" size={20} />
                           {elm.cancel}
                         </p>
 

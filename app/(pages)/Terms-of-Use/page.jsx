@@ -1,5 +1,6 @@
 
 import FooterOne from '@/components/layout/footers/FooterOne'
+import FooterTwo from '@/components/layout/footers/FooterTwo'
 import Header1 from '@/components/layout/header/Header1'
 import Link from 'next/link'
 
@@ -291,7 +292,7 @@ const TermsofUse = () => {
 
         <p>(*) Unzutreffendes streichen.</p>
     </div>
-    <FooterOne />
+    <FooterTwo />
     </>
   )
 }

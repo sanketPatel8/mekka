@@ -41,9 +41,9 @@ export default function PriceRangeBar() {
         <div className="d-flex justify-between mt-20">
           <div className="">
             <span className="">Range: </span>
-            <span className="fw-500 js-lower">{value[0]}</span>
+            <span className="fw-500 js-lower">{value[0]} m</span>
             <span> - </span>
-            <span className="fw-500 js-upper">{value[1]}</span>
+            <span className="fw-500 js-upper">{value[1]} m</span>
           </div>
         </div>
       </div>

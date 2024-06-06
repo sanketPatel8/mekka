@@ -2,6 +2,7 @@ import ArticlesOne from "@/components/homes/articles/ArticlesOne";
 import SpacialOffer from "@/components/homes/others/SpacialOffer";
 import TestimonialOne from "@/components/homes/testimonials/TestimonialOne";
 import FooterOne from "@/components/layout/footers/FooterOne";
+import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Hero from "@/components/pages/destinations/Hero";
 import Information from "@/components/pages/destinations/Information";
@@ -26,7 +27,7 @@ export default function page() {
         <TestimonialOne />
         <Information />
         <ArticlesOne />
-        <FooterOne />
+        <FooterTwo />
       </main>
     </>
   );

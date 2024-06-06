@@ -1,4 +1,5 @@
 import FooterOne from "@/components/layout/footers/FooterOne";
+import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Activity from "@/components/pages/helpCenter/Activity";
 import Faq from "@/components/pages/helpCenter/Faq";
@@ -18,7 +19,7 @@ export default function page() {
         <Hero />
         <Activity />
         <Faq />
-        <FooterOne />
+        <FooterTwo />
       </main>
     </>
   );

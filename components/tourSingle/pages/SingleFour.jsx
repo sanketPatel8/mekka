@@ -118,7 +118,8 @@ export default function SingleFour({ tour }) {
                       }
                     >
                       <div className="pt-20">
-                        <Included />
+                        {/* <Included /> */}
+                        <p>Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe des Masjid Al Haram King Abdul Aziz Gate und des Masjid Al Haram King Abdullah Expension Gate. Zu den Einrichtungen dieser Unterkunft gehören ein Restaurant, Zimmerservice und eine 24-Stunden-Rezeption sowie kostenfreies WLAN. Private Parkplätze stehen vor Ort zur Verfügung. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem Kleiderschrank, einem Wasserkocher, einem Safe, einem Flachbisss</p>
                       </div>
                     </div>
                   </div>

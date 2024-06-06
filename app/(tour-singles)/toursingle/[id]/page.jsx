@@ -1,4 +1,5 @@
 import FooterOne from "@/components/layout/footers/FooterOne";
+import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourSlider from "@/components/tourSingle/TourSlider";
 import SingleFour from "@/components/tourSingle/pages/SingleFour";
@@ -21,7 +22,7 @@ export default function page({ params }) {
       <Header1 />
       <SingleFour tour={tour} />
       <TourSlider />
-      <FooterOne />
+      <FooterTwo />
     </>
   );
 }

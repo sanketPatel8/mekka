@@ -197,3 +197,17 @@
 .z-index-9999{
     z-index: 9999999;
 }
+
+.size_50{
+    width: 220px;
+    height: 60px;
+}
+
+.item-center {
+    align-items: center;
+}
+
+.border-5{
+    border: 2px solid #DAC04F;
+    border-style: dashed;
+}

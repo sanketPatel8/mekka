@@ -48,6 +48,7 @@ export default function BookingPages() {
   const [Nationality, setNationality] = useState('Nationality');
   const [From, setFrom] = useState('Frankfurt(FRA)');
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
   let subtitle;
 
@@ -57,6 +58,40 @@ useEffect(() => {
 
 useEffect(() => {
   Modal.setAppElement('#openSignIn');
+}, []);
+
+
+const getModalStyles = () => {
+  if (windowWidth < 480) {
+    return {
+      ...customStyles,
+      content: {
+        ...customStyles.content,
+        width: '90%', // full width for small screens
+      }
+    };
+  } else if (windowWidth < 768) {
+    return {
+      ...customStyles,
+      content: {
+        ...customStyles.content,
+        width: '80%', // medium width for tablet screens
+      }
+    };
+  } else {
+    return customStyles;
+  }
+};
+
+const handleResize = () => {
+  setWindowWidth(window.innerWidth);
+};
+
+useEffect(() => {
+  window.addEventListener('resize', handleResize);
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
 }, []);
 
 
@@ -1227,7 +1262,7 @@ function closeModal() {
       isOpen={modalIsOpen}
       onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
-      style={customStyles}
+      style={getModalStyles()}
       contentLabel="Example Modal"
     >
 
@@ -1322,14 +1357,14 @@ function closeModal() {
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                    <FaFacebookF size={15} className="mx-1"/>
-                    Continue Facebook
+                    Facebook
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
                   <FaGoogle size={15} className="mx-1" />
-                    Continue Google
+                  Google
                   </button>
                 </div>
               </div><br />

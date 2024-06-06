@@ -3256,8 +3256,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer.-type-1.-dark .footer__bg {
-  left: -20px;
-  right: -20px;
+  left: 0px;
+  right: 0px;
 }
 
 .footer.-type-1.-dark h4 {
@@ -5749,19 +5749,37 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35px;
-  height: 35px;
-  border-radius: 100%;
-  background-color: white;
+  width: 100px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: #dac04f !important;
+  /* font-weight: bold; */
   box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
   z-index: 1;
   transition: .15s;
 }
 
-.tourCard.-type-1 .tourCard__favorite:hover {
+.tourCard__favorite {
+  position: absolute;
+  bottom: -17px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: #dac04f !important;
+  /* font-weight: bold; */
+  box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
+  z-index: 1;
+  transition: .15s;
+}
+
+/* .tourCard.-type-1 .tourCard__favorite:hover {
   color: white;
   background-color: var(--color-accent-1);
-}
+} */
 
 .tourCard.-type-1.-hover-shadow {
   transition: .15s;

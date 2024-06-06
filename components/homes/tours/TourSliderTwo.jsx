@@ -64,7 +64,7 @@ export default function TourSliderTwo() {
                   {tourData.map((elm, i) => (
                     <SwiperSlide key={i}>
                       <Link
-                        href={`/tour-single-4/${elm.id}`}
+                        href={`/toursingle/${elm.id}`}
                         className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                       >
                         <div className="tourCard__header">
@@ -78,7 +78,7 @@ export default function TourSliderTwo() {
                             />
                           </div>
 
-                         
+                          <button className="tourCard__favorite">Direct Flight</button>
                         </div>
 
                         <div className="tourCard__content px-10 pt-10">
@@ -100,6 +100,12 @@ export default function TourSliderTwo() {
                             <span className="text-dark-1 ml-10">
                               {elm.rating} ({elm.ratingCount}) 
                             </span> - IDEALGATE 
+                          </div>
+
+                          <div className="Location">
+                          <span>
+                              Departure : London
+                            </span>
                           </div>
 
                           <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
