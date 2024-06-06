@@ -189,3 +189,7 @@
 .d-inline-block{
     display: inline-block;
 }
+
+.text-red{
+    color: red;
+}

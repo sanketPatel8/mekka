@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import Header from "@/components/dasboard/Header";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
-import { tourDataTwo, tourDataTwoOne } from "@/data/tours";
-import { LiaKaabaSolid } from "react-icons/lia";
+import { tourDataTwoOne } from "@/data/tours";
+import { FaPersonWalking } from "react-icons/fa6";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaStar } from "react-icons/fa";
 import { faHotel, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
@@ -48,7 +48,7 @@ export default function DbBooking() {
 
                     <div className="tourCard__content">
                       <div className="tourCard__location">
-                        <LiaKaabaSolid color="#dabf4f" size={25} />
+                        <FaPersonWalking  color="#dabf4f" size={18} />
                         {elm.location}
                       </div>
 

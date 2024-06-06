@@ -9,23 +9,16 @@ import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData } from
 
 const customStyles = {
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)', 
-    zIndex: 1000 
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    zIndex: 1000
   },
   content: {
-    marginLeft: '20%',
-    // other styles here
-  },
-  '@media (max-width: 768px)': {
-    content: {
-      marginLeft: '0%',
-    },
-  },
-  '@media (max-width: 480px)': {
-    content: {
-      marginLeft: '0%',
-    },
-  },
+    width: '60%', // default width
+    margin: '0 auto', // center the modal
+    padding: '20px', // add some padding
+    borderRadius: '10px', // rounded corners
+    transition: 'width 0.3s ease' // smooth transition
+  }
 };
 
 const customStylesForPendingPayment = {
@@ -54,17 +47,53 @@ const customStylesForPendingPayment = {
 const CustomerDetaTable = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false);
+  const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
   const [CanclePopUp, setCanclePopUp] = useState(false);
   const [gender, setGender] = useState('');
   const [Nationality, setNationality] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     Modal.setAppElement('#modelopen');
     Modal.setAppElement('#pendingpayment');
     Modal.setAppElement('#CanclePop_up');
+    Modal.setAppElement('#upload_file');
   }, [])
+
+  const getModalStyles = () => {
+    if (windowWidth < 480) {
+      return {
+        ...customStyles,
+        content: {
+          ...customStyles.content,
+          width: '90%', // full width for small screens
+        }
+      };
+    } else if (windowWidth < 768) {
+      return {
+        ...customStyles,
+        content: {
+          ...customStyles.content,
+          width: '80%', // medium width for tablet screens
+        }
+      };
+    } else {
+      return customStyles;
+    }
+  };
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
 
   const ColumnReservation_details = [
@@ -155,13 +184,23 @@ const CustomerDetaTable = () => {
     setCanclePopUp(false);
   }
 
+  function openUploadFileModal() {
+    setuploadFileisOpen(true);
+  }
+
+  function closeUploadFileModal() {
+    setuploadFileisOpen(false);
+    
+  }
+
   
   return (
     <div>
       <div className="row px-0 py-3 ">
         <div className='col-lg-7'>
-            <h3>Booking Details : #123216</h3>
+            <h3 >Booking Details : #123216</h3>
             <p>Booked Date : 12.08.2024</p>
+            <p className='text-red'>Available 10 seats</p>
         </div>
 
        <div className="col-lg-5 flex">
@@ -171,13 +210,18 @@ const CustomerDetaTable = () => {
           </button>
           <span>(10,00 €)</span>
         </div>
+        <div className="">
+        <button className="button -sm -info-2 bg-accent-1 text-white" onClick={openUploadFileModal}>
+            UPLOAD DOCUMENT
+        </button>
+       </div>
        <div className="">
         <button className="button -sm -info-2 bg-accent-1 text-white" onClick={openModal}>
             ADD PERSON
           </button>
        </div>
        </div>
-        <p className='text-red'>Available 10 seats</p>
+        
       </div>
       <DataTable title='Reservation Details' columns={ColumnReservation_details} data={ReservationData} highlightOnHover />
       <br />
@@ -202,7 +246,7 @@ const CustomerDetaTable = () => {
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        style={customStyles}
+        style={getModalStyles()}
         contentLabel="Example Modal"
       >
         <div className="d-flex justify-content-between" id="">
@@ -418,7 +462,7 @@ const CustomerDetaTable = () => {
       <Modal
         isOpen={paymentModalIsOpen}
         onRequestClose={closePaymentModal}
-        style={customStylesForPendingPayment}
+        style={getModalStyles()}
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
@@ -514,7 +558,7 @@ const CustomerDetaTable = () => {
       <Modal
         isOpen={CanclePopUp}
         onRequestClose={CloseCancelPopUp}
-        style={customStyles}
+        style={getModalStyles()}
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
@@ -585,6 +629,21 @@ const CustomerDetaTable = () => {
         </div>
         </div>
 
+      </Modal>
+      </div>
+
+      <div id="upload_file">
+      <Modal
+        isOpen={uploadFileisOpen}
+        onRequestClose={closeUploadFileModal}
+        style={getModalStyles()}
+        contentLabel="Pending Payment Modal"
+      >
+        <div className="d-flex justify-content-between" id="modelopen">
+          <h2 className='ml-50'>PENDING PAYMENT</h2>
+          <button onClick={closeUploadFileModal}><IoClose size={25} /></button>
+        </div>
+        
       </Modal>
       </div>
 

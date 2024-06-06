@@ -94,9 +94,10 @@ useEffect(() => {
               </div>
               <div className="col-6">
               <div className="p-2 bg_dark d-inline-block">
-                  <p>
+                  <p className="py-2">
                   You will get an order number after you completed the reservation.  The Order number you will need to enter in the “Purpose Code” when you make the payment via bank.  You will also get email with all the detail as well.
                   </p>
+                  <p className="text-red">Note: Please make the payment within next 7 days. Post that the order will be cancelled. </p>
               </div>
               </div>
             </div>
