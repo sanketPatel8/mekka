@@ -31,10 +31,10 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     padding: '20px',
     // borderRadius: '10px',
-    width: '40%', // Adjust width as needed
-    maxWidth: '80%', // Adjust max-width as needed
+    width: '100%', // Adjust width as needed
+    maxWidth: '700px', // Adjust max-width as needed
     height: '80vh', // Set a specific height for the modal
-    overflowY: 'auto', // Make content scrollable if it exceeds the height
+    overflowY: 'auto', 
     backgroundColor: '#fff' 
   },
 };
@@ -48,7 +48,7 @@ export default function BookingPages() {
   const [Nationality, setNationality] = useState('Nationality');
   const [From, setFrom] = useState('Frankfurt(FRA)');
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+ // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
   let subtitle;
 
@@ -59,43 +59,6 @@ useEffect(() => {
 useEffect(() => {
   Modal.setAppElement('#openSignIn');
 }, []);
-
-
-const getModalStyles = () => {
-  if (windowWidth < 480) {
-    return {
-      ...customStyles,
-      content: {
-        ...customStyles.content,
-        width: '90%', // full width for small screens
-      }
-    };
-  } else if (windowWidth < 768) {
-    return {
-      ...customStyles,
-      content: {
-        ...customStyles.content,
-        width: '80%', // medium width for tablet screens
-      }
-    };
-  } else {
-    return customStyles;
-  }
-};
-
-const handleResize = () => {
-  setWindowWidth(window.innerWidth);
-};
-
-useEffect(() => {
-  window.addEventListener('resize', handleResize);
-  return () => {
-    window.removeEventListener('resize', handleResize);
-  };
-}, []);
-
-
-
 
 
 function openModal() {
@@ -1262,7 +1225,7 @@ function closeModal() {
       isOpen={modalIsOpen}
       onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
-      style={getModalStyles()}
+      style={customStyles}
       contentLabel="Example Modal"
     >
 
