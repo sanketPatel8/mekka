@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import States from "@/components/dasboard/main/States";
+import dynamic from "next/dynamic";
 import Header from "@/components/dasboard/Header";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
-import CustomerDetaTable from "@/components/dasboard/CustomerDetaTable";
+
+// Dynamically import CustomerDetaTable with client-side only rendering
+const CustomerDetaTable = dynamic(() => import("@/components/dasboard/CustomerDetaTable"), { ssr: false });
 
 export default function CustomerDb() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -21,7 +23,6 @@ export default function CustomerDb() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-
             <CustomerDetaTable />
 
             <div className="text-center pt-30">
