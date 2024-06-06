@@ -83,7 +83,6 @@ export default function DbBooking() {
                         {elm.features?.map((elm2, i2) => (
                           <div key={i2} className="col-auto">
                             <div className="text-14 ">  
-                                {/* <FontAwesomeIcon icon={`${elm2.icon}`} /> */}
                               {elm2.name}
                             </div>
                           </div>
