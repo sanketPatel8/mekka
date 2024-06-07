@@ -267,7 +267,7 @@ function closeModal() {
                           type="radio"
                           name="radioGroup"
                           value="f-1-bed-4"
-                          checked={radioValue === "item1"}
+                          checked={radioValue === "f-1-bed-4"}
                           onChange={handleRadioChange}
                         />
                         <span className="radio__mark">
