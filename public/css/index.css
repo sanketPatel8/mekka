@@ -235,4 +235,28 @@
     .font_sm{
         font-size: 9px;
     }
+    .t_center{
+        text-align: center;
+    }
+    .dis_none{
+        display: none;
+    }
 }
+
+hr{
+    color: gray;
+}
+
+.flex_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* styles.css */
+@media (max-width: 767.98px) {
+    .sidebar-hidden-on-small {
+      display: none;
+    }
+  }
+  

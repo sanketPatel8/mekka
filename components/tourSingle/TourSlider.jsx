@@ -122,7 +122,7 @@ export default function TourSlider() {
             </div>
           </div>
 
-          <div className="navAbsolute">
+          <div className="navAbsolute dis_none">
             <button className="navAbsolute__button bg-white js-slider10-prev">
               <i className="icon-arrow-left text-14"></i>
             </button>

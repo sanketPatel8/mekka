@@ -190,9 +190,9 @@ const CustomerDetaTable = () => {
     <div>
       <div className="row px-0 py-3 ">
         <div className='col-lg-6'>
-            <h3 >Booking Details : #123216</h3>
-            <p>Booked Date : 12.08.2024</p>
-            <p className='text-red'>Available 10 seats</p>
+            <h3 className='t_center'>Booking Details : #123216</h3>
+            <p className='t_center'>Booked Date : 12.08.2024</p>
+            <p className='text-red t_center'>Available 10 seats</p>
         </div>
 
        <div className="col-lg-6 flex">
@@ -245,7 +245,7 @@ const CustomerDetaTable = () => {
         contentLabel="Example Modal"
       >
         <div className="d-flex justify-content-between" id="">
-          <h2 className='ml-50'>ADD PERSON</h2>
+          <h2 className='t_center'>ADD PERSON</h2>
           <button onClick={closeModal}><IoClose size={25} /></button>
         </div>
         <div className="form_2">
@@ -437,12 +437,12 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='mx-30'>PENDING PAYMENT</h2>
+          <h2 className=''>PENDING PAYMENT</h2>
           <button onClick={closePaymentModal}><IoClose size={25} /></button>
         </div>
         <div className=" y-gap-30 contactForm px-20 py-10">
           <div className="col-md-12">
-            <h5 className="mb-3">Total Amount : <b>2,55.50 €</b></h5>
+            <h5 className="mb-3 t_center mt-3">Total Amount : <b>2,55.50 €</b></h5>
           </div>
           
 
@@ -533,13 +533,13 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='ml-50'>Cancel Trip</h2>
+          <h2 className=''>Cancel Trip</h2>
           <button onClick={CloseCancelPopUp}><IoClose size={25} /></button>
         </div>
         
         <div className=" y-gap-30 contactForm px-10 py-10">
 
-          <table className="ttable table-success table-striped my-3 custom-table-bordered">
+          <table className="ttable table-success table-striped my-3 custom-table-bordered full_width">
               <thead>
                 <tr>
                   <th scope="col" className='px-1 py-2'><b>Type of fee</b></th>
@@ -568,7 +568,7 @@ const CustomerDetaTable = () => {
 
           <hr />
 
-          <table className="table table-success table-striped my-3 custom-table-bordered" >
+          <table className="table table-success table-striped my-3 custom-table-bordered full_width" >
               <thead>
                 <tr>
                   <th scope="col" className='px-1 py-2'><b>Time frame</b></th>
@@ -616,7 +616,7 @@ const CustomerDetaTable = () => {
         </div>
             <div className="">
 
-              <div className="row item-center my-3">
+              <div className="row item-center my-3 ">
                 <div className="col-md-5">
                 <div className="searchForm -type-1 -sidebar my-2">
                 <div className="searchForm__form">
@@ -672,7 +672,7 @@ const CustomerDetaTable = () => {
                   
                 </div>
                 <div className="col-md-4">
-                <div className="row my-2">
+                <div className="row my-2 flex_center">
                     {image1 ? (
                       <div className="col-auto my-3">
                         <div className="relative">
@@ -714,16 +714,20 @@ const CustomerDetaTable = () => {
                     )}
                   </div>
                 </div>
-               <div className="col-md-1 col-12 ">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
+                    <div className="col-md-3 ">
+                      <div className="row">
+                      <div className=" col-6 ">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 "  >
                 +
             </button>
                </div>
-               <div className="col-md-1 col-12">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width "  >
+               <div className=" col-6">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0  "  >
                 -
             </button>
                </div>
+              </div>
+                    </div>
               </div>
 
               <div className="row item-center my-3">
@@ -782,7 +786,7 @@ const CustomerDetaTable = () => {
                   
                 </div>
                 <div className="col-md-4">
-                <div className="row my-2">
+                <div className="row my-2 flex_center">
                     {image1 ? (
                       <div className="col-auto my-3">
                         <div className="relative">
@@ -824,16 +828,20 @@ const CustomerDetaTable = () => {
                     )}
                   </div>
                 </div>
-               <div className="col-md-1 col-12">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width "  >
+                    <div className="col-md-3">
+                      <div className="row">
+                      <div className="col-6">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width "  >
                 +
             </button>
                </div>
-               <div className="col-md-1 col-12">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
+               <div className=" col-6">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 -
             </button>
                </div>
+                      </div>
+                    </div>
               </div>
 
               <div className="row item-center my-3">
@@ -891,7 +899,7 @@ const CustomerDetaTable = () => {
                   </div>
                   
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 flex_center">
                 <div className="row my-2">
                     {image1 ? (
                       <div className="col-auto my-3">
@@ -934,16 +942,20 @@ const CustomerDetaTable = () => {
                     )}
                   </div>
                 </div>
-               <div className="col-md-1 col-12">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
+                    <div className="col-md-3">
+                      <div className="row">
+                      <div className=" col-6">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 +
             </button>
                </div>
-               <div className="col-md-1 col-12">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
+               <div className=" col-6">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 -
             </button>
                </div>
+                      </div>
+                    </div>
               </div>
 
               <div className="d-flex justify-content-center gap-md-2">

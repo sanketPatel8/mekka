@@ -327,7 +327,7 @@ export default function TourSingleSidebar() {
         <div className="text-14">40 €</div>
       </div>
 
-      {/* <hr /> */}
+      <hr />
 
       <div className={`searchForm -type-1 -sidebar mt-20 ${Flight === true ? 'd-none' : 'd-block'}`}>
 
@@ -382,7 +382,7 @@ export default function TourSingleSidebar() {
         </div>
       </div>
 
-      <div className="line mt-20 mb-20"></div>
+      {/* <div className="line mt-20 mb-20"></div> */}
 
       <div className="d-flex items-center justify-between pt-1">
         <div className="text-18 fw-500">Total:</div>
