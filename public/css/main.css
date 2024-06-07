@@ -4044,7 +4044,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero.-type-7 .hero__content {
   padding-top: 120px;
-  padding-bottom: 120px;
+  padding-bottom: 150px;
   /* border: 5px solid red; */
   padding-left: 100px;
 }
@@ -4053,13 +4053,16 @@ h1, h2, h3, h4, h5, h6 {
   .hero.-type-7 .hero__content {
     padding-top: 220px;
     padding-bottom: 240px;
+    /* padding-left: 100px; */
   }
 }
 
 @media (max-width: 767px) {
   .hero.-type-7 .hero__content {
-    padding-top: 120px;
-    padding-bottom: 400px;
+    padding-top: 100px;
+    padding-bottom: 350px;
+    padding-left: 20px;
+    text-align: center;
   }
 }
 
@@ -4104,6 +4107,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 24px;
     right: 24px;
     transform: none;
+    bottom: 20px;
   }
 }
 
@@ -4124,7 +4128,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero.-type-7 .hero__nav {
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 60px;
   right: 60px;
   justify-content: space-between;
@@ -4178,6 +4182,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero.-type-8 .hero__content {
   display: flex;
   flex-direction: column;
+  border: 2px solid green;
 }
 
 @media (max-width: 767px) {
@@ -5958,6 +5963,11 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-text-decoration-line: line-through;
           text-decoration-line: line-through;
   color: var(--icon, #C6C6D2);
+  text-align: center;
+}
+
+.tourCard__price{
+  margin: auto;
 }
 
 .tourCard.-type-2 .tourCard__price > *:nth-child(2) {
@@ -6081,7 +6091,7 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateX(-50%);
   z-index: -1;
   max-width: 100%;
-  width: 1530px;
+  width: 100%;
 }
 
 .cta.-type-1 .cta__bg img {
@@ -6498,6 +6508,11 @@ h1, h2, h3, h4, h5, h6 {
   .navAbsolute.-type-2 {
     left: 30px;
     right: 30px;
+  }
+
+  .navAbsolute{
+    left: -42px;
+    right: -42px;
   }
 }
 
@@ -11094,7 +11109,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .border-info {
   border: 1px solid #DAC04F;
-  border-radius: 5px;
+  border-radius: 12px;
 }
 
 .border-dark-1 {
@@ -11321,7 +11336,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 50%;
   transform: translateX(-50%);
   max-width: 100%;
-  width: 1530px;
+  width: 100%;
 }
 
 @media (max-width: 1550px) {

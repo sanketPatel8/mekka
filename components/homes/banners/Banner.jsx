@@ -9,57 +9,36 @@ export default function Banner() {
       <div className="cta__bg">
         <Image width={1530} height={100} src="/img/cta/2/bg.png" alt="image" />
 
-        {/* <div className="cta__image">
-          <Image width={100} height={600} src="/img/cta/2/bg.png" alt="image" />
-          <Image
-            width="40"
-            height="600"
-            src="/img/cta/2/shape.svg"
-            alt="image"
-          />
-          <Image
-            width="390"
-            height="35"
-            src="/img/cta/2/shape2.svg"
-            alt="image"
-          />
-        </div> */}
-      </div>
-
-    {/* <div className="container">
-      <div className="row">
-          <div className="col-xxl-4 col-xl-5 col-lg-6 col-md-7">
-              
-          
-          </div>
-      </div>
-    </div> */}
+       </div>
 
     <div className="container">
     <div className="row">
           <div className="col-md-5">
               <div className="cta__content">
               <h2
-                data-aos="fade-up"
-                data-aos-delay=""
-                className="text-40 md:text-30  lh-13"
-              >
-                Grab up to <span className="text-accent-1">35% off</span>
-                <br className="lg:d-none" />
-                on your favorite
-                <br className="lg:d-none" />
-                Destination
-              </h2>
+              data-aos="fade-up"
+              data-aos-delay=""
+              class="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center"
+            >
+              Grab up to <span class="text-info-2">35% off </span>
+              <br class="lg:hidden sm:hidden xs:hidden" />
+              on your favorite
+              <br class="lg:hidden" />
+              Destination
+            </h2>
 
-              <p data-aos="fade-up" data-aos-delay="" className="mt-10">
+            {/* <h2 data-aos="fade-up" data-aos-delay="" className="text-40 md:text-30 lh-13 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left" > Grab up to <span className="text-info-2">35% off </span> <br className="lg:d-none sm:d-none xs:d-none" /> on your favorite <br className="lg:d-none" /> Destination </h2> */}
+
+
+              <p data-aos="fade-up" data-aos-delay="" className="mt-10 text-left md:text-center lg:text-center xl:text-center">
                 Limited time offer, don't miss the opportunity
               </p>
 
-              <div className="mt-30 md:mt-20">
+              <div className="mt-30 md:mt-20 text-center text-md-left d-flex justify-content-center justify-content-md-start">
                 <button
                   data-aos="fade-right"
                   data-aos-delay=""
-                  className="button -md -info-2 bg- -info-2 text-white border-1"
+                  className="button -md -info-2 bg- -info-2 text-white border-1 "
                 >
                   <Link href="/tour-list-5">
                     Book Now
@@ -67,6 +46,7 @@ export default function Banner() {
                   </Link>
                 </button>
               </div>
+              
               </div>
           </div>
           <div className="col-md-7">

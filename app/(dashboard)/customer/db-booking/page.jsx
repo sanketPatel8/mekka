@@ -106,9 +106,11 @@ export default function DbBooking() {
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}
                       </div>
-                        <p className="text-left">Order : #09889</p>
-                        <p className="text-left">Total : {elm.price} €</p>
-                        <p className="text-left">{elm.pending}</p>
+                     
+                       <p className="text-center">Order : #09889</p>
+                        <p className="text-center">Total : {elm.price} €</p>
+                        <p className="text-center">{elm.pending}</p>
+             
                         
                       </div>
 

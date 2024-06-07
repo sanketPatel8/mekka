@@ -50,7 +50,7 @@ export default function Hero1() {
         />
       </div>
 
-      <div className="container">
+      <div className="container py-3">
         <div className="row justify-center">
           <div className="col-xl-12 col-lg-12">
             <div className="hero__content">

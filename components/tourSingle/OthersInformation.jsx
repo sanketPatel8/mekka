@@ -3,7 +3,7 @@ import React from "react";
 export default function OthersInformation() {
   return (
     <>
-      <div className="col-lg-3 col-6">
+      <div className="col-lg-3 col-6 my-2">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-clock"></i>
@@ -16,7 +16,7 @@ export default function OthersInformation() {
         </div>
       </div>
 
-      <div className="col-lg-3 col-6">
+      <div className="col-lg-3 col-6 my-2">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-teamwork"></i>
@@ -29,7 +29,7 @@ export default function OthersInformation() {
         </div>
       </div>
 
-      <div className="col-lg-3 col-6">
+      <div className="col-lg-3 col-6 my-2">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-birthday-cake"></i>
@@ -42,7 +42,7 @@ export default function OthersInformation() {
         </div>
       </div>
 
-      <div className="col-lg-3 col-6">
+      <div className="col-lg-3 col-6 my-2">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-translate"></i>

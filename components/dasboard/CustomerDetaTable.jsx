@@ -6,20 +6,30 @@ import Modal from 'react-modal';
 import { IoClose } from "react-icons/io5";
 import Image from 'next/image';
 import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData, documentData, documentDataFile } from '@/data/CustomerBookingData';
+import { collapseClasses } from '@mui/material';
 
 const customStyles = {
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.75)',
-    zIndex: 1000
+    backgroundColor: 'rgba(0, 0, 0, 0.75)', 
+    zIndex: 1000 
   },
   content: {
-    width: '60%', // default width
-    margin: '0 auto', // center the modal
-    padding: '20px', // add some padding
-    borderRadius: '10px', // rounded corners
-    transition: 'width 0.3s ease' // smooth transition
-  }
+    top: '50%',
+    left: '40%',
+    right: 'auto',
+    bottom: 'auto',
+    marginLeft: '10%',
+    transform: 'translate(-50%, -50%)',
+    padding: '10px',
+    // borderRadius: '10px',
+    width: '100%', // Adjust width as needed
+    maxWidth: '700px', // Adjust max-width as needed
+    height: '80vh', // Set a specific height for the modal
+    overflowY: 'auto', 
+    backgroundColor: '#fff' 
+  },
 };
+
 
 const customStylesForPendingPayment = {
   overlay: {
@@ -53,10 +63,17 @@ const CustomerDetaTable = () => {
   const [Nationality, setNationality] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedTime, setSelectedTime] = useState('');
   const [activeTimeDD, setActiveTimeDD] = useState(false);
+  const [activeTimeDD1, setActiveTimeDD1] = useState(false);
+  const [activeTimeDD2, setActiveTimeDD2] = useState(false);
   const [image1, setImage1] = useState("");
+  const [radioValue, setRadioValue] = useState(""); // Initial state for the radio buttons
+
+  const handleRadioChange = (event) => {
+   console.log(event.target.value);
+    setRadioValue(event.target.value);
+  };
 
   useEffect(() => {
     Modal.setAppElement('#modelopen');
@@ -64,39 +81,6 @@ const CustomerDetaTable = () => {
     Modal.setAppElement('#CanclePop_up');
     Modal.setAppElement('#upload_file');
   }, [])
-
-  const getModalStyles = () => {
-    if (windowWidth < 480) {
-      return {
-        ...customStyles,
-        content: {
-          ...customStyles.content,
-          width: '90%', // full width for small screens
-        }
-      };
-    } else if (windowWidth < 768) {
-      return {
-        ...customStyles,
-        content: {
-          ...customStyles.content,
-          width: '80%', // medium width for tablet screens
-        }
-      };
-    } else {
-      return customStyles;
-    }
-  };
-
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
   
 
   const ColumnReservation_details = [
@@ -153,8 +137,8 @@ const CustomerDetaTable = () => {
   ];
 
   const FileDeta = [
-    { name: 'name', selector: (row) => row.Name },
-    { name: 'file name', selector: (row) => <img src={row.fileUrl} alt={row.fileName} style={{ width: '50px', height: '50px' }} />},
+    { name: 'Document Name', selector: (row) => row.Name },
+    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2">View</button>},
   ];
 
   function afterOpenModal() {
@@ -205,26 +189,26 @@ const CustomerDetaTable = () => {
   return (
     <div>
       <div className="row px-0 py-3 ">
-        <div className='col-lg-7'>
+        <div className='col-lg-6'>
             <h3 >Booking Details : #123216</h3>
             <p>Booked Date : 12.08.2024</p>
             <p className='text-red'>Available 10 seats</p>
         </div>
 
-       <div className="col-lg-5 flex">
+       <div className="col-lg-6 flex">
        <div className="">
-          <button className="button -sm -accent-1 bg-info-2 text-white  " onClick={openPaymentModal}>
+          <button className="button -sm -accent-1 bg-info-2 text-white text-md-14 fs-md-1 fs-sm-6 font_sm" onClick={openPaymentModal}>
             PAY
           </button>
           <span>(10,00 €)</span>
         </div>
         <div className="">
-        <button className="button -sm -info-2 bg-accent-1 text-white" onClick={openUploadFileModal}>
+        <button className="button -sm -info-2 bg-accent-1 text-white fs-6 font_sm" onClick={openUploadFileModal}>
             UPLOAD DOCUMENT
         </button>
        </div>
        <div className="">
-        <button className="button -sm -info-2 bg-accent-1 text-white" onClick={openModal}>
+        <button className="button -sm -info-2 bg-accent-1 text-white font_sm" onClick={openModal}>
             ADD PERSON
           </button>
        </div>
@@ -257,7 +241,7 @@ const CustomerDetaTable = () => {
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        style={getModalStyles()}
+        style={customStyles}
         contentLabel="Example Modal"
       >
         <div className="d-flex justify-content-between" id="">
@@ -265,7 +249,7 @@ const CustomerDetaTable = () => {
           <button onClick={closeModal}><IoClose size={25} /></button>
         </div>
         <div className="form_2">
-          <div className="row y-gap-30 contactForm px-50 py-20 ">
+          <div className=" y-gap-30 contactForm px-20 py-20 ">
             <div className="row my-3">
               <div className="col-md-6">
                 <div className="form-input spacing">
@@ -327,135 +311,111 @@ const CustomerDetaTable = () => {
               </div>
             </div>
 
-            <div className='border_b my-3'>
-                                              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+            <div className="my-3 border_b px-md-40">
+                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
-                                              <div>
+                  <div>
 
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="4Bettzimmer"
-                                                                  // checked={roomType === "4Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">4 Bettzimmer (Standard)</div>
-                                                      </div>
-                                                      <div className="text-14">0,00 €</div>
-                                                  </div>
+                      <div className="d-flex items-center justify-between radio_hight">
+                          <div className="d-flex items-center">
+                          <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-4"
+                          checked={radioValue === "f-1-bed-4"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10"></span> */}
+                      </label>
+                    </div>
+                              <div className="ml-10">4 Bettzimmer (Standard)</div>
+                          </div>
+                          <div className="text-14">0,00 €</div>
+                      </div>
 
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="3Bettzimmer"
-                                                                  // checked={roomType === "3Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">3 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+100,00€</div>
-                                                  </div>
+                      <div className="d-flex items-center justify-between radio_hight">
+                          <div className="d-flex items-center">
+                         <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-3"
+                          checked={radioValue === "f-1-bed-3"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
+                              <div className="ml-10">3 Bettzimmer</div>
+                          </div>
+                          <div className="text-14">+100,00€</div>
+                      </div>
 
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="2Bettzimmer"
-                                                                  // checked={roomType === "2Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">2 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+230,00€</div>
-                                                  </div>
+                      <div className="d-flex items-center justify-between radio_hight">
+                          <div className="d-flex items-center">
+                         <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-2"
+                          checked={radioValue === "f-1-bed-2"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
+                              <div className="ml-10">2 Bettzimmer</div>
+                          </div>
+                          <div className="text-14">+230,00€</div>
+                      </div>
 
-                                                  <div className="d-flex items-center justify-between radio_hight">
-                                                      <div className="d-flex items-center">
-                                                          <div className="form-radio">
-                                                              <input
-                                                                  type="radio"
-                                                                  name="roomType"
-                                                                  className="radio-label"
-                                                                  value="1Bettzimmer"
-                                                                  // checked={roomType === "1Bettzimmer"}
-                                                                  // onChange={handleChange}
-                                                              />
-                                                              <div className="form-radio__mark">
-                                                                  <div className="form-radio__icon">
-                                                                      <Image
-                                                                          width="10"
-                                                                          height="8"
-                                                                          src="/img/icons/check.svg"
-                                                                          alt="icon"
-                                                                      />
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          <div className="ml-10">1 Bettzimmer</div>
-                                                      </div>
-                                                      <div className="text-14">+450,00€</div>
-                                                  </div>
-
-                                                  </div>
-                                              </div>
-
-                                              <div>
-                                                <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
-                                                <p className="text-right text-15">including taxes and fee</p>
-                                              </div>
+                      <div className="d-flex items-center justify-between radio_hight">
+                          <div className="d-flex items-center">
+                         <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-1"
+                          checked={radioValue === "f-1-bed-1"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
+                              <div className="ml-10">1 Bettzimmer</div>
+                          </div>
+                          <div className="text-14">+450,00€</div>
+                      </div>
+                      
+                  </div>
+                    
+                  </div>
 
             <div className="col-12">
            <div className="row">
-           <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-3" onClick={() => {alert('person added'); setTimeout(()=>{
+           <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3" onClick={() => {alert('person added'); setTimeout(()=>{
               closeModal()
             },2000)}}>
                 ADD PERSON
             </button>
-            <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-3" onClick={closeModal} >
+            <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3" onClick={closeModal} >
                 CANCEL
             </button>
            </div>
@@ -473,36 +433,36 @@ const CustomerDetaTable = () => {
       <Modal
         isOpen={paymentModalIsOpen}
         onRequestClose={closePaymentModal}
-        style={getModalStyles()}
+        style={customStyles}
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='ml-50'>PENDING PAYMENT</h2>
+          <h2 className='mx-30'>PENDING PAYMENT</h2>
           <button onClick={closePaymentModal}><IoClose size={25} /></button>
         </div>
-        <div className="row y-gap-30 contactForm px-50 py-10">
+        <div className=" y-gap-30 contactForm px-20 py-10">
           <div className="col-md-12">
             <h5 className="mb-3">Total Amount : <b>2,55.50 €</b></h5>
           </div>
           
 
           <div className="row">
-          <div className="col-md-5">
+          <div className="col-md-5 col-12">
             <div className="form-input spacing">
               <input type="text"  value='85,17 €'/>
               <label className="lh-1 text-16 text-light-1">1st Amount</label>
             </div>
           </div>
 
-          <div className="col-md-5">
+          <div className="col-md-5 col-12">
            <div className="form-input spacing">
               <input type="text"  value="31.05.2024" placeholder='' disabled/>
               <label className="lh-1 text-16 text-light-1 ">Date</label>
             </div>
           </div>
 
-          <div className="col-md-2">
-          <button className="button -sm -green-2 bg-green-3 text-dark my-4 mx-3 text-white " disabled>
+          <div className="col-md-2 col-12">
+          <button className="button -sm -green-2 bg-green-3 text-dark my-4 mx-md-3 mx-0 full_width text-white " disabled>
                 PAID
             </button>
           </div>
@@ -528,7 +488,7 @@ const CustomerDetaTable = () => {
           </div>
 
           <div className="col-md-2">
-          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width text-white  "  >
                 PAY
             </button>
           </div>
@@ -553,7 +513,7 @@ const CustomerDetaTable = () => {
           </div>
 
           <div className="col-md-2">
-          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width text-white "  >
                 PAY
             </button>
           </div>
@@ -569,7 +529,7 @@ const CustomerDetaTable = () => {
       <Modal
         isOpen={CanclePopUp}
         onRequestClose={CloseCancelPopUp}
-        style={getModalStyles()}
+        style={customStyles}
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
@@ -577,56 +537,56 @@ const CustomerDetaTable = () => {
           <button onClick={CloseCancelPopUp}><IoClose size={25} /></button>
         </div>
         
-        <div className="row y-gap-30 contactForm px-50 py-10">
+        <div className=" y-gap-30 contactForm px-10 py-10">
 
-          <table className="table table-success table-striped my-3">
+          <table className="ttable table-success table-striped my-3 custom-table-bordered">
               <thead>
                 <tr>
-                  <th scope="col"><b>Type of fee</b></th>
-                  <th scope="col"><b>Fee (gross)</b></th>
+                  <th scope="col" className='px-1 py-2'><b>Type of fee</b></th>
+                  <th scope="col" className='px-1 py-2'><b>Fee (gross)</b></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Total Package Fees</td>
-                  <td>300.00 €</td>
+                  <td className='px-1 py-2'>Total Package Fees</td>
+                  <td className='px-1 py-2'>300.00 €</td>
                 </tr>
                 <tr>
-                  <td>Mekka Fees</td>
-                  <td>0.00 €</td>
+                  <td className='px-1 py-2'>Mekka Fees</td>
+                  <td className='px-1 py-2'>0.00 €</td>
                 </tr>
                 <tr>
-                  <td>Total Tax Amount</td>
-                  <td>-13.00 €</td>
+                  <td className='px-1 py-2'>Total Tax Amount</td>
+                  <td className='px-1 py-2'>-13.00 €</td>
                 </tr>
                 <tr>
-                  <td>Agent Payable</td>
-                  <td>1.000,00 €</td>
+                  <td className='px-1 py-2'>Agent Payable</td>
+                  <td className='px-1 py-2'>1.000,00 €</td>
                 </tr>
               </tbody>
           </table>
 
           <hr />
 
-          <table className="table table-success table-striped my-3">
+          <table className="table table-success table-striped my-3 custom-table-bordered" >
               <thead>
                 <tr>
-                  <th scope="col"><b>Time frame</b></th>
-                  <th scope="col"><b>MekkaBooking Fee</b></th>
+                  <th scope="col" className='px-1 py-2'><b>Time frame</b></th>
+                  <th scope="col" className='px-1 py-2'><b>MekkaBooking Fee</b></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>0 hours to 3 hours*</td>
-                  <td>ADULT : Non Refundable</td>
+                  <td className='px-1 py-2'>0 hours to 3 hours*</td>
+                  <td className='px-1 py-2 '>ADULT : Non Refundable</td>
                 </tr>
                 <tr>
-                  <td>3 hours to 4 days*</td>
-                  <td>ADULT : 3,500 € + 300 € </td>
+                  <td className='px-1 py-2'>3 hours to 4 days*</td>
+                  <td className='px-1 py-2'>ADULT : 3,500 € + 300 € </td>
                 </tr>
                 <tr>
-                  <td>4 days to 365 days*</td>
-                  <td>ADULT : 3,000 € + 300 €</td>
+                  <td className='px-1 py-2'>4 days to 365 days*</td>
+                  <td className='px-1 py-2'>ADULT : 3,000 € + 300 €</td>
                 </tr>
               </tbody>
           </table>
@@ -647,11 +607,11 @@ const CustomerDetaTable = () => {
       <Modal
         isOpen={uploadFileisOpen}
         onRequestClose={closeUploadFileModal}
-        style={getModalStyles()}
+        style={customStyles}
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='ml-50'>UPLOAD DOCUMENT</h2>
+          <h2 className='ml-20'>UPLOAD DOCUMENT</h2>
           <button onClick={closeUploadFileModal}><IoClose size={25} /></button>
         </div>
             <div className="">
@@ -672,7 +632,7 @@ const CustomerDetaTable = () => {
                   <div className="searchFormItem__content">
                     <h5>Document</h5>
                     <div className="js-select-control-chosen">
-                      {selectedTime ? selectedTime : "Choose time"}
+                      {selectedTime ? selectedTime : "Choose Document"}
                     </div>
                   </div>
                   <div className="searchFormItem__icon_chevron">
@@ -754,13 +714,13 @@ const CustomerDetaTable = () => {
                     )}
                   </div>
                 </div>
-               <div className="col-md-1">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+               <div className="col-md-1 col-12 ">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
                 +
             </button>
                </div>
-               <div className="col-md-1">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+               <div className="col-md-1 col-12">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width "  >
                 -
             </button>
                </div>
@@ -773,7 +733,7 @@ const CustomerDetaTable = () => {
                 <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
-                  onClick={() => setActiveTimeDD((pre) => !pre)}
+                  onClick={() => setActiveTimeDD1((pre) => !pre)}
                   data-x-click="time"
                 >
                   {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
@@ -782,7 +742,7 @@ const CustomerDetaTable = () => {
                   <div className="searchFormItem__content">
                     <h5>Document</h5>
                     <div className="js-select-control-chosen">
-                      {selectedTime ? selectedTime : "Choose time"}
+                      {selectedTime ? selectedTime : "Choose Document"}
                     </div>
                   </div>
                   <div className="searchFormItem__icon_chevron">
@@ -792,7 +752,7 @@ const CustomerDetaTable = () => {
 
                 <div
                   className={`searchFormItemDropdown -tour-type ${
-                    activeTimeDD ? "is-active" : ""
+                    activeTimeDD1 ? "is-active" : ""
                   }`}
                   data-x="time"
                   data-x-toggle="is-active"
@@ -804,7 +764,7 @@ const CustomerDetaTable = () => {
                           key={i}
                           onClick={() => {
                             setSelectedTime((pre) => (pre == elm ? "" : elm));
-                            setActiveTimeDD(false);
+                            setActiveTimeDD1(false);
                           }}
                           className="searchFormItemDropdown__item"
                         >
@@ -864,13 +824,13 @@ const CustomerDetaTable = () => {
                     )}
                   </div>
                 </div>
-               <div className="col-md-1">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+               <div className="col-md-1 col-12">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width "  >
                 +
             </button>
                </div>
-               <div className="col-md-1">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+               <div className="col-md-1 col-12">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
                 -
             </button>
                </div>
@@ -883,7 +843,7 @@ const CustomerDetaTable = () => {
                 <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
-                  onClick={() => setActiveTimeDD((pre) => !pre)}
+                  onClick={() => setActiveTimeDD2((pre) => !pre)}
                   data-x-click="time"
                 >
                   {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
@@ -892,7 +852,7 @@ const CustomerDetaTable = () => {
                   <div className="searchFormItem__content">
                     <h5>Document</h5>
                     <div className="js-select-control-chosen">
-                      {selectedTime ? selectedTime : "Choose time"}
+                      {selectedTime ? selectedTime : "Choose Document"}
                     </div>
                   </div>
                   <div className="searchFormItem__icon_chevron">
@@ -902,7 +862,7 @@ const CustomerDetaTable = () => {
 
                 <div
                   className={`searchFormItemDropdown -tour-type ${
-                    activeTimeDD ? "is-active" : ""
+                    activeTimeDD2 ? "is-active" : ""
                   }`}
                   data-x="time"
                   data-x-toggle="is-active"
@@ -914,7 +874,7 @@ const CustomerDetaTable = () => {
                           key={i}
                           onClick={() => {
                             setSelectedTime((pre) => (pre == elm ? "" : elm));
-                            setActiveTimeDD(false);
+                            setActiveTimeDD2(false);
                           }}
                           className="searchFormItemDropdown__item"
                         >
@@ -974,24 +934,26 @@ const CustomerDetaTable = () => {
                     )}
                   </div>
                 </div>
-               <div className="col-md-1">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+               <div className="col-md-1 col-12">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
                 +
             </button>
                </div>
-               <div className="col-md-1">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+               <div className="col-md-1 col-12">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width"  >
                 -
             </button>
                </div>
               </div>
 
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center gap-md-2">
                 
-                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2" onClick={()=> {
+                  alert('submited')
+                }} >
                   SUBMIT
               </button>
-              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-3 "  >
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2" onClick={closeUploadFileModal} >
                     CANCEL
               </button>
               </div>

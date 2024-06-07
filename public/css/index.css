@@ -216,3 +216,23 @@
     width: 100%;
     max-width: 90%;
 }
+
+.full_width{
+    width: 100%;
+}
+
+.custom-table-bordered th,
+.custom-table-bordered td {
+  border: 1px solid #dee2e6; /* Default Bootstrap border color */
+}
+
+.custom-table-bordered {
+  border-collapse: collapse;
+}
+
+
+@media (max-width: 767px) {
+    .font_sm{
+        font-size: 9px;
+    }
+}

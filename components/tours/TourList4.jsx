@@ -175,18 +175,15 @@ export default function TourList4() {
 
                     <div className="tourCard__info">
                       <div className="h-60">
-                        <p className="d-flex items-center text-14 p-2 border-info my-2 m_width">
-                          {/* <i className="icon-clock mr-10"></i> */}
+                        <p className="d-flex items-center text-14 p-2 border-info my-2 m_width  ">
                           <IoTimeOutline  className="mx-2" color="#DAC04F" size={20}/>
                           {elm.duration}
                         </p>
-                        <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width">
-                          {/* <i className="icon-clock mr-10"></i> */}
+                        <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ">
                           <MdBed className="mx-2" color="#DAC04F" size={20}/>
                           {elm.bedrooms}
                         </p>
-                        <p className="d-flex items-center text-14 free-cancellation p-2 border-info my-2 m_width">
-                          {/* <i className="icon-clock mr-10"></i> */}
+                        <p className="d-flex items-center text-14 free-cancellation p-2 border-info my-2 m_width ">
                           <FaCheck className="mx-2" color="#DAC04F" size={20} />
                           {elm.cancel}
                         </p>
@@ -201,7 +198,7 @@ export default function TourList4() {
                             </p>
                             
                           </div>
-                          <p>including taxes and fee</p>
+                          <p className="text-left text-md-center text-lg-center text-xl-center">including taxes and fee</p>
                         </div>
                       </div>
 

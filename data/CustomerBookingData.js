@@ -73,7 +73,15 @@ export const documentData = ['Passport','Photo','Permanent Resident (PR)','Vacci
 export const documentDataFile = [
     {
         Name : 'Passport',
-        FileName : '../public/img/misc/icon.png',
+    },
+    {
+        Name : 'Photo',
+    },
+    {
+        Name : 'Permanent Resident (PR)',
+    },
+    {
+        Name : 'Vaccination Card',
     },
 ]
 

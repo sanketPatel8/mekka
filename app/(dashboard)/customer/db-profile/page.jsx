@@ -41,7 +41,7 @@ export default function Profile() {
             <div className="mt-50 rounded-12 bg-white shadow-2 px-40 pt-40 pb-30">
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 
-              <div className="contactForm row y-gap-30">
+              <div className="contactForm  y-gap-30">
                 <div className="row my-3">
                 <div className="col-md-12">
                   <div className="form-input spacing">

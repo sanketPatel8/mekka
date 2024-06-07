@@ -120,28 +120,23 @@ export default function Hero7() {
                   </div>
 
                   <div className="container">
-                    <div className="row ">
+                    <div className="row " >
                       <div className="col-lg-8 col-md-10">
-                        <div className="hero__content text-left">
+                        <div className="hero__content">
                           <h1
                             data-aos="fade-up"
                             data-aos-delay="100"
-                            className="hero__subtitle text-white mb-10 md:mb-10"
-                          >
+                            className="hero__subtitle text-white mb-5 md:mb-5">
                             {elm.subtitle}
                           </h1>
 
-                          <h1
-                            data-aos="fade-up"
+                        <div data-aos="fade-up"
                             data-aos-delay="300"
-                            className="hero__title text--color-accent-1"
-                          >
-                            <span className="text_50">{elm.title.split(",")[0]}</span>
-                            <br className="md:d-none" />
-                            <span className="text_30"><b>{elm.title.split(",")[1]}</b></span>
-                            <br className="md:d-none" />
-                            <span className="text_10">{elm.title.split(",")[2]}</span>
-                          </h1>
+                            className="hero__title text--color-accent-1 ">
+                           <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">{elm.title.split(",")[0]}</h2>
+                          <h2 className="text_30 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left"><b>{elm.title.split(",")[1]}</b></h2>
+                           <h2 className="text_10 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">{elm.title.split(",")[2]}</h2>
+                        </div>
                          
                         </div>
                       </div>

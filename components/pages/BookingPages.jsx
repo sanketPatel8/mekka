@@ -96,7 +96,7 @@ function closeModal() {
               Steps to reserve
               </h2>
 
-            <div className="bg-white rounded-12 md:py-20 md:px-20 mt-10">
+            <div className="bg-white rounded-12 md:py-20 px-md-20 mt-10">
 
               {bookingStage == 1 &&
             <div className="border-1 rounded-12 overflow-hidden shadow-1">
@@ -107,7 +107,7 @@ function closeModal() {
                   <p><span><MdError /></span><span> Is also the contact person for the reservation.</span></p>
                 </div>
 
-                <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
+                <div className=" y-gap-30 contactForm px-20 py-20 ">
                   <div className="my-3 row">
 
                   <div className="col-md-6">
@@ -243,7 +243,7 @@ function closeModal() {
                   </div> 
 
                 
-                  <div className="col-12 px-40">
+                  <div className="col-12">
                     <div className="row y-gap-20 items-center justify-between ">
                       <div className="col-12 tb-border">
                         <div className="text-14 ">
@@ -254,7 +254,7 @@ function closeModal() {
                     </div>
                   </div>
 
-                  <div className="my-3 border_b px-40">
+                  <div className="my-3 border_b px-md-40">
                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                   <div>
@@ -362,7 +362,7 @@ function closeModal() {
                     <div className="px-50 py-5 yellow_bg">
                       <p><span><FaUser /></span><span> <b>2 . Adult Information</b></span></p>
                     </div>
-                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
+                    <div className=" y-gap-30 contactForm px-20 py-20 ">
                       
                 <div className="row my-3">
                 <div className="col-md-6">
@@ -429,7 +429,7 @@ function closeModal() {
                   </div>
                 </div>
 
-                  <div className="col-12 px-40">
+                  <div className="col-12">
                     <div className="row y-gap-20 items-center justify-between">
                       <div className="col-12 tb-border">
                         <div className="text-14">
@@ -440,7 +440,7 @@ function closeModal() {
                     </div>
                   </div>
 
-                  <div className="my-3 border_b px-40">
+                  <div className="my-3 border_b px-md-40">
                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                   <div>
@@ -548,7 +548,7 @@ function closeModal() {
                     <div  className="px-50 py-5 yellow_bg">
                       <p><span><FaUser /></span><span> <b>3 . Adult Information</b></span></p>
                     </div>
-                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
+                    <div className=" y-gap-30 contactForm px-20 py-20">
                       
                   <div className="row my-3">
                   <div className="col-md-6">
@@ -615,7 +615,7 @@ function closeModal() {
                   </div>
                   </div>
 
-                  <div className="col-12 px-40">
+                  <div className="col-12">
                     <div className="row y-gap-20 items-center justify-between">
                       <div className="col-12 tb-border">
                         <div className="text-14 ">
@@ -626,7 +626,7 @@ function closeModal() {
                     </div>
                   </div>
 
-                  <div className="my-3 border_b px-40">
+                  <div className="my-3 border_b px-md-40">
                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                   <div>
@@ -734,7 +734,7 @@ function closeModal() {
                     <div  className="px-50 py-5 yellow_bg">
                       <p><span><FaUser /></span><span> <b>1 . Child Information</b></span></p>
                     </div>
-                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
+                    <div className=" y-gap-30 contactForm px-20 py-20 ">
                       
                     <div className="row my-3">
                     <div className="col-md-6">
@@ -801,7 +801,7 @@ function closeModal() {
                       </div>
                     </div>
 
-                  <div className="col-12 px-40">
+                  <div className="col-12 ">
                     <div className="row y-gap-20 items-center justify-between">
                       <div className="col-12 tb-border">
                         <div className="text-14 ">
@@ -812,7 +812,7 @@ function closeModal() {
                     </div>
                   </div>
 
-                  <div className="my-3 border_b px-40">
+                  <div className="my-3 border_b px-md-40">
                   <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
                   <div>
@@ -921,7 +921,7 @@ function closeModal() {
                     <div className="px-50 py-5 yellow_bg">
                       <p><span><FaUser /></span><span> <b>1 . Baby Information</b></span></p>
                     </div>
-                    <div className="row y-gap-30 contactForm px-10 py-20 ml-10">
+                    <div className="y-gap-30 contactForm px-20 py-20">
                       
                     <div className="row my-3">
                       <div className="col-md-6">
@@ -988,7 +988,7 @@ function closeModal() {
                       </div>
                     </div>
 
-                  <div className="col-12 px-40">
+                  <div className="col-12">
                     <div className="row y-gap-20 items-center justify-between">
                       <div className="col-12 tb-border">
                         <div className="text-14 ">

@@ -87,15 +87,15 @@ export default function Payment() {
         </div>
 
             <div className="row ">
-              <div className="col-6 ">
-              <div className={`p-2 ${selectedOption === `adPay` ? `bg_dark` : `bg_dark_1`} d-inline-block`}>
+              <div className="col-md-6 col-12">
+              <div className={`p-2 ${selectedOption === `adPay` ? `bg_dark` : `bg_dark_1`}`}>
                   <p><span><b>Kontoinhaber:</b></span>Mekka Booking GmbH</p>
                   <p><span><b>IBAN:</b></span>DE71 5125 0000 0002 2282 11</p>
                   <p><span><b>BIC:</b></span>HELADEF1TSK</p>
                   <p><span><b>Bank:</b></span>Taunus Sparkasse</p>
               </div>
               </div>
-              <div className="col-6">
+              <div className="col-md-6 col-12 my-md-0 my-3" >
               <div className="p-2 border-5 d-inline-block">
                   <p className="py-2">
                   You will get an order number after you completed the reservation.  The Order number you will need to enter in the “Purpose Code” when you make the payment via bank.  You will also get email with all the detail as well.
@@ -156,7 +156,7 @@ export default function Payment() {
       </div>
 
       {selectedOption === "InstallMent" && (
-        <div className="row y-gap-30 contactForm px-50 py-10">
+        <div className="y-gap-30 contactForm px-20 py-10">
           <div className="col-md-12">
             <h5 className="text-center">Total Amount : <b>2,55.50 €</b></h5>
           </div>
@@ -446,31 +446,31 @@ export default function Payment() {
                   <div className="line my-2"></div>
 
                   <div className="row">
-                    <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-5">4 Bettzimmer (Standard)</p>
-                    <p className="col-lg-4">+0,00 € x1</p>
-                    <p className="col-lg-2">0,0€</p>
+                    <p className="col-lg-1 col-1"><IoIosBed color="#dabf4f" size={20} /></p>
+                    <p className="col-lg-5 col-5">4 Bettzimmer (Standard)</p>
+                    <p className="col-lg-4 col-3">+0,00 € x1</p>
+                    <p className="col-lg-2 col-2">0,0€</p>
                   </div>
 
                   <div className="row">
-                    <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-5">3 Bettzimmer</p>
-                    <p className="col-lg-4">+ 100,00 € x0 </p>
-                    <p className="col-lg-2">0,0€</p>
+                    <p className="col-lg-1 col-1"><IoIosBed color="#dabf4f" size={20} /></p>
+                    <p className="col-lg-5 col-5">3 Bettzimmer</p>
+                    <p className="col-lg-4 col-3">+ 100,00 € x0 </p>
+                    <p className="col-lg-2 col-2">0,0€</p>
                   </div>
 
                   <div className="row">
-                    <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-5">2 Bettzimmer</p>
-                    <p className="col-lg-4">+ 230,00 € x0</p>
-                    <p className="col-lg-2">0,0€</p>
+                    <p className="col-lg-1 col-1"><IoIosBed color="#dabf4f" size={20} /></p>
+                    <p className="col-lg-5 col-5">2 Bettzimmer</p>
+                    <p className="col-lg-4 col-3">+ 230,00 € x0</p>
+                    <p className="col-lg-2 col-2">0,0€</p>
                   </div>
 
                   <div className="row">
-                    <p className="col-lg-1"><IoIosBed color="#dabf4f" size={20} /></p>
-                    <p className="col-lg-5">1 Bettzimmer</p>
-                    <p className="col-lg-4">+ 450,00 € x0</p>
-                    <p className="col-lg-2">0,0€</p>
+                    <p className="col-lg-1 col-1"><IoIosBed color="#dabf4f" size={20} /></p>
+                    <p className="col-lg-5 col-5">1 Bettzimmer</p>
+                    <p className="col-lg-4 col-3">+ 450,00 € x0</p>
+                    <p className="col-lg-2 col-2">0,0€</p>
                   </div>
 
 

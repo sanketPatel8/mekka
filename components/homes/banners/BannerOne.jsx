@@ -3,9 +3,9 @@ import React from "react";
 
 export default function BannerOne() {
   return (
-    <section className="cta -type-1">
+    <section className="cta -type-1 py-3 border-1">
       <div className="cta__bg">
-        <Image width={1530} height={500} src="/img/cta/1/Frame 2.jpg" alt="image" />
+        <Image width={1800} height={300} src="/img/cta/1/Frame 2.jpg" alt="image" />
       </div>
 
       <div className="container">
@@ -15,7 +15,7 @@ export default function BannerOne() {
               <h2
                 data-aos="fade-up"
                 data-aos-delay=""
-                className="text-40 md:text-24 lh-13 text-white"
+                className="text-40 md:text-24 lh-13 text-white text-left md:text-center lg:text-center xl:text-center"
               >
                 Get 10% off your 1st
                 <br className="lg:d-none" />
@@ -25,7 +25,7 @@ export default function BannerOne() {
               <p
                 data-aos="fade-up"
                 data-aos-delay=""
-                className="mt-10 text-white"
+                className="mt-10  text-left md:text-center lg:text-center xl:text-center"
               >
                 To get a discount enter your email address and you will 
                 <br className="lg:d-none" />
@@ -35,7 +35,7 @@ export default function BannerOne() {
               <div
                 data-aos="fade-up"
                 data-aos-delay=""
-                className="text-18 text-white mt-40 md:mt-20"
+                className="text-18  mt-40 md:mt-20 text-left md:text-center lg:text-center xl:text-center"
               >
                 Get a magic link sent to your email
               </div>
