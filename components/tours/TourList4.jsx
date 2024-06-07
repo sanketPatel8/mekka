@@ -6,7 +6,7 @@ import { FaPersonWalking } from "react-icons/fa6";
 import { tourDataTwo } from "@/data/tours";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaQuoteRight } from "react-icons/fa6";
-import { MdFlight } from "react-icons/md";
+import { IoTimeOutline } from "react-icons/io5";
 import { MdBed } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
@@ -175,20 +175,17 @@ export default function TourList4() {
 
                     <div className="tourCard__info">
                       <div className="h-60">
-                        <p className="d-flex items-center text-14">
-                          <i className="icon-clock mr-10"></i>
+                        <p className="d-flex items-center text-14 p-2 border-info my-2 m_width">
+                          {/* <i className="icon-clock mr-10"></i> */}
+                          <IoTimeOutline  className="mx-2" color="#DAC04F" size={20}/>
                           {elm.duration}
                         </p>
-                        {/* <p className="d-flex items-center text-14 direct-flight">
-                          <MdFlight className="mx-2" color="#DAC04F" size={15} />
-                          {elm.flight}
-                        </p> */}
-                        <p className="d-flex items-center text-14 bedrooms">
+                        <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width">
                           {/* <i className="icon-clock mr-10"></i> */}
                           <MdBed className="mx-2" color="#DAC04F" size={20}/>
                           {elm.bedrooms}
                         </p>
-                        <p className="d-flex items-center text-14 free-cancellation">
+                        <p className="d-flex items-center text-14 free-cancellation p-2 border-info my-2 m_width">
                           {/* <i className="icon-clock mr-10"></i> */}
                           <FaCheck className="mx-2" color="#DAC04F" size={20} />
                           {elm.cancel}

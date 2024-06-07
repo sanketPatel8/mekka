@@ -5,24 +5,26 @@ import React, { useState, useEffect } from 'react';
 import { FaUser } from "react-icons/fa";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
-import { MdFlightLand } from "react-icons/md"
+import { MdFlightLand } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import { FaLuggageCart } from "react-icons/fa";
 import { IoIosBed } from "react-icons/io";
 import { FaHotel } from "react-icons/fa6";
 import '@/public/css/index.css';
-
+import { useRouter } from 'next/navigation';
 
 export default function Payment() {
+
+  const router = useRouter();
+
   const [roomType, setRoomType] = useState("");
-  const [bookingStage, setBookingStage] = useState(1)
+  const [bookingStage, setBookingStage] = useState(1);
   const [Flight, setFlight] = useState(false);
   const [Check, setCheck] = useState(false);
   const [InstallMent, setInstallMent] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
-  const [isDisabled, setIsDisabled] = useState(false); 
+  const [isDisabled, setIsDisabled] = useState(false);
   const [selectedOption, setSelectedOption] = useState("adPay");
-
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
@@ -32,13 +34,14 @@ export default function Payment() {
     setSelectedDate(event.target.value);
   };
 
-const checkInstallment = () => {
-     setInstallMent(!InstallMent)
-}
+  const checkInstallment = () => {
+    setInstallMent(!InstallMent);
+  };
 
-useEffect(() => {
+  useEffect(() => {
     console.log('Selected room type:', roomType);
-}, [roomType]);
+  }, [roomType]);
+
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
@@ -53,7 +56,7 @@ useEffect(() => {
             <div className="bg-white rounded  py-30">
 
               {bookingStage == 1 &&
-            <div  className="border-1 rounded-12 shadow-1 overflow-hidden" >
+            <div  className="border-1 rounded-12 shadow-1 overflow-hidden" id="ref" >
              <p className="text-center py-3 bg -color-accent-1 bg-accent-1"><b>Payment Methods</b></p>
             <div className="px-3">
 
@@ -500,7 +503,10 @@ useEffect(() => {
                 </div>
 
                 <div className="mt-10">
-                <button onClick={()=>setBookingStage(pre=>pre+1) }   className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'}  ${bookingStage == 2 ? `d-none` : `d-block`}`}>
+                <button onClick={() => {
+                  setBookingStage(pre=>pre+1) 
+                  router.push('#ref');
+                }}   className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'}  ${bookingStage == 2 ? `d-none` : `d-block`}`}>
                 Complete Reservation</button>
               </div>
               </div>

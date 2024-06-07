@@ -1,4 +1,6 @@
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import Range from "./RangeSlider";
 import Tooltips from "./Tooltips";
@@ -6,6 +8,12 @@ import SelectWithSearch from "./SelectWithSearch";
 import MultipleSelectBox from "./MultipleSelectBox";
 
 export default function Form() {
+  const [radioValue, setRadioValue] = useState(""); // Initial state for the radio buttons
+
+  const handleRadioChange = (event) => {
+    setRadioValue(event.target.value);
+  };
+
   return (
     <section className="contactForm layout-pt-md layout-pb-md">
       <div className="container">
@@ -19,7 +27,7 @@ export default function Form() {
           <div className="col-lg-6">
             <div className="fw-500 mb-10">Input</div>
 
-            <div className="form-input ">
+            <div className="form-input">
               <input type="text" required />
               <label className="lh-1 text-16 text-light-1">Your Name</label>
             </div>
@@ -45,7 +53,7 @@ export default function Form() {
           <div className="col-lg-6">
             <div className="fw-500 mb-10">Textarea</div>
 
-            <div className="form-input ">
+            <div className="form-input">
               <textarea required rows="4"></textarea>
               <label className="lh-1 text-16 text-light-1">
                 Write Your Comment
@@ -61,47 +69,88 @@ export default function Form() {
                 </div>
                 <div className="row y-gap-15">
                   <div className="col-12">
-                    <div className="form-radio d-flex items-center ">
-                      <div className="radio">
-                        <input type="radio" name="name" />
-                        <div className="radio__mark">
-                          <div className="radio__icon"></div>
-                        </div>
-                      </div>
-                      <div className="text-14 lh-1 ml-10">items</div>
+                    <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="item1"
+                          checked={radioValue === "item1"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        <span className="text-14 lh-1 ml-10">Item 1</span>
+                      </label>
                     </div>
                   </div>
                   <div className="col-12">
-                    <div className="form-radio d-flex items-center ">
-                      <div className="radio">
-                        <input type="radio" name="name" />
-                        <div className="radio__mark">
-                          <div className="radio__icon"></div>
-                        </div>
-                      </div>
-                      <div className="text-14 lh-1 ml-10">items</div>
+                    <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="item2"
+                          checked={radioValue === "item2"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        <span className="text-14 lh-1 ml-10">Item 2</span>
+                      </label>
                     </div>
                   </div>
                   <div className="col-12">
-                    <div className="form-radio d-flex items-center ">
-                      <div className="radio">
-                        <input type="radio" name="name" />
-                        <div className="radio__mark">
-                          <div className="radio__icon"></div>
-                        </div>
-                      </div>
-                      <div className="text-14 lh-1 ml-10">items</div>
+                    <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="item3"
+                          checked={radioValue === "item3"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        <span className="text-14 lh-1 ml-10">Item 3</span>
+                      </label>
                     </div>
                   </div>
                   <div className="col-12">
-                    <div className="form-radio d-flex items-center ">
-                      <div className="radio">
-                        <input type="radio" name="name" />
-                        <div className="radio__mark">
-                          <div className="radio__icon"></div>
-                        </div>
-                      </div>
-                      <div className="text-14 lh-1 ml-10">items</div>
+                    <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="item4"
+                          checked={radioValue === "item4"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        <span className="text-14 lh-1 ml-10">Item 4</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-12">
+                    <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="item4"
+                          checked={radioValue === "item4"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        <span className="text-14 lh-1 ml-10">Item 4</span>
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -113,7 +162,7 @@ export default function Form() {
                 </div>
 
                 <div className="d-flex items-center">
-                  <div className="form-checkbox ">
+                  <div className="form-checkbox">
                     <input type="checkbox" name="name" />
                     <div className="form-checkbox__mark">
                       <div className="form-checkbox__icon">
@@ -137,7 +186,7 @@ export default function Form() {
                 </div>
 
                 <div className="d-flex mt-15">
-                  <div className="form-checkbox ">
+                  <div className="form-checkbox">
                     <input type="checkbox" name="name" />
                     <div className="form-checkbox__mark">
                       <div className="form-checkbox__icon">
@@ -161,7 +210,7 @@ export default function Form() {
                 </div>
 
                 <div className="d-flex mt-15">
-                  <div className="form-checkbox ">
+                  <div className="form-checkbox">
                     <input type="checkbox" name="name" />
                     <div className="form-checkbox__mark">
                       <div className="form-checkbox__icon">

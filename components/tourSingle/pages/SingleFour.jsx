@@ -7,15 +7,11 @@ import OthersInformation from "../OthersInformation";
 import Overview from "../Overview";
 import Included from "../Included";
 import RoadMap from "../RoadMap";
-import DateCalender from "../DateCalender";
 import Faq from "../Faq";
-import Rating from "../Rating";
 import Reviews from "../Reviews";
-import CommentBox from "../CommentBox";
 import TourSingleSidebar from "../TourSingleSidebar";
 import OtherInformation2 from "../OtherInformation2";
-import Extras from "../Extras";
-import RoadMap1 from "../RoadMap1";
+import RoadMap2 from "../Roadmap2";
 
 export default function SingleFour({ tour }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
@@ -158,7 +154,7 @@ export default function SingleFour({ tour }) {
                       }
                     >
                       <div className="pt-20">
-                        <RoadMap1 />
+                        <RoadMap2 />
                       </div>
                     </div>
                   </div>

@@ -48,7 +48,12 @@ export default function BookingPages() {
   const [Nationality, setNationality] = useState('Nationality');
   const [From, setFrom] = useState('Frankfurt(FRA)');
   const [modalIsOpen, setIsOpen] = useState(false);
- // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+ const [radioValue, setRadioValue] = useState(""); // Initial state for the radio buttons
+
+ const handleRadioChange = (event) => {
+  console.log(event.target.value);
+   setRadioValue(event.target.value);
+ };
   
   let subtitle;
 
@@ -256,26 +261,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="4Bettzimmer"
-                                      // checked={roomType === "4Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                          <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-4"
+                          checked={radioValue === "item1"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10"></span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">4 Bettzimmer (Standard)</div>
                           </div>
                           <div className="text-14">0,00 €</div>
@@ -283,26 +283,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="3Bettzimmer"
-                                      // checked={roomType === "3Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                         <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-3"
+                          checked={radioValue === "f-1-bed-3"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">3 Bettzimmer</div>
                           </div>
                           <div className="text-14">+100,00€</div>
@@ -310,26 +305,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="2Bettzimmer"
-                                      // checked={roomType === "2Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                         <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-2"
+                          checked={radioValue === "f-1-bed-2"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">2 Bettzimmer</div>
                           </div>
                           <div className="text-14">+230,00€</div>
@@ -337,26 +327,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="1Bettzimmer"
-                                      // checked={roomType === "1Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                         <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-1-bed-1"
+                          checked={radioValue === "f-1-bed-1"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">1 Bettzimmer</div>
                           </div>
                           <div className="text-14">+450,00€</div>
@@ -462,26 +447,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="4Bettzimmer"
-                                      // checked={roomType === "4Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                             <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-2-bed-4"
+                          checked={radioValue === "f-2-bed-4"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">4 Bettzimmer (Standard)</div>
                           </div>
                           <div className="text-14">0,00 €</div>
@@ -489,26 +469,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="3Bettzimmer"
-                                      // checked={roomType === "3Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-2-bed-3"
+                          checked={radioValue === "f-2-bed-3"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">3 Bettzimmer</div>
                           </div>
                           <div className="text-14">+100,00€</div>
@@ -516,26 +491,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="2Bettzimmer"
-                                      // checked={roomType === "2Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-2-bed-2"
+                          checked={radioValue === "f-2-bed-2"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">2 Bettzimmer</div>
                           </div>
                           <div className="text-14">+230,00€</div>
@@ -543,26 +513,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="1Bettzimmer"
-                                      // checked={roomType === "1Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-2-bed-1"
+                          checked={radioValue === "f-2-bed-1"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">1 Bettzimmer</div>
                           </div>
                           <div className="text-14">+450,00€</div>
@@ -668,26 +633,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="4Bettzimmer"
-                                      // checked={roomType === "4Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                             <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-3-bed-4"
+                          checked={radioValue === "f-3-bed-4"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">4 Bettzimmer (Standard)</div>
                           </div>
                           <div className="text-14">0,00 €</div>
@@ -695,26 +655,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="3Bettzimmer"
-                                      // checked={roomType === "3Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-3-bed-3"
+                          checked={radioValue === "f-3-bed-3"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">3 Bettzimmer</div>
                           </div>
                           <div className="text-14">+100,00€</div>
@@ -722,26 +677,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="2Bettzimmer"
-                                      // checked={roomType === "2Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-3-bed-2"
+                          checked={radioValue === "f-3-bed-2"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">2 Bettzimmer</div>
                           </div>
                           <div className="text-14">+230,00€</div>
@@ -749,26 +699,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="1Bettzimmer"
-                                      // checked={roomType === "1Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-3-bed-1"
+                          checked={radioValue === "f-3-bed-1"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">1 Bettzimmer</div>
                           </div>
                           <div className="text-14">+450,00€</div>
@@ -874,26 +819,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="4Bettzimmer"
-                                      // checked={roomType === "4Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                             <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-4-bed-4"
+                          checked={radioValue === "f-4-bed-4"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">4 Bettzimmer (Standard)</div>
                           </div>
                           <div className="text-14">0,00 €</div>
@@ -901,26 +841,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="3Bettzimmer"
-                                      // checked={roomType === "3Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-4-bed-3"
+                          checked={radioValue === "f-4-bed-3"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">3 Bettzimmer</div>
                           </div>
                           <div className="text-14">+100,00€</div>
@@ -928,26 +863,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="2Bettzimmer"
-                                      // checked={roomType === "2Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-4-bed-2"
+                          checked={radioValue === "f-4-bed-2"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">2 Bettzimmer</div>
                           </div>
                           <div className="text-14">+230,00€</div>
@@ -955,26 +885,21 @@ function closeModal() {
 
                       <div className="d-flex items-center justify-between radio_hight">
                           <div className="d-flex items-center">
-                              <div className="form-radio">
-                                  <input
-                                      type="radio"
-                                      name="roomType"
-                                      className="radio-label"
-                                      value="1Bettzimmer"
-                                      // checked={roomType === "1Bettzimmer"}
-                                      // onChange={handleChange}
-                                  />
-                                  <div className="form-radio__mark">
-                                      <div className="form-radio__icon">
-                                          <Image
-                                              width="10"
-                                              height="8"
-                                              src="/img/icons/check.svg"
-                                              alt="icon"
-                                          />
-                                      </div>
-                                  </div>
-                              </div>
+                            <div className="form-radio d-flex items-center">
+                      <label className="radio">
+                        <input
+                          type="radio"
+                          name="radioGroup"
+                          value="f-4-bed-1"
+                          checked={radioValue === "f-4-bed-1"}
+                          onChange={handleRadioChange}
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                      </label>
+                    </div>
                               <div className="ml-10">1 Bettzimmer</div>
                           </div>
                           <div className="text-14">+450,00€</div>
@@ -1186,6 +1111,7 @@ function closeModal() {
                     <div className=""> 43,242 € </div>
                   </div>
                 </div>
+                <hr />
                 <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-10 ">
                 <h2 className="text-20 fw-500 ">Do you have a promo code?</h2>
 
@@ -1199,6 +1125,7 @@ function closeModal() {
                 </div>
 
               </div>
+              {/* <hr /> */}
 
               {/* <div className="mt-30">
                 <button onClick={()=>setBookingStage(pre=>pre+1)} style={{alignSelf:'end'}}  className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 2 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'} `}>

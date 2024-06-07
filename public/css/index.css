@@ -138,7 +138,7 @@
 }
 
 .text_50{
-    font-size: 7vw;
+    font-size: 5vw;
     color: #DAC04F ;
 }
 
@@ -210,4 +210,9 @@
 .border-5{
     border: 2px solid #DAC04F;
     border-style: dashed;
+}
+
+.m_width{
+    width: 100%;
+    max-width: 90%;
 }
