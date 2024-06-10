@@ -716,17 +716,17 @@ const CustomerDetaTable = () => {
                 </div>
                     <div className="col-md-3 ">
                       <div className="row">
-                      <div className=" col-6 ">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 "  >
+                      <div className="col-6">
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width "  >
                 +
             </button>
                </div>
                <div className=" col-6">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0  "  >
+               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 -
             </button>
                </div>
-              </div>
+                      </div>
                     </div>
               </div>
 
