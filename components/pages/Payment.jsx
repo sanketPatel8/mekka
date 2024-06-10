@@ -506,6 +506,9 @@ export default function Payment() {
                 <button onClick={() => {
                   setBookingStage(pre=>pre+1) 
                   router.push('#ref');
+                  setTimeout(() => {
+                    router.push('/customer/db-booking')
+                  }, 2000);
                 }}   className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'}  ${bookingStage == 2 ? `d-none` : `d-block`}`}>
                 Complete Reservation</button>
               </div>

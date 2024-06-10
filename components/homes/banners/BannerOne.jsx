@@ -5,7 +5,7 @@ export default function BannerOne() {
   return (
     <section className="cta -type-1 py-3 border-1">
       <div className="cta__bg">
-        <Image width={1800} height={300} src="/img/cta/1/Frame 3.jpg" alt="image" />
+        <Image width={1920} height={300} src="/img/cta/1/Frame 3.jpg" alt="image" className="full_width"/>
       </div>
 
       <div className="container">

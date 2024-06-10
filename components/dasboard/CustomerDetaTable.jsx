@@ -8,6 +8,9 @@ import Image from 'next/image';
 import { Adult1Data, ReservationData, Adult2InfoData, TotalData, BabyData, documentData, documentDataFile } from '@/data/CustomerBookingData';
 import { collapseClasses } from '@mui/material';
 
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
 const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)', 
@@ -58,17 +61,19 @@ const CustomerDetaTable = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false);
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
+  const [EditData, setEditData] = useState(false)
+  const [Adult1Deta, setAdult1Deta] = useState(false)
   const [CanclePopUp, setCanclePopUp] = useState(false);
   const [gender, setGender] = useState('');
   const [Nationality, setNationality] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
-  const [isDisabled, setIsDisabled] = useState(false);
   const [selectedTime, setSelectedTime] = useState('');
   const [activeTimeDD, setActiveTimeDD] = useState(false);
   const [activeTimeDD1, setActiveTimeDD1] = useState(false);
   const [activeTimeDD2, setActiveTimeDD2] = useState(false);
   const [image1, setImage1] = useState("");
-  const [radioValue, setRadioValue] = useState(""); // Initial state for the radio buttons
+  const [radioValue, setRadioValue] = useState(""); 
+  const [From, setFrom] = useState('Frankfurt(FRA)');
 
   const handleRadioChange = (event) => {
    console.log(event.target.value);
@@ -80,6 +85,8 @@ const CustomerDetaTable = () => {
     Modal.setAppElement('#pendingpayment');
     Modal.setAppElement('#CanclePop_up');
     Modal.setAppElement('#upload_file');
+    Modal.setAppElement('#editData');
+    Modal.setAppElement('#Adult1Data');
   }, [])
   
 
@@ -110,6 +117,8 @@ const CustomerDetaTable = () => {
     { name: 'Strect', selector: (row) => row.Strect },
     { name: 'FRA', selector: (row) => row.FRA },
     { name: 'Additional_services', selector: (row) => row.additional_services },
+    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2" onClick={openAdult1Deta}>Edit</button>},
+    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2"  onClick={openUploadFileModal}>View</button>},
   ];
 
   const columnAduInfo_2 = [
@@ -119,6 +128,8 @@ const CustomerDetaTable = () => {
     { name: 'DOB', selector: (row) => row.DOB },
     { name: 'Nationality', selector: (row) => row.Nationality },
     { name: 'Additional services', selector: (row) => row.additional_services },
+    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2" onClick={openEditData}>Edit</button>},
+    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2"  onClick={openUploadFileModal}>View</button>},
   ];
 
   const Baby = [
@@ -127,12 +138,16 @@ const CustomerDetaTable = () => {
     { name: 'Gender', selector: (row) => row.gender },
     { name: 'DOB', selector: (row) => row.DOB },
     { name: 'Nationality', selector: (row) => row.Nationality },
+    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2" onClick={openEditData}>Edit</button>},
+    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2"  onClick={openUploadFileModal}>View</button>},
   ];
 
   const Total = [
     { name: 'Subtotal', selector: (row) => row.Subtotal },
-    { name: 'Total', selector: (row) => row.Total },
+    { name: 'Tax', selector: (row) => row.Total },
+    { name: 'Discount', selector: (row) => row.Total },
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
+    { name: 'Total', selector: (row) => row.Total },
     { name: 'Amount Due', selector: (row) => row.Amount_Due },
   ];
 
@@ -185,6 +200,24 @@ const CustomerDetaTable = () => {
     
   }
 
+  function openEditData() {
+    setEditData(true);
+  }
+
+  function closeEditData() {
+    setEditData(false);
+    
+  }
+
+  function openAdult1Deta() {
+    setAdult1Deta(true);
+  }
+
+  function closeAdult1Deta() {
+    setAdult1Deta(false);
+    
+  }
+
   
   return (
     <div>
@@ -193,6 +226,7 @@ const CustomerDetaTable = () => {
             <h3 className='t_center'>Booking Details : #123216</h3>
             <p className='t_center'>Booked Date : 12.08.2024</p>
             <p className='text-red t_center'>Available 10 seats</p>
+            <p className='t_center'>Booking Status : Pending</p>
         </div>
 
        <div className="col-lg-6 flex">
@@ -203,9 +237,9 @@ const CustomerDetaTable = () => {
           <span>(10,00 €)</span>
         </div>
         <div className="">
-        <button className="button -sm -info-2 bg-accent-1 text-white fs-6 font_sm" onClick={openUploadFileModal}>
+        {/* <button className="button -sm -info-2 bg-accent-1 text-white fs-6 font_sm" onClick={openUploadFileModal}>
             UPLOAD DOCUMENT
-        </button>
+        </button> */}
        </div>
        <div className="">
         <button className="button -sm -info-2 bg-accent-1 text-white font_sm" onClick={openModal}>
@@ -226,8 +260,6 @@ const CustomerDetaTable = () => {
       <DataTable title='Child' columns={columnAduInfo_2} data={Adult2InfoData} highlightOnHover />
       <br />
       <DataTable title='Baby' columns={Baby} data={BabyData} highlightOnHover />
-      <br />
-      <DataTable title='Documents' columns={FileDeta} data={documentDataFile} highlightOnHover />
       <br />
       <DataTable title='Total' columns={Total} data={TotalData} highlightOnHover />
       <br />
@@ -611,10 +643,18 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='ml-20'>UPLOAD DOCUMENT</h2>
+          <h2 className='ml-20 my-3'>DOCUMENT</h2>
           <button onClick={closeUploadFileModal}><IoClose size={25} /></button>
         </div>
-            <div className="">
+            
+            <Tabs>
+              <TabList>
+                <Tab>UPLOAD</Tab>
+                <Tab>VIEW</Tab>
+              </TabList>
+
+              <TabPanel>
+                    <div className="">
 
               <div className="row item-center my-3 ">
                 <div className="col-md-5">
@@ -717,15 +757,15 @@ const CustomerDetaTable = () => {
                     <div className="col-md-3 ">
                       <div className="row">
                       <div className="col-6">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width "  >
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width "  >
                 +
-            </button>
-               </div>
-               <div className=" col-6">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
+              </button>
+              </div>
+              <div className=" col-6">
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 -
-            </button>
-               </div>
+              </button>
+              </div>
                       </div>
                     </div>
               </div>
@@ -831,15 +871,15 @@ const CustomerDetaTable = () => {
                     <div className="col-md-3">
                       <div className="row">
                       <div className="col-6">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width "  >
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width "  >
                 +
-            </button>
-               </div>
-               <div className=" col-6">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
+              </button>
+              </div>
+              <div className=" col-6">
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 -
-            </button>
-               </div>
+              </button>
+              </div>
                       </div>
                     </div>
               </div>
@@ -945,15 +985,15 @@ const CustomerDetaTable = () => {
                     <div className="col-md-3">
                       <div className="row">
                       <div className=" col-6">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 +
-            </button>
-               </div>
-               <div className=" col-6">
-               <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
+              </button>
+              </div>
+              <div className=" col-6">
+              <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width"  >
                 -
-            </button>
-               </div>
+              </button>
+              </div>
                       </div>
                     </div>
               </div>
@@ -969,9 +1009,257 @@ const CustomerDetaTable = () => {
                     CANCEL
               </button>
               </div>
+                    </div>
+              </TabPanel>
+              <TabPanel>
+              <DataTable title='Your Documents' columns={FileDeta} data={documentDataFile} highlightOnHover />
+              </TabPanel>
+            </Tabs>
+      </Modal>
+      
+      </div>
+
+      <div id="editData">
+      <Modal
+        isOpen={EditData}
+        onRequestClose={closeEditData}
+        style={customStyles}
+        contentLabel="Pending Payment Modal"
+      >
+        <div className="d-flex justify-content-between" id="modelopen">
+          <h2 className=''>Edit You Details</h2>
+          <button onClick={closeEditData}><IoClose size={25} /></button>
+        </div>
+        
+        <div className="form_2">
+          <div className=" y-gap-30 contactForm px-20 py-20 ">
+            <div className="row my-3">
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Name</label>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    required
+                    className="form-control"
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <label className="lh-1 text-16 text-light-1">{gender}</label>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="date" required />
+                  <label className="lh-1 text-16 text-light-1"></label>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <select
+                    value={Nationality}
+                    onChange={(e) => setNationality(e.target.value)}
+                    required
+                    className="form-control"
+                  >
+                    <option value="indian">Indian</option>
+                    <option value="german">German</option>
+                    <option value="canadian">Canadian</option>
+                  </select>
+                  <label className="lh-1 text-16 text-light-1">{Nationality}</label>
+                </div>
+              </div>
             </div>
+
+            <div className="col-12">
+           <div className="row">
+           <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3" onClick={() => {alert('Edit successfully !!'); setTimeout(()=>{
+              closeEditData()
+            },2000)}}>
+                SAVE
+            </button>
+           </div>
+            </div>
+            
+          </div>
+        </div>
+        
+
       </Modal>
       </div>
+
+      <div id="Adult1Data">
+      <Modal
+        isOpen={Adult1Deta}
+        onRequestClose={closeAdult1Deta}
+        style={customStyles}
+        contentLabel="Pending Payment Modal"
+      >
+        <div className="d-flex justify-content-between" id="modelopen">
+          <h2 className=''>Edit You Details</h2>
+          <button onClick={closeAdult1Deta}><IoClose size={25} /></button>
+        </div>
+        
+        <div className="form_1" >
+
+            <div className=" y-gap-30 contactForm px-20 py-20 ">
+              <div className="my-3 row">
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Name
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Email</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Phone
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">City</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={gender} 
+                              onChange={(e) => {setGender(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Select Gender</option> */}
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                              <option value="other">Other</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                              {gender}
+                          </label>
+                      </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="date" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    {/* Birthday */}
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={Nationality} 
+                              onChange={(e)=>{setNationality(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="indian">Indian</option>
+                              <option value="german">German</option>
+                              <option value="canadian">Canadian</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {Nationality}
+                          </label>
+                      </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    House No
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    ZIP code
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Street
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={From} 
+                              onChange={(e)=>{setFrom(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="Frankfurt">Frankfurt(FRA)</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {From}
+                          </label>
+                      </div>
+              </div> 
+
+              </div> 
+              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3" onClick={() => {alert('Edit successfully !!'); setTimeout(()=>{
+              closeAdult1Deta()
+            },2000)}}>
+                SAVE
+            </button>
+            </div>
+            </div>
+
+      </Modal>
+      </div>
+
 
     </div>
   );

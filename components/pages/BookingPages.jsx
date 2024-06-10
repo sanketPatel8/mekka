@@ -98,916 +98,916 @@ function closeModal() {
 
             <div className="bg-white rounded-12 md:py-20 px-md-20 mt-10">
 
-              {bookingStage == 1 &&
-            <div className="border-1 rounded-12 overflow-hidden shadow-1">
-                                        
-                <div className="form_1" >
-                <div  className="px-50 py-5 yellow_bg">
-                  <p><span><FaUser /></span><span> <b>1. Adult information</b></span></p>
-                  <p><span><MdError /></span><span> Is also the contact person for the reservation.</span></p>
+          {bookingStage == 1 &&
+        <div className="border-1 rounded-12 overflow-hidden shadow-1">
+                                    
+            <div className="form_1" >
+            <div  className="px-50 py-5 yellow_bg">
+              <p><span><FaUser /></span><span> <b>1. Adult information</b></span></p>
+              <p><span><MdError /></span><span> Is also the contact person for the reservation.</span></p>
+            </div>
+
+            <div className=" y-gap-30 contactForm px-20 py-20 ">
+              <div className="my-3 row">
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Name
+                  </label>
                 </div>
+              </div>
 
-                <div className=" y-gap-30 contactForm px-20 py-20 ">
-                  <div className="my-3 row">
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                </div>
+              </div>
 
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Name
-                      </label>
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Email</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Phone
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">City</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={gender} 
+                              onChange={(e) => {setGender(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Select Gender</option> */}
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                              <option value="other">Other</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                              {gender}
+                          </label>
+                      </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="date" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    {/* Birthday */}
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={Nationality} 
+                              onChange={(e)=>{setNationality(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="indian">Indian</option>
+                              <option value="german">German</option>
+                              <option value="canadian">Canadian</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {Nationality}
+                          </label>
+                      </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    House No
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    ZIP code
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Street
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={From} 
+                              onChange={(e)=>{setFrom(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="Frankfurt">Frankfurt(FRA)</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {From}
+                          </label>
+                      </div>
+              </div> 
+
+              </div> 
+
+            
+              <div className="col-12">
+                <div className="row y-gap-20 items-center justify-between ">
+                  <div className="col-12 tb-border">
+                    <div className="text-14 ">
+                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
                     </div>
                   </div>
 
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">Surname</label>
-                    </div>
+                </div>
+              </div>
+
+              <div className="my-3 border_b px-md-40">
+              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+
+              <div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                      <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-1-bed-4"
+                      checked={radioValue === "f-1-bed-4"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10"></span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                      </div>
+                      <div className="text-14">0,00 €</div>
                   </div>
 
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">Email</label>
-                    </div>
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                      <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-1-bed-3"
+                      checked={radioValue === "f-1-bed-3"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">3 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+100,00€</div>
                   </div>
 
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Phone
-                      </label>
-                    </div>
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                      <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-1-bed-2"
+                      checked={radioValue === "f-1-bed-2"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">2 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+230,00€</div>
                   </div>
 
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">City</label>
-                    </div>
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                      <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-1-bed-1"
+                      checked={radioValue === "f-1-bed-1"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">1 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+450,00€</div>
                   </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={gender} 
-                                  onChange={(e) => {setGender(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Select Gender</option> */}
-                                  <option value="male">Male</option>
-                                  <option value="female">Female</option>
-                                  <option value="other">Other</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                                  {gender}
-                              </label>
-                          </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="date" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        {/* Birthday */}
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={Nationality} 
-                                  onChange={(e)=>{setNationality(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Nationality</option> */}
-                                  <option value="indian">Indian</option>
-                                  <option value="german">German</option>
-                                  <option value="canadian">Canadian</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                              {Nationality}
-                              </label>
-                          </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        House No
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        ZIP code
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Street
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={From} 
-                                  onChange={(e)=>{setFrom(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Nationality</option> */}
-                                  <option value="Frankfurt">Frankfurt(FRA)</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                              {From}
-                              </label>
-                          </div>
-                  </div> 
-
-                  </div> 
-
+                  
+              </div>
                 
-                  <div className="col-12">
-                    <div className="row y-gap-20 items-center justify-between ">
-                      <div className="col-12 tb-border">
-                        <div className="text-14 ">
-                        <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
-                        </div>
+              </div>
+
+              <div className="">
+                <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
+                <p className="text-right text-15">including taxes and fee</p>
+              </div>
+            </div>
+            </div>
+                                            
+            <div className="form_2">
+                <div className="px-50 py-5 yellow_bg">
+                  <p><span><FaUser /></span><span> <b>2 . Adult Information</b></span></p>
+                </div>
+                <div className=" y-gap-30 contactForm px-20 py-20 ">
+                  
+            <div className="row my-3">
+            <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Name
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={gender} 
+                              onChange={(e) => {setGender(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Select Gender</option> */}
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                              <option value="other">Other</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                              {gender}
+                          </label>
                       </div>
-  
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="date" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Birthday
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={Nationality} 
+                              onChange={(e)=>{setNationality(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="indian">Indian</option>
+                              <option value="german">German</option>
+                              <option value="canadian">Canadian</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {Nationality}
+                          </label>
+                      </div>
+              </div>
+            </div>
+
+              <div className="col-12">
+                <div className="row y-gap-20 items-center justify-between">
+                  <div className="col-12 tb-border">
+                    <div className="text-14">
+                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
                     </div>
                   </div>
 
-                  <div className="my-3 border_b px-md-40">
-                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+                </div>
+              </div>
 
-                  <div>
+              <div className="my-3 border_b px-md-40">
+              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
+              <div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
                           <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-1-bed-4"
-                          checked={radioValue === "f-1-bed-4"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10"></span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">4 Bettzimmer (Standard)</div>
-                          </div>
-                          <div className="text-14">0,00 €</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                         <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-1-bed-3"
-                          checked={radioValue === "f-1-bed-3"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">3 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+100,00€</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                         <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-1-bed-2"
-                          checked={radioValue === "f-1-bed-2"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">2 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+230,00€</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                         <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-1-bed-1"
-                          checked={radioValue === "f-1-bed-1"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">1 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+450,00€</div>
-                      </div>
-                      
-                  </div>
-                    
-                  </div>
-
-                  <div className="px-40">
-                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
-                    <p className="text-right text-15">including taxes and fee</p>
-                  </div>
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-2-bed-4"
+                      checked={radioValue === "f-2-bed-4"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
                 </div>
+                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                      </div>
+                      <div className="text-14">0,00 €</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-2-bed-3"
+                      checked={radioValue === "f-2-bed-3"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
                 </div>
-                                                
-                <div className="form_2">
-                    <div className="px-50 py-5 yellow_bg">
-                      <p><span><FaUser /></span><span> <b>2 . Adult Information</b></span></p>
+                          <div className="ml-10">3 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+100,00€</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-2-bed-2"
+                      checked={radioValue === "f-2-bed-2"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">2 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+230,00€</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-2-bed-1"
+                      checked={radioValue === "f-2-bed-1"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">1 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+450,00€</div>
+                  </div>
+
+                  </div>
+              </div>
+
+              <div className="">
+                <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
+                <p className="text-right text-15">including taxes and fee</p>
+              </div>
+
+                </div> 
+            </div>
+
+            <div className="form_3">
+                <div  className="px-50 py-5 yellow_bg">
+                  <p><span><FaUser /></span><span> <b>3 . Adult Information</b></span></p>
+                </div>
+                <div className=" y-gap-30 contactForm px-20 py-20">
+                  
+              <div className="row my-3">
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Name
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={gender} 
+                              onChange={(e) => {setGender(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Select Gender</option> */}
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                              <option value="other">Other</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                              {gender}
+                          </label>
+                      </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="date" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Birthday
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={Nationality} 
+                              onChange={(e)=>{setNationality(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="indian">Indian</option>
+                              <option value="german">German</option>
+                              <option value="canadian">Canadian</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {Nationality}
+                          </label>
+                      </div>
+              </div>
+              </div>
+
+              <div className="col-12">
+                <div className="row y-gap-20 items-center justify-between">
+                  <div className="col-12 tb-border">
+                    <div className="text-14 ">
+                    <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
                     </div>
-                    <div className=" y-gap-30 contactForm px-20 py-20 ">
-                      
+                  </div>
+
+                </div>
+              </div>
+
+              <div className="my-3 border_b px-md-40">
+              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+
+              <div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                          <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-3-bed-4"
+                      checked={radioValue === "f-3-bed-4"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">4 Bettzimmer (Standard)</div>
+                      </div>
+                      <div className="text-14">0,00 €</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-3-bed-3"
+                      checked={radioValue === "f-3-bed-3"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">3 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+100,00€</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-3-bed-2"
+                      checked={radioValue === "f-3-bed-2"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">2 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+230,00€</div>
+                  </div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-3-bed-1"
+                      checked={radioValue === "f-3-bed-1"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">1 Bettzimmer</div>
+                      </div>
+                      <div className="text-14">+450,00€</div>
+                  </div>
+
+              </div>
+              </div>
+
+              <div className="">
+                <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
+                <p className="text-right text-15">including taxes and fee</p>
+              </div>
+
+                </div> 
+            </div>
+
+            <div className="form_4">
+                <div  className="px-50 py-5 yellow_bg">
+                  <p><span><FaUser /></span><span> <b>1 . Child Information</b></span></p>
+                </div>
+                <div className=" y-gap-30 contactForm px-20 py-20 ">
+                  
                 <div className="row my-3">
                 <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Name
-                      </label>
-                    </div>
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Name
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={gender} 
+                              onChange={(e) => {setGender(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Select Gender</option> */}
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                              <option value="other">Other</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                              {gender}
+                          </label>
+                      </div>
                   </div>
 
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">Surname</label>
-                    </div>
-                  </div>
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="date" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Birthday
+                  </label>
+                </div>
+              </div>
 
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={gender} 
-                                  onChange={(e) => {setGender(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Select Gender</option> */}
-                                  <option value="male">Male</option>
-                                  <option value="female">Female</option>
-                                  <option value="other">Other</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                                  {gender}
-                              </label>
-                          </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="date" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Birthday
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={Nationality} 
-                                  onChange={(e)=>{setNationality(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Nationality</option> */}
-                                  <option value="indian">Indian</option>
-                                  <option value="german">German</option>
-                                  <option value="canadian">Canadian</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                              {Nationality}
-                              </label>
-                          </div>
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={Nationality} 
+                              onChange={(e)=>{setNationality(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="indian">Indian</option>
+                              <option value="german">German</option>
+                              <option value="canadian">Canadian</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {Nationality}
+                          </label>
+                      </div>
                   </div>
                 </div>
 
-                  <div className="col-12">
-                    <div className="row y-gap-20 items-center justify-between">
-                      <div className="col-12 tb-border">
-                        <div className="text-14">
-                        <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
-                        </div>
-                      </div>
-
+              <div className="col-12 ">
+                <div className="row y-gap-20 items-center justify-between">
+                  <div className="col-12 tb-border">
+                    <div className="text-14 ">
+                    <p className="d-flex justify-content-between"><span>Tour price per child</span> <span>1.339,00 €</span></p>
                     </div>
                   </div>
 
-                  <div className="my-3 border_b px-md-40">
-                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
+                </div>
+              </div>
 
-                  <div>
+              <div className="my-3 border_b px-md-40">
+              <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
 
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                             <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-2-bed-4"
-                          checked={radioValue === "f-2-bed-4"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">4 Bettzimmer (Standard)</div>
-                          </div>
-                          <div className="text-14">0,00 €</div>
+              <div>
+
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                          <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-4-bed-4"
+                      checked={radioValue === "f-4-bed-4"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">4 Bettzimmer (Standard)</div>
                       </div>
+                      <div className="text-14">0,00 €</div>
+                  </div>
 
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-2-bed-3"
-                          checked={radioValue === "f-2-bed-3"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">3 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+100,00€</div>
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-4-bed-3"
+                      checked={radioValue === "f-4-bed-3"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">3 Bettzimmer</div>
                       </div>
+                      <div className="text-14">+100,00€</div>
+                  </div>
 
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-2-bed-2"
-                          checked={radioValue === "f-2-bed-2"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">2 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+230,00€</div>
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-4-bed-2"
+                      checked={radioValue === "f-4-bed-2"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">2 Bettzimmer</div>
                       </div>
+                      <div className="text-14">+230,00€</div>
+                  </div>
 
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-2-bed-1"
-                          checked={radioValue === "f-2-bed-1"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">1 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+450,00€</div>
+                  <div className="d-flex items-center justify-between radio_hight">
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value="f-4-bed-1"
+                      checked={radioValue === "f-4-bed-1"}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                  </label>
+                </div>
+                          <div className="ml-10">1 Bettzimmer</div>
                       </div>
+                      <div className="text-14">+450,00€</div>
+                  </div>
 
+              </div>
+
+              </div>
+
+              <div className="">
+                <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
+                <p className="text-right text-15">including taxes and fee</p>
+              </div>
+
+                </div> 
+            </div>
+
+            <div className="form_5">
+                <div className="px-50 py-5 yellow_bg">
+                  <p><span><FaUser /></span><span> <b>1 . Baby Information</b></span></p>
+                </div>
+                <div className="y-gap-30 contactForm px-20 py-20">
+                  
+                <div className="row my-3">
+                  <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Name
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="text" required />
+                  <label className="lh-1 text-16 text-light-1">Surname</label>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={gender} 
+                              onChange={(e) => {setGender(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Select Gender</option> */}
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                              <option value="other">Other</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                              {gender}
+                          </label>
                       </div>
                   </div>
 
-                  <div className="px-40">
-                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
-                    <p className="text-right text-15">including taxes and fee</p>
-                  </div>
+              <div className="col-md-6">
+                <div className="form-input spacing">
+                  <input type="date" required />
+                  <label className="lh-1 text-16 text-light-1">
+                    Birthday
+                  </label>
+                </div>
+              </div>
 
-                    </div> 
+              <div className="col-md-6">
+                      <div className="form-input spacing">
+                          <select 
+                              value={Nationality} 
+                              onChange={(e)=>{setNationality(e.target.value)}} 
+                              required 
+                              className="form-control"
+                          >
+                              {/* <option value="" disabled>Nationality</option> */}
+                              <option value="indian">Indian</option>
+                              <option value="german">German</option>
+                              <option value="canadian">Canadian</option>
+                          </select>
+                          <label className="lh-1 text-16 text-light-1">
+                          {Nationality}
+                          </label>
+                      </div>
+                  </div>
                 </div>
 
-                <div className="form_3">
-                    <div  className="px-50 py-5 yellow_bg">
-                      <p><span><FaUser /></span><span> <b>3 . Adult Information</b></span></p>
-                    </div>
-                    <div className=" y-gap-30 contactForm px-20 py-20">
-                      
-                  <div className="row my-3">
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Name
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">Surname</label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={gender} 
-                                  onChange={(e) => {setGender(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Select Gender</option> */}
-                                  <option value="male">Male</option>
-                                  <option value="female">Female</option>
-                                  <option value="other">Other</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                                  {gender}
-                              </label>
-                          </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="date" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Birthday
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={Nationality} 
-                                  onChange={(e)=>{setNationality(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Nationality</option> */}
-                                  <option value="indian">Indian</option>
-                                  <option value="german">German</option>
-                                  <option value="canadian">Canadian</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                              {Nationality}
-                              </label>
-                          </div>
+              <div className="col-12">
+                <div className="row y-gap-20 items-center justify-between">
+                  <div className="col-12 tb-border">
+                  <div className="">
+                      <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
+                      <p className="text-right text-15">including taxes and fee</p>
                   </div>
                   </div>
 
-                  <div className="col-12">
-                    <div className="row y-gap-20 items-center justify-between">
-                      <div className="col-12 tb-border">
-                        <div className="text-14 ">
-                        <p className="d-flex justify-content-between"><span>Tour price per person</span> <span>1.339,00 €</span></p>
-                        </div>
-                      </div>
-  
-                    </div>
-                  </div>
-
-                  <div className="my-3 border_b px-md-40">
-                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
-
-                  <div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                             <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-3-bed-4"
-                          checked={radioValue === "f-3-bed-4"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">4 Bettzimmer (Standard)</div>
-                          </div>
-                          <div className="text-14">0,00 €</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-3-bed-3"
-                          checked={radioValue === "f-3-bed-3"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">3 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+100,00€</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-3-bed-2"
-                          checked={radioValue === "f-3-bed-2"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">2 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+230,00€</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-3-bed-1"
-                          checked={radioValue === "f-3-bed-1"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">1 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+450,00€</div>
-                      </div>
-
-                  </div>
-                  </div>
-
-                  <div className="px-40">
-                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
-                    <p className="text-right text-15">including taxes and fee</p>
-                  </div>
-
-                    </div> 
                 </div>
+              </div>
 
-                <div className="form_4">
-                    <div  className="px-50 py-5 yellow_bg">
-                      <p><span><FaUser /></span><span> <b>1 . Child Information</b></span></p>
-                    </div>
-                    <div className=" y-gap-30 contactForm px-20 py-20 ">
-                      
-                    <div className="row my-3">
-                    <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Name
-                      </label>
-                    </div>
-                  </div>
+            
 
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">Surname</label>
-                    </div>
-                  </div>
+            
+                </div> 
+            </div>
 
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={gender} 
-                                  onChange={(e) => {setGender(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Select Gender</option> */}
-                                  <option value="male">Male</option>
-                                  <option value="female">Female</option>
-                                  <option value="other">Other</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                                  {gender}
-                              </label>
-                          </div>
-                      </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="date" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Birthday
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={Nationality} 
-                                  onChange={(e)=>{setNationality(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Nationality</option> */}
-                                  <option value="indian">Indian</option>
-                                  <option value="german">German</option>
-                                  <option value="canadian">Canadian</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                              {Nationality}
-                              </label>
-                          </div>
-                      </div>
-                    </div>
-
-                  <div className="col-12 ">
-                    <div className="row y-gap-20 items-center justify-between">
-                      <div className="col-12 tb-border">
-                        <div className="text-14 ">
-                        <p className="d-flex justify-content-between"><span>Tour price per child</span> <span>1.339,00 €</span></p>
-                        </div>
-                      </div>
-  
-                    </div>
-                  </div>
-
-                  <div className="my-3 border_b px-md-40">
-                  <h5 className="text-18 fw-500 my-2">Possible additional services per person:</h5>
-
-                  <div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                             <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-4-bed-4"
-                          checked={radioValue === "f-4-bed-4"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">4 Bettzimmer (Standard)</div>
-                          </div>
-                          <div className="text-14">0,00 €</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-4-bed-3"
-                          checked={radioValue === "f-4-bed-3"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">3 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+100,00€</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-4-bed-2"
-                          checked={radioValue === "f-4-bed-2"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">2 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+230,00€</div>
-                      </div>
-
-                      <div className="d-flex items-center justify-between radio_hight">
-                          <div className="d-flex items-center">
-                            <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="f-4-bed-1"
-                          checked={radioValue === "f-4-bed-1"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
-                              <div className="ml-10">1 Bettzimmer</div>
-                          </div>
-                          <div className="text-14">+450,00€</div>
-                      </div>
-
-                  </div>
-
-                  </div>
-
-                  <div className="px-40">
-                    <p className="text-right text-20">Subtotal <span className='text-accent-1'><b>1.789,00 €</b></span></p>
-                    <p className="text-right text-15">including taxes and fee</p>
-                  </div>
-
-                    </div> 
-                </div>
-
-                <div className="form_5">
-                    <div className="px-50 py-5 yellow_bg">
-                      <p><span><FaUser /></span><span> <b>1 . Baby Information</b></span></p>
-                    </div>
-                    <div className="y-gap-30 contactForm px-20 py-20">
-                      
-                    <div className="row my-3">
-                      <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Name
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">Surname</label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={gender} 
-                                  onChange={(e) => {setGender(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Select Gender</option> */}
-                                  <option value="male">Male</option>
-                                  <option value="female">Female</option>
-                                  <option value="other">Other</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                                  {gender}
-                              </label>
-                          </div>
-                      </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input type="date" required />
-                      <label className="lh-1 text-16 text-light-1">
-                        Birthday
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                          <div className="form-input spacing">
-                              <select 
-                                  value={Nationality} 
-                                  onChange={(e)=>{setNationality(e.target.value)}} 
-                                  required 
-                                  className="form-control"
-                              >
-                                  {/* <option value="" disabled>Nationality</option> */}
-                                  <option value="indian">Indian</option>
-                                  <option value="german">German</option>
-                                  <option value="canadian">Canadian</option>
-                              </select>
-                              <label className="lh-1 text-16 text-light-1">
-                              {Nationality}
-                              </label>
-                          </div>
-                      </div>
-                    </div>
-
-                  <div className="col-12">
-                    <div className="row y-gap-20 items-center justify-between">
-                      <div className="col-12 tb-border">
-                        <div className="text-14 ">
-                        <p className="d-flex justify-content-between"><span>Tour price per Baby</span> <span>1.339,00 €</span></p>
-                        <p className="text-right text-15">including taxes and fee</p>
-                        </div>
-                      </div>
-  
-                    </div>
-                  </div>
-
-                
-
-                
-                    </div> 
-                </div>
-
-          </div>
-              }
+      </div>
+          }
       </div>
           </div>
 
