@@ -62,6 +62,7 @@ export const TotalData = [
     {
         Subtotal : '182 €',
         Total : '23 €',
+        Discount : '-23 €' ,
         Amount_Paid : '3.482 €',
         Amount_Due : '43,242 €'
     },

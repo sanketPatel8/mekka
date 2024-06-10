@@ -43,24 +43,35 @@ export default function Profile() {
 
               <div className="contactForm  y-gap-30">
                 <div className="row my-3">
-                <div className="col-md-12">
+                
+                
+                <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">Name</label>
                   </div>
                 </div>
-                
+
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
+                    <label className="lh-1 text-16 text-light-1">Surname</label>
+                  </div>
+                </div>
+
+                <div className="col-md-12">
+                  <div className="form-input spacing">
+                    <input type="Email" required />
                     <label className="lh-1 text-16 text-light-1">Email</label>
                   </div>
                 </div>
-
+                
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Phone</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      Password
+                    </label>
                   </div>
                 </div>
                 
@@ -68,19 +79,11 @@ export default function Profile() {
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Location
+                      Conform Password
                     </label>
                   </div>
                 </div>
 
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="date" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {/* Location */}
-                    </label>
-                  </div>
-                </div>
                 </div>
 
                 

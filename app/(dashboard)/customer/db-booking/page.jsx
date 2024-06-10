@@ -15,13 +15,13 @@ import Link from "next/link";
 const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
-  const [sideBarOpen, setSideBarOpen] = useState(false);
+  const [sideBarOpen, setSideBarOpen] = useState(true);
   const [close, setclose] = useState(true)
   const [currentTab, setcurrentTab] = useState("Approved");
   return (
     <div
   className={`dashboard ${
-    sideBarOpen ? "" : "-is-sidebar-visible"
+    sideBarOpen ? "-is-sidebar-visible" : ""
     } js-dashboard`}
       
     >

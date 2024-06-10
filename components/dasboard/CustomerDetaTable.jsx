@@ -117,8 +117,27 @@ const CustomerDetaTable = () => {
     { name: 'Strect', selector: (row) => row.Strect },
     { name: 'FRA', selector: (row) => row.FRA },
     { name: 'Additional_services', selector: (row) => row.additional_services },
-    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2" onClick={openAdult1Deta}>Edit</button>},
-    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2"  onClick={openUploadFileModal}>View</button>},
+    {
+      name: '',
+      selector: (row) => (
+        <div className='flex_center'>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            onClick={openAdult1Deta}
+          >
+            Edit
+          </button>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 px-3 text-13"
+            onClick={openUploadFileModal}
+          >
+            Document
+          </button>
+        </div>
+      ),
+      width: '200px' // Set a custom width for the button column
+    }
+
   ];
 
   const columnAduInfo_2 = [
@@ -128,8 +147,26 @@ const CustomerDetaTable = () => {
     { name: 'DOB', selector: (row) => row.DOB },
     { name: 'Nationality', selector: (row) => row.Nationality },
     { name: 'Additional services', selector: (row) => row.additional_services },
-    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2" onClick={openEditData}>Edit</button>},
-    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2"  onClick={openUploadFileModal}>View</button>},
+    {
+      name: '',
+      selector: (row) => (
+        <div className='flex_center'>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            onClick={openEditData}
+          >
+            Edit
+          </button>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 px-3 text-13"
+            onClick={openUploadFileModal}
+          >
+            Document
+          </button>
+        </div>
+      ),
+      width: '200px' // Set a custom width for the button column
+    }
   ];
 
   const Baby = [
@@ -138,21 +175,39 @@ const CustomerDetaTable = () => {
     { name: 'Gender', selector: (row) => row.gender },
     { name: 'DOB', selector: (row) => row.DOB },
     { name: 'Nationality', selector: (row) => row.Nationality },
-    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2" onClick={openEditData}>Edit</button>},
-    { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2"  onClick={openUploadFileModal}>View</button>},
+    {
+      name: '',
+      selector: (row) => (
+        <div className='flex_center'>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            onClick={openEditData}
+          >
+            Edit
+          </button>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 px-3 text-13"
+            onClick={openUploadFileModal}
+          >
+            Document
+          </button>
+        </div>
+      ),
+      width: '200px' // Set a custom width for the button column
+    }
   ];
 
   const Total = [
     { name: 'Subtotal', selector: (row) => row.Subtotal },
     { name: 'Tax', selector: (row) => row.Total },
-    { name: 'Discount', selector: (row) => row.Total },
+    { name: 'Discount', selector: (row) => row.Discount },
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
     { name: 'Total', selector: (row) => row.Total },
     { name: 'Amount Due', selector: (row) => row.Amount_Due },
   ];
 
   const FileDeta = [
-    { name: 'Document Name', selector: (row) => row.Name },
+    { name: '', selector: (row) => row.Name },
     { name: '', selector: (row) =>  <button className="button -sm -accent-1 bg-info-2 text-white my-2">View</button>},
   ];
 
@@ -225,8 +280,8 @@ const CustomerDetaTable = () => {
         <div className='col-lg-6'>
             <h3 className='t_center'>Booking Details : #123216</h3>
             <p className='t_center'>Booked Date : 12.08.2024</p>
-            <p className='text-red t_center'>Available 10 seats</p>
             <p className='t_center'>Booking Status : Pending</p>
+            <p className='text-red t_center'>Available 10 seats</p>
         </div>
 
        <div className="col-lg-6 flex">
@@ -277,7 +332,7 @@ const CustomerDetaTable = () => {
         contentLabel="Example Modal"
       >
         <div className="d-flex justify-content-between" id="">
-          <h2 className='t_center'>ADD PERSON</h2>
+          <h2 className='t_center px-20'>ADD PERSON</h2>
           <button onClick={closeModal}><IoClose size={25} /></button>
         </div>
         <div className="form_2">
@@ -469,7 +524,7 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className=''>PENDING PAYMENT</h2>
+          <h2 className='px-20'>PENDING PAYMENT</h2>
           <button onClick={closePaymentModal}><IoClose size={25} /></button>
         </div>
         <div className=" y-gap-30 contactForm px-20 py-10">
@@ -643,10 +698,11 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className='ml-20 my-3'>DOCUMENT</h2>
+          <h2 className='ml-20 my-3'>DOCUMENTS</h2>
           <button onClick={closeUploadFileModal}><IoClose size={25} /></button>
         </div>
             
+            <div className="ml-20">
             <Tabs>
               <TabList>
                 <Tab>UPLOAD</Tab>
@@ -1015,6 +1071,7 @@ const CustomerDetaTable = () => {
               <DataTable title='Your Documents' columns={FileDeta} data={documentDataFile} highlightOnHover />
               </TabPanel>
             </Tabs>
+            </div>
       </Modal>
       
       </div>
@@ -1027,7 +1084,7 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className=''>Edit You Details</h2>
+          <h2 className='px-20'>Edit You Details</h2>
           <button onClick={closeEditData}><IoClose size={25} /></button>
         </div>
         
@@ -1109,7 +1166,7 @@ const CustomerDetaTable = () => {
         contentLabel="Pending Payment Modal"
       >
         <div className="d-flex justify-content-between" id="modelopen">
-          <h2 className=''>Edit You Details</h2>
+          <h2 className='px-20'>Edit You Details</h2>
           <button onClick={closeAdult1Deta}><IoClose size={25} /></button>
         </div>
         
