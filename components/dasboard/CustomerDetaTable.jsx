@@ -284,20 +284,16 @@ const CustomerDetaTable = () => {
             <p className='text-red t_center'>Available 10 seats</p>
         </div>
 
-       <div className="col-lg-6 flex">
+       <div className="col-lg-6 flex small-flex-center">
        <div className="">
-          <button className="button -sm -accent-1 bg-info-2 text-white text-md-14 fs-md-1 fs-sm-6 font_sm" onClick={openPaymentModal}>
+          <button className="button -sm -accent-1 bg-info-2 text-white " onClick={openPaymentModal}>
             PAY
           </button>
           <span>(10,00 €)</span>
         </div>
-        <div className="">
-        {/* <button className="button -sm -info-2 bg-accent-1 text-white fs-6 font_sm" onClick={openUploadFileModal}>
-            UPLOAD DOCUMENT
-        </button> */}
-       </div>
+
        <div className="">
-        <button className="button -sm -info-2 bg-accent-1 text-white font_sm" onClick={openModal}>
+        <button className="button -sm -info-2 bg-accent-1 text-white " onClick={openModal}>
             ADD PERSON
           </button>
        </div>

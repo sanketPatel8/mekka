@@ -249,6 +249,12 @@
     .dis_none{
         display: none;
     }
+    .small-flex-center {
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        padding: 1rem 0rem;
+    }
 }
 
 hr{
