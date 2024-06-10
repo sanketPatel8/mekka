@@ -4,14 +4,11 @@ const sections = [
   {
     title: "Company",
     links: [
-      { id: 1, text: "About Us", href: "#" },
-      { id: 2, text: "Tourz Reviews", href: "#" },
-      { id: 3, text: "Contact Us", href: "#" },
-      { id: 4, text: "Travel Guides", href: "#" },
-      { id: 5, text: "Data Policy", href: "#" },
-      { id: 6, text: "Cookie Policy", href: "#" },
-      { id: 7, text: "Legal", href: "#" },
-      { id: 8, text: "Sitemap", href: "#" },
+      { id: 1, text: "Contact", href: "/contact" },
+      { id: 2, text: "Login", href: "/login" },
+      { id: 3, text: "Sign Up", href: "/register" },
+      { id: 4, text: "Partners", href: "#" },
+      { id: 5, text: "My Account", href: "#" },
     ],
   },
   {

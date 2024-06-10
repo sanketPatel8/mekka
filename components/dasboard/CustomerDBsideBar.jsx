@@ -15,7 +15,7 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
         <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
       <div className="dashboard__sidebar_header">
         <span
-          onClick={() => setSideBarOpen(false)}
+          onClick={() => setSideBarOpen(true)}
           className="closeSidebar"
         >
           &times;

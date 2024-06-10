@@ -14,6 +14,7 @@ export default function TestimonialOne() {
           height={871}
           src="/img/testimonials/1/1.png"
           alt="image"
+          className=""
         />
       </div>
 
@@ -67,10 +68,11 @@ export default function TestimonialOne() {
                       <div className="testimonials -type-1 pt-10 text-center">
                         <div className="testimonials__image size-100 rounded-full">
                           <Image
-                            width={98}
-                            height={98}
+                            width={150}
+                            height={150}
                             src={elm.imageSrc}
                             alt="image"
+                            className="rounded-full"
                           />
 
                           <div className="testimonials__icon">

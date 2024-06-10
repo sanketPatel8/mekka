@@ -27,21 +27,22 @@ const Impressum = () => {
         </div>
         <div className='d-flex flex-row gap-4 align-items-center p-3 m-3' style={{border : "2px solid black"}}>
             <div className='mx-3'><FaPhoneAlt size={50}/></div>
-            <div><p><b>Steuernummer</b></p><p>043 239 18079</p></div>
+            <div><p><b>Phone</b></p><p>+49 (0) 6196 204 72 40
+            </p></div>
         </div>
         <div className='d-flex flex-row gap-4 align-items-center p-3 m-3' style={{border : "2px solid black"}}>
             <div className='mx-3'><IoLocationOutline size={50}/></div>
-            <div><p><b>Steuernummer</b></p><p>043 239 18079</p></div>
+            <div><p><b>Name and Adress</b></p><p>Mekka Booking GmbH <br /> Frankfurter Str. 92 <br />65760 Eschborn</p></div>
         </div>
        </div>
        <div>
        <div className='d-flex flex-row gap-4 align-items-center p-3 m-3' style={{border : "2px solid black"}}>
             <div className='mx-3'><MdOutlineCurtainsClosed size={50}/></div>
-            <div><p><b>Steuernummer</b></p><p>043 239 18079</p></div>
+            <div><p><b>District Court Frankfurt am Main</b></p><p>HRB: 116404</p></div>
         </div>
         <div className='d-flex flex-row gap-4 align-items-center p-3 m-3' style={{border : "2px solid black"}}>
             <div className='mx-3'><FaUserTie size={50}/></div>
-            <div><p><b>Steuernummer</b></p><p>043 239 18079</p></div>
+            <div><p><b>Chairman</b></p><p>Kagan Kahraman</p></div>
         </div>
        </div>
        </div>

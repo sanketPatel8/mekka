@@ -15,7 +15,8 @@ import Link from "next/link";
 const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
-  const [sideBarOpen, setSideBarOpen] = useState(true);
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+  const [close, setclose] = useState(true)
   const [currentTab, setcurrentTab] = useState("Approved");
   return (
     <div
@@ -51,7 +52,7 @@ export default function DbBooking() {
                     
 
                     <div className="tourCard__content">
-                      <div className="tourCard__location">
+                      <div className="tourCard__location border_yellow px-2">
                         <FaPersonWalking  color="#dabf4f" size={18} />
                         {elm.location}
                       </div>

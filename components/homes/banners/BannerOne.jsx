@@ -5,7 +5,7 @@ export default function BannerOne() {
   return (
     <section className="cta -type-1 py-3 border-1">
       <div className="cta__bg">
-        <Image width={1800} height={300} src="/img/cta/1/Frame 2.jpg" alt="image" />
+        <Image width={1800} height={300} src="/img/cta/1/Frame 3.jpg" alt="image" />
       </div>
 
       <div className="container">
@@ -25,7 +25,7 @@ export default function BannerOne() {
               <p
                 data-aos="fade-up"
                 data-aos-delay=""
-                className="mt-10  text-left md:text-center lg:text-center xl:text-center"
+                className="mt-10  text-left md:text-center lg:text-center xl:text-center text-white "
               >
                 To get a discount enter your email address and you will 
                 <br className="lg:d-none" />
@@ -35,7 +35,7 @@ export default function BannerOne() {
               <div
                 data-aos="fade-up"
                 data-aos-delay=""
-                className="text-18  mt-40 md:mt-20 text-left md:text-center lg:text-center xl:text-center"
+                className="text-18  mt-40 md:mt-20 text-left md:text-center lg:text-center xl:text-center text-white "
               >
                 Get a magic link sent to your email
               </div>
@@ -59,16 +59,16 @@ export default function BannerOne() {
             </div>
           </div>
 
-          {/* <div className="col-lg-6">
+          <div className="col-lg-6 pt-3">
             <div className="cta__image">
               <Image
                 width={667}
                 height={500}
-                src="/img/cta/1/1.png"
+                src="/img/cta/1/mobile.png"
                 alt="image"
               />
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </section>

@@ -108,14 +108,14 @@ export default function Login() {
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                    <FaFacebookF size={15} className="mx-1"/>
-                    Continue Facebook
+                    Facebook
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
                   <FaGoogle size={15} className="mx-1" />
-                    Continue Google
+                    Google
                   </button>
                 </div>
               </div><br />

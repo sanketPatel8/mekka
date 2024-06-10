@@ -29,32 +29,63 @@ export default function Register() {
               onSubmit={(e) => e.preventDefault()}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
-              <div className="form-input spacing">
+              {/* <div className="form-input spacing">
                 <input type="text" required />
                 <label className="lh-1 text-16 text-light-1">Username</label>
-              </div>
+              </div> */}
 
               <div className="form-input spacing">
                 <input type="text" required />
-                <label className="lh-1 text-16 text-light-1">First Name</label>
+                <label className="lh-1 text-16 text-light-1">Name</label>
               </div>
 
               <div className="form-input mt-10 spacing">
                 <input type="text" required />
-                <label className="lh-1 text-16 text-light-1">Last Name</label>
+                <label className="lh-1 text-16 text-light-1">Surname</label>
               </div>
 
               <div className="form-input spacing">
                 <input type="email" required />
-                <label className="lh-1 text-16 text-light-1">Your Email</label>
+                <label className="lh-1 text-16 text-light-1">E-Mail Address</label>
               </div>
 
               <div className="form-input spacing">
-                <input type="email" required />
+                <input type="password" required />
                 <label className="lh-1 text-16 text-light-1">
-                  Confirm email
+                Password
                 </label>
               </div>
+
+              <div className="form-input spacing">
+                <input type="password" required />
+                <label className="lh-1 text-16 text-light-1">
+                Confirm Password
+                </label>
+              </div>
+
+              <div className="d-flex items-center">
+                <label className="form-checkbox d-flex align-items-center">
+                  <input type="checkbox" name="name" className="form-checkbox__input" />
+                  <div className="form-checkbox__mark">
+                    <div className="form-checkbox__icon">
+                      <svg
+                        width="10"
+                        height="8"
+                        viewBox="0 0 10 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <span className="text-14 lh-12 ml-10"> I have read the data protection and I accept the conditions.</span>
+                </label>
+              </div>
+
 
               <button className="button -md -info-2 bg-accent-1 text-white col-12 mt-30">
                 Register
@@ -72,14 +103,14 @@ export default function Register() {
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                    <FaFacebookF size={15} className="mx-1"/>
-                    Continue Facebook
+                    Facebook
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
                   <FaGoogle size={15} className="mx-1" />
-                    Continue Google
+                    Google
                   </button>
                 </div>
               </div><br />

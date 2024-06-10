@@ -78,7 +78,7 @@ export default function TourSlider() {
                       </div>
 
                       <div className="tourCard__content px-10 pt-10">
-                        <div className="tourCard__location d-flex items-center text-13 text-light-2">
+                        <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow">
                           <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i>
                           {elm.location}
                         </div>

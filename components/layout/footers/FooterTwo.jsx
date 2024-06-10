@@ -30,6 +30,7 @@ export default function FooterTwo() {
                     <div className="text-20 fw-500">
                       Speak to our expert at
                       <span className="text-accent-1"> +49 (0)6196 204 72 40</span>
+                   
                     </div>
                   </div>
                 </div>
@@ -57,6 +58,12 @@ export default function FooterTwo() {
                   <a className="d-block" href="#">
                   +49 (0)6196 204 72 40
                   </a>
+                  <a className="d-block" href="#">
+                  info@mekkabooking.com
+                  </a>
+                  <a className="d-block" href="#">
+                  Mekka Booking GmbH
+                  </a>
                 </div>
               </div>
 
@@ -73,19 +80,7 @@ export default function FooterTwo() {
                   <button>Send</button>
                 </div>
 
-                {/* <h4 className="text-20 fw-500 mt-30">Mobile Apps</h4> */}
 
-                {/* <div className="mt-10">
-                  <a className="d-flex items-center" href="#">
-                    <i className="icon-apple text-16 mr-10"></i>
-                    iOS App
-                  </a>
-
-                  <a className="d-flex items-center mt-10" href="#">
-                    <i className="icon-android text-16 mr-10"></i>
-                    Android App
-                  </a>
-                </div> */}
               </div>
             </div>
           </div>
@@ -96,7 +91,7 @@ export default function FooterTwo() {
         <div className="footer__bottom">
           <div className="row y-gap-5 justify-between items-center">
             <div className="col-auto">
-              <div>© Copyright mekkaBookings {new Date().getFullYear()}</div>
+              <div>© Copyright MekkaBookings {new Date().getFullYear()}</div>
             </div>
 
             <div className="col-auto">
