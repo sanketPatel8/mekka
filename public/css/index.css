@@ -263,4 +263,16 @@ hr{
       display: none;
     }
   }
+
+.footer-flex{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.footer-flex-item-top{
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+}
   

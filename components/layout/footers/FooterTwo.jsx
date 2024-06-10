@@ -1,6 +1,9 @@
 import React from "react";
 import Paymentcards from "../components/Paymentcards";
 import FooterLinks from "../components/FooterLinks";
+import { FaPhoneFlip } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 import Socials from "../components/Socials";
 import Image from "next/image";
 
@@ -55,15 +58,28 @@ export default function FooterTwo() {
 
                 <div className="y-gap-10 mt-20">
                   
-                  <a className="d-block" href="#">
+                 <div className="footer-flex">
+                 <FaPhoneFlip color="white" className="mx-2"/>
+                 <a className="d-block" href="#">
                   +49 (0)6196 204 72 40
                   </a>
-                  <a className="d-block" href="#">
-                  info@mekkabooking.com
+                 </div>
+
+                 <div className="footer-flex">
+                 <MdEmail color="white" className="mx-2"/>
+                 <a className="d-block" href="#">
+                 info@mekkabooking.com
                   </a>
-                  <a className="d-block" href="#">
-                  Mekka Booking GmbH
-                  </a>
+                 </div>
+
+                 <div className="footer-flex-item-top ">
+                 <FaLocationDot color="white" className="mx-2 "/>
+                 <p className="d-block" href="#">
+                  Mekka Booking GmbH <br /> Frankfurter Str. 92 <br /> 65760 Eschborn
+                  </p>
+                 </div>
+                  
+                 
                 </div>
               </div>
 
