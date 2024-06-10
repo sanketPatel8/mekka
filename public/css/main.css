@@ -3286,7 +3286,7 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 220px;
   padding-bottom: 220px;
   margin-top: 88px;
-  z-index: 5;
+  z-index: 99;
 }
 
 @media (max-width: 767px) {
@@ -4364,7 +4364,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   padding-top: 250px;
   padding-bottom: 100px;
-  z-index: 5;
+  z-index: 0;
 }
 
 @media (max-width: 767px) {

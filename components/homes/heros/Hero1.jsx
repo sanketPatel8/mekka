@@ -148,12 +148,12 @@ export default function Hero1() {
                   <div className="searchFormItem__content">
                     <h5>Passenger</h5>
                     <div className="js-select-control-chosen">
-                      {tourType ? tourType : "All tour"}
+                      {tourType ? tourType : "Passenger"}
                     </div>
                   </div>
                 </div>
                 <NumberOfTravellers  setTourType={setTourMambar} active={TourLocation === "tourType"} />
-              </div>
+                    </div>
 
                   </div>
 
