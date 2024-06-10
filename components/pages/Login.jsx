@@ -91,7 +91,7 @@ export default function Login() {
                         type="submit"
                         className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                       >
-                        vendor Log in
+                        Vendor Log in
                       </button>
                   </Link>
                 </div>
