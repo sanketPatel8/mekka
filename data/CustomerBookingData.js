@@ -29,6 +29,7 @@ export const  Adult1Data = [
         Strect : 'Test',
         FRA : 'Test',
         additional_services : '2 Bettzimmer',
+        Amount : '43,242 €'
     },
    
 ]
@@ -42,6 +43,7 @@ export const  Adult2InfoData = [
         DOB : '12.03.2002',
         Nationality : 'Indian',
         additional_services : '2 Bettzimmer',
+        Amount : '43,242 €'
     },
    
 ]
@@ -54,6 +56,7 @@ export const  BabyData = [
         gender : 'Male',
         DOB : '12.03.2002',
         Nationality : 'Indian',
+        Amount : '43,242 €'
     },
    
 ]

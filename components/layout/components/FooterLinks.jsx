@@ -7,7 +7,7 @@ const sections = [
       { id: 1, text: "Contact", href: "/contact" },
       { id: 2, text: "Login", href: "/login" },
       { id: 3, text: "Sign Up", href: "/register" },
-      { id: 4, text: "Partners", href: "#" },
+      { id: 4, text: "Partners", href: "/partner" },
       { id: 5, text: "My Account", href: "#" },
     ],
   },
