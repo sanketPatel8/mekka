@@ -13,11 +13,8 @@ const page = () => {
 
 
   const options = [
-    { value: '99955', label: '99955' },
-    { value: '37139', label: '37139' },
-    { value: '29528', label: '29528' },
-    { value: '21365', label: '21365' },
-    { value: '27257', label: '27257' },
+    { value: 'Hajj', label: 'Hajj' },
+    { value: 'Umrah', label: 'Umrah' },
   ];
 
   const handleGenderChange = (newValue, actionMeta) => {

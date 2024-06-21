@@ -34,7 +34,7 @@ export default function DbBooking() {
           <h1 className="text-30">My Booking</h1>
           <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 
-<div className="row y-gap-30 pt-30">
+            <div className="row y-gap-30 pt-30">
               {tourDataTwoOne.map((elm, i) => (
                 <div className="col-12 my-2 " key={i}>
 
@@ -112,11 +112,8 @@ export default function DbBooking() {
                        <p className="text-center">Order : #09889</p>
                         <p className="text-center">Total : {elm.price} €</p>
                         <p className="text-center">{elm.pending}</p>
-             
                         
                       </div>
-
-                      
                         
                         <label className="badge bg-secondary"></label>
 

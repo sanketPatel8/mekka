@@ -310,9 +310,6 @@ hr{
 
 /* styles.css */
 .custom-select {
-    /* Add styles for CreatableSelect */
-    /* Example: */
-    /* border: 1px solid #13f007; */
     margin-top: 0.3rem;
     padding: 8px;
     width: 100%;
@@ -320,9 +317,6 @@ hr{
   }
   
   .custom-input {
-    /* Add styles for input */
-    /* Example: */
-    /* border: 1px solid #f12804 !important; */
     padding: 0px !important;
     width: 100%;
     box-sizing: border-box;
@@ -352,5 +346,20 @@ hr{
     z-index: 99999;
   }
 
+  .dODGfY{
+    display: none;
+  }
   
-  
+  .react-select__control{
+    z-index: 9999999 !important;
+  }
+
+  .react-select-3-listbox{
+    border: 2px solid red;
+  }
+
+  .flex_start{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }

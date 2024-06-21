@@ -227,6 +227,18 @@ const CustomerDetaTable = () => {
     },
   ];
 
+  const DownloadData = [
+    { name: "", selector: (row) => row.Name },
+    {
+      name: "",
+      selector: (row) => (
+        <button className="button -sm -accent-1 bg-info-2 text-white my-2">
+          Download
+        </button>
+      ),
+    },
+  ];
+
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
   }
@@ -600,7 +612,7 @@ const CustomerDetaTable = () => {
           style={customStyles}
           contentLabel="Pending Payment Modal"
         >
-          <div className="d-flex justify-content-between" id="modelopen">
+          <div className="d-flex justify-content-between p-2" id="modelopen">
             <h2 className="px-20">PENDING PAYMENT</h2>
             <button onClick={closePaymentModal}>
               <IoClose size={25} />
@@ -637,7 +649,7 @@ const CustomerDetaTable = () => {
 
               <div className="col-md-2 col-12">
                 <button
-                  className="button -sm -green-2 bg-green-3 text-dark my-4 mx-md-3 mx-0 full_width text-white "
+                  className="button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white "
                   disabled
                 >
                   PAID
@@ -670,7 +682,7 @@ const CustomerDetaTable = () => {
               </div>
 
               <div className="col-md-2">
-                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width text-white  ">
+                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white  ">
                   PAY
                 </button>
               </div>
@@ -701,7 +713,7 @@ const CustomerDetaTable = () => {
               </div>
 
               <div className="col-md-2">
-                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-0 full_width text-white ">
+                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
                   PAY
                 </button>
               </div>
@@ -1199,6 +1211,14 @@ const CustomerDetaTable = () => {
                 <DataTable
                   title="Your Documents"
                   columns={FileDeta}
+                  data={documentDataFile}
+                  highlightOnHover
+                />
+              </TabPanel>
+              <TabPanel>
+              <DataTable
+                  title="Your Documents"
+                  columns={DownloadData}
                   data={documentDataFile}
                   highlightOnHover
                 />
