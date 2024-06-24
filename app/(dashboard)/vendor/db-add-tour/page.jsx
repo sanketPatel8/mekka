@@ -1332,10 +1332,10 @@ export default function AddTour() {
                                     required
                                     className="form-control"
                                   >
-                                    <option value="male">English</option>
-                                    <option value="female">German</option>
-                                    <option value="other">Turkish</option>
-                                    <option value="other">Arabic</option>
+                                    <option value="English">English</option>
+                                    <option value="German">German</option>
+                                    <option value="Turkish">Turkish</option>
+                                    <option value="Arabic">Arabic</option>
                                   </select>
                                   <label className="lh-1 text-16 text-light-1">
                                     {gender}
