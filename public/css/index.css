@@ -272,6 +272,10 @@ hr{
     .sidebar-hidden-on-small {
       display: none;
     }
+    .flex_start{
+        flex-direction: column;
+        justify-content: start;
+    }
   }
 
 .footer-flex{
@@ -311,7 +315,7 @@ hr{
 /* styles.css */
 .custom-select {
     margin-top: 0.3rem;
-    padding: 8px;
+    padding: 8px 0px;
     width: 100%;
     box-sizing: border-box;
   }
@@ -326,7 +330,8 @@ hr{
     border: 1px solid #E7E6E6 !important;
     border-radius: 8px !important;
     padding: 0px !important;
-    height: 55px !important;
+    /* height: 55px !important; */
+    width: 100% !important;
   }
 
   .react-select__value-container{
@@ -362,4 +367,9 @@ hr{
     display: flex;
     justify-content: start;
     align-items: center;
+  }
+
+  .rdw-editor-main{
+    border: 1px solid #F1F1F1 !important;
+    margin: 20px 0px;
   }

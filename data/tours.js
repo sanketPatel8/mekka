@@ -321,10 +321,10 @@ export const tourDataTwoOne = [
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       
-      {
-        icon: `icon-check`,
-        name: `Booked Date : 29.05.2024`,
-      },
+      // {
+      //   icon: `icon-check`,
+      //   name: `Booked Date : 29.05.2024`,
+      // },
       
     ],
   },
@@ -355,10 +355,10 @@ export const tourDataTwoOne = [
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       
-      {
-        icon: `icon-check`,
-        name: `Booked Date : 29.05.2024`,
-      },
+      // {
+      //   icon: `icon-check`,
+      //   name: `Booked Date : 29.05.2024`,
+      // },
       
     ],
   },
@@ -388,10 +388,10 @@ export const tourDataTwoOne = [
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       
-      {
-        icon: `icon-check`,
-        name: `Booked Date : 29.05.2024`,
-      },
+      // {
+      //   icon: `icon-check`,
+      //   name: `Booked Date : 29.05.2024`,
+      // },
       
     ],
   },
@@ -421,10 +421,10 @@ export const tourDataTwoOne = [
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       
-      {
-        icon: `icon-check`,
-        name: `Booked Date : 29.05.2024`,
-      },
+      // {
+      //   icon: `icon-check`,
+      //   name: `Booked Date : 29.05.2024`,
+      // },
       
     ],
   },
@@ -454,10 +454,10 @@ export const tourDataTwoOne = [
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       
-      {
-        icon: `icon-check`,
-        name: `Booked Date : 29.05.2024`,
-      },
+      // {
+      //   icon: `icon-check`,
+      //   name: `Booked Date : 29.05.2024`,
+      // },
       
     ],
   },
@@ -487,10 +487,10 @@ export const tourDataTwoOne = [
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       
-      {
-        icon: `icon-check`,
-        name: `Booked Date : 29.05.2024`,
-      },
+      // {
+      //   icon: `icon-check`,
+      //   name: `Booked Date : 29.05.2024`,
+      // },
       
     ],
   },

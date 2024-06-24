@@ -108,9 +108,9 @@ export default function DBListing() {
                           {elm.duration}
                       </div>
                      
-                       <p className="text-center">Order : #09889</p>
+                       {/* <p className="text-center">Order : #09889</p> */}
                         <p className="text-center">Total : {elm.price} €</p>
-                        <p className="text-center">{elm.pending}</p>
+                        {/* <p className="text-center">{elm.pending}</p> */}
              
                         
                       </div>

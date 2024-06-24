@@ -80,16 +80,16 @@ export default function AddTour() {
   return (
     <>
       <div
-        className={`dashboard ${
+        className={`dashboard overflow-hidden ${
           sideBarOpen ? "-is-sidebar-visible" : ""
-        } js-dashboard`}
+        } js-dashboard `}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content">
           <Header setSideBarOpen={setSideBarOpen} />
 
-          <div className="dashboard__content_content">
+          <div className="dashboard__content_content ">
             <h1 className="text-30">Add Tour</h1>
             <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 

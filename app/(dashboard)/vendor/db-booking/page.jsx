@@ -55,7 +55,7 @@ export default function DbBooking() {
       name: "#",
       selector: (row) => (
         <button
-          className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+          className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
           // onClick={openAdult1Deta}
         >
           Edit
