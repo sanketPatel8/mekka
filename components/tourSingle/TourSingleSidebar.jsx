@@ -26,7 +26,8 @@ export default function TourSingleSidebar() {
   const [hotelMadina, setHotelMadina] = useState("");
   const [roomType, setRoomType] = useState("");
   const [Flight, setFlight] = useState(false);
-  const [radioValue, setRadioValue] = useState(""); // Initial state for the radio buttons
+  const [radioValue, setRadioValue] = useState(""); 
+  
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);

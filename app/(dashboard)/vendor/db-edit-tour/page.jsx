@@ -12,6 +12,7 @@ import { EditorState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const Editor = dynamic(
+  
   () => import('react-draft-wysiwyg').then(mod => mod.Editor),
   { ssr: false }
 );
@@ -64,6 +65,7 @@ export default function AddTour() {
     { value: "27257", label: "27257" },
   ];
 
+  
   const options2 = [
     { value: "99955", label: "99955" },
     { value: "37139", label: "37139" },
@@ -76,7 +78,7 @@ export default function AddTour() {
     if (actionMeta.action === "create-option") {
       setCustomGender(newValue.value);
     } else {
-      setCustomGender("");
+      setCustomGender("yess");
     }
     setGender(newValue);
   };
@@ -99,7 +101,7 @@ export default function AddTour() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content ">
-            <h1 className="text-30">Add Tour</h1>
+            <h1 className="text-30">Edit Tour</h1>
             <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
@@ -134,7 +136,7 @@ export default function AddTour() {
                           <div className=" y-gap-30 contactForm px-20 py-20 ">
                             <div className="row ">
                               <div className="col-md-6">
-                                <div className="form-input spacing d-flex flex-column align-items-center add-tour-type">
+                                <div className="form-input spacing d-flex flex-column align-items-center">
                                   <CreatableSelect
                                     value={gender}
                                     onChange={handleGenderChange}
@@ -232,9 +234,9 @@ export default function AddTour() {
                                     required
                                     className="form-control"
                                   >
-                                    <option value="male">Pending</option>
-                                    <option value="female">Approved</option>
-                                    <option value="other">Rejected</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>
                                   </select>
                                   <label className="lh-1 text-16 text-light-1">
                                     {gender}

@@ -339,8 +339,8 @@ hr{
   }
 
   .react-select__placeholder{
-    padding-bottom: 0.5rem;
-    color: black;
+    /* padding-bottom: 0.5rem; */
+    color: black !important;
   }
 
   .react-select__menu {
@@ -372,4 +372,20 @@ hr{
   .rdw-editor-main{
     border: 1px solid #F1F1F1 !important;
     margin: 20px 0px;
+  }
+
+  .css-b62m3t-container{
+    z-index: 99;
+  }
+
+  .hotel-mekka > .css-b62m3t-container {
+    z-index: 999 !important;
+  }
+
+  .public-DraftStyleDefault-ltr{
+    height: 150px;
+  }
+
+  .add-tour-type > .css-b62m3t-container {
+    z-index: 99999 !important;
   }

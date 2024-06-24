@@ -120,8 +120,8 @@ export default function DBListing() {
                         <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
-                        <Link href="/vendor/db-booking">
-                        VIEW BOOKINGS
+                        <Link href="/vendor/db-edit-tour">
+                        EDIT TOUR
                         </Link>
                       </button>
                     </div>
