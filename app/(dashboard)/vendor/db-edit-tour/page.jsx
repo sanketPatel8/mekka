@@ -57,30 +57,33 @@ export default function AddTour() {
     }
   };
 
-  const options = [
-    { value: "99955", label: "99955" },
-    { value: "37139", label: "37139" },
-    { value: "29528", label: "29528" },
-    { value: "21365", label: "21365" },
-    { value: "27257", label: "27257" },
+  const options2 = [
+    { value: "voco Makkah an IHG HotelOpens ", label: "voco Makkah an IHG HotelOpens  (4 Star)" },
+    { value: "Arayik ResortOpens", label: "Arayik ResortOpens (3 Star)" },
+    { value: "WA HotelOpen ", label: "WA HotelOpen (5 Star)" },
+    { value: "JOUDYAN Red Sea Mall Jeddah By ELAF", label: "JOUDYAN Red Sea Mall Jeddah By ELAF (5 Star)" },
+    { value: "Park Inn by Radisson Makkah Aziziyah", label: "Park Inn by Radisson Makkah Aziziyah (3 Star)" },
   ];
 
-  
-  const options2 = [
-    { value: "99955", label: "99955" },
-    { value: "37139", label: "37139" },
-    { value: "29528", label: "29528" },
-    { value: "21365", label: "21365" },
-    { value: "27257", label: "27257" },
+  const Madina = [
+ 
+    {value: "Madinah Hilton ", label: "Madinah Hilton  (4 Star)" }, 
+    {value: "Dar Al-Taqwa Hotel Madinah ", label: "Dar Al-Taqwa Hotel Madinah  (5 Star)" }, 
+    {value: "Leader Al-Muna Kareem Hotel ", label: "Madinah Hilton  (4 Star)" }, 
+    {value: "Meshal Hotel Al Madina ", label: "Meshal Hotel Al Madina  (3 Star)" }, 
+   
+  ]
+
+  const options = [
+    { value: "Umrah", label: "Umrah" },
+    { value: "Hajj", label: "Hajj" },
+    { value: "ALl", label: "All" },
+    // { value: "21365", label: "21365" },
+    // { value: "27257", label: "27257" },
   ];
 
   const handleGenderChange = (newValue, actionMeta) => {
-    if (actionMeta.action === "create-option") {
-      setCustomGender(newValue.value);
-    } else {
-      setCustomGender("yess");
-    }
-    setGender(newValue);
+   console.log(newValue);
   };
 
   const handleRadioChange = (event) => {
@@ -1177,7 +1180,7 @@ export default function AddTour() {
                                   <CreatableSelect
                                     value={gender}
                                     onChange={handleGenderChange}
-                                    options={options}
+                                    options={Madina}
                                     className="custom-select"
                                     placeholder="Select Hotel For Madina"
                                     classNamePrefix="react-select"
