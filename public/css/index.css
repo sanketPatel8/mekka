@@ -339,7 +339,7 @@ hr{
   }
 
   .react-select__placeholder{
-    /* padding-bottom: 0.5rem; */
+    padding-bottom: 0.5rem;
     color: black !important;
   }
 

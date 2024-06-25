@@ -29,7 +29,7 @@ const Tab1 = [
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [custoer, mGender , setCustomGender] = useState('')
-  const [gendsetGender] = useState("");
+  const [gender ,setGender] = useState("");
   const [Hotel, setHotel] = useState("")
   const [activeTab, setActiveTab] = useState("Content");
   const [image1, setImage1] = useState("");
