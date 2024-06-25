@@ -1,5 +1,5 @@
 import React from "react";
-import Firstpage from "./(homes)/home-1/page";
+import Firstpage from "./home/page";
 
 export const metadata = {
   title: "mekkabooking - Ihr Hajj & Umra Portal ",
