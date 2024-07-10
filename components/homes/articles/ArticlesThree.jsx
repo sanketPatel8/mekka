@@ -41,7 +41,7 @@ export default function ArticlesThree() {
           {blogs.slice(0, 3).map((elm, i) => (
             <div key={i} className="col-lg-3 col-md-5 my-5 border-1 -hover-shadow rounded-12 mx-2 py-3 shadow">
               <Link
-                href={`/blog-single/${elm.id}`}
+                href={`/toursingle/${elm.id}`}
                 className="blogCard -type-1"
               >
                 <div className="blogCard__image ratio ratio-41:30">
