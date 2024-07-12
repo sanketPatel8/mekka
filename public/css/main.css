@@ -2218,7 +2218,7 @@ h1, h2, h3, h4, h5, h6 {
 .headerDropdown .headerDropdown__item button:hover {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
-  color: var(--color-primary, #EB662B);
+  color: var(--color-primary, #DAC04F);
 }
 
 .headerDropdown.-hover-light .headerDropdown__button:hover {
@@ -13989,4 +13989,20 @@ button.gm-ui-hover-effect::after {
 
 .h-500 {
   height: 500px;
+}
+
+.select2-container--default .select2-selection--single{
+  height: 55px !important;
+  border-radius: 12px !important;
+  border-color: #E7E6E6 !important;
+  margin-top: 17px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+  position: absolute;
+  top: 40%;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+  top: 40% !important;
 }

@@ -1,70 +1,123 @@
 "use client"
 
-import React, { useState } from "react";
-import { State } from "@/data/tourSingleContent";
+import React, { useState, useEffect } from 'react';
+import DataTable from 'react-data-table-component';
 
-const page = () => {
+const data = [
+  { id: 1, name: 'John Doe', age: 30, gender: 'Male', role: 'Admin' },
+  { id: 2, name: 'Jane Smith', age: 25, gender: 'Female', role: 'User' },
+  { id: 3, name: 'Sara Wilson', age: 35, gender: 'Female', role: 'User' },
+  { id: 4, name: 'Michael Brown', age: 45, gender: 'Male', role: 'User' },
+  { id: 5, name: 'Emily Johnson', age: 40, gender: 'Female', role: 'Admin' },
+  // Add more data as needed
+];
 
-  const [Flight, setFlight] = useState(false);
-  const [selectedTime, setSelectedTime] = useState("");
-  const [activeTimeDD, setActiveTimeDD] = useState(false);
+const columns = [
+  {
+    name: 'Name',
+    selector: row => row.name,
+    sortable: true,
+  },
+  {
+    name: 'Age',
+    selector: row => row.age,
+    sortable: true,
+  },
+  {
+    name: 'Gender',
+    selector: row => row.gender,
+    sortable: true,
+  },
+  {
+    name: 'Role',
+    selector: row => row.role,
+    sortable: true,
+    cell: row => (
+      <select
+        value={row.role}
+        onChange={(e) => handleRoleChange(row.id, e.target.value)}
+      >
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+        <option value="Guest">Guest</option>
+      </select>
+    ),
+  },
+  {
+    name: 'Action',
+    cell: row => (
+      <div>
+        <button>Edit</button>
+        <button>Delete</button>
+      </div>
+    ),
+  },
+];
+
+const App = () => {
+  const [filterText, setFilterText] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
+  const [tableData, setTableData] = useState(data);
+
+  const handleRoleChange = (id, newRole) => {
+    const updatedData = tableData.map(item => {
+      if (item.id === id) {
+        return { ...item, role: newRole };
+      }
+      return item;
+    });
+    setTableData(updatedData);
+  };
+
+  const filteredItems = tableData.filter(
+    item =>
+      item.name.toLowerCase().includes(filterText.toLowerCase()) &&
+      (selectedRole === '' || item.role === selectedRole)
+  );
+
+  // Ensure client-side specific code only runs after hydration
+  useEffect(() => {
+    import('jquery').then(($) => {
+      import('select2').then(() => {
+        $('#my-select').select2({
+          placeholder: 'Select an option',
+          width: '100%',
+        });
+
+        return () => {
+          $('#my-select').select2('destroy');
+        };
+      });
+    });
+  }, []);
 
   return (
     <div>
-      <div
-        className={`searchForm -type-1 -sidebar mt-20 ${
-          Flight === true ? "d-none" : "d-block"
-        }`}
-      >
-        <div className="searchForm__form">
-          <div className="searchFormItem js-select-control js-form-dd">
-            <div
-              className="searchFormItem__button"
-              onClick={() => setActiveTimeDD((pre) => !pre)}
-              data-x-click="time"
-            >
-              <div className="searchFormItem__content">
-                <h5>Departure </h5>
-                <div className="js-select-control-chosen">
-                  {selectedTime ? selectedTime : "Choose City"}
-                </div>
-              </div>
-              <div className="searchFormItem__icon_chevron">
-                <i className="icon-chevron-down d-flex text-18"></i>
-              </div>
-            </div>
-
-            <div
-              className={`searchFormItemDropdown -tour-type ${
-                activeTimeDD ? "is-active" : ""
-              }`}
-              data-x="time"
-              data-x-toggle="is-active"
-            >
-              <div className="searchFormItemDropdown__container">
-                <div className="searchFormItemDropdown__list sroll-bar-1">
-                  {State.map((elm, i) => (
-                    <div
-                      key={i}
-                      onClick={() => {
-                        setSelectedTime((pre) => (pre == elm ? "" : elm));
-                        setActiveTimeDD(false);
-                      }}
-                      className="searchFormItemDropdown__item"
-                    >
-                      <button className="js-select-control-button">
-                        <span className="js-select-control-choice">{elm}</span>
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Filter By Name"
+          value={filterText}
+          onChange={e => setFilterText(e.target.value)}
+        />
+        <select
+          value={selectedRole}
+          onChange={e => setSelectedRole(e.target.value)}
+        >
+          <option value="">All Roles</option>
+          <option value="Admin">Admin</option>
+          <option value="User">User</option>
+          <option value="Guest">Guest</option>
+        </select>
       </div>
+      <DataTable
+        title="Contact List"
+        columns={columns}
+        data={filteredItems}
+        pagination
+      />
     </div>
   );
 };
 
-export default page;
+export default App;

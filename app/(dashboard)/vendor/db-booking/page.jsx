@@ -41,7 +41,7 @@ export default function DbBooking() {
 
   const VandorBookings = [
     { name: "Booking No", selector: (row) => row.BookingNo },
-    { name: "Status", selector: (row) => row.Status, cell: (row) => <StatusCell row={row} /> },
+    { name: "Status", selector: (row) => row.Status, cell: (row) => <StatusCell row={row} /> , sortable: true, },
     { name: "Full Name", selector: (row) => row.Full_Name, width: "200px" },
     { name: "Total Payment", selector: (row) => row.Total_Payment },
     { name: "Pending Payment", selector: (row) => row.Pending_Payment },
@@ -105,6 +105,7 @@ export default function DbBooking() {
                 highlightOnHover
                 pagination
                 subHeader
+                selectableRows
               />
             </div>
           </div>

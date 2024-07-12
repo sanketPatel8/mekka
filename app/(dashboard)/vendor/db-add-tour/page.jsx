@@ -16,7 +16,7 @@ const Editor = dynamic(
   { ssr: false }
 );
 
-const tabs = ["Content", "Pricing", "Included", "Overview" , "Itinerary" , "General Information"];
+const tabs = ["Content", "Pricing", "Included", "Overview" , "Itinerary" , "Flight Hotel And Visa"];
 // const tabs = ["Content", "Location", "Pricing", "Included", "Overview" , "Itinerary" , "General Information"];
 const Tab1 = [
   "Content",
@@ -83,12 +83,7 @@ export default function AddTour() {
   ];
 
   const handleGenderChange = (newValue, actionMeta) => {
-    // if (actionMeta.action === "create-option") {
-    //   setCustomGender(newValue.value);
-    // } else {
-    //   setCustomGender("");
-    // }
-    // setGender(newValue);
+    setHotel(newValue)
     console.log(newValue)
   };
 
@@ -210,48 +205,22 @@ export default function AddTour() {
 
                               <div className="col-md-6">
                                 <div className="form-input spacing">
-                                  <input type="number" required />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price per adult
-                                  </label>
-                                </div>
-                              </div>
-
-                              <div className="col-md-6">
-                                <div className="form-input spacing">
-                                  <input type="number" required />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price per child
-                                  </label>
-                                </div>
-                              </div>
-
-                              <div className="col-md-6">
-                                <div className="form-input spacing">
-                                  <input type="number" required />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price per baby
-                                  </label>
-                                </div>
-                              </div>
-
-                              {/* <div className="col-md-6">
-                                <div className="form-input spacing">
                                   <select
                                     value={gender}
                                     onChange={(e) => setGender(e.target.value)}
                                     required
                                     className="form-control"
                                   >
-                                    <option value="male">Pending</option>
-                                    <option value="female">Approved</option>
-                                    <option value="other">Rejected</option>
+                                    <option value="English">English</option>
+                                    <option value="German">German</option>
+                                    <option value="Turkish">Turkish</option>
+                                    <option value="Arabic">Arabic</option>
                                   </select>
                                   <label className="lh-1 text-16 text-light-1">
                                     {gender}
                                   </label>
                                 </div>
-                              </div> */}
+                              </div>
 
                             </div>
 
@@ -550,14 +519,14 @@ export default function AddTour() {
                         }`}
                       >
                         <div className="mt-30">
-                          <h3 className="text-18 fw-500 mb-20">Extra Price</h3>
+                          <h3 className="text-18 fw-500 mb-20">Adult Pricing</h3>
 
                           <div className="contactForm row y-gap-30 items-center">
                             <div className="col-lg-4">
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Add Service per booking
+                                Price per adult
                                 </label>
                               </div>
                             </div>
@@ -565,56 +534,17 @@ export default function AddTour() {
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Description
+                                Price per child
                                 </label>
                               </div>
                             </div>
                             <div className="col-lg-4">
-                              <div className="d-flex items-center">
-                                <div className="form-input ">
+                            <div className="form-input ">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Price
+                                  Price per baby
                                   </label>
                                 </div>
-
-                                <button className="text-18 ml-20">
-                                  <i className="icon-delete"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="contactForm row y-gap-30 items-center pt-10">
-                            <div className="col-lg-4">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                  Add Service per booking
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-lg-4">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                  Description
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-lg-4">
-                              <div className="d-flex items-center">
-                                <div className="form-input ">
-                                  <input type="text" required />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price
-                                  </label>
-                                </div>
-
-                                <button className="text-18 ml-20">
-                                  <i className="icon-delete"></i>
-                                </button>
-                              </div>
                             </div>
                           </div>
 
@@ -1047,7 +977,7 @@ export default function AddTour() {
 
                       <div
                         className={`tabs__pane  ${
-                          activeTab == "General Information" ? "is-tab-el-active" : ""
+                          activeTab == "Flight Hotel And Visa" ? "is-tab-el-active" : ""
                         }`}
                       >
                         <div className="">
@@ -1096,51 +1026,7 @@ export default function AddTour() {
                                 </div>
                             </div>
                           </div>
-                          <div className="d-flex item-center justify-content-between">
-                            <h6>Hotel included</h6>
-                            <div className="flex_start my-3">
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Hotel_Yes"
-                                        checked={radioValue === "Hotel_Yes"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10"></span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                    Yes
-                                  </div>
-                                </div>
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Hotel_No"
-                                        checked={radioValue === "Hotel_No"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                  No
-                                  </div>
-                                </div>
-                            </div>
-                          </div>
+                        
                           <br />
                           <div className="">
                             <h6>Mekka Hotel</h6>
@@ -1324,24 +1210,7 @@ export default function AddTour() {
                                   </label>
                                 </div>
                               </div>
-                              <div className="col-md-6">
-                                <div className="form-input spacing">
-                                  <select
-                                    value={gender}
-                                    onChange={(e) => setGender(e.target.value)}
-                                    required
-                                    className="form-control"
-                                  >
-                                    <option value="English">English</option>
-                                    <option value="German">German</option>
-                                    <option value="Turkish">Turkish</option>
-                                    <option value="Arabic">Arabic</option>
-                                  </select>
-                                  <label className="lh-1 text-16 text-light-1">
-                                    {gender}
-                                  </label>
-                                </div>
-                              </div>
+                              
                               </div>
                             </div>
                           </div>
