@@ -2,10 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Header1 from "@/components/layout/header/Header1";
-import CreatableSelect from "react-select/creatable";
 import $ from "jquery";
-import "select2/dist/css/select2.min.css";
-import "select2/dist/js/select2.min.js";
+import "select2/dist/css/select2.min.css"
+// import "select2/dist/js/select2.min.js";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -26,12 +25,13 @@ const page = () => {
       placeholder: "Select an option",
       width: "100%",
     });
-
+  
     // Cleanup Select2 on component unmount
     return () => {
       $("#my-select").select2("destroy");
     };
-  }, []);
+  }, []); // Empty dependency array ensures it runs once after initial render
+  
 
 
   const handleRadioChange = (event) => {
