@@ -20,17 +20,28 @@ const page = () => {
   ];
 
   useEffect(() => {
-    // Initialize Select2 on the component
-    $("#my-select").select2({
-      placeholder: "Select an option",
-      width: "100%",
-    });
+    if (typeof window !== "undefined") {
+      // Import Select2 only on the client-side
+      import("select2/dist/js/select2.min.js").then(() => {
+        // Ensure jQuery is available globally
+        window.$ = window.jQuery = $;
   
-    // Cleanup Select2 on component unmount
-    return () => {
-      $("#my-select").select2("destroy");
-    };
-  }, []); // Empty dependency array ensures it runs once after initial render
+        // Initialize Select2 on the component
+        $("#my-select").select2({
+          placeholder: "Select an option",
+          width: "100%",
+        });
+      });
+  
+      // Cleanup Select2 on component unmount
+      return () => {
+        if ($.fn.select2) {
+          $("#my-select").select2("destroy");
+        }
+      };
+    }
+  }, []);
+  
   
 
 
