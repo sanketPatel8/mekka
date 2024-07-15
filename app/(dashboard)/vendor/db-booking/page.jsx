@@ -14,13 +14,6 @@ export default function DbBooking() {
   const [currentTab, setcurrentTab] = useState("All");
   const [filteredData, setFilteredData] = useState([]);
 
-  // const bookingData = [
-  //   { BookingNo: 1, Status: 'Approved', Full_Name: 'John Doe', Total_Payment: 100, Pending_Payment: 0, Payment_Terms: 'Credit Card', Payment_Method: 'Online', Visas: 'Yes', Flight: 'Yes', Agency_Paid: 'Yes', Initiated_By_Admin: 'No' },
-  //   { BookingNo: 2, Status: 'In Progress', Full_Name: 'Jane Smith', Total_Payment: 200, Pending_Payment: 100, Payment_Terms: 'Paypal', Payment_Method: 'Online', Visas: 'Yes', Flight: 'No', Agency_Paid: 'No', Initiated_By_Admin: 'Yes' },
-  //   { BookingNo: 3, Status: 'Cancelled', Full_Name: 'Michael Johnson', Total_Payment: 300, Pending_Payment: 0, Payment_Terms: 'Bank Transfer', Payment_Method: 'Offline', Visas: 'No', Flight: 'No', Agency_Paid: 'Yes', Initiated_By_Admin: 'No' },
-  //   // Add more data as needed
-  // ];
-
   useEffect(() => {
     // Filter data based on currentTab
     let filtered = [];
@@ -40,17 +33,17 @@ export default function DbBooking() {
   };
 
   const VandorBookings = [
-    { name: "Booking No", selector: (row) => row.BookingNo },
+    { name: "Booking No", selector: (row) => row.BookingNo ,  width: "170px" },
     { name: "Status", selector: (row) => row.Status, cell: (row) => <StatusCell row={row} /> , sortable: true, },
-    { name: "Full Name", selector: (row) => row.Full_Name, width: "200px" },
-    { name: "Total Payment", selector: (row) => row.Total_Payment },
-    { name: "Pending Payment", selector: (row) => row.Pending_Payment },
-    { name: "Payment Terms", selector: (row) => row.Payment_Terms },
-    { name: "Payment Method", selector: (row) => row.Payment_Method },
+    { name: "Full Name", selector: (row) => row.Full_Name, width: "190px" },
+    { name: "Total", selector: (row) => row.Total_Payment },
+    { name: "Pending", selector: (row) => row.Pending_Payment },
+    { name: "Terms", selector: (row) => row.Payment_Terms },
+    { name: "Method", selector: (row) => row.Payment_Method },
     { name: "Visas", selector: (row) => row.Visas },
     { name: "Flight", selector: (row) => row.Flight },
-    { name: "Agency Paid", selector: (row) => row.Agency_Paid },
-    { name: "Initiated By Admin", selector: (row) => row.Initiated_By_Admin },
+    { name: "Tour Name", selector: (row) => row.Agency_Paid },
+    { name: "Initiated By Admin", selector: (row) => row.Initiated_By_Admin  , width: "150px"},
     {
       name: "#",
       selector: (row) => (
@@ -60,7 +53,7 @@ export default function DbBooking() {
         >
           Edit
         </button>
-      ),
+      ) , width: "110px"
     },
   ];
 
@@ -105,7 +98,6 @@ export default function DbBooking() {
                 highlightOnHover
                 pagination
                 subHeader
-                selectableRows
               />
             </div>
           </div>

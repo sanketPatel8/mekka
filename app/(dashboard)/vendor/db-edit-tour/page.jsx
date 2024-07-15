@@ -1,22 +1,31 @@
 "use client";
 
 import Header from "@/components/dasboard/Header";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Map from "@/components/pages/contact/Map";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import CreatableSelect from "react-select/creatable";
 import { FaStar } from "react-icons/fa";
-import dynamic from 'next/dynamic';
-import { EditorState } from 'draft-js';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import dynamic from "next/dynamic";
+import { EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import $ from 'jquery';
+import 'select2/dist/css/select2.css';
 
 const Editor = dynamic(
-  () => import('react-draft-wysiwyg').then(mod => mod.Editor),
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   { ssr: false }
 );
 
-const tabs = ["Content", "Pricing", "Included", "Overview" , "Itinerary" , "Flight Hotel And Visa"];
+const tabs = [
+  "Content",
+  "Pricing",
+  "Included",
+  "Overview",
+  "Itinerary",
+  "Flight Hotel And Visa",
+];
 // const tabs = ["Content", "Location", "Pricing", "Included", "Overview" , "Itinerary" , "General Information"];
 const Tab1 = [
   "Content",
@@ -28,9 +37,11 @@ const Tab1 = [
 ];
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [custoer, mGender , setCustomGender] = useState('')
-  const [gender ,setGender] = useState("");
-  const [Hotel, setHotel] = useState("")
+  const [custoer, mGender, setCustomGender] = useState("");
+  const [MadinaHotel, setMadinaHotel] = useState("");
+  const [MekkaHotel, setMekkaHotel] = useState("");
+  const [gender, setGender] = useState("");
+  const [Hotel, setHotel] = useState("");
   const [activeTab, setActiveTab] = useState("Content");
   const [image1, setImage1] = useState("");
   const [radioValue, setRadioValue] = useState("");
@@ -58,21 +69,37 @@ export default function AddTour() {
   };
 
   const options2 = [
-    { value: "voco Makkah an IHG HotelOpens ", label: "voco Makkah an IHG HotelOpens  (4 Star)" },
+    {
+      value: "voco Makkah an IHG HotelOpens ",
+      label: "voco Makkah an IHG HotelOpens  (4 Star)",
+    },
     { value: "Arayik ResortOpens", label: "Arayik ResortOpens (3 Star)" },
     { value: "WA HotelOpen ", label: "WA HotelOpen (5 Star)" },
-    { value: "JOUDYAN Red Sea Mall Jeddah By ELAF", label: "JOUDYAN Red Sea Mall Jeddah By ELAF (5 Star)" },
-    { value: "Park Inn by Radisson Makkah Aziziyah", label: "Park Inn by Radisson Makkah Aziziyah (3 Star)" },
+    {
+      value: "JOUDYAN Red Sea Mall Jeddah By ELAF",
+      label: "JOUDYAN Red Sea Mall Jeddah By ELAF (5 Star)",
+    },
+    {
+      value: "Park Inn by Radisson Makkah Aziziyah",
+      label: "Park Inn by Radisson Makkah Aziziyah (3 Star)",
+    },
   ];
 
   const Madina = [
- 
-    {value: "Madinah Hilton ", label: "Madinah Hilton  (4 Star)" }, 
-    {value: "Dar Al-Taqwa Hotel Madinah ", label: "Dar Al-Taqwa Hotel Madinah  (5 Star)" }, 
-    {value: "Leader Al-Muna Kareem Hotel ", label: "Madinah Hilton  (4 Star)" }, 
-    {value: "Meshal Hotel Al Madina ", label: "Meshal Hotel Al Madina  (3 Star)" }, 
-   
-  ]
+    { value: "Madinah Hilton ", label: "Madinah Hilton  (4 Star)" },
+    {
+      value: "Dar Al-Taqwa Hotel Madinah ",
+      label: "Dar Al-Taqwa Hotel Madinah  (5 Star)",
+    },
+    {
+      value: "Leader Al-Muna Kareem Hotel ",
+      label: "Madinah Hilton  (4 Star)",
+    },
+    {
+      value: "Meshal Hotel Al Madina ",
+      label: "Meshal Hotel Al Madina  (3 Star)",
+    },
+  ];
 
   const options = [
     { value: "Umrah", label: "Umrah" },
@@ -82,15 +109,54 @@ export default function AddTour() {
     // { value: "27257", label: "27257" },
   ];
 
-  const handleGenderChange = (newValue, actionMeta) => {
-    setHotel(newValue)
-    console.log(newValue)
+  const handleEditGenderChange = (newValue, actionMeta) => {
+    setHotel(newValue);
+    console.log(newValue);
+  };
+
+  const handleMekkaChange = (newValue, actionMeta) => {
+    setHotel(newValue);
+    console.log(newValue);
+  };
+
+  const handleMadinaChange = (newValue, actionMeta) => {
+    setMadinaHotel(newValue);
+    console.log(newValue);
   };
 
   const handleRadioChange = (event) => {
     console.log(event.target.value);
     setRadioValue(event.target.value);
   };
+
+  const selectRef = useRef(null);
+
+  // useEffect(() => {
+  //   $(selectRef.current).select2(); // Initialize select2
+
+  //   // Clean up Select2 instance on component unmount
+  //   return () => {
+  //     $(selectRef.current).select2("destroy");
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.$ = window.jQuery = $;
+      
+      // Dynamically import select2 to ensure it's loaded only on the client side
+      import('select2').then(() => {
+        $(selectRef.current).select2();
+
+        // Cleanup select2 on component unmount
+        return () => {
+          if ($(selectRef.current).data('select2')) {
+            $(selectRef.current).select2('destroy');
+          }
+        };
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -143,7 +209,7 @@ export default function AddTour() {
                                 <div className="form-input spacing d-flex flex-column align-items-center add-tour-type">
                                   <CreatableSelect
                                     value={gender}
-                                    onChange={handleGenderChange}
+                                    onChange={handleEditGenderChange}
                                     options={options}
                                     className="custom-select"
                                     placeholder="Select or Tour Type"
@@ -206,225 +272,224 @@ export default function AddTour() {
                               <div className="col-md-6">
                                 <div className="form-input spacing">
                                   <select
-                                    value={gender}
-                                    onChange={(e) => setGender(e.target.value)}
-                                    required
-                                    className="form-control"
+                                    ref={selectRef}
+                                    className="js-example-basic-multiple"
+                                    name="states[]"
+                                    multiple="multiple"
                                   >
-                                    <option value="English">English</option>
-                                    <option value="German">German</option>
-                                    <option value="Turkish">Turkish</option>
-                                    <option value="Arabic">Arabic</option>
+                                    <option value="ENG">English</option>
+                                    <option value="GER">German</option>
+                                    <option value="TUR">Turkis</option>
+                                    <option value="ARB">Arbic</option>
                                   </select>
-                                  <label className="lh-1 text-16 text-light-1">
-                                    {gender}
+                                  <label className="multi-lan-select">
+                                    Langauge
                                   </label>
                                 </div>
                               </div>
-
                             </div>
 
                             <div className="col-12">
-                            <h4 className="text-18 fw-500 mb-20">Gallery</h4>
+                              <h4 className="text-18 fw-500 mb-20">Gallery</h4>
 
-                            <div className="row x-gap-20 y-gap-20">
-                              {image1 ? (
-                                <div className="col-auto  ">
-                                  <div className="relative">
-                                    <Image
-                                      width={200}
-                                      height={200}
-                                      src={image1}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
-                                    />
-                                    <button
-                                      onClick={() => {
-                                        setImage1("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
-                                    >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="col-auto  ">
-                                  <label
-                                    htmlFor="imageInp1"
-                                    className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                  >
-                                    <Image
-                                      width="40"
-                                      height="40"
-                                      alt="image"
-                                      src={"/img/dashboard/upload.svg"}
-                                    />
-
-                                    <div className="text-16 fw-500 text-accent-1 mt-10">
-                                      Upload Images
+                              <div className="row x-gap-20 y-gap-20">
+                                {image1 ? (
+                                  <div className="col-auto  ">
+                                    <div className="relative">
+                                      <Image
+                                        width={200}
+                                        height={200}
+                                        src={image1}
+                                        alt="image"
+                                        className="size-200 rounded-12 object-cover"
+                                      />
+                                      <button
+                                        onClick={() => {
+                                          setImage1("");
+                                        }}
+                                        className="absoluteIcon1 button -dark-1"
+                                      >
+                                        <i className="icon-delete text-18"></i>
+                                      </button>
                                     </div>
-                                  </label>
-                                  <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage1)
-                                    }
-                                    accept="image/*"
-                                    id="imageInp1"
-                                    type="file"
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                              )}
-                              {image2 ? (
-                                <div className="col-auto  ">
-                                  <div className="relative">
-                                    <Image
-                                      width={200}
-                                      height={200}
-                                      src={image2}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
-                                    />
-                                    <button
-                                      onClick={() => {
-                                        setImage2("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
-                                    >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
                                   </div>
-                                </div>
-                              ) : (
-                                <div className="col-auto  ">
-                                  <label
-                                    htmlFor="imageInp2"
-                                    className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                  >
-                                    <Image
-                                      width="40"
-                                      height="40"
-                                      alt="image"
-                                      src={"/img/dashboard/upload.svg"}
-                                    />
-
-                                    <div className="text-16 fw-500 text-accent-1 mt-10">
-                                      Upload Images
-                                    </div>
-                                  </label>
-                                  <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage2)
-                                    }
-                                    accept="image/*"
-                                    id="imageInp2"
-                                    type="file"
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                              )}
-                              {image3 ? (
-                                <div className="col-auto ">
-                                  <div className="relative">
-                                    <Image
-                                      width={200}
-                                      height={200}
-                                      src={image3}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
-                                    />
-                                    <button
-                                      onClick={() => {
-                                        setImage3("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
+                                ) : (
+                                  <div className="col-auto  ">
+                                    <label
+                                      htmlFor="imageInp1"
+                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
                                     >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="col-auto ">
-                                  <label
-                                    htmlFor="imageInp3"
-                                    className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                  >
-                                    <Image
-                                      width="40"
-                                      height="40"
-                                      alt="image"
-                                      src={"/img/dashboard/upload.svg"}
-                                    />
+                                      <Image
+                                        width="40"
+                                        height="40"
+                                        alt="image"
+                                        src={"/img/dashboard/upload.svg"}
+                                      />
 
-                                    <div className="text-16 fw-500 text-accent-1 mt-10">
-                                      Upload Images
-                                    </div>
-                                  </label>
-                                  <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage3)
-                                    }
-                                    accept="image/*"
-                                    id="imageInp3"
-                                    type="file"
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                              )}
-                              {image4 ? (
-                                <div className="col-auto ">
-                                  <div className="relative">
-                                    <Image
-                                      width={200}
-                                      height={200}
-                                      src={image4}
-                                      alt="image"
-                                      className="size-200 rounded-12 object-cover"
+                                      <div className="text-16 fw-500 text-accent-1 mt-10">
+                                        Upload Images
+                                      </div>
+                                    </label>
+                                    <input
+                                      onChange={(e) =>
+                                        handleImageChange(e, setImage1)
+                                      }
+                                      accept="image/*"
+                                      id="imageInp1"
+                                      type="file"
+                                      style={{ display: "none" }}
                                     />
-                                    <button
-                                      onClick={() => {
-                                        setImage4("");
-                                      }}
-                                      className="absoluteIcon1 button -dark-1"
+                                  </div>
+                                )}
+                                {image2 ? (
+                                  <div className="col-auto  ">
+                                    <div className="relative">
+                                      <Image
+                                        width={200}
+                                        height={200}
+                                        src={image2}
+                                        alt="image"
+                                        className="size-200 rounded-12 object-cover"
+                                      />
+                                      <button
+                                        onClick={() => {
+                                          setImage2("");
+                                        }}
+                                        className="absoluteIcon1 button -dark-1"
+                                      >
+                                        <i className="icon-delete text-18"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="col-auto  ">
+                                    <label
+                                      htmlFor="imageInp2"
+                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
                                     >
-                                      <i className="icon-delete text-18"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="col-auto ">
-                                  <label
-                                    htmlFor="imageInp4"
-                                    className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                  >
-                                    <Image
-                                      width="40"
-                                      height="40"
-                                      alt="image"
-                                      src={"/img/dashboard/upload.svg"}
+                                      <Image
+                                        width="40"
+                                        height="40"
+                                        alt="image"
+                                        src={"/img/dashboard/upload.svg"}
+                                      />
+
+                                      <div className="text-16 fw-500 text-accent-1 mt-10">
+                                        Upload Images
+                                      </div>
+                                    </label>
+                                    <input
+                                      onChange={(e) =>
+                                        handleImageChange(e, setImage2)
+                                      }
+                                      accept="image/*"
+                                      id="imageInp2"
+                                      type="file"
+                                      style={{ display: "none" }}
                                     />
-
-                                    <div className="text-16 fw-500 text-accent-1 mt-10">
-                                      Upload Images
+                                  </div>
+                                )}
+                                {image3 ? (
+                                  <div className="col-auto ">
+                                    <div className="relative">
+                                      <Image
+                                        width={200}
+                                        height={200}
+                                        src={image3}
+                                        alt="image"
+                                        className="size-200 rounded-12 object-cover"
+                                      />
+                                      <button
+                                        onClick={() => {
+                                          setImage3("");
+                                        }}
+                                        className="absoluteIcon1 button -dark-1"
+                                      >
+                                        <i className="icon-delete text-18"></i>
+                                      </button>
                                     </div>
-                                  </label>
-                                  <input
-                                    onChange={(e) =>
-                                      handleImageChange(e, setImage4)
-                                    }
-                                    accept="image/*"
-                                    id="imageInp4"
-                                    type="file"
-                                    style={{ display: "none" }}
-                                  />
-                                </div>
-                              )}
-                            </div>
+                                  </div>
+                                ) : (
+                                  <div className="col-auto ">
+                                    <label
+                                      htmlFor="imageInp3"
+                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                                    >
+                                      <Image
+                                        width="40"
+                                        height="40"
+                                        alt="image"
+                                        src={"/img/dashboard/upload.svg"}
+                                      />
 
-                            <div className="text-14 mt-20">
-                              PNG or JPG no bigger than 800px wide and tall.
-                            </div>
+                                      <div className="text-16 fw-500 text-accent-1 mt-10">
+                                        Upload Images
+                                      </div>
+                                    </label>
+                                    <input
+                                      onChange={(e) =>
+                                        handleImageChange(e, setImage3)
+                                      }
+                                      accept="image/*"
+                                      id="imageInp3"
+                                      type="file"
+                                      style={{ display: "none" }}
+                                    />
+                                  </div>
+                                )}
+                                {image4 ? (
+                                  <div className="col-auto ">
+                                    <div className="relative">
+                                      <Image
+                                        width={200}
+                                        height={200}
+                                        src={image4}
+                                        alt="image"
+                                        className="size-200 rounded-12 object-cover"
+                                      />
+                                      <button
+                                        onClick={() => {
+                                          setImage4("");
+                                        }}
+                                        className="absoluteIcon1 button -dark-1"
+                                      >
+                                        <i className="icon-delete text-18"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="col-auto ">
+                                    <label
+                                      htmlFor="imageInp4"
+                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                                    >
+                                      <Image
+                                        width="40"
+                                        height="40"
+                                        alt="image"
+                                        src={"/img/dashboard/upload.svg"}
+                                      />
+
+                                      <div className="text-16 fw-500 text-accent-1 mt-10">
+                                        Upload Images
+                                      </div>
+                                    </label>
+                                    <input
+                                      onChange={(e) =>
+                                        handleImageChange(e, setImage4)
+                                      }
+                                      accept="image/*"
+                                      id="imageInp4"
+                                      type="file"
+                                      style={{ display: "none" }}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="text-14 mt-20">
+                                PNG or JPG no bigger than 800px wide and tall.
+                              </div>
                             </div>
 
                             <div className="col-12">
@@ -443,7 +508,7 @@ export default function AddTour() {
                           activeTab == "Location" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="contactForm row y-gap-30">
+                        <div className=" y-gap-30 contactForm px-20 py-20 ">
                           <div className="col-12">
                             <div className="form-input ">
                               <input type="text" required />
@@ -518,140 +583,131 @@ export default function AddTour() {
                           activeTab == "Pricing" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="mt-30">
-                          <h3 className="text-18 fw-500 mb-20">Adult Pricing</h3>
+                        <div className=" y-gap-30 contactForm px-20 py-20 ">
+                          <div className="contactForm row y-gap-30 items-center ">
+                            <div className="col-lg-4">
+                              <div className="form-input ">
+                                <input type="text" required />
+                                <label className="lh-1 text-16 text-light-1">
+                                  Price per adult
+                                </label>
+                              </div>
+                            </div>
+                            <div className="col-lg-4">
+                              <div className="form-input ">
+                                <input type="text" required />
+                                <label className="lh-1 text-16 text-light-1">
+                                  Price per child
+                                </label>
+                              </div>
+                            </div>
+                            <div className="col-lg-4">
+                              <div className="form-input ">
+                                <input type="text" required />
+                                <label className="lh-1 text-16 text-light-1">
+                                  Price per baby
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mt-30">
+                            <h3 className="text-18 fw-500 mb-20">
+                              Additional Services{" "}
+                            </h3>
 
-                          <div className="contactForm row y-gap-30 items-center">
-                            <div className="col-lg-4">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                Price per adult
-                                </label>
+                            <div className="row">
+                              <div className="col-lg-6">
+                                <p>Additional Services</p>
+                              </div>
+                              <div className="col-lg-6">
+                                <p>Price (€) per person</p>
                               </div>
                             </div>
-                            <div className="col-lg-4">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                Price per child
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-lg-4">
-                            <div className="form-input ">
+
+                            <div className="contactForm row y-gap-30 items-center">
+                              <div className="col-lg-6">
+                                <div className="form-input ">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                  Price per baby
+                                    1 Bettzimmer
                                   </label>
                                 </div>
+                              </div>
+                              <div className="col-lg-6">
+                                <div className="form-input ">
+                                  <input type="Number" required />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    Price
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="contactForm row y-gap-30 items-center">
+                              <div className="col-lg-6">
+                                <div className="form-input ">
+                                  <input type="text" required />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    2 Bettzimmer
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="col-lg-6">
+                                <div className="form-input ">
+                                  <input type="Number" required />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    Price
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="contactForm row y-gap-30 items-center">
+                              <div className="col-lg-6">
+                                <div className="form-input ">
+                                  <input type="text" required />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    3 Bettzimmer
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="col-lg-6">
+                                <div className="form-input ">
+                                  <input type="Number" required />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    Price
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="contactForm row y-gap-30 items-center">
+                              <div className="col-lg-6">
+                                <div className="form-input ">
+                                  <input type="text" required />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    4 Bettzimmer
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="col-lg-6">
+                                <div className="form-input ">
+                                  <input type="Number" required />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    Price
+                                  </label>
+                                </div>
+                              </div>
                             </div>
                           </div>
-
+                          <div className="col-12">
+                            <div className="row">
+                              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                                SAVE DETAILS
+                              </button>
+                            </div>
+                          </div>
                         </div>
-
-                        <div className="mt-30">
-                          <h3 className="text-18 fw-500 mb-20">Extra Additional services </h3>
-
-                          <div className="row">
-                            <div className="col-lg-6">
-                              <p>Additional services</p>
-                            </div>
-                            <div className="col-lg-6">
-                              <p>Price (€) per person</p>
-                            </div>
-                          </div>
-
-                          <div className="contactForm row y-gap-30 items-center">
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                1 Bettzimmer
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="Number" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                  Price
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="contactForm row y-gap-30 items-center">
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                2 Bettzimmer
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="Number" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                  Price
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="contactForm row y-gap-30 items-center">
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                3 Bettzimmer
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="Number" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                  Price
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="contactForm row y-gap-30 items-center">
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="text" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                4 Bettzimmer
-                                </label>
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="form-input ">
-                                <input type="Number" required />
-                                <label className="lh-1 text-16 text-light-1">
-                                  Price
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* <div className="mt-30">
-                            <button className="button -md -outline-dark-1 bg-light-1">
-                              <i className="icon-add-button text-16 mr-10"></i>
-                              Add Item
-                            </button>
-                          </div> */}
-                        </div>
-                        <div className="col-12">
-                              <div className="row">
-                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
-                                </button>
-                              </div>
-                            </div>
                       </div>
 
                       <div
@@ -659,7 +715,7 @@ export default function AddTour() {
                           activeTab == "Included" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="row y-gap-20 justify-between">
+                        <div className="row justify-between  y-gap-30 contactForm px-20 py-20 ">
                           <div className="col-md-4">
                             <div className="row y-gap-20">
                               <div className="col-12">
@@ -716,10 +772,6 @@ export default function AddTour() {
                                   <div className="lh-16 ml-15">Local taxes</div>
                                 </div>
                               </div>
-
-                              
-
-                              
 
                               <div className="col-12">
                                 <div className="d-flex items-center">
@@ -809,7 +861,7 @@ export default function AddTour() {
 
                           <div className="col-md-4">
                             <div className="row y-gap-20">
-                            <div className="col-12">
+                              <div className="col-12">
                                 <div className="d-flex items-center">
                                   <div className="form-checkbox ">
                                     <input type="checkbox" name="name" />
@@ -867,12 +919,12 @@ export default function AddTour() {
                         </div>
 
                         <div className="col-12">
-                              <div className="row">
-                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
-                                </button>
-                              </div>
-                            </div>
+                          <div className="row">
+                            <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                              SAVE DETAILS
+                            </button>
+                          </div>
+                        </div>
                       </div>
 
                       <div
@@ -880,7 +932,7 @@ export default function AddTour() {
                           activeTab == "Overview" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div>
+                        <div className="y-gap-30 contactForm px-20 py-20 ">
                           <Editor
                             editorState={editorState}
                             // toolbarClassName="toolbarClassName"
@@ -889,12 +941,12 @@ export default function AddTour() {
                             onEditorStateChange={onEditorStateChange}
                           />
                           <div className="col-12">
-                              <div className="row">
-                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
-                                </button>
-                              </div>
+                            <div className="row">
+                              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                                SAVE DETAILS
+                              </button>
                             </div>
+                          </div>
                         </div>
                       </div>
 
@@ -906,8 +958,6 @@ export default function AddTour() {
                         <div className="form_2">
                           <div className=" y-gap-30 contactForm px-20 py-20 ">
                             <div className="row ">
-                              
-
                               <div className="col-md-6">
                                 <div className="form-input spacing">
                                   <input type="text" required />
@@ -919,9 +969,14 @@ export default function AddTour() {
 
                               <div className="col-md-6">
                                 <div className="form-input spacing">
-                                  <textarea type="text" required  rows={1} cols={80}  />
+                                  <textarea
+                                    type="text"
+                                    required
+                                    rows={1}
+                                    cols={80}
+                                  />
                                   <label className="lh-1 text-16 text-light-1">
-                                  Description :
+                                    Description :
                                   </label>
                                 </div>
                               </div>
@@ -936,9 +991,14 @@ export default function AddTour() {
 
                               <div className="col-md-6">
                                 <div className="form-input spacing">
-                                  <textarea type="text" required  rows={1} cols={80}  />
+                                  <textarea
+                                    type="text"
+                                    required
+                                    rows={1}
+                                    cols={80}
+                                  />
                                   <label className="lh-1 text-16 text-light-1">
-                                  Description :
+                                    Description :
                                   </label>
                                 </div>
                               </div>
@@ -954,14 +1014,17 @@ export default function AddTour() {
 
                               <div className="col-md-6">
                                 <div className="form-input spacing">
-                                  <textarea type="text" required  rows={1} cols={80}  />
+                                  <textarea
+                                    type="text"
+                                    required
+                                    rows={1}
+                                    cols={80}
+                                  />
                                   <label className="lh-1 text-16 text-light-1">
-                                  Description :
+                                    Description :
                                   </label>
                                 </div>
                               </div>
-
-                              
                             </div>
 
                             <div className="col-12">
@@ -977,253 +1040,278 @@ export default function AddTour() {
 
                       <div
                         className={`tabs__pane  ${
-                          activeTab == "Flight Hotel And Visa" ? "is-tab-el-active" : ""
+                          activeTab == "Flight Hotel And Visa"
+                            ? "is-tab-el-active"
+                            : ""
                         }`}
                       >
-                        <div className="">
+                        <div className=" y-gap-30 contactForm px-20 py-20 ">
                           <div className="d-flex item-center justify-content-between">
-                            <h6>Visa processing</h6>
+                            <h6>Visa Processing</h6>
                             <div className="flex_start my-3">
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Yes"
-                                        checked={radioValue === "Yes"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10"></span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                    Yes
-                                  </div>
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="Yes"
+                                      checked={radioValue === "Yes"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                  </label>
                                 </div>
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="No"
-                                        checked={radioValue === "No"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                  No
-                                  </div>
+                                <div className="ml-5">Yes</div>
+                              </div>
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="No"
+                                      checked={radioValue === "No"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                  </label>
                                 </div>
+                                <div className="ml-5">No</div>
+                              </div>
                             </div>
                           </div>
-                        
-                          <br />
                           <div className="">
                             <h6>Mekka Hotel</h6>
-                            <ul className="mx-3">
+                            <ul className="">
                               <li>
-                                <div className="col-md-6">
-                                <div className="form-input spacing d-flex flex-column align-items-centerc hotel-mekka">
-                                  <CreatableSelect
-                                    value={Hotel}
-                                    onChange={handleGenderChange}
-                                    options={options2}
-                                    className="custom-select"
-                                    placeholder="Select Hotel For Mekka"
-                                    classNamePrefix="react-select"
-                                    isClearable
-                                    formatCreateLabel={(inputValue) =>
-                                      `Create custom gender: "${inputValue}"`
-                                    }
-                                  />
-                                  {Hotel && Hotel.__isNew__ && (
-                                    <input
-                                      type="text"
-                                      value={customGender}
-                                      onChange={(e) =>
-                                        setCustomGender(e.target.value)
+                                <div className="col-md-12 row">
+                                  <div className="col-4 form-input spacing d-flex flex-column align-items-centerc hotel-mekka">
+                                    <CreatableSelect
+                                      value={Hotel}
+                                      onChange={handleMekkaChange}
+                                      options={options2}
+                                      className="custom-select"
+                                      placeholder="Select Hotel For Mekka"
+                                      classNamePrefix="react-select"
+                                      isClearable
+                                      formatCreateLabel={(inputValue) =>
+                                        `Create custom gender: "${inputValue}"`
                                       }
-                                      placeholder="Enter custom gender"
-                                      className="form-control mt-2 custom-input"
                                     />
-                                  )}
-                                </div>
+                                    {Hotel && Hotel.__isNew__ && (
+                                      <input
+                                        type="text"
+                                        value={MekkaHotel}
+                                        onChange={(e) =>
+                                          setMekkaHotel(e.target.value)
+                                        }
+                                        placeholder="Enter custom gender"
+                                        className="form-control mt-2 custom-input"
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="col-md-4">
+                                    <div className="form-input spacing">
+                                      <input type="text" required />
+                                      <label className="lh-1 text-16 text-light-1">
+                                        Hotel Price
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div className="row col-4">
+                                    <button
+                                      type="button"
+                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                                    >
+                                      +
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                                    >
+                                      -
+                                    </button>
+                                  </div>
                                 </div>
                               </li>
-                              {/* <li className="d-flex item-center my-2">Taj Hotel : ( 3<FaStar className="mx-1"/> )   1.799,00 €</li> */}
-                              {/* <li className="d-flex item-center my-2">Marriott Hotel : ( 5<FaStar className="mx-1"/> ) 2.000,00 €</li> */}
                             </ul>
 
                             <h6>Madina Hotel</h6>
-                            <ul className="mx-3">
-                            <li>
-                                <div className="col-md-6">
-                                <div className="form-input spacing d-flex flex-column align-items-center">
-                                  <CreatableSelect
-                                    value={gender}
-                                    onChange={handleGenderChange}
-                                    options={Madina}
-                                    className="custom-select"
-                                    placeholder="Select Hotel For Madina"
-                                    classNamePrefix="react-select"
-                                    isClearable
-                                    formatCreateLabel={(inputValue) =>
-                                      `Create custom gender: "${inputValue}"`
-                                    }
-                                  />
-                                  {gender && gender.__isNew__ && (
-                                    <input
-                                      type="text"
-                                      value={customGender}
-                                      onChange={(e) =>
-                                        setCustomGender(e.target.value)
+                            <ul className="">
+                              <li>
+                                <div className="col-md-12 row">
+                                  <div className="col-4 form-input spacing d-flex flex-column align-items-center">
+                                    <CreatableSelect
+                                      value={MadinaHotel}
+                                      onChange={handleMadinaChange}
+                                      options={Madina}
+                                      className="custom-select"
+                                      placeholder="Select Hotel For Madina"
+                                      classNamePrefix="react-select"
+                                      isClearable
+                                      formatCreateLabel={(inputValue) =>
+                                        `Create custom gender: "${inputValue}"`
                                       }
-                                      placeholder="Enter custom gender"
-                                      className="form-control mt-2 custom-input"
                                     />
-                                  )}
+                                    {gender && gender.__isNew__ && (
+                                      <input
+                                        type="text"
+                                        value={customGender}
+                                        onChange={(e) =>
+                                          setCustomGender(e.target.value)
+                                        }
+                                        placeholder="Enter custom gender"
+                                        className="form-control mt-2 custom-input"
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="col-md-4">
+                                    <div className="form-input spacing">
+                                      <input type="text" required />
+                                      <label className="lh-1 text-16 text-light-1">
+                                        Hotel Price
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div className="row col-4">
+                                    <button
+                                      type="button"
+                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                                    >
+                                      +
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                                    >
+                                      -
+                                    </button>
+                                  </div>
                                 </div>
-                                </div>
-                            </li>
-                              {/* <li className="d-flex item-center my-2">Orchid Hotel : ( 3<FaStar className="mx-1"/> )   1.799,00 €</li>
-                              <li className="d-flex item-center my-2">Empire Royale Hotel - Hostel Hotel : ( 5<FaStar className="mx-1"/> ) 5.799,00 €</li> */}
+                              </li>
                             </ul>
                           </div>
-                          <br />
                           <div className="d-flex item-center justify-content-between">
-                            <h6>Free cancellation (up to 14 days before travel date)</h6>
+                            <h6>
+                              Free cancellation (up to 14 days before travel
+                              date)
+                            </h6>
                             <div className="flex_start my-3">
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Cancel_yes"
-                                        checked={radioValue === "Cancel_yes"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10"></span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                    Yes
-                                  </div>
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="Cancel_yes"
+                                      checked={radioValue === "Cancel_yes"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                    {/* <span className="text-14 lh-1 ml-10"></span> */}
+                                  </label>
                                 </div>
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Cancel_No"
-                                        checked={radioValue === "Cancel_No"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                  No
-                                  </div>
+                                <div className="ml-5">Yes</div>
+                              </div>
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="Cancel_No"
+                                      checked={radioValue === "Cancel_No"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                  </label>
                                 </div>
+                                <div className="ml-5">No</div>
+                              </div>
                             </div>
                           </div>
                           <div className="d-flex item-center justify-content-between">
                             <h6>Direct Flight</h6>
                             <div className="flex_start my-3">
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Flight_Yes"
-                                        checked={radioValue === "Flight_Yes"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10"></span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                    Yes
-                                  </div>
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="Flight_Yes"
+                                      checked={radioValue === "Flight_Yes"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                    {/* <span className="text-14 lh-1 ml-10"></span> */}
+                                  </label>
                                 </div>
-                                <div className="d-flex items-center mx-2">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio">
-                                      <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Flight_No"
-                                        checked={radioValue === "Flight_No"}
-                                        onChange={handleRadioChange}
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                                    </label>
-                                  </div>
-                                  <div className="ml-10">
-                                  No
-                                  </div>
+                                <div className="ml-5">Yes</div>
+                              </div>
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="Flight_No"
+                                      checked={radioValue === "Flight_No"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                  </label>
                                 </div>
+                                <div className="ml-5">No</div>
+                              </div>
                             </div>
                           </div>
-                          <br />
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm px-20 py-20 ">
                               <div className="row ">
-                              <div className="col-md-6">
-                                <div className="form-input spacing">
-                                  <input type="number" required />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Flight Amount
-                                  </label>
+                                <div className="col-md-6">
+                                  <div className="form-input spacing">
+                                    <input type="number" required />
+                                    <label className="lh-1 text-16 text-light-1">
+                                      Flight Amount
+                                    </label>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="col-md-6">
-                                <div className="form-input spacing">
-                                  <input type="number" required />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    No Of Flight Stops
-                                  </label>
+                                <div className="col-md-6">
+                                  <div className="form-input spacing">
+                                    <input type="number" required />
+                                    <label className="lh-1 text-16 text-light-1">
+                                      No Of Flight Stops
+                                    </label>
+                                  </div>
                                 </div>
-                              </div>
-                              
                               </div>
                             </div>
                           </div>
                           <div className="col-12">
-                              <div className="row">
-                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
-                                </button>
-                              </div>
+                            <div className="row">
+                              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                                SAVE DETAILS
+                              </button>
                             </div>
+                          </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>

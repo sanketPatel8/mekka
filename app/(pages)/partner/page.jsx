@@ -54,7 +54,7 @@ const page = () => {
     <>
       <Header1 />
       <div className="mt-80">
-        <h1 className="text-center my-5">Partner Registration</h1>
+        <h1 className="text-center my-5">Partner Registration </h1>
         <div className="container">
           <div className="row shadow-2">
             <div className="col-md-6 col-12 text-center p-5 border-1 ">

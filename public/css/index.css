@@ -403,3 +403,30 @@ hr{
         z-index: 20 !important;
       }
   }
+
+  .select2-container--default .select2-selection--multiple {
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 1rem 0rem;
+    height: 55px;
+    border: 1px solid #E7E6E6 !important;
+    border-radius: 12px !important;
+    padding: 15px;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+  }
+
+  .select2-container .select2-selection--multiple .select2-selection__rendered{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .dashboard__content_content{
+    padding: 20px;
+  }
+
+  .multi-lan-select{
+    position: absolute !important;
+    top: -1px !important;
+  }
