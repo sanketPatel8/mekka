@@ -10,9 +10,8 @@ import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import $ from 'jquery';
-import 'select2/dist/css/select2.css';
-
+import $ from "jquery";
+import "select2/dist/css/select2.css";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -27,17 +26,6 @@ const tabs = [
   "Itinerary",
   "Flight Hotel And Visa",
 ];
-// const tabs = ["Content", "Location", "Pricing", "Included", "Overview" , "Itinerary" , "General Information"];
-const Tab1 = [
-  "Content",
-  "Overview",
-  "Included",
-  "Itinerary",
-  "General Information",
-  "Extras",
-];
-
-
 
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -118,44 +106,79 @@ export default function AddTour() {
     console.log(newValue);
   };
 
-  const handleMekkaChange = (newValue, actionMeta) => {
-    setHotel(newValue);
-    console.log(newValue);
-  };
-
-  const handleMadinaChange = (newValue, actionMeta) => {
-    setMadinaHotel(newValue);
-    console.log(newValue);
-  };
-
   const handleRadioChange = (event) => {
     console.log(event.target.value);
     setRadioValue(event.target.value);
   };
 
+  // hellow
+
+  const [mekkaRows, setMekkaRows] = useState([
+    { hotel: null, price: "", customGender: "", gender: null },
+  ]);
+
+  const [madinaRows, setMadinaRows] = useState([
+    { hotel: null, price: "", customGender: "", gender: null },
+  ]);
+
+  const handleAddMekkaRow = () => {
+    setMekkaRows([
+      ...mekkaRows,
+      { hotel: null, price: "", customGender: "", gender: null },
+    ]);
+  };
+
+  const handleRemoveMekkaRow = (index) => {
+    const newRows = mekkaRows.filter((_, rowIndex) => rowIndex !== index);
+    setMekkaRows(newRows);
+  };
+
+  const handleAddMadinaRow = () => {
+    setMadinaRows([
+      ...madinaRows,
+      { hotel: null, price: "", customGender: "", gender: null },
+    ]);
+  };
+
+  const handleRemoveMadinaRow = (index) => {
+    const newRows = madinaRows.filter((_, rowIndex) => rowIndex !== index);
+    setMadinaRows(newRows);
+  };
+
+  const handleMekkaChange = (value, index) => {
+    const newRows = [...mekkaRows];
+    newRows[index].hotel = value;
+    setMekkaRows(newRows);
+  };
+
+  const handleMadinaChange = (value, index) => {
+    const newRows = [...madinaRows];
+    newRows[index].hotel = value;
+    setMadinaRows(newRows);
+  };
+
+  const handleMekkaCustomGenderChange = (e, index) => {
+    const newRows = [...mekkaRows];
+    newRows[index].customGender = e.target.value;
+    setMekkaRows(newRows);
+  };
+
+  const handleMadinaCustomGenderChange = (e, index) => {
+    const newRows = [...madinaRows];
+    newRows[index].customGender = e.target.value;
+    setMadinaRows(newRows);
+  };
+
   const selectRef = useRef(null);
 
-  // useEffect(() => {
-  //   $(selectRef.current).select2(); // Initialize select2
-
-  //   // Clean up Select2 instance on component unmount
-  //   return () => {
-  //     $(selectRef.current).select2("destroy");
-  //   };
-  // }, []);
-
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.$ = window.jQuery = $;
-      
-      // Dynamically import select2 to ensure it's loaded only on the client side
-      import('select2').then(() => {
+      import("select2").then(() => {
         $(selectRef.current).select2();
-
-        // Cleanup select2 on component unmount
         return () => {
-          if ($(selectRef.current).data('select2')) {
-            $(selectRef.current).select2('destroy');
+          if ($(selectRef.current).data("select2")) {
+            $(selectRef.current).select2("destroy");
           }
         };
       });
@@ -594,7 +617,7 @@ export default function AddTour() {
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price per adult
+                                  Price Per Adult
                                 </label>
                               </div>
                             </div>
@@ -602,7 +625,7 @@ export default function AddTour() {
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price per child
+                                  Price Per Child
                                 </label>
                               </div>
                             </div>
@@ -610,7 +633,7 @@ export default function AddTour() {
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price per baby
+                                  Price Per Baby
                                 </label>
                               </div>
                             </div>
@@ -625,7 +648,7 @@ export default function AddTour() {
                                 <p>Additional Services</p>
                               </div>
                               <div className="col-lg-6">
-                                <p>Price (€) per person</p>
+                                <p>Price (€) Per Person</p>
                               </div>
                             </div>
 
@@ -1092,113 +1115,158 @@ export default function AddTour() {
                           </div>
                           <div className="">
                             <h6>Mekka Hotel</h6>
+
                             <ul className="">
-                              <li>
-                                <div className="col-md-12 row">
-                                  <div className="col-4 form-input spacing d-flex flex-column align-items-centerc hotel-mekka">
-                                    <CreatableSelect
-                                      value={Hotel}
-                                      onChange={handleMekkaChange}
-                                      options={options2}
-                                      className="custom-select"
-                                      placeholder="Select Hotel For Mekka"
-                                      classNamePrefix="react-select"
-                                      isClearable
-                                      formatCreateLabel={(inputValue) =>
-                                        `Create custom gender: "${inputValue}"`
-                                      }
-                                    />
-                                    {Hotel && Hotel.__isNew__ && (
-                                      <input
-                                        type="text"
-                                        value={MekkaHotel}
-                                        onChange={(e) =>
-                                          setMekkaHotel(e.target.value)
+                              {mekkaRows.map((row, index) => (
+                                <li key={index}>
+                                  <div className="col-md-12 row">
+                                    <div className="col-4 form-input spacing d-flex flex-column align-items-center hotel-mekka">
+                                      <CreatableSelect
+                                        value={row.hotel}
+                                        onChange={(value) =>
+                                          handleMekkaChange(value, index)
                                         }
-                                        placeholder="Enter custom gender"
-                                        className="form-control mt-2 custom-input"
+                                        options={options2}
+                                        className="custom-select"
+                                        placeholder="Select Hotel For Mekka"
+                                        classNamePrefix="react-select"
+                                        isClearable
+                                        formatCreateLabel={(inputValue) =>
+                                          `Create custom hotel: "${inputValue}"`
+                                        }
                                       />
-                                    )}
-                                  </div>
-                                  <div className="col-md-4">
-                                    <div className="form-input spacing">
-                                      <input type="text" required />
-                                      <label className="lh-1 text-16 text-light-1">
-                                        Hotel Price
-                                      </label>
+                                      {row.hotel && row.hotel.__isNew__ && (
+                                        <input
+                                          type="text"
+                                          value={row.customGender}
+                                          onChange={(e) =>
+                                            handleMekkaCustomGenderChange(
+                                              e,
+                                              index
+                                            )
+                                          }
+                                          placeholder="Enter custom gender"
+                                          className="form-control mt-2 custom-input"
+                                        />
+                                      )}
+                                    </div>
+                                    <div className="col-md-4">
+                                      <div className="form-input spacing">
+                                        <input
+                                          type="text"
+                                          value={row.price}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              index,
+                                              "price",
+                                              e.target.value
+                                            )
+                                          }
+                                          required
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Hotel Price
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-2 d-flex">
+                                      <button
+                                        type="button"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                                        onClick={handleAddMekkaRow}
+                                      >
+                                        +
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                                        onClick={() =>
+                                          handleRemoveMekkaRow(index)
+                                        }
+                                      >
+                                        -
+                                      </button>
                                     </div>
                                   </div>
-                                  <div className="row col-4">
-                                    <button
-                                      type="button"
-                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                                    >
-                                      +
-                                    </button>
-                                    <button
-                                      type="button"
-                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                                    >
-                                      -
-                                    </button>
-                                  </div>
-                                </div>
-                              </li>
+                                </li>
+                              ))}
                             </ul>
 
                             <h6>Madina Hotel</h6>
                             <ul className="">
-                              <li>
-                                <div className="col-md-12 row">
-                                  <div className="col-4 form-input spacing d-flex flex-column align-items-center">
-                                    <CreatableSelect
-                                      value={MadinaHotel}
-                                      onChange={handleMadinaChange}
-                                      options={Madina}
-                                      className="custom-select"
-                                      placeholder="Select Hotel For Madina"
-                                      classNamePrefix="react-select"
-                                      isClearable
-                                      formatCreateLabel={(inputValue) =>
-                                        `Create custom gender: "${inputValue}"`
-                                      }
-                                    />
-                                    {gender && gender.__isNew__ && (
-                                      <input
-                                        type="text"
-                                        value={customGender}
-                                        onChange={(e) =>
-                                          setCustomGender(e.target.value)
+                              {madinaRows.map((row, index) => (
+                                <li key={index}>
+                                  <div className="col-md-12 row">
+                                    <div className="col-4 form-input spacing d-flex flex-column align-items-center">
+                                      <CreatableSelect
+                                        value={row.hotel}
+                                        onChange={(value) =>
+                                          handleMadinaChange(value, index)
                                         }
-                                        placeholder="Enter custom gender"
-                                        className="form-control mt-2 custom-input"
+                                        options={Madina}
+                                        className="custom-select"
+                                        placeholder="Select Hotel For Madina"
+                                        classNamePrefix="react-select"
+                                        isClearable
+                                        formatCreateLabel={(inputValue) =>
+                                          `Create custom hotel: "${inputValue}"`
+                                        }
                                       />
-                                    )}
-                                  </div>
-                                  <div className="col-md-4">
-                                    <div className="form-input spacing">
-                                      <input type="text" required />
-                                      <label className="lh-1 text-16 text-light-1">
-                                        Hotel Price
-                                      </label>
+                                      {row.hotel && row.hotel.__isNew__ && (
+                                        <input
+                                          type="text"
+                                          value={row.customGender}
+                                          onChange={(e) =>
+                                            handleMadinaCustomGenderChange(
+                                              e,
+                                              index
+                                            )
+                                          }
+                                          placeholder="Enter custom gender"
+                                          className="form-control mt-2 custom-input"
+                                        />
+                                      )}
+                                    </div>
+                                    <div className="col-md-4">
+                                      <div className="form-input spacing">
+                                        <input
+                                          type="text"
+                                          value={row.price}
+                                          onChange={(e) =>
+                                            handleInputChange(
+                                              index,
+                                              "price",
+                                              e.target.value
+                                            )
+                                          }
+                                          required
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Hotel Price
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-2 d-flex">
+                                      <button
+                                        type="button"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                                        onClick={handleAddMadinaRow}
+                                      >
+                                        +
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                                        onClick={() =>
+                                          handleRemoveMadinaRow(index)
+                                        }
+                                      >
+                                        -
+                                      </button>
                                     </div>
                                   </div>
-                                  <div className="row col-4">
-                                    <button
-                                      type="button"
-                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                                    >
-                                      +
-                                    </button>
-                                    <button
-                                      type="button"
-                                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                                    >
-                                      -
-                                    </button>
-                                  </div>
-                                </div>
-                              </li>
+                                </li>
+                              ))}
                             </ul>
                           </div>
                           <div className="d-flex item-center justify-content-between">
