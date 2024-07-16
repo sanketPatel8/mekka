@@ -45,7 +45,6 @@ const customStyles = {
 };
 
 const DocumentStatusManager = ({ Customerid }) => {
-  console.log(Customerid.id);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
   const [invoice, setinvoice] = useState(false);
@@ -298,7 +297,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                 <div className="searchFormItem js-select-control js-form-dd">
                   <div
                     className="searchFormItem__button"
-                    onClick={() => setActiveTimeDD((pre) => !pre)}
+                    onClick={() => setActiveTimeDD3((pre) => !pre)}
                     data-x-click="time"
                   >
                     <div className="searchFormItem__content">
@@ -314,7 +313,7 @@ const DocumentStatusManager = ({ Customerid }) => {
 
                   <div
                     className={`searchFormItemDropdown -tour-type ${
-                      activeTimeDD ? "is-active" : ""
+                      activeTimeDD3 ? "is-active" : ""
                     }`}
                     data-x="time"
                     data-x-toggle="is-active"
@@ -326,7 +325,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                             key={i}
                             onClick={() => {
                               setSelectedTime((pre) => (pre == elm ? "" : elm));
-                              setActiveTimeDD(false);
+                              setActiveTimeDD3(false);
                             }}
                             className="searchFormItemDropdown__item"
                           >
@@ -440,7 +439,7 @@ const DocumentStatusManager = ({ Customerid }) => {
 
                             <div
                               className={`searchFormItemDropdown -tour-type ${
-                                activeTimeDD3 ? "is-active" : ""
+                                activeTimeDD ? "is-active" : ""
                               }`}
                               data-x="time"
                               data-x-toggle="is-active"
@@ -454,7 +453,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                                         setSelectedTime((pre) =>
                                           pre == elm ? "" : elm
                                         );
-                                        setActiveTimeDD3(false);
+                                        setActiveTimeDD(false);
                                       }}
                                       className="searchFormItemDropdown__item"
                                     >
