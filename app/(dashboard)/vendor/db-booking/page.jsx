@@ -43,7 +43,7 @@ export default function DbBooking() {
     { name: "Visas", selector: (row) => row.Visas },
     { name: "Flight", selector: (row) => row.Flight },
     { name: "Tour Name", selector: (row) => row.Agency_Paid },
-    { name: "Initiated By Admin", selector: (row) => row.Initiated_By_Admin  , width: "150px"},
+    { name: "Initiated By", selector: (row) => row.Initiated_By_Admin  , width: "150px"},
     {
       name: "#",
       selector: (row) => (

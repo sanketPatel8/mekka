@@ -93,6 +93,25 @@ const MyComponent = () => {
     setMadinaRows(newRows);
   };
 
+  const customStyles = {
+    menu: (provided) => ({
+      ...provided,
+      zIndex: 9999,
+    }),
+  };
+
+  const handleInputChange = (index, field, value) => {
+    if (field === "price") {
+      const newMekkaRows = [...mekkaRows];
+      newMekkaRows[index][field] = value;
+      setMekkaRows(newMekkaRows);
+
+      const newMadinaRows = [...madinaRows];
+      newMadinaRows[index][field] = value;
+      setMadinaRows(newMadinaRows);
+    }
+  };
+
   return (
     <>
       <ul className="">
@@ -111,6 +130,7 @@ const MyComponent = () => {
                   formatCreateLabel={(inputValue) =>
                     `Create custom hotel: "${inputValue}"`
                   }
+                  styles={customStyles}
                 />
                 {row.hotel && row.hotel.__isNew__ && (
                   <input
@@ -173,6 +193,7 @@ const MyComponent = () => {
                   formatCreateLabel={(inputValue) =>
                     `Create custom hotel: "${inputValue}"`
                   }
+                  styles={customStyles}
                 />
                 {row.hotel && row.hotel.__isNew__ && (
                   <input

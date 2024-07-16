@@ -344,20 +344,18 @@ hr{
   }
 
   .react-select__menu {
-    /* border: 1px solid #fe1601; */
+    border: 1px solid green;
     border-top: none;
+    position: absolute;
     border-radius: 0 0 4px 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 99999;
+    z-index: 999999 !important;
   }
 
   .dODGfY{
     display: none;
   }
-  
-  .react-select__control{
-    z-index: 9999999 !important;
-  }
+
 
   .react-select-3-listbox{
     border: 2px solid red;
@@ -374,35 +372,13 @@ hr{
     margin: 20px 0px;
   }
 
-  .css-b62m3t-container{
-    z-index: 99;
-  }
 
-  .hotel-mekka > .css-b62m3t-container {
-    z-index: 999 !important;
-  }
+ 
 
   .public-DraftStyleDefault-ltr{
     height: 150px;
   }
 
-  .add-tour-type > .css-b62m3t-container {
-    z-index: 99999 !important;
-  }
-
-
-  @media only screen and (max-width: 700px) {
-    .add-tour-type > .css-b62m3t-container {
-        z-index: 15 !important;
-      }
-      .css-b62m3t-container{
-        z-index: 15;
-      }
-    
-      .hotel-mekka > .css-b62m3t-container {
-        z-index: 20 !important;
-      }
-  }
 
   .select2-container--default .select2-selection--multiple {
     font-size: 15px;
@@ -430,3 +406,11 @@ hr{
     position: absolute !important;
     top: -1px !important;
   }
+
+  .DraftEditor-editorContainer{
+    padding: 10px;
+  }
+
+  /* .react-select__placeholder{
+    padding: 0 ;
+  } */

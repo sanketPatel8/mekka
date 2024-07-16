@@ -111,7 +111,7 @@ export default function AddTour() {
     setRadioValue(event.target.value);
   };
 
-  // hellow
+  // for add hotel and remove hotels
 
   const [mekkaRows, setMekkaRows] = useState([
     { hotel: null, price: "", customGender: "", gender: null },
