@@ -215,3 +215,10 @@ export const State = [
   "Frankfurt (FRA)",
   "Altenburg (AOC)",
 ];
+
+export const VandorSideBookingStatus = [
+  "Cancelled",
+  "Completed",
+  "In Progress",
+];
+

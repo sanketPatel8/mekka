@@ -16,9 +16,10 @@ export default function page({ params }) {
   const id = params.id;
   const tour = allTour.find((item) => item.id == id) || allTour[0];
 
+  console.log(params);
+
   return (
     <>
-
       <Header1 />
       <SingleFour tour={tour} />
       <TourSlider />

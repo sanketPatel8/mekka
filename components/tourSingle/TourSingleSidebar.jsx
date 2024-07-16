@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Calender from "../common/dropdownSearch/Calender";
 import Image from "next/image";
-import { State} from "@/data/tourSingleContent";
-import "@/public/css/index.css"
+import { State } from "@/data/tourSingleContent";
+import "@/public/css/index.css";
 import Link from "next/link";
 
 export default function TourSingleSidebar() {
@@ -19,20 +19,16 @@ export default function TourSingleSidebar() {
   const [adultNumber, setAdultNumber] = useState(3);
   const [youthNumber, setYouthNumber] = useState(2);
   const [childrenNumber, setChildrenNumber] = useState(4);
-  const [extraService, setExtraService] = useState('');
+  const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
   const [hotelMakka, setHotelMakka] = useState("");
-  const [hotelMadina, setHotelMadina] = useState("");
-  const [roomType, setRoomType] = useState("");
   const [Flight, setFlight] = useState(false);
-  const [radioValue, setRadioValue] = useState(""); 
-  
+  const [radioValue, setRadioValue] = useState("");
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
-
 
   useEffect(() => {
     setExtraCharge(0);
@@ -48,8 +44,8 @@ export default function TourSingleSidebar() {
   const [activeTimeDD, setActiveTimeDD] = useState(false);
 
   const handleChange = (e) => {
-    setHotelMakka(e.target.value)
-  }
+    setHotelMakka(e.target.value);
+  };
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">Tickets</h5>
@@ -155,21 +151,21 @@ export default function TourSingleSidebar() {
 
       <div className="d-flex items-center justify-between">
         <div className="d-flex items-center">
-        <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="mekka-3star"
-                          checked={radioValue === "mekka-3star"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
+          <div className="form-radio d-flex items-center">
+            <label className="radio">
+              <input
+                type="radio"
+                name="radioGroup"
+                value="mekka-3star"
+                checked={radioValue === "mekka-3star"}
+                onChange={handleRadioChange}
+              />
+              <span className="radio__mark">
+                <span className="radio__icon"></span>
+              </span>
+              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+            </label>
+          </div>
           <div className="ml-10">Hotel-name ( 3 Star )</div>
         </div>
 
@@ -178,21 +174,21 @@ export default function TourSingleSidebar() {
 
       <div className="d-flex justify-between mt-1">
         <div className="d-flex items-center">
-        <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="mekka-4star"
-                          checked={radioValue === "mekka-4star"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
+          <div className="form-radio d-flex items-center">
+            <label className="radio">
+              <input
+                type="radio"
+                name="radioGroup"
+                value="mekka-4star"
+                checked={radioValue === "mekka-4star"}
+                onChange={handleRadioChange}
+              />
+              <span className="radio__mark">
+                <span className="radio__icon"></span>
+              </span>
+              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+            </label>
+          </div>
 
           <div className="ml-10">Hotel-name ( 4 Star )</div>
         </div>
@@ -202,21 +198,21 @@ export default function TourSingleSidebar() {
 
       <div className="d-flex justify-between mt-1">
         <div className="d-flex">
-        <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="mekka-5star"
-                          checked={radioValue === "mekka-5star"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
+          <div className="form-radio d-flex items-center">
+            <label className="radio">
+              <input
+                type="radio"
+                name="radioGroup"
+                value="mekka-5star"
+                checked={radioValue === "mekka-5star"}
+                onChange={handleRadioChange}
+              />
+              <span className="radio__mark">
+                <span className="radio__icon"></span>
+              </span>
+              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+            </label>
+          </div>
 
           <div className="ml-10">Hotel-name ( 5 Star )</div>
         </div>
@@ -230,21 +226,21 @@ export default function TourSingleSidebar() {
 
       <div className="d-flex items-center justify-between">
         <div className="d-flex items-center">
-        <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="madina-3star"
-                          checked={radioValue === "madina-3star"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
+          <div className="form-radio d-flex items-center">
+            <label className="radio">
+              <input
+                type="radio"
+                name="radioGroup"
+                value="madina-3star"
+                checked={radioValue === "madina-3star"}
+                onChange={handleRadioChange}
+              />
+              <span className="radio__mark">
+                <span className="radio__icon"></span>
+              </span>
+              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+            </label>
+          </div>
           <div className="ml-10">Hotel-name ( 3 Star )</div>
         </div>
 
@@ -253,21 +249,21 @@ export default function TourSingleSidebar() {
 
       <div className="d-flex justify-between mt-1">
         <div className="d-flex items-center">
-        <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="madina-4star"
-                          checked={radioValue === "madina-4star"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
+          <div className="form-radio d-flex items-center">
+            <label className="radio">
+              <input
+                type="radio"
+                name="radioGroup"
+                value="madina-4star"
+                checked={radioValue === "madina-4star"}
+                onChange={handleRadioChange}
+              />
+              <span className="radio__mark">
+                <span className="radio__icon"></span>
+              </span>
+              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+            </label>
+          </div>
 
           <div className="ml-10">Hotel-name ( 4 Star )</div>
         </div>
@@ -277,21 +273,21 @@ export default function TourSingleSidebar() {
 
       <div className="d-flex justify-between mt-1">
         <div className="d-flex">
-        <div className="form-radio d-flex items-center">
-                      <label className="radio">
-                        <input
-                          type="radio"
-                          name="radioGroup"
-                          value="madina-5star"
-                          checked={radioValue === "madina-5star"}
-                          onChange={handleRadioChange}
-                        />
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
-                        {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                      </label>
-                    </div>
+          <div className="form-radio d-flex items-center">
+            <label className="radio">
+              <input
+                type="radio"
+                name="radioGroup"
+                value="madina-5star"
+                checked={radioValue === "madina-5star"}
+                onChange={handleRadioChange}
+              />
+              <span className="radio__mark">
+                <span className="radio__icon"></span>
+              </span>
+              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+            </label>
+          </div>
 
           <div className="ml-10">Hotel-name ( 5 Star )</div>
         </div>
@@ -330,8 +326,11 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <div className={`searchForm -type-1 -sidebar mt-20 ${Flight === true ? 'd-none' : 'd-block'}`}>
-
+      <div
+        className={`searchForm -type-1 -sidebar mt-20 ${
+          Flight === true ? "d-none" : "d-block"
+        }`}
+      >
         <div className="searchForm__form">
           <div className="searchFormItem js-select-control js-form-dd">
             <div
@@ -389,24 +388,23 @@ export default function TourSingleSidebar() {
         <div className="text-18 fw-500">Total:</div>
         <div>
           <div className="text-18 fw-500">
-            
             {(
               prices.adultPrice * adultNumber +
               prices.youthPrice * youthNumber +
               prices.childrenPrice * childrenNumber +
               extraCharge * 1
-            ).toFixed(2)} €
+            ).toFixed(2)}{" "}
+            €
           </div>
           <span className="text-center">including taxes and fees</span>
         </div>
       </div>
 
-      <Link href='/booking'>
-          <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
-            Book Now
-            {/* <i className="icon-arrow-top-right ml-10"></i> */}
-          </button>
-        
+      <Link href="/booking">
+        <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
+          Book Now
+          {/* <i className="icon-arrow-top-right ml-10"></i> */}
+        </button>
       </Link>
     </div>
   );

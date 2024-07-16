@@ -13,6 +13,7 @@ import {
   BabyData,
   documentData,
   documentDataFile,
+  ViewCustomerDocument,
 } from "@/data/CustomerBookingData";
 import { collapseClasses } from "@mui/material";
 
@@ -1209,15 +1210,15 @@ const CustomerDetaTable = () => {
               </TabPanel>
               <TabPanel>
                 <DataTable
-                  title="Your Documents"
+                  title="View Your Documents"
                   columns={FileDeta}
-                  data={documentDataFile}
+                  data={ViewCustomerDocument}
                   highlightOnHover
                 />
               </TabPanel>
               <TabPanel>
               <DataTable
-                  title="Your Documents"
+                  title="Download Your Tickets and Visa"
                   columns={DownloadData}
                   data={documentDataFile}
                   highlightOnHover

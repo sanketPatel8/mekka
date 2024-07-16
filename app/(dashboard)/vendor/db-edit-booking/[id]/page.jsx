@@ -6,13 +6,22 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import DataTable from "react-data-table-component";
 import { bookingData } from "@/data/dashboard";
 import Link from "next/link";
+import { FaUser } from "react-icons/fa";
+import { MdError } from "react-icons/md";
+import DocumentStatusManager from "@/components/dasboard/DocumentStatusManager";
 
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
-export default function DbBooking() {
+export default function DbBooking({ params }) {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("All");
   const [filteredData, setFilteredData] = useState([]);
+  const [radioValue, setRadioValue] = useState("");
+
+  const handleRadioChange = (event) => {
+    setRadioValue(event.target.value);
+  };
+
 
   useEffect(() => {
     // Filter data based on currentTab
@@ -63,8 +72,7 @@ export default function DbBooking() {
     {
       name: "Action",
       selector: (row) => (
-        
-        <Link href={`/vendor/db-edit-booking/${row.BookingNo}`}>
+        <Link href="/vendor/db-edit-booking">
           {" "}
           <button
             className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
@@ -90,38 +98,9 @@ export default function DbBooking() {
         <Header setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
-          <h1 className="text-30">My Booking</h1>
-          <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
+         
 
-          <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:mb-20 mt-60">
-            <div className="tabs -underline-2 js-tabs">
-              <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
-                {tabs.map((tab, index) => (
-                  <div
-                    key={index}
-                    className="col-auto"
-                    onClick={() => setcurrentTab(tab)}
-                  >
-                    <button
-                      className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
-                        tab === currentTab ? "is-tab-el-active" : ""
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <DataTable
-                columns={VandorBookings}
-                data={filteredData}
-                highlightOnHover
-                pagination
-                subHeader
-              />
-            </div>
-          </div>
+            <DocumentStatusManager Customerid = {params}/>
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

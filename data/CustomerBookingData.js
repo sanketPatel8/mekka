@@ -71,10 +71,12 @@ export const TotalData = [
     },
 ]
 
+// customer side deta 
 
 export const documentData = ['Passport','Photo','Permanent Resident (PR)','Vaccination Card']
 
-export const documentDataFile = [
+
+export const ViewCustomerDocument = [
     {
         Name : 'Passport',
     },
@@ -89,3 +91,32 @@ export const documentDataFile = [
     },
 ]
 
+
+export const documentDataFile = [
+    {
+        Name : 'Visa',
+    },
+    {
+        Name : 'Hotel Booking Pdf',
+    },
+    {
+        Name : 'Flight Booking Ticket',
+    },
+]
+
+
+// vandor side documnet data 
+
+export const TicketsForVandor = ['Vasa' , "Hotel Booking Pdf" , "Flight Ticket"]
+
+export const ViewTicketsForVandor = [
+    {
+        Name : 'Vasa',
+    },
+    {
+        Name : 'Hotel Booking Pdf',
+    },
+    {
+        Name : 'Flight Ticket',
+    },
+]
