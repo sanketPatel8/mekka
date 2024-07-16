@@ -111,22 +111,22 @@ const CustomerDetaTable = () => {
   ];
 
   const columnAdu_1 = [
-    { name: "name", selector: (row) => row.name },
+    { name: "Name", selector: (row) => row.name , width : "100px" },
     { name: "Surname", selector: (row) => row.surname },
-    { name: "Email", selector: (row) => row.email },
-    { name: "Phone", selector: (row) => row.phone },
-    { name: "City", selector: (row) => row.city },
+    { name: "Email", selector: (row) => row.email , width : "150px" },
+    { name: "Phone", selector: (row) => row.phone , width : "150px"},
+    { name: "City", selector: (row) => row.city , width : "150px"},
     { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
-    { name: "House No", selector: (row) => row.House_No },
+    { name: "House No.", selector: (row) => row.House_No },
     { name: "Zip Code", selector: (row) => row.Zip_code },
-    { name: "Strect", selector: (row) => row.Strect },
+    { name: "Street", selector: (row) => row.Strect },
     { name: "FRA", selector: (row) => row.FRA },
-    { name: "Additional_services", selector: (row) => row.additional_services },
+    { name: "Additional Services", selector: (row) => row.additional_services , width : "150px" },
     { name: "Total", selector: (row) => row.Amount },
     {
-      name: "",
+      name: "Action",
       selector: (row) => (
         <div className="flex_center">
           <button
@@ -148,15 +148,15 @@ const CustomerDetaTable = () => {
   ];
 
   const columnAduInfo_2 = [
-    { name: "Name", selector: (row) => row.name },
+    { name: "Name", selector: (row) => row.name , width : "100px" },
     { name: "Surname", selector: (row) => row.surname },
     { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
-    { name: "Additional services", selector: (row) => row.additional_services },
+    { name: "Additional Services", selector: (row) => row.additional_services , width : "150px" },
     { name: "Total", selector: (row) => row.Amount },
     {
-      name: "",
+      name: "Action",
       selector: (row) => (
         <div className="flex_center">
           <button
@@ -178,14 +178,14 @@ const CustomerDetaTable = () => {
   ];
 
   const Baby = [
-    { name: "Name", selector: (row) => row.name },
+    { name: "Name", selector: (row) => row.name , width : "100px" },
     { name: "Surname", selector: (row) => row.surname },
     { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
     { name: "Total", selector: (row) => row.Amount },
     {
-      name: "",
+      name: "Action",
       selector: (row) => (
         <div className="flex_center">
           <button
@@ -216,9 +216,9 @@ const CustomerDetaTable = () => {
   ];
 
   const FileDeta = [
-    { name: "", selector: (row) => row.Name },
+    { name: "Document Name", selector: (row) => row.Name },
     {
-      name: "",
+      name: "Action",
       selector: (row) => (
         <button className="button -sm -accent-1 bg-info-2 text-white my-2">
           View
@@ -228,9 +228,9 @@ const CustomerDetaTable = () => {
   ];
 
   const DownloadData = [
-    { name: "", selector: (row) => row.Name },
+    { name: "Document Name", selector: (row) => row.Name },
     {
-      name: "",
+      name: "Action",
       selector: (row) => (
         <button className="button -sm -accent-1 bg-info-2 text-white my-2">
           Download

@@ -33,19 +33,19 @@ export default function DbBooking() {
   };
 
   const VandorBookings = [
-    { name: "Booking No", selector: (row) => row.BookingNo ,  width: "170px" },
+    { name: "Booking No.", selector: (row) => row.BookingNo ,  width: "170px" },
     { name: "Status", selector: (row) => row.Status, cell: (row) => <StatusCell row={row} /> , sortable: true, },
     { name: "Full Name", selector: (row) => row.Full_Name, width: "190px" },
-    { name: "Total", selector: (row) => row.Total_Payment },
-    { name: "Pending", selector: (row) => row.Pending_Payment },
-    { name: "Terms", selector: (row) => row.Payment_Terms },
-    { name: "Method", selector: (row) => row.Payment_Method },
+    { name: "Total (€) ", selector: (row) => row.Total_Payment },
+    { name: "Pending (€) ", selector: (row) => row.Pending_Payment },
+    { name: "Terms ", selector: (row) => row.Payment_Terms },
+    { name: "Method ", selector: (row) => row.Payment_Method },
     { name: "Visas", selector: (row) => row.Visas },
     { name: "Flight", selector: (row) => row.Flight },
-    { name: "Tour Name", selector: (row) => row.Agency_Paid },
+    { name: "Tour Name", selector: (row) => row.Tour_name , width : "150px" },
     { name: "Initiated By", selector: (row) => row.Initiated_By_Admin  , width: "150px"},
     {
-      name: "#",
+      name: "Action",
       selector: (row) => (
         <button
           className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"

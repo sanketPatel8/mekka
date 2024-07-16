@@ -223,6 +223,7 @@ export default function AddTour() {
                 <div className="row pt-40">
                   <div className="col-xl-12 col-lg-12">
                     <div className="tabs__content js-tabs-content">
+
                       <div
                         className={`tabs__pane  ${
                           activeTab == "Content" ? "is-tab-el-active" : ""
@@ -272,7 +273,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="number" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Seat availibility
+                                    Seat Availability
                                   </label>
                                 </div>
                               </div>
@@ -281,7 +282,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Start date of tour
+                                    Start Date Of Tour
                                   </label>
                                 </div>
                               </div>
@@ -290,7 +291,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    End date of tour
+                                    End Date Of Tour
                                   </label>
                                 </div>
                               </div>

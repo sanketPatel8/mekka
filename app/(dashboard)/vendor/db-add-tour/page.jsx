@@ -29,9 +29,10 @@ const tabs = [
 
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [custoer, mGender, setCustomGender] = useState("");
-  const [MadinaHotel, setMadinaHotel] = useState("");
-  const [MekkaHotel, setMekkaHotel] = useState("");
+  // const [custoer, mGender, setCustomGender] = useState("");
+  // const [MadinaHotel, setMadinaHotel] = useState("");
+  // const [MekkaHotel, setMekkaHotel] = useState("");
+  const [SelectedTour , setSelectedTour] = useState('');
   const [gender, setGender] = useState("");
   const [Hotel, setHotel] = useState("");
   const [activeTab, setActiveTab] = useState("Content");
@@ -97,12 +98,10 @@ export default function AddTour() {
     { value: "Umrah", label: "Umrah" },
     { value: "Hajj", label: "Hajj" },
     { value: "ALl", label: "All" },
-    // { value: "21365", label: "21365" },
-    // { value: "27257", label: "27257" },
   ];
 
-  const handleGenderChange = (newValue, actionMeta) => {
-    setHotel(newValue);
+  const HandleTourChange = (newValue, actionMeta) => {
+    setSelectedTour(newValue);
     console.log(newValue);
   };
 
@@ -233,10 +232,10 @@ export default function AddTour() {
                           <div className=" y-gap-30 contactForm px-20 py-20 ">
                             <div className="row ">
                               <div className="col-md-6">
-                                <div className="form-input spacing d-flex flex-column align-items-center add-tour-type">
+                                <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
                                   <CreatableSelect
-                                    value={gender}
-                                    onChange={handleGenderChange}
+                                    value={SelectedTour}
+                                    onChange={HandleTourChange}
                                     options={options}
                                     className="custom-select"
                                     placeholder="Select or Tour Type"
@@ -249,9 +248,9 @@ export default function AddTour() {
                                   {gender && gender.__isNew__ && (
                                     <input
                                       type="text"
-                                      value={customGender}
+                                      value={SelectedTour}
                                       onChange={(e) =>
-                                        setCustomGender(e.target.value)
+                                        setSelectedTour(e.target.value)
                                       }
                                       placeholder="Enter custom gender"
                                       className="form-control mt-2 custom-input"
@@ -261,7 +260,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Tour Name
@@ -270,7 +269,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <input type="number" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Seat availibility
@@ -279,7 +278,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Start date of tour
@@ -288,7 +287,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     End date of tour
@@ -297,7 +296,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing position-relative">
+                                <div className="form-input my-1 position-relative">
                                   <select
                                     ref={selectRef}
                                     className="js-example-basic-multiple"
@@ -654,7 +653,7 @@ export default function AddTour() {
 
                             <div className="contactForm row y-gap-30 items-center">
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     1 Bettzimmer
@@ -662,7 +661,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="Number" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Price
@@ -673,7 +672,7 @@ export default function AddTour() {
 
                             <div className="contactForm row y-gap-30 items-center">
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     2 Bettzimmer
@@ -681,7 +680,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="Number" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Price
@@ -692,7 +691,7 @@ export default function AddTour() {
 
                             <div className="contactForm row y-gap-30 items-center">
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     3 Bettzimmer
@@ -700,7 +699,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="Number" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Price
@@ -711,7 +710,7 @@ export default function AddTour() {
 
                             <div className="contactForm row y-gap-30 items-center">
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     4 Bettzimmer
@@ -719,7 +718,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-lg-6">
-                                <div className="form-input ">
+                                <div className="form-input my-3">
                                   <input type="Number" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Price
@@ -963,9 +962,9 @@ export default function AddTour() {
                         <div className="y-gap-30 contactForm px-20 py-20 ">
                           <Editor
                             editorState={editorState}
-                            // toolbarClassName="toolbarClassName"
-                            // wrapperClassName="wrapperClassName"
-                            // editorClassName="editorClassName"
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
                             onEditorStateChange={onEditorStateChange}
                           />
                           <div className="col-12">
@@ -987,7 +986,7 @@ export default function AddTour() {
                           <div className=" y-gap-30 contactForm px-20 py-20 ">
                             <div className="row ">
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 1 :
@@ -996,7 +995,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <textarea
                                     type="text"
                                     required
@@ -1009,7 +1008,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 2 :
@@ -1018,7 +1017,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <textarea
                                     type="text"
                                     required
@@ -1032,7 +1031,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 3 :
@@ -1041,7 +1040,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input spacing">
+                                <div className="form-input my-1">
                                   <textarea
                                     type="text"
                                     required

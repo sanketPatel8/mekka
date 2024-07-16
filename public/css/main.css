@@ -6902,7 +6902,8 @@ h1, h2, h3, h4, h5, h6 {
 .tabs__pane {
   position: absolute;
   top: 0;
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
   transition: none;
   opacity: 0;
 }
@@ -6911,7 +6912,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) 0.1s;
   position: relative;
   opacity: 1;
-  visibility: visible;
+  /* visibility: visible; */
+  display: block;
 }
 
 .tabs.-terms .tabs__controls .tabs__button {

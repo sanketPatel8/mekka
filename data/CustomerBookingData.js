@@ -20,7 +20,7 @@ export const  Adult1Data = [
         surname : 'Test',
         email : 'Test@gmail.com',
         phone : '9898988998',
-        city : 'Ahemdabad',
+        city : 'Ahmedabad',
         gender : 'Male',
         DOB : '12.03.2002',
         Nationality : 'Indian',

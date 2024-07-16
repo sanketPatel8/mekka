@@ -189,7 +189,7 @@ export default function TourList4() {
                         </p>
 
                         <div className="tourCard__price">
-                          <div>{elm.price} €</div>
+                          <div></div>
 
                           <div className="d-flex items-center justify-content-center">
                             
