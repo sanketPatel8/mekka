@@ -56,8 +56,8 @@ const DocumentStatusManager = ({ Customerid }) => {
   const [activeTimeDD2, setActiveTimeDD2] = useState(false);
   const [activeTimeDD3, setActiveTimeDD3] = useState(false);
   const [image1, setImage1] = useState("");
-//   const [BookingStatus, setBookingStatus] = useState();
   const [BookingStatus, setBookingStatus] = useState(false);
+  const [selectedBookingStatus, setselectedBookingStatus] = useState("");
 
   // Function to set selected time
   const handleSelectTime = (time) => {
@@ -223,24 +223,12 @@ const DocumentStatusManager = ({ Customerid }) => {
     // No need to change subtitle color as it's not being used in this context
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
   function openUploadFileModal() {
     setuploadFileisOpen(true);
   }
 
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
-  }
-
-  function openEditData() {
-    setEditData(true);
-  }
-
-  function openAdult1Deta() {
-    setAdult1Deta(true);
   }
 
   function openInvoice() {
@@ -252,11 +240,11 @@ const DocumentStatusManager = ({ Customerid }) => {
   }
 
   const getStatusColor = () => {
-    if (selectedTime === 'Cancelled') {
+    if (selectedBookingStatus === 'Cancelled') {
       return { color: 'red' }; // Red color for Cancelled status
-    } else if (selectedTime === 'Completed') {
+    } else if (selectedBookingStatus === 'Completed') {
       return { color: 'green' }; // Green color for Completed status
-    } else if (selectedTime === 'In Progress') {
+    } else if (selectedBookingStatus === 'In Progress') {
       return { color: 'orange' }; // Orange color for In Progress status
     } else {
       return {}; // Default color or no style applied
@@ -272,7 +260,7 @@ const DocumentStatusManager = ({ Customerid }) => {
           {/* <h3 className="t_center">Booking Details : #123216</h3> */}
           <p className="t_center">Booked Date : 12.08.2024</p>
           <p className="t_center"> Booking Status : <span  style={getStatusColor()}>
-       {selectedTime ? selectedTime : "Choose Status"}
+       {selectedBookingStatus ? selectedBookingStatus : "Choose Status"}
       </span></p>
           {/* <p className="text-red t_center">Available 10 seats</p> */}
         </div>
@@ -303,7 +291,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                     <div className="searchFormItem__content">
                       <h5>All Booking Status </h5>
                       <div className="js-select-control-chosen">
-                        {selectedTime ? selectedTime : "Choose Status"}
+                        {selectedBookingStatus ? selectedBookingStatus : "Choose Status"}
                       </div>
                     </div>
                     <div className="searchFormItem__icon_chevron">
@@ -324,7 +312,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                           <div
                             key={i}
                             onClick={() => {
-                              setSelectedTime((pre) => (pre == elm ? "" : elm));
+                                setselectedBookingStatus((pre) => (pre == elm ? "" : elm));
                               setActiveTimeDD3(false);
                             }}
                             className="searchFormItemDropdown__item"
