@@ -431,6 +431,8 @@ hr{
 
   .dd-vendor > div:nth-child(3) {
     height: 55px ;
+    border-radius: 12px;
+    margin: 0px;
   }
 
   .dd-statusChange > div:nth-child(3) {
