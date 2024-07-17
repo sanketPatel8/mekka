@@ -15,10 +15,10 @@ export default function Login() {
             <div className="text-center mb-60 md:mb-30">
               <h1 className="text-30">Log In</h1>
               <div className="text-18 fw-500 mt-20 md:mt-15">
-                We're glad to see you again!
+                We're Glad To See You Again!
               </div>
               <div className="mt-5">
-                Don't have an account?{" "}
+                Don't Have An Account?{" "}
                 <Link href="/register" className="text-accent-1">
                   Sign Up!
                 </Link>
@@ -69,7 +69,7 @@ export default function Login() {
                 </div>
 
                 <div className="col-auto">
-                  <a href="#">Lost your password?</a>
+                  <a href="#">Lost Your Password?</a>
                 </div>
               </div>
 

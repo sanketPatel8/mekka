@@ -1248,7 +1248,7 @@ export default function BookingPages() {
                       <div className="form-input spacing">
                         <input type="text" required />
                         <label className="lh-2 text-16 text-light-1 top-29">
-                          Promo code
+                          Promo Code
                         </label>
                       </div>
                     </div>
