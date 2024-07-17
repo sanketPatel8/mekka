@@ -608,10 +608,6 @@ const CustomerDetaTable = () => {
                   </button>
                 </div>
               </div>
-              {/* <div className='my-3'>
-              <p className="text-right text-20">Subtotal <span style={{ color: "#DAC04F" }}><b>1.789,00 €</b></span></p>
-              <p className="text-right text-15">including taxes and fee</p>
-            </div> */}
             </div>
           </div>
         </Modal>
@@ -900,12 +896,18 @@ const CustomerDetaTable = () => {
                     <div className="col-md-3 px-0 mx-0">
                       <div className="px-0 py-0 d-flex justify-content-start">
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width ">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             +
                           </button>
                         </div>
-                        <div className="mx-1" >
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width">
+                        <div className="mx-1">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             -
                           </button>
                         </div>
@@ -963,12 +965,18 @@ const CustomerDetaTable = () => {
                     <div className="col-md-3 px-0 mx-0">
                       <div className="px-0 py-0 d-flex justify-content-start">
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width ">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             +
                           </button>
                         </div>
-                        <div className="mx-1" >
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width">
+                        <div className="mx-1">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             -
                           </button>
                         </div>
@@ -1026,12 +1034,18 @@ const CustomerDetaTable = () => {
                     <div className="col-md-3 px-0 mx-0">
                       <div className="px-0 py-0 d-flex justify-content-start">
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width ">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             +
                           </button>
                         </div>
-                        <div className="mx-1" >
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width">
+                        <div className="mx-1">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             -
                           </button>
                         </div>

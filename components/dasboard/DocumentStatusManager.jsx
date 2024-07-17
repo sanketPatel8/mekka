@@ -20,7 +20,7 @@ import {
 import { VandorSideBookingStatus } from "@/data/tourSingleContent";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import Select from 'react-select'
+import Select from "react-select";
 
 const customStyles = {
   overlay: {
@@ -239,30 +239,30 @@ const DocumentStatusManager = ({ Customerid }) => {
     setinvoice(false);
   }
 
-  // for update booking status dropdown 
+  // for update booking status dropdown
 
   const [status, setStatus] = useState(null); // Initialize status as null or an object from your options array
   const [Document, setDocument] = useState(null); // Initialize status as null or an object from your options array
 
   const options = [
-    { value: 'Cancelled', label: 'Cancelled' },
-    { value: 'Completed', label: 'Completed' },
-    { value: 'In Progress', label: 'In Progress' }
+    { value: "Cancelled", label: "Cancelled" },
+    { value: "Completed", label: "Completed" },
+    { value: "In Progress", label: "In Progress" },
   ];
 
   const VandorDoc = [
-    { value: 'Visa', label: 'Visa' },
-    { value: 'Hotel Booking Voucher', label: 'Hotel Booking Voucher' },
-    { value: 'Flight Ticket', label: 'Flight Ticket' }
-  ]
+    { value: "Visa", label: "Visa" },
+    { value: "Hotel Booking Voucher", label: "Hotel Booking Voucher" },
+    { value: "Flight Ticket", label: "Flight Ticket" },
+  ];
 
   const handleChange = (selectedOption) => {
     setStatus(selectedOption);
   };
 
   const handleDocumentChange = (selectedOption) => {
-    setDocument(selectedOption)
-  }
+    setDocument(selectedOption);
+  };
 
   return (
     <div>
@@ -284,9 +284,15 @@ const DocumentStatusManager = ({ Customerid }) => {
           </div>
 
           <div className="">
-          <div>
-      <Select options={options} value={status} onChange={handleChange} className="dd-statusChange" isClearable/>
-    </div>
+            <div>
+              <Select
+                options={options}
+                value={status}
+                onChange={handleChange}
+                className="dd-statusChange"
+                isClearable
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -361,7 +367,13 @@ const DocumentStatusManager = ({ Customerid }) => {
                 <div className="">
                   <div className="row item-center my-3 ">
                     <div className="col-md-4 px-0 mx-0">
-                    <Select options={VandorDoc} value={Document} onChange={handleDocumentChange} className="dd-vendor" isClearable />
+                      <Select
+                        options={VandorDoc}
+                        value={Document}
+                        onChange={handleDocumentChange}
+                        className="dd-vendor"
+                        isClearable
+                      />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2 ">
@@ -409,12 +421,18 @@ const DocumentStatusManager = ({ Customerid }) => {
                     <div className="col-md-3 px-0 mx-0">
                       <div className="px-0 py-0 d-flex justify-content-start">
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width ">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             +
                           </button>
                         </div>
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             -
                           </button>
                         </div>
@@ -424,7 +442,13 @@ const DocumentStatusManager = ({ Customerid }) => {
 
                   <div className="row item-center my-3">
                     <div className="col-md-4 px-0 mx-0">
-                    <Select options={VandorDoc} value={Document} onChange={handleDocumentChange} className="dd-vendor" isClearable />
+                      <Select
+                        options={VandorDoc}
+                        value={Document}
+                        onChange={handleDocumentChange}
+                        className="dd-vendor"
+                        isClearable
+                      />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2 flex_center">
@@ -472,12 +496,18 @@ const DocumentStatusManager = ({ Customerid }) => {
                     <div className="col-md-3 px-0 mx-0">
                       <div className="px-0 py-0 d-flex justify-content-start">
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width ">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             +
                           </button>
                         </div>
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             -
                           </button>
                         </div>
@@ -487,7 +517,13 @@ const DocumentStatusManager = ({ Customerid }) => {
 
                   <div className="row item-center my-3">
                     <div className="col-md-4 px-0 mx-0">
-                    <Select options={VandorDoc} value={Document} onChange={handleDocumentChange} className="dd-vendor" isClearable />
+                      <Select
+                        options={VandorDoc}
+                        value={Document}
+                        onChange={handleDocumentChange}
+                        className="dd-vendor"
+                        isClearable
+                      />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2">
@@ -535,12 +571,18 @@ const DocumentStatusManager = ({ Customerid }) => {
                     <div className="col-md-3 px-0 mx-0">
                       <div className="px-0 py-0 d-flex justify-content-start">
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width ">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             +
                           </button>
                         </div>
                         <div className="mx-1">
-                          <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-1 mx-0 full_width">
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                          >
                             -
                           </button>
                         </div>

@@ -29,10 +29,11 @@ const tabs = [
 
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  // const [custoer, mGender, setCustomGender] = useState("");
-  // const [MadinaHotel, setMadinaHotel] = useState("");
-  // const [MekkaHotel, setMekkaHotel] = useState("");
-  const [SelectedTour , setSelectedTour] = useState('');
+  const [showAddMekkaHotelPositive, setshowAddMekkaHotelPositive] =
+    useState(false);
+  const [showAddMadinaHotelPositive, setshowAddMadinaHotelPositive] =
+    useState(false);
+  const [SelectedTour, setSelectedTour] = useState("");
   const [gender, setGender] = useState("");
   const [Hotel, setHotel] = useState("");
   const [activeTab, setActiveTab] = useState("Content");
@@ -42,6 +43,12 @@ export default function AddTour() {
   const [image3, setImage3] = useState("/img/dashboard/addtour/2.jpg");
   const [image4, setImage4] = useState("/img/dashboard/addtour/3.jpg");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [mekkaRows, setMekkaRows] = useState([
+    { hotel: null, price: "", customGender: "", gender: null },
+  ]);
+  const [madinaRows, setMadinaRows] = useState([
+    { hotel: null, price: "", customGender: "", gender: null },
+  ]);
 
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
@@ -112,14 +119,6 @@ export default function AddTour() {
 
   // for add hotel and remove hotels
 
-  const [mekkaRows, setMekkaRows] = useState([
-    { hotel: null, price: "", customGender: "", gender: null },
-  ]);
-
-  const [madinaRows, setMadinaRows] = useState([
-    { hotel: null, price: "", customGender: "", gender: null },
-  ]);
-
   const handleAddMekkaRow = () => {
     setMekkaRows([
       ...mekkaRows,
@@ -128,7 +127,11 @@ export default function AddTour() {
   };
 
   const handleRemoveMekkaRow = (index) => {
-    const newRows = mekkaRows.filter((_, rowIndex) => rowIndex !== index);
+    if (mekkaRows.length === 1) {
+      return; // Do not remove the last row
+    }
+    const newRows = [...mekkaRows];
+    newRows.splice(index, 1);
     setMekkaRows(newRows);
   };
 
@@ -140,7 +143,11 @@ export default function AddTour() {
   };
 
   const handleRemoveMadinaRow = (index) => {
-    const newRows = madinaRows.filter((_, rowIndex) => rowIndex !== index);
+    if (madinaRows.length === 1) {
+      return; // Do not remove the last row
+    }
+    const newRows = [...madinaRows];
+    newRows.splice(index, 1);
     setMadinaRows(newRows);
   };
 
@@ -156,18 +163,6 @@ export default function AddTour() {
     setMadinaRows(newRows);
   };
 
-  const handleMekkaCustomGenderChange = (e, index) => {
-    const newRows = [...mekkaRows];
-    newRows[index].customGender = e.target.value;
-    setMekkaRows(newRows);
-  };
-
-  const handleMadinaCustomGenderChange = (e, index) => {
-    const newRows = [...madinaRows];
-    newRows[index].customGender = e.target.value;
-    setMadinaRows(newRows);
-  };
-
   const selectRef = useRef(null);
 
   useEffect(() => {
@@ -176,9 +171,7 @@ export default function AddTour() {
       import("select2").then(() => {
         $(selectRef.current).select2();
         return () => {
-          if ($(selectRef.current).data("select2")) {
-            $(selectRef.current).select2("destroy");
-          }
+          $(selectRef.current).select2("destroy");
         };
       });
     }
@@ -223,7 +216,6 @@ export default function AddTour() {
                 <div className="row pt-40">
                   <div className="col-xl-12 col-lg-12">
                     <div className="tabs__content js-tabs-content">
-
                       <div
                         className={`tabs__pane  ${
                           activeTab == "Content" ? "is-tab-el-active" : ""
@@ -273,7 +265,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="number" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Seat Availability
+                                    Seat availibility
                                   </label>
                                 </div>
                               </div>
@@ -282,7 +274,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Start Date Of Tour
+                                    Start date of tour
                                   </label>
                                 </div>
                               </div>
@@ -291,7 +283,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    End Date Of Tour
+                                    End date of tour
                                   </label>
                                 </div>
                               </div>
@@ -617,7 +609,7 @@ export default function AddTour() {
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price Per Adult
+                                  Price (€) Per Adult
                                 </label>
                               </div>
                             </div>
@@ -625,7 +617,7 @@ export default function AddTour() {
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price Per Child
+                                  Price (€) Per Child
                                 </label>
                               </div>
                             </div>
@@ -633,7 +625,7 @@ export default function AddTour() {
                               <div className="form-input ">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price Per Baby
+                                  Price (€) Per Baby
                                 </label>
                               </div>
                             </div>
@@ -739,18 +731,25 @@ export default function AddTour() {
                       </div>
 
                       <div
-                        className={`tabs__pane  ${
+                        className={`tabs__pane ${
                           activeTab == "Included" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="row justify-between  y-gap-30 contactForm px-20 py-20 ">
+                        <div className="row justify-between y-gap-30 contactForm px-20 py-20">
                           <div className="col-md-4">
                             <div className="row y-gap-20">
-                              <div className="col-12">
-                                <div className="d-flex items-center">
-                                  <div className="form-checkbox ">
-                                    <input type="checkbox" name="name" />
-                                    <div className="form-checkbox__mark">
+                              <div className="col-12 ">
+                                <div className="d-flex items-center pointer-check">
+                                  <div className="form-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id="item1"
+                                      name="item1"
+                                    />
+                                    <label
+                                      htmlFor="item1"
+                                      className="form-checkbox__mark"
+                                    >
                                       <div className="form-checkbox__icon">
                                         <svg
                                           width="10"
@@ -765,21 +764,30 @@ export default function AddTour() {
                                           />
                                         </svg>
                                       </div>
-                                    </div>
+                                    </label>
                                   </div>
-
-                                  <div className="lh-16 ml-15">
+                                  <label
+                                    htmlFor="item1"
+                                    className="lh-16 ml-15"
+                                  >
                                     Beverages, drinking water, morning tea and
                                     buffet lunch
-                                  </div>
+                                  </label>
                                 </div>
                               </div>
 
                               <div className="col-12">
-                                <div className="d-flex items-center">
-                                  <div className="form-checkbox ">
-                                    <input type="checkbox" name="name" />
-                                    <div className="form-checkbox__mark">
+                                <div className="d-flex items-center pointer-check">
+                                  <div className="form-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id="item2"
+                                      name="item2"
+                                    />
+                                    <label
+                                      htmlFor="item2"
+                                      className="form-checkbox__mark"
+                                    >
                                       <div className="form-checkbox__icon">
                                         <svg
                                           width="10"
@@ -794,18 +802,29 @@ export default function AddTour() {
                                           />
                                         </svg>
                                       </div>
-                                    </div>
+                                    </label>
                                   </div>
-
-                                  <div className="lh-16 ml-15">Local taxes</div>
+                                  <label
+                                    htmlFor="item2"
+                                    className="lh-16 ml-15"
+                                  >
+                                    Local taxes
+                                  </label>
                                 </div>
                               </div>
 
                               <div className="col-12">
-                                <div className="d-flex items-center">
-                                  <div className="form-checkbox ">
-                                    <input type="checkbox" name="name" />
-                                    <div className="form-checkbox__mark">
+                                <div className="d-flex items-center pointer-check">
+                                  <div className="form-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id="item3"
+                                      name="item3"
+                                    />
+                                    <label
+                                      htmlFor="item3"
+                                      className="form-checkbox__mark"
+                                    >
                                       <div className="form-checkbox__icon">
                                         <svg
                                           width="10"
@@ -820,10 +839,14 @@ export default function AddTour() {
                                           />
                                         </svg>
                                       </div>
-                                    </div>
+                                    </label>
                                   </div>
-
-                                  <div className="lh-16 ml-15">Tour Guide</div>
+                                  <label
+                                    htmlFor="item3"
+                                    className="lh-16 ml-15"
+                                  >
+                                    Tour Guide
+                                  </label>
                                 </div>
                               </div>
                             </div>
@@ -832,10 +855,17 @@ export default function AddTour() {
                           <div className="col-md-4">
                             <div className="row y-gap-20">
                               <div className="col-12">
-                                <div className="d-flex items-center">
-                                  <div className="form-checkbox ">
-                                    <input type="checkbox" name="name" />
-                                    <div className="form-checkbox__mark">
+                                <div className="d-flex items-center pointer-check">
+                                  <div className="form-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id="item4"
+                                      name="item4"
+                                    />
+                                    <label
+                                      htmlFor="item4"
+                                      className="form-checkbox__mark"
+                                    >
                                       <div className="form-checkbox__icon">
                                         <svg
                                           width="10"
@@ -850,17 +880,28 @@ export default function AddTour() {
                                           />
                                         </svg>
                                       </div>
-                                    </div>
+                                    </label>
                                   </div>
-
-                                  <div className="lh-16 ml-15"> Wifi</div>
+                                  <label
+                                    htmlFor="item4"
+                                    className="lh-16 ml-15"
+                                  >
+                                    Wifi
+                                  </label>
                                 </div>
                               </div>
                               <div className="col-12">
-                                <div className="d-flex items-center">
-                                  <div className="form-checkbox ">
-                                    <input type="checkbox" name="name" />
-                                    <div className="form-checkbox__mark">
+                                <div className="d-flex items-center pointer-check">
+                                  <div className="form-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id="item5"
+                                      name="item5"
+                                    />
+                                    <label
+                                      htmlFor="item5"
+                                      className="form-checkbox__mark"
+                                    >
                                       <div className="form-checkbox__icon">
                                         <svg
                                           width="10"
@@ -875,13 +916,15 @@ export default function AddTour() {
                                           />
                                         </svg>
                                       </div>
-                                    </div>
+                                    </label>
                                   </div>
-
-                                  <div className="lh-16 ml-15">
+                                  <label
+                                    htmlFor="item5"
+                                    className="lh-16 ml-15"
+                                  >
                                     Hotel pickup and drop-off by air-conditioned
                                     minivan
-                                  </div>
+                                  </label>
                                 </div>
                               </div>
                             </div>
@@ -890,10 +933,17 @@ export default function AddTour() {
                           <div className="col-md-4">
                             <div className="row y-gap-20">
                               <div className="col-12">
-                                <div className="d-flex items-center">
-                                  <div className="form-checkbox ">
-                                    <input type="checkbox" name="name" />
-                                    <div className="form-checkbox__mark">
+                                <div className="d-flex items-center pointer-check">
+                                  <div className="form-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id="item6"
+                                      name="item6"
+                                    />
+                                    <label
+                                      htmlFor="item6"
+                                      className="form-checkbox__mark"
+                                    >
                                       <div className="form-checkbox__icon">
                                         <svg
                                           width="10"
@@ -908,20 +958,29 @@ export default function AddTour() {
                                           />
                                         </svg>
                                       </div>
-                                    </div>
+                                    </label>
                                   </div>
-
-                                  <div className="lh-16 ml-15">
+                                  <label
+                                    htmlFor="item6"
+                                    className="lh-16 ml-15"
+                                  >
                                     InsuranceTransfer to a private pier
-                                  </div>
+                                  </label>
                                 </div>
                               </div>
 
                               <div className="col-12">
-                                <div className="d-flex items-center">
-                                  <div className="form-checkbox ">
-                                    <input type="checkbox" name="name" />
-                                    <div className="form-checkbox__mark">
+                                <div className="d-flex items-center pointer-check">
+                                  <div className="form-checkbox">
+                                    <input
+                                      type="checkbox"
+                                      id="item7"
+                                      name="item7"
+                                    />
+                                    <label
+                                      htmlFor="item7"
+                                      className="form-checkbox__mark"
+                                    >
                                       <div className="form-checkbox__icon">
                                         <svg
                                           width="10"
@@ -936,10 +995,14 @@ export default function AddTour() {
                                           />
                                         </svg>
                                       </div>
-                                    </div>
+                                    </label>
                                   </div>
-
-                                  <div className="lh-16 ml-15">Soft drinks</div>
+                                  <label
+                                    htmlFor="item7"
+                                    className="lh-16 ml-15"
+                                  >
+                                    Soft drinks
+                                  </label>
                                 </div>
                               </div>
                             </div>
@@ -1079,7 +1142,7 @@ export default function AddTour() {
                             <div className="flex_start my-3">
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
@@ -1090,13 +1153,15 @@ export default function AddTour() {
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
+                                    <span className="text-14 lh-1 ml-10">
+                                      Yes
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-5">Yes</div>
                               </div>
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
@@ -1107,9 +1172,11 @@ export default function AddTour() {
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
+                                    <span className="text-14 lh-1 ml-10">
+                                      No
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-5">No</div>
                               </div>
                             </div>
                           </div>
@@ -1132,38 +1199,13 @@ export default function AddTour() {
                                         classNamePrefix="react-select"
                                         isClearable
                                         formatCreateLabel={(inputValue) =>
-                                          `Create custom hotel: "${inputValue}"`
+                                          `Not Found: "${inputValue}"`
                                         }
                                       />
-                                      {row.hotel && row.hotel.__isNew__ && (
-                                        <input
-                                          type="text"
-                                          value={row.customGender}
-                                          onChange={(e) =>
-                                            handleMekkaCustomGenderChange(
-                                              e,
-                                              index
-                                            )
-                                          }
-                                          placeholder="Enter custom gender"
-                                          className="form-control mt-2 custom-input"
-                                        />
-                                      )}
                                     </div>
                                     <div className="col-md-4">
                                       <div className="form-input spacing">
-                                        <input
-                                          type="text"
-                                          value={row.price}
-                                          onChange={(e) =>
-                                            handleInputChange(
-                                              index,
-                                              "price",
-                                              e.target.value
-                                            )
-                                          }
-                                          required
-                                        />
+                                        <input type="text" required />
                                         <label className="lh-1 text-16 text-light-1">
                                           Hotel Price
                                         </label>
@@ -1177,15 +1219,17 @@ export default function AddTour() {
                                       >
                                         +
                                       </button>
-                                      <button
-                                        type="button"
-                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
-                                        onClick={() =>
-                                          handleRemoveMekkaRow(index)
-                                        }
-                                      >
-                                        -
-                                      </button>
+                                      {index > 0 && (
+                                        <button
+                                          type="button"
+                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3`}
+                                          onClick={() =>
+                                            handleRemoveMekkaRow(index)
+                                          }
+                                        >
+                                          -
+                                        </button>
+                                      )}
                                     </div>
                                   </div>
                                 </li>
@@ -1209,38 +1253,13 @@ export default function AddTour() {
                                         classNamePrefix="react-select"
                                         isClearable
                                         formatCreateLabel={(inputValue) =>
-                                          `Create custom hotel: "${inputValue}"`
+                                          `Not Found: "${inputValue}"`
                                         }
                                       />
-                                      {row.hotel && row.hotel.__isNew__ && (
-                                        <input
-                                          type="text"
-                                          value={row.customGender}
-                                          onChange={(e) =>
-                                            handleMadinaCustomGenderChange(
-                                              e,
-                                              index
-                                            )
-                                          }
-                                          placeholder="Enter custom gender"
-                                          className="form-control mt-2 custom-input"
-                                        />
-                                      )}
                                     </div>
                                     <div className="col-md-4">
                                       <div className="form-input spacing">
-                                        <input
-                                          type="text"
-                                          value={row.price}
-                                          onChange={(e) =>
-                                            handleInputChange(
-                                              index,
-                                              "price",
-                                              e.target.value
-                                            )
-                                          }
-                                          required
-                                        />
+                                        <input type="text" required />
                                         <label className="lh-1 text-16 text-light-1">
                                           Hotel Price
                                         </label>
@@ -1254,15 +1273,17 @@ export default function AddTour() {
                                       >
                                         +
                                       </button>
-                                      <button
-                                        type="button"
-                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
-                                        onClick={() =>
-                                          handleRemoveMadinaRow(index)
-                                        }
-                                      >
-                                        -
-                                      </button>
+                                      {index > 0 && (
+                                        <button
+                                          type="button"
+                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3`}
+                                          onClick={() =>
+                                            handleRemoveMadinaRow(index)
+                                          }
+                                        >
+                                          -
+                                        </button>
+                                      )}
                                     </div>
                                   </div>
                                 </li>
@@ -1277,39 +1298,41 @@ export default function AddTour() {
                             <div className="flex_start my-3">
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="Cancel_yes"
-                                      checked={radioValue === "Cancel_yes"}
+                                      value="FreeCancel_Yes"
+                                      checked={radioValue === "FreeCancel_Yes"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10"></span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      Yes
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-5">Yes</div>
                               </div>
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="Cancel_No"
-                                      checked={radioValue === "Cancel_No"}
+                                      value="FreeCancel_No"
+                                      checked={radioValue === "FreeCancel_No"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      No
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-5">No</div>
                               </div>
                             </div>
                           </div>
@@ -1318,7 +1341,7 @@ export default function AddTour() {
                             <div className="flex_start my-3">
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
@@ -1329,14 +1352,15 @@ export default function AddTour() {
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10"></span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      Yes
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-5">Yes</div>
                               </div>
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
@@ -1347,10 +1371,11 @@ export default function AddTour() {
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      No
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-5">No</div>
                               </div>
                             </div>
                           </div>
@@ -1359,7 +1384,7 @@ export default function AddTour() {
                               <div className="row ">
                                 <div className="col-md-6">
                                   <div className="form-input spacing">
-                                    <input type="number" required />
+                                    <input type="text" required />
                                     <label className="lh-1 text-16 text-light-1">
                                       Flight Amount
                                     </label>
@@ -1367,9 +1392,9 @@ export default function AddTour() {
                                 </div>
                                 <div className="col-md-6">
                                   <div className="form-input spacing">
-                                    <input type="number" required />
+                                    <input type="text" required />
                                     <label className="lh-1 text-16 text-light-1">
-                                      No Of Flight Stops
+                                      No of Flight Stops
                                     </label>
                                   </div>
                                 </div>
