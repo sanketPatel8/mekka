@@ -17,10 +17,10 @@ import {
   ViewTicketsForVandor,
   ViewCustomerDocument,
 } from "@/data/CustomerBookingData";
-import { collapseClasses } from "@mui/material";
 import { VandorSideBookingStatus } from "@/data/tourSingleContent";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import Select from 'react-select'
 
 const customStyles = {
   overlay: {
@@ -239,30 +239,38 @@ const DocumentStatusManager = ({ Customerid }) => {
     setinvoice(false);
   }
 
-  const getStatusColor = () => {
-    if (selectedBookingStatus === 'Cancelled') {
-      return { color: 'red' }; // Red color for Cancelled status
-    } else if (selectedBookingStatus === 'Completed') {
-      return { color: 'green' }; // Green color for Completed status
-    } else if (selectedBookingStatus === 'In Progress') {
-      return { color: 'orange' }; // Orange color for In Progress status
-    } else {
-      return {}; // Default color or no style applied
-    }
+  // for update booking status dropdown 
+
+  const [status, setStatus] = useState(null); // Initialize status as null or an object from your options array
+  const [Document, setDocument] = useState(null); // Initialize status as null or an object from your options array
+
+  const options = [
+    { value: 'Cancelled', label: 'Cancelled' },
+    { value: 'Completed', label: 'Completed' },
+    { value: 'In Progress', label: 'In Progress' }
+  ];
+
+  const VandorDoc = [
+    { value: 'Visa', label: 'Visa' },
+    { value: 'Hotel Booking Voucher', label: 'Hotel Booking Voucher' },
+    { value: 'Flight Ticket', label: 'Flight Ticket' }
+  ]
+
+  const handleChange = (selectedOption) => {
+    setStatus(selectedOption);
   };
+
+  const handleDocumentChange = (selectedOption) => {
+    setDocument(selectedOption)
+  }
 
   return (
     <div>
       <div className="row px-0 py-3 ">
         <div className="col-lg-6">
-          <h1 className="text-30">Edit Booking Id : #{Customerid.id}</h1>
-          {/* <p className="">Lorem ipsum dolor sit amet, consectetur.</p> */}
-          {/* <h3 className="t_center">Booking Details : #123216</h3> */}
-          <p className="t_center">Booked Date : 12.08.2024</p>
-          <p className="t_center"> Booking Status : <span  style={getStatusColor()}>
-       {selectedBookingStatus ? selectedBookingStatus : "Choose Status"}
-      </span></p>
-          {/* <p className="text-red t_center">Available 10 seats</p> */}
+          <h1 className="text-30">Booking Id : #{Customerid.id}</h1>
+          <p className="t_center">Booking Date : 12.08.2024</p>
+          <p className="t_center"> Booking Status : Cancelled</p>
         </div>
 
         <div className="col-lg-6 flex small-flex-center items-center">
@@ -271,65 +279,14 @@ const DocumentStatusManager = ({ Customerid }) => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openInvoice}
             >
-              Sent Invoice
+              Send Invoice
             </button>
           </div>
 
           <div className="">
-            <div
-              className={`searchForm -type-1 -sidebar ${
-                BookingStatus === true ? "d-none" : "d-block"
-              }`}
-            >
-              <div className="searchForm__form">
-                <div className="searchFormItem js-select-control js-form-dd">
-                  <div
-                    className="searchFormItem__button"
-                    onClick={() => setActiveTimeDD3((pre) => !pre)}
-                    data-x-click="time"
-                  >
-                    <div className="searchFormItem__content">
-                      <h5>All Booking Status </h5>
-                      <div className="js-select-control-chosen">
-                        {selectedBookingStatus ? selectedBookingStatus : "Choose Status"}
-                      </div>
-                    </div>
-                    <div className="searchFormItem__icon_chevron">
-                      <i className="icon-chevron-down d-flex text-18"></i>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`searchFormItemDropdown -tour-type ${
-                      activeTimeDD3 ? "is-active" : ""
-                    }`}
-                    data-x="time"
-                    data-x-toggle="is-active"
-                  >
-                    <div className="searchFormItemDropdown__container">
-                      <div className="searchFormItemDropdown__list sroll-bar-1">
-                        {VandorSideBookingStatus.map((elm, i) => (
-                          <div
-                            key={i}
-                            onClick={() => {
-                                setselectedBookingStatus((pre) => (pre == elm ? "" : elm));
-                              setActiveTimeDD3(false);
-                            }}
-                            className="searchFormItemDropdown__item"
-                          >
-                            <button className="js-select-control-button">
-                              <span className="js-select-control-choice">
-                                {elm}
-                              </span>
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div>
+      <Select options={options} value={status} onChange={handleChange} className="dd-statusChange" isClearable/>
+    </div>
           </div>
         </div>
       </div>
@@ -404,60 +361,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                 <div className="">
                   <div className="row item-center my-3 ">
                     <div className="col-md-4 px-0 mx-0">
-                      <div className="searchForm -type-1 -sidebar my-2">
-                        <div className="searchForm__form">
-                          <div className="searchFormItem js-select-control js-form-dd">
-                            <div
-                              className="searchFormItem__button"
-                              onClick={() => setActiveTimeDD((pre) => !pre)}
-                              data-x-click="time"
-                            >
-                              <div className="searchFormItem__content">
-                                <h5>Document</h5>
-                                <div className="js-select-control-chosen">
-                                  {selectedTime
-                                    ? selectedTime
-                                    : "Choose Document"}
-                                </div>
-                              </div>
-                              <div className="searchFormItem__icon_chevron">
-                                <i className="icon-chevron-down d-flex text-18"></i>
-                              </div>
-                            </div>
-
-                            <div
-                              className={`searchFormItemDropdown -tour-type ${
-                                activeTimeDD ? "is-active" : ""
-                              }`}
-                              data-x="time"
-                              data-x-toggle="is-active"
-                            >
-                              <div className="searchFormItemDropdown__container">
-                                <div className="searchFormItemDropdown__list sroll-bar-1">
-                                  {TicketsForVandor.map((elm, i) => (
-                                    <div
-                                      key={i}
-                                      onClick={() => {
-                                        setSelectedTime((pre) =>
-                                          pre == elm ? "" : elm
-                                        );
-                                        setActiveTimeDD(false);
-                                      }}
-                                      className="searchFormItemDropdown__item"
-                                    >
-                                      <button className="js-select-control-button">
-                                        <span className="js-select-control-choice">
-                                          {elm}
-                                        </span>
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <Select options={VandorDoc} value={Document} onChange={handleDocumentChange} className="dd-vendor" isClearable />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2 ">
@@ -520,60 +424,7 @@ const DocumentStatusManager = ({ Customerid }) => {
 
                   <div className="row item-center my-3">
                     <div className="col-md-4 px-0 mx-0">
-                      <div className="searchForm -type-1 -sidebar my-2">
-                        <div className="searchForm__form">
-                          <div className="searchFormItem js-select-control js-form-dd">
-                            <div
-                              className="searchFormItem__button"
-                              onClick={() => setActiveTimeDD1((pre) => !pre)}
-                              data-x-click="time"
-                            >
-                              <div className="searchFormItem__content">
-                                <h5>Document</h5>
-                                <div className="js-select-control-chosen">
-                                  {selectedTime
-                                    ? selectedTime
-                                    : "Choose Document"}
-                                </div>
-                              </div>
-                              <div className="searchFormItem__icon_chevron">
-                                <i className="icon-chevron-down d-flex text-18"></i>
-                              </div>
-                            </div>
-
-                            <div
-                              className={`searchFormItemDropdown -tour-type ${
-                                activeTimeDD1 ? "is-active" : ""
-                              }`}
-                              data-x="time"
-                              data-x-toggle="is-active"
-                            >
-                              <div className="searchFormItemDropdown__container">
-                                <div className="searchFormItemDropdown__list sroll-bar-1">
-                                  {documentData.map((elm, i) => (
-                                    <div
-                                      key={i}
-                                      onClick={() => {
-                                        setSelectedTime((pre) =>
-                                          pre == elm ? "" : elm
-                                        );
-                                        setActiveTimeDD1(false);
-                                      }}
-                                      className="searchFormItemDropdown__item"
-                                    >
-                                      <button className="js-select-control-button">
-                                        <span className="js-select-control-choice">
-                                          {elm}
-                                        </span>
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <Select options={VandorDoc} value={Document} onChange={handleDocumentChange} className="dd-vendor" isClearable />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2 flex_center">
@@ -636,63 +487,7 @@ const DocumentStatusManager = ({ Customerid }) => {
 
                   <div className="row item-center my-3">
                     <div className="col-md-4 px-0 mx-0">
-                      <div className="searchForm -type-1 -sidebar my-2">
-                        <div className="searchForm__form">
-                          <div className="searchFormItem js-select-control js-form-dd">
-                            <div
-                              className="searchFormItem__button"
-                              onClick={() => setActiveTimeDD2((pre) => !pre)}
-                              data-x-click="time"
-                            >
-                              {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
-                    <i className="text-20 icon-clock"></i>
-                  </div> */}
-                              <div className="searchFormItem__content">
-                                <h5>Document</h5>
-                                <div className="js-select-control-chosen">
-                                  {selectedTime
-                                    ? selectedTime
-                                    : "Choose Document"}
-                                </div>
-                              </div>
-                              <div className="searchFormItem__icon_chevron">
-                                <i className="icon-chevron-down d-flex text-18"></i>
-                              </div>
-                            </div>
-
-                            <div
-                              className={`searchFormItemDropdown -tour-type ${
-                                activeTimeDD2 ? "is-active" : ""
-                              }`}
-                              data-x="time"
-                              data-x-toggle="is-active"
-                            >
-                              <div className="searchFormItemDropdown__container">
-                                <div className="searchFormItemDropdown__list sroll-bar-1">
-                                  {documentData.map((elm, i) => (
-                                    <div
-                                      key={i}
-                                      onClick={() => {
-                                        setSelectedTime((pre) =>
-                                          pre == elm ? "" : elm
-                                        );
-                                        setActiveTimeDD2(false);
-                                      }}
-                                      className="searchFormItemDropdown__item"
-                                    >
-                                      <button className="js-select-control-button">
-                                        <span className="js-select-control-choice">
-                                          {elm}
-                                        </span>
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <Select options={VandorDoc} value={Document} onChange={handleDocumentChange} className="dd-vendor" isClearable />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2">

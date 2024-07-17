@@ -15,8 +15,7 @@ import {
   documentDataFile,
   ViewCustomerDocument,
 } from "@/data/CustomerBookingData";
-import { collapseClasses } from "@mui/material";
-
+import Select from 'react-select'
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
@@ -304,6 +303,18 @@ const CustomerDetaTable = () => {
     setinvoice(false);
   }
 
+  const [CustomerDoc, setCustomerDoc] = useState(null); // Initialize status as null or an object from your options array
+
+  const CustomeDocoptions = [
+    { value: 'Passport', label: 'Passport' },
+    { value: 'Photo', label: 'Photo' },
+    { value: 'Permanent Resident (PR)', label: 'Permanent Resident (PR)' },
+    { value: 'Vaccination Card', label: 'Vaccination Card' }
+  ];
+
+  const handleCustomerDocumentChange = (selectedOption) => {
+    setCustomerDoc(selectedOption)
+  }
   return (
     <div>
       <div className="row px-0 py-3 ">
@@ -841,60 +852,7 @@ const CustomerDetaTable = () => {
                 <div className="">
                   <div className="row item-center my-3 ">
                     <div className="col-md-4 px-0 mx-0">
-                      <div className="searchForm -type-1 -sidebar my-2">
-                        <div className="searchForm__form">
-                          <div className="searchFormItem js-select-control js-form-dd">
-                            <div
-                              className="searchFormItem__button"
-                              onClick={() => setActiveTimeDD((pre) => !pre)}
-                              data-x-click="time"
-                            >
-                              <div className="searchFormItem__content">
-                                <h5>Document</h5>
-                                <div className="js-select-control-chosen">
-                                  {selectedTime
-                                    ? selectedTime
-                                    : "Choose Document"}
-                                </div>
-                              </div>
-                              <div className="searchFormItem__icon_chevron">
-                                <i className="icon-chevron-down d-flex text-18"></i>
-                              </div>
-                            </div>
-
-                            <div
-                              className={`searchFormItemDropdown -tour-type ${
-                                activeTimeDD ? "is-active" : ""
-                              }`}
-                              data-x="time"
-                              data-x-toggle="is-active"
-                            >
-                              <div className="searchFormItemDropdown__container">
-                                <div className="searchFormItemDropdown__list sroll-bar-1">
-                                  {documentData.map((elm, i) => (
-                                    <div
-                                      key={i}
-                                      onClick={() => {
-                                        setSelectedTime((pre) =>
-                                          pre == elm ? "" : elm
-                                        );
-                                        setActiveTimeDD(false);
-                                      }}
-                                      className="searchFormItemDropdown__item"
-                                    >
-                                      <button className="js-select-control-button">
-                                        <span className="js-select-control-choice">
-                                          {elm}
-                                        </span>
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <Select options={CustomeDocoptions} value={CustomerDoc} onChange={handleCustomerDocumentChange} className="dd-vendor" isClearable />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2 ">
@@ -957,60 +915,7 @@ const CustomerDetaTable = () => {
 
                   <div className="row item-center my-3">
                     <div className="col-md-4 px-0 mx-0">
-                      <div className="searchForm -type-1 -sidebar my-2">
-                        <div className="searchForm__form">
-                          <div className="searchFormItem js-select-control js-form-dd">
-                            <div
-                              className="searchFormItem__button"
-                              onClick={() => setActiveTimeDD1((pre) => !pre)}
-                              data-x-click="time"
-                            >
-                              <div className="searchFormItem__content">
-                                <h5>Document</h5>
-                                <div className="js-select-control-chosen">
-                                  {selectedTime
-                                    ? selectedTime
-                                    : "Choose Document"}
-                                </div>
-                              </div>
-                              <div className="searchFormItem__icon_chevron">
-                                <i className="icon-chevron-down d-flex text-18"></i>
-                              </div>
-                            </div>
-
-                            <div
-                              className={`searchFormItemDropdown -tour-type ${
-                                activeTimeDD1 ? "is-active" : ""
-                              }`}
-                              data-x="time"
-                              data-x-toggle="is-active"
-                            >
-                              <div className="searchFormItemDropdown__container">
-                                <div className="searchFormItemDropdown__list sroll-bar-1">
-                                  {documentData.map((elm, i) => (
-                                    <div
-                                      key={i}
-                                      onClick={() => {
-                                        setSelectedTime((pre) =>
-                                          pre == elm ? "" : elm
-                                        );
-                                        setActiveTimeDD1(false);
-                                      }}
-                                      className="searchFormItemDropdown__item"
-                                    >
-                                      <button className="js-select-control-button">
-                                        <span className="js-select-control-choice">
-                                          {elm}
-                                        </span>
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <Select options={CustomeDocoptions} value={CustomerDoc} onChange={handleCustomerDocumentChange} className="dd-vendor" isClearable />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2 flex_center">
@@ -1073,63 +978,7 @@ const CustomerDetaTable = () => {
 
                   <div className="row item-center my-3">
                     <div className="col-md-4 px-0 mx-0">
-                      <div className="searchForm -type-1 -sidebar my-2">
-                        <div className="searchForm__form">
-                          <div className="searchFormItem js-select-control js-form-dd">
-                            <div
-                              className="searchFormItem__button"
-                              onClick={() => setActiveTimeDD2((pre) => !pre)}
-                              data-x-click="time"
-                            >
-                              {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
-                    <i className="text-20 icon-clock"></i>
-                  </div> */}
-                              <div className="searchFormItem__content">
-                                <h5>Document</h5>
-                                <div className="js-select-control-chosen">
-                                  {selectedTime
-                                    ? selectedTime
-                                    : "Choose Document"}
-                                </div>
-                              </div>
-                              <div className="searchFormItem__icon_chevron">
-                                <i className="icon-chevron-down d-flex text-18"></i>
-                              </div>
-                            </div>
-
-                            <div
-                              className={`searchFormItemDropdown -tour-type ${
-                                activeTimeDD2 ? "is-active" : ""
-                              }`}
-                              data-x="time"
-                              data-x-toggle="is-active"
-                            >
-                              <div className="searchFormItemDropdown__container">
-                                <div className="searchFormItemDropdown__list sroll-bar-1">
-                                  {documentData.map((elm, i) => (
-                                    <div
-                                      key={i}
-                                      onClick={() => {
-                                        setSelectedTime((pre) =>
-                                          pre == elm ? "" : elm
-                                        );
-                                        setActiveTimeDD2(false);
-                                      }}
-                                      className="searchFormItemDropdown__item"
-                                    >
-                                      <button className="js-select-control-button">
-                                        <span className="js-select-control-choice">
-                                          {elm}
-                                        </span>
-                                      </button>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <Select options={CustomeDocoptions} value={CustomerDoc} onChange={handleCustomerDocumentChange} className="dd-vendor" isClearable />
                     </div>
                     <div className="col-md-4 px-0 mx-2">
                       <div className="row my-2">

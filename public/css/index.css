@@ -344,7 +344,7 @@ hr{
   }
 
   .react-select__menu {
-    border: 1px solid green;
+    /* border: 1px solid green; */
     border-top: none;
     position: absolute;
     border-radius: 0 0 4px 4px;
@@ -414,3 +414,27 @@ hr{
   /* .react-select__placeholder{
     padding: 0 ;
   } */
+
+
+  .form-checkbox > input {
+    height: 0px !important;
+  }
+
+  .form-checkbox > label {
+    cursor: pointer;
+    /* border: 2px solid red; */
+  }
+
+  .pointer-check > label{
+    cursor: pointer;
+  }
+
+  .dd-vendor > div:nth-child(3) {
+    height: 55px ;
+  }
+
+  .dd-statusChange > div:nth-child(3) {
+    width: 150px !important;
+    height: 50px !important;
+    border-radius: 12px;
+   }

@@ -74,7 +74,7 @@ export const states = [
   {
     id: 3,
     title: "Total Booking",
-    amount: "54,800 €",
+    amount: "54,800",
     today: "90+",
     iconClass: "icon-booking text-accent-1",
   },

@@ -216,9 +216,10 @@ export const State = [
   "Altenburg (AOC)",
 ];
 
+
 export const VandorSideBookingStatus = [
-  "Cancelled",
-  "Completed",
-  "In Progress",
+  { value: 'Cancelled', label: 'Cancelled' },
+  { value: 'Completed', label: 'Completed' },
+  { value: 'In Progress', label: 'In Progress' }
 ];
 

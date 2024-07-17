@@ -40,25 +40,25 @@ export default function DbBooking() {
   };
 
   const VandorBookings = [
-    { name: "Booking No.", selector: (row) => row.BookingNo, width: "170px" },
+    { name: "Booking No.", selector: (row) => row.BookingNo, width: "170px" ,  sortable: true, },
     {
       name: "Status",
       selector: (row) => row.Status,
       cell: (row) => <StatusCell row={row} />,
       sortable: true,
     },
-    { name: "Full Name", selector: (row) => row.Full_Name, width: "190px" },
-    { name: "Tour Name", selector: (row) => row.Tour_name, width: "150px" },
-    { name: "Total (€) ", selector: (row) => row.Total_Payment },
-    { name: "Pending (€) ", selector: (row) => row.Pending_Payment },
-    { name: "Terms ", selector: (row) => row.Payment_Terms },
-    { name: "Method ", selector: (row) => row.Payment_Method },
-    { name: "Visas", selector: (row) => row.Visas },
-    { name: "Flight", selector: (row) => row.Flight },
+    { name: "Full Name", selector: (row) => row.Full_Name, width: "190px" ,  sortable: true, },
+    { name: "Tour Name", selector: (row) => row.Tour_name, width: "150px" ,  sortable: true, },
+    { name: "Total (€) ", selector: (row) => row.Total_Payment , sortable: true, },
+    { name: "Pending (€) ", selector: (row) => row.Pending_Payment , sortable: true,},
+    { name: "Terms ", selector: (row) => row.Payment_Terms , sortable: true, },
+    { name: "Method ", selector: (row) => row.Payment_Method , sortable: true, },
+    { name: "Visas", selector: (row) => row.Visas , width : "150px" , sortable: true,},
+    { name: "Flight", selector: (row) => row.Flight , width: "150px" ,  sortable: true, },
     {
       name: "Initiated By",
       selector: (row) => row.Initiated_By_Admin,
-      width: "150px",
+      width: "150px", sortable: true,
     },
     {
       name: "Action",

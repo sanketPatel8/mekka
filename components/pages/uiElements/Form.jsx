@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import ProgressBar from "./ProgressBar";
@@ -163,8 +163,8 @@ export default function Form() {
 
                 <div className="d-flex items-center">
                   <div className="form-checkbox">
-                    <input type="checkbox" name="name" />
-                    <div className="form-checkbox__mark">
+                    <input type="checkbox" name="item1" id="item1" />
+                    <label htmlFor="item1" className="form-checkbox__mark">
                       <div className="form-checkbox__icon">
                         <svg
                           width="10"
@@ -179,16 +179,17 @@ export default function Form() {
                           />
                         </svg>
                       </div>
-                    </div>
+                    </label>
                   </div>
-
-                  <div className="text-14 lh-12 ml-10">Items</div>
+                  <label htmlFor="item1" className="text-14 lh-12 ml-10">
+                    Item 1
+                  </label>
                 </div>
 
-                <div className="d-flex mt-15">
+                <div className="d-flex mt-15 items-center">
                   <div className="form-checkbox">
-                    <input type="checkbox" name="name" />
-                    <div className="form-checkbox__mark">
+                    <input type="checkbox" name="item2" id="item2" />
+                    <label htmlFor="item2" className="form-checkbox__mark">
                       <div className="form-checkbox__icon">
                         <svg
                           width="10"
@@ -203,16 +204,17 @@ export default function Form() {
                           />
                         </svg>
                       </div>
-                    </div>
+                    </label>
                   </div>
-
-                  <div className="text-14 lh-12 ml-10">Items</div>
+                  <label htmlFor="item2" className="text-14 lh-12 ml-10">
+                    Item 2
+                  </label>
                 </div>
 
-                <div className="d-flex mt-15">
+                <div className="d-flex mt-15 items-center">
                   <div className="form-checkbox">
-                    <input type="checkbox" name="name" />
-                    <div className="form-checkbox__mark">
+                    <input type="checkbox" name="item3" id="item3" />
+                    <label htmlFor="item3" className="form-checkbox__mark">
                       <div className="form-checkbox__icon">
                         <svg
                           width="10"
@@ -227,10 +229,11 @@ export default function Form() {
                           />
                         </svg>
                       </div>
-                    </div>
+                    </label>
                   </div>
-
-                  <div className="text-14 lh-12 ml-10">Items</div>
+                  <label htmlFor="item3" className="text-14 lh-12 ml-10">
+                    Item 3
+                  </label>
                 </div>
               </div>
 

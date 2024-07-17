@@ -97,7 +97,7 @@ export const documentDataFile = [
         Name : 'Visa',
     },
     {
-        Name : 'Hotel Booking Pdf',
+        Name : 'Hotel Booking Voucher',
     },
     {
         Name : 'Flight Booking Ticket',
@@ -107,14 +107,14 @@ export const documentDataFile = [
 
 // vandor side documnet data 
 
-export const TicketsForVandor = ['Vasa' , "Hotel Booking Pdf" , "Flight Ticket"]
+export const TicketsForVandor = ['Visa' , "Hotel Booking Voucher" , "Flight Ticket"]
 
 export const ViewTicketsForVandor = [
     {
-        Name : 'Vasa',
+        Name : 'Visa',
     },
     {
-        Name : 'Hotel Booking Pdf',
+        Name : 'Hotel Booking Voucher',
     },
     {
         Name : 'Flight Ticket',
