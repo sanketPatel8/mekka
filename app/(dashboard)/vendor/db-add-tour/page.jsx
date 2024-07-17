@@ -265,7 +265,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="number" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Seat availibility
+                                    Seat Availibility
                                   </label>
                                 </div>
                               </div>
@@ -274,7 +274,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Start date of tour
+                                    Start Date of Tour
                                   </label>
                                 </div>
                               </div>
@@ -283,7 +283,7 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    End date of tour
+                                    End Date of Tour
                                   </label>
                                 </div>
                               </div>
@@ -508,7 +508,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="text-14 mt-20">
-                                PNG or JPG no bigger than 800px wide and tall.
+                                PNG or JPG no Bigger Than 800px Wide And Tall.
                               </div>
                             </div>
 
