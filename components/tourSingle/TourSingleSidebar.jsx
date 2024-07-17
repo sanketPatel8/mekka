@@ -25,10 +25,19 @@ export default function TourSingleSidebar() {
   const [hotelMakka, setHotelMakka] = useState("");
   const [Flight, setFlight] = useState(false);
   const [radioValue, setRadioValue] = useState("");
+  const [selectedCheckbox , setselectedCheckbox] = useState(false)
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
+
+  const handleExcludeFlight = () => {
+    if(selectedCheckbox === false){
+      setselectedCheckbox(true)
+    }else{
+      setselectedCheckbox(false)
+    }
+  }
 
   useEffect(() => {
     setExtraCharge(0);
@@ -300,33 +309,41 @@ export default function TourSingleSidebar() {
       <h5 className="text-18 fw-500 mb-20 mt-20">Flight Booking</h5>
 
       <div className="d-flex items-center justify-between pt-1">
-        <div className="d-flex items-center pointer-check py-3">
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              id="item2"
-              name="item2"
-            />
-            <label htmlFor="item2" className="form-checkbox__mark">
-              <div className="form-checkbox__icon">
-                <svg
-                  width="10"
-                  height="8"
-                  viewBox="0 0 10 8"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                    fill="white"
+        <div className="d-flex items-center justify-between py-3">
+          <div className="row ">
+            <div className="col-12">
+              <div className="d-flex items-center pointer-check">
+                <div className="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="item4"
+                    name="item4"
+                    checked={selectedCheckbox}
+                    onChange={handleExcludeFlight}
                   />
-                </svg>
+                  <label htmlFor="item4" className="form-checkbox__mark">
+                    <div className="form-checkbox__icon">
+                      <svg
+                        width="10"
+                        height="8"
+                        viewBox="0 0 10 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                  </label>
+                </div>
+                <label htmlFor="item4" className="lh-16 ml-15">
+                Exclude Flight Booking
+                </label>
               </div>
-            </label>
+            </div>
           </div>
-          <label htmlFor="item2" className="lh-16 ml-15">
-          Exclude Flight Booking
-          </label>
         </div>
 
         <div className="text-14">40 €</div>
@@ -336,7 +353,7 @@ export default function TourSingleSidebar() {
 
       <div
         className={`searchForm -type-1 -sidebar mt-20 ${
-          Flight === true ? "d-none" : "d-block"
+          selectedCheckbox ? "d-none" : "d-block"
         }`}
       >
         <div className="searchForm__form">
@@ -404,7 +421,7 @@ export default function TourSingleSidebar() {
             ).toFixed(2)}{" "}
             €
           </div>
-          <span className="text-center">including taxes and fees</span>
+          <span className="text-center">Including Taxes And Fees</span>
         </div>
       </div>
 
