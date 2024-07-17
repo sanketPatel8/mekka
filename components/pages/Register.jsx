@@ -15,10 +15,10 @@ export default function Register() {
             <div className="text-center mb-60 md:mb-30">
               <h1 className="text-30">Register</h1>
               <div className="text-18 fw-500 mt-20 md:mt-15">
-                Let's create your account!
+                Let's Create Your Account!
               </div>
               <div className="mt-5">
-                Already have an account?{" "}
+                Already Have An Account?{" "}
                 <Link href="/login" className="text-accent-1">
                   Log In!
                 </Link>
@@ -29,10 +29,6 @@ export default function Register() {
               onSubmit={(e) => e.preventDefault()}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
-              {/* <div className="form-input spacing">
-                <input type="text" required />
-                <label className="lh-1 text-16 text-light-1">Username</label>
-              </div> */}
 
               <div className="form-input spacing">
                 <input type="text" required />
