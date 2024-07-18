@@ -43,33 +43,33 @@ export default function SingleFour({ tour }) {
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("included") ? "is-active" : ""
+                      activeAcorditions.includes("Included") ? "is-active" : ""
                     }`}
                   >
                     <div
                       onClick={() =>
                         setActiveAcorditions((pre) =>
-                          pre.includes("included")
-                            ? [...pre.filter((elm) => elm != "included")]
-                            : [...pre, "included"],
+                          pre.includes("Included")
+                            ? [...pre.filter((elm) => elm != "Included")]
+                            : [...pre, "Included"],
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        What's included
+                        What's Included
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
                         <i className="icon-chevron-down"></i>
                         <i className="icon-chevron-up"></i>
-                      </div>
-                    </div>
+                        </div>
+                    </div>  
 
                     <div
                       className="accordion__content"
                       style={
-                        activeAcorditions.includes("included")
+                        activeAcorditions.includes("Included")
                           ? { maxHeight: "500px" }
                           : {}
                       }
@@ -82,15 +82,15 @@ export default function SingleFour({ tour }) {
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("f_included") ? "is-active" : ""
+                      activeAcorditions.includes("f_Included") ? "is-active" : ""
                     }`}
                   >
                     <div
                       onClick={() =>
                         setActiveAcorditions((pre) =>
-                          pre.includes("f_included")
-                            ? [...pre.filter((elm) => elm != "f_included")]
-                            : [...pre, "f_included"],
+                          pre.includes("f_Included")
+                            ? [...pre.filter((elm) => elm != "f_Included")]
+                            : [...pre, "f_Included"],
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
@@ -108,7 +108,7 @@ export default function SingleFour({ tour }) {
                     <div
                       className="accordion__content"
                       style={
-                        activeAcorditions.includes("f_included")
+                        activeAcorditions.includes("f_Included")
                           ? { maxHeight: "500px" }
                           : {}
                       }

@@ -87,8 +87,8 @@ export default function BookingPages() {
                 >
                   <a className="text-accent-1 px-1">Sign in </a>{" "}
                 </button>
-                book with your saved details or continue as a guest to book your
-                travel.
+                Book With Your Saved Details or Continue As a Guest To Book Your
+                Travel.
               </div>
               <h2 className="text-30 md:text-24 fw-700 bg-Primary">
                 Steps to reserve
@@ -114,7 +114,7 @@ export default function BookingPages() {
                           </span>
                           <span>
                             {" "}
-                            Is also the contact person for the reservation.
+                            Is Also The Contact Person For The Reservation.
                           </span>
                         </p>
                       </div>
@@ -269,7 +269,7 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14 ">
                                 <p className="d-flex justify-content-between">
-                                  <span>Tour price per person</span>{" "}
+                                  <span>Tour Price Per Person</span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -279,7 +279,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            Possible additional services per person:
+                            Possible Additional Services Per Person:
                           </h5>
 
                           <div>
@@ -383,7 +383,7 @@ export default function BookingPages() {
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            including taxes and fee
+                            Including Taxes And Fee
                           </p>
                         </div>
                       </div>
@@ -478,7 +478,7 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14">
                                 <p className="d-flex justify-content-between">
-                                  <span>Tour price per person</span>{" "}
+                                  <span>Tour Price Per Person</span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -488,7 +488,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            Possible additional services per person:
+                            Possible Additional Services Per Person:
                           </h5>
 
                           <div>
@@ -592,7 +592,7 @@ export default function BookingPages() {
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            including taxes and fee
+                            Including Taxes And Fee
                           </p>
                         </div>
                       </div>
@@ -687,7 +687,7 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14 ">
                                 <p className="d-flex justify-content-between">
-                                  <span>Tour price per person</span>{" "}
+                                  <span>Tour Price Per Person</span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -697,7 +697,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            Possible additional services per person:
+                            Possible Additional Services Per Person:
                           </h5>
 
                           <div>
@@ -801,7 +801,7 @@ export default function BookingPages() {
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            including taxes and fee
+                            Including Taxes And Fee
                           </p>
                         </div>
                       </div>
@@ -896,7 +896,7 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14 ">
                                 <p className="d-flex justify-content-between">
-                                  <span>Tour price per child</span>{" "}
+                                  <span>Tour Price Per Child</span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -906,7 +906,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            Possible additional services per person:
+                            Possible Additional Services Per Person:
                           </h5>
 
                           <div>
@@ -1010,7 +1010,7 @@ export default function BookingPages() {
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            including taxes and fee
+                            Including Taxes And Fee
                           </p>
                         </div>
                       </div>
@@ -1111,7 +1111,7 @@ export default function BookingPages() {
                                   </span>
                                 </p>
                                 <p className="text-right text-15">
-                                  including taxes and fee
+                                  Including Taxes And Fee
                                 </p>
                               </div>
                             </div>
@@ -1188,7 +1188,7 @@ export default function BookingPages() {
                         <TbWorld size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Offered languages: German, Arabic
+                        Offered Languages: German, Arabic
                       </div>
                     </div>
 
@@ -1197,7 +1197,7 @@ export default function BookingPages() {
                         <FaLuggageCart size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Max Luggage per person: 30 kg
+                        Max Luggage Per Person: 30 kg
                       </div>
                     </div>
 
@@ -1205,18 +1205,18 @@ export default function BookingPages() {
                       <div className="mr-5">
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
-                      <div className="text-start">Mekka - (Hotel name)</div>
+                      <div className="text-start">Mekka - (Hotel Name)</div>
                     </div>
 
                     <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
-                      <div className="text-start">Madina - (Hotel name)</div>
+                      <div className="text-start">Madina - (Hotel Name)</div>
                     </div>
 
                     <p className="text-12">
-                      (The standard offer may include a multi-bed room.)
+                      (The Standard Offer May Include a Multi-Bed Room.)
                     </p>
                   </div>
 

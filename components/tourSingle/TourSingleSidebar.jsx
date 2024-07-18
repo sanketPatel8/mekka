@@ -175,7 +175,7 @@ export default function TourSingleSidebar() {
               {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
             </label>
           </div>
-          <div className="ml-10">Hotel-name ( 3 Star )</div>
+          <div className="ml-10">Hotel-Name ( 3 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -199,7 +199,7 @@ export default function TourSingleSidebar() {
             </label>
           </div>
 
-          <div className="ml-10">Hotel-name ( 4 Star )</div>
+          <div className="ml-10">Hotel-Name ( 4 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -223,7 +223,7 @@ export default function TourSingleSidebar() {
             </label>
           </div>
 
-          <div className="ml-10">Hotel-name ( 5 Star )</div>
+          <div className="ml-10">Hotel-Name ( 5 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -250,7 +250,7 @@ export default function TourSingleSidebar() {
               {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
             </label>
           </div>
-          <div className="ml-10">Hotel-name ( 3 Star )</div>
+          <div className="ml-10">Hotel-Name ( 3 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -274,7 +274,7 @@ export default function TourSingleSidebar() {
             </label>
           </div>
 
-          <div className="ml-10">Hotel-name ( 4 Star )</div>
+          <div className="ml-10">Hotel-Name ( 4 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -298,7 +298,7 @@ export default function TourSingleSidebar() {
             </label>
           </div>
 
-          <div className="ml-10">Hotel-name ( 5 Star )</div>
+          <div className="ml-10">Hotel-Name ( 5 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -309,7 +309,7 @@ export default function TourSingleSidebar() {
       <h5 className="text-18 fw-500 mb-20 mt-20">Flight Booking</h5>
 
       <div className="d-flex items-center justify-between pt-1">
-        <div className="d-flex items-center justify-between py-3">
+        <div className="d-flex items-center justify-between">
           <div className="row ">
             <div className="col-12">
               <div className="d-flex items-center pointer-check">
@@ -421,9 +421,9 @@ export default function TourSingleSidebar() {
             ).toFixed(2)}{" "}
             €
           </div>
-          <span className="text-center">Including Taxes And Fees</span>
         </div>
       </div>
+          <p className="text-right">Including Taxes And Fees</p>
 
       <Link href="/booking">
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">

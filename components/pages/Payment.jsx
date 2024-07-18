@@ -527,7 +527,7 @@ export default function Payment() {
                       <TbWorld size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      Offered languages: German, Turkish, Arabic
+                      Offered Languages: German, Turkish, Arabic
                     </div>
                   </div>
 
@@ -538,7 +538,7 @@ export default function Payment() {
                       <FaLuggageCart size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      Max Luggage per Person: 30 kg
+                      Max Luggage Per Person: 30 kg
                     </div>
                   </div>
 
@@ -548,7 +548,7 @@ export default function Payment() {
                     <div className="mr-5">
                       <FaHotel size={20} color="#DAC04F" />
                     </div>
-                    <div className="text-start">Makka - (hotel name)</div>
+                    <div className="text-start">Makka - (Hotel name)</div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -557,17 +557,17 @@ export default function Payment() {
                     <div className="mr-5">
                       <FaHotel size={20} color="#DAC04F" />
                     </div>
-                    <div className="text-start">Madina - (hotel name)</div>
+                    <div className="text-start">Madina - (Hotel name)</div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
 
                   <p className="my-1 fs-6 my-2">
-                    (The standard offer may include a multi-bed room.)
+                    (The Standard Offer May Include a Multi-Bed Room.)
                   </p>
 
                   <p>
-                    <b>Selected additional services per person:</b>
+                    <b>Selected Additional Services Per Person:</b>
                   </p>
                   <div className="line my-2"></div>
 

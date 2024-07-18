@@ -49,7 +49,7 @@ const RoadMap = () => {
       </div>
       <br />
       <div>
-        <h2>Hotel for Madina</h2>
+        <h4>Hotel for Madina</h4>
         <p>
         In idealer Lage in Al Madinah bietet das View Al Madinah Hotel einen Concierge-Service und kostenfreie Privatparkplätze. Die Unterkunft befindet sich 3,7 km von der Quba-Moschee, 7,3 km von der Qiblatain-Moschee und 7,5 km vom Jabal Ahad Garden Park entfernt. Das Hotel verfügt über ein Restaurant und die Al-Masjid an-Nabawi ist 700 m entfernt. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem Kleiderschrank, einem Wasserkocher, einem Kühlschrank, einem Safe, einem Flachbild-TV und einem eigenen Bad mit Bidet. Im View Al Madinah Hotel genießen Sie ein Buffet oder ein kontinentales Frühstück. Die Mitarbeiter an der Rezeption sprechen Arabisch, Englisch, Türkisch und Urdu und sind Ihnen rund um die Uhr be
         </p>
