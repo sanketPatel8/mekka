@@ -172,8 +172,7 @@ export default function Payment() {
                               </label>
                             </div>
                             <label htmlFor="item4" className="lh-16 ml-15">
-                              Beverages, drinking water, morning tea and buffet
-                              lunch
+                            Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)
                             </label>
                           </div>
                         </div>

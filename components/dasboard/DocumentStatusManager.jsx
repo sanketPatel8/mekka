@@ -83,18 +83,18 @@ const DocumentStatusManager = ({ Customerid }) => {
   ];
 
   const columnAdu_1 = [
-    { name: "Name", selector: (row) => row.name, width: "100px" },
-    { name: "Surname", selector: (row) => row.surname },
+    // { name: "Name", selector: (row) => row.name, width: "100px" },
+    // { name: "Surname", selector: (row) => row.surname },
     { name: "Email", selector: (row) => row.email, width: "150px" },
     { name: "Phone", selector: (row) => row.phone, width: "150px" },
     { name: "City", selector: (row) => row.city, width: "150px" },
-    { name: "Gender", selector: (row) => row.gender },
+    // { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
     { name: "House No.", selector: (row) => row.House_No },
     { name: "Zip Code", selector: (row) => row.Zip_code },
     { name: "Street", selector: (row) => row.Strect },
-    { name: "FRA", selector: (row) => row.FRA },
+    // { name: "FRA", selector: (row) => row.FRA },
     {
       name: "Additional Services",
       selector: (row) => row.additional_services,
@@ -124,9 +124,9 @@ const DocumentStatusManager = ({ Customerid }) => {
   ];
 
   const columnAduInfo_2 = [
-    { name: "Name", selector: (row) => row.name, width: "100px" },
-    { name: "Surname", selector: (row) => row.surname },
-    { name: "Gender", selector: (row) => row.gender },
+    // { name: "Name", selector: (row) => row.name, width: "100px" },
+    // { name: "Surname", selector: (row) => row.surname },
+    // { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
     {
@@ -158,9 +158,9 @@ const DocumentStatusManager = ({ Customerid }) => {
   ];
 
   const Baby = [
-    { name: "Name", selector: (row) => row.name, width: "100px" },
-    { name: "Surname", selector: (row) => row.surname },
-    { name: "Gender", selector: (row) => row.gender },
+    // { name: "Name", selector: (row) => row.name, width: "100px" },
+    // { name: "Surname", selector: (row) => row.surname },
+    // { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
     { name: "Total", selector: (row) => row.Amount },
@@ -304,34 +304,34 @@ const DocumentStatusManager = ({ Customerid }) => {
       />
       <br />
       <DataTable
-        title="Adult-1"
+        title="Adult : Adult Name (Gender)"
         columns={columnAdu_1}
         data={Adult1Data}
         highlightOnHover
       />
       <br />
       <DataTable
-        title="Adult-2"
+        title="Adult : Adult Name (Gender)"
         columns={columnAduInfo_2}
         data={Adult2InfoData}
         highlightOnHover
       />
       <br />
       <DataTable
-        title="Adult-3"
+        title="Adult : Adult Name (Gender)"
         columns={columnAduInfo_2}
         data={Adult2InfoData}
         highlightOnHover
       />
       <br />
       <DataTable
-        title="Child"
+        title="Children : Children Name (Gender)"
         columns={columnAduInfo_2}
         data={Adult2InfoData}
         highlightOnHover
       />
       <br />
-      <DataTable title="Baby" columns={Baby} data={BabyData} highlightOnHover />
+      <DataTable title="Baby : Baby Name (Gender)" columns={Baby} data={BabyData} highlightOnHover />
       <br />
       <DataTable
         title="Total"
@@ -618,7 +618,7 @@ const DocumentStatusManager = ({ Customerid }) => {
               </TabPanel>
               <TabPanel>
                 <DataTable
-                  title="Your Documents"
+                  title="Customer Documents"
                   columns={DownloadData}
                   data={ViewCustomerDocument}
                   highlightOnHover

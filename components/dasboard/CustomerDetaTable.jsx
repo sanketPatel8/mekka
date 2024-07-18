@@ -122,7 +122,6 @@ const CustomerDetaTable = () => {
     { name: "House No.", selector: (row) => row.House_No },
     { name: "Zip Code", selector: (row) => row.Zip_code },
     { name: "Street", selector: (row) => row.Strect },
-    { name: "FRA", selector: (row) => row.FRA },
     { name: "Additional Services", selector: (row) => row.additional_services , width : "150px" },
     { name: "Total", selector: (row) => row.Amount },
     {

@@ -29,9 +29,8 @@ export default function DBListing() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">My Listings</h1>
-            <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 
-            <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
+       
 
             <div className="row y-gap-30 pt-30">
               {tourDataTwoOne.map((elm, i) => (
@@ -108,11 +107,8 @@ export default function DBListing() {
                           {elm.duration}
                       </div>
                      
-                       {/* <p className="text-center">Order : #09889</p> */}
+                       <p className="text-cente text-Danger">Available Seats : 5 / 100</p>
                         <p className="text-center">Total : {elm.price} €</p>
-                        {/* <p className="text-center">{elm.pending}</p> */}
-             
-                        
                       </div>
 
                       
@@ -134,7 +130,7 @@ export default function DBListing() {
                   <Pagination />
               </div>
 
-            </div>
+    
 
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}

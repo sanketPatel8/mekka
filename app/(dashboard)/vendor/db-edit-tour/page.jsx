@@ -1380,7 +1380,7 @@ export default function AddTour() {
                             </div>
                           </div>
                           <div className="form_2">
-                            <div className=" y-gap-30 contactForm px-20 py-20 ">
+                            <div className=" y-gap-30 contactForm py-20 ">
                               <div className="row ">
                                 <div className="col-md-6">
                                   <div className="form-input spacing">

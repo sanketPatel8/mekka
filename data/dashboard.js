@@ -420,6 +420,8 @@ export const PaymentPendingHistry = [
     Full_Name : "Yanus",
     Last_Name : "Fa-Our",
     Total_Payment : "2000 (€)",
-    Payment_Tax : "20 (€)"
+    Payment_Tax : "20 (€)",
+    Booking_date : "12.08.2024",
+    Transation_id : "12121212121212121"
   },
 ]

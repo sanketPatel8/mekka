@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-const options = ["Adult", "Children", "Babies"];
+const options = ["Adult", "Children", "Children"];
 
 export default function NumberOfTravellers({ active, setTourType }) {
   const [counts, setCounts] = useState({

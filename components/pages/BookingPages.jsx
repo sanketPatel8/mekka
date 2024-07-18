@@ -255,7 +255,9 @@ export default function BookingPages() {
                                 className="form-control"
                               >
                                 <option value="">City</option>
-                                <option value="Frankfurt(FRA)">Frankfurt(FRA)</option>
+                                <option value="Frankfurt(FRA)">
+                                  Frankfurt(FRA)
+                                </option>
                               </select>
                               <label className="lh-1 text-16 text-light-1">
                                 {From}
@@ -286,89 +288,91 @@ export default function BookingPages() {
                             <div className="d-flex items-center justify-between radio_hight">
                               <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-1-bed-4"
-                                      checked={radioValue === "f-1-bed-4"}
+                                      value="ad-1-4bad"
+                                      checked={radioValue === "ad-1-4bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10"></span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      4 Bettzimmer (Standard)
+                                    </span>
                                   </label>
-                                </div>
-                                <div className="ml-10">
-                                  4 Bettzimmer (Standard)
                                 </div>
                               </div>
                               <div className="text-14">0,00 €</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-1-bed-3"
-                                      checked={radioValue === "f-1-bed-3"}
+                                      value="ad-1-3bad"
+                                      checked={radioValue === "ad-1-3bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    3 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">3 Bettzimmer</div>
                               </div>
                               <div className="text-14">+100,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-1-bed-2"
-                                      checked={radioValue === "f-1-bed-2"}
+                                      value="ad-1-2bad"
+                                      checked={radioValue === "ad-1-2bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    2 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">2 Bettzimmer</div>
                               </div>
                               <div className="text-14">+230,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-1-bed-1"
-                                      checked={radioValue === "f-1-bed-1"}
+                                      value="ad-1-1bad"
+                                      checked={radioValue === "ad-1-1bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    1 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">1 Bettzimmer</div>
                               </div>
                               <div className="text-14">+450,00€</div>
                             </div>
@@ -495,89 +499,91 @@ export default function BookingPages() {
                             <div className="d-flex items-center justify-between radio_hight">
                               <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-2-bed-4"
-                                      checked={radioValue === "f-2-bed-4"}
+                                      value="adu-2-4bad"
+                                      checked={radioValue === "adu-2-4bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      4 Bettzimmer (Standard)
+                                    </span>
                                   </label>
-                                </div>
-                                <div className="ml-10">
-                                  4 Bettzimmer (Standard)
                                 </div>
                               </div>
                               <div className="text-14">0,00 €</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-2-bed-3"
-                                      checked={radioValue === "f-2-bed-3"}
+                                      value="adu-2-3bad"
+                                      checked={radioValue === "adu-2-3bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    3 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">3 Bettzimmer</div>
                               </div>
                               <div className="text-14">+100,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-2-bed-2"
-                                      checked={radioValue === "f-2-bed-2"}
+                                      value="adu-2-2bad"
+                                      checked={radioValue === "adu-2-2bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    2 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">2 Bettzimmer</div>
                               </div>
                               <div className="text-14">+230,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-2-bed-1"
-                                      checked={radioValue === "f-2-bed-1"}
+                                      value="ad-2-1bad"
+                                      checked={radioValue === "ad-2-1bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    1 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">1 Bettzimmer</div>
                               </div>
                               <div className="text-14">+450,00€</div>
                             </div>
@@ -704,89 +710,91 @@ export default function BookingPages() {
                             <div className="d-flex items-center justify-between radio_hight">
                               <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-3-bed-4"
-                                      checked={radioValue === "f-3-bed-4"}
+                                      value="ad-1-4bad"
+                                      checked={radioValue === "ad-1-4bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      4 Bettzimmer (Standard)
+                                    </span>
                                   </label>
-                                </div>
-                                <div className="ml-10">
-                                  4 Bettzimmer (Standard)
                                 </div>
                               </div>
                               <div className="text-14">0,00 €</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-3-bed-3"
-                                      checked={radioValue === "f-3-bed-3"}
+                                      value="ad-1-3bad"
+                                      checked={radioValue === "ad-1-3bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    3 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">3 Bettzimmer</div>
                               </div>
                               <div className="text-14">+100,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-3-bed-2"
-                                      checked={radioValue === "f-3-bed-2"}
+                                      value="ad-1-2bad"
+                                      checked={radioValue === "ad-1-2bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    2 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">2 Bettzimmer</div>
                               </div>
                               <div className="text-14">+230,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-3-bed-1"
-                                      checked={radioValue === "f-3-bed-1"}
+                                      value="ad-1-1bad"
+                                      checked={radioValue === "ad-1-1bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    1 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">1 Bettzimmer</div>
                               </div>
                               <div className="text-14">+450,00€</div>
                             </div>
@@ -913,89 +921,91 @@ export default function BookingPages() {
                             <div className="d-flex items-center justify-between radio_hight">
                               <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-4-bed-4"
-                                      checked={radioValue === "f-4-bed-4"}
+                                      value="ad-1-4bad"
+                                      checked={radioValue === "ad-1-4bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                      4 Bettzimmer (Standard)
+                                    </span>
                                   </label>
-                                </div>
-                                <div className="ml-10">
-                                  4 Bettzimmer (Standard)
                                 </div>
                               </div>
                               <div className="text-14">0,00 €</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-4-bed-3"
-                                      checked={radioValue === "f-4-bed-3"}
+                                      value="ad-1-3bad"
+                                      checked={radioValue === "ad-1-3bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    3 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">3 Bettzimmer</div>
                               </div>
                               <div className="text-14">+100,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-4-bed-2"
-                                      checked={radioValue === "f-4-bed-2"}
+                                      value="ad-1-2bad"
+                                      checked={radioValue === "ad-1-2bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    2 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">2 Bettzimmer</div>
                               </div>
                               <div className="text-14">+230,00€</div>
                             </div>
 
                             <div className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
+                            <div className="d-flex items-center">
                                 <div className="form-radio d-flex items-center">
-                                  <label className="radio">
+                                  <label className="radio  d-flex items-center">
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="f-4-bed-1"
-                                      checked={radioValue === "f-4-bed-1"}
+                                      value="ad-1-1bad"
+                                      checked={radioValue === "ad-1-1bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
                                       <span className="radio__icon"></span>
                                     </span>
-                                    {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                                    <span className="text-14 lh-1 ml-10">
+                                    1 Bettzimmer
+                                    </span>
                                   </label>
                                 </div>
-                                <div className="ml-10">1 Bettzimmer</div>
                               </div>
                               <div className="text-14">+450,00€</div>
                             </div>

@@ -88,7 +88,7 @@ export default function HeaderSerch({ white }) {
           placeholder="Search Latest Package"
           className={`js-search ${white ? "text-white" : ""}`}
         />
-
+{/* 
         <div
           className={
             ddActive ? "headerSearchRecent is-active" : "headerSearchRecent"
@@ -137,7 +137,7 @@ export default function HeaderSerch({ white }) {
                 ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

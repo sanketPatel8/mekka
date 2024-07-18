@@ -25,19 +25,19 @@ export default function TourSingleSidebar() {
   const [hotelMakka, setHotelMakka] = useState("");
   const [Flight, setFlight] = useState(false);
   const [radioValue, setRadioValue] = useState("");
-  const [selectedCheckbox , setselectedCheckbox] = useState(false)
+  const [selectedCheckbox, setselectedCheckbox] = useState(false);
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
 
   const handleExcludeFlight = () => {
-    if(selectedCheckbox === false){
-      setselectedCheckbox(true)
-    }else{
-      setselectedCheckbox(false)
+    if (selectedCheckbox === false) {
+      setselectedCheckbox(true);
+    } else {
+      setselectedCheckbox(false);
     }
-  }
+  };
 
   useEffect(() => {
     setExtraCharge(0);
@@ -158,10 +158,10 @@ export default function TourSingleSidebar() {
 
       <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Makka</h5>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between my-1">
         <div className="d-flex items-center">
           <div className="form-radio d-flex items-center">
-            <label className="radio">
+            <label className="radio  d-flex items-center">
               <input
                 type="radio"
                 name="radioGroup"
@@ -172,19 +172,18 @@ export default function TourSingleSidebar() {
               <span className="radio__mark">
                 <span className="radio__icon"></span>
               </span>
-              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+              <span className="text-14 lh-1 ml-10">Hotel-Name ( 3 Star )</span>
             </label>
           </div>
-          <div className="ml-10">Hotel-Name ( 3 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
       </div>
 
-      <div className="d-flex justify-between mt-1">
+      <div className="d-flex items-center justify-between my-1">
         <div className="d-flex items-center">
           <div className="form-radio d-flex items-center">
-            <label className="radio">
+            <label className="radio  d-flex items-center">
               <input
                 type="radio"
                 name="radioGroup"
@@ -195,20 +194,18 @@ export default function TourSingleSidebar() {
               <span className="radio__mark">
                 <span className="radio__icon"></span>
               </span>
-              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+              <span className="text-14 lh-1 ml-10">Hotel-Name ( 4 Star )</span>
             </label>
           </div>
-
-          <div className="ml-10">Hotel-Name ( 4 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
       </div>
 
-      <div className="d-flex justify-between mt-1">
-        <div className="d-flex">
+      <div className="d-flex items-center justify-between my-1">
+        <div className="d-flex items-center">
           <div className="form-radio d-flex items-center">
-            <label className="radio">
+            <label className="radio  d-flex items-center">
               <input
                 type="radio"
                 name="radioGroup"
@@ -219,24 +216,24 @@ export default function TourSingleSidebar() {
               <span className="radio__mark">
                 <span className="radio__icon"></span>
               </span>
-              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+              <span className="text-14 lh-1 ml-10">Hotel-Name ( 5 Star )</span>
             </label>
           </div>
-
-          <div className="ml-10">Hotel-Name ( 5 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
       </div>
 
+
+
       <hr />
 
       <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Madina</h5>
 
-      <div className="d-flex items-center justify-between">
+      <div className="d-flex items-center justify-between my-1">
         <div className="d-flex items-center">
           <div className="form-radio d-flex items-center">
-            <label className="radio">
+            <label className="radio  d-flex items-center">
               <input
                 type="radio"
                 name="radioGroup"
@@ -247,19 +244,18 @@ export default function TourSingleSidebar() {
               <span className="radio__mark">
                 <span className="radio__icon"></span>
               </span>
-              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+              <span className="text-14 lh-1 ml-10">Hotel-Name ( 3 Star )</span>
             </label>
           </div>
-          <div className="ml-10">Hotel-Name ( 3 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
       </div>
 
-      <div className="d-flex justify-between mt-1">
+      <div className="d-flex items-center justify-between my-1">
         <div className="d-flex items-center">
           <div className="form-radio d-flex items-center">
-            <label className="radio">
+            <label className="radio  d-flex items-center">
               <input
                 type="radio"
                 name="radioGroup"
@@ -270,20 +266,18 @@ export default function TourSingleSidebar() {
               <span className="radio__mark">
                 <span className="radio__icon"></span>
               </span>
-              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+              <span className="text-14 lh-1 ml-10">Hotel-Name ( 4 Star )</span>
             </label>
           </div>
-
-          <div className="ml-10">Hotel-Name ( 4 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
       </div>
 
-      <div className="d-flex justify-between mt-1">
-        <div className="d-flex">
+      <div className="d-flex items-center justify-between my-1">
+        <div className="d-flex items-center">
           <div className="form-radio d-flex items-center">
-            <label className="radio">
+            <label className="radio  d-flex items-center">
               <input
                 type="radio"
                 name="radioGroup"
@@ -294,11 +288,9 @@ export default function TourSingleSidebar() {
               <span className="radio__mark">
                 <span className="radio__icon"></span>
               </span>
-              {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+              <span className="text-14 lh-1 ml-10">Hotel-Name ( 5 Star )</span>
             </label>
           </div>
-
-          <div className="ml-10">Hotel-Name ( 5 Star )</div>
         </div>
 
         <div className="text-14">40 €</div>
@@ -339,7 +331,7 @@ export default function TourSingleSidebar() {
                   </label>
                 </div>
                 <label htmlFor="item4" className="lh-16 ml-15">
-                Exclude Flight Booking
+                  Exclude Flight Booking
                 </label>
               </div>
             </div>
@@ -423,7 +415,7 @@ export default function TourSingleSidebar() {
           </div>
         </div>
       </div>
-          <p className="text-right">Including Taxes And Fees</p>
+      <p className="text-right">Including Taxes And Fees</p>
 
       <Link href="/booking">
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
