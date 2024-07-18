@@ -63,7 +63,7 @@ const RoadMap = () => {
         <HotelGallary name='madina' /> 
         <div>
           <br />
-          <h3>Hotel Options</h3>
+          <h4>Hotel Options</h4>
           <div className="row">
             <span className="col">
               <MdVerified className="mx-2" />
