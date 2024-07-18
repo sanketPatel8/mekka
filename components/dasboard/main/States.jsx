@@ -13,7 +13,7 @@ export default function States() {
                 <div className="text-30 fw-700">{elm.amount}</div>
 
                 <div>
-                  <span className="text-accent-1">{elm.today}</span> Today
+                  {/* <span className="text-accent-1">{elm.today}</span> Today */}
                 </div>
               </div>
 

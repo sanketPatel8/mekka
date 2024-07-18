@@ -31,7 +31,13 @@ export const sidebarItemsAgentDB = [
     iconClass: "icon-account text-26",
     label: "My Profile",
   },
-  { id: 6, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
+  {
+    id: 6,
+    href: "/vendor/db-payment-history",
+    iconClass: "fa fa-calendar-alt",
+    label: "Payment History",
+  },
+  { id: 7, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
 ];
 
 export const sidebarItemsCustomerDB = [
@@ -86,6 +92,23 @@ export const states = [
   //   iconClass: "icon-heart text-accent-1",
   // },
 ];
+
+export const StatusPaymentHistry = [
+  {
+    id: 1,
+    title: "Total Earnings",
+    amount: "10,800 €",
+    today: "50 €",
+    iconClass: "icon-wallet text-accent-1",
+  },
+  {
+    id: 2,
+    title: "Total Pending",
+    amount: "12,800 €",
+    today: "40+",
+    iconClass: "icon-payment text-accent-1",
+  },
+]
 
 export const notificationData = [
   {
@@ -389,3 +412,14 @@ export const messageSanders = [
     time: `35 mins`,
   },
 ];
+
+
+export const PaymentPendingHistry = [
+  {
+    BookingNo : "1MB128389384848",
+    Full_Name : "Yanus",
+    Last_Name : "Fa-Our",
+    Total_Payment : "2000 (€)",
+    Payment_Tax : "20 (€)"
+  },
+]
