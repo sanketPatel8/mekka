@@ -429,6 +429,10 @@ hr{
     cursor: pointer;
   }
 
+  .dd-vendor{
+    padding-left: 20px;
+  }
+
   .dd-vendor > div:nth-child(3) {
     height: 55px ;
     border-radius: 12px;
@@ -439,4 +443,36 @@ hr{
     width: 200px !important;
     height: 50px !important;
     border-radius: 12px;
+   }
+
+
+   @media (max-width: 767px){
+    .dd-vendor{
+      display: flex;
+      justify-content: center;
+      padding-left: 0;
+    } 
+    .Hotel-Madina-dd > div:nth-child(3){
+      width: 250px !important;
+    }
+
+    .Hotel-Mekka-dd > div:nth-child(3){
+      width: 250px !important;
+    }
+    .dd-vendor > div:nth-child(3){
+      width: 80%;
+     
+    }
+    .dd-vendor > div:nth-child(4){
+      width: 80%;
+    }
+    .pl-20-doc-img{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .visaYESNOFLEx {
+      display: flex !important;
+      flex-direction: row !important;
+    }
    }

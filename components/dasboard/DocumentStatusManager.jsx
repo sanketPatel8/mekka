@@ -355,7 +355,7 @@ const DocumentStatusManager = ({ Customerid }) => {
             </button>
           </div>
 
-          <div className="ml-20">
+          <div className="ml-lg-20 ml-0 ">
             <Tabs>
               <TabList>
                 <Tab>Upload</Tab>
@@ -364,9 +364,9 @@ const DocumentStatusManager = ({ Customerid }) => {
               </TabList>
 
               <TabPanel>
-                <div className="">
+                <div className="overflow-hidden overflow-lg-auto">
                   <div className="row item-center my-3 ">
-                    <div className="col-md-4 px-0 mx-0">
+                    <div className="col-md-4 px-0 mx-0 pl-lg-50">
                       <Select
                         options={VandorDoc}
                         value={Document}
@@ -418,12 +418,12 @@ const DocumentStatusManager = ({ Customerid }) => {
                         )}
                       </div>
                     </div>
-                    <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-start">
+                    <div className="col-md-2 px-0 mx-0">
+                      <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             +
                           </button>
@@ -431,7 +431,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             -
                           </button>
@@ -494,11 +494,11 @@ const DocumentStatusManager = ({ Customerid }) => {
                       </div>
                     </div>
                     <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-start">
+                      <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             +
                           </button>
@@ -506,7 +506,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             -
                           </button>
@@ -569,11 +569,11 @@ const DocumentStatusManager = ({ Customerid }) => {
                       </div>
                     </div>
                     <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-start">
+                      <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             +
                           </button>
@@ -581,7 +581,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             -
                           </button>

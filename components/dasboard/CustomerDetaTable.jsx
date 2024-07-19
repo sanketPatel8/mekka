@@ -111,12 +111,12 @@ const CustomerDetaTable = () => {
   ];
 
   const columnAdu_1 = [
-    { name: "Name", selector: (row) => row.name , width : "100px" },
-    { name: "Surname", selector: (row) => row.surname },
+    // { name: "Name", selector: (row) => row.name , width : "100px" },
+    // { name: "Surname", selector: (row) => row.surname },
     { name: "Email", selector: (row) => row.email , width : "150px" },
     { name: "Phone", selector: (row) => row.phone , width : "150px"},
     { name: "City", selector: (row) => row.city , width : "150px"},
-    { name: "Gender", selector: (row) => row.gender },
+    // { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
     { name: "House No.", selector: (row) => row.House_No },
@@ -147,9 +147,9 @@ const CustomerDetaTable = () => {
   ];
 
   const columnAduInfo_2 = [
-    { name: "Name", selector: (row) => row.name , width : "100px" },
-    { name: "Surname", selector: (row) => row.surname },
-    { name: "Gender", selector: (row) => row.gender },
+    // { name: "Name", selector: (row) => row.name , width : "100px" },
+    // { name: "Surname", selector: (row) => row.surname },
+    // { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
     { name: "Additional Services", selector: (row) => row.additional_services , width : "150px" },
@@ -177,9 +177,9 @@ const CustomerDetaTable = () => {
   ];
 
   const Baby = [
-    { name: "Name", selector: (row) => row.name , width : "100px" },
-    { name: "Surname", selector: (row) => row.surname },
-    { name: "Gender", selector: (row) => row.gender },
+    // { name: "Name", selector: (row) => row.name , width : "100px" },
+    // { name: "Surname", selector: (row) => row.surname },
+    // { name: "Gender", selector: (row) => row.gender },
     { name: "DOB", selector: (row) => row.DOB },
     { name: "Nationality", selector: (row) => row.Nationality },
     { name: "Total", selector: (row) => row.Amount },
@@ -362,34 +362,34 @@ const CustomerDetaTable = () => {
       />
       <br />
       <DataTable
-        title="Adult-1"
+        title="Adult : Adult Name (Gender)"
         columns={columnAdu_1}
         data={Adult1Data}
         highlightOnHover
       />
       <br />
       <DataTable
-        title="Adult-2"
+        title="Adult : Adult Name (Gender)"
         columns={columnAduInfo_2}
         data={Adult2InfoData}
         highlightOnHover
       />
       <br />
       <DataTable
-        title="Adult-3"
+        title="Adult : Adult Name (Gender)"
         columns={columnAduInfo_2}
         data={Adult2InfoData}
         highlightOnHover
       />
       <br />
       <DataTable
-        title="Child"
+        title="Child : Child Name (Gender)"
         columns={columnAduInfo_2}
         data={Adult2InfoData}
         highlightOnHover
       />
       <br />
-      <DataTable title="Baby" columns={Baby} data={BabyData} highlightOnHover />
+      <DataTable title="Baby : Baby Name (Gender)" columns={Baby} data={BabyData} highlightOnHover />
       <br />
       <DataTable
         title="Total"
@@ -835,7 +835,7 @@ const CustomerDetaTable = () => {
             </button>
           </div>
 
-          <div className="ml-20">
+          <div className="ml-lg-20 ml-0">
             <Tabs>
               <TabList>
                 <Tab>Upload</Tab>
@@ -844,7 +844,7 @@ const CustomerDetaTable = () => {
               </TabList>
 
               <TabPanel>
-                <div className="">
+                <div className="overflow-hidden overflow-lg-auto">
                   <div className="row item-center my-3 ">
                     <div className="col-md-4 px-0 mx-0">
                     <Select options={CustomeDocoptions} value={CustomerDoc} onChange={handleCustomerDocumentChange} className="dd-vendor" isClearable />
@@ -893,11 +893,11 @@ const CustomerDetaTable = () => {
                       </div>
                     </div>
                     <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-start">
+                      <div className="px-0 py-0 d-flex justify-content-lg-start justify-content-center">
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             +
                           </button>
@@ -905,7 +905,7 @@ const CustomerDetaTable = () => {
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             -
                           </button>
@@ -962,11 +962,11 @@ const CustomerDetaTable = () => {
                       </div>
                     </div>
                     <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-start">
+                      <div className="px-0 py-0 d-flex justify-content-lg-start justify-content-center">
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             +
                           </button>
@@ -974,7 +974,7 @@ const CustomerDetaTable = () => {
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             -
                           </button>
@@ -1030,12 +1030,12 @@ const CustomerDetaTable = () => {
                         )}
                       </div>
                     </div>
-                    <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-start">
+                    <div className="col-md-2 px-0 mx-0">
+                      <div className="px-0 py-0 d-flex justify-content-lg-start justify-content-center">
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             +
                           </button>
@@ -1043,7 +1043,7 @@ const CustomerDetaTable = () => {
                         <div className="mx-1">
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
                           >
                             -
                           </button>
@@ -1140,7 +1140,7 @@ const CustomerDetaTable = () => {
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="date" required />
-                    <label className="lh-1 text-16 text-light-1"></label>
+                    <label className="lh-1 text-16 text-light-1">Birthday Date</label>
                   </div>
                 </div>
                 <div className="col-md-6">

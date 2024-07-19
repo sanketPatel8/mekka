@@ -714,8 +714,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-4bad"
-                                      checked={radioValue === "ad-1-4bad"}
+                                      value="ad-3-4bad"
+                                      checked={radioValue === "ad-3-4bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
@@ -737,8 +737,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-3bad"
-                                      checked={radioValue === "ad-1-3bad"}
+                                      value="ad-3-3bad"
+                                      checked={radioValue === "ad-3-3bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
@@ -760,8 +760,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-2bad"
-                                      checked={radioValue === "ad-1-2bad"}
+                                      value="ad-3-2bad"
+                                      checked={radioValue === "ad-3-2bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
@@ -783,8 +783,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-1bad"
-                                      checked={radioValue === "ad-1-1bad"}
+                                      value="ad-3-1bad"
+                                      checked={radioValue === "ad-3-1bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
@@ -925,8 +925,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-4bad"
-                                      checked={radioValue === "ad-1-4bad"}
+                                      value="Child-1-4bad"
+                                      checked={radioValue === "Child-1-4bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
@@ -948,8 +948,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-3bad"
-                                      checked={radioValue === "ad-1-3bad"}
+                                      value="Child-1-3bad"
+                                      checked={radioValue === "Child-1-3bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
@@ -971,8 +971,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-2bad"
-                                      checked={radioValue === "ad-1-2bad"}
+                                      value="Child-1-2bad"
+                                      checked={radioValue === "Child-1-2bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">
@@ -994,8 +994,8 @@ export default function BookingPages() {
                                     <input
                                       type="radio"
                                       name="radioGroup"
-                                      value="ad-1-1bad"
-                                      checked={radioValue === "ad-1-1bad"}
+                                      value="Child-1-1bad"
+                                      checked={radioValue === "Child-1-1bad"}
                                       onChange={handleRadioChange}
                                     />
                                     <span className="radio__mark">

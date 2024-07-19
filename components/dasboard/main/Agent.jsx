@@ -25,7 +25,6 @@ export default function Sidebar() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">Dashboard - Agent</h1>
-            <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 
             <States />
 

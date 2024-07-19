@@ -205,9 +205,8 @@ export default function AddTour() {
 
           <div className="dashboard__content_content ">
             <h1 className="text-30">Add Tour</h1>
-            <p className="">Lorem ipsum dolor sit amet, consectetur.</p>
 
-            <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-60">
+            <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-20">
               <div className="tabs -underline-2 js-tabs">
                 <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                   {tabs.map((elm, i) => (
@@ -236,7 +235,7 @@ export default function AddTour() {
                         }`}
                       >
                         <div className="form_2">
-                          <div className=" y-gap-30 contactForm px-20 py-20 ">
+                          <div className=" y-gap-30 contactForm px-lg-20 px-0 py-20 ">
                             <div className="row ">
                               <div className="col-md-6">
                                 <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
@@ -542,7 +541,7 @@ export default function AddTour() {
                           activeTab == "Location" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className=" y-gap-30 contactForm px-20 py-20 ">
+                        <div className=" y-gap-30 contactForm px-lg-20 px-0 py-20 ">
                           <div className="col-12">
                             <div className="form-input ">
                               <input type="text" required />
@@ -617,10 +616,10 @@ export default function AddTour() {
                           activeTab == "Pricing" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className=" y-gap-30 contactForm px-20 py-20 ">
+                        <div className=" y-gap-30 contactForm px-lg-20 px-0 py-20 ">
                           <div className="contactForm row y-gap-30 items-center ">
                             <div className="col-lg-4">
-                              <div className="form-input ">
+                              <div className="form-input my-0">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
                                   Price (€) Per Adult
@@ -628,7 +627,7 @@ export default function AddTour() {
                               </div>
                             </div>
                             <div className="col-lg-4">
-                              <div className="form-input ">
+                              <div className="form-input my-0">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
                                   Price (€) Per Child
@@ -636,7 +635,7 @@ export default function AddTour() {
                               </div>
                             </div>
                             <div className="col-lg-4">
-                              <div className="form-input ">
+                              <div className="form-input my-0">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
                                   Price (€) Per Baby
@@ -658,7 +657,7 @@ export default function AddTour() {
                               </div>
                             </div>
 
-                            <div className="contactForm row y-gap-30 items-center">
+                            <div className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
                               <div className="col-lg-4">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
@@ -889,10 +888,10 @@ export default function AddTour() {
                           activeTab == "Included" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="row justify-between y-gap-30 contactForm px-20 py-20">
+                        <div className="row justify-between y-gap-30 contactForm px-lg-20 px-0 py-20">
                           <div className="col-md-4">
                             <div className="row y-gap-20">
-                              <div className="col-12 ">
+                              <div className="col-12 px-0">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
                                     <input
@@ -930,7 +929,7 @@ export default function AddTour() {
                                 </div>
                               </div>
 
-                              <div className="col-12">
+                              <div className="col-12 px-0">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
                                     <input
@@ -967,7 +966,7 @@ export default function AddTour() {
                                 </div>
                               </div>
 
-                              <div className="col-12">
+                              <div className="col-12 px-0">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
                                     <input
@@ -1008,7 +1007,7 @@ export default function AddTour() {
 
                           <div className="col-md-4">
                             <div className="row y-gap-20">
-                              <div className="col-12">
+                              <div className="col-12 px-0">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
                                     <input
@@ -1044,7 +1043,7 @@ export default function AddTour() {
                                   </label>
                                 </div>
                               </div>
-                              <div className="col-12">
+                              <div className="col-12 px-0">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
                                     <input
@@ -1086,7 +1085,7 @@ export default function AddTour() {
 
                           <div className="col-md-4">
                             <div className="row y-gap-20">
-                              <div className="col-12">
+                              <div className="col-12 px-0">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
                                     <input
@@ -1123,7 +1122,7 @@ export default function AddTour() {
                                 </div>
                               </div>
 
-                              <div className="col-12">
+                              <div className="col-12 px-0">
                                 <div className="d-flex items-center pointer-check">
                                   <div className="form-checkbox">
                                     <input
@@ -1177,7 +1176,7 @@ export default function AddTour() {
                           activeTab == "Overview" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="y-gap-30 contactForm px-20 py-20 ">
+                        <div className="y-gap-30 contactForm px-lg-20 px-0 py-20 ">
                           <Editor
                             editorState={editorState}
                             toolbarClassName="toolbarClassName"
@@ -1201,7 +1200,7 @@ export default function AddTour() {
                         }`}
                       >
                         <div className="form_2">
-                          <div className=" y-gap-30 contactForm px-20 py-20 ">
+                          <div className=" y-gap-30 contactForm px-lg-20 px-0 py-20 ">
                             <div className="row ">
                               <div className="col-md-6">
                                 <div className="form-input my-1">
@@ -1290,10 +1289,10 @@ export default function AddTour() {
                             : ""
                         }`}
                       >
-                        <div className=" y-gap-30 contactForm px-20 py-20 ">
+                        <div className=" y-gap-30 contactForm px-lg-20 px-0 py-20 ">
                           <div className="d-flex item-center justify-content-between">
                             <h6>Visa Processing</h6>
-                            <div className="flex_start my-3">
+                            <div className="flex_start visaYESNOFLEx my-3">
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
                                   <label className="radio d-flex items-center">
@@ -1348,7 +1347,7 @@ export default function AddTour() {
                                           handleMekkaChange(value, index)
                                         }
                                         options={options2}
-                                        className="custom-select"
+                                        className="custom-select Hotel-Mekka-dd"
                                         placeholder="Select Hotel For Mekka"
                                         classNamePrefix="react-select"
                                         isClearable
@@ -1402,7 +1401,7 @@ export default function AddTour() {
                                           handleMadinaChange(value, index)
                                         }
                                         options={Madina}
-                                        className="custom-select"
+                                        className="custom-select Hotel-Madina-dd"
                                         placeholder="Select Hotel For Madina"
                                         classNamePrefix="react-select"
                                         isClearable
@@ -1449,7 +1448,7 @@ export default function AddTour() {
                               Free cancellation (up to 14 days before travel
                               date)
                             </h6>
-                            <div className="flex_start my-3">
+                            <div className="flex_start visaYESNOFLEx my-3">
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
                                   <label className="radio d-flex items-center">
@@ -1492,7 +1491,7 @@ export default function AddTour() {
                           </div>
                           <div className="d-flex item-center justify-content-between">
                             <h6>Direct Flight</h6>
-                            <div className="flex_start my-3">
+                            <div className="flex_start visaYESNOFLEx my-3">
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
                                   <label className="radio d-flex items-center">

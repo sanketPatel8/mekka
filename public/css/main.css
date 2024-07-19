@@ -1989,6 +1989,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 767px) {
   .header.-type-1 .header__container {
     height: 57px;
+    justify-content: space-around;
   }
 }
 
