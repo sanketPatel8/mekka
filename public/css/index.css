@@ -232,6 +232,7 @@
 
 .border_yellow {
     border: 1px solid #dac04f;
+    background-color: #d1d0d082;
     width: fit-content;
     padding: 0 5px !important;
     border-radius: 5px;

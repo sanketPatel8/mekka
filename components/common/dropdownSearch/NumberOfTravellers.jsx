@@ -38,7 +38,7 @@ export default function NumberOfTravellers({ active, setTourType }) {
       data-x-toggle="is-active"
     >
       <div className="searchFormItemDropdown__container">
-        <div className="searchFormItemDropdown__list scroll-bar-1">
+        <div className="searchFormItemDropdown__list sroll-bar-1">
           {options.map((elm, i) => (
             <div
               onClick={() => setTourType((pre) => (pre === elm ? "" : elm))}

@@ -225,7 +225,7 @@ export default function Profile() {
                         />
                       </div>
                     )}
-                    {image2 ? (
+                    {/* {image2 ? (
                       <div className="col-auto">
                         <div className="relative">
                           <Image
@@ -270,7 +270,7 @@ export default function Profile() {
                           style={{ display: "none" }}
                         />
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   <h4 className="text-18 fw-500 mb-20 mt-20">Documents</h4>

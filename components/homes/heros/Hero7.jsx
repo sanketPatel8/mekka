@@ -6,45 +6,41 @@ import { useRouter } from "next/navigation";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
+
 const slides = [
   {
     id: 1,
     imageSrc: "/img/hero/7/pxfuel 1.jpg",
-    subtitle:
-      "the independent",
-    title: "comparison portal , find cheap , offers & save",
+    subtitle: "the independent",
+    title: "comparison portal, find cheap, offers & save",
   },
   {
     id: 2,
     imageSrc: "/img/hero/7/image 2.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 3,
     imageSrc: "/img/hero/7/image 3.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 4,
     imageSrc: "/img/hero/7/image 4.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 5,
     imageSrc: "/img/hero/7/image 1.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
 ];
@@ -52,15 +48,15 @@ const slides = [
 export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
-  const [TourLocation, setTourLocation] = useState("");
   const [location, setLocation] = useState("");
   const [calender, setCalender] = useState("");
   const [tourType, setTourType] = useState("");
-  const [TourMambar, setTourMambar] = useState('')
+  const [TourMambar, setTourMambar] = useState('');
 
   useEffect(() => {
     setCurrentActiveDD("");
   }, [location, calender, tourType, setCurrentActiveDD]);
+
   const dropDownContainer = useRef();
   useEffect(() => {
     const handleClick = (event) => {
@@ -78,6 +74,10 @@ export default function Hero7() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
+  const handleDropdownClick = (dropdown) => {
+    setCurrentActiveDD((prev) => (prev === dropdown ? "" : dropdown));
+  };
 
   return (
     <>
@@ -120,24 +120,29 @@ export default function Hero7() {
                   </div>
 
                   <div className="container">
-                    <div className="row " >
+                    <div className="row ">
                       <div className="col-lg-8 col-md-10">
                         <div className="hero__content">
                           <h1
                             data-aos="fade-up"
                             data-aos-delay="100"
-                            className="hero__subtitle text-white mb-5 md:mb-5">
+                            className="hero__subtitle text-white mb-5 md:mb-5"
+                          >
                             {elm.subtitle}
                           </h1>
 
-                        <div data-aos="fade-up"
+                          <div
+                            data-aos="fade-up"
                             data-aos-delay="300"
-                            className="hero__title text--color-accent-1 ">
-                           <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">{elm.title.split(",")[0]}</h2>
-                          <h2 className="text_30 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left"><b>{elm.title.split(",")[1]}</b></h2>
-                           {/* <h2 className="text_10 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">{elm.title.split(",")[2]}</h2> */}
-                        </div>
-                         
+                            className="hero__title text--color-accent-1 "
+                          >
+                            <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
+                              {elm.title.split(",")[0]}
+                            </h2>
+                            {/* <h2 className="text_30 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
+                              <b>{elm.title.split(",")[1]}</b>
+                            </h2> */}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -161,18 +166,13 @@ export default function Hero7() {
         <div className="hero__filter">
           <div
             ref={dropDownContainer}
-            className="searchForm -type-1 shadow-1  rounded-200"
+            className="searchForm -type-1 shadow-1 rounded-200"
           >
             <div className="searchForm__form">
-
               <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
-                  onClick={() =>
-                    setCurrentActiveDD((pre) =>
-                      pre == "location" ? "" : "location",
-                    )
-                  }
+                  onClick={() => handleDropdownClick("location")}
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-pin"></i>
@@ -194,11 +194,7 @@ export default function Hero7() {
               <div className="searchFormItem js-select-control js-form-dd js-calendar">
                 <div
                   className="searchFormItem__button"
-                  onClick={() =>
-                    setCurrentActiveDD((pre) =>
-                      pre == "calender" ? "" : "calender",
-                    )
-                  }
+                  onClick={() => handleDropdownClick("calender")}
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-calendar"></i>
@@ -216,15 +212,9 @@ export default function Hero7() {
               </div>
 
               <div className="searchFormItem js-select-control js-form-dd">
-                 <div
+                <div
                   className="searchFormItem__button"
-                  onClick={() =>
-                    setTourLocation((pre) =>
-                      pre == "tourType" ? "" : "tourType",
-                    )
-                  }
-
-                  
+                  onClick={() => handleDropdownClick("tourType")}
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-flag"></i>
@@ -236,7 +226,10 @@ export default function Hero7() {
                     </div>
                   </div>
                 </div>
-                <NumberOfTravellers  setTourType={setTourMambar} active={TourLocation === "tourType"} />
+                <NumberOfTravellers
+                  setTourType={setTourMambar}
+                  active={currentActiveDD === "tourType"}
+                />
               </div>
             </div>
 
@@ -255,3 +248,4 @@ export default function Hero7() {
     </>
   );
 }
+ 
