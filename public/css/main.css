@@ -12758,6 +12758,14 @@ table.table-4.-border-bottom tbody > tr {
   z-index: 1;
 }
 
+.search-box{
+  border-radius: 12px;
+  height: 55px;
+  border: 1px solid #e7e6e6;
+  width: fit-content;
+  padding: 0px 10px;
+}
+
 .navTourSingle {
   position: absolute;
   top: 50%;

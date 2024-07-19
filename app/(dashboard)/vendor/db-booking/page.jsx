@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect, useMemo } from "react";
 import Header from "@/components/dasboard/Header";
@@ -12,18 +12,18 @@ const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 export default function DbBooking() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("All");
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState(bookingData);
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
   // Memoized filtered items based on filterText
   const filteredItems = useMemo(() => {
-    return bookingData.filter(item => {
+    return filteredData.filter(item => {
       return Object.keys(item).some(key =>
         item[key].toString().toLowerCase().includes(filterText.toLowerCase())
       );
     });
-  }, [filterText]);
+  }, [filterText, filteredData]);
 
   // Function to handle clearing filter and resetting pagination
   const handleClear = () => {
@@ -133,6 +133,12 @@ export default function DbBooking() {
                       className="ml-10 border-1"
                       onChange={(e) => setFilterText(e.target.value)}
                     />
+                     <div className="form-input m-0 ">
+                      <input type="text" required />
+                      <label className="lh-1 text-16 text-light-1">
+                        Owner Name
+                      </label>
+                    </div>
                     <button onClick={handleClear}>Clear</button>
                   </div>
                 }
