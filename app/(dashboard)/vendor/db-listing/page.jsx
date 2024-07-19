@@ -102,6 +102,7 @@ export default function DBListing() {
                     <div className="tourCard__info tourCard__info_Dash ">
                       <div className="m-auto">
                       <label className={elm.vendor_Listning === 'Pending'? 'badge-orange' : elm.vendor_Listning === 'Approved'? 'badge-green' : elm.vendor_Listning === 'Rejected' ? 'badge-red' : ''}><b>{elm.vendor_Listning}</b></label>
+                      <span className={elm.vendor_Listning === 'Rejected' ? 'd-block py-3' : 'd-none'}>Your cover letter is your chance to show that you are a good match for the job and for the company </span>
                       <div className="d-flex items-center text-14 ">
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}
