@@ -100,7 +100,7 @@ export default function Header1() {
               <HeaderSerch />
             </div>
             
-            <Currency />
+            {/* <Currency /> */}
 
             <Langauge />
 

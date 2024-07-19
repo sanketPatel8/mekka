@@ -125,13 +125,13 @@ export default function DbBooking() {
                 pagination
                 subHeader
                 subHeaderComponent={
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div className="d-flex items-center ">
                     <input
                       type="text"
                       placeholder="Search all columns"
                       value={filterText}
+                      className="ml-10 border-1"
                       onChange={(e) => setFilterText(e.target.value)}
-                      style={{ marginRight: '10px' }}
                     />
                     <button onClick={handleClear}>Clear</button>
                   </div>

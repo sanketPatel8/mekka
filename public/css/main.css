@@ -4625,7 +4625,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__container {
-  width: 490px;
+  /* width: 490px; */
   max-width: calc(100vw - 14px);
   padding: 20px;
 }
@@ -4634,7 +4634,7 @@ h1, h2, h3, h4, h5, h6 {
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  height: 302px;
+  /* height: 302px; */
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__item button {
