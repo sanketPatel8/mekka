@@ -24,7 +24,7 @@ export default function Sidebar() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">Dashboard - Agent</h1>
+            <h1 className="text-30">Dashboard </h1>
 
             <States />
 

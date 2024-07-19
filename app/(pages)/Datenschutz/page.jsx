@@ -10,8 +10,6 @@ const Datenschutz = () => {
     <div className="container">
         <br /><br /><br /><br />
         <h1>Datenschutzerklärung</h1><br />
-        <h1 className="text-center">Datenschutzerklärung</h1><br />
-        <h1>Datenschutzerklärung</h1><br />
         <p>Mit dieser Datenschutzerklärung möchten wir Sie über Art, Umfang und Zweck der Verarbeitung von personenbezogenen Daten (im Folgenden auch nur als "Daten" bezeichnet) aufklären. Personenbezogene Daten sind alle Daten, die einen persönlichen Bezug zu Ihnen aufweisen, z. B. Name, Adresse, E-Mail-Adresse oder Ihr Nutzerverhalten. Die Datenschutzerklärung gilt für alle von uns vorgenommene Daten-Verarbeitungsvorgänge sowohl im Rahmen unserer Kerntätigkeit als auch für die von uns vorgehaltenen Online-Medien.</p><br />
         <h2>Wer bei uns für die Datenverarbeitung verantwortlich ist</h2><br />
         <p>Verantwortlich für die Datenverarbeitung ist:</p><br />
@@ -67,9 +65,8 @@ const Datenschutz = () => {
             <li>wenn Sie vom Ihrem Widerspruchsrecht Gebrauch machen und der Löschung keine zwingenden schutzwürdigen Gründe entgegenstehen.</li>
 
         </ul>
-        <p>Sofern wir (bestimmte Teile) Ihre(r) Daten jedoch noch für andere Zwecke vorhalten müssen, weil dies etwa steuerliche Aufbewahrungsfristen (in der Regel 6 Jahre für Geschäftskorrespondenz bzw. 10 Jahre für Buchungsbelege) oder die Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen aus vertraglichen Beziehungen (bis zu vier Jahren) erforderlich machen oder die Daten zum Schutz der Rechte einer anderen natürlichen oder juristischen Person gebraucht werden, löschen wir (den Teil) Ihre(r) Daten erst nach Ablauf dieser Fristen. Bis zum Ablauf dieser Fristen beschränken wir die Verarbeitung dieser Daten jedoch auf diese Zwecke (Erfüllung der Aufbewahrungspflichten).</p>
-        <h1 className="text-center">Cookie Richtlinie</h1>
-        <h2><b>Cookies</b></h2>
+        <p>Sofern wir (bestimmte Teile) Ihre(r) Daten jedoch noch für andere Zwecke vorhalten müssen, weil dies etwa steuerliche Aufbewahrungsfristen (in der Regel 6 Jahre für Geschäftskorrespondenz bzw. 10 Jahre für Buchungsbelege) oder die Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen aus vertraglichen Beziehungen (bis zu vier Jahren) erforderlich machen oder die Daten zum Schutz der Rechte einer anderen natürlichen oder juristischen Person gebraucht werden, löschen wir (den Teil) Ihre(r) Daten erst nach Ablauf dieser Fristen. Bis zum Ablauf dieser Fristen beschränken wir die Verarbeitung dieser Daten jedoch auf diese Zwecke (Erfüllung der Aufbewahrungspflichten).</p> <br />
+        <h2><b>Cookies</b></h2> <br />
         <p>Unsere Internetseite nutzt Cookies. Bei Cookies handelt es sich um kleine Textdateien, bestehend aus einer Reihe von Zahlen und Buchstaben, die auf dem von Ihnen genutzten Endgerät abgelegt und gespeichert werden. Cookies dienen vorrangig dazu, Informationen zwischen dem von Ihnen genutzten Endgerät und unserer Webseite auszutauschen. Hierzu gehören u. a. die Spracheinstellungen auf einer Webseite, der Login-Status oder die Stelle, an der ein Video geschaut wurde.</p>
         <p>Beim Besuch unserer Webseiten werden zwei Typen von Cookies eingesetzt:</p>
         <ul>

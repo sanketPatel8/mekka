@@ -34,7 +34,7 @@ export const sidebarItemsAgentDB = [
   {
     id: 6,
     href: "/vendor/db-payment-history",
-    iconClass: "fa fa-calendar-alt",
+    iconClass: "icon-payment text-26",
     label: "Payment History",
   },
   { id: 7, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
