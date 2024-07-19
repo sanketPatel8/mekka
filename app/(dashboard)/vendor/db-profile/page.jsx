@@ -367,6 +367,144 @@ export default function Profile() {
                         />
                       </div>
                     )}
+                    {image2 ? (
+                      <div className="col-auto">
+                        <div className="relative">
+                          <Image
+                            width={200}
+                            height={200}
+                            src={image2}
+                            alt="image"
+                            className="size-200 rounded-12 object-cover"
+                          />
+                          <button
+                            onClick={() => {
+                              setImage2("");
+                            }}
+                            className="absoluteIcon1 button -dark-1"
+                          >
+                            <i className="icon-delete text-18"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="col-auto">
+                        <label
+                          htmlFor="imageInp2"
+                          className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                        >
+                          <Image
+                            width="40"
+                            height="40"
+                            alt="image"
+                            src={"/img/dashboard/upload.svg"}
+                          />
+
+                          <div className="text-16 fw-500 text-accent-1 mt-10">
+                            Upload Images
+                          </div>
+                        </label>
+                        <input
+                          onChange={(e) => handleImageChange(e, setImage2)}
+                          accept="image/*"
+                          id="imageInp2"
+                          type="file"
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    )}
+                    {image2 ? (
+                      <div className="col-auto">
+                        <div className="relative">
+                          <Image
+                            width={200}
+                            height={200}
+                            src={image2}
+                            alt="image"
+                            className="size-200 rounded-12 object-cover"
+                          />
+                          <button
+                            onClick={() => {
+                              setImage2("");
+                            }}
+                            className="absoluteIcon1 button -dark-1"
+                          >
+                            <i className="icon-delete text-18"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="col-auto">
+                        <label
+                          htmlFor="imageInp2"
+                          className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                        >
+                          <Image
+                            width="40"
+                            height="40"
+                            alt="image"
+                            src={"/img/dashboard/upload.svg"}
+                          />
+
+                          <div className="text-16 fw-500 text-accent-1 mt-10">
+                            Upload Images
+                          </div>
+                        </label>
+                        <input
+                          onChange={(e) => handleImageChange(e, setImage2)}
+                          accept="image/*"
+                          id="imageInp2"
+                          type="file"
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    )}
+                    {image2 ? (
+                      <div className="col-auto">
+                        <div className="relative">
+                          <Image
+                            width={200}
+                            height={200}
+                            src={image2}
+                            alt="image"
+                            className="size-200 rounded-12 object-cover"
+                          />
+                          <button
+                            onClick={() => {
+                              setImage2("");
+                            }}
+                            className="absoluteIcon1 button -dark-1"
+                          >
+                            <i className="icon-delete text-18"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="col-auto">
+                        <label
+                          htmlFor="imageInp2"
+                          className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                        >
+                          <Image
+                            width="40"
+                            height="40"
+                            alt="image"
+                            src={"/img/dashboard/upload.svg"}
+                          />
+
+                          <div className="text-16 fw-500 text-accent-1 mt-10">
+                            Upload Images
+                          </div>
+                        </label>
+                        <input
+                          onChange={(e) => handleImageChange(e, setImage2)}
+                          accept="image/*"
+                          id="imageInp2"
+                          type="file"
+                          style={{ display: "none" }}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="text-14 mt-20">

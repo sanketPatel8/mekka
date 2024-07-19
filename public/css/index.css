@@ -109,7 +109,7 @@
     color: red;
 }
 
-.text-orange{
+.badge-orange{
     color: black;
     background-color: orange;
     padding: 0.1rem 2rem;
@@ -117,12 +117,20 @@
     font-size: 13px;
 }
 
-.text-green{
+.badge-green{
     color: white;
     background-color: green;
     padding: 0.1rem 2rem;
     border-radius: 10px;
     font-size: 13px;
+}
+
+.badge-red{
+  color: white;
+  background-color: red;
+  padding: 0.1rem 2rem;
+  border-radius: 10px;
+  font-size: 13px;
 }
 
 .text-12{
@@ -232,11 +240,11 @@
 
 .border_yellow {
     border: 1px solid #dac04f;
-    background-color: #d1d0d082;
+    background-color: #dac04f;
     width: fit-content;
     padding: 0 5px !important;
     border-radius: 5px;
-
+    color: black;
 }
 
 

@@ -224,8 +224,6 @@ export default function TourSingleSidebar() {
         <div className="text-14">40 €</div>
       </div>
 
-
-
       <hr />
 
       <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Madina</h5>
@@ -343,55 +341,126 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <div
-        className={`searchForm -type-1 -sidebar mt-20 ${
-          selectedCheckbox ? "d-none" : "d-block"
-        }`}
-      >
-        <div className="searchForm__form">
-          <div className="searchFormItem js-select-control js-form-dd">
-            <div
-              className="searchFormItem__button"
-              onClick={() => setActiveTimeDD((pre) => !pre)}
-              data-x-click="time"
-            >
-              {/* <div className="searchFormItem__icon size-50 rounded-12 bg-light-1 flex-center">
-                <i className="text-20 icon-clock"></i>
-              </div> */}
-              <div className="searchFormItem__content">
-                <h5>Departure </h5>
-                <div className="js-select-control-chosen">
-                  {selectedTime ? selectedTime : "Choose City"}
-                </div>
-              </div>
-              <div className="searchFormItem__icon_chevron">
-                <i className="icon-chevron-down d-flex text-18"></i>
+      <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
+        <div>
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-1"
+                    checked={radioValue === "Flight-1"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                    Flight Name ( 3 Star )
+                  </span>
+                </label>
               </div>
             </div>
 
-            <div
-              className={`searchFormItemDropdown -tour-type ${
-                activeTimeDD ? "is-active" : ""
-              }`}
-              data-x="time"
-              data-x-toggle="is-active"
-            >
-              <div className="searchFormItemDropdown__container">
-                <div className="searchFormItemDropdown__list sroll-bar-1">
-                  {State.map((elm, i) => (
-                    <div
-                      key={i}
-                      onClick={() => {
-                        setSelectedTime((pre) => (pre == elm ? "" : elm));
-                        setActiveTimeDD(false);
-                      }}
-                      className="searchFormItemDropdown__item"
-                    >
-                      <button className="js-select-control-button">
-                        <span className="js-select-control-choice">{elm}</span>
-                      </button>
-                    </div>
-                  ))}
+            <div className="text-14">40 €</div>
+          </div>
+
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-2"
+                    checked={radioValue === "Flight-2"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                  Flight Name ( 4 Star )
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="text-14">40 €</div>
+          </div>
+
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-3"
+                    checked={radioValue === "Flight-3"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                  Flight Name ( 5 Star )
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="text-14">40 €</div>
+          </div>
+        </div>
+        <hr />
+        <div className="searchForm -type-1 -sidebar mt-20">
+          <div className="searchForm__form">
+            <div className="searchFormItem js-select-control js-form-dd">
+              <div
+                className="searchFormItem__button"
+                onClick={() => setActiveTimeDD((pre) => !pre)}
+                data-x-click="time"
+              >
+                <div className="searchFormItem__content">
+                  <h5>Departure </h5>
+                  <div className="js-select-control-chosen">
+                    {selectedTime ? selectedTime : "Choose City"}
+                  </div>
+                </div>
+                <div className="searchFormItem__icon_chevron">
+                  <i className="icon-chevron-down d-flex text-18"></i>
+                </div>
+              </div>
+
+              <div
+                className={`searchFormItemDropdown -tour-type ${
+                  activeTimeDD ? "is-active" : ""
+                }`}
+                data-x="time"
+                data-x-toggle="is-active"
+              >
+                <div className="searchFormItemDropdown__container">
+                  <div className="searchFormItemDropdown__list sroll-bar-1">
+                    {State.map((elm, i) => (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          setSelectedTime((pre) => (pre == elm ? "" : elm));
+                          setActiveTimeDD(false);
+                        }}
+                        className="searchFormItemDropdown__item"
+                      >
+                        <button className="js-select-control-button">
+                          <span className="js-select-control-choice">
+                            {elm}
+                          </span>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

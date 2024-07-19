@@ -28,7 +28,7 @@ export default function SingleFour({ tour }) {
       <section className="layout-pt-md">
         <div className="container">
           <div className="row y-gap-30 justify-between">
-            <div className="col-lg-8">
+            <div className="col-lg-7">
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
                 <OthersInformation />
               </div>
@@ -313,7 +313,7 @@ export default function SingleFour({ tour }) {
 
                       
 
-            <div className="col-lg-4">
+            <div className="col-lg-5">
               <div
                 style={{ position: "sticky", top: "10px" }}
                 className="d-flex justify-end"

@@ -25,10 +25,10 @@ export default function Payment() {
 
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
-    if(index === 2){
-      setInstallmentChecked(true)
-    }else{
-      setInstallmentChecked(false)
+    if (index === 2) {
+      setInstallmentChecked(true);
+    } else {
+      setInstallmentChecked(false);
     }
   };
 
@@ -149,8 +149,13 @@ export default function Payment() {
                         <div className="col-12">
                           <div className="d-flex items-center pointer-check">
                             <div className="form-checkbox">
-                              <input type="checkbox" id="item4" name="item4"  checked={selectedCheckbox === 1}
-          onChange={() => handleCheckboxChange(1)}/>
+                              <input
+                                type="checkbox"
+                                id="item4"
+                                name="item4"
+                                checked={selectedCheckbox === 1}
+                                onChange={() => handleCheckboxChange(1)}
+                              />
                               <label
                                 htmlFor="item4"
                                 className="form-checkbox__mark"
@@ -172,7 +177,8 @@ export default function Payment() {
                               </label>
                             </div>
                             <label htmlFor="item4" className="lh-16 ml-15">
-                            Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)
+                              Online Payment (Visa, Mastercard, American
+                              Express, Japan Credit Bureau (JCB), Discover)
                             </label>
                           </div>
                         </div>
@@ -368,6 +374,12 @@ export default function Payment() {
                         conditions. This trip is operated by the IDEALGATE.
                       </label>
                     </div>
+                      <div className="">
+                        <h6>Cancellation Rules:</h6>
+                        <p>15% if canceled before 90 days of the trip</p>
+                        <p>60% if canceled before 30 days of the trip</p>
+                        <p>100% if canceled before 7 days of the trip</p>
+                      </div>
                   </div>
                 </div>
               )}

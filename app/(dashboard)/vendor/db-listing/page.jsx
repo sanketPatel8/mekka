@@ -51,7 +51,7 @@ export default function DBListing() {
 
                     <div className="tourCard__content">
                       <div className="tourCard__location border_yellow px-2">
-                        <FaPersonWalking  color="#dabf4f" size={18} />
+                         <FaPersonWalking  color="black" size={18} />
                         {elm.location}
                       </div>
 
@@ -101,7 +101,7 @@ export default function DBListing() {
 
                     <div className="tourCard__info tourCard__info_Dash ">
                       <div className="m-auto">
-                      <label className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : '' }><b>{elm.arriving}</b></label>
+                      <label className={elm.vendor_Listning === 'Pending'? 'badge-orange' : elm.vendor_Listning === 'Approved'? 'badge-green' : elm.vendor_Listning === 'Rejected' ? 'badge-red' : ''}><b>{elm.vendor_Listning}</b></label>
                       <div className="d-flex items-center text-14 ">
                           <i className="icon-clock mr-10"></i>
                           {elm.duration}

@@ -123,7 +123,7 @@ export default function TourList4() {
                     <div className="tourCard__content">
                       <div className="tourCard__location border_yellow">
                         {/* <i className="icon-pin"></i> */}
-                        <FaPersonWalking  color="#dabf4f" size={18} />
+                         <FaPersonWalking  color="black" size={18} />
                         {elm.location}
                       </div>
 

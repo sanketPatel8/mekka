@@ -300,6 +300,7 @@ export const tourDataTwoOne = [
     
     location: "zu Kaaba 500 m",
     arriving : 'Upcoming' ,
+    vendor_Listning : "Pending" , 
     pending:'Due : 14.00 €',
     title:
       "Umrah - SOMMER",
@@ -334,6 +335,7 @@ export const tourDataTwoOne = [
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
     arriving : 'Completed' ,
+    vendor_Listning : "Rejected" , 
     pending:'Due : 12.00 €',
     title:
       "Umrah - SOMMER",
@@ -367,6 +369,7 @@ export const tourDataTwoOne = [
     imageSrc: "/img/tourCards/1/13.jpeg",
     badgeText: "20 % OFF",
     location: "zu Kaaba 500 m",
+    vendor_Listning : "Approved" , 
     title:
       "Umrah - SOMMER",
       pending:'Due : 18.00 €',

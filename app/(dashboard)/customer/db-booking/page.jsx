@@ -52,7 +52,7 @@ export default function DbBooking() {
 
                     <div className="tourCard__content">
                       <div className="tourCard__location border_yellow px-2">
-                        <FaPersonWalking  color="#dabf4f" size={18} />
+                         <FaPersonWalking  color="black" size={18} />
                         {elm.location}
                       </div>
 
