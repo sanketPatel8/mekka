@@ -44,7 +44,7 @@ export default function Payment() {
     <section className="layout-pt-md layout-pb-lg mt-header">
       <div className="container">
         <div className="row">
-          <div className="col-lg-7 ">
+          <div className="col-lg-8 ">
             <h2
               className={`text-30 md:text-24 fw-700 bg-Primary ${
                 bookingStage === 2 ? "d-none" : "d-block"
@@ -454,8 +454,8 @@ export default function Payment() {
             </div>
           </div>
 
-          <div className="col-lg-5">
-            <div className="pl-50 md:pl-0">
+          <div className="col-lg-4">
+            <div className="">
               <div className="bg-white rounded-12 border-1 shadow-2 py-20 px-20 md:py-20 md:px-20">
                 <h2 className="text-20 fw-500">Reservation Details</h2>
 

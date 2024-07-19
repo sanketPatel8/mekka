@@ -3,7 +3,7 @@ import React from "react";
 
 export default function States() {
   return (
-    <div className="row y-gap-30 pt-60 md:pt-30">
+    <div className="row y-gap-30 pt-30 md:pt-30 pt-30">
       {states.map((elm, i) => (
         <div key={i} className="col-xl-3 col-sm-6 py-3 py-lg-1">
           <div className="rounded-12 bg-white shadow-2 px-30 py-30 h-full">

@@ -12675,7 +12675,7 @@ table.table-4.-border-bottom tbody > tr {
 
 .tourSingleSidebar {
   position: relative;
-  width: 360px;
+  /* width: 360px; */
   padding: 30px;
   border-radius: 12px;
   border: 1px solid var(--border, #E7E6E6);

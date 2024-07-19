@@ -66,13 +66,13 @@ export default function Header1() {
               />
             </Link>
            <div className="media">
-           <Link href="/" className=" mx-2">
+           <Link href="/" className="mx-3">
                 Home
               </Link>
-              <Link href="/tourlist" className=" mx-2">
+              <Link href="/tourlist" className=" mx-3">
                 Tour
               </Link>
-              <Link href="/contact" className=" mx-2">
+              <Link href="/contact" className=" mx-3">
                 Contact
               </Link>
            </div>

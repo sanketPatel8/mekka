@@ -53,7 +53,7 @@ export default function Profile() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">My Profile</h1>
-            <div className="mt-50 rounded-12 bg-white shadow-2 px-40 pt-40 pb-30">
+            <div className="mt-30 rounded-12 bg-white shadow-2 px-40 pt-40 pb-30">
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 
               <div className="contactForm row y-gap-30">
@@ -111,7 +111,7 @@ export default function Profile() {
                       onChange={HandleCountryChange}
                       options={CountryOptions}
                       className="custom-select"
-                      placeholder="Select or Country  "
+                      placeholder="Select Country  "
                       classNamePrefix="react-select"
                       isClearable
                       formatCreateLabel={(inputValue) =>
@@ -180,7 +180,7 @@ export default function Profile() {
                   <h4 className="text-18 fw-500 mb-20">Company Logo</h4>
                   <div className="row x-gap-20 y-gap">
                     {image1 ? (
-                      <div className="col-auto my-3">
+                      <div className="col-auto">
                         <div className="relative">
                           <Image
                             width={200}
@@ -226,7 +226,7 @@ export default function Profile() {
                       </div>
                     )}
                     {image2 ? (
-                      <div className="col-auto my-3">
+                      <div className="col-auto">
                         <div className="relative">
                           <Image
                             width={200}
@@ -370,7 +370,7 @@ export default function Profile() {
                   </div>
 
                   <div className="text-14 mt-20">
-                    PNG or JPG no bigger than 800px wide and tall.
+                    PDF or PNG or JPG or DOC no bigger than 800px wide and tall.
                   </div>
 
                   <button className="button -md -dark-1 bg-accent-1 text-white mt-30">
@@ -396,7 +396,7 @@ export default function Profile() {
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="row y-gap-30">
                   <div className="col-md-6">
                     <div className="form-input m-0 ">
                       <input type="text" required />
@@ -442,7 +442,7 @@ export default function Profile() {
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="row y-gap-30">
                   <div className="col-md-6">
                     <div className="form-input m-0 ">
                       <input type="text" required />

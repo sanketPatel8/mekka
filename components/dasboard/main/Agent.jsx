@@ -24,11 +24,11 @@ export default function Sidebar() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">Dashboard </h1>
+            <h1 className="text-30">Dashboard</h1>
 
             <States />
 
-            <div className="row pt-30 y-gap-30">
+            <div className="row pt-30 mt-30 y-gap-30">
               <Statistics />
 
               <div className="col-xl-4 col-lg-12 col-md-6">

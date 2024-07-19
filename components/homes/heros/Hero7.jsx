@@ -14,7 +14,7 @@ import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTrave
 const slides = [
   {
     id: 1,
-    imageSrc: "/img/hero/7/image 1.jpg",
+    imageSrc: "/img/hero/7/pxfuel 1.jpg",
     subtitle:
       "the independent",
     title: "comparison portal , find cheap , offers & save",
@@ -42,7 +42,7 @@ const slides = [
   },
   {
     id: 5,
-    imageSrc: "/img/hero/7/pxfuel 1.jpg",
+    imageSrc: "/img/hero/7/image 1.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
@@ -135,7 +135,7 @@ export default function Hero7() {
                             className="hero__title text--color-accent-1 ">
                            <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">{elm.title.split(",")[0]}</h2>
                           <h2 className="text_30 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left"><b>{elm.title.split(",")[1]}</b></h2>
-                           <h2 className="text_10 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">{elm.title.split(",")[2]}</h2>
+                           {/* <h2 className="text_10 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">{elm.title.split(",")[2]}</h2> */}
                         </div>
                          
                         </div>

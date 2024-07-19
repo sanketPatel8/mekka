@@ -35,8 +35,8 @@ export default function DBListing() {
       sortable: true,
     },
     { name: "Paid (€) ", selector: (row) => row.Payment_Tax, sortable: true },
-    { name: "Date ", selector: (row) => row.Booking_date, sortable: true },
-    { name: "Transaction ID ", selector: (row) => row.Transation_id, sortable: true },
+    { name: "Date ", selector: (row) => row.Booking_date, sortable: true  , width : "100px"},
+    { name: "Transaction ID ", selector: (row) => row.Transation_id, sortable: true  , width : "150px"},
   ];
 
   useEffect(() => {

@@ -29,11 +29,11 @@ const customStyles = {
     bottom: "auto",
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
-    padding: "20px",
+    padding: "5px",
     // borderRadius: '10px',
     width: "100%", // Adjust width as needed
     maxWidth: "700px", // Adjust max-width as needed
-    height: "80vh", // Set a specific height for the modal
+    height: "90vh", // Set a specific height for the modal
     overflowY: "auto",
     backgroundColor: "#fff",
   },
@@ -1135,7 +1135,7 @@ export default function BookingPages() {
             </div>
 
             <div className="col-lg-4 ">
-              <div className="pl-50 md:pl-0 ">
+              <div className="">
                 <div className="bg-white border-1 rounded-12 shadow-2 py-20 px-20 md:py-20 md:px-20 tourSingleSidebar">
                   <h2 className="text-20 fw-500">Reservation Details</h2>
 
@@ -1288,18 +1288,21 @@ export default function BookingPages() {
           contentLabel="Example Modal"
         >
           <section className="">
-            <div className="d-flex justify-content-between my-3 px-2" id="">
-              <h2 className="ml-10"></h2>
-              <button onClick={closeModal}>
-                <IoClose size={25} />
-              </button>
+            <div className="d-flex justify-content-between my-1 px-2" id="">
+              <h2 className=""></h2>
+            
             </div>
 
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="contactForm border-1  rounded-12 px-40 py-3 "
+              className="contactForm border-1  rounded-12 px-40 py-1 "
             >
-              <h2 className="text-center">LOG IN</h2>
+             <div className="d-flex justify-content-between">
+             <h2 className="text-center">LOG IN</h2>
+              <button onClick={closeModal}>
+                <IoClose size={25} />
+              </button>
+             </div>
               <div className="form-input spacing">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">
@@ -1312,7 +1315,7 @@ export default function BookingPages() {
                 <label className="lh-1 text-16 text-light-1">Password</label>
               </div>
 
-              <div className="row y-ga-10 justify-between items-center pt-30 spacing">
+              <div className="row y-ga-10 justify-between items-center pt-10 spacing">
                 <div className="col-auto">
                   <div className="d-flex items-center">
                     <div className="form-checkbox ">
@@ -1352,17 +1355,6 @@ export default function BookingPages() {
                       className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                     >
                       Customer Log In
-                    </button>
-                  </Link>
-                </div>
-
-                <div className="col">
-                  <Link href="/vendor/db-main">
-                    <button
-                      type="submit"
-                      className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
-                    >
-                      Agent Log in
                     </button>
                   </Link>
                 </div>
