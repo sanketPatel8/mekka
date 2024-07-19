@@ -166,7 +166,7 @@ export default function Profile() {
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="row y-gap-30">
                   <div className="col-md-6">
                     <div className="form-input spacing">
                       <input type="text" required />
