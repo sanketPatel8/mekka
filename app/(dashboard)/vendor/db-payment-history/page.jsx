@@ -12,7 +12,7 @@ export default function DBListing() {
 
   const VandorBookings = [
     {
-      name: "Order No.",
+      name: "Booking No.",
       selector: (row) => row.BookingNo,
       width: "170px",
       sortable: true,
