@@ -73,11 +73,6 @@ const CustomerDetaTable = () => {
   const [CanclePopUp, setCanclePopUp] = useState(false);
   const [gender, setGender] = useState("");
   const [Nationality, setNationality] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [activeTimeDD, setActiveTimeDD] = useState(false);
-  const [activeTimeDD1, setActiveTimeDD1] = useState(false);
-  const [activeTimeDD2, setActiveTimeDD2] = useState(false);
   const [image1, setImage1] = useState("");
   const [radioValue, setRadioValue] = useState("");
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -258,10 +253,6 @@ const CustomerDetaTable = () => {
     setPaymentModalIsOpen(false);
   }
 
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
-  };
-
   function openCancelPopUp() {
     setCanclePopUp(true);
   }
@@ -314,6 +305,43 @@ const CustomerDetaTable = () => {
   const handleCustomerDocumentChange = (selectedOption) => {
     setCustomerDoc(selectedOption)
   }
+
+    // for add document row and remove row 
+
+    const [rows, setRows] = useState([{ id: 1, image: "", document: null }]); // State to manage rows
+  
+    const addRow = () => {
+      setRows([...rows, { id: rows.length + 1, image: "", document: null }]);
+    };
+  
+    const removeRow = (index) => {
+      if (rows.length > 1) {
+        const newRows = rows.filter((_, i) => i !== index);
+        setRows(newRows);
+      }
+    };
+  
+    const handleDocumentChange = (selectedOption, index) => {
+      const newRows = [...rows];
+      newRows[index].document = selectedOption;
+      setRows(newRows);
+    };
+  
+    const handleImageChange = (e, index) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+  
+      reader.onloadend = () => {
+        const newRows = [...rows];
+        newRows[index].image = reader.result;
+        setRows(newRows);
+      };
+  
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    };
+
   return (
     <div>
       <div className="row px-0 py-3 ">
@@ -845,212 +873,90 @@ const CustomerDetaTable = () => {
 
               <TabPanel>
                 <div className="overflow-hidden overflow-lg-auto">
-                  <div className="row item-center my-3 ">
-                    <div className="col-md-4 px-0 mx-0">
-                    <Select options={CustomeDocoptions} value={CustomerDoc} onChange={handleCustomerDocumentChange} className="dd-vendor" isClearable />
-                    </div>
-                    <div className="col-md-4 px-0 mx-2">
-                      <div className="row my-2 ">
-                        {image1 ? (
-                          <div className="col-auto my-3" >
-                            <div className="relative">
-                              <Image
-                                width={200}
-                                height={200}
-                                src={image1}
-                                alt="image"
-                                className="size-200 rounded-12 object-cover my-3"
-                              />
-                              <button
-                                onClick={() => {
-                                  setImage1("");
-                                }}
-                                className="absoluteIcon1 button -dark-1"
+                  {rows.map((row, index) => (
+                    <div className="row item-center my-3" key={row.id}>
+                      <div className="col-md-4 px-0 mx-0 pl-lg-50">
+                        <Select
+                          options={CustomeDocoptions}
+                          value={row.document}
+                          onChange={(selectedOption) =>
+                            handleDocumentChange(selectedOption, index)
+                          }
+                          className="dd-vendor"
+                          isClearable
+                        />
+                      </div>
+                      <div className="col-md-4 px-0 mx-2">
+                        <div className="row my-2 ">
+                          {row.image ? (
+                            <div className="col-auto my-3">
+                              <div className="relative">
+                                <Image
+                                  width={200}
+                                  height={200}
+                                  src={row.image}
+                                  alt="image"
+                                  className="size-200 rounded-12 object-cover my-3"
+                                />
+                                <button
+                                  onClick={() => {
+                                    const newRows = [...rows];
+                                    newRows[index].image = "";
+                                    setRows(newRows);
+                                  }}
+                                  className="absoluteIcon1 button -dark-1"
+                                >
+                                  <i className="icon-delete text-18"></i>
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="col-auto  pl-20-doc-img">
+                              <label
+                                htmlFor={`imageInp-${index}`}
+                                className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
                               >
-                                <i className="icon-delete text-18"></i>
+                                <div className="text-16 fw-500 text-accent-1">
+                                  Upload Document
+                                </div>
+                              </label>
+                              <input
+                                onChange={(e) => handleImageChange(e, index)}
+                                accept="image/*"
+                                id={`imageInp-${index}`}
+                                type="file"
+                                style={{ display: "none" }}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="col-md-2 px-0 mx-0">
+                        <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
+                          <div className="mx-1">
+                            <button
+                              type="button"
+                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                              onClick={addRow}
+                            >
+                              +
+                            </button>
+                          </div>
+                          {index > 0 && (
+                            <div className="mx-1">
+                              <button
+                                type="button"
+                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                                onClick={() => removeRow(index)}
+                              >
+                                -
                               </button>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="col-auto  pl-20-doc-img">
-                            <label
-                              htmlFor="imageInp1"
-                              className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
-                            >
-                              <div className="text-16 fw-500 text-accent-1">
-                                Upload Document
-                              </div>
-                            </label>
-                            <input
-                              onChange={(e) => handleImageChange(e, setImage1)}
-                              accept="image/*"
-                              id="imageInp1"
-                              type="file"
-                              style={{ display: "none" }}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-lg-start justify-content-center">
-                        <div className="mx-1">
-                          <button
-                            type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
-                          >
-                            +
-                          </button>
-                        </div>
-                        <div className="mx-1">
-                          <button
-                            type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
-                          >
-                            -
-                          </button>
+                          )}
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="row item-center my-3">
-                    <div className="col-md-4 px-0 mx-0">
-                    <Select options={CustomeDocoptions} value={CustomerDoc} onChange={handleCustomerDocumentChange} className="dd-vendor" isClearable />
-                    </div>
-                    <div className="col-md-4 px-0 mx-2">
-                      <div className="row my-2 flex_center">
-                        {image1 ? (
-                          <div className="col-auto my-3">
-                            <div className="relative">
-                              <Image
-                                width={200}
-                                height={200}
-                                src={image1}
-                                alt="image"
-                                className="size-200 rounded-12 object-cover my-3"
-                              />
-                              <button
-                                onClick={() => {
-                                  setImage1("");
-                                }}
-                                className="absoluteIcon1 button -dark-1"
-                              >
-                                <i className="icon-delete text-18"></i>
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="col-auto  pl-20-doc-img">
-                            <label
-                              htmlFor="imageInp1"
-                              className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
-                            >
-                              <div className="text-16 fw-500 text-accent-1 ">
-                                Upload Document
-                              </div>
-                            </label>
-                            <input
-                              onChange={(e) => handleImageChange(e, setImage1)}
-                              accept="image/*"
-                              id="imageInp1"
-                              type="file"
-                              style={{ display: "none" }}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-md-3 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-lg-start justify-content-center">
-                        <div className="mx-1">
-                          <button
-                            type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
-                          >
-                            +
-                          </button>
-                        </div>
-                        <div className="mx-1">
-                          <button
-                            type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
-                          >
-                            -
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row item-center my-3">
-                    <div className="col-md-4 px-0 mx-0">
-                    <Select options={CustomeDocoptions} value={CustomerDoc} onChange={handleCustomerDocumentChange} className="dd-vendor" isClearable />
-                    </div>
-                    <div className="col-md-4 px-0 mx-2">
-                      <div className="row my-2">
-                        {image1 ? (
-                          <div className="col-auto my-3">
-                            <div className="relative">
-                              <Image
-                                width={200}
-                                height={200}
-                                src={image1}
-                                alt="image"
-                                className="size-200 rounded-12 object-cover my-3"
-                              />
-                              <button
-                                onClick={() => {
-                                  setImage1("");
-                                }}
-                                className="absoluteIcon1 button -dark-1"
-                              >
-                                <i className="icon-delete text-18"></i>
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="col-auto  pl-20-doc-img">
-                            <label
-                              htmlFor="imageInp1"
-                              className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
-                            >
-                              <div className="text-16 fw-500 text-accent-1">
-                                Upload Document
-                              </div>
-                            </label>
-                            <input
-                              onChange={(e) => handleImageChange(e, setImage1)}
-                              accept="image/*"
-                              id="imageInp1"
-                              type="file"
-                              style={{ display: "none" }}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="col-md-2 px-0 mx-0">
-                      <div className="px-0 py-0 d-flex justify-content-lg-start justify-content-center">
-                        <div className="mx-1">
-                          <button
-                            type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
-                          >
-                            +
-                          </button>
-                        </div>
-                        <div className="mx-1">
-                          <button
-                            type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 "
-                          >
-                            -
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
 
                   <div className="d-flex justify-content-center gap-md-2">
                     <button

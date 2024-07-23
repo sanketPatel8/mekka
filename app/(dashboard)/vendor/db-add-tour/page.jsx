@@ -872,7 +872,12 @@ export default function AddTour() {
                                 </div>
                               </div>
                             </div>
+
                           </div>
+
+
+
+                          
                           <div className="col-12">
                             <div className="row">
                               <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
