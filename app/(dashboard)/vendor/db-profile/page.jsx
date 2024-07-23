@@ -178,7 +178,7 @@ export default function Profile() {
 
                 <div className="col-12">
                   <h4 className="text-18 fw-500 mb-20">Company Logo</h4>
-                  <div className="row x-gap-20 y-gap">
+                  <div className="row x-gap-20 y-gap my-1">
                     {image1 ? (
                       <div className="col-auto">
                         <div className="relative">
@@ -296,7 +296,7 @@ export default function Profile() {
                         </div>
                       </div>
                     ) : (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <label
                           htmlFor="imageInp1"
                           className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
@@ -322,7 +322,7 @@ export default function Profile() {
                       </div>
                     )}
                     {image2 ? (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <div className="relative">
                           <Image
                             width={200}
@@ -342,7 +342,7 @@ export default function Profile() {
                         </div>
                       </div>
                     ) : (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <label
                           htmlFor="imageInp2"
                           className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
@@ -368,7 +368,7 @@ export default function Profile() {
                       </div>
                     )}
                     {image2 ? (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <div className="relative">
                           <Image
                             width={200}
@@ -388,7 +388,7 @@ export default function Profile() {
                         </div>
                       </div>
                     ) : (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <label
                           htmlFor="imageInp2"
                           className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
@@ -414,7 +414,7 @@ export default function Profile() {
                       </div>
                     )}
                     {image2 ? (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <div className="relative">
                           <Image
                             width={200}
@@ -434,7 +434,7 @@ export default function Profile() {
                         </div>
                       </div>
                     ) : (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <label
                           htmlFor="imageInp2"
                           className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
@@ -460,7 +460,7 @@ export default function Profile() {
                       </div>
                     )}
                     {image2 ? (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <div className="relative">
                           <Image
                             width={200}
@@ -480,7 +480,7 @@ export default function Profile() {
                         </div>
                       </div>
                     ) : (
-                      <div className="col-auto">
+                      <div className="col-auto my-2">
                         <label
                           htmlFor="imageInp2"
                           className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"

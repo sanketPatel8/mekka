@@ -1367,7 +1367,7 @@ export default function AddTour() {
                                     <div className="col-2 d-flex">
                                       <button
                                         type="button"
-                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
                                         onClick={handleAddMekkaRow}
                                       >
                                         +
@@ -1375,7 +1375,7 @@ export default function AddTour() {
                                       {index > 0 && (
                                         <button
                                           type="button"
-                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3`}
+                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
                                           onClick={() =>
                                             handleRemoveMekkaRow(index)
                                           }
@@ -1421,7 +1421,7 @@ export default function AddTour() {
                                     <div className="col-2 d-flex">
                                       <button
                                         type="button"
-                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
                                         onClick={handleAddMadinaRow}
                                       >
                                         +
@@ -1429,7 +1429,7 @@ export default function AddTour() {
                                       {index > 0 && (
                                         <button
                                           type="button"
-                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-10 mx-md-3`}
+                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
                                           onClick={() =>
                                             handleRemoveMadinaRow(index)
                                           }

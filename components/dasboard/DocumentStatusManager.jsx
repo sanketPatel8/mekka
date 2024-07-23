@@ -401,7 +401,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                         />
                       </div>
                       <div className="col-md-4 px-0 mx-2">
-                        <div className="row my-2 ">
+                        <div className="row my-2 flex_center ">
                           {row.image ? (
                             <div className="col-auto my-3">
                               <div className="relative">
