@@ -61,7 +61,7 @@ export default function AddTour() {
 
   const handlePriceChange = (event) => {
     setPrice(event.target.value);
-    setIsChecked(event)
+    setIsChecked(event);
   };
 
   const onEditorStateChange = (newEditorState) => {
@@ -145,7 +145,7 @@ export default function AddTour() {
       return; // Do not remove the last row
     }
     const newRows = [...mekkaRows];
-    newRows.splice(index, 1); 
+    newRows.splice(index, 1);
     setMekkaRows(newRows);
   };
 
@@ -190,6 +190,34 @@ export default function AddTour() {
       });
     }
   }, []);
+
+
+  // for add flight name and amount booking 
+
+  const [flightRow , setFlightRow ]  = useState([{ Flight: " ", price: " ", Stop: " ", }])
+
+
+  const handleFlightChange =  (value, index) => {
+    const newRows = [...flightRow];
+    newRows[index].Flight = value;
+    setFlightRow(newRows);
+  };
+
+  const HandleAddFlightRow = () => {
+    setFlightRow([
+      ...flightRow,
+      { Flight: " ", price: " ", Stop: " ",},
+    ]);
+  };
+
+  const HandleRemoveFlightRow = (index) => {
+    if (flightRow.length === 1) {
+      return; // Do not remove the last row
+    }
+    const newRows = [...flightRow];
+    newRows.splice(index, 1);
+    setFlightRow(newRows);
+  };
 
   return (
     <>
@@ -873,6 +901,7 @@ export default function AddTour() {
                               </div>
                             </div>
                           </div>
+
                           <div className="col-12">
                             <div className="row">
                               <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
@@ -1356,6 +1385,7 @@ export default function AddTour() {
                                         }
                                       />
                                     </div>
+                                    
                                     <div className="col-md-4">
                                       <div className="form-input spacing">
                                         <input type="text" required />
@@ -1364,10 +1394,11 @@ export default function AddTour() {
                                         </label>
                                       </div>
                                     </div>
+                                   
                                     <div className="col-2 d-flex">
                                       <button
                                         type="button"
-                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3 "
                                         onClick={handleAddMekkaRow}
                                       >
                                         +
@@ -1375,7 +1406,7 @@ export default function AddTour() {
                                       {index > 0 && (
                                         <button
                                           type="button"
-                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-md-3 mx-1`}
                                           onClick={() =>
                                             handleRemoveMekkaRow(index)
                                           }
@@ -1383,6 +1414,14 @@ export default function AddTour() {
                                           -
                                         </button>
                                       )}
+                                    </div>
+                                    <div className="col-md-8">
+                                      <div className="form-input m-0">
+                                        <textarea required rows="1"></textarea>
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Description
+                                        </label>
+                                      </div>
                                     </div>
                                   </div>
                                 </li>
@@ -1410,6 +1449,7 @@ export default function AddTour() {
                                         }
                                       />
                                     </div>
+
                                     <div className="col-md-4">
                                       <div className="form-input spacing">
                                         <input type="text" required />
@@ -1437,6 +1477,14 @@ export default function AddTour() {
                                           -
                                         </button>
                                       )}
+                                    </div>
+                                    <div className="col-md-8">
+                                      <div className="form-input m-0">
+                                        <textarea required rows="1"></textarea>
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Description
+                                        </label>
+                                      </div>
                                     </div>
                                   </div>
                                 </li>
@@ -1534,24 +1582,61 @@ export default function AddTour() {
                           </div>
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm py-20 ">
-                              <div className="row ">
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input type="text" required />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      Flight Amount
-                                    </label>
+                              {
+                                flightRow.map((row , index) => {
+                                  return(
+                                    <div className="row ">
+                                    <div className="col-md-5">
+                                      <div className="form-input spacing">
+                                        <input type="text" required value={row.Flight}  onChange={(value) =>
+                                          handleFlightChange(value, index)
+                                        } />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Flight Name
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-2">
+                                      <div className="form-input spacing">
+                                        <input type="text" required value={row.price}/>
+                                        <label className="lh-1 text-16 text-light-1">
+                                          Flight Amount
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-2">
+                                      <div className="form-input spacing">
+                                        <input type="text" required value={row.Stop}/>
+                                        <label className="lh-1 text-16 text-light-1">
+                                          No of Flight Stops
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-2 d-flex">
+                                      <button
+                                        type="button"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                        onClick={HandleAddFlightRow}
+                                      >
+                                        +
+                                      </button>
+                                      {index > 0 && (
+                                        <button
+                                          type="button"
+                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                          onClick={() =>
+                                            HandleRemoveFlightRow(index)
+                                          }
+                                        >
+                                          -
+                                        </button>
+                                      )}
+                                    </div>
                                   </div>
-                                </div>
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input type="text" required />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      No of Flight Stops
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>
+                                  )
+                                })
+                              }
+                             
                             </div>
                           </div>
                           <div className="col-12">

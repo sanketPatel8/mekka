@@ -32,10 +32,9 @@ const customStyles = {
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
     padding: "10px",
-    // borderRadius: '10px',
-    width: "100%", // Adjust width as needed
-    maxWidth: "700px", // Adjust max-width as needed
-    height: "80vh", // Set a specific height for the modal
+    width: "100%", 
+    maxWidth: "700px", 
+    height: "80vh", 
     overflowY: "auto",
     backgroundColor: "#fff",
   },
@@ -54,11 +53,10 @@ const customStylesForPendingPayment = {
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
     padding: "20px",
-    // borderRadius: '10px',
-    width: "70%", // Adjust width as needed
-    maxWidth: "70%", // Adjust max-width as needed
-    height: "80vh", // Set a specific height for the modal
-    overflowY: "auto", // Make content scrollable if it exceeds the height
+    width: "70%",
+    maxWidth: "70%", 
+    height: "80vh",
+    overflowY: "auto", 
     backgroundColor: "#fff",
   },
 };
