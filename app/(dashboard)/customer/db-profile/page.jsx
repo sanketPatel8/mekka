@@ -78,7 +78,7 @@ export default function Profile() {
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Conform Password
+                      Confirm Password
                     </label>
                   </div>
                 </div>
