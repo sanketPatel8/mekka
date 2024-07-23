@@ -33,7 +33,7 @@ export default function TourSlderOne() {
 
           <div className="col-auto">
             <Link
-              href={"/tour-list-4"}
+              href={"/tourlist"}
               data-aos="fade-right"
               data-aos-delay=""
               className="buttonArrow d-flex items-center "

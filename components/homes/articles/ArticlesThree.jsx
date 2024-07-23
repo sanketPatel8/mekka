@@ -22,7 +22,7 @@ export default function ArticlesThree() {
 
           <div className="col-auto">
             <Link
-              href={"/toursingle/3"}
+              href={"/tourlist"}
               data-aos="fade-right"
               data-aos-delay=""
               className="buttonArrow d-flex items-center  "

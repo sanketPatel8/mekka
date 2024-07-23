@@ -22,7 +22,7 @@ export default function Tour1() {
 
           <div className="col-auto">
             <Link
-              href={"/tour-list-1"}
+              href={"/tourlist"}
               data-aos="fade-left"
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
