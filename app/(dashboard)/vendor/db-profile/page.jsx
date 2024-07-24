@@ -56,7 +56,7 @@ export default function Profile() {
             <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40">
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 
-              <div className="contactForm row y-gap-30">
+              <div className="contactForm row my-1">
                 <div className="col-md-6">
                   <div className="form-input m-0 ">
                     <input type="text" required />
@@ -511,9 +511,9 @@ export default function Profile() {
                     PDF or PNG or JPG or DOC no bigger than 800px wide and tall.
                   </div>
 
-                  <button className="button -md -dark-1 bg-accent-1 text-white mt-30">
+                  <button className="button -md -info-2 bg-accent-1 text-white mt-30">
                     Save Changes
-                    <i className="icon-arrow-top-right text-16 ml-10"></i>
+                    {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                   </button>
                 </div>
               </div>
@@ -522,10 +522,11 @@ export default function Profile() {
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-30">
               <h5 className="text-20 fw-500 mb-30">Payout Account (IBAN)</h5>
 
-              <div className="contactForm y-gap-30">
-                <div className="row y-gap-30">
+              <div className="contactForm ">
+
+                <div className="row ">
                   <div className="col-md-6">
-                    <div className="form-input m-0 ">
+                    <div className="form-input my-1 ">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
                         Bank Name
@@ -534,11 +535,11 @@ export default function Profile() {
                   </div>
                 </div>
 
-                <div className="row y-gap-30">
+                <div className="row ">
                   <div className="col-md-6">
-                    <div className="form-input m-0 ">
+                    <div className="form-input my-1 ">
                       <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">
+                      <label className="lh-1 te xt-16 text-light-1">
                         Owner Name
                       </label>
                     </div>
@@ -547,7 +548,7 @@ export default function Profile() {
 
                 <div className="row">
                   <div className="col-md-6">
-                    <div className="form-input m-0 ">
+                    <div className="form-input my-1 ">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">IBAN</label>
                     </div>
@@ -556,9 +557,9 @@ export default function Profile() {
 
                 <div className="row">
                   <div className="col-12">
-                    <button className="button -md -dark-1 bg-accent-1 text-white">
+                    <button className="button -md -info-2 bg-accent-1 text-white mt-15">
                       Save Changes
-                      <i className="icon-arrow-top-right text-16 ml-10"></i>
+                      {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                     </button>
                   </div>
                 </div>
@@ -568,8 +569,8 @@ export default function Profile() {
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-30">
               <h5 className="text-20 fw-500 mb-30">Change Password</h5>
 
-              <div className="contactForm y-gap-30">
-                <div className="row y-gap-30">
+              <div className="contactForm ">
+                <div className="row my-1">
                   <div className="col-md-6">
                     <div className="form-input m-0 ">
                       <input type="text" required />
@@ -580,7 +581,7 @@ export default function Profile() {
                   </div>
                 </div>
 
-                <div className="row y-gap-30">
+                <div className="row my-1">
                   <div className="col-md-6">
                     <div className="form-input m-0 ">
                       <input type="text" required />
@@ -604,9 +605,9 @@ export default function Profile() {
 
                 <div className="row">
                   <div className="col-12">
-                    <button className="button -md -dark-1 bg-accent-1 text-white">
+                    <button className="button -md -info-2 bg-accent-1 text-white">
                       Save Changes
-                      <i className="icon-arrow-top-right text-16 ml-10"></i>
+                      {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                     </button>
                   </div>
                 </div>

@@ -122,7 +122,7 @@ export default function BookingPages() {
                       <div className=" y-gap-30 contactForm px-20 py-20 ">
                         <div className="my-3 row">
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Name
@@ -131,7 +131,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Surname
@@ -140,7 +140,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Email
@@ -149,7 +149,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Phone
@@ -158,7 +158,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 City
@@ -167,7 +167,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={gender}
                                 onChange={(e) => {
@@ -188,7 +188,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Birthday Date
@@ -197,7 +197,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={Nationality}
                                 onChange={(e) => {
@@ -218,7 +218,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-lg-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 House No
@@ -227,7 +227,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-lg-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 ZIP Code
@@ -236,7 +236,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-lg-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Street
@@ -245,7 +245,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={From}
                                 onChange={(e) => {
@@ -408,7 +408,7 @@ export default function BookingPages() {
                       <div className=" y-gap-30 contactForm px-20 py-20 ">
                         <div className="row my-3">
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Name
@@ -417,7 +417,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Surname
@@ -426,7 +426,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={gender}
                                 onChange={(e) => {
@@ -447,7 +447,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Birthday Date
@@ -456,7 +456,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={Nationality}
                                 onChange={(e) => {
@@ -619,7 +619,7 @@ export default function BookingPages() {
                       <div className=" y-gap-30 contactForm px-20 py-20">
                         <div className="row my-3">
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Name
@@ -628,7 +628,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Surname
@@ -637,7 +637,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={gender}
                                 onChange={(e) => {
@@ -658,7 +658,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Birthday Date
@@ -667,7 +667,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={Nationality}
                                 onChange={(e) => {
@@ -830,7 +830,7 @@ export default function BookingPages() {
                       <div className=" y-gap-30 contactForm px-20 py-20 ">
                         <div className="row my-3">
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Name
@@ -839,7 +839,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Surname
@@ -848,7 +848,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={gender}
                                 onChange={(e) => {
@@ -869,7 +869,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Birthday Date
@@ -878,7 +878,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={Nationality}
                                 onChange={(e) => {
@@ -1041,7 +1041,7 @@ export default function BookingPages() {
                       <div className="y-gap-30 contactForm px-20 py-20">
                         <div className="row my-3">
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Name
@@ -1050,7 +1050,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Surname
@@ -1059,7 +1059,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={gender}
                                 onChange={(e) => {
@@ -1080,7 +1080,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
                                 Birthday Date
@@ -1089,7 +1089,7 @@ export default function BookingPages() {
                           </div>
 
                           <div className="col-md-6">
-                            <div className="form-input spacing">
+                            <div className="form-input my-1">
                               <select
                                 value={Nationality}
                                 onChange={(e) => {
@@ -1255,7 +1255,7 @@ export default function BookingPages() {
                     </h2>
 
                     <div className="contactForm mt-10">
-                      <div className="form-input spacing">
+                      <div className="form-input my-1">
                         <input type="text" required />
                         <label className="lh-2 text-16 text-light-1 top-29">
                           Promo Code
@@ -1303,14 +1303,14 @@ export default function BookingPages() {
                 <IoClose size={25} />
               </button>
              </div>
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">
                   Email Address
                 </label>
               </div>
 
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">Password</label>
               </div>
