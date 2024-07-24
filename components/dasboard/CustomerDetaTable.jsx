@@ -343,7 +343,7 @@ const CustomerDetaTable = () => {
   return (
     <div>
       <h3 className="t_center">Booking Details : #123216</h3>
-      <div className="row px-0 pb-10 mt-30 ">
+      <div className="row px-0 pb-10 mt-20 ">
         <div className="col-lg-6">
           <p className="t_center">Booked Date : 12.08.2024</p>
           <p className="t_center">Booking Status : Pending</p>

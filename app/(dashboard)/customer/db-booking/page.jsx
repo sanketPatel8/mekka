@@ -33,7 +33,7 @@ export default function DbBooking() {
         <div className="dashboard__content_content">
           <h1 className="text-30">My Booking</h1>
 
-            <div className="row mt-30">
+            <div className="row mt-20">
               {tourDataTwoOne.map((elm, i) => (
                 <div className="col-12 mb-15 " key={i}>
                   <div className="tourCard -type-2 bg-white">

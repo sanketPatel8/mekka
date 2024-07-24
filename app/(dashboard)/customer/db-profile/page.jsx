@@ -37,7 +37,7 @@ export default function Profile() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">My Profile - Customer Name</h1>
-            <div className="mt-30 rounded-12 bg-white shadow-2 px-40 pt-30 pb-30">
+            <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40 ">
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 
               <div className="contactForm  y-gap-30">
