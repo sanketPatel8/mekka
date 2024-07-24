@@ -63,7 +63,7 @@ export default function DBListing() {
         <div className="dashboard__content_content">
           <h1 className="text-30">Payment History</h1>
 
-          <div className="row y-gap-30 mt-30 md:pt-30">
+          <div className="row y-gap-30 mt-20 md:pt-30">
             {StatusPaymentHistry.map((elm, i) => (
               <div key={i} className="col-xl-3 col-sm-6 py-3 py-lg-1">
                 <div className="rounded-12 bg-white shadow-2 px-30 py-30 h-full">

@@ -28,7 +28,7 @@ export default function Sidebar() {
 
             <States />
 
-            <div className="row pt-30 mt-30 y-gap-30">
+            <div className="row pt-30 mt-20 y-gap-30">
               <Statistics />
 
               <div className="col-xl-4 col-lg-12 col-md-6">

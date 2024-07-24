@@ -110,7 +110,7 @@ export default function DbBooking() {
         <Header setSideBarOpen={setSideBarOpen} />
         <div className="dashboard__content_content">
           <h1 className="text-30">My Booking</h1>
-          <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-30 ">
+          <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20 ">
             <div className="tabs -underline-2 js-tabs">
               <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                 {tabs.map((tab, index) => (

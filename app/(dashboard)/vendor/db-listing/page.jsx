@@ -74,7 +74,7 @@ export default function DBListing() {
           <div className="dashboard__content_content">
             <h1 className="text-30">My Listings</h1>
 
-            <div className="row y-gap-30 mt-30">
+            <div className="row y-gap-30 mt-20">
               {tourDataTwoOne.map((elm, i) => (
                 <div className="col-12 mb-15" key={i}>
                   <div className="tourCard -type-2 bg-white">
