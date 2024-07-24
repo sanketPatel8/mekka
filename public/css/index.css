@@ -239,12 +239,12 @@
 }
 
 .border_yellow {
-    border: 1px solid #dac04f;
-    background-color: #dac04f;
+    border: 1px solid #3f97ca;
+    background-color: #3f97ca;
     width: fit-content;
     padding: 0 5px !important;
     border-radius: 5px;
-    color: black;
+    color: white;
 }
 
 
@@ -381,7 +381,10 @@ hr{
     margin: 20px 0px;
   }
 
-
+  .single-lft-box-shadow{
+    box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+  }
  
 
   .public-DraftStyleDefault-ltr{

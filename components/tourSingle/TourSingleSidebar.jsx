@@ -358,7 +358,7 @@ export default function TourSingleSidebar() {
                     <span className="radio__icon"></span>
                   </span>
                   <span className="text-14 lh-1 ml-10">
-                    Flight Name ( 3 Star )
+                  IndiGo ( No Stop )
                   </span>
                 </label>
               </div>
@@ -382,7 +382,7 @@ export default function TourSingleSidebar() {
                     <span className="radio__icon"></span>
                   </span>
                   <span className="text-14 lh-1 ml-10">
-                  Flight Name ( 4 Star )
+                  Akasa Air ( 1 Stop )
                   </span>
                 </label>
               </div>
@@ -406,7 +406,31 @@ export default function TourSingleSidebar() {
                     <span className="radio__icon"></span>
                   </span>
                   <span className="text-14 lh-1 ml-10">
-                  Flight Name ( 5 Star )
+                  Vistara ( 2 Stop )
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="text-14">40 €</div>
+          </div>
+
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-4"
+                    checked={radioValue === "Flight-4"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                  Club One Air ( 4 Stop )
                   </span>
                 </label>
               </div>

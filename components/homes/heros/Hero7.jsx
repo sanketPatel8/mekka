@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
@@ -22,25 +22,29 @@ const slides = [
   {
     id: 2,
     imageSrc: "/img/hero/7/image 2.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 3,
     imageSrc: "/img/hero/7/image 3.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 4,
     imageSrc: "/img/hero/7/image 4.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 5,
     imageSrc: "/img/hero/7/image 1.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
 ];
@@ -51,7 +55,7 @@ export default function Hero7() {
   const [location, setLocation] = useState("");
   const [calender, setCalender] = useState("");
   const [tourType, setTourType] = useState("");
-  const [TourMambar, setTourMambar] = useState('');
+  const [TourMambar, setTourMambar] = useState("");
 
   useEffect(() => {
     setCurrentActiveDD("");
@@ -88,7 +92,8 @@ export default function Hero7() {
           <div className="swiper-wrapper">
             <Swiper
               className="w-100"
-              modules={[Navigation]}
+              modules={[Navigation, Autoplay]}
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
               navigation={{
                 prevEl: ".js-sliderHero-prev",
                 nextEl: ".js-sliderHero-next",
@@ -248,4 +253,3 @@ export default function Hero7() {
     </>
   );
 }
- 

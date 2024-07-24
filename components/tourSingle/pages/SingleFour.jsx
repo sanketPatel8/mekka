@@ -27,8 +27,8 @@ export default function SingleFour({ tour }) {
 
       <section className="layout-pt-md">
         <div className="container">
-          <div className="row y-gap-30 justify-between">
-            <div className="col-lg-7">
+          <div className="row y-gap-30 justify-between ml-2">
+            <div className="col-lg-8 border-1 single-lft-box-shadow">
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
                 <OthersInformation />
               </div>
@@ -311,12 +311,10 @@ export default function SingleFour({ tour }) {
               </div>
             </div>
 
-                      
-
-            <div className="col-lg-5">
+            <div className="col-lg-4">
               <div
                 style={{ position: "sticky", top: "10px" }}
-                className="d-flex justify-end"
+                className="d-flex justify-start"
               >
                 <TourSingleSidebar />
               </div>

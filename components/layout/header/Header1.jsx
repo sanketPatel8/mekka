@@ -72,6 +72,12 @@ export default function Header1() {
               <Link href="/tourlist" className=" mx-3">
                 Tour
               </Link>
+              <Link href="/tourlist?=Hajj" className=" mx-3">
+                Hajj
+              </Link>
+              <Link href="/tourlist?=Umrah" className=" mx-3">
+                Umrah
+              </Link>
               <Link href="/contact" className=" mx-3">
                 Contact
               </Link>

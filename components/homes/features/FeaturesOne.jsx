@@ -3,10 +3,10 @@ import React from 'react';
 // import HomeT from '@/Translate/HomeT';
 import { features } from '@/data/features';
 
-export default function FeaturesOne() {
+export default function   FeaturesOne() {
   return (
     // <Provider language="en" translation={HomeT}>
-      <section className="layout-pt-xl">
+      <section className="pt-50">
         <div className="container">
           <div className="row">
             <div className="col-auto">

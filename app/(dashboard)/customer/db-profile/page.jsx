@@ -37,7 +37,7 @@ export default function Profile() {
 
           <div className="dashboard__content_content">
             <h1 className="text-30">My Profile - Customer Name</h1>
-            <div className="mt-50 rounded-12 bg-white shadow-2 px-40 pt-30 pb-30">
+            <div className="mt-30 rounded-12 bg-white shadow-2 px-40 pt-30 pb-30">
               <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
 
               <div className="contactForm  y-gap-30">
@@ -45,28 +45,28 @@ export default function Profile() {
                 
                 
                 <div className="col-md-6">
-                  <div className="form-input spacing">
+                  <div className="form-input my-1">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">Name</label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
-                  <div className="form-input spacing">
+                  <div className="form-input my-1">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">Surname</label>
                   </div>
                 </div>
 
                 <div className="col-md-12">
-                  <div className="form-input spacing">
+                  <div className="form-input my-1">
                     <input type="Email" required />
                     <label className="lh-1 text-16 text-light-1">Email</label>
                   </div>
                 </div>
                 
                 <div className="col-md-6">
-                  <div className="form-input spacing">
+                  <div className="form-input my-1">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       Password
@@ -75,7 +75,7 @@ export default function Profile() {
                 </div>
                 
                 <div className="col-md-6">
-                  <div className="form-input spacing">
+                  <div className="form-input my-1">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       Confirm Password
@@ -157,7 +157,7 @@ export default function Profile() {
               <div className="contactForm y-gap-30">
                 <div className="row y-gap-30">
                   <div className="col-md-6">
-                    <div className="form-input spacing">
+                    <div className="form-input my-1">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
                         Old password
@@ -168,7 +168,7 @@ export default function Profile() {
 
                 <div className="row y-gap-30">
                   <div className="col-md-6">
-                    <div className="form-input spacing">
+                    <div className="form-input my-1">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
                         New password
@@ -179,7 +179,7 @@ export default function Profile() {
 
                 <div className="row">
                   <div className="col-md-6">
-                    <div className="form-input spacing">
+                    <div className="form-input my-1">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
                         Confirm new password

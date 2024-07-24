@@ -33,7 +33,7 @@ export default function DbBooking() {
         <div className="dashboard__content_content">
           <h1 className="text-30">My Booking</h1>
 
-            <div className="row y-gap-30 pt-20">
+            <div className="row mt-30">
               {tourDataTwoOne.map((elm, i) => (
                 <div className="col-12 my-2 " key={i}>
 
@@ -52,7 +52,7 @@ export default function DbBooking() {
 
                     <div className="tourCard__content">
                       <div className="tourCard__location border_yellow px-2">
-                         <FaPersonWalking  color="black" size={18} />
+                          <FaPersonWalking  color="white" size={18} />
                         {elm.location}
                       </div>
 
@@ -108,7 +108,7 @@ export default function DbBooking() {
                           {elm.duration}
                       </div>
                      
-                       <p className="text-center">Order : #09889</p>
+                       <p className="text-center">Booking No : #09889</p>
                         <p className="text-center">Total : {elm.price} €</p>
                         <p className="text-center">{elm.pending}</p>
                         

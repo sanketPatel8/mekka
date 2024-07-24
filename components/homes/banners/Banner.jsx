@@ -18,7 +18,7 @@ export default function Banner() {
               <h2
               data-aos="fade-up"
               data-aos-delay=""
-              class="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center"
+              class="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
             >
               Grab up to <span class="text-info-2">35% off </span>
               <br class="lg:hidden sm:hidden xs:hidden" />
@@ -30,7 +30,7 @@ export default function Banner() {
             {/* <h2 data-aos="fade-up" data-aos-delay="" className="text-40 md:text-30 lh-13 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left" > Grab up to <span className="text-info-2">35% off </span> <br className="lg:d-none sm:d-none xs:d-none" /> on your favorite <br className="lg:d-none" /> Destination </h2> */}
 
 
-              <p data-aos="fade-up" data-aos-delay="" className="mt-10 text-left md:text-center lg:text-center xl:text-center">
+              <p data-aos="fade-up" data-aos-delay="" className="mt-10 text-left md:text-center lg:text-center xl:text-center text-white">
                 Limited time offer, don't miss the opportunity
               </p>
 

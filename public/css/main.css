@@ -4631,7 +4631,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__list {
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   /* height: 302px; */
@@ -4691,7 +4691,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__list {
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   height: 200px;

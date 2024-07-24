@@ -55,7 +55,8 @@ export default function Payment() {
 
             <div className="bg-white rounded py-30">
               {bookingStage === 1 && (
-                <div
+               <div>
+                 <div
                   className="border-1 rounded-12 shadow-1 overflow-hidden"
                   id="ref"
                 >
@@ -374,14 +375,27 @@ export default function Payment() {
                         conditions. This trip is operated by the IDEALGATE.
                       </label>
                     </div>
-                      <div className="">
-                        <h6>Cancellation Rules:</h6>
-                        <p>15% if canceled before 90 days of the trip</p>
-                        <p>60% if canceled before 30 days of the trip</p>
-                        <p>100% if canceled before 7 days of the trip</p>
-                      </div>
+                     
                   </div>
                 </div>
+                <div
+                  className="border-1 rounded-12 shadow-1 overflow-hidden mt-20"
+                  id="ref"
+                >
+                  <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
+                    <b>Cancellation Rules</b>
+                  </p>
+                  <div className="px-3">
+
+                      <ul className="">
+                        <li className="text-center py-1">15% if canceled before 90 days of the trip</li>
+                        <li className="text-center py-1">60% if canceled before 30 days of the trip</li>
+                        <li className="text-center py-1">100% if canceled before 7 days of the trip</li>
+                      </ul>
+                  </div>
+                </div>
+               </div>
+                
               )}
 
               {bookingStage === 2 && (
