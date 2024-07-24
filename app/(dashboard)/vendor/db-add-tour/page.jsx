@@ -197,9 +197,10 @@ export default function AddTour() {
   const [flightRow , setFlightRow ]  = useState([{ Flight: " ", price: " ", Stop: " ", }])
 
 
-  const handleFlightChange =  (value, index) => {
+  const handleFlightChange = (e, index, field) => {
+    const { value } = e.target;
     const newRows = [...flightRow];
-    newRows[index].Flight = value;
+    newRows[index][field] = value;
     setFlightRow(newRows);
   };
 
@@ -1585,12 +1586,15 @@ export default function AddTour() {
                               {
                                 flightRow.map((row , index) => {
                                   return(
-                                    <div className="row ">
+                                    <div className="row">
                                     <div className="col-md-5">
                                       <div className="form-input spacing">
-                                        <input type="text" required value={row.Flight}  onChange={(value) =>
-                                          handleFlightChange(value, index)
-                                        } />
+                                        <input
+                                          type="text"
+                                          required
+                                          value={row.Flight}
+                                          onChange={(e) => handleFlightChange(e, index, 'Flight')}
+                                        />
                                         <label className="lh-1 text-16 text-light-1">
                                           Flight Name
                                         </label>
@@ -1598,7 +1602,12 @@ export default function AddTour() {
                                     </div>
                                     <div className="col-md-2">
                                       <div className="form-input spacing">
-                                        <input type="text" required value={row.price}/>
+                                        <input
+                                          type="text"
+                                          required
+                                          value={row.price}
+                                          onChange={(e) => handleFlightChange(e, index, 'price')}
+                                        />
                                         <label className="lh-1 text-16 text-light-1">
                                           Flight Amount
                                         </label>
@@ -1606,7 +1615,12 @@ export default function AddTour() {
                                     </div>
                                     <div className="col-md-2">
                                       <div className="form-input spacing">
-                                        <input type="text" required value={row.Stop}/>
+                                        <input
+                                          type="text"
+                                          required
+                                          value={row.Stop}
+                                          onChange={(e) => handleFlightChange(e, index, 'Stop')}
+                                        />
                                         <label className="lh-1 text-16 text-light-1">
                                           No of Flight Stops
                                         </label>
@@ -1623,16 +1637,15 @@ export default function AddTour() {
                                       {index > 0 && (
                                         <button
                                           type="button"
-                                          className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                          onClick={() =>
-                                            HandleRemoveFlightRow(index)
-                                          }
+                                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                          onClick={() => HandleRemoveFlightRow(index)}
                                         >
                                           -
                                         </button>
                                       )}
                                     </div>
                                   </div>
+                                  
                                   )
                                 })
                               }
