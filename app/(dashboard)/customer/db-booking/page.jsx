@@ -35,8 +35,7 @@ export default function DbBooking() {
 
             <div className="row mt-30">
               {tourDataTwoOne.map((elm, i) => (
-                <div className="col-12 my-2 " key={i}>
-
+                <div className="col-12 mb-15 " key={i}>
                   <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
                       <Image

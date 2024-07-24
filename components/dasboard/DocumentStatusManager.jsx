@@ -288,9 +288,9 @@ const DocumentStatusManager = ({ Customerid }) => {
 
   return (
     <div>
-      <div className="row px-0 py-3 ">
+       <h1 className="text-30">Booking Id : #{Customerid.id}</h1>
+      <div className="row px-0 pb-10 mt-30">
         <div className="col-lg-6">
-          <h1 className="text-30">Booking Id : #{Customerid.id}</h1>
           <p className="t_center">Booking Date : 12.08.2024</p>
           <p className="t_center"> Booking Status : Cancelled</p>
         </div>
