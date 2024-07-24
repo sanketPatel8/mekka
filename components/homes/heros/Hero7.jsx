@@ -5,9 +5,7 @@ import TourType from "@/components/common/dropdownSearch/TourType";
 import { useRouter } from "next/navigation";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import { Navigation, Autoplay } from "swiper/modules";
-
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
@@ -144,9 +142,6 @@ export default function Hero7() {
                             <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
                               {elm.title.split(",")[0]}
                             </h2>
-                            {/* <h2 className="text_30 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
-                              <b>{elm.title.split(",")[1]}</b>
-                            </h2> */}
                           </div>
                         </div>
                       </div>
@@ -199,13 +194,15 @@ export default function Hero7() {
               <div className="searchFormItem js-select-control js-form-dd js-calendar">
                 <div
                   className="searchFormItem__button"
-                  onClick={() => handleDropdownClick("calender")}
+                  // onClick={() => handleDropdownClick("calender")}
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-calendar"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5>Start of trip to end of trip</h5>
+                    <h5 onClick={() => handleDropdownClick("calender")}>
+                      Start of trip to end of trip
+                    </h5>
                     <div>
                       <span className="js-first-date">
                         <Calender active={currentActiveDD === "calender"} />
