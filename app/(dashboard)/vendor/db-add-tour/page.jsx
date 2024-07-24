@@ -29,13 +29,8 @@ const tabs = [
 
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [showAddMekkaHotelPositive, setshowAddMekkaHotelPositive] =
-    useState(false);
-  const [showAddMadinaHotelPositive, setshowAddMadinaHotelPositive] =
-    useState(false);
   const [SelectedTour, setSelectedTour] = useState("");
   const [gender, setGender] = useState("");
-  const [Hotel, setHotel] = useState("");
   const [activeTab, setActiveTab] = useState("Content");
   const [image1, setImage1] = useState("");
   const [radioValue, setRadioValue] = useState("");
@@ -733,7 +728,7 @@ export default function AddTour() {
                                       onChange={handleCheckboxChange}
                                     />
                                     <label
-                                      htmlFor="bedroom1"
+                                      htmlFor="bedroom1" 
                                       className="form-checkbox__mark"
                                     >
                                       <div className="form-checkbox__icon">
@@ -764,7 +759,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
@@ -818,7 +812,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
@@ -872,7 +865,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
@@ -926,7 +918,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
