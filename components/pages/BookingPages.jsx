@@ -119,7 +119,7 @@ export default function BookingPages() {
                         </p>
                       </div>
 
-                      <div className=" y-gap-30 contactForm px-20 py-20 ">
+                      <form className=" y-gap-30 contactForm px-20 py-20 ">
                         <div className="my-3 row">
                           <div className="col-md-6">
                             <div className="form-input my-1">
@@ -390,7 +390,7 @@ export default function BookingPages() {
                             Including Taxes And Fee
                           </p>
                         </div>
-                      </div>
+                      </form>
                     </div>
 
                     <div className="form_2">
@@ -827,7 +827,7 @@ export default function BookingPages() {
                           </span>
                         </p>
                       </div>
-                      <div className=" y-gap-30 contactForm px-20 py-20 ">
+                      <form className=" y-gap-30 contactForm px-20 py-20 ">
                         <div className="row my-3">
                           <div className="col-md-6">
                             <div className="form-input my-1">
@@ -1023,7 +1023,7 @@ export default function BookingPages() {
                             Including Taxes And Fee
                           </p>
                         </div>
-                      </div>
+                      </form>
                     </div>
 
                     <div className="form_5">
@@ -1038,7 +1038,7 @@ export default function BookingPages() {
                           </span>
                         </p>
                       </div>
-                      <div className="y-gap-30 contactForm px-20 py-20">
+                      <form className="y-gap-30 contactForm px-20 py-20">
                         <div className="row my-3">
                           <div className="col-md-6">
                             <div className="form-input my-1">
@@ -1127,7 +1127,7 @@ export default function BookingPages() {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 )}
@@ -1254,14 +1254,14 @@ export default function BookingPages() {
                       Do you have a promo code?
                     </h2>
 
-                    <div className="contactForm mt-10">
+                    <form className="contactForm mt-10">
                       <div className="form-input my-1">
                         <input type="text" required />
                         <label className="lh-2 text-16 text-light-1 top-29">
                           Promo Code
                         </label>
                       </div>
-                    </div>
+                    </form>
                   </div>
 
                   <div className="mt-2">

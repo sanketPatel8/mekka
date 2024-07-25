@@ -22,7 +22,7 @@ const tabs = [
   "Content",
   "Pricing",
   "Included",
-  "Overview",
+  "Overview", 
   "Itinerary",
   "Flight Hotel And Visa",
 ];
@@ -38,26 +38,30 @@ export default function AddTour() {
   const [image3, setImage3] = useState("/img/dashboard/addtour/2.jpg");
   const [image4, setImage4] = useState("/img/dashboard/addtour/3.jpg");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [mekkaRows, setMekkaRows] = useState([
-    { hotel: null, price: "", customGender: "", gender: null },
-  ]);
-  const [madinaRows, setMadinaRows] = useState([
-    { hotel: null, price: "", customGender: "", gender: null },
-  ]);
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
+    const [services, setServices] = useState({
+      bedroom1: { checked: false, price: "" },
+      bedroom2: { checked: false, price: "" },
+      bedroom3: { checked: false, price: "" },
+      bedroom4: { checked: false, price: "" },
+    });
 
-  const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
-    if (!event.target.checked) {
-      setPrice(""); // Clear the price value if the checkbox is unchecked
-    }
-  };
+    const handleCheckboxChange = (event) => {
+      const { id, checked } = event.target;
+      setServices((prev) => ({
+        ...prev,
+        [id]: { ...prev[id], checked },
+      }));
+    };
 
-  const handlePriceChange = (event) => {
-    setPrice(event.target.value);
-    setIsChecked(event);
-  };
+    const handlePriceChange = (event) => {
+      const { id, value } = event.target;
+      setServices((prev) => ({
+        ...prev,
+        [id]: { ...prev[id], price: value },
+      }));
+    };
 
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
@@ -76,6 +80,27 @@ export default function AddTour() {
       reader.readAsDataURL(file);
     }
   };
+
+
+  const options = [
+    { value: "Umrah", label: "Umrah" },
+    { value: "Hajj", label: "Hajj" },
+    { value: "ALl", label: "All" },
+  ];
+
+  const HandleTourChange = (newValue, actionMeta) => {
+    setSelectedTour(newValue);
+    console.log(newValue);
+  };
+
+  const handleRadioChange = (event) => {
+    console.log(event.target.value);
+    setRadioValue(event.target.value);
+  };
+
+  // for add hotel and remove hotels
+
+        // hotels for makka and madina 
 
   const options2 = [
     {
@@ -110,23 +135,13 @@ export default function AddTour() {
     },
   ];
 
-  const options = [
-    { value: "Umrah", label: "Umrah" },
-    { value: "Hajj", label: "Hajj" },
-    { value: "ALl", label: "All" },
-  ];
+  const [mekkaRows, setMekkaRows] = useState([
+    { hotel: null, price: "", customGender: "", gender: null },
+  ]);
+  const [madinaRows, setMadinaRows] = useState([
+    { hotel: null, price: "", customGender: "", gender: null },
+  ]);
 
-  const HandleTourChange = (newValue, actionMeta) => {
-    setSelectedTour(newValue);
-    console.log(newValue);
-  };
-
-  const handleRadioChange = (event) => {
-    console.log(event.target.value);
-    setRadioValue(event.target.value);
-  };
-
-  // for add hotel and remove hotels
 
   const handleAddMekkaRow = () => {
     setMekkaRows([
@@ -248,7 +263,7 @@ export default function AddTour() {
     const newRows = [...flightRow];
     newRows[index].Flight = value;
     setFlightRow(newRows);
-  };
+  }
 
   return (
     <>
@@ -597,85 +612,10 @@ export default function AddTour() {
 
                       <div
                         className={`tabs__pane  ${
-                          activeTab == "Location" ? "is-tab-el-active" : ""
+                          activeTab === "Pricing" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
-                          <div className="col-12">
-                            <div className="form-input ">
-                              <input type="text" required />
-                              <label className="lh-1 text-16 text-light-1">
-                                City
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <div className="form-input ">
-                              <input type="text" required />
-                              <label className="lh-1 text-16 text-light-1">
-                                State
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <div className="form-input ">
-                              <input type="text" required />
-                              <label className="lh-1 text-16 text-light-1">
-                                Address
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-12">
-                            <div className="form-input ">
-                              <input type="text" required />
-                              <label className="lh-1 text-16 text-light-1">
-                                Zip Code
-                              </label>
-                            </div>
-                          </div>
-
-                          <div className="col-lg-4">
-                            <div className="form-input ">
-                              <input type="text" required />
-                              <label className="lh-1 text-16 text-light-1">
-                                Map Latitude
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-lg-4">
-                            <div className="form-input ">
-                              <input type="text" required />
-                              <label className="lh-1 text-16 text-light-1">
-                                Map Longitude
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-lg-4">
-                            <div className="form-input ">
-                              <input type="text" required />
-                              <label className="lh-1 text-16 text-light-1">
-                                Map Zoom
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="map relative mt-30">
-                          <Map />
-                        </div>
-
-                        <button className="button -md -dark-1 bg-accent-1 text-white mt-30">
-                          Save Changes
-                          <i className="icon-arrow-top-right text-16 ml-10"></i>
-                        </button>
-                      </div>
-
-                      <div
-                        className={`tabs__pane  ${
-                          activeTab == "Pricing" ? "is-tab-el-active" : ""
-                        }`}
-                      >
-                        <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
+                        <form className="y-gap-30 contactForm px-lg-20 px-0 ">
                           <div className="contactForm row y-gap-30 items-center ">
                             <div className="col-lg-4">
                               <div className="form-input my-1">
@@ -704,7 +644,7 @@ export default function AddTour() {
                           </div>
                           <div className="mt-30">
                             <h3 className="text-18 fw-500 mb-20">
-                              Additional Services{" "}
+                              Additional Services
                             </h3>
 
                             <div className="row">
@@ -716,227 +656,73 @@ export default function AddTour() {
                               </div>
                             </div>
 
-                            <div className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
-                              <div className="col-lg-4">
-                                <div className="d-flex items-center pointer-check">
-                                  <div className="form-checkbox">
-                                    <input
-                                      type="checkbox"
-                                      id="bedroom1"
-                                      name="bedroom1"
-                                      checked={isChecked}
-                                      onChange={handleCheckboxChange}
-                                    />
+                            {Object.keys(services).map((id, index) => (
+                              <div key={id} className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
+                                <div className="col-lg-4">
+                                  <div className="d-flex items-center pointer-check">
+                                    <div className="form-checkbox">
+                                      <input
+                                        type="checkbox"
+                                        id={id}
+                                        checked={services[id].checked}
+                                        onChange={handleCheckboxChange}
+                                      />
+                                      <label
+                                        htmlFor={id}
+                                        className="form-checkbox__mark"
+                                      >
+                                        <div className="form-checkbox__icon">
+                                          <svg
+                                            width="10"
+                                            height="8"
+                                            viewBox="0 0 10 8"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                              fill="white"
+                                            />
+                                          </svg>
+                                        </div>
+                                      </label>
+                                    </div>
                                     <label
-                                      htmlFor="bedroom1"
-                                      className="form-checkbox__mark"
+                                      htmlFor={id}
+                                      className="lh-16 ml-15 my-2"
                                     >
-                                      <div className="form-checkbox__icon">
-                                        <svg
-                                          width="10"
-                                          height="8"
-                                          viewBox="0 0 10 8"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                            fill="white"
-                                          />
-                                        </svg>
-                                      </div>
+                                      {index + 1} Bed-Room
                                     </label>
                                   </div>
-                                  <label
-                                    htmlFor="bedroom1"
-                                    className="lh-16 ml-15"
-                                  >
-                                    1 Bed-Room
-                                  </label>
                                 </div>
+                                {services[id].checked && (
+                                  <div className="col-lg-6">
+                                    <div className="form-input my-1">
+                                      <input
+                                        type="number"
+                                        id={id}
+                                        value={services[id].price}
+                                        onChange={handlePriceChange}
+                                        required
+                                      />
+                                      <label className="lh-1 text-16 text-light-1">
+                                        Price
+                                      </label>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
-                              <div className="col-lg-6">
-                                <div className="form-input my-1">
-                                  <input
-                                    type="number"
-                                    onChange={handlePriceChange}
-                                    required
-                                  />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
+                            ))}
 
-                            <div className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
-                              <div className="col-lg-4">
-                                <div className="d-flex items-center pointer-check">
-                                  <div className="form-checkbox">
-                                    <input
-                                      type="checkbox"
-                                      id="bedroom2"
-                                      name="bedroom2"
-                                      checked={isChecked}
-                                      onChange={handleCheckboxChange}
-                                    />
-                                    <label
-                                      htmlFor="bedroom2"
-                                      className="form-checkbox__mark"
-                                    >
-                                      <div className="form-checkbox__icon">
-                                        <svg
-                                          width="10"
-                                          height="8"
-                                          viewBox="0 0 10 8"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                            fill="white"
-                                          />
-                                        </svg>
-                                      </div>
-                                    </label>
-                                  </div>
-                                  <label
-                                    htmlFor="bedroom2"
-                                    className="lh-16 ml-15"
-                                  >
-                                    2 Bed-Room
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-6">
-                                <div className="form-input my-1">
-                                  <input
-                                    type="number"
-                                    onChange={handlePriceChange}
-                                    required
-                                  />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
-                              <div className="col-lg-4">
-                                <div className="d-flex items-center pointer-check">
-                                  <div className="form-checkbox">
-                                    <input
-                                      type="checkbox"
-                                      id="bedroom3"
-                                      name="bedroom3"
-                                      checked={isChecked}
-                                      onChange={handleCheckboxChange}
-                                    />
-                                    <label
-                                      htmlFor="bedroom3"
-                                      className="form-checkbox__mark"
-                                    >
-                                      <div className="form-checkbox__icon">
-                                        <svg
-                                          width="10"
-                                          height="8"
-                                          viewBox="0 0 10 8"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                            fill="white"
-                                          />
-                                        </svg>
-                                      </div>
-                                    </label>
-                                  </div>
-                                  <label
-                                    htmlFor="bedroom3"
-                                    className="lh-16 ml-15"
-                                  >
-                                    3 Bed-Room
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-6">
-                                <div className="form-input my-1">
-                                  <input
-                                    type="number"
-                                    onChange={handlePriceChange}
-                                    required
-                                  />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
-                              <div className="col-lg-4">
-                                <div className="d-flex items-center pointer-check">
-                                  <div className="form-checkbox">
-                                    <input
-                                      type="checkbox"
-                                      id="bedroom4"
-                                      name="bedroom4"
-                                      checked={isChecked}
-                                      onChange={handleCheckboxChange}
-                                    />
-                                    <label
-                                      htmlFor="bedroom4"
-                                      className="form-checkbox__mark"
-                                    >
-                                      <div className="form-checkbox__icon">
-                                        <svg
-                                          width="10"
-                                          height="8"
-                                          viewBox="0 0 10 8"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                            fill="white"
-                                          />
-                                        </svg>
-                                      </div>
-                                    </label>
-                                  </div>
-                                  <label
-                                    htmlFor="bedroom4"
-                                    className="lh-16 ml-15"
-                                  >
-                                    4 Bed-Room
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-6">
-                                <div className="form-input my-1">
-                                  <input
-                                    type="number"
-                                    onChange={handlePriceChange}
-                                    required
-                                  />
-                                  <label className="lh-1 text-16 text-light-1">
-                                    Price
-                                  </label>
-                                </div>
+                            <div className="col-12">
+                              <div className="row">
+                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                                  SAVE DETAILS
+                                </button>
                               </div>
                             </div>
                           </div>
-
-                          <div className="col-12">
-                            <div className="row">
-                              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                SAVE DETAILS
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+                        </form>
                       </div>
 
                       <div
@@ -1232,23 +1018,19 @@ export default function AddTour() {
                           activeTab == "Overview" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className=" contactForm px-lg-20 px-0 ">
-                          <div className="row">
-                            <div className="col-12">
-                              <Editor
-                                editorState={editorState}
-                                toolbarClassName="toolbarClassName"
-                                wrapperClassName="wrapperClassName"
-                                editorClassName="editorClassName"
-                                onEditorStateChange={onEditorStateChange}
-                              />
-                            </div>
-                            <div className="col-12">
-                              <div className="row">
-                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
-                                </button>
-                              </div>
+                        <div className="y-gap-30 contactForm px-lg-20 px-0 ">
+                          <Editor
+                            editorState={editorState}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
+                            onEditorStateChange={onEditorStateChange}
+                          />
+                          <div className="col-12">
+                            <div className="row">
+                              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                                SAVE DETAILS
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1263,7 +1045,7 @@ export default function AddTour() {
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="row ">
                               <div className="col-md-6">
-                                <div className="form-input my-0">
+                                <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 1 :
@@ -1272,7 +1054,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-0">
+                                <div className="form-input my-1">
                                   <textarea
                                     type="text"
                                     required
@@ -1285,7 +1067,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-md-6">
-                                <div className="form-input my-0">
+                                <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 2 :
@@ -1294,7 +1076,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-0">
+                                <div className="form-input my-1">
                                   <textarea
                                     type="text"
                                     required
@@ -1308,7 +1090,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-0">
+                                <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 3 :
@@ -1317,7 +1099,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-0">
+                                <div className="form-input my-1">
                                   <textarea
                                     type="text"
                                     required
@@ -1570,6 +1352,46 @@ export default function AddTour() {
                           </div>
                           <div className="d-flex item-center justify-content-between pt-10">
                             <h6>Add Flight Details</h6>
+                            {/* <div className="flex_start visaYESNOFLEx my-3">
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio d-flex items-center">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="Flight_Yes"
+                                      checked={radioValue === "Flight_Yes"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                    <span className="text-14 lh-1 ml-5">
+                                      Yes
+                                    </span>
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="d-flex items-center mx-2">
+                                <div className="form-radio d-flex items-center">
+                                  <label className="radio d-flex items-center">
+                                    <input
+                                      type="radio"
+                                      name="radioGroup"
+                                      value="Flight_No"
+                                      checked={radioValue === "Flight_No"}
+                                      onChange={handleRadioChange}
+                                    />
+                                    <span className="radio__mark">
+                                      <span className="radio__icon"></span>
+                                    </span>
+                                    <span className="text-14 lh-1 ml-5">
+                                      No
+                                    </span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div> */}
                           </div>
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm py-20 ">
@@ -1577,9 +1399,9 @@ export default function AddTour() {
                                 return (
                                   <div className="row">
                                     <div className="col-md-5">
-                                      <CreatableSelect
+                                    <CreatableSelect
                                         value={row.Flight}
-                                        onChange={(value) =>
+                                          onChange={(value) =>
                                           handleFlightSelectChange(value, index)
                                         }
                                         options={ChooseFlight}
