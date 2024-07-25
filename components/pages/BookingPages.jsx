@@ -78,7 +78,7 @@ export default function BookingPages() {
       <section className="layout-pt-md layout-pb-lg mt-header">
         <div className="container">
           <div className="row">
-            <div className="col-lg-8 ">
+            <div className="col-lg-8 px-0">
               <div className="bg-white rounded-12  py-15">
                 <button
                   onClick={() => {
