@@ -4151,6 +4151,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 991px) {
+
+  .hero.-type-7 .hero__nav{
+    top: 30%;
+  }
   .hero.-type-8 {
     padding-top: 180px;
     padding-bottom: 340px;

@@ -63,7 +63,7 @@ export default function DBListing() {
     <>
       <div
         className={`dashboard ${
-          sideBarOpen ? "-is-sidebar-visible" : ""
+          sideBarOpen ? "" : "-is-sidebar-visible"
         } js-dashboard`}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
@@ -153,7 +153,7 @@ export default function DBListing() {
                     </div>
 
                     <div className="tourCard__info tourCard__info_Dash ">
-                      <div className="m-auto">
+                      <div className="">
                         <button
                           className={
                             elm.vendor_Listning === "Pending"

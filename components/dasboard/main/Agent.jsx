@@ -15,7 +15,7 @@ export default function Sidebar() {
     <>
       <div
         className={`dashboard ${
-          sideBarOpen ? "-is-sidebar-visible" : ""
+          sideBarOpen ? "" : "-is-sidebar-visible"
         } js-dashboard`}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />

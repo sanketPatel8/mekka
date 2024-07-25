@@ -4,17 +4,18 @@ import { menuData } from "@/data/mobileMenu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+
 const socialMediaLinks = [
   { id: 1, class: "icon-facebook", href: "#" },
   { id: 2, class: "icon-twitter", href: "#" },
   { id: 3, class: "icon-instagram", href: "#" },
   { id: 4, class: "icon-linkedin", href: "#" },
 ];
+
 export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
   const [activeSub, setActiveSub] = useState("");
-  // const [Sidebar, setSideBarOpen] = useState(true);
-
   const pathname = usePathname();
+
   return (
     <div
       data-aos="fade"
@@ -49,63 +50,13 @@ export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
             style={{ maxHeight: "calc(100vh - 262px)", overflowY: "auto" }}
           >
             {menuData.map((elm, i) => (
-              <li key={i} className="menuNav__item -has-submenu js-has-submenu">
-                <a
-                  onClick={() =>
-                    setActiveSub((pre) => (pre == elm.label ? "" : elm.label))
-                  }
-                >
-                  <span
-                    className={
-                      elm.submenu.some(
-                        (elm) =>
-                          elm.href.split("/")[1] == pathname?.split("/")[1],
-                      )
-                        ? "activeMenu"
-                        : ""
-                    }
-                  >
-                    {elm.label}
-                  </span>
-                  <i
-                    style={
-                      activeSub == elm.label
-                        ? { transform: "rotate(90deg)", transition: "0.3s" }
-                        : { transform: "rotate(0deg)", transition: "0.3s" }
-                    }
-                    className="icon-chevron-right"
-                  ></i>
-                </a>
-
-                <ul
-                  style={
-                    activeSub == elm.label
-                      ? { maxHeight: "1200px", transition: "0.6s" }
-                      : { maxHeight: "0px", transition: "0.6s" }
-                  }
-                >
-                  {elm.submenu.map((elm2, i2) => (
-                    <li key={i2} className="">
-                      <Link
-                        className={
-                          pathname.split("/")[1] == elm2.href?.split("/")[1]
-                            ? "activeMenu"
-                            : ""
-                        }
-                        style={{ paddingLeft: "15px", fontSize: "17px" }}
-                        href={elm2.href}
-                      >
-                        {elm2.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
+           
+           <li className="menuNav__item" key={elm.id}>
+              <Link href={elm.href}>{elm.label}</Link>
+            </li>
+             
             ))}
 
-            <li className="menuNav__item">
-              <Link href="/contact">Contact</Link>
-            </li>
           </ul>
         </div>
 

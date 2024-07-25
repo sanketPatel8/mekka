@@ -399,7 +399,7 @@ export default function Payment() {
               )}
 
               {bookingStage === 2 && (
-                <div>
+                <div className="px-3 px-lg-0">
                   <div className="d-flex flex-column items-center text-center">
                     <div className="size-80 rounded-full flex-center bg-accent-1 text-white">
                       <i className="icon-check text-26"></i>
@@ -466,9 +466,9 @@ export default function Payment() {
                       <div className="">12 Days</div>
                     </div>
 
-                    <div className="d-flex items-center justify-between">
-                      <div className="fw-500">Tickets:</div>
-                      <div className="">
+                    <div className=" items-center justify-between row">
+                      <div className="fw-500 col-lg-3 col-12">Tickets:</div>
+                      <div className="col-lg-9 text-right col-12">
                         Adult x2 = 98 € - Youth x3 = 383 € - Children x6 = 394 €
                       </div>
                     </div>
@@ -477,6 +477,8 @@ export default function Payment() {
                   <div className="line mt-30 mb-30"></div>
                 </div>
               )}
+
+
             </div>
           </div>
 

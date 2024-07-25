@@ -42,7 +42,7 @@ const OtherInformation2 = () => {
         </div>
       </div>
 
-      <div className="col-lg-3 col-6">
+      <div className="col-lg-3 col-12">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-translate"></i>

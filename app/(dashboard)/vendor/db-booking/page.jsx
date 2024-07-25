@@ -104,7 +104,7 @@ export default function DbBooking() {
   }
 
   return (
-    <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
+    <div className={`dashboard ${sideBarOpen ? "" : "-is-sidebar-visible"} js-dashboard`}>
       <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
       <div className="dashboard__content">
         <Header setSideBarOpen={setSideBarOpen} />

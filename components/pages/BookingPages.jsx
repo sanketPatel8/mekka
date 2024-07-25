@@ -1156,7 +1156,7 @@ export default function BookingPages() {
                       <div className="mr-5">
                         <FaTelegramPlane size={25} color="#DAC04F" />
                       </div>
-                      <div className="text-start">
+                      <div className="text-start">d
                         Airline: Royal Jordanian, Egyptair
                       </div>
                     </div>

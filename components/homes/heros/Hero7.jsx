@@ -3,7 +3,6 @@ import Calender from "@/components/common/dropdownSearch/Calender";
 import Location from "@/components/common/dropdownSearch/Location";
 import TourType from "@/components/common/dropdownSearch/TourType";
 import { useRouter } from "next/navigation";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
@@ -20,29 +19,25 @@ const slides = [
   {
     id: 2,
     imageSrc: "/img/hero/7/image 2.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 3,
     imageSrc: "/img/hero/7/image 3.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 4,
     imageSrc: "/img/hero/7/image 4.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 5,
     imageSrc: "/img/hero/7/image 1.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
 ];
@@ -53,19 +48,12 @@ export default function Hero7() {
   const [location, setLocation] = useState("");
   const [calender, setCalender] = useState("");
   const [tourType, setTourType] = useState("");
-  const [TourMambar, setTourMambar] = useState("");
+  const [tourMambar, setTourMambar] = useState("");
 
   useEffect(() => {
-    setCurrentActiveDD("");
-  }, [location, calender, tourType, setCurrentActiveDD]);
-
-  const dropDownContainer = useRef();
-  useEffect(() => {
+    // Close dropdown when clicking outside
     const handleClick = (event) => {
-      if (
-        dropDownContainer.current &&
-        !dropDownContainer.current.contains(event.target)
-      ) {
+      if (dropDownContainer.current && !dropDownContainer.current.contains(event.target)) {
         setCurrentActiveDD("");
       }
     };
@@ -77,7 +65,10 @@ export default function Hero7() {
     };
   }, []);
 
+  const dropDownContainer = useRef();
+
   const handleDropdownClick = (dropdown) => {
+    // Set the clicked dropdown as active or close if already active
     setCurrentActiveDD((prev) => (prev === dropdown ? "" : dropdown));
   };
 
@@ -123,7 +114,7 @@ export default function Hero7() {
                   </div>
 
                   <div className="container">
-                    <div className="row ">
+                    <div className="row">
                       <div className="col-lg-8 col-md-10">
                         <div className="hero__content">
                           <h1
@@ -137,7 +128,7 @@ export default function Hero7() {
                           <div
                             data-aos="fade-up"
                             data-aos-delay="300"
-                            className="hero__title text--color-accent-1 "
+                            className="hero__title text--color-accent-1"
                           >
                             <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
                               {elm.title.split(",")[0]}
@@ -194,15 +185,13 @@ export default function Hero7() {
               <div className="searchFormItem js-select-control js-form-dd js-calendar">
                 <div
                   className="searchFormItem__button"
-                  // onClick={() => handleDropdownClick("calender")}
+                  onClick={() => handleDropdownClick("calender")}
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-calendar"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5 onClick={() => handleDropdownClick("calender")}>
-                      Start of trip to end of trip
-                    </h5>
+                    <h5>Start of trip to end of trip</h5>
                     <div>
                       <span className="js-first-date">
                         <Calender active={currentActiveDD === "calender"} />

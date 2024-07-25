@@ -311,7 +311,7 @@ export default function SingleFour({ tour }) {
               </div>
             </div>
 
-            <div className="col-lg-4 my-2 my-md-2 my-lg-0">
+            <div className="col-lg-4 my-3 my-md-2 my-lg-0">
               <div
                 style={{ position: "sticky", top: "10px" }}
                 className="d-flex justify-start"

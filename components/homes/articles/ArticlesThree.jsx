@@ -39,7 +39,7 @@ export default function ArticlesThree() {
           className="row justify-content-center mb-10"
         >
           {blogs.slice(0, 3).map((elm, i) => (
-            <div key={i} className="col-lg-3 col-md-5 my-5 border-1 -hover-shadow rounded-12 mx-2 py-3 shadow">
+            <div key={i} className="col-lg-3 col-md-5 my-lg-5  my-2 border-1 -hover-shadow rounded-12 mx-2 py-10 px-10 shadow">
               <Link
                 href={`/toursingle/${elm.id}`}
                 className="blogCard -type-1"

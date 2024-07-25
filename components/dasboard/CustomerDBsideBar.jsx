@@ -1,33 +1,35 @@
 "use client";
 
-import { sidebarItems, sidebarItemsCustomerDB } from "@/data/dashboard";
+import { sidebarItemsCustomerDB } from "@/data/dashboard";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 
 const CustomerDBsideBar = ({ setSideBarOpen }) => {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
-    // const [setSideBarOpen, setSideBarOpen] = useState(true)
+  const handleCloseSidebar = () => {
+    setSideBarOpen(false);
+  };
+
   return (
-    <div>
-        <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
+    <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
       <div className="dashboard__sidebar_header">
         <span
-          onClick={() => setSideBarOpen(false)}
+          onClick={handleCloseSidebar}
           className="closeSidebar"
         >
           &times;
         </span>
         <Link href={"/"}>
           <Image
-                width="167"
-                height="32"
-                src="/img/general/logo-1.png"
-                alt="logo icon"
-                priority
-              />
+            width="167"
+            height="32"
+            src="/img/general/logo-1.png"
+            alt="logo icon"
+            priority
+          />
         </Link>
       </div>
 
@@ -36,10 +38,10 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
           <div
             key={i}
             className={`sidebar__item ${
-              pathname == elm.href ? "-is-active" : ""
+              pathname === elm.href ? "-is-active" : ""
             } `}
           >
-            <Link href={elm.href}>
+            <Link href={elm.href} onClick={handleCloseSidebar}>
               <i className={elm.iconClass}></i>
               <span className="ml-10">{elm.label}</span>
             </Link>
@@ -47,8 +49,7 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
         ))}
       </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default CustomerDBsideBar
+export default CustomerDBsideBar;

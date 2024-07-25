@@ -16,12 +16,11 @@ const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [close, setclose] = useState(true)
-  const [currentTab, setcurrentTab] = useState("Approved");
+
   return (
     <div
   className={`dashboard ${
-    sideBarOpen ? "-is-sidebar-visible" : ""
+    sideBarOpen ? "" : "-is-sidebar-visible"
     } js-dashboard`}
       
     >
@@ -100,7 +99,7 @@ export default function DbBooking() {
                     </div>
 
                     <div className="tourCard__info tourCard__info_Dash ">
-                      <div className="m-auto">
+                      <div className="">
                       <label className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : '' }><b>{elm.arriving}</b></label>
                       <div className="d-flex items-center text-14 ">
                           <i className="icon-clock mr-10"></i>
