@@ -1182,7 +1182,7 @@ export default function AddTour() {
                               {mekkaRows.map((row, index) => (
                                 <li key={index}>
                                   <div className="col-md-12 row">
-                                    <div className="col-4 form-input spacing d-flex flex-column align-items-center hotel-mekka">
+                                    <div className="col-lg-4 col-md-auto col-12 form-input spacing d-flex flex-column align-items-center hotel-mekka">
                                       <CreatableSelect
                                         value={row.hotel}
                                         onChange={(value) =>
@@ -1199,7 +1199,7 @@ export default function AddTour() {
                                       />
                                     </div>
 
-                                    <div className="col-md-4">
+                                    <div className="col-lg-4 col-md-auto col-12">
                                       <div className="form-input spacing">
                                         <input type="text" required />
                                         <label className="lh-1 text-16 text-light-1">
@@ -1228,7 +1228,7 @@ export default function AddTour() {
                                         </button>
                                       )}
                                     </div>
-                                    <div className="col-md-8">
+                                    <div className="col-lg-8 col-md-auto col-12">
                                       <div className="form-input m-0">
                                         <textarea required rows="1"></textarea>
                                         <label className="lh-1 text-16 text-light-1">
@@ -1236,6 +1236,7 @@ export default function AddTour() {
                                         </label>
                                       </div>
                                     </div>
+                                    <hr />
                                   </div>
                                 </li>
                               ))}
@@ -1246,7 +1247,7 @@ export default function AddTour() {
                               {madinaRows.map((row, index) => (
                                 <li key={index}>
                                   <div className="col-md-12 row">
-                                    <div className="col-4 form-input spacing d-flex flex-column align-items-center">
+                                    <div className="col-md-4 form-input spacing d-flex flex-column align-items-center">
                                       <CreatableSelect
                                         value={row.hotel}
                                         onChange={(value) =>
@@ -1271,6 +1272,7 @@ export default function AddTour() {
                                         </label>
                                       </div>
                                     </div>
+
                                     <div className="col-2 d-flex">
                                       <button
                                         type="button"
@@ -1291,6 +1293,7 @@ export default function AddTour() {
                                         </button>
                                       )}
                                     </div>
+
                                     <div className="col-md-8">
                                       <div className="form-input m-0">
                                         <textarea required rows="1"></textarea>
@@ -1299,6 +1302,8 @@ export default function AddTour() {
                                         </label>
                                       </div>
                                     </div>
+
+                                    <hr />
                                   </div>
                                 </li>
                               ))}
@@ -1352,46 +1357,6 @@ export default function AddTour() {
                           </div>
                           <div className="d-flex item-center justify-content-between pt-10">
                             <h6>Add Flight Details</h6>
-                            {/* <div className="flex_start visaYESNOFLEx my-3">
-                              <div className="d-flex items-center mx-2">
-                                <div className="form-radio d-flex items-center">
-                                  <label className="radio d-flex items-center">
-                                    <input
-                                      type="radio"
-                                      name="radioGroup"
-                                      value="Flight_Yes"
-                                      checked={radioValue === "Flight_Yes"}
-                                      onChange={handleRadioChange}
-                                    />
-                                    <span className="radio__mark">
-                                      <span className="radio__icon"></span>
-                                    </span>
-                                    <span className="text-14 lh-1 ml-5">
-                                      Yes
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="d-flex items-center mx-2">
-                                <div className="form-radio d-flex items-center">
-                                  <label className="radio d-flex items-center">
-                                    <input
-                                      type="radio"
-                                      name="radioGroup"
-                                      value="Flight_No"
-                                      checked={radioValue === "Flight_No"}
-                                      onChange={handleRadioChange}
-                                    />
-                                    <span className="radio__mark">
-                                      <span className="radio__icon"></span>
-                                    </span>
-                                    <span className="text-14 lh-1 ml-5">
-                                      No
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                            </div> */}
                           </div>
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm py-20 ">
@@ -1405,7 +1370,7 @@ export default function AddTour() {
                                           handleFlightSelectChange(value, index)
                                         }
                                         options={ChooseFlight}
-                                        className="custom-select Hotel-Madina-dd"
+                                        className="custom-select Flight-selected-dd"
                                         placeholder="Select Flight"
                                         classNamePrefix="react-select"
                                         isClearable
@@ -1448,7 +1413,7 @@ export default function AddTour() {
                                         </label>
                                       </div>
                                     </div>
-                                    <div className="col-2 d-flex">
+                                    <div className="col-md-2 col-lg-auto col-12 d-flex">
                                       <button
                                         type="button"
                                         className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"

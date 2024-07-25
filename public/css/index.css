@@ -465,12 +465,16 @@ hr{
       padding-left: 0;
     } 
     .Hotel-Madina-dd > div:nth-child(3){
-      width: 250px !important;
+      width: 100% !important;
       border: 2px solid green;
     }
 
+    .Flight-selected-dd >  div:nth-child(3) {
+      width: 100% !important;
+    }
+
     .Hotel-Mekka-dd > div:nth-child(3){
-      width: 250px !important;
+      width: 100% !important;
     }
     .dd-vendor > div:nth-child(3){
       width: 80%;

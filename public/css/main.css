@@ -3567,6 +3567,13 @@ h1, h2, h3, h4, h5, h6 {
   right: 30px;
 }
 
+@media (max-width: 1300px){
+  .navAbsolute {
+    left: -50px !important;
+    right : -50px !important;
+  }
+}
+
 @media (max-width: 991px) {
   .hero.-type-2 .navAbsolute {
     left: 12px;
@@ -12676,7 +12683,7 @@ table.table-4.-border-bottom tbody > tr {
 
 .tourSingleSidebar {
   position: relative;
-  /* width: 360px; */
+  width: 100%;
   padding: 30px;
   border-radius: 12px;
   border: 1px solid var(--border, #E7E6E6);
