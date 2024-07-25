@@ -29,13 +29,8 @@ const tabs = [
 
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [showAddMekkaHotelPositive, setshowAddMekkaHotelPositive] =
-    useState(false);
-  const [showAddMadinaHotelPositive, setshowAddMadinaHotelPositive] =
-    useState(false);
   const [SelectedTour, setSelectedTour] = useState("");
   const [gender, setGender] = useState("");
-  const [Hotel, setHotel] = useState("");
   const [activeTab, setActiveTab] = useState("Content");
   const [image1, setImage1] = useState("");
   const [radioValue, setRadioValue] = useState("");
@@ -253,7 +248,7 @@ export default function AddTour() {
     const newRows = [...flightRow];
     newRows[index].Flight = value;
     setFlightRow(newRows);
-  }
+  };
 
   return (
     <>
@@ -764,7 +759,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
@@ -818,7 +812,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
@@ -872,7 +865,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
@@ -926,7 +918,6 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    value={isChecked ? price : ""}
                                     onChange={handlePriceChange}
                                     required
                                   />
@@ -1241,19 +1232,23 @@ export default function AddTour() {
                           activeTab == "Overview" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="y-gap-30 contactForm px-lg-20 px-0 ">
-                          <Editor
-                            editorState={editorState}
-                            toolbarClassName="toolbarClassName"
-                            wrapperClassName="wrapperClassName"
-                            editorClassName="editorClassName"
-                            onEditorStateChange={onEditorStateChange}
-                          />
-                          <div className="col-12">
-                            <div className="row">
-                              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                SAVE DETAILS
-                              </button>
+                        <div className=" contactForm px-lg-20 px-0 ">
+                          <div className="row">
+                            <div className="col-12">
+                              <Editor
+                                editorState={editorState}
+                                toolbarClassName="toolbarClassName"
+                                wrapperClassName="wrapperClassName"
+                                editorClassName="editorClassName"
+                                onEditorStateChange={onEditorStateChange}
+                              />
+                            </div>
+                            <div className="col-12">
+                              <div className="row">
+                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                                  SAVE DETAILS
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1268,7 +1263,7 @@ export default function AddTour() {
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="row ">
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 1 :
@@ -1277,7 +1272,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <textarea
                                     type="text"
                                     required
@@ -1290,7 +1285,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 2 :
@@ -1299,7 +1294,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <textarea
                                     type="text"
                                     required
@@ -1313,7 +1308,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 3 :
@@ -1322,7 +1317,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <textarea
                                     type="text"
                                     required
@@ -1575,46 +1570,6 @@ export default function AddTour() {
                           </div>
                           <div className="d-flex item-center justify-content-between pt-10">
                             <h6>Add Flight Details</h6>
-                            {/* <div className="flex_start visaYESNOFLEx my-3">
-                              <div className="d-flex items-center mx-2">
-                                <div className="form-radio d-flex items-center">
-                                  <label className="radio d-flex items-center">
-                                    <input
-                                      type="radio"
-                                      name="radioGroup"
-                                      value="Flight_Yes"
-                                      checked={radioValue === "Flight_Yes"}
-                                      onChange={handleRadioChange}
-                                    />
-                                    <span className="radio__mark">
-                                      <span className="radio__icon"></span>
-                                    </span>
-                                    <span className="text-14 lh-1 ml-5">
-                                      Yes
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="d-flex items-center mx-2">
-                                <div className="form-radio d-flex items-center">
-                                  <label className="radio d-flex items-center">
-                                    <input
-                                      type="radio"
-                                      name="radioGroup"
-                                      value="Flight_No"
-                                      checked={radioValue === "Flight_No"}
-                                      onChange={handleRadioChange}
-                                    />
-                                    <span className="radio__mark">
-                                      <span className="radio__icon"></span>
-                                    </span>
-                                    <span className="text-14 lh-1 ml-5">
-                                      No
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                            </div> */}
                           </div>
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm py-20 ">
@@ -1622,9 +1577,9 @@ export default function AddTour() {
                                 return (
                                   <div className="row">
                                     <div className="col-md-5">
-                                    <CreatableSelect
+                                      <CreatableSelect
                                         value={row.Flight}
-                                          onChange={(value) =>
+                                        onChange={(value) =>
                                           handleFlightSelectChange(value, index)
                                         }
                                         options={ChooseFlight}

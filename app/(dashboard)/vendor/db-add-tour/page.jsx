@@ -248,7 +248,7 @@ export default function AddTour() {
     const newRows = [...flightRow];
     newRows[index].Flight = value;
     setFlightRow(newRows);
-  }
+  };
 
   return (
     <>
@@ -728,7 +728,7 @@ export default function AddTour() {
                                       onChange={handleCheckboxChange}
                                     />
                                     <label
-                                      htmlFor="bedroom1" 
+                                      htmlFor="bedroom1"
                                       className="form-checkbox__mark"
                                     >
                                       <div className="form-checkbox__icon">
@@ -1232,19 +1232,23 @@ export default function AddTour() {
                           activeTab == "Overview" ? "is-tab-el-active" : ""
                         }`}
                       >
-                        <div className="y-gap-30 contactForm px-lg-20 px-0 ">
-                          <Editor
-                            editorState={editorState}
-                            toolbarClassName="toolbarClassName"
-                            wrapperClassName="wrapperClassName"
-                            editorClassName="editorClassName"
-                            onEditorStateChange={onEditorStateChange}
-                          />
-                          <div className="col-12">
-                            <div className="row">
-                              <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                SAVE DETAILS
-                              </button>
+                        <div className=" contactForm px-lg-20 px-0 ">
+                          <div className="row">
+                            <div className="col-12">
+                              <Editor
+                                editorState={editorState}
+                                toolbarClassName="toolbarClassName"
+                                wrapperClassName="wrapperClassName"
+                                editorClassName="editorClassName"
+                                onEditorStateChange={onEditorStateChange}
+                              />
+                            </div>
+                            <div className="col-12">
+                              <div className="row">
+                                <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                                  SAVE DETAILS
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1259,7 +1263,7 @@ export default function AddTour() {
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="row ">
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 1 :
@@ -1268,7 +1272,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <textarea
                                     type="text"
                                     required
@@ -1281,7 +1285,7 @@ export default function AddTour() {
                                 </div>
                               </div>
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 2 :
@@ -1290,7 +1294,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <textarea
                                     type="text"
                                     required
@@ -1304,7 +1308,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
                                     Day 3 :
@@ -1313,7 +1317,7 @@ export default function AddTour() {
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-input my-1">
+                                <div className="form-input my-0">
                                   <textarea
                                     type="text"
                                     required
@@ -1613,9 +1617,9 @@ export default function AddTour() {
                                 return (
                                   <div className="row">
                                     <div className="col-md-5">
-                                    <CreatableSelect
+                                      <CreatableSelect
                                         value={row.Flight}
-                                          onChange={(value) =>
+                                        onChange={(value) =>
                                           handleFlightSelectChange(value, index)
                                         }
                                         options={ChooseFlight}

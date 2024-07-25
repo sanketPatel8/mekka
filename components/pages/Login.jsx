@@ -29,14 +29,14 @@ export default function Login() {
               onSubmit={(e) => e.preventDefault()}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">
                   Email Address
                 </label>
               </div>
 
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">Password</label>
               </div>

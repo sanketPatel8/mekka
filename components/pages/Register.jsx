@@ -30,29 +30,29 @@ export default function Register() {
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
 
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="text" required />
                 <label className="lh-1 text-16 text-light-1">Name</label>
               </div>
 
-              <div className="form-input mt-10 spacing">
+              <div className="form-input  my-1">
                 <input type="text" required />
                 <label className="lh-1 text-16 text-light-1">Surname</label>
               </div>
 
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">E-Mail Address</label>
               </div>
 
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="password" required />
                 <label className="lh-1 text-16 text-light-1">
                 Password
                 </label>
               </div>
 
-              <div className="form-input spacing">
+              <div className="form-input my-1">
                 <input type="password" required />
                 <label className="lh-1 text-16 text-light-1">
                 Confirm Password
