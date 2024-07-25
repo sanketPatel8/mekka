@@ -49,6 +49,8 @@ export default function AddTour() {
     }));
   };
 
+  console.log(services);
+
   return (
     <>
       <div
