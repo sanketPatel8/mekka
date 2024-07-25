@@ -466,6 +466,7 @@ hr{
     } 
     .Hotel-Madina-dd > div:nth-child(3){
       width: 250px !important;
+      border: 2px solid green;
     }
 
     .Hotel-Mekka-dd > div:nth-child(3){

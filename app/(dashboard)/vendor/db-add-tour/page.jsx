@@ -1399,8 +1399,8 @@ export default function AddTour() {
                             <ul className="">
                               {mekkaRows.map((row, index) => (
                                 <li key={index}>
-                                  <div className="col-md-12 row">
-                                    <div className="col-4 form-input spacing d-flex flex-column align-items-center hotel-mekka">
+                                  <div className="col-md-12 col-12 row">
+                                    <div className="col-md-4 form-input spacing d-flex flex-column align-items-center hotel-mekka">
                                       <CreatableSelect
                                         value={row.hotel}
                                         onChange={(value) =>
@@ -1446,6 +1446,7 @@ export default function AddTour() {
                                         </button>
                                       )}
                                     </div>
+
                                     <div className="col-md-8">
                                       <div className="form-input m-0">
                                         <textarea required rows="1"></textarea>
