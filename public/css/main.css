@@ -4135,7 +4135,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero.-type-7 .hero__nav {
   position: absolute;
-  top: 35%;
+  top: 50%;
   left: 60px;
   right: 60px;
   justify-content: space-between;
@@ -11208,6 +11208,19 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 0;
   width: 72px;
   height: 72px;
+}
+
+@media (max-width: 991px) {
+  .size-72 {
+    width: 50px;
+    height: 50px;
+  }
+
+  .hero.-type-7 .hero__nav{
+    top: 34%;
+    left: 10px;
+    right: 10px;
+  }
 }
 
 .size-80 {
