@@ -65,7 +65,7 @@ export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
 
           <div className="text-20 lh-12 fw-500 mt-20">
             <div>Speak to our expert at</div>
-            <div className="text-accent-1">1-800-453-6744</div>
+            <div className="text-accent-1">+49 (0)6196 204 72 40</div>
           </div>
 
           <div className="d-flex items-center x-gap-10 pt-30">
