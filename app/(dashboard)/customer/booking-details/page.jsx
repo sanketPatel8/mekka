@@ -13,11 +13,7 @@ export default function CustomerDb() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1000) {
-        setSideBarOpen(true);
-      } else {
-        setSideBarOpen(false);
-      }
+      setSideBarOpen(window.innerWidth >= 1000);
     };
 
     // Set the initial state based on the screen size
@@ -33,24 +29,20 @@ export default function CustomerDb() {
   }, []);
 
   return (
-    <>
-      <div
-        className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}
-      >
-        <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
+    <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
+      <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 
-        <div className="dashboard__content">
-          <Header setSideBarOpen={setSideBarOpen} />
+      <div className="dashboard__content">
+        <Header setSideBarOpen={setSideBarOpen} />
 
-          <div className="dashboard__content_content">
-            <CustomerDetaTable />
+        <div className="dashboard__content_content">
+          <CustomerDetaTable />
 
-            <div className="text-center pt-30">
-              © Copyright MekkaBooking.com {new Date().getFullYear()}
-            </div>
+          <div className="text-center pt-30">
+            © Copyright MekkaBooking.com {new Date().getFullYear()}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

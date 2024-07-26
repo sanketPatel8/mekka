@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/dasboard/Header";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
@@ -16,6 +16,32 @@ const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Indicate that the component has mounted
+      // setMounted(true);
+
+      const handleResize = () => {
+        if (window.innerWidth >= 1000) {
+          setSideBarOpen(true);
+        } else {
+          setSideBarOpen(false);
+        }
+      };
+
+      // Set the initial state based on the screen size
+      handleResize();
+
+      // Add event listener to update state on resize
+      window.addEventListener("resize", handleResize);
+
+      // Cleanup event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
 
   return (
     <div

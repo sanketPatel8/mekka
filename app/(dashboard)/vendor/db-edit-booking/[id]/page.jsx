@@ -89,7 +89,7 @@ export default function DbBooking({ params }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
-      setMounted(true);
+      // setMounted(true);
 
       const handleResize = () => {
         if (window.innerWidth >= 1000) {
