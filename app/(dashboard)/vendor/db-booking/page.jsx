@@ -18,24 +18,29 @@ export default function DbBooking() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1000) {
-        setSideBarOpen(true);
-      } else {
-        setSideBarOpen(false);
-      }
-    };
+    if (typeof window !== "undefined") {
+      // Indicate that the component has mounted
+      setMounted(true);
 
-    // Set the initial state based on the screen size
-    handleResize();
+      const handleResize = () => {
+        if (window.innerWidth >= 1000) {
+          setSideBarOpen(true);
+        } else {
+          setSideBarOpen(false);
+        }
+      };
 
-    // Add event listener to update state on resize
-    window.addEventListener("resize", handleResize);
+      // Set the initial state based on the screen size
+      handleResize();
 
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      // Add event listener to update state on resize
+      window.addEventListener("resize", handleResize);
+
+      // Cleanup event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   useEffect(() => {

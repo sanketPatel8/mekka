@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Header from "@/components/dasboard/Header";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
@@ -31,12 +31,11 @@ export default function CustomerDb() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <>
       <div
-        className={`dashboard ${
-          sideBarOpen ? "-is-sidebar-visible" : ""
-        } js-dashboard`}
+        className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}
       >
         <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 

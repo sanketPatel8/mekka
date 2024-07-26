@@ -1,13 +1,13 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Header from "@/components/dasboard/Header";
-import { useEffect, useState } from "react";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import { PaymentPendingHistry, StatusPaymentHistry } from "@/data/dashboard";
 import DataTable from "react-data-table-component";
 
 export default function DBListing() {
-  const [sideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1000);
+  const [sideBarOpen, setSideBarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const VandorBookings = [
@@ -50,25 +50,28 @@ export default function DBListing() {
   ];
 
   useEffect(() => {
-    const handleResize = () => {
-      setSideBarOpen(window.innerWidth >= 1000);
-    };
+    if (typeof window !== "undefined") {
+      setMounted(true);
 
-    // Add event listener to update state on resize
-    window.addEventListener("resize", handleResize);
+      const handleResize = () => {
+        setSideBarOpen(window.innerWidth >= 1000);
+      };
 
-    // Indicate that the component has mounted
-    setMounted(true);
+      // Set the initial state based on the screen size
+      handleResize();
 
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      // Add event listener to update state on resize
+      window.addEventListener("resize", handleResize);
+
+      // Cleanup event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   if (!mounted) {
-    // Avoid rendering client-specific elements until the component has mounted
-    return null;
+    return null; // Avoid rendering client-specific elements until the component has mounted
   }
 
   return (
@@ -93,12 +96,10 @@ export default function DBListing() {
                     <div className="col-auto">
                       <div>{elm.title}</div>
                       <div className="text-30 fw-700">{elm.amount}</div>
-
                       <div>
                         {/* <span className="text-accent-1">{elm.today}</span> Today */}
                       </div>
                     </div>
-
                     <div className="col-auto">
                       <div className="size-80 flex-center bg-accent-1-05 rounded-full">
                         <i className={`text-30 ${elm.iconClass}`}></i>
