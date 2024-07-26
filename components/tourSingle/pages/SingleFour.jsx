@@ -27,8 +27,8 @@ export default function SingleFour({ tour }) {
 
       <section className="layout-pt-md">
         <div className="container pl-lg-auto pl-md-auto pl-0">
-          <div className="row y-gap-30 justify-between ml-lg-2 ml-md-0 ml-0">
-            <div className="col-lg-8 border-1 single-lft-box-shadow">
+          <div className="row y-gap-30 justify-between ml-lg-2 ml-md-0 ml-0 ">
+            <div className="col-lg-8 col-11 border-1 single-lft-box-shadow mx-auto">
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
                 <OthersInformation />
               </div>
