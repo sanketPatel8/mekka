@@ -3,7 +3,7 @@ import React from "react";
 
 export default function BannerOne() {
   return (
-    <section className="cta -type-1 py-3 border-1">
+    <section className="cta -type-1 banner-one-main-pt-30 pt-10 border-1">
       <div className="cta__bg">
         <Image width={1920} height={300} src="/img/cta/1/Frame 3.jpg" alt="image" className="full_width"/>
       </div>
@@ -59,7 +59,7 @@ export default function BannerOne() {
             </div>
           </div>
 
-          <div className="col-lg-6 pt-3">
+          <div className="col-lg-6 pt-3 ">
             <div className="cta__image">
               <Image
                 width={667}

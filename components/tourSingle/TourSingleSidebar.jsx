@@ -311,7 +311,7 @@ export default function TourSingleSidebar() {
                     checked={selectedCheckbox}
                     onChange={handleExcludeFlight}
                   />
-                  <label htmlFor="item4" className="form-checkbox__mark">
+                  <label htmlFor="item4" className="form-checkbox__mark ml-0">
                     <div className="form-checkbox__icon">
                       <svg
                         width="10"
