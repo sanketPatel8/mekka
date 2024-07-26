@@ -20,7 +20,7 @@ export default function DbBooking() {
   return (
     <div
   className={`dashboard ${
-    sideBarOpen ? "" : "-is-sidebar-visible"
+    sideBarOpen ? "-is-sidebar-visible" : ""
     } js-dashboard`}
       
     >

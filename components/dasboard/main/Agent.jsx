@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Sidebar from "../Sidebar";
 import States from "./States";
 import Activities from "./Activities";
@@ -11,11 +11,33 @@ import AgentDBsideBar from "../AgentDBsideBar";
 
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1000) {
+        setSideBarOpen(true);
+      } else {
+        setSideBarOpen(false);
+      }
+    };
+
+    // Set the initial state based on the screen size
+    handleResize();
+
+    // Add event listener to update state on resize
+    window.addEventListener("resize", handleResize);
+
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       <div
         className={`dashboard ${
-          sideBarOpen ? "" : "-is-sidebar-visible"
+          sideBarOpen ? "-is-sidebar-visible" : ""
         } js-dashboard`}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />

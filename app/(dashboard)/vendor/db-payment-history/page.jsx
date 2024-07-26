@@ -7,7 +7,7 @@ import { PaymentPendingHistry, StatusPaymentHistry } from "@/data/dashboard";
 import DataTable from "react-data-table-component";
 
 export default function DBListing() {
-  const [sideBarOpen, setSideBarOpen] = useState(true);
+  const [sideBarOpen, setSideBarOpen] = useState(window.innerWidth >= 1000);
   const [mounted, setMounted] = useState(false);
 
   const VandorBookings = [
@@ -35,13 +35,35 @@ export default function DBListing() {
       sortable: true,
     },
     { name: "Paid (€) ", selector: (row) => row.Payment_Tax, sortable: true },
-    { name: "Date ", selector: (row) => row.Booking_date, sortable: true  , width : "100px"},
-    { name: "Transaction ID ", selector: (row) => row.Transation_id, sortable: true  , width : "150px"},
+    {
+      name: "Date ",
+      selector: (row) => row.Booking_date,
+      sortable: true,
+      width: "100px",
+    },
+    {
+      name: "Transaction ID ",
+      selector: (row) => row.Transation_id,
+      sortable: true,
+      width: "150px",
+    },
   ];
 
   useEffect(() => {
+    const handleResize = () => {
+      setSideBarOpen(window.innerWidth >= 1000);
+    };
+
+    // Add event listener to update state on resize
+    window.addEventListener("resize", handleResize);
+
     // Indicate that the component has mounted
     setMounted(true);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   if (!mounted) {
@@ -52,7 +74,7 @@ export default function DBListing() {
   return (
     <div
       className={`dashboard ${
-        sideBarOpen ? "" : "-is-sidebar-visible"
+        sideBarOpen ? "-is-sidebar-visible" : ""
       } js-dashboard`}
     >
       <AgentDBsideBar setSideBarOpen={setSideBarOpen} />

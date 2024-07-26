@@ -18,6 +18,27 @@ export default function DbBooking() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1000) {
+        setSideBarOpen(true);
+      } else {
+        setSideBarOpen(false);
+      }
+    };
+
+    // Set the initial state based on the screen size
+    handleResize();
+
+    // Add event listener to update state on resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
     setIsClient(true);
   }, []);
 
@@ -104,7 +125,7 @@ export default function DbBooking() {
   }
 
   return (
-    <div className={`dashboard ${sideBarOpen ? "" : "-is-sidebar-visible"} js-dashboard`}>
+    <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
       <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
       <div className="dashboard__content">
         <Header setSideBarOpen={setSideBarOpen} />

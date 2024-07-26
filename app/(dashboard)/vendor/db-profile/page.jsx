@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/dasboard/Header";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import Image from "next/image";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import $ from "jquery";
@@ -39,11 +39,32 @@ export default function Profile() {
     console.log(newValue);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1000) {
+        setSideBarOpen(true);
+      } else {
+        setSideBarOpen(false);
+      }
+    };
+
+    // Set the initial state based on the screen size
+    handleResize();
+
+    // Add event listener to update state on resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <div
         className={`dashboard ${
-          sideBarOpen ? "" : "-is-sidebar-visible"
+          sideBarOpen ? "-is-sidebar-visible" : ""
         } js-dashboard`}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
