@@ -183,10 +183,10 @@ export default function TourList4() {
                           <MdBed className="mx-2" color="#DAC04F" size={20}/>
                           {elm.bedrooms}
                         </p>
-                        <p className="d-flex items-center text-14 free-cancellation p-2 border-info my-2 m_width ">
+                        {/* <p className="d-flex items-center text-14 free-cancellation p-2 border-info my-2 m_width ">
                           <FaCheck className="mx-2" color="#DAC04F" size={20} />
                           {elm.cancel}
-                        </p>
+                        </p> */}
 
                         <div className="tourCard__price">
                           <div></div>
