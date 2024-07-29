@@ -5,6 +5,7 @@ import "select2/dist/css/select2.min.css";
 import { DM_Sans } from "next/font/google";
 import ScrollTopBehaviour from "@/components/common/ScrollTopBehavier";
 import Wrapper from "@/components/layout/Wrapper";
+import { TranslationProvider } from "@/app/context/TranslationContext";
 
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -24,9 +25,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head></head>
       <body className={dmsans.className}>
-        <Wrapper>{children}</Wrapper>
+        <TranslationProvider >
+        <Wrapper>
+          {children}
+          </Wrapper>
         <ScrollToTop />
         <ScrollTopBehaviour />
+        </TranslationProvider>
       </body>
     </html>
   );

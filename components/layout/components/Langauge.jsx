@@ -1,16 +1,18 @@
 "use client";
 
+import { useTranslations } from "@/app/context/TranslationContext";
 import { useState, useEffect, useRef } from "react";
 
-const currencies = [
-  "DE",
-  "EN",
-];
+const currencies = ["DE", "EN"];
 
-export default function Langauge({ parentClass } ) {
+export default function Langauge({ parentClass }) {
   const [currentdd, setCurrentdd] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("DE");
+
+  const { setLocale } = useTranslations();
+
   const dropDownContainer = useRef();
+
   useEffect(() => {
     const handleClick = (event) => {
       if (
@@ -49,7 +51,7 @@ export default function Langauge({ parentClass } ) {
       >
         <div className="headerDropdown">
           <div className="headerDropdown__container">
-            {currencies.map((elm, i) => (
+            {/* {currencies.map((elm, i) => (
               <div
                 onClick={() => {
                   setSelectedCurrency(elm);
@@ -58,9 +60,13 @@ export default function Langauge({ parentClass } ) {
                 key={i}
                 className="headerDropdown__item"
               >
-                <button className="currencyhov">{elm}</button>
+                <button className="currencyhov" onClick={() => setLocale('en')}>{elm}</button>
               </div>
-            ))}
+            ))} */}
+            <div className="d-flex flex-column">
+              <button onClick={() => setLocale("en")}>English</button>
+              <button onClick={() => setLocale("de")}>German</button>
+            </div>
           </div>
         </div>
       </div>
