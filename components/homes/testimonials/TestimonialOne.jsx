@@ -29,7 +29,7 @@ export default function TestimonialOne() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-                   {translate("customerReview") || "Find Latest Packages"}
+                   {translate("Customer Reviews") || "Find Latest Packages"}
             </h2>
           </div>
         </div>

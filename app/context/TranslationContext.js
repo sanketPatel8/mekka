@@ -12,7 +12,8 @@ export const TranslationProvider = ({ children }) => {
     // Fetch the translation file for the current locale
     fetch(`/locales/${locale}.json`)
       .then((response) => response.json())
-      .then((data) => setTranslations(data)); // No array indexing needed
+      .then((data) => setTranslations(data))
+      .catch((error) => console.error("Error fetching translations:", error));
   }, [locale]);
 
   const translate = (key) => translations[key] || key;

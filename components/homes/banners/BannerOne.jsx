@@ -19,9 +19,9 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="text-40 md:text-24 lh-13 text-white text-left md:text-center lg:text-center xl:text-center"
               >
-               {translate("bannerOneH1") || "Find Latest Packages"}
+               {translate("Get 10% off your 1st") || "Find Latest Packages"}
                 <br className="lg:d-none" />
-                {translate("bannerOneH2") || "Find Latest Packages"}
+                {translate("booking") || "Find Latest Packages"}
               </h2>
 
               <p
@@ -29,9 +29,9 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="mt-10  text-left md:text-center lg:text-center xl:text-center text-white "
               >
-                {translate("bannerOneP") || "Find Latest Packages"}
+                {translate("To get a discount enter your email address and you will") || "Find Latest Packages"}
                 <br className="lg:d-none" />
-                {translate("bannerOnePafterBR") || "Find Latest Packages"}
+                {translate("get code on your email") || "Find Latest Packages"}
               </p>
 
               <div
@@ -39,7 +39,7 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="text-18  mt-40 md:mt-20 text-left md:text-center lg:text-center xl:text-center text-white "
                 >
-                {translate("senEmail") || "Find Latest Packages"}
+                {translate("Get a magic link sent to your email") || "Find Latest Packages"}
               </div>
 
               <div className="mt-10">

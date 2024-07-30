@@ -31,7 +31,7 @@ export default function TourSlderOne() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-                {translate("TourSlderOneh") || "Find Latest Packages"}
+                {translate("Top Trending") || "Find Latest Packages"}
             </h2>
           </div>
 
@@ -42,7 +42,7 @@ export default function TourSlderOne() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span> {translate("seeAll") || "Find Latest Packages"}</span>
+              <span> {translate("See all") || "Find Latest Packages"}</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>
