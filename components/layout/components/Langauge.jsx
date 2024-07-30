@@ -69,8 +69,8 @@ export default function Language({ parentClass, onLocaleChange }) {
                     setSelectedCurrency(currency);
                     handleLocaleChange(currency);
                   }}
-                >
-                  {currency === "EN" ? "en" : "de"}
+                > 
+                  {currency === "EN" ? "EN" : "DE"}
                 </button>
               ))}
             </div>
