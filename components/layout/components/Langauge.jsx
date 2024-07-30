@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/app/context/TranslationContext";
 import { useState, useEffect, useRef } from "react";
 
 const currencies = ["DE", "EN"];
@@ -35,6 +36,8 @@ export default function Language({ parentClass, onLocaleChange }) {
     setCurrentdd("");
   };
 
+  const { setLocale } = useTranslation();
+
   return (
     <div
       ref={dropDownContainer}
@@ -46,7 +49,7 @@ export default function Language({ parentClass, onLocaleChange }) {
           setCurrentdd((prev) => (prev === "currency" ? "" : "currency"))
         }
       >
-        {selectedCurrency === "DE" ? "German" : "English"}
+        {selectedCurrency === "DE" ? "DE" : "EN"}
         <i className="icon-chevron-down text-18"></i>
       </div>
 
@@ -61,11 +64,14 @@ export default function Language({ parentClass, onLocaleChange }) {
               {currencies.map((currency) => (
                 <button
                   key={currency}
-                  onClick={() => handleLocaleChange(currency)}
+                  onClick={() => setLocale(currency)}
                 >
-                  {currency === "DE" ? "German" : "English"}
+                  {currency === "DE" ? "DE" : "EN"}
                 </button>
               ))}
+
+{/* <button onClick={() => setLocale("en")}>English</button>
+<button onClick={() => setLocale("de")}>German</button> */}
             </div>
           </div>
         </div>

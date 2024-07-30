@@ -2207,7 +2207,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--Border, #E7E6E6);
   padding: 20px 40px;
-  width: 220px;
+  /* width: 220px; */
 }
 
 .headerDropdown .headerDropdown__item {

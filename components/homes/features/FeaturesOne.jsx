@@ -1,37 +1,11 @@
+// components/homes/features/FeaturesOne.jsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useTranslation } from "@/app/context/TranslationContext";
 import { features } from "@/data/features";
 
-// Function to fetch translations
-const fetchTranslations = async (locale) => {
-  try {
-    const res = await fetch(`/locales/${locale}.json`);
-    if (!res.ok)
-      throw new Error(`Failed to fetch translations: ${res.statusText}`);
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return {};
-  }
-};
-
-export default function FeaturesOne({ locale }) {
-  const [translations, setTranslations] = useState({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    fetchTranslations(locale)
-      .then((data) => {
-        setTranslations(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching translations:", error);
-        setLoading(false);
-      });
-  }, [locale]);
+export default function FeaturesOne() {
+  const { translate } = useTranslation();
 
   return (
     <section className="pt-50">
@@ -39,13 +13,11 @@ export default function FeaturesOne({ locale }) {
         <div className="row">
           <div className="col-auto">
             <h2 data-aos="fade-up" className="text-30 md:text-24">
-              {loading
-                ? "Loading..."
-                : translations.welcome || "Why choose MekkaBooking?"}
+              {translate("welcome") || "Why choose MekkaBooking?"}
             </h2>
           </div>
         </div>
-        <div
+        <div  
           data-aos="fade-up"
           className="row md:x-gap-20 pt-40 sm:pt-20 mobile-css-slider -w-280"
         >
