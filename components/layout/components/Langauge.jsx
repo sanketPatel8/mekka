@@ -56,7 +56,7 @@ export default function Language({ parentClass, onLocaleChange }) {
       <div
         className={`headerDropdown__content ${
           currentdd === "currency" ? "is-active" : ""
-        } `}
+        }`}
       >
         <div className="headerDropdown">
           <div className="headerDropdown__container">
@@ -64,14 +64,15 @@ export default function Language({ parentClass, onLocaleChange }) {
               {currencies.map((currency) => (
                 <button
                   key={currency}
-                  onClick={() => setLocale(currency)}
+                  onClick={() => {
+                    setLocale(currency);
+                    setSelectedCurrency(currency);
+                    handleLocaleChange(currency);
+                  }}
                 >
                   {currency === "DE" ? "DE" : "EN"}
                 </button>
               ))}
-
-{/* <button onClick={() => setLocale("en")}>English</button>
-<button onClick={() => setLocale("de")}>German</button> */}
             </div>
           </div>
         </div>
