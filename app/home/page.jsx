@@ -13,9 +13,9 @@ import Header1 from "@/components/layout/header/Header1";
 export default function Home() {
   return (
     <main>
-      <Header1 />
       <Hero7 />
-      <FeaturesOne />
+      <Header1 />
+      {/* <FeaturesOne /> */}
       <Tour1 />
       <Banner />
       <TourSlderOne />

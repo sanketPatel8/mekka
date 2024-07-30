@@ -1,17 +1,37 @@
-// @/components/homes/features/FeaturesOne.jsx
-import React from 'react';
-import { features } from '@/data/features';
-import { useTranslations } from '@/app/context/TranslationContext';
+"use client";
 
-export default function FeaturesOne() {
-  const { translations } = useTranslations();
+import { useState, useEffect } from "react";
+import { features } from "@/data/features";
 
-  console.log('useTranslations:', useTranslations);
-  console.log('translations:', translations);
-
-  if (!translations) {
-    return <div>Loading translations...</div>;
+// Function to fetch translations
+const fetchTranslations = async (locale) => {
+  try {
+    const res = await fetch(`/locales/${locale}.json`);
+    if (!res.ok)
+      throw new Error(`Failed to fetch translations: ${res.statusText}`);
+    return res.json();
+  } catch (error) {
+    console.error(error);
+    return {};
   }
+};
+
+export default function FeaturesOne({ locale }) {
+  const [translations, setTranslations] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchTranslations(locale)
+      .then((data) => {
+        setTranslations(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching translations:", error);
+        setLoading(false);
+      });
+  }, [locale]);
 
   return (
     <section className="pt-50">
@@ -19,11 +39,16 @@ export default function FeaturesOne() {
         <div className="row">
           <div className="col-auto">
             <h2 data-aos="fade-up" className="text-30 md:text-24">
-              {translations.greeting || 'Default Greeting'}
+              {loading
+                ? "Loading..."
+                : translations.welcome || "Why choose MekkaBooking?"}
             </h2>
           </div>
         </div>
-        <div data-aos="fade-up" className="row md:x-gap-20 pt-40 sm:pt-20 mobile-css-slider -w-280">
+        <div
+          data-aos="fade-up"
+          className="row md:x-gap-20 pt-40 sm:pt-20 mobile-css-slider -w-280"
+        >
           {features.map((elm, i) => (
             <div key={i} className="col-lg-4 col-sm-4 my-4">
               <div className="featureIcon -type-1 pr-40 md:pr-0">
@@ -33,7 +58,9 @@ export default function FeaturesOne() {
                 <h3 className="featureIcon__title text-18 fw-500 mt-30 text-center">
                   {elm.title}
                 </h3>
-                <p className="featureIcon__text mt-10 text-center">{elm.text}</p>
+                <p className="featureIcon__text mt-10 text-center">
+                  {elm.text}
+                </p>
               </div>
             </div>
           ))}

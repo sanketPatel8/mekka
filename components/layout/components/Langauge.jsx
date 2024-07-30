@@ -1,16 +1,12 @@
 "use client";
 
-import { useTranslations } from "@/app/context/TranslationContext";
 import { useState, useEffect, useRef } from "react";
 
 const currencies = ["DE", "EN"];
 
-export default function Langauge({ parentClass }) {
+export default function Language({ parentClass, onLocaleChange }) {
   const [currentdd, setCurrentdd] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("DE");
-
-  const { setLocale } = useTranslations();
-
   const dropDownContainer = useRef();
 
   useEffect(() => {
@@ -29,43 +25,47 @@ export default function Langauge({ parentClass }) {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
+  const handleLocaleChange = (locale) => {
+    console.log("Changing locale to:", locale); // Debugging statement
+    setSelectedCurrency(locale);
+    if (onLocaleChange) {
+      onLocaleChange(locale);
+    }
+    setCurrentdd("");
+  };
+
   return (
     <div
       ref={dropDownContainer}
-      className={`${parentClass ? parentClass : "headerDropdown  js-form-dd"}`}
+      className={`${parentClass ? parentClass : "headerDropdown js-form-dd"}`}
     >
       <div
         className="headerDropdown__button"
         onClick={() =>
-          setCurrentdd((pre) => (pre == "currency" ? "" : "currency"))
+          setCurrentdd((prev) => (prev === "currency" ? "" : "currency"))
         }
       >
-        {selectedCurrency}
+        {selectedCurrency === "DE" ? "German" : "English"}
         <i className="icon-chevron-down text-18"></i>
       </div>
 
       <div
         className={`headerDropdown__content ${
-          currentdd == "currency" ? "is-active" : ""
+          currentdd === "currency" ? "is-active" : ""
         } `}
       >
         <div className="headerDropdown">
           <div className="headerDropdown__container">
-            {/* {currencies.map((elm, i) => (
-              <div
-                onClick={() => {
-                  setSelectedCurrency(elm);
-                  setCurrentdd("");
-                }}
-                key={i}
-                className="headerDropdown__item"
-              >
-                <button className="currencyhov" onClick={() => setLocale('en')}>{elm}</button>
-              </div>
-            ))} */}
             <div className="d-flex flex-column">
-              <button onClick={() => setLocale("en")}>English</button>
-              <button onClick={() => setLocale("de")}>German</button>
+              {currencies.map((currency) => (
+                <button
+                  key={currency}
+                  onClick={() => handleLocaleChange(currency)}
+                >
+                  {currency === "DE" ? "German" : "English"}
+                </button>
+              ))}
             </div>
           </div>
         </div>

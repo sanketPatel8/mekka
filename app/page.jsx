@@ -13,7 +13,7 @@ export const metadata = {
 export default function page() {
   return (
     <>
-     {/* <Provider language={langauge} translation={HomeT}> */}
+      {/* <Provider language={langauge} translation={HomeT}> */}
       <Firstpage />
       {/* </Provider> */}
     </>

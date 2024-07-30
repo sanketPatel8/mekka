@@ -1,5 +1,5 @@
 {
-    "greeting": "Warum MekkaBooking wählen?",
-    "farewell": "Auf Wiedersehen"
-  }
-  
+  "welcome": "Warum MekkaBooking wählen?",
+  "home": "Zuhause",
+  "about": "Über"
+}

@@ -1,33 +1,26 @@
-// @/app/context/TranslationContext.js
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { loadTranslations } from '@/app/ilb/i18n';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const TranslationContext = createContext();
 
-export function TranslationProvider({ children }) {
+export const TranslationProvider = ({ children }) => {
+  const [locale, setLocale] = useState("en");
   const [translations, setTranslations] = useState({});
-  const [locale, setLocale] = useState('en'); // Default locale
 
   useEffect(() => {
-    async function fetchTranslations() {
-      console.log('Fetching translations for locale:', locale);
-      const translations = await loadTranslations(locale);
-      console.log('Translations fetched:', translations);
-      setTranslations(translations);
-    }
-
-    fetchTranslations();
+    fetch(`/locales/${locale}.json`)
+      .then((response) => response.json())
+      .then((data) => setTranslations(data));
   }, [locale]);
 
+  const translate = (key) => translations[key] || key;
+
   return (
-    <TranslationContext.Provider value={{ translations, setLocale }}>
+    <TranslationContext.Provider value={{ translate, setLocale }}>
       {children}
     </TranslationContext.Provider>
   );
-}
+};
 
-export function useTranslations() {
-  return useContext(TranslationContext);
-}
+export const useTranslation = () => useContext(TranslationContext);

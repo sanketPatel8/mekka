@@ -1,26 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import HeaderSerch from "../components/HeaderSerch";
-import Currency from "../components/Currency";
 import MobileMenu from "../components/MobileMenu";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import LangaugeSwitcher from "@/components/LanSwitcher/LangaugeSwitcher";
-import Langauge from "../components/Langauge";
-
-
+import Language from "../components/Langauge";
+import FeaturesOne from "@/components/homes/features/FeaturesOne";
 
 export default function Header1() {
-
   const router = useRouter();
-  const pageNavigate = (pageName) => {
-    router.push(pageName);
-  };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [addClass, setAddClass] = useState(false);
+  const [locale, setLocale] = useState("DE");
 
   // Add a class to the element when scrolled 50px
   const handleScroll = () => {
@@ -29,6 +22,11 @@ export default function Header1() {
     } else {
       setAddClass(false);
     }
+  };
+
+  const handleLocaleChange = (locale) => {
+    console.log("Locale changed to:", locale); // Debugging statement
+    setLocale(locale);
   };
 
   useEffect(() => {
@@ -65,36 +63,32 @@ export default function Header1() {
                 priority
               />
             </Link>
-           <div className="media">
-           <Link href="/" className="mx-3">
+            <div className="media">
+              <Link href="/" className="mx-3">
                 Home
               </Link>
-              <Link href="/tourlist" className=" mx-3">
+              <Link href="/tourlist" className="mx-3">
                 Tour
               </Link>
-              <Link href="/tourlist?=Hajj" className=" mx-3">
+              <Link href="/tourlist?=Hajj" className="mx-3">
                 Hajj
               </Link>
-              <Link href="/tourlist?=Umrah" className=" mx-3">
+              <Link href="/tourlist?=Umrah" className="mx-3">
                 Umrah
               </Link>
-              <Link href="/contact" className=" mx-3">
+              <Link href="/contact" className="mx-3">
                 Contact
               </Link>
-           </div>
-           
+            </div>
           </div>
 
           <div className="headerMobile__right">
-            <button
-              onClick={() => pageNavigate("/tourlist")}
-              className="d-flex"
-            >
+            <button onClick={() => router.push("/tourlist")} className="d-flex">
               <i className="icon-search text-18"></i>
             </button>
 
             <button
-              onClick={() => pageNavigate("/login")}
+              onClick={() => router.push("/login")}
               className="d-flex ml-10"
             >
               <i className="icon-person text-18"></i>
@@ -102,21 +96,26 @@ export default function Header1() {
           </div>
 
           <div className="header__right">
-          <div className="xl:d-none ml-10">
+            <div className="xl:d-none ml-10">
               <HeaderSerch />
             </div>
-            
-            {/* <Currency /> */}
 
-            <Langauge />
+            <Language onLocaleChange={handleLocaleChange} />
 
-            <Link href="/register" className="ml-10">Sign Up</Link>
+            <Link href="/register" className="ml-10">
+              Sign Up
+            </Link>
 
-            <Link href="/login" className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20 ">Log In</Link>
+            <Link
+              href="/login"
+              className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20"
+            >
+              Log In
+            </Link>
 
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="header__menuBtn ml-30 js-menu-button "
+              className="header__menuBtn ml-30 js-menu-button"
               id="menuhide"
             >
               <i className="icon-main-menu"></i>
@@ -128,6 +127,7 @@ export default function Header1() {
         setMobileMenuOpen={setMobileMenuOpen}
         mobileMenuOpen={mobileMenuOpen}
       />
+      <FeaturesOne locale={locale} />
     </>
   );
 }
