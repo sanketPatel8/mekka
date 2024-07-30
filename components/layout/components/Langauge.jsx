@@ -70,7 +70,7 @@ export default function Language({ parentClass, onLocaleChange }) {
                     handleLocaleChange(currency);
                   }}
                 >
-                  {currency === "EN" ? "EN" : "DE"}
+                  {currency === "EN" ? "en" : "de"}
                 </button>
               ))}
             </div>
