@@ -7,7 +7,7 @@ const currencies = ["DE", "EN"];
 
 export default function Language({ parentClass, onLocaleChange }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("DE");
+  const [selectedCurrency, setSelectedCurrency] = useState("EN");
   const dropDownContainer = useRef();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Language({ parentClass, onLocaleChange }) {
           setCurrentdd((prev) => (prev === "currency" ? "" : "currency"))
         }
       >
-        {selectedCurrency === "DE" ? "DE" : "EN"}
+        {selectedCurrency === "EN" ? "EN" : "DE"}
         <i className="icon-chevron-down text-18"></i>
       </div>
 
@@ -70,7 +70,7 @@ export default function Language({ parentClass, onLocaleChange }) {
                     handleLocaleChange(currency);
                   }}
                 >
-                  {currency === "DE" ? "DE" : "EN"}
+                  {currency === "EN" ? "EN" : "DE"}
                 </button>
               ))}
             </div>
