@@ -1,23 +1,25 @@
 import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
+import { useTranslation } from "@/app/context/TranslationContext";
 import { FaPersonWalking } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 export default function Tour1() {
+  const { translate } = useTranslation();
   return (
     <section className="layout-pt-xl layout-pb-xl">
       <div className="container">
         <div className="row justify-between items-end y-gap-10">
           <div className="col-auto">
             <h2
-              data-aos="fade-right"
+              data-aos="fade-right"   
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Find Latest Packages
-            </h2>
+               {translate("Tour1") || "Find Latest Packages"}
+            </h2> 
           </div>
 
           <div className="col-auto">
@@ -27,7 +29,7 @@ export default function Tour1() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span>See all</span>
+              <span>  {translate("seeAll") || "Find Latest Packages"}</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>

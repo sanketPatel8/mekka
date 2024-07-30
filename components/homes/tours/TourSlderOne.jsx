@@ -9,12 +9,16 @@ import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function TourSlderOne() {
   const [showSwiper, setShowSwiper] = useState(false);
   useEffect(() => {
     setShowSwiper(true);
   }, []);
+
+  const { translate } = useTranslation();
+
   return (
     <section className="layout-pt-sm layout-pb-sm relative">
       <div className="sectionBg -w-1530 rounded-12 bg-light-1"></div>
@@ -27,7 +31,7 @@ export default function TourSlderOne() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Top Trending
+                {translate("TourSlderOneh") || "Find Latest Packages"}
             </h2>
           </div>
 
@@ -38,7 +42,7 @@ export default function TourSlderOne() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span>See all</span>
+              <span> {translate("seeAll") || "Find Latest Packages"}</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>

@@ -1,5 +1,19 @@
 {
-  "welcome": "Warum MekkaBooking wählen?",
-  "home": "Zuhause",
-  "about": "Über"
+  "FeaturesOne": "Warum MekkaBooking wählen?",
+  "Tour1": "Aktuelle Pakete finden",
+  "seeAll": "alles sehen",
+  "bannerhline1": "Schnapp dir bis zu",
+  "bannerhspan": "35 % Rabatt",
+  "bannerhline2": "auf deinen Favoriten",
+  "bannerhline3": "Reiseziel",
+  "bannerP": "Zeitlich begrenztes Angebot, verpasse diese Gelegenheit nicht",
+  "bannerbtn": "buchen Sie jetzt",
+  "TourSlderOneh": "Top-Trends",
+  "customerReview": "Kundenrezensionen",
+  "bannerOneH1": "Erhalten Sie 10 % Rabatt auf Ihre 1. Buchung",
+  "bannerOneH2": "Buchung",
+  "bannerOneP": "Um einen Rabatt zu erhalten, geben Sie Ihre E-Mail-Adresse ein und Sie werden",
+  "bannerOnePafterBR": "einen Code per E-Mail erhalten.",
+  "senEmail": "Einen magischen Link erhalten Sie per E-Mail",
+  "ArticlesThree" : "Reiseartikel"
 }

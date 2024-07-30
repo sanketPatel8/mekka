@@ -5,7 +5,10 @@ import { Navigation, Pagination } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { testimonialsOne } from "@/data/testimonials";
 import Image from "next/image";
+import { useTranslation } from "@/app/context/TranslationContext";
+
 export default function TestimonialOne() {
+  const { translate } = useTranslation();
   return (
     <section className="relative layout-pt-xl layout-pb-xl">
       <div className="sectionBg md:d-none">
@@ -26,7 +29,7 @@ export default function TestimonialOne() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              Customer Reviews
+                   {translate("customerReview") || "Find Latest Packages"}
             </h2>
           </div>
         </div>

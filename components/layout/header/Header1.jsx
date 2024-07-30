@@ -7,13 +7,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Language from "../components/Langauge";
-import FeaturesOne from "@/components/homes/features/FeaturesOne";
 
 export default function Header1() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
-  const [locale, setLocale] = useState("DE");
 
   // Add a class to the element when scrolled 50px
   const handleScroll = () => {
@@ -22,11 +20,6 @@ export default function Header1() {
     } else {
       setAddClass(false);
     }
-  };
-
-  const handleLocaleChange = (locale) => {
-    console.log("Locale changed to:", locale); // Debugging statement
-    setLocale(locale);
   };
 
   useEffect(() => {
@@ -100,7 +93,7 @@ export default function Header1() {
               <HeaderSerch />
             </div>
 
-            <Language onLocaleChange={handleLocaleChange} />
+            <Language />
 
             <Link href="/register" className="ml-10">
               Sign Up
@@ -127,7 +120,6 @@ export default function Header1() {
         setMobileMenuOpen={setMobileMenuOpen}
         mobileMenuOpen={mobileMenuOpen}
       />
-      <FeaturesOne locale={locale} />
     </>
   );
 }

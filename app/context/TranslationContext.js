@@ -1,4 +1,3 @@
-// context/TranslationContext.js
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
@@ -10,9 +9,10 @@ export const TranslationProvider = ({ children }) => {
   const [translations, setTranslations] = useState({});
 
   useEffect(() => {
+    // Fetch the translation file for the current locale
     fetch(`/locales/${locale}.json`)
       .then((response) => response.json())
-      .then((data) => setTranslations(data));
+      .then((data) => setTranslations(data)); // No array indexing needed
   }, [locale]);
 
   const translate = (key) => translations[key] || key;

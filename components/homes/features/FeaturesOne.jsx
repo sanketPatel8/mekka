@@ -13,7 +13,7 @@ export default function FeaturesOne() {
         <div className="row">
           <div className="col-auto">
             <h2 data-aos="fade-up" className="text-30 md:text-24">
-              {translate("welcome") || "Why choose MekkaBooking?"}
+              {translate("FeaturesOne") || "Why choose MekkaBooking?"}
             </h2>
           </div>
         </div>

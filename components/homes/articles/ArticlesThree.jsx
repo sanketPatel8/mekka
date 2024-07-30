@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import '@/public/css/index.css'
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function ArticlesThree() {
+  const { translate } = useTranslation();
   return (
     <section className="layout-pt-xl">
       <div className="container">
@@ -16,7 +18,7 @@ export default function ArticlesThree() {
               data-aos-delay=""
               className="text-30 md:text-24 "
             >
-              Travel Articles
+             {translate("ArticlesThree") || "Find Latest Packages"}
             </h2>
           </div>
 
@@ -25,9 +27,9 @@ export default function ArticlesThree() {
               href={"/tourlist"}
               data-aos="fade-right"
               data-aos-delay=""
-              className="buttonArrow d-flex items-center  "
+              className="buttonArrow d-flex items-center"
             >
-              <span>See all</span>
+              <span> {translate("seeAll") || "Find Latest Packages"}</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>

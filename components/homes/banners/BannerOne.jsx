@@ -1,7 +1,9 @@
+import { useTranslation } from "@/app/context/TranslationContext";
 import Image from "next/image";
 import React from "react";
 
 export default function BannerOne() {
+  const { translate } = useTranslation();
   return (
     <section className="cta -type-1 banner-one-main-pt-30 pt-10 border-1">
       <div className="cta__bg">
@@ -17,9 +19,9 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="text-40 md:text-24 lh-13 text-white text-left md:text-center lg:text-center xl:text-center"
               >
-                Get 10% off your 1st
+               {translate("bannerOneH1") || "Find Latest Packages"}
                 <br className="lg:d-none" />
-                booking
+                {translate("bannerOneH2") || "Find Latest Packages"}
               </h2>
 
               <p
@@ -27,17 +29,17 @@ export default function BannerOne() {
                 data-aos-delay=""
                 className="mt-10  text-left md:text-center lg:text-center xl:text-center text-white "
               >
-                To get a discount enter your email address and you will 
+                {translate("bannerOneP") || "Find Latest Packages"}
                 <br className="lg:d-none" />
-                get code on your email.
+                {translate("bannerOnePafterBR") || "Find Latest Packages"}
               </p>
 
               <div
                 data-aos="fade-up"
                 data-aos-delay=""
                 className="text-18  mt-40 md:mt-20 text-left md:text-center lg:text-center xl:text-center text-white "
-              >
-                Get a magic link sent to your email
+                >
+                {translate("senEmail") || "Find Latest Packages"}
               </div>
 
               <div className="mt-10">
