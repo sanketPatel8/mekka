@@ -1,9 +1,12 @@
+import { useTranslation } from "@/app/context/TranslationContext";
 import React from "react";
 
 export default function Overview() {
+
+  const { translate } = useTranslation();
   return (
     <>
-      <h2 className="text-30">Tour Overview</h2>
+      <h2 className="text-30">{translate("Tour Overview") || "Find Latest Packages"}</h2>
       <p className="mt-20">
         The Phi Phi archipelago is a must-visit while in Phuket, and this
         speedboat trip whisks you around the islands in one day. Swim over the
@@ -13,7 +16,7 @@ export default function Overview() {
         Phuket hotel pickup and drop-off all included.
       </p>
 
-      <h3 className="text-20 fw-500 mt-20">Tour Highlights</h3>
+      <h3 className="text-20 fw-500 mt-20">{translate("Tour Highlights") || "Find Latest Packages"}</h3>
       <ul className="ulList mt-20">
         <li>
           Experience the thrill of a speedboat to the stunning Phi Phi Islands

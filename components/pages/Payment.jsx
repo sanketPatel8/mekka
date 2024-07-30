@@ -12,6 +12,7 @@ import { IoIosBed } from "react-icons/io";
 import { FaHotel } from "react-icons/fa6";
 import "@/public/css/index.css";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Payment() {
   const router = useRouter();
@@ -40,9 +41,12 @@ export default function Payment() {
     console.log("Selected room type:", roomType);
   }, [roomType]);
 
+  const { translate } = useTranslation();
+
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
       <div className="container">
+
         <div className="row">
           <div className="col-lg-8 px-0 col-11 mx-auto">
             <h2
@@ -50,7 +54,7 @@ export default function Payment() {
                 bookingStage === 2 ? "d-none" : "d-block"
               }`}
             >
-              Payment options
+               {translate("Payment Methods") || "Find Latest Packages"}
             </h2>
 
             <div className="bg-white rounded py-30">
@@ -61,7 +65,7 @@ export default function Payment() {
                     id="ref"
                   >
                     <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
-                      <b>Payment Methods</b>
+                      <b> {translate("Payment Methods") || "Find Latest Packages"}</b>
                     </p>
                     <div className="px-3">
                       <div className="d-flex items-center pointer-check py-3">
@@ -94,7 +98,7 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="item2" className="lh-16 ml-15">
-                          Payment in advance. Payment installment is possible.
+                        {translate("Payment in advance. Payment installment is possible.") || "Find Latest Packages"}
                         </label>
                       </div>
 
@@ -136,15 +140,10 @@ export default function Payment() {
                         <div className="col-md-6 col-12 my-md-0 my-3">
                           <div className="p-2 border-5 d-inline-block">
                             <p className="py-2">
-                              You will get an order number after you completed
-                              the reservation. The Order number you will need to
-                              enter in the “Purpose Code” when you make the
-                              payment via bank. You will also get email with all
-                              the detail as well.
+                              {translate("You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well.") || "Find Latest Packages"}
                             </p>
                             <p className="text-red">
-                              Note: Please make the payment within next 7 days.
-                              Post that the order will be cancelled.
+                            {translate("Note: Please make the payment within next 7 days. Post that the order will be cancelled.") || "Find Latest Packages"}
                             </p>
                           </div>
                         </div>
@@ -183,8 +182,7 @@ export default function Payment() {
                                 </label>
                               </div>
                               <label htmlFor="item4" className="lh-16 ml-15">
-                                Online Payment (Visa, Mastercard, American
-                                Express, Japan Credit Bureau (JCB), Discover)
+                              {translate("Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)") || "Find Latest Packages"}
                               </label>
                             </div>
                           </div>
@@ -221,7 +219,7 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="installment" className="lh-16 ml-15">
-                          Click for Installment Payment
+                        {translate("Click for Installment Payment") || "Find Latest Packages"}
                         </label>
                       </div>
 
@@ -346,8 +344,7 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="item5" className="lh-16 ml-15">
-                          Yes, I declare my consent to the data protection and
-                          accept the Declaration of Consent of mekkabooking GmbH
+                        {translate("Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH") || "Find Latest Packages"}
                         </label>
                       </div>
 
@@ -379,8 +376,7 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="agbAcceptance" className="lh-16 ml-15">
-                          I have read the AGB (mekkabooking) and I accept the
-                          conditions. This trip is operated by the IDEALGATE.
+                        {translate("I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE.") || "Find Latest Packages"}
                         </label>
                       </div>
                     </div>
@@ -390,18 +386,18 @@ export default function Payment() {
                     id="ref"
                   >
                     <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
-                      <b>Cancellation Rules</b>
+                      <b> {translate("Cancellation Rules") || "Find Latest Packages"}</b>
                     </p>
                     <div className="px-3">
                       <ul className="">
                         <li className="text-center py-1">
-                          15% if canceled before 90 days of the trip
+                        {translate("15% if canceled before 90 days of the trip") || "Find Latest Packages"}
                         </li>
                         <li className="text-center py-1">
-                          60% if canceled before 30 days of the trip
+                        {translate("60% if canceled before 30 days of the trip") || "Find Latest Packages"}
                         </li>
                         <li className="text-center py-1">
-                          100% if canceled before 7 days of the trip
+                        {translate("100% if canceled before 7 days of the trip") || "Find Latest Packages"}
                         </li>
                       </ul>
                     </div>
@@ -418,10 +414,10 @@ export default function Payment() {
                       </div>
 
                       <h2 className="text-30 md:text-24 fw-700 mt-20">
-                        Your order was submitted successfully!
+                      {translate("Your order was submitted successfully!") || "Find Latest Packages"}
                       </h2>
                       <div className="mt-10">
-                        Booking details have been sent to: mekkabooking.com
+                      {translate(" Booking details have been sent to: mekkabooking.com") || "Find Latest Packages"}
                       </div>
                     </div>
 

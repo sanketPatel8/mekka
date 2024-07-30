@@ -12,9 +12,11 @@ import Reviews from "../Reviews";
 import TourSingleSidebar from "../TourSingleSidebar";
 import OtherInformation2 from "../OtherInformation2";
 import RoadMap2 from "../Roadmap2";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function SingleFour({ tour }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
+  const { translate } = useTranslation();
   return (
     <>
       <section className="py-30 mt-80">
@@ -40,7 +42,6 @@ export default function SingleFour({ tour }) {
 
               <div className="accordion -tour-single row y-gap-20 pt-60 md:pt-30 js-accordion">
                 <div className="col-12">
-
                   <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("Included") ? "is-active" : ""
@@ -51,20 +52,20 @@ export default function SingleFour({ tour }) {
                         setActiveAcorditions((pre) =>
                           pre.includes("Included")
                             ? [...pre.filter((elm) => elm != "Included")]
-                            : [...pre, "Included"],
+                            : [...pre, "Included"]
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        What's Included
+                        {translate("What's Included") || "Find Latest Packages"}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
                         <i className="icon-chevron-down"></i>
                         <i className="icon-chevron-up"></i>
-                        </div>
-                    </div>  
+                      </div>
+                    </div>
 
                     <div
                       className="accordion__content"
@@ -82,7 +83,9 @@ export default function SingleFour({ tour }) {
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("f_Included") ? "is-active" : ""
+                      activeAcorditions.includes("f_Included")
+                        ? "is-active"
+                        : ""
                     }`}
                   >
                     <div
@@ -90,13 +93,14 @@ export default function SingleFour({ tour }) {
                         setActiveAcorditions((pre) =>
                           pre.includes("f_Included")
                             ? [...pre.filter((elm) => elm != "f_Included")]
-                            : [...pre, "f_Included"],
+                            : [...pre, "f_Included"]
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                       Flight Information
+                        {translate("Flight Information") ||
+                          "Find Latest Packages"}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -115,12 +119,23 @@ export default function SingleFour({ tour }) {
                     >
                       <div className="pt-20">
                         {/* <Included /> */}
-                        <p>Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe des Masjid Al Haram King Abdul Aziz Gate und des Masjid Al Haram King Abdullah Expension Gate. Zu den Einrichtungen dieser Unterkunft gehören ein Restaurant, Zimmerservice und eine 24-Stunden-Rezeption sowie kostenfreies WLAN. Private Parkplätze stehen vor Ort zur Verfügung. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem Kleiderschrank, einem Wasserkocher, einem Safe, einem Flachbisss</p>
+                        <p>
+                          Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe
+                          des Masjid Al Haram King Abdul Aziz Gate und des
+                          Masjid Al Haram King Abdullah Expension Gate. Zu den
+                          Einrichtungen dieser Unterkunft gehören ein
+                          Restaurant, Zimmerservice und eine
+                          24-Stunden-Rezeption sowie kostenfreies WLAN. Private
+                          Parkplätze stehen vor Ort zur Verfügung. Das Hotel
+                          bietet Ihnen klimatisierte Zimmer mit einem
+                          Kleiderschrank, einem Wasserkocher, einem Safe, einem
+                          Flachbisss
+                        </p>
                       </div>
                     </div>
                   </div>
 
-                   <div
+                  <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("roadmap") ? "is-active" : ""
                     }`}
@@ -130,13 +145,13 @@ export default function SingleFour({ tour }) {
                         setActiveAcorditions((pre) =>
                           pre.includes("roadmap")
                             ? [...pre.filter((elm) => elm != "roadmap")]
-                            : [...pre, "roadmap"],
+                            : [...pre, "roadmap"]
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        Itinerary
+                        {translate("Itinerary") || "Find Latest Packages"}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -169,13 +184,14 @@ export default function SingleFour({ tour }) {
                         setActiveAcorditions((pre) =>
                           pre.includes("HotelInfo")
                             ? [...pre.filter((elm) => elm != "HotelInfo")]
-                            : [...pre, "HotelInfo"],
+                            : [...pre, "HotelInfo"]
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        Hotel Information
+                        {translate("Hotel Information") ||
+                          "Find Latest Packages"}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -209,12 +225,14 @@ export default function SingleFour({ tour }) {
                         setActiveAcorditions((pre) =>
                           pre.includes("faq")
                             ? [...pre.filter((elm) => elm != "faq")]
-                            : [...pre, "faq"],
+                            : [...pre, "faq"]
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
                     >
-                      <div className="text-30 md:text-20 lh-13 fw-700">FAQ</div>
+                      <div className="text-30 md:text-20 lh-13 fw-700">
+                        {translate("FAQ") || "Find Latest Packages"}
+                      </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
                         <i className="icon-chevron-down"></i>
@@ -248,7 +266,7 @@ export default function SingleFour({ tour }) {
                         setActiveAcorditions((pre) =>
                           pre.includes("review")
                             ? [...pre.filter((elm) => elm != "review")]
-                            : [...pre, "review"],
+                            : [...pre, "review"]
                         )
                       }
                       className="accordion__button d-flex items-center justify-between"
@@ -281,9 +299,7 @@ export default function SingleFour({ tour }) {
                         </button>
                         {/* <CommentBox /> */}
                       </div>
-
                     </div>
-                      
                   </div>
 
                   <div
@@ -305,8 +321,6 @@ export default function SingleFour({ tour }) {
                       </div>
                     </div>
                   </div>
-
-                  
                 </div>
               </div>
             </div>
@@ -319,11 +333,10 @@ export default function SingleFour({ tour }) {
                 <TourSingleSidebar />
               </div>
             </div>
-
           </div>
-            <div className="py-40">
+          <div className="py-40">
             <hr />
-            </div>
+          </div>
         </div>
       </section>
     </>

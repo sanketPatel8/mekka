@@ -1,6 +1,8 @@
+import { useTranslation } from "@/app/context/TranslationContext";
 import React from "react";
 
 export default function OthersInformation() {
+  const { translate } = useTranslation();
   return (
     <>
       <div className="col-lg-3 col-6 my-2">
@@ -10,7 +12,8 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Duration</div>
+            <div className="lh-16">
+ {translate("Duration") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16">8 days</div>
           </div>
         </div>
@@ -23,7 +26,8 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Travel</div>
+            <div className="lh-16">
+ {translate("Travel") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16">Umrah</div>
           </div>
         </div>
@@ -36,7 +40,8 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Start Date</div>
+            <div className="lh-16">
+ {translate("Start Date") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16">23 Apr 2024</div>
           </div>
         </div>
@@ -49,7 +54,8 @@ export default function OthersInformation() {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Languages</div>
+            <div className="lh-16">
+ {translate("Languages") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16">German, Turkish, Arabic</div>
           </div>
         </div>

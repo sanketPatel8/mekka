@@ -7,6 +7,7 @@ import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Hero1() {
   const router = useRouter();
@@ -39,6 +40,8 @@ export default function Hero1() {
     };
   }, []);
 
+  const { translate } = useTranslation();
+
   return (
     <section className="hero -type-1">
       <div className="hero__bg">
@@ -61,7 +64,7 @@ export default function Hero1() {
                 data-aos-delay="100"
                 className="hero__title"
               >
-                Your world of joy
+                {translate("Your world of joy") || "Find Latest Packages"}
               </h1>
 
               <p
@@ -69,8 +72,7 @@ export default function Hero1() {
                 data-aos-delay="300"
                 className="hero__text"
               >
-                From local escapes to far-flung adventures, find what makes you
-                happy anytime, anywhere
+                {translate("From local escapes to far-flung adventures, find what makes you happy anytime, anywhere") || "Find Latest Packages"}
               </p>
 
               <div

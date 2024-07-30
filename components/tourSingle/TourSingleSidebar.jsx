@@ -6,6 +6,7 @@ import Image from "next/image";
 import { State } from "@/data/tourSingleContent";
 import "@/public/css/index.css";
 import Link from "next/link";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function TourSingleSidebar() {
   const prices = {
@@ -55,9 +56,13 @@ export default function TourSingleSidebar() {
   const handleChange = (e) => {
     setHotelMakka(e.target.value);
   };
+
+  const { translate } = useTranslation();
   return (
     <div className="tourSingleSidebar">
-      <h5 className="text-18 fw-500 mb-20 mt-20">Tickets</h5>
+      <h5 className="text-18 fw-500 mb-20 mt-20">
+        {translate("Tickets") || "Find Latest Packages"}
+      </h5>
 
       <div>
         <div className="d-flex items-center justify-between">
@@ -156,7 +161,9 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Makka</h5>
+      <h5 className="text-18 fw-500 mb-20 mt-20">
+        {translate("Hotel For Makka") || "Find Latest Packages"}
+      </h5>
 
       <div className="d-flex items-center justify-between my-1">
         <div className="d-flex items-center">
@@ -226,7 +233,9 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Madina</h5>
+      <h5 className="text-18 fw-500 mb-20 mt-20">
+        {translate("Hotel For Madina") || "Find Latest Packages"}
+      </h5>
 
       <div className="d-flex items-center justify-between my-1">
         <div className="d-flex items-center">
@@ -296,7 +305,9 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">Flight Booking</h5>
+      <h5 className="text-18 fw-500 mb-20 mt-20">
+        {translate("Flight Booking") || "Find Latest Packages"}
+      </h5>
 
       <div className="d-flex items-center justify-between pt-1">
         <div className="d-flex items-center justify-between">
@@ -329,7 +340,8 @@ export default function TourSingleSidebar() {
                   </label>
                 </div>
                 <label htmlFor="item4" className="lh-16 ml-15">
-                  Exclude Flight Booking
+                  Exclude
+                  {translate("Flight Booking") || "Find Latest Packages"}
                 </label>
               </div>
             </div>
@@ -357,9 +369,7 @@ export default function TourSingleSidebar() {
                   <span className="radio__mark">
                     <span className="radio__icon"></span>
                   </span>
-                  <span className="text-14 lh-1 ml-10">
-                  IndiGo ( No Stop )
-                  </span>
+                  <span className="text-14 lh-1 ml-10">IndiGo ( No Stop )</span>
                 </label>
               </div>
             </div>
@@ -382,7 +392,7 @@ export default function TourSingleSidebar() {
                     <span className="radio__icon"></span>
                   </span>
                   <span className="text-14 lh-1 ml-10">
-                  Akasa Air ( 1 Stop )
+                    Akasa Air ( 1 Stop )
                   </span>
                 </label>
               </div>
@@ -405,9 +415,7 @@ export default function TourSingleSidebar() {
                   <span className="radio__mark">
                     <span className="radio__icon"></span>
                   </span>
-                  <span className="text-14 lh-1 ml-10">
-                  Vistara ( 2 Stop )
-                  </span>
+                  <span className="text-14 lh-1 ml-10">Vistara ( 2 Stop )</span>
                 </label>
               </div>
             </div>
@@ -430,7 +438,7 @@ export default function TourSingleSidebar() {
                     <span className="radio__icon"></span>
                   </span>
                   <span className="text-14 lh-1 ml-10">
-                  Club One Air ( 4 Stop )
+                    Club One Air ( 4 Stop )
                   </span>
                 </label>
               </div>
@@ -492,8 +500,6 @@ export default function TourSingleSidebar() {
         </div>
       </div>
 
-      {/* <div className="line mt-20 mb-20"></div> */}
-
       <div className="d-flex items-center justify-between pt-1">
         <div className="text-18 fw-500">Total:</div>
         <div>
@@ -512,8 +518,7 @@ export default function TourSingleSidebar() {
 
       <Link href="/booking">
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
-          Book Now
-          {/* <i className="icon-arrow-top-right ml-10"></i> */}
+          {translate("Book Now") || "Find Latest Packages"}
         </button>
       </Link>
     </div>

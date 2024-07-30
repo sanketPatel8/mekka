@@ -1,6 +1,8 @@
+import { useTranslation } from '@/app/context/TranslationContext';
 import React from 'react'
 
 const OtherInformation2 = () => {
+  const { translate } = useTranslation();
   return (
     <>
       <div className="col-lg-3 col-6">
@@ -10,7 +12,8 @@ const OtherInformation2 = () => {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Visa Processing</div>
+            <div className="lh-16">
+ {translate("Languages") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16">Included</div>
           </div>
         </div>
@@ -23,7 +26,8 @@ const OtherInformation2 = () => {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Flight Included</div>
+            <div className="lh-16">
+ {translate("Flight Included") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16"> Included</div>
           </div>
         </div>
@@ -36,7 +40,8 @@ const OtherInformation2 = () => {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Hotels Included</div>
+            <div className="lh-16">
+ {translate("Hotels Included") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16">Included</div>
           </div>
         </div>
@@ -49,7 +54,9 @@ const OtherInformation2 = () => {
           </div>
 
           <div className="ml-10">
-            <div className="lh-16">Free Cancellation (Up to 14 Days Before Travel Date)</div>
+            <div className="lh-16">
+ {translate("Free Cancellation") || "Find Latest Packages"} 
+ {translate("(Up to 14 Days Before Travel Date)") || "Find Latest Packages"}</div>
             <div className="text-14 text-light-2 lh-16">Not included</div>
           </div>
         </div>

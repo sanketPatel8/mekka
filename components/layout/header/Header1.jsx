@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Language from "../components/Langauge";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Header1() {
   const router = useRouter();
@@ -30,6 +31,8 @@ export default function Header1() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const { translate } = useTranslation();
 
   return (
     <>
@@ -58,19 +61,24 @@ export default function Header1() {
             </Link>
             <div className="media">
               <Link href="/" className="mx-3">
-                Home
+                
+                {translate("Home") || "Find Latest Packages"}
               </Link>
               <Link href="/tourlist" className="mx-3">
-                Tour
+                
+                {translate("Tour") || "Find Latest Packages"}
               </Link>
               <Link href="/tourlist?=Hajj" className="mx-3">
-                Hajj
+                
+                {translate("Hajj") || "Find Latest Packages"}
               </Link>
               <Link href="/tourlist?=Umrah" className="mx-3">
-                Umrah
+                
+                {translate("Umrah") || "Find Latest Packages"}
               </Link>
               <Link href="/contact" className="mx-3">
-                Contact
+                
+                {translate("Contact") || "Find Latest Packages"}
               </Link>
             </div>
           </div>
@@ -96,14 +104,14 @@ export default function Header1() {
             <Language />
 
             <Link href="/register" className="ml-10">
-              Sign Up
+            {translate("Register") || "Find Latest Packages"}
             </Link>
 
             <Link
               href="/login"
               className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20"
             >
-              Log In
+           {translate("Log In") || "Find Latest Packages"}
             </Link>
 
             <button

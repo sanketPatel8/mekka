@@ -18,6 +18,7 @@ import {
 import Select from 'react-select'
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const customStyles = {
   overlay: {
@@ -340,13 +341,19 @@ const CustomerDetaTable = () => {
       }
     };
 
+
+    // FOR CANGE LANGAUGE 
+
+    const { translate } = useTranslation();
+
+
   return (
     <div>
-      <h3 className="t_center">Booking Details : #123216</h3>
+      <h3 className="t_center"> {translate("Booking Details") || "Find Latest Packages"} : #123216</h3>
       <div className="row px-0 pb-10 mt-20 ">
         <div className="col-lg-6">
-          <p className="t_center">Booked Date : 12.08.2024</p>
-          <p className="t_center">Booking Status : Pending</p>
+          <p className="t_center">  {translate("Booked Date") || "Find Latest Packages"} : 12.08.2024</p>
+          <p className="t_center"> {translate("Booking Status") || "Find Latest Packages"} : Pending</p>
           <p className="text-red t_center">Available 10 seats</p>
         </div>
 
@@ -356,7 +363,7 @@ const CustomerDetaTable = () => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openInvoice}
             >
-              Print Invoice
+               {translate("Print Invoice") || "Find Latest Packages"}
             </button>
           </div>
 
@@ -365,7 +372,7 @@ const CustomerDetaTable = () => {
               className="button -sm -accent-1 bg-info-2 text-white "
               onClick={openPaymentModal}
             >
-              Pay
+               {translate("Pay") || "Find Latest Packages"}
             </button>
             <span>(10,00 €)</span>
           </div>
@@ -375,7 +382,7 @@ const CustomerDetaTable = () => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openModal}
             >
-              Add Person
+               {translate("Add Person") || "Find Latest Packages"}
             </button>
           </div>
         </div>

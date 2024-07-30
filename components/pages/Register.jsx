@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
 import React from "react";
 import { FaFacebookF } from "react-icons/fa";
@@ -7,20 +8,21 @@ import { FaGoogle } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 
 export default function Register() {
+  const { translate } = useTranslation();
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
       <div className="container">
         <div className="row justify-center">
           <div className="col-xl-6 col-lg-7 col-md-9">
             <div className="text-center mb-60 md:mb-30">
-              <h1 className="text-30">Register</h1>
+              <h1 className="text-30">  {translate("Register") || "Find Latest Packages"}</h1>
               <div className="text-18 fw-500 mt-20 md:mt-15">
-                Let's Create Your Account!
+                  {translate("Let's Create Your Account!") || "Find Latest Packages"}
               </div>
               <div className="mt-5">
-                Already Have An Account?{" "}
+                  {translate("Already Have An Account?") || "Find Latest Packages"}{" "}
                 <Link href="/login" className="text-accent-1">
-                  Log In!
+                   {translate("Log In") || "Find Latest Packages"}! 
                 </Link>
               </div>
             </div>
@@ -32,30 +34,30 @@ export default function Register() {
 
               <div className="form-input my-1">
                 <input type="text" required />
-                <label className="lh-1 text-16 text-light-1">Name</label>
+                <label className="lh-1 text-16 text-light-1">  {translate("Name") || "Find Latest Packages"}</label>
               </div>
 
               <div className="form-input  my-1">
                 <input type="text" required />
-                <label className="lh-1 text-16 text-light-1">Surname</label>
+                <label className="lh-1 text-16 text-light-1">  {translate("Surname") || "Find Latest Packages"}</label>
               </div>
 
               <div className="form-input my-1">
                 <input type="email" required />
-                <label className="lh-1 text-16 text-light-1">E-Mail Address</label>
+                <label className="lh-1 text-16 text-light-1">  {translate("Email Address") || "Find Latest Packages"}</label>
               </div>
 
               <div className="form-input my-1">
                 <input type="password" required />
                 <label className="lh-1 text-16 text-light-1">
-                Password
+                  {translate("Password") || "Find Latest Packages"}
                 </label>
               </div>
 
               <div className="form-input my-1">
                 <input type="password" required />
                 <label className="lh-1 text-16 text-light-1">
-                Confirm Password
+                  {translate("Confirm Password") || "Find Latest Packages"}
                 </label>
               </div>
 
@@ -78,13 +80,13 @@ export default function Register() {
                       </svg>
                     </div>
                   </div>
-                  <span className="text-14 lh-12 ml-10"> I have read the data protection and I accept the conditions.</span>
+                  <span className="text-14 lh-12 ml-10">  {translate("I have read the data protection and I accept the conditions.") || "Find Latest Packages"}</span>
                 </label>
               </div>
 
 
               <button className="button -md -info-2 bg-accent-1 text-white col-12 mt-30">
-                Register
+                  {translate("Register") || "Find Latest Packages"}
                 {/* <i className="icon-arrow-top-right ml-10"></i> */}
               </button>
 
@@ -99,14 +101,14 @@ export default function Register() {
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                    <FaFacebookF size={15} className="mx-1"/>
-                    Facebook
+                      {translate("Facebook") || "Find Latest Packages"}
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
                   <FaGoogle size={15} className="mx-1" />
-                    Google
+                      {translate("Google") || "Find Latest Packages"}
                   </button>
                 </div>
               </div><br />
@@ -114,7 +116,7 @@ export default function Register() {
                 <div className="col">
                   <button className="button -md -outline-dark-1 text-dark-1 col-12">
                   <FaApple size={15} className="mx-1" />
-                    Sign in With Apple
+                      {translate("Sign in With Apple") || "Find Latest Packages"}
                   </button>
                 </div>
               </div>

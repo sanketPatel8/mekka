@@ -6,14 +6,16 @@ import { tourData } from "@/data/tours";
 import Image from "next/image";
 import Stars from "../common/Stars";
 import Link from "next/link";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function TourSlider() {
+  const { translate } = useTranslation();
   return (
     <section className="">
       <div className="container">
         <div className="row">
           <div className="col-auto">
-            <h2 className="text-30">You might also like...</h2>
+            <h2 className="text-30"> {translate("You might also like...") || "Find Latest Packages"}</h2>
           </div>
         </div>
 

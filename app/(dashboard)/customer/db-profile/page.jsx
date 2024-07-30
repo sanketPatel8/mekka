@@ -4,6 +4,7 @@ import Header from "@/components/dasboard/Header";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -49,6 +50,8 @@ export default function Profile() {
       };
     }
   }, []);
+
+  const { translate } = useTranslation();
   return (
     <>
       <div
@@ -62,9 +65,9 @@ export default function Profile() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">My Profile - Customer Name</h1>
+            <h1 className="text-30"> {translate("My Booking") || "Find Latest Packages"} - Customer Name</h1>
             <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40 ">
-              <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
+              <h5 className="text-20 fw-500 mb-30">  {translate("Profile Details") || "Find Latest Packages"}</h5>
 
               <div className="contactForm  y-gap-30">
                 <div className="row my-3">
@@ -73,21 +76,21 @@ export default function Profile() {
                 <div className="col-md-6">
                   <div className="form-input my-1">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Name</label>
+                    <label className="lh-1 text-16 text-light-1">  {translate("Name") || "Find Latest Packages"}</label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input my-1">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Surname</label>
+                    <label className="lh-1 text-16 text-light-1">  {translate("Surname") || "Find Latest Packages"}</label>
                   </div>
                 </div>
 
                 <div className="col-md-12">
                   <div className="form-input my-1">
                     <input type="Email" required />
-                    <label className="lh-1 text-16 text-light-1">Email</label>
+                    <label className="lh-1 text-16 text-light-1">  {translate("Email") || "Find Latest Packages"}</label>
                   </div>
                 </div>
                 
@@ -95,7 +98,7 @@ export default function Profile() {
                   <div className="form-input my-1">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Password
+                        {translate("Password") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -104,7 +107,7 @@ export default function Profile() {
                   <div className="form-input my-1">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Confirm Password
+                        {translate("Confirm Password") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -115,7 +118,7 @@ export default function Profile() {
 
 
                 <div className="col-12">
-                  <h4 className="text-18 fw-500 mb-20">Your photo</h4>
+                  <h4 className="text-18 fw-500 mb-20">  {translate("Your photo") || "Find Latest Packages"}</h4>
                   <div className="row x-gap-20 y-gap">
                     {image1 ? (
                       <div className="col-auto my-3">
@@ -166,11 +169,11 @@ export default function Profile() {
                   </div>
 
                   <div className="text-14 mt-20">
-                    PNG or JPG no bigger than 800px wide and tall.
+                    {translate("  PNG or JPG no bigger than 800px wide and tall.") || "Find Latest Packages"}
                   </div>
 
                   <button className="button -md -info-2 bg-accent-1 text-white mt-30">
-                    Save Changes
+                   {translate("Save Changes ") || "Find Latest Packages"}
                     <i className="icon-arrow-top-right text-16 ml-10"></i>
                   </button>
                 </div>
@@ -178,7 +181,7 @@ export default function Profile() {
             </div>
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-30">
-              <h5 className="text-20 fw-500 mb-30">Change Password</h5>
+              <h5 className="text-20 fw-500 mb-30">  {translate("Change Password") || "Find Latest Packages"}</h5>
 
               <div className="contactForm y-gap-30">
                 <div className="row y-gap-30">
@@ -186,7 +189,7 @@ export default function Profile() {
                     <div className="form-input my-1">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
-                        Old password
+                          {translate("Old password") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -197,7 +200,7 @@ export default function Profile() {
                     <div className="form-input my-1">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
-                        New password
+                          {translate("New password") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -208,7 +211,7 @@ export default function Profile() {
                     <div className="form-input my-1">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
-                        Confirm new password
+                         {translate("Confirm new password") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -217,7 +220,7 @@ export default function Profile() {
                 <div className="row">
                   <div className="col-12">
                     <button className="button -md -info-2 bg-accent-1 text-white">
-                      Save Changes
+                       {translate("Save Changes") || "Find Latest Packages"}
                       <i className="icon-arrow-top-right text-16 ml-10"></i>
                     </button>
                   </div>
@@ -232,5 +235,5 @@ export default function Profile() {
         </div>
       </div>
     </>
-  );
+  );  
 }
