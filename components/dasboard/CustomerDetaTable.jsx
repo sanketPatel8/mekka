@@ -1,4 +1,4 @@
-  "use client";
+"use client";
 
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
@@ -15,7 +15,7 @@ import {
   documentDataFile,
   ViewCustomerDocument,
 } from "@/data/CustomerBookingData";
-import Select from 'react-select'
+import Select from "react-select";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { useTranslation } from "@/app/context/TranslationContext";
@@ -33,9 +33,9 @@ const customStyles = {
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
     padding: "10px",
-    width: "100%", 
-    maxWidth: "700px", 
-    height: "80vh", 
+    width: "100%",
+    maxWidth: "700px",
+    height: "80vh",
     overflowY: "auto",
     backgroundColor: "#fff",
   },
@@ -55,9 +55,9 @@ const customStylesForPendingPayment = {
     transform: "translate(-50%, -50%)",
     padding: "20px",
     width: "70%",
-    maxWidth: "70%", 
+    maxWidth: "70%",
     height: "80vh",
-    overflowY: "auto", 
+    overflowY: "auto",
     backgroundColor: "#fff",
   },
 };
@@ -66,7 +66,7 @@ const CustomerDetaTable = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false);
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
-  const [invoice, setinvoice] = useState(false)
+  const [invoice, setinvoice] = useState(false);
   const [EditData, setEditData] = useState(false);
   const [Adult1Deta, setAdult1Deta] = useState(false);
   const [CanclePopUp, setCanclePopUp] = useState(false);
@@ -88,51 +88,55 @@ const CustomerDetaTable = () => {
     Modal.setAppElement("#upload_file");
     Modal.setAppElement("#editData");
     Modal.setAppElement("#Adult1Data");
-    Modal.setAppElement('#invoice')
+    Modal.setAppElement("#invoice");
   }, []);
 
   const ColumnReservation_details = [
-    { name: "Airline", selector: (row) => row.Airline },
-    { name: "From", selector: (row) => row.From },
-    { name: "To", selector: (row) => row.To },
-    { name: "Departure", selector: (row) => row.Date_of_departure },
-    { name: "Return", selector: (row) => row.Date_of_return_flight },
+    { name:  translate("Airline") || "Find Latest Packages", selector: (row) => row.Airline },
+    { name:  translate("From") || "Find Latest Packages", selector: (row) => row.From },
+    { name:  translate("To") || "Find Latest Packages", selector: (row) => row.To },
+    { name:  translate("Departure") || "Find Latest Packages", selector: (row) => row.Date_of_departure },
+    { name:  translate("Return") || "Find Latest Packages", selector: (row) => row.Date_of_return_flight },
     // { name: 'Offered languages', selector: (row) => row.Offered_languages },
     // { name: 'Max Luggage', selector: (row) => row.max_luggage },
-    { name: "Mekka", selector: (row) => row.Mekka_hotel },
-    { name: "Madina", selector: (row) => row.Madina_hotel },
-    { name: "Adult", selector: (row) => row.Adult },
+    { name:  translate("Mekka") || "Find Latest Packages", selector: (row) => row.Mekka_hotel },
+    { name:  translate("Madina") || "Find Latest Packages", selector: (row) => row.Madina_hotel },
+    { name:  translate("Adult") || "Find Latest Packages", selector: (row) => row.Adult },
   ];
 
   const columnAdu_1 = [
     // { name: "Name", selector: (row) => row.name , width : "100px" },
     // { name: "Surname", selector: (row) => row.surname },
-    { name: "Email", selector: (row) => row.email , width : "150px" },
-    { name: "Phone", selector: (row) => row.phone , width : "150px"},
-    { name: "City", selector: (row) => row.city , width : "150px"},
+    { name:  translate("Email") || "Find Latest Packages", selector: (row) => row.email, width: "150px" },
+    { name:  translate("Phone") || "Find Latest Packages", selector: (row) => row.phone, width: "150px" },
+    { name:  translate("City") || "Find Latest Packages", selector: (row) => row.city, width: "150px" },
     // { name: "Gender", selector: (row) => row.gender },
-    { name: "DOB", selector: (row) => row.DOB },
-    { name: "Nationality", selector: (row) => row.Nationality },
-    { name: "House No.", selector: (row) => row.House_No },
-    { name: "Zip Code", selector: (row) => row.Zip_code },
-    { name: "Street", selector: (row) => row.Strect },
-    { name: "Additional Services", selector: (row) => row.additional_services , width : "150px" },
-    { name: "Total", selector: (row) => row.Amount },
+    { name:  translate("DOB") || "Find Latest Packages", selector: (row) => row.DOB },
+    { name:  translate("Nationality") || "Find Latest Packages", selector: (row) => row.Nationality },
+    { name:  translate("House No.") || "Find Latest Packages", selector: (row) => row.House_No },
+    { name:  translate("Zip Code") || "Find Latest Packages", selector: (row) => row.Zip_code },
+    { name:  translate("Street") || "Find Latest Packages", selector: (row) => row.Strect },
     {
-      name: "Action",
+      name: translate("Additional Services") || "Find Latest Packages", 
+      selector: (row) => row.additional_services,
+      width: "150px",
+    },
+    { name:  translate("Total") || "Find Latest Packages", selector: (row) => row.Amount },
+    {
+      name: translate("Action" ) || "Find Latest Packages",
       selector: (row) => (
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             onClick={openAdult1Deta}
           >
-            Edit
+            {translate("Edit") || "Find Latest Packages"}
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-            Document
+            {translate("Document") || "Find Latest Packages"}
           </button>
         </div>
       ),
@@ -144,25 +148,29 @@ const CustomerDetaTable = () => {
     // { name: "Name", selector: (row) => row.name , width : "100px" },
     // { name: "Surname", selector: (row) => row.surname },
     // { name: "Gender", selector: (row) => row.gender },
-    { name: "DOB", selector: (row) => row.DOB },
-    { name: "Nationality", selector: (row) => row.Nationality },
-    { name: "Additional Services", selector: (row) => row.additional_services , width : "150px" },
-    { name: "Total", selector: (row) => row.Amount },
+    { name:  translate("DOB") || "Find Latest Packages", selector: (row) => row.DOB },
+    { name:  translate("Nationality") || "Find Latest Packages", selector: (row) => row.Nationality },
     {
-      name: "Action",
+      name:  translate("Additional Services") || "Find Latest Packages",
+      selector: (row) => row.additional_services,
+      width: "150px",
+    },
+    { name:  translate("Total") || "Find Latest Packages", selector: (row) => row.Amount },
+    {
+      name: translate("Action" ) || "Find Latest Packages",
       selector: (row) => (
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             onClick={openEditData}
           >
-            Edit
+            {translate("Edit") || "Find Latest Packages"}
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-            Document
+            {translate("Document") || "Find Latest Packages"}
           </button>
         </div>
       ),
@@ -174,24 +182,24 @@ const CustomerDetaTable = () => {
     // { name: "Name", selector: (row) => row.name , width : "100px" },
     // { name: "Surname", selector: (row) => row.surname },
     // { name: "Gender", selector: (row) => row.gender },
-    { name: "DOB", selector: (row) => row.DOB },
-    { name: "Nationality", selector: (row) => row.Nationality },
-    { name: "Total", selector: (row) => row.Amount },
+    { name:  translate("DOB") || "Find Latest Packages", selector: (row) => row.DOB },
+    { name:  translate("Nationality") || "Find Latest Packages", selector: (row) => row.Nationality },
+    { name:  translate("Total") || "Find Latest Packages", selector: (row) => row.Amount },
     {
-      name: "Action",
+      name:  translate("Action") || "Find Latest Packages",
       selector: (row) => (
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             onClick={openEditData}
           >
-            Edit
+            {translate("Edit") || "Find Latest Packages"}
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-            Document
+            {translate("Document") || "Find Latest Packages"}
           </button>
         </div>
       ),
@@ -295,65 +303,72 @@ const CustomerDetaTable = () => {
   const [CustomerDoc, setCustomerDoc] = useState(null); // Initialize status as null or an object from your options array
 
   const CustomeDocoptions = [
-    { value: 'Passport', label: 'Passport' },
-    { value: 'Photo', label: 'Photo' },
-    { value: 'Permanent Resident (PR)', label: 'Permanent Resident (PR)' },
-    { value: 'Vaccination Card', label: 'Vaccination Card' }
+    { value: "Passport", label: "Passport" },
+    { value: "Photo", label: "Photo" },
+    { value: "Permanent Resident (PR)", label: "Permanent Resident (PR)" },
+    { value: "Vaccination Card", label: "Vaccination Card" },
   ];
 
   const handleCustomerDocumentChange = (selectedOption) => {
-    setCustomerDoc(selectedOption)
-  }
+    setCustomerDoc(selectedOption);
+  };
 
-    // for add document row and remove row 
+  // for add document row and remove row
 
-    const [rows, setRows] = useState([{ id: 1, image: "", document: null }]); // State to manage rows
-  
-    const addRow = () => {
-      setRows([...rows, { id: rows.length + 1, image: "", document: null }]);
-    };
-  
-    const removeRow = (index) => {
-      if (rows.length > 1) {
-        const newRows = rows.filter((_, i) => i !== index);
-        setRows(newRows);
-      }
-    };
-  
-    const handleDocumentChange = (selectedOption, index) => {
+  const [rows, setRows] = useState([{ id: 1, image: "", document: null }]); // State to manage rows
+
+  const addRow = () => {
+    setRows([...rows, { id: rows.length + 1, image: "", document: null }]);
+  };
+
+  const removeRow = (index) => {
+    if (rows.length > 1) {
+      const newRows = rows.filter((_, i) => i !== index);
+      setRows(newRows);
+    }
+  };
+
+  const handleDocumentChange = (selectedOption, index) => {
+    const newRows = [...rows];
+    newRows[index].document = selectedOption;
+    setRows(newRows);
+  };
+
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
       const newRows = [...rows];
-      newRows[index].document = selectedOption;
+      newRows[index].image = reader.result;
       setRows(newRows);
     };
-  
-    const handleImageChange = (e, index) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-  
-      reader.onloadend = () => {
-        const newRows = [...rows];
-        newRows[index].image = reader.result;
-        setRows(newRows);
-      };
-  
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-    };
 
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
-    // FOR CANGE LANGAUGE 
+  // FOR CANGE LANGAUGE
 
-    const { translate } = useTranslation();
-
+  const { translate } = useTranslation();
 
   return (
     <div>
-      <h3 className="t_center"> {translate("Booking Details") || "Find Latest Packages"} : #123216</h3>
+      <h3 className="t_center">
+        {" "}
+        {translate("Booking Details") || "Find Latest Packages"} : #123216
+      </h3>
       <div className="row px-0 pb-10 mt-20 ">
         <div className="col-lg-6">
-          <p className="t_center">  {translate("Booked Date") || "Find Latest Packages"} : 12.08.2024</p>
-          <p className="t_center"> {translate("Booking Status") || "Find Latest Packages"} : Pending</p>
+          <p className="t_center">
+            {" "}
+            {translate("Booked Date") || "Find Latest Packages"} : 12.08.2024
+          </p>
+          <p className="t_center">
+            {" "}
+            {translate("Booking Status") || "Find Latest Packages"} : Pending
+          </p>
           <p className="text-red t_center">Available 10 seats</p>
         </div>
 
@@ -363,7 +378,7 @@ const CustomerDetaTable = () => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openInvoice}
             >
-               {translate("Print Invoice") || "Find Latest Packages"}
+              {translate("Print Invoice") || "Find Latest Packages"}
             </button>
           </div>
 
@@ -372,7 +387,7 @@ const CustomerDetaTable = () => {
               className="button -sm -accent-1 bg-info-2 text-white "
               onClick={openPaymentModal}
             >
-               {translate("Pay") || "Find Latest Packages"}
+              {translate("Pay") || "Find Latest Packages"}
             </button>
             <span>(10,00 €)</span>
           </div>
@@ -382,7 +397,7 @@ const CustomerDetaTable = () => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openModal}
             >
-               {translate("Add Person") || "Find Latest Packages"}
+              {translate("Add Person") || "Find Latest Packages"}
             </button>
           </div>
         </div>
@@ -422,7 +437,12 @@ const CustomerDetaTable = () => {
         highlightOnHover
       />
       <br />
-      <DataTable title="Baby : Baby Name (Gender)" columns={Baby} data={BabyData} highlightOnHover />
+      <DataTable
+        title="Baby : Baby Name (Gender)"
+        columns={Baby}
+        data={BabyData}
+        highlightOnHover
+      />
       <br />
       <DataTable
         title="Total"
@@ -436,7 +456,7 @@ const CustomerDetaTable = () => {
         className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
         onClick={openCancelPopUp}
       >
-        Cancel
+        {translate("Cancel") || "Find Latest Packages"}
       </button>
 
       <div id="modelopen">
@@ -448,7 +468,9 @@ const CustomerDetaTable = () => {
           contentLabel="Example Modal"
         >
           <div className="d-flex justify-content-between" id="">
-            <h2 className="t_center px-20">ADD PERSON</h2>
+            <h2 className="t_center px-20">
+              {translate("ADD PERSON") || "Find Latest Packages"}
+            </h2>
             <button onClick={closeModal}>
               <IoClose size={25} />
             </button>
@@ -459,13 +481,19 @@ const CustomerDetaTable = () => {
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Name</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Name") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Surname</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Surname") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -476,9 +504,15 @@ const CustomerDetaTable = () => {
                       required
                       className="form-control"
                     >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      <option value="male">
+                         {translate("Male") || "Find Latest Packages"}
+                      </option>
+                      <option value="female">
+                         {translate("Female") || "Find Latest Packages"}
+                      </option>
+                      <option value="other">
+                         {translate("Other") || "Find Latest Packages"}
+                      </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
                       {gender}
@@ -499,9 +533,15 @@ const CustomerDetaTable = () => {
                       required
                       className="form-control"
                     >
-                      <option value="indian">Indian</option>
-                      <option value="german">German</option>
-                      <option value="canadian">Canadian</option>
+                      <option value="indian">
+                         {translate("Indian") || "Find Latest Packages"}
+                      </option>
+                      <option value="german">
+                         {translate("German") || "Find Latest Packages"}
+                      </option>
+                      <option value="canadian">
+                         {translate("Canadian") || "Find Latest Packages"}
+                      </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
                       {Nationality}
@@ -514,7 +554,11 @@ const CustomerDetaTable = () => {
                   <div className="col-12 tb-border">
                     <div className="text-14">
                       <p className="d-flex justify-content-between">
-                        <span>Tour price per person</span>{" "}
+                        <span>
+                          {" "}
+                          {translate("Tour price per person") ||
+                            "Find Latest Packages"}
+                        </span>{" "}
                         <span>1.339,00 €</span>
                       </p>
                       {/* <p className="text-right text-15">including taxes and fee</p> */}
@@ -525,7 +569,8 @@ const CustomerDetaTable = () => {
 
               <div className="my-3 border_b px-md-40">
                 <h5 className="text-18 fw-500 my-2">
-                  Possible additional services per person:
+                  {translate("  Possible additional services per person:") ||
+                    "Find Latest Packages"}
                 </h5>
 
                 <div>
@@ -630,13 +675,13 @@ const CustomerDetaTable = () => {
                       }, 2000);
                     }}
                   >
-                    ADD PERSON
+                    {translate("ADD PERSON") || "Find Latest Packages"}
                   </button>
                   <button
                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                     onClick={closeModal}
                   >
-                    CANCEL
+                    {translate("CANCEL") || "Find Latest Packages"}
                   </button>
                 </div>
               </div>
@@ -692,7 +737,7 @@ const CustomerDetaTable = () => {
                   className="button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white "
                   disabled
                 >
-                  PAID
+                  {translate("PAID") || "Find Latest Packages"}
                 </button>
               </div>
             </div>
@@ -723,7 +768,7 @@ const CustomerDetaTable = () => {
 
               <div className="col-md-2">
                 <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white  ">
-                  PAY
+                  {translate("PAY") || "Find Latest Packages"}
                 </button>
               </div>
             </div>
@@ -754,7 +799,7 @@ const CustomerDetaTable = () => {
 
               <div className="col-md-2">
                 <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
-                  PAY
+                  {translate("PAY") || "Find Latest Packages"}
                 </button>
               </div>
             </div>
@@ -847,7 +892,7 @@ const CustomerDetaTable = () => {
                   }, 2000);
                 }}
               >
-                Cancel Booking
+                {translate("Cancel Booking") || "Find Latest Packages"}
               </button>
             </div>
           </div>
@@ -871,9 +916,9 @@ const CustomerDetaTable = () => {
           <div className="ml-lg-20 ml-0">
             <Tabs>
               <TabList>
-                <Tab>Upload</Tab>
-                <Tab>View</Tab>
-                <Tab>Download</Tab>
+                <Tab> {translate("Upload") || "Find Latest Packages"}</Tab>
+                <Tab> {translate("View") || "Find Latest Packages"}</Tab>
+                <Tab> {translate("Download") || "Find Latest Packages"}</Tab>
               </TabList>
 
               <TabPanel>
@@ -922,7 +967,8 @@ const CustomerDetaTable = () => {
                                 className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
                               >
                                 <div className="text-16 fw-500 text-accent-1">
-                                  Upload Document
+                                  {translate("Upload Document") ||
+                                    "Find Latest Packages"}
                                 </div>
                               </label>
                               <input
@@ -970,13 +1016,13 @@ const CustomerDetaTable = () => {
                         alert("submited");
                       }}
                     >
-                      SUBMIT
+                      {translate("SUBMIT") || "Find Latest Packages"}
                     </button>
                     <button
                       className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
                       onClick={closeUploadFileModal}
                     >
-                      CANCEL
+                      {translate("CANCEL") || "Find Latest Packages"}
                     </button>
                   </div>
                 </div>
@@ -990,7 +1036,7 @@ const CustomerDetaTable = () => {
                 />
               </TabPanel>
               <TabPanel>
-              <DataTable
+                <DataTable
                   title="Download Your Tickets and Visa"
                   columns={DownloadData}
                   data={documentDataFile}
@@ -1010,7 +1056,10 @@ const CustomerDetaTable = () => {
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="px-20">Edit Your Details</h2>
+            <h2 className="px-20">
+              {" "}
+              {translate("Edit Your Details") || "Find Latest Packages"}
+            </h2>
             <button onClick={closeEditData}>
               <IoClose size={25} />
             </button>
@@ -1022,13 +1071,19 @@ const CustomerDetaTable = () => {
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Name</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Name") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Surname</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Surname") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -1039,9 +1094,18 @@ const CustomerDetaTable = () => {
                       required
                       className="form-control"
                     >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      <option value="male">
+                        {" "}
+                        {translate("Male") || "Find Latest Packages"}
+                      </option>
+                      <option value="female">
+                        {" "}
+                        {translate("Female") || "Find Latest Packages"}
+                      </option>
+                      <option value="other">
+                        {" "}
+                        {translate("Other") || "Find Latest Packages"}
+                      </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
                       {gender}
@@ -1051,7 +1115,10 @@ const CustomerDetaTable = () => {
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="date" required />
-                    <label className="lh-1 text-16 text-light-1">Birthday Date</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Birthday Date") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -1062,9 +1129,18 @@ const CustomerDetaTable = () => {
                       required
                       className="form-control"
                     >
-                      <option value="indian">Indian</option>
-                      <option value="german">German</option>
-                      <option value="canadian">Canadian</option>
+                      <option value="indian">
+                        {" "}
+                        {translate("Indian") || "Find Latest Packages"}
+                      </option>
+                      <option value="german">
+                        {" "}
+                        {translate("German") || "Find Latest Packages"}
+                      </option>
+                      <option value="canadian">
+                        {" "}
+                        {translate("Canadian") || "Find Latest Packages"}
+                      </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
                       {Nationality}
@@ -1084,7 +1160,7 @@ const CustomerDetaTable = () => {
                       }, 2000);
                     }}
                   >
-                    SAVE
+                    {translate("SAVE") || "Find Latest Packages"}
                   </button>
                 </div>
               </div>
@@ -1101,7 +1177,10 @@ const CustomerDetaTable = () => {
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="px-20">Edit You Details</h2>
+            <h2 className="px-20">
+              {" "}
+              {translate("Edit Your Details") || "Find Latest Packages"}
+            </h2>
             <button onClick={closeAdult1Deta}>
               <IoClose size={25} />
             </button>
@@ -1113,35 +1192,50 @@ const CustomerDetaTable = () => {
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Name</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Name") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Surname</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Surname") || "Find Latest Packages"}{" "}
+                    </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Email</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Email") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Phone</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Email") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">City</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("City") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
 
@@ -1156,9 +1250,18 @@ const CustomerDetaTable = () => {
                       className="form-control"
                     >
                       {/* <option value="" disabled>Select Gender</option> */}
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      <option value="male">
+                        {" "}
+                        {translate("Male") || "Find Latest Packages"}
+                      </option>
+                      <option value="female">
+                        {" "}
+                        {translate("Female") || "Find Latest Packages"}
+                      </option>
+                      <option value="other">
+                        {" "}
+                        {translate("Other") || "Find Latest Packages"}
+                      </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
                       {gender}
@@ -1186,9 +1289,18 @@ const CustomerDetaTable = () => {
                       className="form-control"
                     >
                       {/* <option value="" disabled>Nationality</option> */}
-                      <option value="indian">Indian</option>
-                      <option value="german">German</option>
-                      <option value="canadian">Canadian</option>
+                      <option value="indian">
+                        {" "}
+                        {translate("Indian") || "Find Latest Packages"}
+                      </option>
+                      <option value="german">
+                        {" "}
+                        {translate("German") || "Find Latest Packages"}
+                      </option>
+                      <option value="canadian">
+                        {" "}
+                        {translate("Canadian") || "Find Latest Packages"}
+                      </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
                       {Nationality}
@@ -1200,7 +1312,7 @@ const CustomerDetaTable = () => {
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      House No
+                      {translate("House No") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -1209,7 +1321,7 @@ const CustomerDetaTable = () => {
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      ZIP code
+                      {translate("ZIP code") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -1217,7 +1329,10 @@ const CustomerDetaTable = () => {
                 <div className="col-lg-6">
                   <div className="form-input spacing">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Street</label>
+                    <label className="lh-1 text-16 text-light-1">
+                      {" "}
+                      {translate("Street") || "Find Latest Packages"}
+                    </label>
                   </div>
                 </div>
 
@@ -1232,7 +1347,10 @@ const CustomerDetaTable = () => {
                       className="form-control"
                     >
                       {/* <option value="" disabled>Nationality</option> */}
-                      <option value="Frankfurt">Frankfurt(FRA)</option>
+                      <option value="Frankfurt">
+                        Frankfurt(FRA){" "}
+                        {translate("Email") || "Find Latest Packages"}
+                      </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">{From}</label>
                   </div>
@@ -1247,7 +1365,7 @@ const CustomerDetaTable = () => {
                   }, 2000);
                 }}
               >
-                SAVE
+                {translate("SAVE") || "Find Latest Packages"}
               </button>
             </div>
           </div>
@@ -1255,23 +1373,25 @@ const CustomerDetaTable = () => {
       </div>
 
       <div id="invoice">
-      <Modal
+        <Modal
           isOpen={invoice}
           onRequestClose={closeInvoice}
           style={customStyles}
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="px-20">Invoice</h2>
+            <h2 className="px-20">
+              {" "}
+              {translate("Invoice") || "Find Latest Packages"}
+            </h2>
             <button onClick={closeInvoice}>
               <IoClose size={25} />
             </button>
           </div>
 
           <h1>Your invoice Here ......</h1>
-          </Modal>
+        </Modal>
       </div>
-
     </div>
   );
 };

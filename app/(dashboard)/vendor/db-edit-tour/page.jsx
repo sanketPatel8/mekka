@@ -12,6 +12,7 @@ import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import $ from "jquery";
 import "select2/dist/css/select2.css";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -22,7 +23,7 @@ const tabs = [
   "Content",
   "Pricing",
   "Included",
-  "Overview", 
+  "Overview",
   "Itinerary",
   "Flight Hotel And Visa",
 ];
@@ -40,28 +41,48 @@ export default function AddTour() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
-    const [services, setServices] = useState({
-      bedroom1: { checked: false, price: "" },
-      bedroom2: { checked: false, price: "" },
-      bedroom3: { checked: false, price: "" },
-      bedroom4: { checked: false, price: "" },
-    });
+  const [services, setServices] = useState({
+    bedroom1: { checked: false, price: "" },
+    bedroom2: { checked: false, price: "" },
+    bedroom3: { checked: false, price: "" },
+    bedroom4: { checked: false, price: "" },
+  });
 
-    const handleCheckboxChange = (event) => {
-      const { id, checked } = event.target;
-      setServices((prev) => ({
-        ...prev,
-        [id]: { ...prev[id], checked },
-      }));
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1000) {
+        setSideBarOpen(true);
+      } else {
+        setSideBarOpen(false);
+      }
     };
 
-    const handlePriceChange = (event) => {
-      const { id, value } = event.target;
-      setServices((prev) => ({
-        ...prev,
-        [id]: { ...prev[id], price: value },
-      }));
+    // Set the initial state based on the screen size
+    handleResize();
+
+    // Add event listener to update state on resize
+    window.addEventListener("resize", handleResize);
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
     };
+  }, []);
+
+  const handleCheckboxChange = (event) => {
+    const { id, checked } = event.target;
+    setServices((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], checked },
+    }));
+  };
+
+  const handlePriceChange = (event) => {
+    const { id, value } = event.target;
+    setServices((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], price: value },
+    }));
+  };
 
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
@@ -81,7 +102,6 @@ export default function AddTour() {
     }
   };
 
-
   const options = [
     { value: "Umrah", label: "Umrah" },
     { value: "Hajj", label: "Hajj" },
@@ -100,7 +120,7 @@ export default function AddTour() {
 
   // for add hotel and remove hotels
 
-        // hotels for makka and madina 
+  // hotels for makka and madina
 
   const options2 = [
     {
@@ -141,7 +161,6 @@ export default function AddTour() {
   const [madinaRows, setMadinaRows] = useState([
     { hotel: null, price: "", customGender: "", gender: null },
   ]);
-
 
   const handleAddMekkaRow = () => {
     setMekkaRows([
@@ -263,33 +282,9 @@ export default function AddTour() {
     const newRows = [...flightRow];
     newRows[index].Flight = value;
     setFlightRow(newRows);
-  }
+  };
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Indicate that the component has mounted
-      // setMounted(true);
-
-      const handleResize = () => {
-        if (window.innerWidth >= 1000) {
-          setSideBarOpen(true);
-        } else {
-          setSideBarOpen(false);
-        }
-      };
-
-      // Set the initial state based on the screen size
-      handleResize();
-
-      // Add event listener to update state on resize
-      window.addEventListener("resize", handleResize);
-
-      // Cleanup event listener on component unmount
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, []);
+  const { translate } = useTranslation();
 
   return (
     <>
@@ -304,7 +299,9 @@ export default function AddTour() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content ">
-            <h1 className="text-30">Edit Tour</h1>
+            <h1 className="text-30">
+               {translate("Edit Tour") || "Find Latest Packages"}
+            </h1>
 
             <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
               <div className="tabs -underline-2 js-tabs">
@@ -369,7 +366,8 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="text" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Tour Name
+                                    {translate("Tour Name") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -378,7 +376,8 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="number" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Seat Availibility
+                                    {translate("Seat Availibility") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -387,7 +386,8 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    Start Date of Tour
+                                    {translate("Start Date of Tour") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -396,7 +396,8 @@ export default function AddTour() {
                                 <div className="form-input my-1">
                                   <input type="date" required />
                                   <label className="lh-1 text-16 text-light-1">
-                                    End Date of Tour
+                                    {translate("End Date of Tour") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -410,20 +411,40 @@ export default function AddTour() {
                                     multiple="multiple"
                                     placeholder="Langauge"
                                   >
-                                    <option value="ENG">English</option>
-                                    <option value="GER">German</option>
-                                    <option value="TUR">Turkis</option>
-                                    <option value="ARB">Arbic</option>
+                                    <option value="ENG">
+                                      {" "}
+                                      {translate("English") ||
+                                        "Find Latest Packages"}
+                                    </option>
+                                    <option value="GER">
+                                      {" "}
+                                      {translate("German") ||
+                                        "Find Latest Packages"}
+                                    </option>
+                                    <option value="TUR">
+                                      {" "}
+                                      {translate("Turkis") ||
+                                        "Find Latest Packages"}
+                                    </option>
+                                    <option value="ARB">
+                                      {" "}
+                                      {translate("Arbic") ||
+                                        "Find Latest Packages"}
+                                    </option>
                                   </select>
                                   <label className="multi-lan-select">
-                                    Langauge
+                                    {translate("Langauge") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
                             </div>
 
                             <div className="col-12">
-                              <h4 className="text-18 fw-500 mb-20">Gallery</h4>
+                              <h4 className="text-18 fw-500 mb-20">
+                                {" "}
+                                {translate("Gallery") || "Find Latest Packages"}
+                              </h4>
 
                               <div className="row x-gap-20 y-gap-20">
                                 {image1 ? (
@@ -460,7 +481,8 @@ export default function AddTour() {
                                       />
 
                                       <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        Upload Images
+                                        {translate("Upload Images") ||
+                                          "Find Latest Packages"}
                                       </div>
                                     </label>
                                     <input
@@ -508,7 +530,8 @@ export default function AddTour() {
                                       />
 
                                       <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        Upload Images
+                                        {translate("Upload Images") ||
+                                          "Find Latest Packages"}
                                       </div>
                                     </label>
                                     <input
@@ -556,7 +579,8 @@ export default function AddTour() {
                                       />
 
                                       <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        Upload Images
+                                        {translate("Upload Images") ||
+                                          "Find Latest Packages"}
                                       </div>
                                     </label>
                                     <input
@@ -604,7 +628,8 @@ export default function AddTour() {
                                       />
 
                                       <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        Upload Images
+                                        {translate("Upload Images") ||
+                                          "Find Latest Packages"}
                                       </div>
                                     </label>
                                     <input
@@ -628,7 +653,8 @@ export default function AddTour() {
                             <div className="col-12">
                               <div className="row">
                                 <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
+                                  {translate("SAVE DETAILS") ||
+                                    "Find Latest Packages"}
                                 </button>
                               </div>
                             </div>
@@ -647,7 +673,8 @@ export default function AddTour() {
                               <div className="form-input my-1">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price (€) Per Adult
+                                  {translate("Price (€) Per Adult") ||
+                                    "Find Latest Packages"}
                                 </label>
                               </div>
                             </div>
@@ -655,7 +682,8 @@ export default function AddTour() {
                               <div className="form-input my-1">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price (€) Per Child
+                                  {translate("Price (€) Per Child") ||
+                                    "Find Latest Packages"}
                                 </label>
                               </div>
                             </div>
@@ -663,27 +691,40 @@ export default function AddTour() {
                               <div className="form-input my-1">
                                 <input type="text" required />
                                 <label className="lh-1 text-16 text-light-1">
-                                  Price (€) Per Baby
+                                  {translate("Price (€) Per Baby") ||
+                                    "Find Latest Packages"}
                                 </label>
                               </div>
                             </div>
                           </div>
                           <div className="mt-30">
                             <h3 className="text-18 fw-500 mb-20">
-                              Additional Services
+                              {translate("Additional Services") ||
+                                "Find Latest Packages"}
                             </h3>
 
                             <div className="row">
                               <div className="col-lg-4">
-                                <p>Additional Services</p>
+                                <p>
+                                  {" "}
+                                  {translate("Additional Services") ||
+                                    "Find Latest Packages"}
+                                </p>
                               </div>
                               <div className="col-lg-6">
-                                <p>Price (€) Per Person</p>
+                                <p>
+                                  {" "}
+                                  {translate("Price (€) Per Person") ||
+                                    "Find Latest Packages"}
+                                </p>
                               </div>
                             </div>
 
                             {Object.keys(services).map((id, index) => (
-                              <div key={id} className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
+                              <div
+                                key={id}
+                                className="contactForm row y-gap-30 items-center pt-lg-0 pt-10"
+                              >
                                 <div className="col-lg-4">
                                   <div className="d-flex items-center pointer-check">
                                     <div className="form-checkbox">
@@ -743,7 +784,8 @@ export default function AddTour() {
                             <div className="col-12">
                               <div className="row">
                                 <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
+                                  {translate("SAVE DETAILS") ||
+                                    "Find Latest Packages"}
                                 </button>
                               </div>
                             </div>
@@ -791,8 +833,9 @@ export default function AddTour() {
                                     htmlFor="item1"
                                     className="lh-16 ml-15"
                                   >
-                                    Beverages, drinking water, morning tea and
-                                    buffet lunch
+                                    {translate(
+                                      "Beverages, drinking water, morning tea an buffet lunch"
+                                    ) || "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -829,7 +872,8 @@ export default function AddTour() {
                                     htmlFor="item2"
                                     className="lh-16 ml-15"
                                   >
-                                    Local taxes
+                                    {translate("Local taxes") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -866,7 +910,8 @@ export default function AddTour() {
                                     htmlFor="item3"
                                     className="lh-16 ml-15"
                                   >
-                                    Tour Guide
+                                    {translate("Tour Guide") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -907,7 +952,8 @@ export default function AddTour() {
                                     htmlFor="item4"
                                     className="lh-16 ml-15"
                                   >
-                                    Wifi
+                                    {translate("Wifi") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -943,8 +989,9 @@ export default function AddTour() {
                                     htmlFor="item5"
                                     className="lh-16 ml-15"
                                   >
-                                    Hotel pickup and drop-off by air-conditioned
-                                    minivan
+                                    {translate(
+                                      " Hotel pickup and drop-off by air-conditioned minivan "
+                                    ) || "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -985,7 +1032,9 @@ export default function AddTour() {
                                     htmlFor="item6"
                                     className="lh-16 ml-15"
                                   >
-                                    InsuranceTransfer to a private pier
+                                    {translate(
+                                      "InsuranceTransfer to a private pier"
+                                    ) || "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -1022,7 +1071,8 @@ export default function AddTour() {
                                     htmlFor="item7"
                                     className="lh-16 ml-15"
                                   >
-                                    Soft drinks
+                                    {translate("Soft drinks") ||
+                                      "Find Latest Packages"}
                                   </label>
                                 </div>
                               </div>
@@ -1033,7 +1083,8 @@ export default function AddTour() {
                         <div className="col-12">
                           <div className="row">
                             <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                              SAVE DETAILS
+                              {translate("SAVE DETAILS") ||
+                                "Find Latest Packages"}
                             </button>
                           </div>
                         </div>
@@ -1055,7 +1106,8 @@ export default function AddTour() {
                           <div className="col-12">
                             <div className="row">
                               <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                SAVE DETAILS
+                                {translate("SAVE DETAILS") ||
+                                  "Find Latest Packages"}
                               </button>
                             </div>
                           </div>
@@ -1142,7 +1194,8 @@ export default function AddTour() {
                             <div className="col-12">
                               <div className="row">
                                 <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                  SAVE DETAILS
+                                  {" "}
+                                  {translate("SAVE DETAILS") || "Find Latest Packages"}
                                 </button>
                               </div>
                             </div>
@@ -1159,7 +1212,10 @@ export default function AddTour() {
                       >
                         <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
                           <div className="d-flex item-center justify-content-between">
-                            <h6>Visa Processing</h6>
+                            <h6>
+                              {" "}
+                              {translate("Visa Processing") || "Find Latest Packages"}
+                            </h6>
                             <div className="flex_start visaYESNOFLEx my-3">
                               <div className="d-flex items-center mx-2">
                                 <div className="form-radio d-flex items-center">
@@ -1175,7 +1231,8 @@ export default function AddTour() {
                                       <span className="radio__icon"></span>
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
-                                      Yes
+                                      {" "}
+                                      {translate("Yes") || "Find Latest Packages"}
                                     </span>
                                   </label>
                                 </div>
@@ -1194,7 +1251,8 @@ export default function AddTour() {
                                       <span className="radio__icon"></span>
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
-                                      No
+                                      {" "}
+                                      {translate("No") || "Find Latest Packages"}
                                     </span>
                                   </label>
                                 </div>
@@ -1202,7 +1260,10 @@ export default function AddTour() {
                             </div>
                           </div>
                           <div className="">
-                            <h6>Mekka Hotel</h6>
+                            <h6>
+                              {" "}
+                              {translate("Mekka Hotel") || "Find Latest Packages"}
+                            </h6>
 
                             <ul className="">
                               {mekkaRows.map((row, index) => (
@@ -1229,7 +1290,9 @@ export default function AddTour() {
                                       <div className="form-input spacing">
                                         <input type="text" required />
                                         <label className="lh-1 text-16 text-light-1">
-                                          Hotel Price
+                                          {" "}
+                                          {translate("Hotel Price") ||
+                                            "Find Latest Packages"}
                                         </label>
                                       </div>
                                     </div>
@@ -1258,7 +1321,9 @@ export default function AddTour() {
                                       <div className="form-input m-0">
                                         <textarea required rows="1"></textarea>
                                         <label className="lh-1 text-16 text-light-1">
-                                          Description
+                                          {" "}
+                                          {translate("Description") ||
+                                            "Find Latest Packages"}
                                         </label>
                                       </div>
                                     </div>
@@ -1268,7 +1333,10 @@ export default function AddTour() {
                               ))}
                             </ul>
 
-                            <h6>Madina Hotel</h6>
+                            <h6>
+                              {" "}
+                              {translate(" ") || "Find Latest Packages"}
+                            </h6>
                             <ul className="">
                               {madinaRows.map((row, index) => (
                                 <li key={index}>
@@ -1294,7 +1362,9 @@ export default function AddTour() {
                                       <div className="form-input spacing">
                                         <input type="text" required />
                                         <label className="lh-1 text-16 text-light-1">
-                                          Hotel Price
+                                          {" "}
+                                          {translate("Hotel Price") ||
+                                            "Find Latest Packages"}
                                         </label>
                                       </div>
                                     </div>
@@ -1324,7 +1394,9 @@ export default function AddTour() {
                                       <div className="form-input m-0">
                                         <textarea required rows="1"></textarea>
                                         <label className="lh-1 text-16 text-light-1">
-                                          Description
+                                          {" "}
+                                          {translate("Description") ||
+                                            "Find Latest Packages"}
                                         </label>
                                       </div>
                                     </div>
@@ -1337,8 +1409,7 @@ export default function AddTour() {
                           </div>
                           <div className="d-flex item-center justify-content-between">
                             <h6>
-                              Free cancellation (up to 14 days before travel
-                              date)
+                             {translate("Free cancellation (up to 14 days before travel date)") || "Find Latest Packages"}
                             </h6>
                             <div className="flex_start visaYESNOFLEx my-3">
                               <div className="d-flex items-center mx-2">
@@ -1355,7 +1426,8 @@ export default function AddTour() {
                                       <span className="radio__icon"></span>
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
-                                      Yes
+                                      {" "}
+                                      {translate("Yes") || "Find Latest Packages"}
                                     </span>
                                   </label>
                                 </div>
@@ -1374,7 +1446,8 @@ export default function AddTour() {
                                       <span className="radio__icon"></span>
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
-                                      No
+                                      {" "}
+                                      {translate("No") || "Find Latest Packages"}
                                     </span>
                                   </label>
                                 </div>
@@ -1382,7 +1455,10 @@ export default function AddTour() {
                             </div>
                           </div>
                           <div className="d-flex item-center justify-content-between pt-10">
-                            <h6>Add Flight Details</h6>
+                            <h6>
+                             {" "}
+                              {translate("Add Flight Details") || "Find Latest Packages"}
+                            </h6>
                           </div>
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm py-20 ">
@@ -1390,9 +1466,9 @@ export default function AddTour() {
                                 return (
                                   <div className="row">
                                     <div className="col-md-5">
-                                    <CreatableSelect
+                                      <CreatableSelect
                                         value={row.Flight}
-                                          onChange={(value) =>
+                                        onChange={(value) =>
                                           handleFlightSelectChange(value, index)
                                         }
                                         options={ChooseFlight}
@@ -1420,7 +1496,9 @@ export default function AddTour() {
                                           }
                                         />
                                         <label className="lh-1 text-16 text-light-1">
-                                          Flight Amount
+                                          {" "}
+                                          {translate("Flight Amount") ||
+                                            "Find Latest Packages"}
                                         </label>
                                       </div>
                                     </div>
@@ -1435,7 +1513,9 @@ export default function AddTour() {
                                           }
                                         />
                                         <label className="lh-1 text-16 text-light-1">
-                                          No of Flight Stops
+                                          {" "}
+                                          {translate("No of Flight Stops") ||
+                                            "Find Latest Packages"}
                                         </label>
                                       </div>
                                     </div>
@@ -1467,7 +1547,8 @@ export default function AddTour() {
                           <div className="col-12">
                             <div className="row">
                               <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                                SAVE DETAILS
+                                {" "}
+                                {translate("SAVE DETAILS") || "Find Latest Packages"}
                               </button>
                             </div>
                           </div>

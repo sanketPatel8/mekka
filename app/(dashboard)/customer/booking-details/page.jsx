@@ -28,6 +28,8 @@ export default function CustomerDb() {
     };
   }, []);
 
+  
+
   return (
     <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
       <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />

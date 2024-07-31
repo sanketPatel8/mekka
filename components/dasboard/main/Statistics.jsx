@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/app/context/TranslationContext";
 import { tabContentStaticties } from "@/data/dashboard";
 import { useState } from "react";
 import {
@@ -38,13 +39,15 @@ export default function Statistics() {
       </LineChart>
     </ResponsiveContainer>
   );
+
+  const { translate } = useTranslation();
   return (
     <div className="col-xl-8 col-lg-12 col-md-6 my-3">
       <div className="rounded-12 bg-white shadow-2 h-full">
         <div className="pt-20 px-30">
           <div className="tabs -underline-2 js-tabs">
             <div className="d-flex items-center justify-between">
-              <div className="text-18 fw-500">Earning Statistics</div>
+              <div className="text-18 fw-500"> {translate("Earning Statistics") || "Find Latest Packages"}</div>
 
               <div className="tabs__controls row x-gap-20 y-gap-10 lg:x-gap-20 js-tabs-controls">
                 {tabContentStaticties.map((elm, i) => (

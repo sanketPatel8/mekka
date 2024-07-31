@@ -7,6 +7,7 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import $ from "jquery";
 import "select2/dist/css/select2.css";
 import CreatableSelect from "react-select/creatable";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -65,6 +66,8 @@ export default function Profile() {
     }
   }, []);
 
+  const { translate } = useTranslation();
+
   return (
     <>
       <div
@@ -78,16 +81,16 @@ export default function Profile() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">My Profile</h1>
+            <h1 className="text-30"> {translate("My Profile") || "Find Latest Packages"}</h1>
             <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40">
-              <h5 className="text-20 fw-500 mb-30">Profile Details</h5>
+              <h5 className="text-20 fw-500 mb-30"> {translate("Profile Details") || "Find Latest Packages"}</h5>
 
               <div className="contactForm row my-1">
                 <div className="col-md-6">
                   <div className="form-input m-0 ">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      First Name
+                       {translate("First Name") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -96,7 +99,7 @@ export default function Profile() {
                   <div className="form-input m-0">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Last Name
+                       {translate("Last Name") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -105,7 +108,7 @@ export default function Profile() {
                   <div className="form-input m-0">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Company Name
+                       {translate("Company Name") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -114,7 +117,7 @@ export default function Profile() {
                   <div className="form-input m-0">
                     <input type="email" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Email Id
+                       {translate("Email Id") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -123,7 +126,7 @@ export default function Profile() {
                   <div className="form-input m-0">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Contact No
+                       {translate("Contact No") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -150,14 +153,14 @@ export default function Profile() {
                 <div className="col-md-6">
                   <div className="form-input m-0">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">City</label>
+                    <label className="lh-1 text-16 text-light-1"> {translate("City") || "Find Latest Packages"}</label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Street</label>
+                    <label className="lh-1 text-16 text-light-1"> {translate("Street") || "Find Latest Packages"}</label>
                   </div>
                 </div>
 
@@ -165,7 +168,7 @@ export default function Profile() {
                   <div className="form-input m-0">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      House No
+                       {translate("House No") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -174,7 +177,7 @@ export default function Profile() {
                   <div className="form-input m-0">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      ZIP Code
+                       {translate("ZIP Code") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -182,7 +185,7 @@ export default function Profile() {
                 <div className="col-md-6">
                   <div className="form-input m-0">
                     <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">Website</label>
+                    <label className="lh-1 text-16 text-light-1"> {translate("Website") || "Find Latest Packages"}</label>
                   </div>
                 </div>
 
@@ -190,7 +193,7 @@ export default function Profile() {
                   <div className="form-input m-0 ">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      Tax Number
+                       {translate("Tax Number") || "Find Latest Packages"}
                     </label>
                   </div>
                 </div>
@@ -198,12 +201,12 @@ export default function Profile() {
                 <div className="col-md-12">
                   <div className="form-input m-0">
                     <textarea required rows="2"></textarea>
-                    <label className="lh-1 text-16 text-light-1">Info</label>
+                    <label className="lh-1 text-16 text-light-1"> {translate("Info") || "Find Latest Packages"}</label>
                   </div>
                 </div>
 
                 <div className="col-12">
-                  <h4 className="text-18 fw-500 mb-20">Company Logo</h4>
+                  <h4 className="text-18 fw-500 mb-20"> {translate("Company Logo") || "Find Latest Packages"}</h4>
                   <div className="row x-gap-20 y-gap my-1">
                     {image1 ? (
                       <div className="col-auto">
@@ -239,7 +242,7 @@ export default function Profile() {
                           />
 
                           <div className="text-16 fw-500 text-accent-1 mt-10">
-                            Upload Images
+                             {translate("Upload Images") || "Find Latest Packages"}
                           </div>
                         </label>
                         <input
@@ -251,55 +254,9 @@ export default function Profile() {
                         />
                       </div>
                     )}
-                    {/* {image2 ? (
-                      <div className="col-auto">
-                        <div className="relative">
-                          <Image
-                            width={200}
-                            height={200}
-                            src={image2}
-                            alt="image"
-                            className="size-200 rounded-12 object-cover"
-                          />
-                          <button
-                            onClick={() => {
-                              setImage2("");
-                            }}
-                            className="absoluteIcon1 button -dark-1"
-                          >
-                            <i className="icon-delete text-18"></i>
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="col-auto">
-                        <label
-                          htmlFor="imageInp2"
-                          className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                        >
-                          <Image
-                            width="40"
-                            height="40"
-                            alt="image"
-                            src={"/img/dashboard/upload.svg"}
-                          />
-
-                          <div className="text-16 fw-500 text-accent-1 mt-10">
-                            Upload Images
-                          </div>
-                        </label>
-                        <input
-                          onChange={(e) => handleImageChange(e, setImage2)}
-                          accept="image/*"
-                          id="imageInp2"
-                          type="file"
-                          style={{ display: "none" }}
-                        />
-                      </div>
-                    )} */}
                   </div>
 
-                  <h4 className="text-18 fw-500 mb-20 mt-20">Documents</h4>
+                  <h4 className="text-18 fw-500 mb-20 mt-20"> {translate("Documents") || "Find Latest Packages"}</h4>
                   <div className="row x-gap-20 y-gap">
                     {image1 ? (
                       <div className="col-auto">
@@ -335,7 +292,7 @@ export default function Profile() {
                           />
 
                           <div className="text-16 fw-500 text-accent-1 mt-10">
-                            Upload Images
+                             {translate("Upload Images") || "Find Latest Packages"}
                           </div>
                         </label>
                         <input
@@ -381,7 +338,7 @@ export default function Profile() {
                           />
 
                           <div className="text-16 fw-500 text-accent-1 mt-10">
-                            Upload Images
+                             {translate("Upload Images") || "Find Latest Packages"}
                           </div>
                         </label>
                         <input
@@ -427,7 +384,7 @@ export default function Profile() {
                           />
 
                           <div className="text-16 fw-500 text-accent-1 mt-10">
-                            Upload Images
+                             {translate("Upload Images") || "Find Latest Packages"}
                           </div>
                         </label>
                         <input
@@ -473,7 +430,7 @@ export default function Profile() {
                           />
 
                           <div className="text-16 fw-500 text-accent-1 mt-10">
-                            Upload Images
+                             {translate("Upload Images") || "Find Latest Packages"}
                           </div>
                         </label>
                         <input
@@ -519,7 +476,7 @@ export default function Profile() {
                           />
 
                           <div className="text-16 fw-500 text-accent-1 mt-10">
-                            Upload Images
+                             {translate("Upload Images") || "Find Latest Packages"}
                           </div>
                         </label>
                         <input
@@ -538,7 +495,7 @@ export default function Profile() {
                   </div>
 
                   <button className="button -md -info-2 bg-accent-1 text-white mt-30">
-                    Save Changes
+                     {translate("Save Changes") || "Find Latest Packages"}
                     {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                   </button>
                 </div>
@@ -546,7 +503,7 @@ export default function Profile() {
             </div>
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-30">
-              <h5 className="text-20 fw-500 mb-30">Payout Account (IBAN)</h5>
+              <h5 className="text-20 fw-500 mb-30">  {translate("Payout Account (IBAN)") || "Find Latest Packages"}</h5>
 
               <div className="contactForm ">
 
@@ -555,7 +512,7 @@ export default function Profile() {
                     <div className="form-input my-1 ">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
-                        Bank Name
+                         {translate("Bank Name") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -566,7 +523,7 @@ export default function Profile() {
                     <div className="form-input my-1 ">
                       <input type="text" required />
                       <label className="lh-1 te xt-16 text-light-1">
-                        Owner Name
+                         {translate("Owner Name") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -576,7 +533,7 @@ export default function Profile() {
                   <div className="col-md-6">
                     <div className="form-input my-1 ">
                       <input type="text" required />
-                      <label className="lh-1 text-16 text-light-1">IBAN</label>
+                      <label className="lh-1 text-16 text-light-1"> {translate("IBAN") || "Find Latest Packages"}</label>
                     </div>
                   </div>
                 </div>
@@ -584,7 +541,7 @@ export default function Profile() {
                 <div className="row">
                   <div className="col-12">
                     <button className="button -md -info-2 bg-accent-1 text-white mt-15">
-                      Save Changes
+                       {translate("Save Changes") || "Find Latest Packages"}
                       {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                     </button>
                   </div>
@@ -593,7 +550,7 @@ export default function Profile() {
             </div>
 
             <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-30">
-              <h5 className="text-20 fw-500 mb-30">Change Password</h5>
+              <h5 className="text-20 fw-500 mb-30"> {translate("Change Password") || "Find Latest Packages"}</h5>
 
               <div className="contactForm ">
                 <div className="row my-1">
@@ -601,7 +558,7 @@ export default function Profile() {
                     <div className="form-input m-0 ">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
-                        Old password
+                         {translate("Old password") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -612,7 +569,7 @@ export default function Profile() {
                     <div className="form-input m-0 ">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
-                        New password
+                         {translate("New password") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -623,7 +580,7 @@ export default function Profile() {
                     <div className="form-input m-0 ">
                       <input type="text" required />
                       <label className="lh-1 text-16 text-light-1">
-                        Confirm new password
+                         {translate("Confirm new password") || "Find Latest Packages"}
                       </label>
                     </div>
                   </div>
@@ -632,7 +589,7 @@ export default function Profile() {
                 <div className="row">
                   <div className="col-12">
                     <button className="button -md -info-2 bg-accent-1 text-white">
-                      Save Changes
+                       {translate("Save Changes") || "Find Latest Packages"}
                       {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                     </button>
                   </div>

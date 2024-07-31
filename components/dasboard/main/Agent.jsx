@@ -8,6 +8,7 @@ import Statistics from "./Statistics";
 import Header from "../Header";
 // import SidebarAgent from "../SidebarAgent";
 import AgentDBsideBar from "../AgentDBsideBar";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -33,6 +34,8 @@ export default function Sidebar() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const { translate } = useTranslation();
   return (
     <>
       <div
@@ -46,7 +49,7 @@ export default function Sidebar() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">Dashboard</h1>
+            <h1 className="text-30"> {translate("Dashboard") || "Find Latest Packages"}</h1>
 
             <States />
 
@@ -56,15 +59,14 @@ export default function Sidebar() {
               <div className="col-xl-4 col-lg-12 col-md-6">
                 <div className="px-30 py-25 rounded-12 bg-white shadow-2">
                   <div className="d-flex items-center justify-between">
-                    <div className="text-18 fw-500">Recent Activities</div>
+                    <div className="text-18 fw-500"> {translate("Recent Activities") || "Find Latest Packages"}</div>
                   </div>
 
                   <Activities />
 
                   <div className="pt-40">
                     <button className="button -md -outline-accent-1 col-12 text-accent-1">
-                      View More
-                      <i className="icon-arrow-top-right text-16 ml-10"></i>
+                       {translate("View More") || "Find Latest Packages"}
                     </button>
                   </div>
                 </div>

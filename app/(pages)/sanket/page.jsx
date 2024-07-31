@@ -1,50 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React from 'react';
+import useAxios from '@/app/hooks/useAxios';
 
-const fetchTranslations = async (locale) => {
-  try {
-    const res = await fetch(`/locales/${locale}.json`);
-    if (!res.ok)
-      throw new Error(`Failed to fetch translations: ${res.statusText}`);
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return {}; // Return an empty object in case of an error
-  }
-};
+const ExampleComponent = () => {
+  const { data, error, loading } = useAxios('https://jsonplaceholder.typicode.com/posts');
 
-const TranslationComponent = () => {
-  const [translations, setTranslations] = useState({});
-  const [locale, setLocale] = useState("en");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    fetchTranslations(locale)
-      .then((data) => {
-        setTranslations(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching translations:", error);
-        setLoading(false);
-      });
-  }, [locale]);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <h1>{translations.welcome || "Welcome"}</h1>
-      )}
-      <button onClick={() => setLocale("en")} className="mx-3">
-        English
-      </button>
-      <button onClick={() => setLocale("de")}>German</button>
+      <h1>Data</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 };
 
-export default TranslationComponent;
+export default ExampleComponent;

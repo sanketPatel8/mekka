@@ -5,6 +5,7 @@ import Header from "@/components/dasboard/Header";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import { PaymentPendingHistry, StatusPaymentHistry } from "@/data/dashboard";
 import DataTable from "react-data-table-component";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function DBListing() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -74,6 +75,8 @@ export default function DBListing() {
     return null; // Avoid rendering client-specific elements until the component has mounted
   }
 
+  const { translate } = useTranslation();
+
   return (
     <div
       className={`dashboard ${
@@ -86,7 +89,7 @@ export default function DBListing() {
         <Header setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
-          <h1 className="text-30">Payment History</h1>
+          <h1 className="text-30">  {translate("Payment History") || "Find Latest Packages"}</h1>
 
           <div className="row y-gap-30 mt-20 md:pt-30">
             {StatusPaymentHistry.map((elm, i) => (

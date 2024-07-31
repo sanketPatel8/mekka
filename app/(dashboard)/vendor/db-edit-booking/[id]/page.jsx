@@ -78,7 +78,7 @@ export default function DbBooking({ params }) {
             className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             // onClick={openAdult1Deta}
           >
-            Edit
+             {translate("Edit") || "Find Latest Packages"}
           </button>
         </Link>
       ),

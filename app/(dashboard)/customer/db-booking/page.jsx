@@ -11,6 +11,7 @@ import { FaStar } from "react-icons/fa";
 import { faHotel, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import Stars from "@/components/common/Stars";
 import Link from "next/link";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const tabs = ["Approved", "Pending", "Cancelled"];
 
@@ -43,6 +44,8 @@ export default function DbBooking() {
     }
   }, []);
 
+  const { translate } = useTranslation();
+
   return (
     <div
   className={`dashboard ${
@@ -56,7 +59,7 @@ export default function DbBooking() {
         <Header setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
-          <h1 className="text-30">My Booking</h1>
+          <h1 className="text-30">{translate("My Booking") || "Find Latest Packages"}</h1>
 
             <div className="row mt-20">
               {tourDataTwoOne.map((elm, i) => (
@@ -142,7 +145,7 @@ export default function DbBooking() {
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
                         <Link href="/customer/booking-details">
-                        VIEW DETAILS
+                         {translate("VIEW DETAILS") || "Find Latest Packages"}
                         </Link>
                       </button>
                     </div>

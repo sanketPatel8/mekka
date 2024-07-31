@@ -6,6 +6,7 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import DataTable from "react-data-table-component";
 import { bookingData } from "@/data/dashboard";
 import Link from "next/link";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
@@ -117,7 +118,7 @@ export default function DbBooking() {
           <button
             className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
           >
-            Edit
+             {translate("Edit") || "Find Latest Packages"}
           </button>
         </Link>
       ),
@@ -129,13 +130,15 @@ export default function DbBooking() {
     return null;
   }
 
+  const { translate } = useTranslation();
+
   return (
     <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
       <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
       <div className="dashboard__content">
         <Header setSideBarOpen={setSideBarOpen} />
         <div className="dashboard__content_content">
-          <h1 className="text-30">My Booking</h1>
+          <h1 className="text-30"> {translate("My Booking") || "Find Latest Packages"}</h1>
           <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20 ">
             <div className="tabs -underline-2 js-tabs">
               <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
