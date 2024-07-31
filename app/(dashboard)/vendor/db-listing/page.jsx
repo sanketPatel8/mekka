@@ -14,6 +14,7 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import Link from "next/link";
 import Modal from "react-modal";
 import { IoClose } from "react-icons/io5";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const customStyles = {
   overlay: {
@@ -83,7 +84,7 @@ export default function DBListing() {
     }
   }, []);
 
-
+  const { translate } = useTranslation();
 
   return (
     <>
