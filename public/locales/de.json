@@ -221,7 +221,30 @@
   "Old password" : "Altes Kennwort",
   "New password" : "Neues Kennwort",
   "Confirm new password" : "Bestätige neues Passwort",
-  "Payment History" : "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
+  "Payment History data" : "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
   "Payment History" : "Zahlungshistorie",
-  "My Listings" : "Meine Einträge"
+  "My Listings" : "Meine Einträge",
+  
+  "Form Column Translate " : "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
+  "Airline" : "Fluggesellschaft",
+  "From" : "Aus",
+  "To" : "Zu",
+  "Return" : "Zurückkehren",
+  "Adult" : "Erwachsene",
+  "Action" : "Aktion",
+  "Total" : "Gesamt",
+  "Booking No." : "Buchungsnr",
+  "Customer Name" : "Kundenname",
+  "Total (€) " : "Gesamt (€)",
+  "Paid (€) " : "Bezahlt (€)",
+  "Date " : "Datum",
+  "Transaction ID " : "Transaktions-ID",
+  "Full Name" : "Vollständiger Name",
+  "Terms" : "Bedingungen" ,
+  "Method" : "Methode" , 
+  "Flight" : "Flug",
+  "Initiated By" : "Eingeführt von" , 
+  "Bookings" : "Buchungen"
+ 
+
 }

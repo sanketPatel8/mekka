@@ -220,7 +220,7 @@
   "Old password" : "Old password",
   "New password" : "New password",
   "Confirm new password" : " Confirm new password",
-  "Payment History" : "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
+  "Payment History data" : "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
   "Payment History" : "Payment History",
   "My Listings" : "My Listings",
 
@@ -232,6 +232,18 @@
   "Return" : "Return",
   "Adult" : "Adult",
   "Action" : "Action",
-  "Total" : "Total"
+  "Total" : "Total",
+  "Booking No." : "Booking No",
+  "Customer Name" : "Customer Name",
+  "Total (€) " : "Total (€)",
+  "Paid (€) " : "Paid (€)",
+  "Date " : "Date",
+  "Transaction ID " : "Transaction ID",
+  "Full Name" : "Full Name",
+  "Terms" : "Terms" ,
+  "Method" : "Method" , 
+  "Flight" : "Flight",
+  "Initiated By" : "Initiated By" , 
+  "Bookings" : "Bookings"
   
  }
