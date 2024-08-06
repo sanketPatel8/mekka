@@ -2,12 +2,63 @@
 
 import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 
 export default function Login() {
+  const [LogInData, setLogInData] = useState({
+    AccessKey : process.env.NEXT_PUBLIC_ACCESS_KEY ,
+    email : "",
+    password : ""
+  })
+
+  const [LoginISChacked , setLoginISChacked] = useState(false)
+
+  const HandleLogInChange = (e) => {
+    const { name, value } = e.target;
+    setLogInData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  const handleLoginCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
+
+  const handleLoginSubmite = async (e) => {
+    e.preventDefault();
+    if (isChecked === true) {
+      try {
+        const response = await post("login", LogInData);
+        showSuccessToast(response.status);
+
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast(error.response.data.message);
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+      setLogInData({
+        email: "",
+        password: "",
+        
+      });
+      setLoginISChacked(false)
+     
+    } else {
+      showErrorToast("please check checkbox");
+    }
+  }
+
   const { translate } = useTranslation();
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
@@ -31,11 +82,11 @@ export default function Login() {
             </div>
 
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleLoginSubmite}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
               <div className="form-input my-1">
-                <input type="email" required />
+                <input type="email" onChange={HandleLogInChange} value={LogInData.email} name="email" required />
                 <label className="lh-1 text-16 text-light-1">
                   
                   {translate("Email Address") || "Find Latest Packages"}
@@ -43,7 +94,7 @@ export default function Login() {
               </div>
 
               <div className="form-input my-1">
-                <input type="email" required />
+                <input type="email" onChange={HandleLogInChange} value={LogInData.password} name="password"  required />
                 <label className="lh-1 text-16 text-light-1"> {translate("Password") || "Find Latest Packages"}</label>
               </div>
 
@@ -51,7 +102,7 @@ export default function Login() {
                 <div className="col-auto">
                   <div className="d-flex items-center">
                     <div className="form-checkbox ">
-                      <input type="checkbox" name="name" />
+                      <input type="checkbox" name="name"   checked={LoginISChacked} onChange={handleLoginCheckboxChange} />
                       <div className="form-checkbox__mark">
                         <div className="form-checkbox__icon">
                           <svg
@@ -79,6 +130,38 @@ export default function Login() {
                 </div>
               </div>
 
+              <div className="d-flex items-center">
+                <label className="form-checkbox d-flex align-items-center">
+                  <input
+                    type="checkbox"
+                    name="acceptTerms"
+                    className="form-checkbox__input"
+                    checked={LoginISChacked} onChange={handleLoginCheckboxChange}
+                  />
+                  <div className="form-checkbox__mark">
+                    <div className="form-checkbox__icon">
+                      <svg
+                        width="10"
+                        height="8"
+                        viewBox="0 0 10 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <span className="text-14 lh-12 ml-10">
+                    {translate(
+                      "I have read the data protection and I accept the conditions."
+                    ) || "Find Latest Packages"}
+                  </span>
+                </label>
+              </div>
+
              <div className="row y-gap-15">
                 <div className="col-lg-6 col-12">
                 <Link href='/customer/db-booking/'>
@@ -86,12 +169,12 @@ export default function Login() {
                         type="submit"
                         className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                       >
-                         {translate("Customer Log In") || "Find Latest Packages"}
+                         {translate("Log In") || "Find Latest Packages"}
                       </button>
                   </Link>
                 </div>
 
-                <div className="col-lg-6 col-12">
+                {/* <div className="col-lg-6 col-12">
                 <Link href='/vendor/db-main/'>
                       <button
                         type="submit"
@@ -100,7 +183,7 @@ export default function Login() {
                          {translate("Vendor Log in") || "Find Latest Packages"}
                       </button>
                   </Link>
-                </div>
+                </div> */}
               </div>
 
               <div className="relative line mt-50 mb-30">

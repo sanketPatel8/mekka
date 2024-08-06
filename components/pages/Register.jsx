@@ -2,60 +2,169 @@
 
 import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
+import { post } from "@/app/utils/api";
+import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
 
 export default function Register() {
+  const [RegisterData, setRegisterData] = useState({
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    name: "",
+    surname: "",
+    email: "",
+    password: ""
+  
+  });
+  
+  const [confirm_pass , setConfirm_pass] = useState('')
+  const [isChecked, setIsChecked] = useState(false);
+
+  console.log(showSuccessToast);
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const MatchPass = (e) => {
+    setConfirm_pass(e.target.value)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isChecked === true) {
+      if(RegisterData.password === confirm_pass){
+        try {
+          const response = await post("register", RegisterData);
+          showSuccessToast(response.message);
+  
+        } catch (error) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            showErrorToast(error.response.data.message);
+          } else {
+            showErrorToast("An error occurred during registration.");
+          }
+        }
+        setRegisterData({
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+          
+        });
+        alert(RegisterData.AccessKey)
+        setConfirm_pass("")
+        setIsChecked(false)
+      }else{
+        showErrorToast("password dose not match")
+      }
+     
+    } else {
+      showErrorToast("please check checkbox");
+    }
+  };
+
   const { translate } = useTranslation();
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
+      <ToastContainer />
       <div className="container">
         <div className="row justify-center">
           <div className="col-xl-6 col-lg-7 col-md-9">
             <div className="text-center mb-60 md:mb-30">
-              <h1 className="text-30">  {translate("Register") || "Find Latest Packages"}</h1>
+              <h1 className="text-30">
+                {" "}
+                {translate("Register") || "Find Latest Packages"}
+              </h1>
               <div className="text-18 fw-500 mt-20 md:mt-15">
-                  {translate("Let's Create Your Account!") || "Find Latest Packages"}
+                {translate("Let's Create Your Account!") ||
+                  "Find Latest Packages"}
               </div>
               <div className="mt-5">
-                  {translate("Already Have An Account?") || "Find Latest Packages"}{" "}
+                {translate("Already Have An Account?") ||
+                  "Find Latest Packages"}{" "}
                 <Link href="/login" className="text-accent-1">
-                   {translate("Log In") || "Find Latest Packages"}! 
+                  {translate("Log In") || "Find Latest Packages"}!
                 </Link>
               </div>
             </div>
 
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
-
               <div className="form-input my-1">
-                <input type="text" required />
-                <label className="lh-1 text-16 text-light-1">  {translate("Name") || "Find Latest Packages"}</label>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  name="name"
+                  value={RegisterData.name}
+                  required
+                />
+                <label className="lh-1 text-16 text-light-1">
+                  {" "}
+                  {translate("Name") || "Find Latest Packages"}
+                </label>
               </div>
 
               <div className="form-input  my-1">
-                <input type="text" required />
-                <label className="lh-1 text-16 text-light-1">  {translate("Surname") || "Find Latest Packages"}</label>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  name="surname"
+                  value={RegisterData.surname}
+                  required
+                />
+                <label className="lh-1 text-16 text-light-1">
+                  {" "}
+                  {translate("Surname") || "Find Latest Packages"}
+                </label>
               </div>
 
               <div className="form-input my-1">
-                <input type="email" required />
-                <label className="lh-1 text-16 text-light-1">  {translate("Email Address") || "Find Latest Packages"}</label>
+                <input
+                  type="email"
+                  onChange={handleChange}
+                  name="email"
+                  value={RegisterData.email}
+                  required
+                />
+                <label className="lh-1 text-16 text-light-1">
+                  {" "}
+                  {translate("Email Address") || "Find Latest Packages"}
+                </label>
               </div>
 
               <div className="form-input my-1">
-                <input type="password" required />
+                <input
+                  type="password"
+                  onChange={handleChange}
+                  name="password"
+                  value={RegisterData.password}
+                  required
+                />
                 <label className="lh-1 text-16 text-light-1">
                   {translate("Password") || "Find Latest Packages"}
                 </label>
               </div>
 
               <div className="form-input my-1">
-                <input type="password" required />
+                <input type="password" value={confirm_pass} onChange={MatchPass} required />
                 <label className="lh-1 text-16 text-light-1">
                   {translate("Confirm Password") || "Find Latest Packages"}
                 </label>
@@ -63,7 +172,13 @@ export default function Register() {
 
               <div className="d-flex items-center">
                 <label className="form-checkbox d-flex align-items-center">
-                  <input type="checkbox" name="name" className="form-checkbox__input" />
+                  <input
+                    type="checkbox"
+                    name="acceptTerms"
+                    className="form-checkbox__input"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
+                  />
                   <div className="form-checkbox__mark">
                     <div className="form-checkbox__icon">
                       <svg
@@ -80,14 +195,19 @@ export default function Register() {
                       </svg>
                     </div>
                   </div>
-                  <span className="text-14 lh-12 ml-10">  {translate("I have read the data protection and I accept the conditions.") || "Find Latest Packages"}</span>
+                  <span className="text-14 lh-12 ml-10">
+                    {translate(
+                      "I have read the data protection and I accept the conditions."
+                    ) || "Find Latest Packages"}
+                  </span>
                 </label>
               </div>
 
-
-              <button className="button -md -info-2 bg-accent-1 text-white col-12 mt-30">
-                  {translate("Register") || "Find Latest Packages"}
-                {/* <i className="icon-arrow-top-right ml-10"></i> */}
+              <button
+                className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
+                type="submit"
+              >
+                {translate("Register") || "Find Latest Packages"}
               </button>
 
               <div className="relative line mt-50 mb-30">
@@ -100,23 +220,24 @@ export default function Register() {
                     type="submit"
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
-                   <FaFacebookF size={15} className="mx-1"/>
-                      {translate("Facebook") || "Find Latest Packages"}
+                    <FaFacebookF size={15} className="mx-1" />
+                    {translate("Facebook") || "Find Latest Packages"}
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
-                  <FaGoogle size={15} className="mx-1" />
-                      {translate("Google") || "Find Latest Packages"}
+                    <FaGoogle size={15} className="mx-1" />
+                    {translate("Google") || "Find Latest Packages"}
                   </button>
                 </div>
-              </div><br />
+              </div>
+              <br />
               <div className="row y-gap-15">
                 <div className="col">
                   <button className="button -md -outline-dark-1 text-dark-1 col-12">
-                  <FaApple size={15} className="mx-1" />
-                      {translate("Sign in With Apple") || "Find Latest Packages"}
+                    <FaApple size={15} className="mx-1" />
+                    {translate("Sign in With Apple") || "Find Latest Packages"}
                   </button>
                 </div>
               </div>
