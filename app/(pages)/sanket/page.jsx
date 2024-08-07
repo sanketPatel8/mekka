@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { FaHotel } from "react-icons/fa6";
 
 const Page = () => {
   const [data, setData] = useState(null); // State to store API response
@@ -12,15 +12,18 @@ const Page = () => {
     // Define the async function
     const fetchData = async () => {
       try {
-        const response = await axios.post('https://xcoder.a2hosted.com/mekkabooking/api/tourlist', {
-          AccessKey: "Mekka@24",
-          email: 'sanket.xceptive+123@gmail.com',
-        });
+        const response = await axios.post(
+          "https://xcoder.a2hosted.com/mekkabooking/api/tourlist",
+          {
+            AccessKey: "Mekka@24",
+            start: 0,
+          }
+        );
         setData(response.data); // Update state with API response
         console.log(response.data); // Log the response data
       } catch (err) {
         console.error(err);
-        setError('An error occurred while fetching the data.'); // Update state with error message
+        setError("An error occurred while fetching the data."); // Update state with error message
       }
     };
 
@@ -30,6 +33,7 @@ const Page = () => {
 
   return (
     <div>
+      <FaHotel className="px-1" color="#dabf4f" size={25} />
       <h1>Page</h1>
       {error && <p>{error}</p>} {/* Show error message if there's an error */}
       {data ? (

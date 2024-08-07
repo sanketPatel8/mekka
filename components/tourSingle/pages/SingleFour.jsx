@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainInformation from "../MainInformation";
 import Gallery1 from "../Galleries/Gallery1";
 import OthersInformation from "../OthersInformation";
@@ -13,10 +13,30 @@ import TourSingleSidebar from "../TourSingleSidebar";
 import OtherInformation2 from "../OtherInformation2";
 import RoadMap2 from "../Roadmap2";
 import { useTranslation } from "@/app/context/TranslationContext";
+import axios from "axios";
 
 export default function SingleFour({ tour }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   const { translate } = useTranslation();
+
+
+  useEffect(() => {
+    const fatchdata = () => {
+      axios
+        .post("https://xcoder.a2hosted.com/mekkabooking/api/tour_details", {
+          AccessKey: "Mekka@24",
+          id: 12,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    fatchdata()
+  }, []);
   return (
     <>
       <section className="py-30 mt-80">

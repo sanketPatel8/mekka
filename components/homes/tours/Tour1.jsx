@@ -4,9 +4,12 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { FaPersonWalking } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+
 
 export default function Tour1() {
+
+
   const { translate } = useTranslation();
   return (
     <section className="layout-pt-xl layout-pb-xl">
@@ -14,12 +17,12 @@ export default function Tour1() {
         <div className="row justify-between items-end y-gap-10">
           <div className="col-auto">
             <h2
-              data-aos="fade-right"   
+              data-aos="fade-right"
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-               {translate("Find Latest Packages") || "Find Latest Packages"}
-            </h2> 
+              {translate("Find Latest Packages") || "Find Latest Packages"}
+            </h2>
           </div>
 
           <div className="col-auto">
@@ -29,7 +32,7 @@ export default function Tour1() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span>  {translate("See all") || "Find Latest Packages"}</span>
+              <span> {translate("See all") || "Find Latest Packages"}</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>
@@ -63,7 +66,7 @@ export default function Tour1() {
                 <div className="tourCard__content px-10 pt-10">
                   <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2">
                     {/* <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i> */}
-                     <FaPersonWalking  color="white" size={18} />
+                    <FaPersonWalking color="white" size={18} />
                     {elm.location}
                   </div>
 
@@ -77,14 +80,12 @@ export default function Tour1() {
                     </div>
 
                     <span className="text-dark-1 ml-10">
-                      {elm.rating} ({elm.ratingCount}) - IDEALGATE 
+                      {elm.rating} ({elm.ratingCount}) - IDEALGATE
                     </span>
                   </div>
                   <div className="Location">
-                          <span>
-                              Departure : London
-                            </span>
-                          </div>
+                    <span>Departure : London</span>
+                  </div>
 
                   <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                     <div className="d-flex items-center">
