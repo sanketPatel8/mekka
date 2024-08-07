@@ -2,10 +2,15 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { speedFeatures } from "@/data/tourFilteringOptions";
-import { FaPersonWalking, FaQuoteRight, FaStar, FaCheck } from "react-icons/fa6";
+import {
+  FaPersonWalking,
+  FaQuoteRight,
+  FaStar,
+  FaCheck,
+} from "react-icons/fa6";
 import { tourDataTwo } from "@/data/tours";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHotel } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHotel } from "@fortawesome/free-solid-svg-icons";
 import { FaCalendar } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
 import { MdBed } from "react-icons/md";
@@ -21,7 +26,7 @@ export default function TourList4() {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
-  const [TourListData, setTourListData] = useState([])
+  const [TourListData, setTourListData] = useState([]);
   const dropDownContainer = useRef();
 
   useEffect(() => {
@@ -42,9 +47,9 @@ export default function TourList4() {
   }, []);
 
   const sendData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    email : "sanket.xceptive+123@gmail.com"
-  }
+    AccessKey: "Mekka@24",
+    start : 0
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,18 +60,21 @@ export default function TourList4() {
         setTourListData(response.data); // Assuming response.data contains the data you need
       } catch (error) {
         console.error("Error caught:", error);
-        if (error.response && error.response.data && error.response.data.message) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
           showErrorToast("Please verify your email");
         } else {
           showErrorToast("An error occurred during registration.");
         }
       }
     };
-  
+
     console.log("Calling fetchData");
     fetchData();
   }, []);
-  
 
   return (
     <section className="layout-pb-xl">
@@ -143,34 +151,64 @@ export default function TourList4() {
                       <Image
                         width={420}
                         height={390}
-                        src={elm.imageSrc}
+                        src={elm.tour_image}
                         alt="image"
                       />
-                      <button className="tourCard__favorite" disabled >Direct Flight</button>
+
+                      <button
+                        className={`tourCard__favorite ${
+                          elm.direct_flight === 0 ? "d-none" : "d-block"
+                        }`}
+                        disabled
+                      >
+                        Direct Flight
+                      </button>
                     </div>
 
                     <div className="tourCard__content">
                       <div className="tourCard__location border_yellow">
                         <FaPersonWalking color="white" size={18} />
-                        {elm.location}
+                        zu Kaaba {elm.distance_to_hotel}
                       </div>
 
                       <h3 className="tourCard__title mt-5">
-                        <span>{elm.title}</span>
+                        <span>
+                          {elm.type}-{elm.name}
+                        </span>
                       </h3>
 
-                      <p className="tourCard__text mt-5 items-center d-flex">
-                        <FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1"/>
-                        {elm.description} (3 <FaStar color="#dabf4f" className="mx-1" />)
-                      </p>
-                      <p className="tourCard__text mt-5 items-center d-flex">
-                        <FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1" />
-                        {elm.description2} (5 <FaStar color="#dabf4f" className="mx-1" />)
-                      </p>
-                      <p className="tourCard__text mt-5">
-                        <FaQuoteRight color="#dabf4f" size={20} className="mx-1"/> 
-                        {elm.description3}
-                      </p>
+                      {elm.tour_hotels?.map((elm2, ind) => (
+                        <div key={elm2.key}>
+                          <p className="tourCard__text mt-5 items-center d-flex">
+                            <FontAwesomeIcon
+                              icon={faHotel}
+                              style={{ color: "#dabf4f" }}
+                              className="px-1"
+                            />
+                            {elm2.hotel_type === 1 ? " Mekka Hotel " : " "}:{" "}
+                            {elm2.hotel_name} ({elm2.hotel_stars}{" "}
+                            <FaStar color="#dabf4f" className="mx-1" />)
+                          </p>
+                          <p className="tourCard__text mt-5 items-center d-flex">
+                            <FontAwesomeIcon
+                              icon={faHotel}
+                              style={{ color: "#dabf4f" }}
+                              className="px-1"
+                            />
+                            {elm2.hotel_type === 2 ? " Madina Hotel " : " "}:{" "}
+                            {elm2.hotel_name}({elm2.hotel_stars}{" "}
+                            <FaStar color="#dabf4f" className="mx-1" />)
+                          </p>
+                          <p className="tourCard__text mt-5">
+                            <FaQuoteRight
+                              color="#dabf4f"
+                              size={20}
+                              className="mx-1"
+                            />
+                            Medine und Mekka
+                          </p>
+                        </div>
+                      ))}
 
                       <div className="d-flex items-center mt-5">
                         <div className="d-flex items-center x-gap-5">
@@ -179,37 +217,37 @@ export default function TourList4() {
 
                         <div className="text-14 ml-10">
                           <span className="fw-500">{elm.rating}</span> (
-                          {elm.ratingCount}) - IDEALGATE
+                          {elm.rating_count}) - IDEALGATE
                         </div>
                       </div>
 
                       <div className="Location">
-                        <span>
-                          Departure : London
-                        </span>
+                        <span>Departure : {elm.departures}</span>
                       </div>
 
                       <div className="row x-gap-20 y-gap-5 pt-30">
-                        {elm.features?.map((elm2, i2) => (
-                          <div key={i2} className="col-auto">
-                            <div className="text-14 items-center ">
-                            <FaCalendar  color="dabf4f" size={15}/>
-                              {elm2.name}
-                            </div>
+                        <div className="col-auto">
+                          <div className="text-14 items-center ">
+                            <FaCalendar color="dabf4f" size={15} />
+                            {elm.date_begin} - {elm.date_end}
                           </div>
-                        ))}
+                        </div>
                       </div>
                     </div>
 
                     <div className="tourCard__info">
                       <div className="h-60">
                         <p className="d-flex items-center text-14 p-2 border-info my-2 m_width  ">
-                          <IoTimeOutline className="mx-2" color="#DAC04F" size={20}/>
-                          {elm.duration}
+                          <IoTimeOutline
+                            className="mx-2"
+                            color="#DAC04F"
+                            size={20}
+                          />
+                          {elm.days_of_stay}
                         </p>
                         <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ">
-                          <MdBed className="mx-2" color="#DAC04F" size={20}/>
-                          {elm.bedrooms}
+                          <MdBed className="mx-2" color="#DAC04F" size={20} />
+                          {elm.tour_with_service}
                         </p>
 
                         <div className="tourCard__price">
@@ -217,7 +255,7 @@ export default function TourList4() {
 
                           <div className="d-flex items-center justify-content-center">
                             <p className="text-20 fw-500 ml-5 text-center">
-                              {elm.fromPrice} €  
+                              {elm.tour_price} €
                             </p>
                           </div>
                           <p className="text-left text-md-center text-lg-center text-xl-center">

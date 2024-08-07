@@ -5,6 +5,8 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL, // Replace with your API base URL
   headers: {
     'Content-Type': 'application/json',
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/x-www-form-urlencoded",
   },
 });
 
