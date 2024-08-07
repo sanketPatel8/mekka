@@ -5,16 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { showErrorToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
+import { useState } from "react";
 
 const CustomerDBsideBar = ({ setSideBarOpen }) => {
   const pathname = usePathname();
+ const Key = process.env.NEXT_PUBLIC_ACCESS_KEY
 
   const handleCloseSidebar = () => {
     setSideBarOpen(false);
   };
 
+  const handleLogoutAndCloseSidebar = async () => {
+    console.log("hello logout ");
+    
+  }
+    
+
   return (
     <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
+      <ToastContainer />
       <div className="dashboard__sidebar_header">
         <span
           onClick={handleCloseSidebar}
@@ -41,7 +52,7 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
               pathname === elm.href ? "-is-active" : ""
             } `}
           >
-            <Link href={elm.href} onClick={handleCloseSidebar}>
+            <Link href={elm.href}  onClick={elm.label === "Logout" ? handleLogoutAndCloseSidebar : handleCloseSidebar}>
               <i className={elm.iconClass}></i>
               <span className="ml-10">{elm.label}</span>
             </Link>

@@ -498,4 +498,46 @@ hr{
    .banner-one-main-pt-30{
     padding-top: 50px !important;
    }
+
+
+
+
+
+
+
+   /* for pagination csss for sanket example round not important */
+
+
+   .item-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .pagination .active {
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+  
+  .pagination button:hover {
+    background-color: #ddd;
+  }
+  
    

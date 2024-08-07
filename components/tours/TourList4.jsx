@@ -2,25 +2,26 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { speedFeatures } from "@/data/tourFilteringOptions";
-import { FaPersonWalking } from "react-icons/fa6";
+import { FaPersonWalking, FaQuoteRight, FaStar, FaCheck } from "react-icons/fa6";
 import { tourDataTwo } from "@/data/tours";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FaQuoteRight } from "react-icons/fa6";
+import { faHotel } from '@fortawesome/free-solid-svg-icons';
+import { FaCalendar } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
 import { MdBed } from "react-icons/md";
-import { FaCheck } from "react-icons/fa";
-import { FaStar } from "react-icons/fa6";
-import { faHotel } from '@fortawesome/free-solid-svg-icons';
 import Stars from "../common/Stars";
 import Pagination from "../common/Pagination";
 import Sidebar2 from "./Sidebar2";
 import Image from "next/image";
+import { post } from "@/app/utils/api";
 import Link from "next/link";
+import { showErrorToast } from "@/app/utils/tost";
 
 export default function TourList4() {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
+  const [TourListData, setTourListData] = useState([])
   const dropDownContainer = useRef();
 
   useEffect(() => {
@@ -39,6 +40,34 @@ export default function TourList4() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
+  const sendData = {
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    email : "sanket.xceptive+123@gmail.com"
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("fetchData function called");
+      try {
+        const response = await post("tourlist", sendData);
+        console.log("Response received:", response);
+        setTourListData(response.data); // Assuming response.data contains the data you need
+      } catch (error) {
+        console.error("Error caught:", error);
+        if (error.response && error.response.data && error.response.data.message) {
+          showErrorToast("Please verify your email");
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+    };
+  
+    console.log("Calling fetchData");
+    fetchData();
+  }, []);
+  
+
   return (
     <section className="layout-pb-xl">
       <div className="container">
@@ -117,13 +146,12 @@ export default function TourList4() {
                         src={elm.imageSrc}
                         alt="image"
                       />
-                      <button className="tourCard__favorite" desabled >Direct Flight</button>
+                      <button className="tourCard__favorite" disabled >Direct Flight</button>
                     </div>
 
                     <div className="tourCard__content">
                       <div className="tourCard__location border_yellow">
-                        {/* <i className="icon-pin"></i> */}
-                          <FaPersonWalking  color="white" size={18} />
+                        <FaPersonWalking color="white" size={18} />
                         {elm.location}
                       </div>
 
@@ -131,17 +159,20 @@ export default function TourList4() {
                         <span>{elm.title}</span>
                       </h3>
 
-                      <p className="tourCard__text mt-5 items-center d-flex"><FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1"/>
-                       {elm.description} (3 <FaStar color="#dabf4f" className="mx-1" />)
+                      <p className="tourCard__text mt-5 items-center d-flex">
+                        <FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1"/>
+                        {elm.description} (3 <FaStar color="#dabf4f" className="mx-1" />)
                       </p>
-                        <p className="tourCard__text mt-5 items-center d-flex "><FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1" />
-                         {elm.description2} (5 <FaStar color="#dabf4f" className="mx-1" />)
-                         </p>
-                        <p className="tourCard__text mt-5"><FaQuoteRight color="#dabf4f" size={20} className="mx-1"/> 
-                         {elm.description3}
-                         </p>
+                      <p className="tourCard__text mt-5 items-center d-flex">
+                        <FontAwesomeIcon icon={faHotel} style={{ color: "#dabf4f" }} className="px-1" />
+                        {elm.description2} (5 <FaStar color="#dabf4f" className="mx-1" />)
+                      </p>
+                      <p className="tourCard__text mt-5">
+                        <FaQuoteRight color="#dabf4f" size={20} className="mx-1"/> 
+                        {elm.description3}
+                      </p>
 
-                      <div className="d-flex items-center mt-5">  
+                      <div className="d-flex items-center mt-5">
                         <div className="d-flex items-center x-gap-5">
                           <Stars star={elm.rating} font={12} />
                         </div>
@@ -150,22 +181,19 @@ export default function TourList4() {
                           <span className="fw-500">{elm.rating}</span> (
                           {elm.ratingCount}) - IDEALGATE
                         </div>
-                        
                       </div>
 
                       <div className="Location">
-                          <span>
-                              Departure : London
-                            </span>
-                          </div>
-
-                      
+                        <span>
+                          Departure : London
+                        </span>
+                      </div>
 
                       <div className="row x-gap-20 y-gap-5 pt-30">
                         {elm.features?.map((elm2, i2) => (
                           <div key={i2} className="col-auto">
-                            <div className="text-14 ">
-                                <FontAwesomeIcon icon={`${elm2.icon}`} />
+                            <div className="text-14 items-center ">
+                            <FaCalendar  color="dabf4f" size={15}/>
                               {elm2.name}
                             </div>
                           </div>
@@ -176,36 +204,31 @@ export default function TourList4() {
                     <div className="tourCard__info">
                       <div className="h-60">
                         <p className="d-flex items-center text-14 p-2 border-info my-2 m_width  ">
-                          <IoTimeOutline  className="mx-2" color="#DAC04F" size={20}/>
+                          <IoTimeOutline className="mx-2" color="#DAC04F" size={20}/>
                           {elm.duration}
                         </p>
                         <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ">
                           <MdBed className="mx-2" color="#DAC04F" size={20}/>
                           {elm.bedrooms}
                         </p>
-                        {/* <p className="d-flex items-center text-14 free-cancellation p-2 border-info my-2 m_width ">
-                          <FaCheck className="mx-2" color="#DAC04F" size={20} />
-                          {elm.cancel}
-                        </p> */}
 
                         <div className="tourCard__price">
                           <div></div>
 
                           <div className="d-flex items-center justify-content-center">
-                            
                             <p className="text-20 fw-500 ml-5 text-center">
-                            {elm.fromPrice} €  
+                              {elm.fromPrice} €  
                             </p>
-                            
                           </div>
-                          <p className="text-left text-md-center text-lg-center text-xl-center">including taxes and fee</p>
+                          <p className="text-left text-md-center text-lg-center text-xl-center">
+                            including taxes and fee
+                          </p>
                         </div>
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
                         <Link href={`/toursingle/${elm.id}`}>
-                        SHOW AVAILABILITY
-                          {/* <i className="icon-arrow-top-right ml-10"></i> */}
+                          SHOW AVAILABILITY
                         </Link>
                       </button>
                     </div>

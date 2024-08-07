@@ -1,20 +1,30 @@
-import FooterOne from "@/components/layout/footers/FooterOne";
+"use client";
+
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Login from "@/components/pages/Login";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
-export const metadata = {
-  title: "Login || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "mekkaBooking - Travel & Tour React NextJS Template",
-};
+export default function Page() {
+  const router = useRouter();
 
-export default function page() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <>
       <main>
         <Header1 />
-        <Login />
+
+        {!isLoggedIn ? (
+          <Login onLoginSuccess={handleLoginSuccess} />
+        ) : (
+          router.push("/customer/db-booking")
+        )}
         <FooterTwo />
       </main>
     </>

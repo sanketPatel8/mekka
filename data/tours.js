@@ -125,7 +125,7 @@ export const tourDataTwo = [
     badgeClass: "bg-accent-1",
     features: [
       {
-        icon: `faCalendarDays`,
+        icon: `FontAwesomeIcon`,
         name: ` 26. Jun. 2024 - 05. Jul. 2024`,
       },
       
