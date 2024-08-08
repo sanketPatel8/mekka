@@ -1,7 +1,42 @@
-import { useTranslation } from '@/app/context/TranslationContext';
-import React from 'react'
+"use client"
+
+import { useTranslation } from "@/app/context/TranslationContext";
+import { hotelDAta } from "@/data/tours";
+import React, { useEffect, useState } from "react";
+import { post } from "@/app/utils/api";
+import { showErrorToast } from "@/app/utils/tost";
 
 const OtherInformation2 = () => {
+  const [tourDAta, settourDAta] = useState([]);
+
+  const sendData = {
+    AccessKey: "Mekka@24",
+    id: 12,
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("fetchData function called");
+      try {
+        const response = await post("tour_details", sendData);
+        settourDAta(response.Tour_Details.tour_details);
+      } catch (error) {
+        console.error("Error caught:", error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast("Please verify your email");
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const { translate } = useTranslation();
   return (
     <>
@@ -13,7 +48,8 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
- {translate("Languages") || "Find Latest Packages"}</div>
+              {translate("Luggages") || "Find Latest Packages"}
+            </div>
             <div className="text-14 text-light-2 lh-16">Included</div>
           </div>
         </div>
@@ -27,8 +63,9 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
- {translate("Flight Included") || "Find Latest Packages"}</div>
-            <div className="text-14 text-light-2 lh-16"> Included</div>
+              {translate("Flight Included") || "Find Latest Packages"}
+            </div>
+            <div className="text-14 text-light-2 lh-16">{tourDAta?.flight_included == 1 ? "Included" : "Not Included"} </div>
           </div>
         </div>
       </div>
@@ -41,8 +78,9 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
- {translate("Hotels Included") || "Find Latest Packages"}</div>
-            <div className="text-14 text-light-2 lh-16">Included</div>
+              {translate("Hotels Included") || "Find Latest Packages"}
+            </div>
+            <div className="text-14 text-light-2 lh-16">{tourDAta?.hotel_included !== 1 ? "Not Included" : "Included"}</div>
           </div>
         </div>
       </div>
@@ -55,14 +93,16 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
- {translate("Free Cancellation") || "Find Latest Packages"} 
- {translate("(Up to 14 Days Before Travel Date)") || "Find Latest Packages"}</div>
-            <div className="text-14 text-light-2 lh-16">Not included</div>
+              {translate("Free Cancellation") || "Find Latest Packages"}
+              {translate("(Up to 14 Days Before Travel Date)") ||
+                "Find Latest Packages"}
+            </div>
+            <div className="text-14 text-light-2 lh-16">{tourDAta?.free_cancellation}</div>
           </div>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default OtherInformation2
+export default OtherInformation2;

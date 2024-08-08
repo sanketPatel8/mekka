@@ -7,6 +7,9 @@ import { State } from "@/data/tourSingleContent";
 import "@/public/css/index.css";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { hotelDAta } from "@/data/tours";
+import { post } from "@/app/utils/api";
+import { showErrorToast } from "@/app/utils/tost";
 
 export default function TourSingleSidebar() {
   const prices = {
@@ -17,14 +20,48 @@ export default function TourSingleSidebar() {
     servicePerPerson: 40,
   };
 
+  const [TourListData, setTourListData] = useState([]);
+
+  const sendData = {
+    AccessKey: "Mekka@24",
+    id: 12,
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("fetchData function called");
+      try {
+        const response = await post("tour_details", sendData);
+        setTourListData(response.Tour_Details.tour_hotels);
+      } catch (error) {
+        console.error("Error caught:", error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast("Please verify your email");
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Filter Mekka hotels (hotel_type: "1")
+  const mekkaHotels = TourListData.filter((hotel) => hotel.hotel_type === "1");
+
+  // Filter Madina hotels (hotel_type: "2")
+  const madinaHotels = TourListData.filter((hotel) => hotel.hotel_type === "2");
+
   const [adultNumber, setAdultNumber] = useState(3);
   const [youthNumber, setYouthNumber] = useState(2);
   const [childrenNumber, setChildrenNumber] = useState(4);
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
-  const [hotelMakka, setHotelMakka] = useState("");
-  const [Flight, setFlight] = useState(false);
   const [radioValue, setRadioValue] = useState("");
   const [selectedCheckbox, setselectedCheckbox] = useState(false);
 
@@ -52,10 +89,6 @@ export default function TourSingleSidebar() {
 
   const [selectedTime, setSelectedTime] = useState("");
   const [activeTimeDD, setActiveTimeDD] = useState(false);
-
-  const handleChange = (e) => {
-    setHotelMakka(e.target.value);
-  };
 
   const { translate } = useTranslation();
   return (
@@ -161,146 +194,74 @@ export default function TourSingleSidebar() {
 
       <hr />
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">
-        {translate("Hotel For Makka") || "Find Latest Packages"}
-      </h5>
-
-      <div className="d-flex items-center justify-between my-1">
-        <div className="d-flex items-center">
-          <div className="form-radio d-flex items-center">
-            <label className="radio  d-flex items-center">
-              <input
-                type="radio"
-                name="radioGroup"
-                value="mekka-3star"
-                checked={radioValue === "mekka-3star"}
-                onChange={handleRadioChange}
-              />
-              <span className="radio__mark">
-                <span className="radio__icon"></span>
-              </span>
-              <span className="text-14 lh-1 ml-10">Hotel-Name ( 3 Star )</span>
-            </label>
+      <div>
+        <h5 className="text-18 fw-500 mb-20 mt-20">
+          {translate("Hotel For Makka") || "Find Latest Packages"}
+        </h5>
+        {mekkaHotels.map((elm) => (
+          <div>
+            <div
+              className="d-flex items-center justify-between my-1"
+              key={elm.id}
+            >
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value={`mekka-${elm.hotel_stars}star`}
+                      checked={radioValue === `mekka-${elm.hotel_stars}star`}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.hotel_name} ({elm.hotel_stars} star)
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="text-14">40 €</div>
+            </div>
           </div>
-        </div>
+        ))}
 
-        <div className="text-14">40 €</div>
-      </div>
+        <hr />
 
-      <div className="d-flex items-center justify-between my-1">
-        <div className="d-flex items-center">
-          <div className="form-radio d-flex items-center">
-            <label className="radio  d-flex items-center">
-              <input
-                type="radio"
-                name="radioGroup"
-                value="mekka-4star"
-                checked={radioValue === "mekka-4star"}
-                onChange={handleRadioChange}
-              />
-              <span className="radio__mark">
-                <span className="radio__icon"></span>
-              </span>
-              <span className="text-14 lh-1 ml-10">Hotel-Name ( 4 Star )</span>
-            </label>
+        <h5 className="text-18 fw-500 mb-20 mt-20">
+          {translate("Hotel For Madina") || "Find Latest Packages"}
+        </h5>
+        {madinaHotels.map((elm) => (
+          <div>
+            <div
+              className="d-flex items-center justify-between my-1"
+              key={elm.id}
+            >
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value={`madina-${elm.hotel_stars}star`}
+                      checked={radioValue === `madina-${elm.hotel_stars}star`}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.hotel_name} ({elm.hotel_stars} star)
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="text-14">40 €</div>
+            </div>
           </div>
-        </div>
-
-        <div className="text-14">40 €</div>
-      </div>
-
-      <div className="d-flex items-center justify-between my-1">
-        <div className="d-flex items-center">
-          <div className="form-radio d-flex items-center">
-            <label className="radio  d-flex items-center">
-              <input
-                type="radio"
-                name="radioGroup"
-                value="mekka-5star"
-                checked={radioValue === "mekka-5star"}
-                onChange={handleRadioChange}
-              />
-              <span className="radio__mark">
-                <span className="radio__icon"></span>
-              </span>
-              <span className="text-14 lh-1 ml-10">Hotel-Name ( 5 Star )</span>
-            </label>
-          </div>
-        </div>
-
-        <div className="text-14">40 €</div>
-      </div>
-
-      <hr />
-
-      <h5 className="text-18 fw-500 mb-20 mt-20">
-        {translate("Hotel For Madina") || "Find Latest Packages"}
-      </h5>
-
-      <div className="d-flex items-center justify-between my-1">
-        <div className="d-flex items-center">
-          <div className="form-radio d-flex items-center">
-            <label className="radio  d-flex items-center">
-              <input
-                type="radio"
-                name="radioGroup"
-                value="madina-3star"
-                checked={radioValue === "madina-3star"}
-                onChange={handleRadioChange}
-              />
-              <span className="radio__mark">
-                <span className="radio__icon"></span>
-              </span>
-              <span className="text-14 lh-1 ml-10">Hotel-Name ( 3 Star )</span>
-            </label>
-          </div>
-        </div>
-
-        <div className="text-14">40 €</div>
-      </div>
-
-      <div className="d-flex items-center justify-between my-1">
-        <div className="d-flex items-center">
-          <div className="form-radio d-flex items-center">
-            <label className="radio  d-flex items-center">
-              <input
-                type="radio"
-                name="radioGroup"
-                value="madina-4star"
-                checked={radioValue === "madina-4star"}
-                onChange={handleRadioChange}
-              />
-              <span className="radio__mark">
-                <span className="radio__icon"></span>
-              </span>
-              <span className="text-14 lh-1 ml-10">Hotel-Name ( 4 Star )</span>
-            </label>
-          </div>
-        </div>
-
-        <div className="text-14">40 €</div>
-      </div>
-
-      <div className="d-flex items-center justify-between my-1">
-        <div className="d-flex items-center">
-          <div className="form-radio d-flex items-center">
-            <label className="radio  d-flex items-center">
-              <input
-                type="radio"
-                name="radioGroup"
-                value="madina-5star"
-                checked={radioValue === "madina-5star"}
-                onChange={handleRadioChange}
-              />
-              <span className="radio__mark">
-                <span className="radio__icon"></span>
-              </span>
-              <span className="text-14 lh-1 ml-10">Hotel-Name ( 5 Star )</span>
-            </label>
-          </div>
-        </div>
-
-        <div className="text-14">40 €</div>
+        ))}
       </div>
 
       <hr />

@@ -37,6 +37,7 @@ export default function SingleFour({ tour }) {
 
     fatchdata()
   }, []);
+
   return (
     <>
       <section className="py-30 mt-80">
@@ -52,7 +53,7 @@ export default function SingleFour({ tour }) {
           <div className="row y-gap-30 justify-between ml-lg-2 ml-md-0 ml-0 ">
             <div className="col-lg-8 col-11 border-1 single-lft-box-shadow mx-auto">
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
-                <OthersInformation />
+                <OthersInformation tour={tour} />
               </div>
               <div className="row y-gap-20 justify-between items-center layout-pb-sm">
                 <OtherInformation2 />

@@ -8,9 +8,6 @@ import {
   FaStar,
   FaCheck,
 } from "react-icons/fa6";
-import { tourDataTwo } from "@/data/tours";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHotel } from "@fortawesome/free-solid-svg-icons";
 import { FaHotel } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
@@ -49,7 +46,7 @@ export default function TourList4() {
 
   const sendData = {
     AccessKey: "Mekka@24",
-    start : 0
+    start: 0,
   };
 
   useEffect(() => {
@@ -57,8 +54,8 @@ export default function TourList4() {
       console.log("fetchData function called");
       try {
         const response = await post("tourlist", sendData);
-        console.log("Response received:", response);
-        setTourListData(response.data); // Assuming response.data contains the data you need
+        console.log("Response received:", response.Tours);
+        setTourListData(response.Tours); // Assuming response.data contains the data you need
       } catch (error) {
         console.error("Error caught:", error);
         if (
@@ -76,6 +73,14 @@ export default function TourList4() {
     console.log("Calling fetchData");
     fetchData();
   }, []);
+
+  const mekkaHotels = TourListData?.tour_hotels?.filter(
+    (hotel) => hotel.hotel_type === "1"
+  );
+
+  const madinaHotels = TourListData?.tour_hotels?.filter(
+    (hotel) => hotel.hotel_type === "2"
+  );
 
   return (
     <section className="layout-pb-xl">
@@ -145,127 +150,142 @@ export default function TourList4() {
             </div>
 
             <div className="row y-gap-30 pt-30">
-              {tourDataTwo.map((elm, i) => (
-                <div className="col-12 my-2" key={i}>
-                  <div className="tourCard -type-2">
-                    <div className="tourCard__image">
-                      <Image
-                        width={420}
-                        height={390}
-                        src={elm?.tour_image}
-                        alt="image"
-                      />
+              <div className="col-12 my-2">
+                <div className="tourCard -type-2">
+                  <div className="tourCard__image">
+                    <Image
+                      width={420}
+                      height={390}
+                      src={TourListData?.tour_image}
+                      alt="image"
+                    />
 
-                      <button
-                        className={`tourCard__favorite ${
-                          elm?.direct_flight === 0 ? "d-none" : "d-block"
-                        }`}
-                        disabled
-                      >
-                        Direct Flight
-                      </button>
+                    <button
+                      className={`tourCard__favorite ${
+                        TourListData?.direct_flight === 0 ? "d-none" : "d-block"
+                      }`}
+                      disabled
+                    >
+                      Direct Flight
+                    </button>
+                  </div>
+
+                  <div className="tourCard__content">
+                    <div className="tourCard__location border_yellow">
+                      <FaPersonWalking color="white" size={18} />
+                      zu Kaaba {TourListData?.distance_to_hotel}
                     </div>
 
-                    <div className="tourCard__content">
-                      <div className="tourCard__location border_yellow">
-                        <FaPersonWalking color="white" size={18} />
-                        zu Kaaba {elm?.distance_to_hotel}
-                      </div>
+                    <h3 className="tourCard__title mt-5">
+                      <span>
+                        {TourListData?.type}-{TourListData?.name}
+                      </span>
+                    </h3>
 
-                      <h3 className="tourCard__title mt-5">
-                        <span>
-                          {elm?.type}-{elm?.name}
-                        </span>
-                      </h3>
-
-                      {elm?.tour_hotels?.map((elm2, ind) => (
-                        <div key={elm2.ind}>
-                          <p className="tourCard__text mt-5 items-center d-flex">
-                          <FaHotel className="px-1" color="#dabf4f" size={25}/>
-                            {elm2?.hotel_type === 1 ? " Mekka Hotel " : " "}:{" "}
-                            {elm2?.hotel_name} ({elm2?.hotel_stars}{" "}
-                            <FaStar color="#dabf4f" className="mx-1" />)
-                          </p>
-                          <p className="tourCard__text mt-5 items-center d-flex">
-                          <FaHotel className="px-1" color="#dabf4f" size={25}/>
-                            {elm2?.hotel_type === 2 ? " Madina Hotel " : " "}:{" "}
-                            {elm2?.hotel_name}({elm2?.hotel_stars}{" "}
-                            <FaStar color="#dabf4f" className="mx-1" />)
-                          </p>
-                          <p className="tourCard__text mt-5">
-                            <FaQuoteRight
-                              color="#dabf4f"
-                              size={20}
-                              className="mx-1"
-                            />
-                            Medine und Mekka
-                          </p>
-                        </div>
-                      ))}
-
-                      <div className="d-flex items-center mt-5">
-                        <div className="d-flex items-center x-gap-5">
-                          <Stars star={elm?.rating} font={12} />
-                        </div>
-
-                        <div className="text-14 ml-10">
-                          <span className="fw-500">{elm?.rating}</span> (
-                          {elm?.rating_count}) - IDEALGATE
-                        </div>
-                      </div>
-
-                      <div className="Location">
-                        <span>Departure : {elm?.departures}</span>
-                      </div>
-
-                      <div className="row x-gap-20 y-gap-5 pt-30">
-                        <div className="col-auto">
-                          <div className="text-14 items-center ">
-                            <FaCalendar color="dabf4f" size={15} />
-                            {elm.date_begin} - {elm?.date_end}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="tourCard__info">
-                      <div className="h-60">
-                        <p className="d-flex items-center text-14 p-2 border-info my-2 m_width  ">
-                          <IoTimeOutline
-                            className="mx-2"
-                            color="#DAC04F"
-                            size={20}
-                          />
-                          {elm?.days_of_stay}
-                        </p>
-                        <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ">
-                          <MdBed className="mx-2" color="#DAC04F" size={20} />
-                          {elm?.tour_with_service}
-                        </p>
-
-                        <div className="tourCard__price">
-                          <div></div>
-
-                          <div className="d-flex items-center justify-content-center">
-                            <p className="text-20 fw-500 ml-5 text-center">
-                              {elm?.tour_price} €
+                    <div>
+                    
+                      {mekkaHotels?.length > 0 ? (
+                        mekkaHotels.map((hotel, index) => (
+                          <div key={hotel.id}>
+                            <p className="tourCard__text mt-5 items-center d-flex">
+                              <FaHotel
+                                className="px-1"
+                                color="#dabf4f"
+                                size={25}
+                              />
+                              Mekka Hotel: {hotel.hotel_name} (
+                              {hotel.hotel_stars}{" "}
+                              <FaStar color="#dabf4f" className="mx-1" />)
                             </p>
                           </div>
-                          <p className="text-left text-md-center text-lg-center text-xl-center">
-                            including taxes and fee
-                          </p>
-                        </div>
+                        ))
+                      ) : (
+                        <p>No Mekka hotels available.</p>
+                      )}
+
+                    
+                      {madinaHotels?.length > 0 ? (
+                        madinaHotels.map((hotel, index) => (
+                          <div key={hotel.id}>
+                            <p className="tourCard__text mt-5 items-center d-flex">
+                              <FaHotel
+                                className="px-1"
+                                color="#dabf4f"
+                                size={25}
+                              />
+                              Madina Hotel: {hotel.hotel_name} (
+                              {hotel.hotel_stars}{" "}
+                              <FaStar color="#dabf4f" className="mx-1" />)
+                            </p>
+                          </div>
+                        ))
+                      ) : (
+                        <p>No Madina hotels available.</p>
+                      )}
+                    </div>
+
+                    <div className="d-flex items-center mt-5">
+                      <div className="d-flex items-center x-gap-5">
+                        <Stars star={TourListData?.rating} font={12} />
                       </div>
 
-                      <button className="button -outline-accent-1 text-accent-1">
-                        <Link href={`/toursingle/${elm.id}`}>
-                          SHOW AVAILABILITY
-                        </Link>
-                      </button>
+                      <div className="text-14 ml-10">
+                        <span className="fw-500">{TourListData?.rating}</span> (
+                        {TourListData?.rating_count}) - IDEALGATE
+                      </div>
+                    </div>
+
+                    <div className="Location">
+                      <span>Departure : {TourListData?.departures}</span>
+                    </div>
+
+                    <div className="row x-gap-20 y-gap-5 pt-30">
+                      <div className="col-auto">
+                        <div className="text-14 items-center ">
+                          <FaCalendar color="dabf4f" size={15} />
+                          {TourListData.date_begin} - {TourListData?.date_end}
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  <div className="tourCard__info">
+                    <div className="h-60">
+                      <p className="d-flex items-center text-14 p-2 border-info my-2 m_width  ">
+                        <IoTimeOutline
+                          className="mx-2"
+                          color="#DAC04F"
+                          size={20}
+                        />
+                        {TourListData?.days_of_stay}
+                      </p>
+                      <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ">
+                        <MdBed className="mx-2" color="#DAC04F" size={20} />
+                        {TourListData?.tour_with_service}
+                      </p>
+
+                      <div className="tourCard__price">
+                        <div></div>
+
+                        <div className="d-flex items-center justify-content-center">
+                          <p className="text-20 fw-500 ml-5 text-center">
+                            {TourListData?.tour_price} €
+                          </p>
+                        </div>
+                        <p className="text-left text-md-center text-lg-center text-xl-center">
+                          including taxes and fee
+                        </p>
+                      </div>
+                    </div>
+
+                    <button className="button -outline-accent-1 text-accent-1">
+                      <Link href={`/toursingle/${TourListData.id}`}>
+                        SHOW AVAILABILITY
+                      </Link>
+                    </button>
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
 
             <div className="d-flex justify-center flex-column mt-60">

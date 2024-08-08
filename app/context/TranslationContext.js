@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const TranslationContext = createContext();
 
 export const TranslationProvider = ({ children }) => {
-  const [locale, setLocale] = useState("DE");
+  const [locale, setLocale] = useState("EN");
   const [translations, setTranslations] = useState({});
 
   useEffect(() => {
