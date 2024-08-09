@@ -165,7 +165,7 @@ export default function TourList4() {
                       className={`tourCard__favorite ${
                         TourListData?.direct_flight === 0 ? "d-none" : "d-block"
                       }`}
-                      disabled
+                      
                     >
                       Direct Flight
                     </button>
