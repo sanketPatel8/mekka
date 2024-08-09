@@ -164,7 +164,7 @@ export default function Hero1() {
 
                   <div className="searchForm__button">
                     <button
-                      onClick={() => router.push("/tourlist")}
+                      onClick={() => router.push("/tour")}
                       className="button -info-2 bg-accent-1 text-white"
                     >
                       <i className="icon-search text-16 mr-10"></i>

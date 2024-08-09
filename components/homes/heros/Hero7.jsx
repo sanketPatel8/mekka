@@ -225,7 +225,7 @@ export default function Hero7() {
             </div>
 
             <div
-              onClick={() => router.push("/tourlist")}
+              onClick={() => router.push("/tour")}
               className="searchForm__button"
             >
               <button className="button -info-2 bg-accent-1 rounded-200 text-white">

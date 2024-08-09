@@ -94,7 +94,7 @@ export default function TourSlider() {
                 {slibleTourSlider.map((elm, i) => (
                   <SwiperSlide key={i}>
                     <Link
-                      href={`/toursingle/${elm.id}`}
+                      href={`/package/${elm.id}`}
                       className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                     >
                       <div className="tourCard__header">

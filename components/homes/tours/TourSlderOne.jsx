@@ -37,7 +37,7 @@ export default function TourSlderOne() {
 
           <div className="col-auto">
             <Link
-              href={"/tourlist"}
+              href={"/tour"}
               data-aos="fade-right"
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
@@ -86,7 +86,7 @@ export default function TourSlderOne() {
                   {tourData.map((elm, i) => (
                     <SwiperSlide key={i}>
                       <Link
-                        href={`/toursingle/${elm.id}`}
+                        href={`/package/${elm.id}`}
                         className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                       >
                         <div className="tourCard__header">

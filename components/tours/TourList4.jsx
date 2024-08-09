@@ -286,7 +286,7 @@ export default function TourList4() {
                     </div>
 
                     <button className="button -outline-accent-1 text-accent-1">
-                      <Link href={`/toursingle/${TourListData.slug}`}>
+                      <Link href={`/package/${TourListData.slug}`}>
                         SHOW AVAILABILITY
                       </Link>
                     </button>

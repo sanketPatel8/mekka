@@ -64,15 +64,15 @@ export default function Header1() {
                 
                 {translate("Home") }
               </Link>
-              <Link href="/tourlist" className="mx-3">
+              <Link href="/tour" className="mx-3">
                 
                 {translate("Tour") }
               </Link>
-              <Link href="/tourlist?=Hajj" className="mx-3">
+              <Link href="/tour?=Hajj" className="mx-3">
                 
                 {translate("Hajj") }
               </Link>
-              <Link href="/tourlist?=Umrah" className="mx-3">
+              <Link href="/tour?=Umrah" className="mx-3">
                 
                 {translate("Umrah") }
               </Link>
@@ -84,7 +84,7 @@ export default function Header1() {
           </div>
 
           <div className="headerMobile__right">
-            <button onClick={() => router.push("/tourlist")} className="d-flex">
+            <button onClick={() => router.push("/tour")} className="d-flex">
               <i className="icon-search text-18"></i>
             </button>
 

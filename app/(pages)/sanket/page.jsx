@@ -13,7 +13,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          "https://xcoder.a2hosted.com/mekkabooking/api/tourlist",
+          "https://xcoder.a2hosted.com/mekkabooking/api/tour",
           {
             AccessKey: "Mekka@24",
             start: 0,

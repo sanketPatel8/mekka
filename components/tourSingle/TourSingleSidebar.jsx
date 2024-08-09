@@ -298,8 +298,8 @@ export default function TourSingleSidebar() {
                   </label>
                 </div>
                 <label htmlFor="item4" className="lh-16 ml-15">
-                  Exclude
-                  {translate("Flight Booking") }
+                  Exclude 
+                  {translate(" Flight Booking") }
                 </label>
               </div>
             </div>

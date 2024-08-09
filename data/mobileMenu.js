@@ -7,17 +7,17 @@ export const menuData = [
   {
     id: 2,
     label: 'Tour',
-    href: '/tourlist'
+    href: '/tour'
   },
   {
     id: 3,
     label: 'Hajj',
-    href: '/tourlist?=Hajj'
+    href: '/tour?=Hajj'
   },
   {
     id: 4,
     label: 'Umrah',
-    href: '/tourlist?=Umrah'
+    href: '/tour?=Umrah'
   },
   // {
   //   id: 5,

@@ -24,7 +24,7 @@ export default function ArticlesThree() {
 
           <div className="col-auto">
             <Link
-              href={"/tourlist"}
+              href={"/tour"}
               data-aos="fade-right"
               data-aos-delay=""
               className="buttonArrow d-flex items-center"
@@ -43,7 +43,7 @@ export default function ArticlesThree() {
           {blogs.slice(0, 3).map((elm, i) => (
             <div key={i} className="col-lg-3 col-md-5 my-lg-5  my-2 border-1 -hover-shadow rounded-12 mx-2 py-10 px-10 shadow">
               <Link
-                href={`/toursingle/${elm.id}`}
+                href={`/package/${elm.id}`}
                 className="blogCard -type-1"
               >
                 <div className="blogCard__image ratio ratio-41:30">

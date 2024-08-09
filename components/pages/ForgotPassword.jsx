@@ -29,6 +29,9 @@ export default function ForgotPassword({ onLoginSuccess }) {
     try {
       const response = await post("forgot_password", ForgotpssData);
       showSuccessToast(response.msg);
+      setForgotpssData({
+        email : ""
+      })
     } catch (error) {
       if (
         error.response &&
