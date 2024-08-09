@@ -1,9 +1,13 @@
+// Pagination.js
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
-export default function Pagination({ range = 20 }) {
-  const [activeIndex, setActiveIndex] = useState(1);
+export default function Pagination({
+  range = 20,
+  activeIndex,
+  setActiveIndex,
+}) {
   return (
     <div className="pagination justify-center">
       <button
@@ -17,16 +21,15 @@ export default function Pagination({ range = 20 }) {
         <div
           style={{ cursor: "pointer" }}
           onClick={() => setActiveIndex(1)}
-          className={activeIndex == 1 ? `is-active` : ""}
+          className={activeIndex === 1 ? `is-active` : ""}
         >
           1
         </div>
         {range > 1 && (
           <div
             style={{ cursor: "pointer" }}
-            href="#"
             onClick={() => setActiveIndex(2)}
-            className={activeIndex == 2 ? `is-active` : ""}
+            className={activeIndex === 2 ? `is-active` : ""}
           >
             2
           </div>
@@ -34,9 +37,8 @@ export default function Pagination({ range = 20 }) {
         {range > 2 && (
           <div
             style={{ cursor: "pointer" }}
-            href="#"
             onClick={() => setActiveIndex(3)}
-            className={activeIndex == 3 ? `is-active` : ""}
+            className={activeIndex === 3 ? `is-active` : ""}
           >
             3
           </div>
@@ -44,37 +46,32 @@ export default function Pagination({ range = 20 }) {
         {range > 3 && (
           <div
             style={{ cursor: "pointer" }}
-            href="#"
             onClick={() => setActiveIndex(4)}
-            className={activeIndex == 4 ? `is-active` : ""}
+            className={activeIndex === 4 ? `is-active` : ""}
           >
             4
           </div>
         )}
-
-        {activeIndex == 5 && range != 5 && (
+        {activeIndex === 5 && range !== 5 && (
           <div
             style={{ cursor: "pointer" }}
-            href="#"
             onClick={() => setActiveIndex(5)}
-            className={activeIndex == 5 ? `is-active` : ""}
+            className={activeIndex === 5 ? `is-active` : ""}
           >
             5
           </div>
         )}
-
         {range > 5 && <div>...</div>}
         {activeIndex > 5 && activeIndex < range && (
-          <div style={{ cursor: "pointer" }} href="#" className="is-active">
+          <div style={{ cursor: "pointer" }} className="is-active">
             {activeIndex}
           </div>
         )}
         {range > 4 && (
           <div
             style={{ cursor: "pointer" }}
-            href="#"
             onClick={() => setActiveIndex(range)}
-            className={activeIndex == range ? `is-active` : ""}
+            className={activeIndex === range ? `is-active` : ""}
           >
             {range}
           </div>
