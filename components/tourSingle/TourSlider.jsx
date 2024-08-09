@@ -102,7 +102,7 @@ export default function TourSlider() {
                           <Image
                             width={421}
                             height={301}
-                            src={elm?.imageSrc}
+                            src='/public/img/hotel photo/madina-2.jpeg'
                             alt="image"
                             className="img-ratio rounded-12"
                           />

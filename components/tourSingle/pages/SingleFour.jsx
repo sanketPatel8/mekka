@@ -14,7 +14,9 @@ import OtherInformation2 from "../OtherInformation2";
 import RoadMap2 from "../Roadmap2";
 import { useTranslation } from "@/app/context/TranslationContext";
 
-export default function SingleFour({ tour }) {
+
+
+export default function SingleFour({ tour , TourDetaild }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   const { translate } = useTranslation();
 
@@ -22,7 +24,7 @@ export default function SingleFour({ tour }) {
     <>
       <section className="py-30 mt-80">
         <div className="container">
-          <MainInformation tour={tour} />
+          <MainInformation tour={tour} TourDetaild={TourDetaild} />
 
           <Gallery1 />
         </div>

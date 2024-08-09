@@ -38,6 +38,7 @@ const OtherInformation2 = () => {
   }, []);
 
   const { translate } = useTranslation();
+  
   return (
     <>
       <div className="col-lg-3 col-6">

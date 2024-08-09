@@ -1,7 +1,10 @@
 import React from "react";
 import Stars from "../common/Stars";
 
-export default function MainInformation({ tour }) {
+export default function MainInformation({ tour , TourDetaild }) {
+
+  console.log("data for main information component " + TourDetaild);
+  
   return (
     <>
       <div className="row y-gap-20 justify-between items-end">
