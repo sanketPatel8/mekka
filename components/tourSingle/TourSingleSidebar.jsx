@@ -17,7 +17,7 @@ export default function TourSingleSidebar() {
     servicePerPerson: 40,
   };
 
-  const [TourListData, setTourListData] = useState([]);
+  const [PackageData, setPackageData] = useState([]);
 
   const sendData = {
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -29,7 +29,7 @@ export default function TourSingleSidebar() {
       console.log("fetchData function called");
       try {
         const response = await post("tour_details", sendData);
-        setTourListData(response.Tour_Details.tour_hotels);
+        setPackageData(response);
       } catch (error) {
         console.error("Error caught:", error);
         if (
@@ -46,12 +46,6 @@ export default function TourSingleSidebar() {
 
     fetchData();
   }, []);
-
-  // Filter Mekka hotels (hotel_type: "1")
-  const mekkaHotels = TourListData.filter((hotel) => hotel.hotel_type === "1");
-
-  // Filter Madina hotels (hotel_type: "2")
-  const madinaHotels = TourListData.filter((hotel) => hotel.hotel_type === "2");
 
   const [adultNumber, setAdultNumber] = useState(3);
   const [youthNumber, setYouthNumber] = useState(2);
@@ -195,7 +189,7 @@ export default function TourSingleSidebar() {
         <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Makka") }
         </h5>
-        {mekkaHotels.map((elm , ind) => (
+        {/* {mekkaHotels.map((elm , ind) => (
           <div key={ind}>
             <div
               className="d-flex items-center justify-between my-1"
@@ -223,14 +217,14 @@ export default function TourSingleSidebar() {
               <div className="text-14">40 €</div>
             </div>
           </div>
-        ))}
+        ))} */}
 
         <hr />
 
         <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Madina") }
         </h5>
-        {madinaHotels.map((elm) => (
+        {/* {madinaHotels.map((elm) => (
           <div>
             <div
               className="d-flex items-center justify-between my-1"
@@ -258,7 +252,7 @@ export default function TourSingleSidebar() {
               <div className="text-14">40 €</div>
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
 
       <hr />

@@ -46,14 +46,14 @@ export default function TourList4() {
     };
   }, []);
 
-  const sendData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    start: activeIndex,
-  };
+  
 
   useEffect(() => {
     const fetchData = async () => {
-      
+      const sendData = {
+        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        start: activeIndex * 10,
+      };
       try {
         const response = await post("tourlist", sendData);
         console.log("API response:", response); // Check the full response
@@ -197,7 +197,7 @@ export default function TourList4() {
                               color="#dabf4f"
                               size={25}
                             />
-                            Hotel: {elm.hotel_name} ({elm.hotel_stars}{" "}
+                            Hotel: {elm?.hotel_name} ({elm?.hotel_stars}{" "}
                             <FaStar color="#dabf4f" className="mx-1" />)
                           </p>
                         </div>
@@ -237,7 +237,7 @@ export default function TourList4() {
 
                         <div className="text-14 ml-10">
                           <span className="fw-500">{elm?.rating}</span> (
-                          {elm?.rating_count}) - {elm.company_name}
+                          {elm?.rating_count}) - {elm?.company_name}
                         </div>
                       </div>
 
@@ -250,7 +250,7 @@ export default function TourList4() {
                           <div className="d-flex text-14 items-center ">
                             <FaCalendar color="dabf4f" size={17} />
                             <p className="mx-1">
-                              {elm.date_begin} - {elm?.date_end}
+                              {elm?.date_begin} - {elm?.date_end}
                             </p>
                           </div>
                         </div>
@@ -287,7 +287,7 @@ export default function TourList4() {
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
-                        <Link href={`/package/${TourListData.slug}`}>
+                        <Link href={`/package/${elm?.slug}`}>
                           SHOW AVAILABILITY
                         </Link>
                       </button>

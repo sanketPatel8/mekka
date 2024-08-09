@@ -39,12 +39,12 @@ const RoadMap = () => {
   }, []);
 
   // Separate the hotels by type
-  const makkahHotels = mainHotelData.filter(hotel => hotel.hotel_type === "2");
-  const madinaHotels = mainHotelData.filter(hotel => hotel.hotel_type === "1");
+  // const makkahHotels = mainHotelData.filter(hotel => hotel.hotel_type === "2");
+  // const madinaHotels = mainHotelData.filter(hotel => hotel.hotel_type === "1");
 
   return (
     <>
-      {makkahHotels.map((elm, ind) => (
+      {/* {makkahHotels.map((elm, ind) => (
         <div key={ind}>
           <h4>Hotel for Makkah</h4>
           <p>{elm.hotel_info}</p>
@@ -126,7 +126,7 @@ const RoadMap = () => {
             <br />
           </div>
         </div>
-      ))}
+      ))} */}
     </>
   );
 };
