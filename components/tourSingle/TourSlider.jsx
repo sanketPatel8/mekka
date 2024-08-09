@@ -51,7 +51,7 @@ export default function TourSlider() {
       <div className="container">
         <div className="row">
           <div className="col-auto">
-            <h2 className="text-30"> {translate("You might also like...") || "Find Latest Packages"}</h2>
+            <h2 className="text-30"> {translate("You might also like...") }</h2>
           </div>
         </div>
 

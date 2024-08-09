@@ -98,7 +98,7 @@ const DocumentStatusManager = ({ Customerid }) => {
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-             {translate("Document") || "Find Latest Packages"}
+             {translate("Document") }
           </button> 
         </div>
       ),
@@ -132,7 +132,7 @@ const DocumentStatusManager = ({ Customerid }) => {
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-             {translate("Document") || "Find Latest Packages"}
+             {translate("Document") }
           </button>
         </div>
       ),
@@ -161,7 +161,7 @@ const DocumentStatusManager = ({ Customerid }) => {
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-             {translate("Document") || "Find Latest Packages"}
+             {translate("Document") }
           </button>
         </div>
       ),
@@ -184,7 +184,7 @@ const DocumentStatusManager = ({ Customerid }) => {
       name: "Action",
       selector: (row) => (
         <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          View {translate(" ") || "Find Latest Packages"}
+          View {translate(" ") }
         </button>
       ),
     },
@@ -196,7 +196,7 @@ const DocumentStatusManager = ({ Customerid }) => {
       name: "Action",
       selector: (row) => (
         <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          Download {translate(" ") || "Find Latest Packages"}
+          Download {translate(" ") }
         </button>
       ),
     },
@@ -285,11 +285,11 @@ const DocumentStatusManager = ({ Customerid }) => {
   const { translate } = useTranslation();
   return (
     <div>
-       <h1 className="text-30"> {translate("Booking Id") || "Find Latest Packages"} : #{Customerid.id}</h1>
+       <h1 className="text-30"> {translate("Booking Id") } : #{Customerid.id}</h1>
       <div className="row px-0 pb-10 mt-20">
         <div className="col-lg-6">
-          <p className="t_center"> {translate("Booking Date") || "Find Latest Packages"} : 12.08.2024</p>
-          <p className="t_center">  {translate("Booking Status") || "Find Latest Packages"} : Cancelled</p>
+          <p className="t_center"> {translate("Booking Date") } : 12.08.2024</p>
+          <p className="t_center">  {translate("Booking Status") } : Cancelled</p>
         </div>
 
         <div className="col-lg-6 flex small-flex-center items-center">
@@ -298,7 +298,7 @@ const DocumentStatusManager = ({ Customerid }) => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openInvoice}
             >
-               {translate("Send Invoice") || "Find Latest Packages"}
+               {translate("Send Invoice") }
             </button>
           </div>
 
@@ -368,7 +368,7 @@ const DocumentStatusManager = ({ Customerid }) => {
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="ml-20 my-3"> {translate("Document") || "Find Latest Packages"}</h2>
+            <h2 className="ml-20 my-3"> {translate("Document") }</h2>
             <button onClick={closeUploadFileModal}>
               <IoClose size={25} />
             </button>
@@ -377,9 +377,9 @@ const DocumentStatusManager = ({ Customerid }) => {
           <div className="ml-lg-20 ml-0 ">
             <Tabs>
               <TabList>
-                <Tab> {translate("Upload") || "Find Latest Packages"}</Tab>
-                <Tab> {translate("View") || "Find Latest Packages"}</Tab>
-                <Tab> {translate("Download") || "Find Latest Packages"}</Tab>
+                <Tab> {translate("Upload") }</Tab>
+                <Tab> {translate("View") }</Tab>
+                <Tab> {translate("Download") }</Tab>
               </TabList>
 
               <TabPanel>
@@ -428,7 +428,7 @@ const DocumentStatusManager = ({ Customerid }) => {
                                 className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
                               >
                                 <div className="text-16 fw-500 text-accent-1">
-                                   {translate("Upload Document") || "Find Latest Packages"}
+                                   {translate("Upload Document") }
                                 </div>
                               </label>
                               <input
@@ -476,13 +476,13 @@ const DocumentStatusManager = ({ Customerid }) => {
                         alert("submited");
                       }}
                     >
-                       {translate("SUBMIT") || "Find Latest Packages"}
+                       {translate("SUBMIT") }
                     </button>
                     <button
                       className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
                       onClick={closeUploadFileModal}
                     >
-                       {translate("CANCEL") || "Find Latest Packages"}
+                       {translate("CANCEL") }
                     </button>
                   </div>
                 </div>
@@ -516,7 +516,7 @@ const DocumentStatusManager = ({ Customerid }) => {
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="px-20"> {translate("Invoice") || "Find Latest Packages"}</h2>
+            <h2 className="px-20"> {translate("Invoice") }</h2>
             <button onClick={closeInvoice}>
               <IoClose size={25} />
             </button>

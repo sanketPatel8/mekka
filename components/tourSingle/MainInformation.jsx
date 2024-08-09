@@ -46,8 +46,8 @@ export default function MainInformation({ tour }) {
             <div className="col-auto">
               <div className="d-flex items-center" style={{color : "red"}}>
                 <i className="icon-reservation text-16 mr-5"></i>
-                {/* <i className="fa-regular fa-users"></i> */}
-                Noch 10 Plätze verfügbar
+               
+                10 Places Still Available
               </div>
             </div>
           </div>

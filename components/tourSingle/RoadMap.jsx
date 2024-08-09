@@ -11,7 +11,7 @@ const RoadMap = () => {
   const [mainHotelData, setMainHotelData] = useState([]);
 
   const sendData = {
-    AccessKey: "Mekka@24",
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     id: 12,
   };
 

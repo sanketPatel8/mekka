@@ -99,7 +99,7 @@ export default function DBListing() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">  {translate("My Listings") || "Find Latest Packages"}</h1>
+            <h1 className="text-30">  {translate("My Listings") }</h1>
 
             <div className="row y-gap-30 mt-20">
               {tourDataTwoOne.map((elm, i) => (

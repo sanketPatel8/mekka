@@ -43,7 +43,7 @@ export default function Sidebar2() {
               >
                 <h5 className="text-18 fw-500">
                   {" "}
-                  {translate("Tour Type") || "Find Latest Packages"}
+                  {translate("Tour Type") }
                 </h5>
 
                 <div className="accordion__icon flex-center">
@@ -123,7 +123,7 @@ export default function Sidebar2() {
               >
                 <h5 className="text-18 fw-500">
                   {" "}
-                  {translate("Languages") || "Find Latest Packages"}
+                  {translate("Languages") }
                 </h5>
 
                 <div className="accordion__icon flex-center">
@@ -202,7 +202,7 @@ export default function Sidebar2() {
                 }
               >
                 <h5 className="text-18 fw-500">
-                  {translate("Departure") || "Find Latest Packages"}
+                  {translate("Departure") }
                 </h5>
 
                 <div className="accordion__icon flex-center">
@@ -281,7 +281,7 @@ export default function Sidebar2() {
                 }
               >
                 <h5 className="text-18 fw-500">
-                  {translate("Filter Price") || "Find Latest Packages"}
+                  {translate("Filter Price") }
                 </h5>
 
                 <div className="accordion__icon flex-center">
@@ -322,7 +322,7 @@ export default function Sidebar2() {
                 }
               >
                 <h5 className="text-18 fw-500">
-                  {translate("Distance to Mosque") || "Find Latest Packages"}
+                  {translate("Distance to Mosque") }
                 </h5>
 
                 <div className="accordion__icon flex-center">
@@ -363,7 +363,7 @@ export default function Sidebar2() {
                 }
               >
                 <h5 className="text-18 fw-500">
-                  {translate("Hotel Star") || "Find Latest Packages"}
+                  {translate("Hotel Star") }
                 </h5>
 
                 <div className="accordion__icon flex-center">
@@ -442,7 +442,7 @@ export default function Sidebar2() {
                 }
               >
                 <h5 className="text-18 fw-500">
-                  {translate("Agent Rating") || "Find Latest Packages"}
+                  {translate("Agent Rating") }
                 </h5>
 
                 <div className="accordion__icon flex-center">
@@ -524,7 +524,7 @@ export default function Sidebar2() {
                 }
               >
                 <h5 className="text-18 fw-500">
-                  {translate("Amenities") || "Find Latest Packages"}
+                  {translate("Amenities") }
                 </h5>
 
                 <div className="accordion__icon flex-center">

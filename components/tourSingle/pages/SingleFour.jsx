@@ -13,30 +13,10 @@ import TourSingleSidebar from "../TourSingleSidebar";
 import OtherInformation2 from "../OtherInformation2";
 import RoadMap2 from "../Roadmap2";
 import { useTranslation } from "@/app/context/TranslationContext";
-import axios from "axios";
 
 export default function SingleFour({ tour }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   const { translate } = useTranslation();
-
-
-  useEffect(() => {
-    const fatchdata = () => {
-      axios
-        .post("https://xcoder.a2hosted.com/mekkabooking/api/tour_details", {
-          AccessKey: "Mekka@24",
-          id: 12,
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    fatchdata()
-  }, []);
 
   return (
     <>
@@ -79,7 +59,7 @@ export default function SingleFour({ tour }) {
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        {translate("What's Included") || "Find Latest Packages"}
+                        {translate("What's Included")}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -172,7 +152,7 @@ export default function SingleFour({ tour }) {
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        {translate("Itinerary") || "Find Latest Packages"}
+                        {translate("Itinerary")}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -252,7 +232,7 @@ export default function SingleFour({ tour }) {
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        {translate("FAQ") || "Find Latest Packages"}
+                        {translate("FAQ")}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">

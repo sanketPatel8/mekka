@@ -18,7 +18,7 @@ export default function ArticlesThree() {
               data-aos-delay=""
               className="text-30 md:text-24 "
             >
-             {translate("Travel Articles") || "Find Latest Packages"}
+             {translate("Travel Articles") }
             </h2>
           </div>
 
@@ -29,7 +29,7 @@ export default function ArticlesThree() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center"
             >
-              <span> {translate("See all") || "Find Latest Packages"}</span>
+              <span> {translate("See all") }</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>

@@ -90,15 +90,15 @@ export default function BookingPages() {
                 >
                   <a className="text-accent-1 px-1">
                     {" "}
-                    {translate("Sign in") || "Find Latest Packages"}{" "}
+                    {translate("Sign in") }{" "}
                   </a>{" "}
                 </button>
                 {translate(
                   " Book With Your Saved Details or Continue As a Guest To Book Your Travel."
-                ) || "Find Latest Packages"}
+                ) }
               </div>
               <h2 className="text-30 md:text-24 fw-700 bg-Primary">
-                {translate("Steps to reserve") || "Find Latest Packages"}
+                {translate("Steps to reserve") }
               </h2>
 
               <div className="bg-white rounded-12 md:py-20 px-md-20 mt-10">
@@ -127,7 +127,7 @@ export default function BookingPages() {
                             {" "}
                             {translate(
                               " Is Also The Contact Person For The Reservation."
-                            ) || "Find Latest Packages"}
+                            ) }
                           </span>
                         </p>
                       </div>
@@ -138,7 +138,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                              {translate("Name") || "Find Latest Packages"}
+                              {translate("Name") }
                               </label>
                             </div>
                           </div>
@@ -147,7 +147,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") || "Find Latest Packages"}
+                                {translate("Surname") }
                               </label>
                             </div>
                           </div>
@@ -156,7 +156,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Email") || "Find Latest Packages"}
+                                {translate("Email") }
                               </label>
                             </div>
                           </div>
@@ -165,7 +165,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Phone") || "Find Latest Packages"}
+                                {translate("Phone") }
                               </label>
                             </div>
                           </div>
@@ -174,7 +174,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("City") || "Find Latest Packages"}
+                                {translate("City") }
                               </label>
                             </div>
                           </div>
@@ -204,7 +204,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") || "Find Latest Packages"}
+                                {translate("Birthday Date") }
                               </label>
                             </div>
                           </div>
@@ -234,7 +234,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("House No") || "Find Latest Packages"}
+                                {translate("House No") }
                               </label>
                             </div>
                           </div>
@@ -243,7 +243,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("ZIP Code") || "Find Latest Packages"}
+                                {translate("ZIP Code") }
                               </label>
                             </div>
                           </div>
@@ -252,7 +252,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Street") || "Find Latest Packages"}
+                                {translate("Street") }
                               </label>
                             </div>
                           </div>
@@ -267,7 +267,7 @@ export default function BookingPages() {
                                 required
                                 className="form-control"
                               >
-                                <option value="">{translate("City") || "Find Latest Packages"}</option>
+                                <option value="">{translate("City") }</option>
                                 <option value="Frankfurt(FRA)">
                                   Frankfurt(FRA)
                                 </option>
@@ -284,7 +284,7 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14 ">
                                 <p className="d-flex justify-content-between">
-                                  <span>{translate("Tour Price Per Person") || "Find Latest Packages"}</span>{" "}
+                                  <span>{translate("Tour Price Per Person") }</span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -294,7 +294,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") || "Find Latest Packages"}:
+                            {translate("Possible Additional Services Per Person") }:
                           </h5>
 
                           <div>
@@ -394,13 +394,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") || "Find Latest Packages"}{" "}
+                            {translate("Subtotal") }{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") || "Find Latest Packages"}
+                            {translate("Including Taxes And Fee") }
                           </p>
                         </div>
                       </form>
@@ -424,7 +424,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                              {translate("Name") || "Find Latest Packages"}
+                              {translate("Name") }
                               </label>
                             </div>
                           </div>
@@ -433,7 +433,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") || "Find Latest Packages"}
+                                {translate("Surname") }
                               </label>
                             </div>
                           </div>
@@ -463,7 +463,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") || "Find Latest Packages"}
+                                {translate("Birthday Date") }
                               </label>
                             </div>
                           </div>
@@ -495,7 +495,7 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14">
                                 <p className="d-flex justify-content-between">
-                                  <span>{translate("Tour Price Per Person") || "Find Latest Packages"}</span>{" "}
+                                  <span>{translate("Tour Price Per Person") }</span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -505,7 +505,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") || "Find Latest Packages"}:
+                            {translate("Possible Additional Services Per Person") }:
                           </h5>
 
                           <div>
@@ -605,13 +605,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") || "Find Latest Packages"}{" "}
+                            {translate("Subtotal") }{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") || "Find Latest Packages"}
+                            {translate("Including Taxes And Fee") }
                           </p>
                         </div>
                       </div>
@@ -644,7 +644,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") || "Find Latest Packages"}
+                                {translate("Surname") }
                               </label>
                             </div>
                           </div>
@@ -674,7 +674,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") || "Find Latest Packages"}
+                                {translate("Birthday Date") }
                               </label>
                             </div>
                           </div>
@@ -706,7 +706,7 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14 ">
                                 <p className="d-flex justify-content-between">
-                                  <span>{translate("Tour Price Per Person") || "Find Latest Packages"}</span>{" "}
+                                  <span>{translate("Tour Price Per Person") }</span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -716,7 +716,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") || "Find Latest Packages"}:
+                            {translate("Possible Additional Services Per Person") }:
                           </h5>
 
                           <div>
@@ -816,13 +816,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") || "Find Latest Packages"}{" "}
+                            {translate("Subtotal") }{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") || "Find Latest Packages"}
+                            {translate("Including Taxes And Fee") }
                           </p>
                         </div>
                       </div>
@@ -855,7 +855,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") || "Find Latest Packages"}
+                                {translate("Surname") }
                               </label>
                             </div>
                           </div>
@@ -885,7 +885,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") || "Find Latest Packages"}
+                                {translate("Birthday Date") }
                               </label>
                             </div>
                           </div>
@@ -927,7 +927,7 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") || "Find Latest Packages"}:
+                            {translate("Possible Additional Services Per Person") }:
                           </h5>
 
                           <div>
@@ -1027,13 +1027,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") || "Find Latest Packages"}{" "}
+                            {translate("Subtotal") }{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") || "Find Latest Packages"}
+                            {translate("Including Taxes And Fee") }
                           </p>
                         </div>
                       </form>
@@ -1066,7 +1066,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") || "Find Latest Packages"}
+                                {translate("Surname") }
                               </label>
                             </div>
                           </div>
@@ -1096,7 +1096,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") || "Find Latest Packages"}
+                                {translate("Birthday Date") }
                               </label>
                             </div>
                           </div>
@@ -1128,13 +1128,13 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="">
                                 <p className="text-right text-20">
-                                  {translate("Subtotal") || "Find Latest Packages"}{" "}
+                                  {translate("Subtotal") }{" "}
                                   <span className="text-accent-1">
                                     <b>1.789,00 €</b>
                                   </span>
                                 </p>
                                 <p className="text-right text-15">
-                                  {translate("Including Taxes And Fee") || "Find Latest Packages"}
+                                  {translate("Including Taxes And Fee") }
                                 </p>
                               </div>
                             </div>
@@ -1247,7 +1247,7 @@ export default function BookingPages() {
 
                   <div className="">
                     <div className="d-flex items-center justify-between">
-                      <div className="fw-500">{translate("Subtotal") || "Find Latest Packages"}</div>
+                      <div className="fw-500">{translate("Subtotal") }</div>
                       <div className=""> 182 € </div>
                     </div>
 
@@ -1318,7 +1318,7 @@ export default function BookingPages() {
               <div className="form-input my-1">
                 <input type="email" required />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Email") || "Find Latest Packages"} 
+                  {translate("Email") } 
                 </label>
               </div>
 

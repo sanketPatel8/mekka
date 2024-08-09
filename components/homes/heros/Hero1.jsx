@@ -64,7 +64,7 @@ export default function Hero1() {
                 data-aos-delay="100"
                 className="hero__title"
               >
-                {translate("Your world of joy") || "Find Latest Packages"}
+                {translate("Your world of joy") }
               </h1>
 
               <p
@@ -72,7 +72,7 @@ export default function Hero1() {
                 data-aos-delay="300"
                 className="hero__text"
               >
-                {translate("From local escapes to far-flung adventures, find what makes you happy anytime, anywhere") || "Find Latest Packages"}
+                {translate("From local escapes to far-flung adventures, find what makes you happy anytime, anywhere") }
               </p>
 
               <div

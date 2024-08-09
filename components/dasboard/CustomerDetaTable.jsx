@@ -92,51 +92,51 @@ const CustomerDetaTable = () => {
   }, []);
 
   const ColumnReservation_details = [
-    { name:  translate("Airline") || "Find Latest Packages", selector: (row) => row.Airline },
-    { name:  translate("From") || "Find Latest Packages", selector: (row) => row.From },
-    { name:  translate("To") || "Find Latest Packages", selector: (row) => row.To },
-    { name:  translate("Departure") || "Find Latest Packages", selector: (row) => row.Date_of_departure },
-    { name:  translate("Return") || "Find Latest Packages", selector: (row) => row.Date_of_return_flight },
+    { name:  translate("Airline") , selector: (row) => row.Airline },
+    { name:  translate("From") , selector: (row) => row.From },
+    { name:  translate("To") , selector: (row) => row.To },
+    { name:  translate("Departure") , selector: (row) => row.Date_of_departure },
+    { name:  translate("Return") , selector: (row) => row.Date_of_return_flight },
     // { name: 'Offered languages', selector: (row) => row.Offered_languages },
     // { name: 'Max Luggage', selector: (row) => row.max_luggage },
-    { name:  translate("Mekka") || "Find Latest Packages", selector: (row) => row.Mekka_hotel },
-    { name:  translate("Madina") || "Find Latest Packages", selector: (row) => row.Madina_hotel },
-    { name:  translate("Adult") || "Find Latest Packages", selector: (row) => row.Adult },
+    { name:  translate("Mekka") , selector: (row) => row.Mekka_hotel },
+    { name:  translate("Madina") , selector: (row) => row.Madina_hotel },
+    { name:  translate("Adult") , selector: (row) => row.Adult },
   ];
 
   const columnAdu_1 = [
     // { name: "Name", selector: (row) => row.name , width : "100px" },
     // { name: "Surname", selector: (row) => row.surname },
-    { name:  translate("Email") || "Find Latest Packages", selector: (row) => row.email, width: "150px" },
-    { name:  translate("Phone") || "Find Latest Packages", selector: (row) => row.phone, width: "150px" },
-    { name:  translate("City") || "Find Latest Packages", selector: (row) => row.city, width: "150px" },
+    { name:  translate("Email") , selector: (row) => row.email, width: "150px" },
+    { name:  translate("Phone") , selector: (row) => row.phone, width: "150px" },
+    { name:  translate("City") , selector: (row) => row.city, width: "150px" },
     // { name: "Gender", selector: (row) => row.gender },
-    { name:  translate("DOB") || "Find Latest Packages", selector: (row) => row.DOB },
-    { name:  translate("Nationality") || "Find Latest Packages", selector: (row) => row.Nationality },
-    { name:  translate("House No.") || "Find Latest Packages", selector: (row) => row.House_No },
-    { name:  translate("Zip Code") || "Find Latest Packages", selector: (row) => row.Zip_code },
-    { name:  translate("Street") || "Find Latest Packages", selector: (row) => row.Strect },
+    { name:  translate("DOB") , selector: (row) => row.DOB },
+    { name:  translate("Nationality") , selector: (row) => row.Nationality },
+    { name:  translate("House No.") , selector: (row) => row.House_No },
+    { name:  translate("Zip Code") , selector: (row) => row.Zip_code },
+    { name:  translate("Street") , selector: (row) => row.Strect },
     {
-      name: translate("Additional Services") || "Find Latest Packages", 
+      name: translate("Additional Services") , 
       selector: (row) => row.additional_services,
       width: "150px",
     },
-    { name:  translate("Total") || "Find Latest Packages", selector: (row) => row.Amount },
+    { name:  translate("Total") , selector: (row) => row.Amount },
     {
-      name: translate("Action" ) || "Find Latest Packages",
+      name: translate("Action" ) ,
       selector: (row) => (
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             onClick={openAdult1Deta}
           >
-            {translate("Edit") || "Find Latest Packages"}
+            {translate("Edit") }
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-            {translate("Document") || "Find Latest Packages"}
+            {translate("Document") }
           </button>
         </div>
       ),
@@ -148,29 +148,29 @@ const CustomerDetaTable = () => {
     // { name: "Name", selector: (row) => row.name , width : "100px" },
     // { name: "Surname", selector: (row) => row.surname },
     // { name: "Gender", selector: (row) => row.gender },
-    { name:  translate("DOB") || "Find Latest Packages", selector: (row) => row.DOB },
-    { name:  translate("Nationality") || "Find Latest Packages", selector: (row) => row.Nationality },
+    { name:  translate("DOB") , selector: (row) => row.DOB },
+    { name:  translate("Nationality") , selector: (row) => row.Nationality },
     {
-      name:  translate("Additional Services") || "Find Latest Packages",
+      name:  translate("Additional Services") ,
       selector: (row) => row.additional_services,
       width: "150px",
     },
-    { name:  translate("Total") || "Find Latest Packages", selector: (row) => row.Amount },
+    { name:  translate("Total") , selector: (row) => row.Amount },
     {
-      name: translate("Action" ) || "Find Latest Packages",
+      name: translate("Action" ) ,
       selector: (row) => (
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             onClick={openEditData}
           >
-            {translate("Edit") || "Find Latest Packages"}
+            {translate("Edit") }
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-            {translate("Document") || "Find Latest Packages"}
+            {translate("Document") }
           </button>
         </div>
       ),
@@ -182,24 +182,24 @@ const CustomerDetaTable = () => {
     // { name: "Name", selector: (row) => row.name , width : "100px" },
     // { name: "Surname", selector: (row) => row.surname },
     // { name: "Gender", selector: (row) => row.gender },
-    { name:  translate("DOB") || "Find Latest Packages", selector: (row) => row.DOB },
-    { name:  translate("Nationality") || "Find Latest Packages", selector: (row) => row.Nationality },
-    { name:  translate("Total") || "Find Latest Packages", selector: (row) => row.Amount },
+    { name:  translate("DOB") , selector: (row) => row.DOB },
+    { name:  translate("Nationality") , selector: (row) => row.Nationality },
+    { name:  translate("Total") , selector: (row) => row.Amount },
     {
-      name:  translate("Action") || "Find Latest Packages",
+      name:  translate("Action") ,
       selector: (row) => (
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             onClick={openEditData}
           >
-            {translate("Edit") || "Find Latest Packages"}
+            {translate("Edit") }
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
-            {translate("Document") || "Find Latest Packages"}
+            {translate("Document") }
           </button>
         </div>
       ),
@@ -357,17 +357,17 @@ const CustomerDetaTable = () => {
     <div>
       <h3 className="t_center">
         {" "}
-        {translate("Booking Details") || "Find Latest Packages"} : #123216
+        {translate("Booking Details") } : #123216
       </h3>
       <div className="row px-0 pb-10 mt-20 ">
         <div className="col-lg-6">
           <p className="t_center">
             {" "}
-            {translate("Booked Date") || "Find Latest Packages"} : 12.08.2024
+            {translate("Booked Date") } : 12.08.2024
           </p>
           <p className="t_center">
             {" "}
-            {translate("Booking Status") || "Find Latest Packages"} : Pending
+            {translate("Booking Status") } : Pending
           </p>
           <p className="text-red t_center">Available 10 seats</p>
         </div>
@@ -378,7 +378,7 @@ const CustomerDetaTable = () => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openInvoice}
             >
-              {translate("Print Invoice") || "Find Latest Packages"}
+              {translate("Print Invoice") }
             </button>
           </div>
 
@@ -387,7 +387,7 @@ const CustomerDetaTable = () => {
               className="button -sm -accent-1 bg-info-2 text-white "
               onClick={openPaymentModal}
             >
-              {translate("Pay") || "Find Latest Packages"}
+              {translate("Pay") }
             </button>
             <span>(10,00 €)</span>
           </div>
@@ -397,7 +397,7 @@ const CustomerDetaTable = () => {
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openModal}
             >
-              {translate("Add Person") || "Find Latest Packages"}
+              {translate("Add Person") }
             </button>
           </div>
         </div>
@@ -456,7 +456,7 @@ const CustomerDetaTable = () => {
         className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
         onClick={openCancelPopUp}
       >
-        {translate("Cancel") || "Find Latest Packages"}
+        {translate("Cancel") }
       </button>
 
       <div id="modelopen">
@@ -469,7 +469,7 @@ const CustomerDetaTable = () => {
         >
           <div className="d-flex justify-content-between" id="">
             <h2 className="t_center px-20">
-              {translate("ADD PERSON") || "Find Latest Packages"}
+              {translate("ADD PERSON") }
             </h2>
             <button onClick={closeModal}>
               <IoClose size={25} />
@@ -483,7 +483,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Name") || "Find Latest Packages"}
+                      {translate("Name") }
                     </label>
                   </div>
                 </div>
@@ -492,7 +492,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Surname") || "Find Latest Packages"}
+                      {translate("Surname") }
                     </label>
                   </div>
                 </div>
@@ -505,13 +505,13 @@ const CustomerDetaTable = () => {
                       className="form-control"
                     >
                       <option value="male">
-                         {translate("Male") || "Find Latest Packages"}
+                         {translate("Male") }
                       </option>
                       <option value="female">
-                         {translate("Female") || "Find Latest Packages"}
+                         {translate("Female") }
                       </option>
                       <option value="other">
-                         {translate("Other") || "Find Latest Packages"}
+                         {translate("Other") }
                       </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
@@ -534,13 +534,13 @@ const CustomerDetaTable = () => {
                       className="form-control"
                     >
                       <option value="indian">
-                         {translate("Indian") || "Find Latest Packages"}
+                         {translate("Indian") }
                       </option>
                       <option value="german">
-                         {translate("German") || "Find Latest Packages"}
+                         {translate("German") }
                       </option>
                       <option value="canadian">
-                         {translate("Canadian") || "Find Latest Packages"}
+                         {translate("Canadian") }
                       </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
@@ -675,13 +675,13 @@ const CustomerDetaTable = () => {
                       }, 2000);
                     }}
                   >
-                    {translate("ADD PERSON") || "Find Latest Packages"}
+                    {translate("ADD PERSON") }
                   </button>
                   <button
                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                     onClick={closeModal}
                   >
-                    {translate("CANCEL") || "Find Latest Packages"}
+                    {translate("CANCEL") }
                   </button>
                 </div>
               </div>
@@ -737,7 +737,7 @@ const CustomerDetaTable = () => {
                   className="button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white "
                   disabled
                 >
-                  {translate("PAID") || "Find Latest Packages"}
+                  {translate("PAID") }
                 </button>
               </div>
             </div>
@@ -768,7 +768,7 @@ const CustomerDetaTable = () => {
 
               <div className="col-md-2">
                 <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white  ">
-                  {translate("PAY") || "Find Latest Packages"}
+                  {translate("PAY") }
                 </button>
               </div>
             </div>
@@ -799,7 +799,7 @@ const CustomerDetaTable = () => {
 
               <div className="col-md-2">
                 <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
-                  {translate("PAY") || "Find Latest Packages"}
+                  {translate("PAY") }
                 </button>
               </div>
             </div>
@@ -892,7 +892,7 @@ const CustomerDetaTable = () => {
                   }, 2000);
                 }}
               >
-                {translate("Cancel Booking") || "Find Latest Packages"}
+                {translate("Cancel Booking") }
               </button>
             </div>
           </div>
@@ -916,9 +916,9 @@ const CustomerDetaTable = () => {
           <div className="ml-lg-20 ml-0">
             <Tabs>
               <TabList>
-                <Tab> {translate("Upload") || "Find Latest Packages"}</Tab>
-                <Tab> {translate("View") || "Find Latest Packages"}</Tab>
-                <Tab> {translate("Download") || "Find Latest Packages"}</Tab>
+                <Tab> {translate("Upload") }</Tab>
+                <Tab> {translate("View") }</Tab>
+                <Tab> {translate("Download") }</Tab>
               </TabList>
 
               <TabPanel>
@@ -1016,13 +1016,13 @@ const CustomerDetaTable = () => {
                         alert("submited");
                       }}
                     >
-                      {translate("SUBMIT") || "Find Latest Packages"}
+                      {translate("SUBMIT") }
                     </button>
                     <button
                       className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
                       onClick={closeUploadFileModal}
                     >
-                      {translate("CANCEL") || "Find Latest Packages"}
+                      {translate("CANCEL") }
                     </button>
                   </div>
                 </div>
@@ -1058,7 +1058,7 @@ const CustomerDetaTable = () => {
           <div className="d-flex justify-content-between" id="modelopen">
             <h2 className="px-20">
               {" "}
-              {translate("Edit Your Details") || "Find Latest Packages"}
+              {translate("Edit Your Details") }
             </h2>
             <button onClick={closeEditData}>
               <IoClose size={25} />
@@ -1073,7 +1073,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Name") || "Find Latest Packages"}
+                      {translate("Name") }
                     </label>
                   </div>
                 </div>
@@ -1082,7 +1082,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Surname") || "Find Latest Packages"}
+                      {translate("Surname") }
                     </label>
                   </div>
                 </div>
@@ -1096,15 +1096,15 @@ const CustomerDetaTable = () => {
                     >
                       <option value="male">
                         {" "}
-                        {translate("Male") || "Find Latest Packages"}
+                        {translate("Male") }
                       </option>
                       <option value="female">
                         {" "}
-                        {translate("Female") || "Find Latest Packages"}
+                        {translate("Female") }
                       </option>
                       <option value="other">
                         {" "}
-                        {translate("Other") || "Find Latest Packages"}
+                        {translate("Other") }
                       </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
@@ -1117,7 +1117,7 @@ const CustomerDetaTable = () => {
                     <input type="date" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Birthday Date") || "Find Latest Packages"}
+                      {translate("Birthday Date") }
                     </label>
                   </div>
                 </div>
@@ -1131,15 +1131,15 @@ const CustomerDetaTable = () => {
                     >
                       <option value="indian">
                         {" "}
-                        {translate("Indian") || "Find Latest Packages"}
+                        {translate("Indian") }
                       </option>
                       <option value="german">
                         {" "}
-                        {translate("German") || "Find Latest Packages"}
+                        {translate("German") }
                       </option>
                       <option value="canadian">
                         {" "}
-                        {translate("Canadian") || "Find Latest Packages"}
+                        {translate("Canadian") }
                       </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
@@ -1160,7 +1160,7 @@ const CustomerDetaTable = () => {
                       }, 2000);
                     }}
                   >
-                    {translate("SAVE") || "Find Latest Packages"}
+                    {translate("SAVE") }
                   </button>
                 </div>
               </div>
@@ -1179,7 +1179,7 @@ const CustomerDetaTable = () => {
           <div className="d-flex justify-content-between" id="modelopen">
             <h2 className="px-20">
               {" "}
-              {translate("Edit Your Details") || "Find Latest Packages"}
+              {translate("Edit Your Details") }
             </h2>
             <button onClick={closeAdult1Deta}>
               <IoClose size={25} />
@@ -1194,7 +1194,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Name") || "Find Latest Packages"}
+                      {translate("Name") }
                     </label>
                   </div>
                 </div>
@@ -1204,7 +1204,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Surname") || "Find Latest Packages"}{" "}
+                      {translate("Surname") }{" "}
                     </label>
                   </div>
                 </div>
@@ -1214,7 +1214,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Email") || "Find Latest Packages"}
+                      {translate("Email") }
                     </label>
                   </div>
                 </div>
@@ -1224,7 +1224,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Email") || "Find Latest Packages"}
+                      {translate("Email") }
                     </label>
                   </div>
                 </div>
@@ -1234,7 +1234,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("City") || "Find Latest Packages"}
+                      {translate("City") }
                     </label>
                   </div>
                 </div>
@@ -1252,15 +1252,15 @@ const CustomerDetaTable = () => {
                       {/* <option value="" disabled>Select Gender</option> */}
                       <option value="male">
                         {" "}
-                        {translate("Male") || "Find Latest Packages"}
+                        {translate("Male") }
                       </option>
                       <option value="female">
                         {" "}
-                        {translate("Female") || "Find Latest Packages"}
+                        {translate("Female") }
                       </option>
                       <option value="other">
                         {" "}
-                        {translate("Other") || "Find Latest Packages"}
+                        {translate("Other") }
                       </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
@@ -1291,15 +1291,15 @@ const CustomerDetaTable = () => {
                       {/* <option value="" disabled>Nationality</option> */}
                       <option value="indian">
                         {" "}
-                        {translate("Indian") || "Find Latest Packages"}
+                        {translate("Indian") }
                       </option>
                       <option value="german">
                         {" "}
-                        {translate("German") || "Find Latest Packages"}
+                        {translate("German") }
                       </option>
                       <option value="canadian">
                         {" "}
-                        {translate("Canadian") || "Find Latest Packages"}
+                        {translate("Canadian") }
                       </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
@@ -1312,7 +1312,7 @@ const CustomerDetaTable = () => {
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      {translate("House No") || "Find Latest Packages"}
+                      {translate("House No") }
                     </label>
                   </div>
                 </div>
@@ -1321,7 +1321,7 @@ const CustomerDetaTable = () => {
                   <div className="form-input spacing">
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
-                      {translate("ZIP code") || "Find Latest Packages"}
+                      {translate("ZIP code") }
                     </label>
                   </div>
                 </div>
@@ -1331,7 +1331,7 @@ const CustomerDetaTable = () => {
                     <input type="text" required />
                     <label className="lh-1 text-16 text-light-1">
                       {" "}
-                      {translate("Street") || "Find Latest Packages"}
+                      {translate("Street") }
                     </label>
                   </div>
                 </div>
@@ -1349,7 +1349,7 @@ const CustomerDetaTable = () => {
                       {/* <option value="" disabled>Nationality</option> */}
                       <option value="Frankfurt">
                         Frankfurt(FRA){" "}
-                        {translate("Email") || "Find Latest Packages"}
+                        {translate("Email") }
                       </option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">{From}</label>
@@ -1365,7 +1365,7 @@ const CustomerDetaTable = () => {
                   }, 2000);
                 }}
               >
-                {translate("SAVE") || "Find Latest Packages"}
+                {translate("SAVE") }
               </button>
             </div>
           </div>
@@ -1382,7 +1382,7 @@ const CustomerDetaTable = () => {
           <div className="d-flex justify-content-between" id="modelopen">
             <h2 className="px-20">
               {" "}
-              {translate("Invoice") || "Find Latest Packages"}
+              {translate("Invoice") }
             </h2>
             <button onClick={closeInvoice}>
               <IoClose size={25} />

@@ -10,7 +10,7 @@ const OtherInformation2 = () => {
   const [tourDAta, settourDAta] = useState([]);
 
   const sendData = {
-    AccessKey: "Mekka@24",
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     id: 12,
   };
 
@@ -48,7 +48,7 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
-              {translate("Luggages") || "Find Latest Packages"}
+              {translate("Luggages") }
             </div>
             <div className="text-14 text-light-2 lh-16">Included</div>
           </div>
@@ -63,7 +63,7 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
-              {translate("Flight Included") || "Find Latest Packages"}
+              {translate("Flight Included") }
             </div>
             <div className="text-14 text-light-2 lh-16">{tourDAta?.flight_included == 1 ? "Included" : "Not Included"} </div>
           </div>
@@ -78,7 +78,7 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
-              {translate("Hotels Included") || "Find Latest Packages"}
+              {translate("Hotels Included") }
             </div>
             <div className="text-14 text-light-2 lh-16">{tourDAta?.hotel_included !== 1 ? "Not Included" : "Included"}</div>
           </div>
@@ -93,7 +93,7 @@ const OtherInformation2 = () => {
 
           <div className="ml-10">
             <div className="lh-16">
-              {translate("Free Cancellation") || "Find Latest Packages"}
+              {translate("Free Cancellation") }
               {translate("(Up to 14 Days Before Travel Date)") ||
                 "Find Latest Packages"}
             </div>

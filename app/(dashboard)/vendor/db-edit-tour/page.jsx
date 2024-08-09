@@ -300,7 +300,7 @@ export default function AddTour() {
 
           <div className="dashboard__content_content ">
             <h1 className="text-30">
-               {translate("Edit Tour") || "Find Latest Packages"}
+               {translate("Edit Tour") }
             </h1>
 
             <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
@@ -443,7 +443,7 @@ export default function AddTour() {
                             <div className="col-12">
                               <h4 className="text-18 fw-500 mb-20">
                                 {" "}
-                                {translate("Gallery") || "Find Latest Packages"}
+                                {translate("Gallery") }
                               </h4>
 
                               <div className="row x-gap-20 y-gap-20">
@@ -835,7 +835,7 @@ export default function AddTour() {
                                   >
                                     {translate(
                                       "Beverages, drinking water, morning tea an buffet lunch"
-                                    ) || "Find Latest Packages"}
+                                    ) }
                                   </label>
                                 </div>
                               </div>
@@ -991,7 +991,7 @@ export default function AddTour() {
                                   >
                                     {translate(
                                       " Hotel pickup and drop-off by air-conditioned minivan "
-                                    ) || "Find Latest Packages"}
+                                    ) }
                                   </label>
                                 </div>
                               </div>
@@ -1034,7 +1034,7 @@ export default function AddTour() {
                                   >
                                     {translate(
                                       "InsuranceTransfer to a private pier"
-                                    ) || "Find Latest Packages"}
+                                    ) }
                                   </label>
                                 </div>
                               </div>
@@ -1195,7 +1195,7 @@ export default function AddTour() {
                               <div className="row">
                                 <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
                                   {" "}
-                                  {translate("SAVE DETAILS") || "Find Latest Packages"}
+                                  {translate("SAVE DETAILS") }
                                 </button>
                               </div>
                             </div>
@@ -1214,7 +1214,7 @@ export default function AddTour() {
                           <div className="d-flex item-center justify-content-between">
                             <h6>
                               {" "}
-                              {translate("Visa Processing") || "Find Latest Packages"}
+                              {translate("Visa Processing") }
                             </h6>
                             <div className="flex_start visaYESNOFLEx my-3">
                               <div className="d-flex items-center mx-2">
@@ -1232,7 +1232,7 @@ export default function AddTour() {
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
                                       {" "}
-                                      {translate("Yes") || "Find Latest Packages"}
+                                      {translate("Yes") }
                                     </span>
                                   </label>
                                 </div>
@@ -1252,7 +1252,7 @@ export default function AddTour() {
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
                                       {" "}
-                                      {translate("No") || "Find Latest Packages"}
+                                      {translate("No") }
                                     </span>
                                   </label>
                                 </div>
@@ -1262,7 +1262,7 @@ export default function AddTour() {
                           <div className="">
                             <h6>
                               {" "}
-                              {translate("Mekka Hotel") || "Find Latest Packages"}
+                              {translate("Mekka Hotel") }
                             </h6>
 
                             <ul className="">
@@ -1335,7 +1335,7 @@ export default function AddTour() {
 
                             <h6>
                               {" "}
-                              {translate(" ") || "Find Latest Packages"}
+                              {translate(" ") }
                             </h6>
                             <ul className="">
                               {madinaRows.map((row, index) => (
@@ -1409,7 +1409,7 @@ export default function AddTour() {
                           </div>
                           <div className="d-flex item-center justify-content-between">
                             <h6>
-                             {translate("Free cancellation (up to 14 days before travel date)") || "Find Latest Packages"}
+                             {translate("Free cancellation (up to 14 days before travel date)") }
                             </h6>
                             <div className="flex_start visaYESNOFLEx my-3">
                               <div className="d-flex items-center mx-2">
@@ -1427,7 +1427,7 @@ export default function AddTour() {
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
                                       {" "}
-                                      {translate("Yes") || "Find Latest Packages"}
+                                      {translate("Yes") }
                                     </span>
                                   </label>
                                 </div>
@@ -1447,7 +1447,7 @@ export default function AddTour() {
                                     </span>
                                     <span className="text-14 lh-1 ml-5">
                                       {" "}
-                                      {translate("No") || "Find Latest Packages"}
+                                      {translate("No") }
                                     </span>
                                   </label>
                                 </div>
@@ -1457,7 +1457,7 @@ export default function AddTour() {
                           <div className="d-flex item-center justify-content-between pt-10">
                             <h6>
                              {" "}
-                              {translate("Add Flight Details") || "Find Latest Packages"}
+                              {translate("Add Flight Details") }
                             </h6>
                           </div>
                           <div className="form_2">
@@ -1548,7 +1548,7 @@ export default function AddTour() {
                             <div className="row">
                               <button className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
                                 {" "}
-                                {translate("SAVE DETAILS") || "Find Latest Packages"}
+                                {translate("SAVE DETAILS") }
                               </button>
                             </div>
                           </div>

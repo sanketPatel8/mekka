@@ -62,23 +62,23 @@ export default function Header1() {
             <div className="media">
               <Link href="/" className="mx-3">
                 
-                {translate("Home") || "Find Latest Packages"}
+                {translate("Home") }
               </Link>
               <Link href="/tourlist" className="mx-3">
                 
-                {translate("Tour") || "Find Latest Packages"}
+                {translate("Tour") }
               </Link>
               <Link href="/tourlist?=Hajj" className="mx-3">
                 
-                {translate("Hajj") || "Find Latest Packages"}
+                {translate("Hajj") }
               </Link>
               <Link href="/tourlist?=Umrah" className="mx-3">
                 
-                {translate("Umrah") || "Find Latest Packages"}
+                {translate("Umrah") }
               </Link>
               <Link href="/contact" className="mx-3">
                 
-                {translate("Contact") || "Find Latest Packages"}
+                {translate("Contact") }
               </Link>
             </div>
           </div>
@@ -104,14 +104,14 @@ export default function Header1() {
             <Language />
 
             <Link href="/register" className="ml-10">
-            {translate("Register") || "Find Latest Packages"}
+            {translate("Register") }
             </Link>
 
             <Link
               href="/login"
               className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20"
             >
-           {translate("Log In") || "Find Latest Packages"}
+           {translate("Log In") }
             </Link>
 
             <button

@@ -1,13 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Calender from "../common/dropdownSearch/Calender";
-import Image from "next/image";
 import { State } from "@/data/tourSingleContent";
 import "@/public/css/index.css";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { hotelDAta } from "@/data/tours";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 
@@ -23,7 +20,7 @@ export default function TourSingleSidebar() {
   const [TourListData, setTourListData] = useState([]);
 
   const sendData = {
-    AccessKey: "Mekka@24",
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     id: 12,
   };
 
@@ -94,7 +91,7 @@ export default function TourSingleSidebar() {
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">
-        {translate("Tickets") || "Find Latest Packages"}
+        {translate("Tickets") }
       </h5>
 
       <div>
@@ -196,10 +193,10 @@ export default function TourSingleSidebar() {
 
       <div>
         <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Makka") || "Find Latest Packages"}
+          {translate("Hotel For Makka") }
         </h5>
-        {mekkaHotels.map((elm) => (
-          <div>
+        {mekkaHotels.map((elm , ind) => (
+          <div key={ind}>
             <div
               className="d-flex items-center justify-between my-1"
               key={elm.id}
@@ -231,7 +228,7 @@ export default function TourSingleSidebar() {
         <hr />
 
         <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Madina") || "Find Latest Packages"}
+          {translate("Hotel For Madina") }
         </h5>
         {madinaHotels.map((elm) => (
           <div>
@@ -267,7 +264,7 @@ export default function TourSingleSidebar() {
       <hr />
 
       <h5 className="text-18 fw-500 mb-20 mt-20">
-        {translate("Flight Booking") || "Find Latest Packages"}
+        {translate("Flight Booking") }
       </h5>
 
       <div className="d-flex items-center justify-between pt-1">
@@ -302,7 +299,7 @@ export default function TourSingleSidebar() {
                 </div>
                 <label htmlFor="item4" className="lh-16 ml-15">
                   Exclude
-                  {translate("Flight Booking") || "Find Latest Packages"}
+                  {translate("Flight Booking") }
                 </label>
               </div>
             </div>
@@ -479,7 +476,7 @@ export default function TourSingleSidebar() {
 
       <Link href="/booking">
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
-          {translate("Book Now") || "Find Latest Packages"}
+          {translate("Book Now") }
         </button>
       </Link>
     </div>

@@ -4,9 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { speedFeatures } from "@/data/tourFilteringOptions";
 import {
   FaPersonWalking,
-  FaQuoteRight,
   FaStar,
-  FaCheck,
 } from "react-icons/fa6";
 import { FaHotel } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
@@ -19,6 +17,8 @@ import Image from "next/image";
 import { post } from "@/app/utils/api";
 import Link from "next/link";
 import { showErrorToast } from "@/app/utils/tost";
+import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function TourList4() {
   const [sortOption, setSortOption] = useState("");
@@ -45,7 +45,7 @@ export default function TourList4() {
   }, []);
 
   const sendData = {
-    AccessKey: "Mekka@24",
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     start: 0,
   };
 
@@ -54,8 +54,8 @@ export default function TourList4() {
       console.log("fetchData function called");
       try {
         const response = await post("tourlist", sendData);
-        console.log("Response received:", response.Tours);
-        setTourListData(response.Tours); // Assuming response.data contains the data you need
+        console.log("Response received:", response);
+        setTourListData(response.Tours); 
       } catch (error) {
         console.error("Error caught:", error);
         if (
@@ -156,7 +156,8 @@ export default function TourList4() {
                     <Image
                       width={420}
                       height={390}
-                      src={TourListData?.tour_image}
+                      // src={TourListData?.tour_image}
+                      src="/_next/image?url=%2Fimg%2FtourCards%2F1%2F13.jpeg&w=1080&q=75"
                       alt="image"
                     />
 
@@ -183,7 +184,6 @@ export default function TourList4() {
                     </h3>
 
                     <div>
-                    
                       {mekkaHotels?.length > 0 ? (
                         mekkaHotels.map((hotel, index) => (
                           <div key={hotel.id}>
@@ -203,7 +203,6 @@ export default function TourList4() {
                         <p>No Mekka hotels available.</p>
                       )}
 
-                    
                       {madinaHotels?.length > 0 ? (
                         madinaHotels.map((hotel, index) => (
                           <div key={hotel.id}>
@@ -222,6 +221,14 @@ export default function TourList4() {
                       ) : (
                         <p>No Madina hotels available.</p>
                       )}
+
+                      <p className="tourCard__text mt-5">
+                        <FontAwesomeIcon
+                          icon={faQuoteRight}
+                          className="px-1 text-accent-1"
+                        />
+                        Medine und Mekka
+                      </p>
                     </div>
 
                     <div className="d-flex items-center mt-5">
@@ -241,9 +248,9 @@ export default function TourList4() {
 
                     <div className="row x-gap-20 y-gap-5 pt-30">
                       <div className="col-auto">
-                        <div className="text-14 items-center ">
-                          <FaCalendar color="dabf4f" size={15} />
-                          {TourListData.date_begin} - {TourListData?.date_end}
+                        <div className="d-flex text-14 items-center ">
+                          <FaCalendar color="dabf4f" size={17} />
+                          <p className="mx-1">{TourListData.date_begin} - {TourListData?.date_end}</p>
                         </div>
                       </div>
                     </div>
@@ -279,7 +286,7 @@ export default function TourList4() {
                     </div>
 
                     <button className="button -outline-accent-1 text-accent-1">
-                      <Link href={`/toursingle/${TourListData.id}`}>
+                      <Link href={`/toursingle/${TourListData.slug}`}>
                         SHOW AVAILABILITY
                       </Link>
                     </button>

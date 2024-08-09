@@ -75,7 +75,7 @@ export default function Register() {
       }
      
     } else {
-      showErrorToast("please check checkbox");
+      showErrorToast("Check that check box");
     }
   };
 
@@ -89,7 +89,7 @@ export default function Register() {
             <div className="text-center mb-60 md:mb-30">
               <h1 className="text-30">
                 {" "}
-                {translate("Register") || "Find Latest Packages"}
+                {translate("Register") }
               </h1>
               <div className="text-18 fw-500 mt-20 md:mt-15">
                 {translate("Let's Create Your Account!") ||
@@ -99,7 +99,7 @@ export default function Register() {
                 {translate("Already Have An Account?") ||
                   "Find Latest Packages"}{" "}
                 <Link href="/login" className="text-accent-1">
-                  {translate("Log In") || "Find Latest Packages"}!
+                  {translate("Log In") }!
                 </Link>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function Register() {
                 />
                 <label className="lh-1 text-16 text-light-1">
                   {" "}
-                  {translate("Name") || "Find Latest Packages"}
+                  {translate("Name") }
                 </label>
               </div>
 
@@ -132,7 +132,7 @@ export default function Register() {
                 />
                 <label className="lh-1 text-16 text-light-1">
                   {" "}
-                  {translate("Surname") || "Find Latest Packages"}
+                  {translate("Surname") }
                 </label>
               </div>
 
@@ -146,7 +146,7 @@ export default function Register() {
                 />
                 <label className="lh-1 text-16 text-light-1">
                   {" "}
-                  {translate("Email Address") || "Find Latest Packages"}
+                  {translate("Email Address") }
                 </label>
               </div>
 
@@ -159,14 +159,14 @@ export default function Register() {
                   required
                 />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Password") || "Find Latest Packages"}
+                  {translate("Password") }
                 </label>
               </div>
 
               <div className="form-input my-1">
                 <input type="password" value={confirm_pass} onChange={MatchPass} required />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Confirm Password") || "Find Latest Packages"}
+                  {translate("Confirm Password") }
                 </label>
               </div>
 
@@ -198,7 +198,7 @@ export default function Register() {
                   <span className="text-14 lh-12 ml-10">
                     {translate(
                       "I have read the data protection and I accept the conditions."
-                    ) || "Find Latest Packages"}
+                    ) }
                   </span>
                 </label>
               </div>
@@ -207,7 +207,7 @@ export default function Register() {
                 className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                 type="submit"
               >
-                {translate("Register") || "Find Latest Packages"}
+                {translate("Register") }
               </button>
 
               <div className="relative line mt-50 mb-30">
@@ -221,14 +221,14 @@ export default function Register() {
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                     <FaFacebookF size={15} className="mx-1" />
-                    {translate("Facebook") || "Find Latest Packages"}
+                    {translate("Facebook") }
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
                     <FaGoogle size={15} className="mx-1" />
-                    {translate("Google") || "Find Latest Packages"}
+                    {translate("Google") }
                   </button>
                 </div>
               </div>
@@ -237,7 +237,7 @@ export default function Register() {
                 <div className="col">
                   <button className="button -md -outline-dark-1 text-dark-1 col-12">
                     <FaApple size={15} className="mx-1" />
-                    {translate("Sign in With Apple") || "Find Latest Packages"}
+                    {translate("Sign in With Apple") }
                   </button>
                 </div>
               </div>

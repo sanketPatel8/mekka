@@ -118,7 +118,7 @@ export default function DbBooking() {
           <button
             className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
           >
-             {translate("Edit") || "Find Latest Packages"}
+             {translate("Edit") }
           </button>
         </Link>
       ),
@@ -138,7 +138,7 @@ export default function DbBooking() {
       <div className="dashboard__content">
         <Header setSideBarOpen={setSideBarOpen} />
         <div className="dashboard__content_content">
-          <h1 className="text-30"> {translate("My Booking") || "Find Latest Packages"}</h1>
+          <h1 className="text-30"> {translate("My Booking") }</h1>
           <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20 ">
             <div className="tabs -underline-2 js-tabs">
               <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">

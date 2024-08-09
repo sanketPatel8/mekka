@@ -21,7 +21,7 @@ export default function Tour1() {
               data-aos-delay=""
               className="text-30 md:text-24"
             >
-              {translate("Find Latest Packages") || "Find Latest Packages"}
+              {translate("Find Latest Packages") }
             </h2>
           </div>
 
@@ -32,7 +32,7 @@ export default function Tour1() {
               data-aos-delay=""
               className="buttonArrow d-flex items-center "
             >
-              <span> {translate("See all") || "Find Latest Packages"}</span>
+              <span> {translate("See all") }</span>
               <i className="icon-arrow-top-right text-16 ml-10"></i>
             </Link>
           </div>
