@@ -4,43 +4,20 @@ import React, { useEffect, useState } from "react";
 import "react-image-lightbox/style.css";
 import { MdVerified } from "react-icons/md";
 import HotelGallary from "./Galleries/HotelGallary";
-import { post } from "@/app/utils/api";
-import { showErrorToast } from "@/app/utils/tost";
 
-const RoadMap = () => {
-  const [mainHotelData, setMainHotelData] = useState([]);
 
-  const sendData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    id: 12,
-  };
+const RoadMap = ({ PAckageData }) => {
+  const [mainHotelData, setMainHotelData] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log("fetchData function called");
-      try {
-        const response = await post("tour_details", sendData);
-        setMainHotelData(response.Tour_Details.tour_hotels);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
+    setMainHotelData(PAckageData?.Tour_Details?.tour_hotels)
+  }, [PAckageData])
+  
+console.log('the Hotel data was : ' , mainHotelData);
 
-    fetchData();
-  }, []);
 
   // Separate the hotels by type
-  // const makkahHotels = mainHotelData.filter(hotel => hotel.hotel_type === "2");
-  // const madinaHotels = mainHotelData.filter(hotel => hotel.hotel_type === "1");
+
 
   return (
     <>

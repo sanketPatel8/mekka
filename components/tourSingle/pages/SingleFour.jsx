@@ -16,15 +16,26 @@ import { useTranslation } from "@/app/context/TranslationContext";
 
 
 
-export default function SingleFour({ tour , TourDetaild }) {
+export default function SingleFour({ PAckageData }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
+  const [FlightInc, setFlightInc] = useState(null);
+
+  useEffect(() => {
+    const foundTour = PAckageData?.Tour_List?.find(tour => tour.id === "1");
+    
+    setFlightInc(foundTour);
+  }, [PAckageData]);
+
   const { translate } = useTranslation();
+  
+  // console.log("data was single for data :" + JSON.stringify(PAckageData));
+  
 
   return (
     <>
       <section className="py-30 mt-80">
         <div className="container">
-          <MainInformation tour={tour} TourDetaild={TourDetaild} />
+          <MainInformation  PAckageData={PAckageData} />
 
           <Gallery1 />
         </div>
@@ -35,13 +46,13 @@ export default function SingleFour({ tour , TourDetaild }) {
           <div className="row y-gap-30 justify-between ml-lg-2 ml-md-0 ml-0 ">
             <div className="col-lg-8 col-11 border-1 single-lft-box-shadow mx-auto">
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
-                <OthersInformation tour={tour} />
+                <OthersInformation PAckageData={PAckageData} />
               </div>
               <div className="row y-gap-20 justify-between items-center layout-pb-sm">
                 <OtherInformation2 />
               </div>
 
-              <Overview />
+              <Overview PAckageData={PAckageData} />
 
               <div className="accordion -tour-single row y-gap-20 pt-60 md:pt-30 js-accordion">
                 <div className="col-12">
@@ -123,16 +134,7 @@ export default function SingleFour({ tour , TourDetaild }) {
                       <div className="pt-20">
                         {/* <Included /> */}
                         <p>
-                          Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe
-                          des Masjid Al Haram King Abdul Aziz Gate und des
-                          Masjid Al Haram King Abdullah Expension Gate. Zu den
-                          Einrichtungen dieser Unterkunft gehören ein
-                          Restaurant, Zimmerservice und eine
-                          24-Stunden-Rezeption sowie kostenfreies WLAN. Private
-                          Parkplätze stehen vor Ort zur Verfügung. Das Hotel
-                          bietet Ihnen klimatisierte Zimmer mit einem
-                          Kleiderschrank, einem Wasserkocher, einem Safe, einem
-                          Flachbisss
+                          {FlightInc?.flight_info == null ? " Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe des Masjid Al Haram King Abdul Aziz Gate und des  Masjid Al Haram King Abdullah Expension Gate. Zu den Einrichtungen dieser Unterkunft gehören ein Restaurant, Zimmerservice und eine  24-Stunden-Rezeption sowie kostenfreies WLAN. Private Parkplätze stehen vor Ort zur Verfügung. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem  Kleiderschrank, einem Wasserkocher, einem Safe, einem Flachbisss" : FlightInc.flight_info}
                         </p>
                       </div>
                     </div>
@@ -172,7 +174,7 @@ export default function SingleFour({ tour , TourDetaild }) {
                       }
                     >
                       <div className="pt-20">
-                        <RoadMap2 />
+                        <RoadMap2 PAckageData={PAckageData} />
                       </div>
                     </div>
                   </div>
@@ -212,8 +214,7 @@ export default function SingleFour({ tour , TourDetaild }) {
                       }
                     >
                       <div className="pt-20">
-                        <RoadMap />
-                        {/* <Gallery1 /> */}
+                        <RoadMap PAckageData={PAckageData} />
                       </div>
                     </div>
                   </div>

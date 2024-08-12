@@ -5,8 +5,7 @@ import { State } from "@/data/tourSingleContent";
 import "@/public/css/index.css";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { post } from "@/app/utils/api";
-import { showErrorToast } from "@/app/utils/tost";
+
 
 export default function TourSingleSidebar() {
   const prices = {
@@ -17,35 +16,10 @@ export default function TourSingleSidebar() {
     servicePerPerson: 40,
   };
 
-  const [PackageData, setPackageData] = useState([]);
-
   const sendData = {
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     id: 12,
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("fetchData function called");
-      try {
-        const response = await post("tour_details", sendData);
-        setPackageData(response);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const [adultNumber, setAdultNumber] = useState(3);
   const [youthNumber, setYouthNumber] = useState(2);

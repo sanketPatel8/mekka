@@ -1,19 +1,16 @@
-import { useTranslation } from "@/app/context/TranslationContext";
-import React from "react";
+"use client"
 
-export default function Overview() {
+import { useTranslation } from "@/app/context/TranslationContext";
+import React, { useEffect, useState } from "react";
+
+export default function Overview({ PAckageData }) {
 
   const { translate } = useTranslation();
   return (
     <>
       <h2 className="text-30">{translate("Tour Overview") }</h2>
       <p className="mt-20">
-        The Phi Phi archipelago is a must-visit while in Phuket, and this
-        speedboat trip whisks you around the islands in one day. Swim over the
-        coral reefs of Pileh Lagoon, have lunch at Phi Phi Leh, snorkel at
-        Bamboo Island, and visit Monkey Beach and Maya Bay, immortalized in "The
-        Beach." Boat transfers, snacks, buffet lunch, snorkeling equipment, and
-        Phuket hotel pickup and drop-off all included.
+       {PAckageData?.Tour_Details?.tour_details?.tour_info}
       </p>
 
       <h3 className="text-20 fw-500 mt-20">{translate("Tour Highlights") }</h3>

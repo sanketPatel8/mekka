@@ -16,35 +16,6 @@ export default function TourSlider() {
 
   const [slibleTourSlider, setslibleTourSlider] = useState([]);
 
-  const sendData = {
-    AccessKey: "Mekka@24",
-    id: 12,
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("fetchData function called");
-      try {
-        const response = await post("tour_details", sendData);
-        console.log("rispo" + response.Tour_List);
-        
-        setslibleTourSlider(response.Tour_List);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <section className="">

@@ -16,6 +16,7 @@ import Link from "next/link";
 import { showErrorToast } from "@/app/utils/tost";
 import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 
 export default function TourList4() {
   const [sortOption, setSortOption] = useState("");
@@ -23,7 +24,10 @@ export default function TourList4() {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [TourListData, setTourListData] = useState([]);
   const [count, setCount] = useState("");
+  const [Dataid, setDataid] = useState("");
   // for paination
+
+  const Router = useRouter();
 
   const [activeIndex, setActiveIndex] = useState(1);
 
@@ -46,8 +50,6 @@ export default function TourList4() {
     };
   }, []);
 
-  
-
   useEffect(() => {
     const fetchData = async () => {
       const sendData = {
@@ -56,7 +58,6 @@ export default function TourList4() {
       };
       try {
         const response = await post("tourlist", sendData);
-        console.log("API response:", response); // Check the full response
         setCount(response.Count);
         if (response.Tours) {
           setTourListData(response.Tours);
@@ -202,25 +203,6 @@ export default function TourList4() {
                           </p>
                         </div>
 
-                        {/* {madinaHotels?.length > 0 ? (
-                          madinaHotels.map((hotel, index) => (
-                            <div key={hotel.id}>
-                              <p className="tourCard__text mt-5 items-center d-flex">
-                                <FaHotel
-                                  className="px-1"
-                                  color="#dabf4f"
-                                  size={25}
-                                />
-                                Madina Hotel: {hotel.hotel_name} (
-                                {hotel.hotel_stars}{" "}
-                                <FaStar color="#dabf4f" className="mx-1" />)
-                              </p>
-                            </div>
-                          ))
-                        ) : (
-                          <p>No Madina hotels available.</p>
-                        )} */}
-
                         <p className="tourCard__text mt-5">
                           <FontAwesomeIcon
                             icon={faQuoteRight}
@@ -287,7 +269,7 @@ export default function TourList4() {
                       </div>
 
                       <button className="button -outline-accent-1 text-accent-1">
-                        <Link href={`/package/${elm?.slug}`}>
+                        <Link href={`/package/${elm?.slug}?id=${elm?.id}`}>
                           SHOW AVAILABILITY
                         </Link>
                       </button>

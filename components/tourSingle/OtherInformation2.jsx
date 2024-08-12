@@ -6,36 +6,15 @@ import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 
-const OtherInformation2 = () => {
-  const [tourDAta, settourDAta] = useState([]);
-
-  const sendData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    id: 12,
-  };
+const OtherInformation2 = ({ PAckageData }) => {
+  const [OtherInfo, setOtherInfo] = useState({});
+  const [TourList, setTourList] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log("fetchData function called");
-      try {
-        const response = await post("tour_details", sendData);
-        settourDAta(response.Tour_Details.tour_details);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
+    setOtherInfo(PAckageData);
+    const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === "1");
+    setTourList(foundTour);
+  }, [PAckageData]);
 
   const { translate } = useTranslation();
   
@@ -51,7 +30,7 @@ const OtherInformation2 = () => {
             <div className="lh-16">
               {translate("Luggages") }
             </div>
-            <div className="text-14 text-light-2 lh-16">Included</div>
+            <div className="text-14 text-light-2 lh-16">{TourList?.baggage}</div>
           </div>
         </div>
       </div>
@@ -66,7 +45,7 @@ const OtherInformation2 = () => {
             <div className="lh-16">
               {translate("Flight Included") }
             </div>
-            <div className="text-14 text-light-2 lh-16">{tourDAta?.flight_included == 1 ? "Included" : "Not Included"} </div>
+            <div className="text-14 text-light-2 lh-16">{TourList?.flight_included == 1 ? "Included" : "Not Included"} </div>
           </div>
         </div>
       </div>
@@ -81,7 +60,9 @@ const OtherInformation2 = () => {
             <div className="lh-16">
               {translate("Hotels Included") }
             </div>
-            <div className="text-14 text-light-2 lh-16">{tourDAta?.hotel_included !== 1 ? "Not Included" : "Included"}</div>
+            <div className="text-14 text-light-2 lh-16">
+              {TourList?.hotel_included !== 1 ? "Not Included" : "Included"}
+              </div>
           </div>
         </div>
       </div>
@@ -98,7 +79,7 @@ const OtherInformation2 = () => {
               {translate("(Up to 14 Days Before Travel Date)") ||
                 "Find Latest Packages"}
             </div>
-            <div className="text-14 text-light-2 lh-16">{tourDAta?.free_cancellation}</div>
+            <div className="text-14 text-light-2 lh-16">{TourList?.free_cancellation}</div>
           </div>
         </div>
       </div>

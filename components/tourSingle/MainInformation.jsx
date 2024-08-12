@@ -1,17 +1,28 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 import Stars from "../common/Stars";
 
-export default function MainInformation({ tour , TourDetaild }) {
+export default function MainInformation({ PAckageData }) {
+  const [InformationData, setInformationData] = useState({});
 
-  console.log("data for main information component " + TourDetaild);
+  useEffect(() => {
+    setInformationData(PAckageData);
+  }, [PAckageData]);
+
+
   
+
+
   return (
     <>
       <div className="row y-gap-20 justify-between items-end">
         <div className="col-auto">
           <div className="row x-gap-10 y-gap-10 items-center">
             <div className="col-auto">
-              <button className="button -accent-1 text-14 py-5 px-15 bg-accent-1-05 text-accent-1 rounded-200">
+              <button 
+                className={`button -accent-1 text-14 py-5 px-15 bg-accent-1-05 text-accent-1 rounded-200 ${InformationData?.Tour_Details?.tour_details?.bestseller === 0 ? 'd-block' : 'd-none'}`}
+              >
                 Bestseller
               </button>
             </div>
@@ -23,34 +34,30 @@ export default function MainInformation({ tour , TourDetaild }) {
           </div>
 
           <h2 className="text-40 sm:text-30 lh-14 mt-20">
-            {tour?.title.split(" ").slice(0, 7).join(" ")}
-
-            <br />
-            {tour?.title.split(" ").slice(7).join(" ")}
+            {InformationData?.Tour_Details?.tour_details?.type} - {InformationData?.Tour_Details?.tour_details?.name}
           </h2>
 
           <div className="row x-gap-20 y-gap-20 items-center pt-20">
             <div className="col-auto">
               <div className="d-flex items-center">
                 <div className="d-flex x-gap-5 pr-10">
-                  <Stars star={tour?.rating} font={12} />
+                  <Stars star={`${InformationData?.Tour_Details?.tour_details?.rating == null ? '2' : InformationData?.Tour_Details?.tour_details?.rating}`} font={12} />
                 </div>
-                {tour?.rating} ({tour.ratingCount}) - IDEALGATE
+                {InformationData?.Tour_Details?.tour_details?.rating} ({InformationData?.Tour_Details?.tour_details?.rating_count}) - {InformationData?.Tour_Details?.tour_details?.company_name}
               </div>
             </div>
 
             <div className="col-auto">
               <div className="d-flex items-center">
                 <i className="icon-pin text-16 mr-5"></i>
-                {tour?.location}
+                zu Kaaba {InformationData?.Tour_Details?.tour_details?.distance_to_hotel} km
               </div>
             </div>
 
             <div className="col-auto">
               <div className="d-flex items-center" style={{color : "red"}}>
                 <i className="icon-reservation text-16 mr-5"></i>
-               
-                10 Places Still Available
+                {InformationData?.Tour_Details?.tour_details?.capacity_empty} Places Still Available
               </div>
             </div>
           </div>

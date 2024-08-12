@@ -6,38 +6,19 @@ import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 
-export default function OthersInformation() {
-  const [tourDAta, settourDAta] = useState([]);
-
-  const sendData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    id: 12,
-  };
+export default function OthersInformation({ PAckageData }) {
+  const [OtherInfo, setOtherInfo] = useState({});
+  const [TourList, setTourList] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log("fetchData function called");
-      try {
-        const response = await post("tour_details", sendData);
-        settourDAta(response.Tour_Details.tour_details);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
+    setOtherInfo(PAckageData);
+    const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === "1");
+    setTourList(foundTour);
+    
+  }, [PAckageData]);
 
   const { translate } = useTranslation();
+
   return (
     <>
       <div className="row my-2">
@@ -49,9 +30,7 @@ export default function OthersInformation() {
 
             <div className="ml-10">
               <div className="lh-16">{translate("Duration")}</div>
-              <div className="text-14 text-light-2 lh-16">
-                {tourDAta.travel_duration} days
-              </div>
+              <div className="text-14 text-light-2 lh-16">{TourList?.travel_duration} days</div>
             </div>
           </div>
         </div>
@@ -65,7 +44,7 @@ export default function OthersInformation() {
             <div className="ml-10">
               <div className="lh-16">{translate("Travel")}</div>
               <div className="text-14 text-light-2 lh-16">
-                {tourDAta.travel}
+                {TourList?.travel}
               </div>
             </div>
           </div>
@@ -80,7 +59,7 @@ export default function OthersInformation() {
             <div className="ml-10">
               <div className="lh-16">{translate("Start Date")}</div>
               <div className="text-14 text-light-2 lh-16">
-                {tourDAta.date_begin}
+                {TourList?.date_begin}
               </div>
             </div>
           </div>

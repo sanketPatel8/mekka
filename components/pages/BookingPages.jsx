@@ -17,6 +17,10 @@ import { FaGoogle } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { post } from "@/app/utils/api";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const customStyles = {
   overlay: {
@@ -47,7 +51,27 @@ export default function BookingPages() {
   const [Nationality, setNationality] = useState("Nationality");
   const [From, setFrom] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [radioValue, setRadioValue] = useState(""); // Initial state for the radio buttons
+  const [radioValue, setRadioValue] = useState("");
+  const [LoginISChacked, setLoginISChacked] = useState(false);
+  const [BookingLoginData, setBookingLoginData] = useState({
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    email: "",
+    password: "",
+  });
+
+  const router = useRouter();
+
+  const HandleLogInDataChange = (e) => {
+    const { name, value } = e.target;
+    setBookingLoginData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleLoginCheckboxChange = (e) => {
+    setLoginISChacked(e.target.checked);
+  };
 
   const handleRadioChange = (event) => {
     console.log(event.target.value);
@@ -74,11 +98,46 @@ export default function BookingPages() {
     setIsOpen(false);
   }
 
+  const HandleLoginSubmite = async (e) => {
+    e.preventDefault();
+  
+    console.log("Form submitted");
+    console.log("LoginISChacked:", LoginISChacked);
+  
+    if (LoginISChacked === true) {
+      try {
+        const response = await post("login", BookingLoginData);
+        localStorage.setItem("token", response.authorisation.token);
+        showSuccessToast("Login successful!");
+  
+        setTimeout(() => {
+          router.push('/customer/db-booking')
+        }, 2000);
+      } catch (error) {
+        console.error("Error:", error); // Log the full error for debugging
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast("Please verify your email");
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+    } else {
+      showErrorToast("ChackBox Was Not Chacked");
+    }
+  };
+  
+
+
   const { translate } = useTranslation();
 
   return (
     <>
       <section className="layout-pt-md layout-pb-lg mt-header">
+      <ToastContainer />
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-11 mx-auto px-0">
@@ -88,17 +147,14 @@ export default function BookingPages() {
                     openModal();
                   }}
                 >
-                  <a className="text-accent-1 px-1">
-                    {" "}
-                    {translate("Sign in") }{" "}
-                  </a>{" "}
+                  <a className="text-accent-1 px-1"> {translate("Sign in")} </a>{" "}
                 </button>
                 {translate(
                   " Book With Your Saved Details or Continue As a Guest To Book Your Travel."
-                ) }
+                )}
               </div>
               <h2 className="text-30 md:text-24 fw-700 bg-Primary">
-                {translate("Steps to reserve") }
+                {translate("Steps to reserve")}
               </h2>
 
               <div className="bg-white rounded-12 md:py-20 px-md-20 mt-10">
@@ -127,7 +183,7 @@ export default function BookingPages() {
                             {" "}
                             {translate(
                               " Is Also The Contact Person For The Reservation."
-                            ) }
+                            )}
                           </span>
                         </p>
                       </div>
@@ -138,7 +194,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                              {translate("Name") }
+                                {translate("Name")}
                               </label>
                             </div>
                           </div>
@@ -147,7 +203,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") }
+                                {translate("Surname")}
                               </label>
                             </div>
                           </div>
@@ -156,7 +212,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Email") }
+                                {translate("Email")}
                               </label>
                             </div>
                           </div>
@@ -165,7 +221,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Phone") }
+                                {translate("Phone")}
                               </label>
                             </div>
                           </div>
@@ -174,7 +230,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("City") }
+                                {translate("City")}
                               </label>
                             </div>
                           </div>
@@ -204,7 +260,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") }
+                                {translate("Birthday Date")}
                               </label>
                             </div>
                           </div>
@@ -234,7 +290,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("House No") }
+                                {translate("House No")}
                               </label>
                             </div>
                           </div>
@@ -243,7 +299,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("ZIP Code") }
+                                {translate("ZIP Code")}
                               </label>
                             </div>
                           </div>
@@ -252,7 +308,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Street") }
+                                {translate("Street")}
                               </label>
                             </div>
                           </div>
@@ -267,7 +323,7 @@ export default function BookingPages() {
                                 required
                                 className="form-control"
                               >
-                                <option value="">{translate("City") }</option>
+                                <option value="">{translate("City")}</option>
                                 <option value="Frankfurt(FRA)">
                                   Frankfurt(FRA)
                                 </option>
@@ -284,7 +340,9 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14 ">
                                 <p className="d-flex justify-content-between">
-                                  <span>{translate("Tour Price Per Person") }</span>{" "}
+                                  <span>
+                                    {translate("Tour Price Per Person")}
+                                  </span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -294,7 +352,10 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") }:
+                            {translate(
+                              "Possible Additional Services Per Person"
+                            )}
+                            :
                           </h5>
 
                           <div>
@@ -394,13 +455,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") }{" "}
+                            {translate("Subtotal")}{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") }
+                            {translate("Including Taxes And Fee")}
                           </p>
                         </div>
                       </form>
@@ -424,7 +485,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                              {translate("Name") }
+                                {translate("Name")}
                               </label>
                             </div>
                           </div>
@@ -433,7 +494,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") }
+                                {translate("Surname")}
                               </label>
                             </div>
                           </div>
@@ -463,7 +524,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") }
+                                {translate("Birthday Date")}
                               </label>
                             </div>
                           </div>
@@ -495,7 +556,9 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14">
                                 <p className="d-flex justify-content-between">
-                                  <span>{translate("Tour Price Per Person") }</span>{" "}
+                                  <span>
+                                    {translate("Tour Price Per Person")}
+                                  </span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -505,7 +568,10 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") }:
+                            {translate(
+                              "Possible Additional Services Per Person"
+                            )}
+                            :
                           </h5>
 
                           <div>
@@ -605,13 +671,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") }{" "}
+                            {translate("Subtotal")}{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") }
+                            {translate("Including Taxes And Fee")}
                           </p>
                         </div>
                       </div>
@@ -644,7 +710,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") }
+                                {translate("Surname")}
                               </label>
                             </div>
                           </div>
@@ -674,7 +740,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") }
+                                {translate("Birthday Date")}
                               </label>
                             </div>
                           </div>
@@ -706,7 +772,9 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="text-14 ">
                                 <p className="d-flex justify-content-between">
-                                  <span>{translate("Tour Price Per Person") }</span>{" "}
+                                  <span>
+                                    {translate("Tour Price Per Person")}
+                                  </span>{" "}
                                   <span>1.339,00 €</span>
                                 </p>
                               </div>
@@ -716,7 +784,10 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") }:
+                            {translate(
+                              "Possible Additional Services Per Person"
+                            )}
+                            :
                           </h5>
 
                           <div>
@@ -816,13 +887,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") }{" "}
+                            {translate("Subtotal")}{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") }
+                            {translate("Including Taxes And Fee")}
                           </p>
                         </div>
                       </div>
@@ -855,7 +926,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") }
+                                {translate("Surname")}
                               </label>
                             </div>
                           </div>
@@ -885,7 +956,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") }
+                                {translate("Birthday Date")}
                               </label>
                             </div>
                           </div>
@@ -927,7 +998,10 @@ export default function BookingPages() {
 
                         <div className="my-3 border_b px-md-40">
                           <h5 className="text-18 fw-500 my-2">
-                            {translate("Possible Additional Services Per Person") }:
+                            {translate(
+                              "Possible Additional Services Per Person"
+                            )}
+                            :
                           </h5>
 
                           <div>
@@ -1027,13 +1101,13 @@ export default function BookingPages() {
 
                         <div className="">
                           <p className="text-right text-20">
-                            {translate("Subtotal") }{" "}
+                            {translate("Subtotal")}{" "}
                             <span className="text-accent-1">
                               <b>1.789,00 €</b>
                             </span>
                           </p>
                           <p className="text-right text-15">
-                            {translate("Including Taxes And Fee") }
+                            {translate("Including Taxes And Fee")}
                           </p>
                         </div>
                       </form>
@@ -1066,7 +1140,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="text" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Surname") }
+                                {translate("Surname")}
                               </label>
                             </div>
                           </div>
@@ -1096,7 +1170,7 @@ export default function BookingPages() {
                             <div className="form-input my-1">
                               <input type="date" required />
                               <label className="lh-1 text-16 text-light-1">
-                                {translate("Birthday Date") }
+                                {translate("Birthday Date")}
                               </label>
                             </div>
                           </div>
@@ -1128,13 +1202,13 @@ export default function BookingPages() {
                             <div className="col-12 tb-border">
                               <div className="">
                                 <p className="text-right text-20">
-                                  {translate("Subtotal") }{" "}
+                                  {translate("Subtotal")}{" "}
                                   <span className="text-accent-1">
                                     <b>1.789,00 €</b>
                                   </span>
                                 </p>
                                 <p className="text-right text-15">
-                                  {translate("Including Taxes And Fee") }
+                                  {translate("Including Taxes And Fee")}
                                 </p>
                               </div>
                             </div>
@@ -1247,7 +1321,7 @@ export default function BookingPages() {
 
                   <div className="">
                     <div className="d-flex items-center justify-between">
-                      <div className="fw-500">{translate("Subtotal") }</div>
+                      <div className="fw-500">{translate("Subtotal")}</div>
                       <div className=""> 182 € </div>
                     </div>
 
@@ -1306,9 +1380,10 @@ export default function BookingPages() {
             </div>
 
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={HandleLoginSubmite}
               className="contactForm border-1  rounded-12 px-40 py-1 "
             >
+               
               <div className="d-flex justify-content-between">
                 <h2 className="text-center">LOG IN</h2>
                 <button onClick={closeModal}>
@@ -1316,22 +1391,34 @@ export default function BookingPages() {
                 </button>
               </div>
               <div className="form-input my-1">
-                <input type="email" required />
+                <input
+                  type="email"
+                  onChange={HandleLogInDataChange}
+                  name="email"
+                  value={BookingLoginData.email}
+                  required
+                />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Email") } 
+                  {translate("Email")}
                 </label>
               </div>
 
               <div className="form-input my-1">
-                <input type="email" required />
+                <input type="password" onChange={HandleLogInDataChange}   value={BookingLoginData.password}  name="password" required />
                 <label className="lh-1 text-16 text-light-1">Password</label>
               </div>
 
               <div className="row y-ga-10 justify-between items-center pt-10 spacing">
                 <div className="col-auto">
                   <div className="d-flex items-center">
-                    <div className="form-checkbox ">
-                      <input type="checkbox" name="name" />
+                    <label className="form-checkbox d-flex align-items-center">
+                      <input
+                        type="checkbox"
+                        name="acceptTerms"
+                        className="form-checkbox__input"
+                        checked={LoginISChacked}
+                        onChange={handleLoginCheckboxChange}
+                      />
                       <div className="form-checkbox__mark">
                         <div className="form-checkbox__icon">
                           <svg
@@ -1348,9 +1435,10 @@ export default function BookingPages() {
                           </svg>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="lh-11 ml-10">Remember me</div>
+                      <span className="text-14 lh-12 ml-10">
+                        {translate("Remember me") || "Find Latest Packages"}
+                      </span>
+                    </label>
                   </div>
                 </div>
 
@@ -1361,14 +1449,14 @@ export default function BookingPages() {
 
               <div className="row y-gap-15">
                 <div className="col">
-                  <Link href="/customer/db-booking">
+                
                     <button
                       type="submit"
                       className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                     >
-                      Customer Log In
+                      Log In
                     </button>
-                  </Link>
+            
                 </div>
               </div>
 

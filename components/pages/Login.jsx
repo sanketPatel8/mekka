@@ -19,7 +19,7 @@ export default function Login({ onLoginSuccess }) {
   });
   const [LoginISChacked, setLoginISChacked] = useState(false);
 
-  const router = useRouter();
+  
 
   const HandleLogInChange = (e) => {
     const { name, value } = e.target;
@@ -115,7 +115,7 @@ export default function Login({ onLoginSuccess }) {
               </div>
 
               <div className="d-flex justify-content-between">
-                <div className="d-flex items-center">
+              <div className="d-flex items-center">
                   <label className="form-checkbox d-flex align-items-center">
                     <input
                       type="checkbox"
