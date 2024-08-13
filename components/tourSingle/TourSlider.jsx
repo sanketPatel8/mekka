@@ -10,19 +10,24 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { useEffect, useState } from "react";
 
-
-export default function TourSlider() {
+export default function TourSlider({ PAckageData }) {
   const { translate } = useTranslation();
 
-  const [slibleTourSlider, setslibleTourSlider] = useState([]);
+  const [slibleTourSlider, setslibleTourSlider] = useState({});
 
+  useEffect(() => {
+    setslibleTourSlider(PAckageData?.Tour_List);
+  }, [PAckageData]);
+
+  console.log("Tour list Data was : " , slibleTourSlider);
+  
 
   return (
     <section className="">
       <div className="container">
         <div className="row">
           <div className="col-auto">
-            <h2 className="text-30"> {translate("You might also like...") }</h2>
+            <h2 className="text-30"> {translate("You might also like...")}</h2>
           </div>
         </div>
 
@@ -62,10 +67,10 @@ export default function TourSlider() {
                   },
                 }}
               >
-                {slibleTourSlider.map((elm, i) => (
+                {tourData.map((elm, i) => (
                   <SwiperSlide key={i}>
                     <Link
-                      href={`/package/${elm.id}`}
+                      href={`/package/${elm?.slug}?id=${elm?.id}`}
                       className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                     >
                       <div className="tourCard__header">
@@ -73,27 +78,26 @@ export default function TourSlider() {
                           <Image
                             width={421}
                             height={301}
-                            src='/public/img/hotel photo/madina-2.jpeg'
+                            src="/public/img/hotel photo/madina-2.jpeg"
                             alt="image"
                             className="img-ratio rounded-12"
                           />
                         </div>
 
                         <button
-                      className={`tourCard__favorite ${
-                        elm?.direct_flight === 0 ? "d-none" : "d-block"
-                      }`}
-                      disabled
-                    >
-                      Direct Flight
-                    </button>
-                        
+                          className={`tourCard__favorite ${
+                            elm?.direct_flight === 0 ? "d-none" : "d-block"
+                          }`}
+                          disabled
+                        >
+                          Direct Flight
+                        </button>
                       </div>
 
                       <div className="tourCard__content px-10 pt-10">
                         <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow">
                           <i className="icon-pin d-flex text-16 text-white mr-5"></i>
-                         Zu Kaaba {elm?.travel_duration} m
+                          Zu Kaaba {elm?.travel_duration} m
                         </div>
 
                         <h3 className="tourCard__title text-16 fw-500 mt-5">
@@ -106,15 +110,13 @@ export default function TourSlider() {
                           </div>
 
                           <span className="text-dark-1 ml-10">
-                            {elm?.rating} ({elm?.ratingCount}) - IDEALGATE 
+                            {elm?.rating} ({elm?.ratingCount}) - IDEALGATE
                           </span>
                         </div>
 
                         <div className="Location">
-                          <span>
-                              Departure :  {elm?.departures}
-                            </span>
-                          </div>
+                          <span>Departure : {elm?.departures}</span>
+                        </div>
 
                         <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                           <div className="d-flex items-center">
@@ -124,7 +126,9 @@ export default function TourSlider() {
 
                           <div>
                             From{" "}
-                            <span className="text-16 fw-500">{elm?.price} €</span>
+                            <span className="text-16 fw-500">
+                              {elm?.price} €
+                            </span>
                           </div>
                         </div>
                       </div>

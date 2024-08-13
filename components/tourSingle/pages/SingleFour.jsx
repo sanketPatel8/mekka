@@ -254,7 +254,7 @@ export default function SingleFour({ PAckageData }) {
                     >
                       <div className="pt-20">
                         <div className="accordion -simple row y-gap-20 js-accordion">
-                          <Faq />
+                          <Faq PAckageData={PAckageData} />
                         </div>
                       </div>
                     </div>
@@ -295,7 +295,7 @@ export default function SingleFour({ PAckageData }) {
                     >
                       <div className="pt-20">
                         {/* <Rating /> */}
-                        <Reviews />
+                        <Reviews PAckageData={PAckageData} />
 
                         <button className="button -md -outline-accent-1 text-accent-1 mt-30">
                           See more reviews
@@ -334,7 +334,7 @@ export default function SingleFour({ PAckageData }) {
                 style={{ position: "sticky", top: "10px" }}
                 className="d-flex justify-start"
               >
-                <TourSingleSidebar />
+                <TourSingleSidebar PAckageData={PAckageData} />
               </div>
             </div>
           </div>

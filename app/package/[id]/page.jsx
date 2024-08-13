@@ -6,19 +6,23 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourSlider from "@/components/tourSingle/TourSlider";
 import SingleFour from "@/components/tourSingle/pages/SingleFour";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from "react";
 
 export default function Page() {
-  const router = useRouter();
-  
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   const [PAckageData, setPAckageData] = useState({});
 
   const fetchData = async (id) => {
+    if (id) {
+      console.log('Package ID:', id);
+    }
+    
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      id: "12"
+      id: id // Passing the id to sendData
     };
 
     try {
@@ -44,22 +48,16 @@ export default function Page() {
   };
 
   useEffect(() => {
-   const id = router.query;
-    console.log(id);
-   if(id) fetchData()
-  }, [ router.query]);
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-  
-
+    if (id) {
+      fetchData(id); // Pass the id to fetchData
+    }
+  }, [id]);
 
   return (
     <>
       <Header1 />
       <SingleFour PAckageData={PAckageData} />
-      <TourSlider />
+      <TourSlider PAckageData={PAckageData} />
       <FooterTwo />
     </>
   );

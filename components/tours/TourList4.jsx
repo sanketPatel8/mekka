@@ -25,6 +25,7 @@ export default function TourList4() {
   const [TourListData, setTourListData] = useState([]);
   const [count, setCount] = useState("");
   const [Dataid, setDataid] = useState("");
+  const [AllPage, setAllPage] = useState("");
   // for paination
 
   const Router = useRouter();
@@ -61,6 +62,7 @@ export default function TourList4() {
         setCount(response.Count);
         if (response.Tours) {
           setTourListData(response.Tours);
+          setAllPage(response.Total_Page);
           console.log("Tours data:", response.Tours); // Check the data being set
         } else {
           console.error("Tours data is undefined in the response.");
@@ -249,7 +251,13 @@ export default function TourList4() {
                           />
                           {elm?.days_of_stay}
                         </p>
-                        <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ">
+                        <p
+                          className={`d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ${
+                            elm?.tour_with_service == null
+                              ? "d-none"
+                              : "d-block"
+                          }`}
+                        >
                           <MdBed className="mx-2" color="#DAC04F" size={20} />
                           {elm?.tour_with_service}
                         </p>
@@ -281,7 +289,7 @@ export default function TourList4() {
 
             <div className="d-flex justify-center flex-column mt-60">
               <Pagination
-                range={20}
+                range={AllPage}
                 activeIndex={activeIndex}
                 setActiveIndex={handleIndexChange}
               />

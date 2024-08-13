@@ -1,13 +1,20 @@
 "use client";
 
-import { faqData } from "@/data/tourSingleContent";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Faq() {
+export default function Faq({ PAckageData }) {
   const [currentActiveFaq, setCurrentActiveFaq] = useState(0);
+  const [FAQData, setFAQData] = useState([]);
+
+  useEffect(() => {
+    setFAQData(PAckageData?.Tour_Details?.faqs || []);
+  }, [PAckageData]);
+
+  console.log("A Faq Data was : ", FAQData);
+
   return (
     <>
-      {faqData.map((elm, i) => (
+      {FAQData?.map((elm, i) => (
         <div key={i} className="col-12">
           <div
             className={`accordion__item px-20 py-15 border-1 rounded-12 ${

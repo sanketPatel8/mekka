@@ -12,16 +12,11 @@ const RoadMap = ({ PAckageData }) => {
   useEffect(() => {
     setMainHotelData(PAckageData?.Tour_Details?.tour_hotels)
   }, [PAckageData])
-  
-console.log('the Hotel data was : ' , mainHotelData);
-
-
-  // Separate the hotels by type
 
 
   return (
     <>
-      {/* {makkahHotels.map((elm, ind) => (
+      {mainHotelData?.mekka_hotels?.map((elm, ind) => (
         <div key={ind}>
           <h4>Hotel for Makkah</h4>
           <p>{elm.hotel_info}</p>
@@ -63,7 +58,7 @@ console.log('the Hotel data was : ' , mainHotelData);
         </div>
       ))}
 
-      {madinaHotels.map((elm, ind) => (
+      {mainHotelData?.medina_hotels?.map((elm, ind) => (
         <div key={ind} className="mt-50">
           <h4>Hotel for Madina</h4>
           <p>{elm.hotel_info}</p>
@@ -103,7 +98,7 @@ console.log('the Hotel data was : ' , mainHotelData);
             <br />
           </div>
         </div>
-      ))} */}
+      ))}
     </>
   );
 };

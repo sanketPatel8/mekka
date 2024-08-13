@@ -7,18 +7,13 @@ import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
 
 
-export default function TourSingleSidebar() {
+export default function TourSingleSidebar({ PAckageData }) {
   const prices = {
     adultPrice: 94,
     youthPrice: 84,
     childrenPrice: 20,
     extraService: 40,
     servicePerPerson: 40,
-  };
-
-  const sendData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    id: 12,
   };
 
   const [adultNumber, setAdultNumber] = useState(3);
@@ -29,6 +24,7 @@ export default function TourSingleSidebar() {
   const [extraCharge, setExtraCharge] = useState(0);
   const [radioValue, setRadioValue] = useState("");
   const [selectedCheckbox, setselectedCheckbox] = useState(false);
+  const [SidebarData, setSidebarData] = useState({ })
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
@@ -56,6 +52,14 @@ export default function TourSingleSidebar() {
   const [activeTimeDD, setActiveTimeDD] = useState(false);
 
   const { translate } = useTranslation();
+
+  useEffect(() => {
+    setSidebarData(PAckageData?.Tour_Details)
+  }, [PAckageData])
+
+  console.log("a sidebar data was : " , SidebarData );
+  
+  
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">
@@ -163,7 +167,7 @@ export default function TourSingleSidebar() {
         <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Makka") }
         </h5>
-        {/* {mekkaHotels.map((elm , ind) => (
+        {SidebarData?.tour_hotels?.mekka_hotels?.map((elm , ind) => (
           <div key={ind}>
             <div
               className="d-flex items-center justify-between my-1"
@@ -191,14 +195,14 @@ export default function TourSingleSidebar() {
               <div className="text-14">40 €</div>
             </div>
           </div>
-        ))} */}
+        ))}
 
         <hr />
 
         <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Madina") }
         </h5>
-        {/* {madinaHotels.map((elm) => (
+        {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
           <div>
             <div
               className="d-flex items-center justify-between my-1"
@@ -226,7 +230,7 @@ export default function TourSingleSidebar() {
               <div className="text-14">40 €</div>
             </div>
           </div>
-        ))} */}
+        ))}
       </div>
 
       <hr />

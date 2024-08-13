@@ -1,4 +1,3 @@
-// Pagination.js
 "use client";
 
 import React from "react";
@@ -8,6 +7,32 @@ export default function Pagination({
   activeIndex,
   setActiveIndex,
 }) {
+  const visibleRange = 5; // Number of buttons visible at once (excluding "..." indicators)
+  
+  const generatePaginationButtons = () => {
+    let start = Math.max(1, activeIndex - Math.floor(visibleRange / 2));
+    let end = Math.min(range, start + visibleRange - 1);
+
+    if (end === range) {
+      start = Math.max(1, range - visibleRange + 1);
+    }
+
+    const buttons = [];
+    for (let i = start; i <= end; i++) {
+      buttons.push(
+        <div
+          key={i}
+          style={{ cursor: "pointer" }}
+          onClick={() => setActiveIndex(i)}
+          className={activeIndex === i ? `is-active` : ""}
+        >
+          {i}
+        </div>
+      );
+    }
+    return buttons;
+  };
+
   return (
     <div className="pagination justify-center">
       <button
@@ -18,63 +43,32 @@ export default function Pagination({
       </button>
 
       <div className="pagination__count">
-        <div
-          style={{ cursor: "pointer" }}
-          onClick={() => setActiveIndex(1)}
-          className={activeIndex === 1 ? `is-active` : ""}
-        >
-          1
-        </div>
-        {range > 1 && (
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => setActiveIndex(2)}
-            className={activeIndex === 2 ? `is-active` : ""}
-          >
-            2
-          </div>
+        {activeIndex > visibleRange - 2 && (
+          <>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => setActiveIndex(1)}
+              className={activeIndex === 1 ? `is-active` : ""}
+            >
+              1
+            </div>
+            {activeIndex > visibleRange - 1 && <div>...</div>}
+          </>
         )}
-        {range > 2 && (
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => setActiveIndex(3)}
-            className={activeIndex === 3 ? `is-active` : ""}
-          >
-            3
-          </div>
-        )}
-        {range > 3 && (
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => setActiveIndex(4)}
-            className={activeIndex === 4 ? `is-active` : ""}
-          >
-            4
-          </div>
-        )}
-        {activeIndex === 5 && range !== 5 && (
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => setActiveIndex(5)}
-            className={activeIndex === 5 ? `is-active` : ""}
-          >
-            5
-          </div>
-        )}
-        {range > 5 && <div>...</div>}
-        {activeIndex > 5 && activeIndex < range && (
-          <div style={{ cursor: "pointer" }} className="is-active">
-            {activeIndex}
-          </div>
-        )}
-        {range > 4 && (
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => setActiveIndex(range)}
-            className={activeIndex === range ? `is-active` : ""}
-          >
-            {range}
-          </div>
+        
+        {generatePaginationButtons()}
+
+        {activeIndex < range - (visibleRange - 2) && (
+          <>
+            {activeIndex < range - (visibleRange - 1) && <div>...</div>}
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => setActiveIndex(range)}
+              className={activeIndex === range ? `is-active` : ""}
+            >
+              {range}
+            </div>
+          </>
         )}
       </div>
 
