@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import HeaderSerch from "../components/HeaderSerch";
 import MobileMenu from "../components/MobileMenu";
 import Image from "next/image";
@@ -8,29 +8,31 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Language from "../components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
+import Count from "@/app/context/LoginState";
 
-export default function Header1() {
+export default function Header1({ isLoggedIn, onLogout }) {
   const router = useRouter();
+  const [LoginPer, setLoginPer] = useContext(Count)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
 
-  // Add a class to the element when scrolled 50px
-  const handleScroll = () => {
-    if (window.scrollY >= 50) {
-      setAddClass(true);
-    } else {
-      setAddClass(false);
-    }
+  const handleLogoutClick = () => {
+    setLoginPer(false)
+    router.push("/");
+  };
+
+  const handleLoginClick = () => {
+    router.push("/login");
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    // Check if token exists in localStorage
+    const token = localStorage.getItem("token");
+    if (!isLoggedIn && token) {
+      // Synchronize with the Page component's isLoggedIn state
+      console.error('isLoggedIn state does not match localStorage token');
+    }
+  }, [isLoggedIn]);
 
   const { translate } = useTranslation();
 
@@ -61,24 +63,19 @@ export default function Header1() {
             </Link>
             <div className="media">
               <Link href="/" className="mx-3">
-                
-                {translate("Home") }
+                {translate("Home")}
               </Link>
               <Link href="/tour" className="mx-3">
-                
-                {translate("Tour") }
+                {translate("Tour")}
               </Link>
               <Link href="/tour?=Hajj" className="mx-3">
-                
-                {translate("Hajj") }
+                {translate("Hajj")}
               </Link>
               <Link href="/tour?=Umrah" className="mx-3">
-                
-                {translate("Umrah") }
+                {translate("Umrah")}
               </Link>
               <Link href="/contact" className="mx-3">
-                
-                {translate("Contact") }
+                {translate("Contact")}
               </Link>
             </div>
           </div>
@@ -89,7 +86,7 @@ export default function Header1() {
             </button>
 
             <button
-              onClick={() => router.push("/login")}
+              onClick={LoginPer ? handleLogoutClick : handleLoginClick}
               className="d-flex ml-10"
             >
               <i className="icon-person text-18"></i>
@@ -103,16 +100,16 @@ export default function Header1() {
 
             <Language />
 
-            <Link href="/register" className="ml-10">
-            {translate("Register") }
+            <Link href="/register" className={`ml-10 ${LoginPer == true ? "d-none" : "d-block"}`}>
+              {translate("Register")}
             </Link>
 
-            <Link
-              href="/login"
+            <button
               className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20"
+              onClick={LoginPer ? handleLogoutClick : handleLoginClick}
             >
-           {translate("Log In") }
-            </Link>
+              {LoginPer === true ? "Log Out" : "Log In"}
+            </button>
 
             <button
               onClick={() => setMobileMenuOpen(true)}

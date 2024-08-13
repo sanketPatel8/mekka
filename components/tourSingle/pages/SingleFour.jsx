@@ -13,17 +13,20 @@ import TourSingleSidebar from "../TourSingleSidebar";
 import OtherInformation2 from "../OtherInformation2";
 import RoadMap2 from "../Roadmap2";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useSearchParams } from "next/navigation";
 
 
 
 export default function SingleFour({ PAckageData }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   const [FlightInc, setFlightInc] = useState(null);
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   useEffect(() => {
-    const foundTour = PAckageData?.Tour_List?.find(tour => tour.id === "1");
-    
+    const foundTour = PAckageData?.Tour_List?.find(tour => tour.id == id);
     setFlightInc(foundTour);
+    
   }, [PAckageData]);
 
   const { translate } = useTranslation();
@@ -49,7 +52,7 @@ export default function SingleFour({ PAckageData }) {
                 <OthersInformation PAckageData={PAckageData} />
               </div>
               <div className="row y-gap-20 justify-between items-center layout-pb-sm">
-                <OtherInformation2 />
+                <OtherInformation2  PAckageData={PAckageData}  />
               </div>
 
               <Overview PAckageData={PAckageData} />

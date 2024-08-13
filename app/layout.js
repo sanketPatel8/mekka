@@ -1,3 +1,5 @@
+"use client"
+
 import ScrollToTop from "@/components/common/ScrollToTop";
 import "../public/css/style.css";
 import "select2/dist/css/select2.min.css";
@@ -6,6 +8,8 @@ import { DM_Sans } from "next/font/google";
 import ScrollTopBehaviour from "@/components/common/ScrollTopBehavier";
 import Wrapper from "@/components/layout/Wrapper";
 import { TranslationProvider } from "@/app/context/TranslationContext";
+import Count from "./context/LoginState";
+import { useState } from "react";
 
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -21,16 +25,19 @@ if (typeof window !== "undefined") {
 }
 
 export default function RootLayout({ children }) {
+  const [LoginPer, setLoginPer] = useState(false)
   return (
     <TranslationProvider>
-    <html lang="en">
-      <head></head>
-      <body className={dmsans.className}>
-        <Wrapper>{children}</Wrapper>
-        <ScrollToTop />
-        <ScrollTopBehaviour />
-      </body>
-    </html>
-   </TranslationProvider>
+      <Count.Provider value={[LoginPer, setLoginPer]}>
+        <html lang="en">
+          <head></head>
+          <body className={dmsans.className}>
+            <Wrapper>{children}</Wrapper>
+            <ScrollToTop />
+            <ScrollTopBehaviour />
+          </body>
+        </html>
+      </Count.Provider>
+    </TranslationProvider>
   );
 }

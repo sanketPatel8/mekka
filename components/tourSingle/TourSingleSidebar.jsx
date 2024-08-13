@@ -56,8 +56,6 @@ export default function TourSingleSidebar({ PAckageData }) {
   useEffect(() => {
     setSidebarData(PAckageData?.Tour_Details)
   }, [PAckageData])
-
-  console.log("a sidebar data was : " , SidebarData );
   
   
   return (

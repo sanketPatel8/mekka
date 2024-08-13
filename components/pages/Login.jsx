@@ -3,13 +3,12 @@
 import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { FaFacebookF } from "react-icons/fa";
-import { FaGoogle } from "react-icons/fa";
-import { FaApple } from "react-icons/fa";
+import React, { useState, useEffect, useContext } from "react";
+import { FaFacebookF, FaGoogle, FaApple } from "react-icons/fa";
 import { post } from "@/app/utils/api";
 import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
+import Count from "@/app/context/LoginState";
 
 export default function Login({ onLoginSuccess }) {
   const [LogInData, setLogInData] = useState({
@@ -17,35 +16,40 @@ export default function Login({ onLoginSuccess }) {
     email: "",
     password: "",
   });
+  const [LoginPer, setLoginPer] = useContext(Count)
   const [LoginISChacked, setLoginISChacked] = useState(false);
 
-  
+  const router = useRouter();
 
+  const { translate } = useTranslation();
+
+  // Save data to local storage on input change
   const HandleLogInChange = (e) => {
     const { name, value } = e.target;
     setLogInData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
+    localStorage.setItem(name, value);
   };
 
   const handleLoginCheckboxChange = (e) => {
-    setLoginISChacked(e.target.checked);
+    const isChecked = e.target.checked;
+    setLoginISChacked(isChecked);
+    localStorage.setItem("LoginISChacked", isChecked);
   };
 
-  const handleLoginSubmite = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Form submitted");
-    console.log("LoginISChacked:", LoginISChacked);
-
-    if (LoginISChacked === true) {
+    if (LoginISChacked) {
       try {
         const response = await post("login", LogInData);
         localStorage.setItem("token", response.authorisation.token);
-        showSuccessToast("Login successful! ");
+        showSuccessToast("Login successful!");
         setTimeout(() => {
-          onLoginSuccess();
+          setLoginPer(true) 
+          router.push('/');
         }, 2000);
       } catch (error) {
         if (
@@ -53,17 +57,16 @@ export default function Login({ onLoginSuccess }) {
           error.response.data &&
           error.response.data.message
         ) {
-          showErrorToast("Please verify your email");
+          showErrorToast(error.response.data.message || "An error occurred.");
         } else {
-          showErrorToast("An error occurred during registration.");
+          showErrorToast("An error occurred during login.");
         }
       }
     } else {
-      showErrorToast("Check that check box");
+      showErrorToast("Please check the checkbox to remember me.");
     }
   };
 
-  const { translate } = useTranslation();
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
       <ToastContainer />
@@ -84,7 +87,7 @@ export default function Login({ onLoginSuccess }) {
             </div>
 
             <form
-              onSubmit={handleLoginSubmite}
+              onSubmit={handleLoginSubmit}
               className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
             >
               <div className="form-input my-1">
@@ -109,13 +112,12 @@ export default function Login({ onLoginSuccess }) {
                   required
                 />
                 <label className="lh-1 text-16 text-light-1">
-                  {" "}
                   {translate("Password")}
                 </label>
               </div>
 
               <div className="d-flex justify-content-between">
-              <div className="d-flex items-center">
+                <div className="d-flex items-center">
                   <label className="form-checkbox d-flex align-items-center">
                     <input
                       type="checkbox"
@@ -141,14 +143,13 @@ export default function Login({ onLoginSuccess }) {
                       </div>
                     </div>
                     <span className="text-14 lh-12 ml-10">
-                      {translate("Remember me") || "Find Latest Packages"}
+                      {translate("Remember me")}
                     </span>
                   </label>
                 </div>
                 <button>
                   <Link href="/login/forgot-password">
-                    {" "}
-                    Lost your password ?
+                    Lost your password?
                   </Link>
                 </button>
               </div>
@@ -171,7 +172,7 @@ export default function Login({ onLoginSuccess }) {
               <div className="row y-gap-15">
                 <div className="col">
                   <button
-                    type="submit"
+                    type="button"
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                     <FaFacebookF size={15} className="mx-1" />
@@ -180,7 +181,7 @@ export default function Login({ onLoginSuccess }) {
                 </div>
 
                 <div className="col">
-                  <button className="button -md -outline-red-1 text-red-1 col-12">
+                  <button type="button" className="button -md -outline-red-1 text-red-1 col-12">
                     <FaGoogle size={15} className="mx-1" />
                     {translate("Google")}
                   </button>
@@ -189,7 +190,7 @@ export default function Login({ onLoginSuccess }) {
               <br />
               <div className="row y-gap-15">
                 <div className="col">
-                  <button className="button -md -outline-dark-1 text-dark-1 col-12">
+                  <button type="button" className="button -md -outline-dark-1 text-dark-1 col-12">
                     <FaApple size={15} className="mx-1" />
                     {translate("Sign in With Apple")}
                   </button>

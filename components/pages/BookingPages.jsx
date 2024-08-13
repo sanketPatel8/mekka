@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdError } from "react-icons/md";
 import { FaTelegramPlane } from "react-icons/fa";
@@ -21,6 +21,7 @@ import { post } from "@/app/utils/api";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Count from "@/app/context/LoginState";
 
 const customStyles = {
   overlay: {
@@ -58,6 +59,7 @@ export default function BookingPages() {
     email: "",
     password: "",
   });
+  const [LoginPer, setLoginPer] = useContext(Count)
 
   const router = useRouter();
 
@@ -80,6 +82,14 @@ export default function BookingPages() {
 
   let subtitle;
 
+  const HandlePaymentClick = () => {
+    if (LoginPer === true) {
+      router.push("/payment");
+    } else {
+      router.push("/login");
+    }
+  };
+
   useEffect(() => {
     console.log("Selected room type:", roomType);
   }, [roomType]);
@@ -100,18 +110,18 @@ export default function BookingPages() {
 
   const HandleLoginSubmite = async (e) => {
     e.preventDefault();
-  
+
     console.log("Form submitted");
     console.log("LoginISChacked:", LoginISChacked);
-  
+
     if (LoginISChacked === true) {
       try {
         const response = await post("login", BookingLoginData);
         localStorage.setItem("token", response.authorisation.token);
         showSuccessToast("Login successful!");
-  
+
         setTimeout(() => {
-          router.push('/customer/db-booking')
+          router.push("/customer/db-booking");
         }, 2000);
       } catch (error) {
         console.error("Error:", error); // Log the full error for debugging
@@ -129,15 +139,13 @@ export default function BookingPages() {
       showErrorToast("ChackBox Was Not Chacked");
     }
   };
-  
-
 
   const { translate } = useTranslation();
 
   return (
     <>
       <section className="layout-pt-md layout-pb-lg mt-header">
-      <ToastContainer />
+        <ToastContainer />
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-11 mx-auto px-0">
@@ -1352,13 +1360,14 @@ export default function BookingPages() {
                   </div>
 
                   <div className="mt-2">
-                    <Link href="/payment">
-                      <button
-                        className={`button -md -info-2 bg-accent-1 text-white col-12 text-end} `}
-                      >
-                        Proceed to Payment
-                      </button>
-                    </Link>
+                    {/* <Link href="/payment"> */}
+                    <button
+                      className={`button -md -info-2 bg-accent-1 text-white col-12 text-end} `}
+                      onClick={HandlePaymentClick}
+                    >
+                      Proceed to Payment
+                    </button>
+                    {/* </Link> */}
                   </div>
                 </div>
               </div>
@@ -1383,7 +1392,6 @@ export default function BookingPages() {
               onSubmit={HandleLoginSubmite}
               className="contactForm border-1  rounded-12 px-40 py-1 "
             >
-               
               <div className="d-flex justify-content-between">
                 <h2 className="text-center">LOG IN</h2>
                 <button onClick={closeModal}>
@@ -1404,7 +1412,13 @@ export default function BookingPages() {
               </div>
 
               <div className="form-input my-1">
-                <input type="password" onChange={HandleLogInDataChange}   value={BookingLoginData.password}  name="password" required />
+                <input
+                  type="password"
+                  onChange={HandleLogInDataChange}
+                  value={BookingLoginData.password}
+                  name="password"
+                  required
+                />
                 <label className="lh-1 text-16 text-light-1">Password</label>
               </div>
 
@@ -1449,14 +1463,12 @@ export default function BookingPages() {
 
               <div className="row y-gap-15">
                 <div className="col">
-                
-                    <button
-                      type="submit"
-                      className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
-                    >
-                      Log In
-                    </button>
-            
+                  <button
+                    type="submit"
+                    className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
+                  >
+                    Log In
+                  </button>
                 </div>
               </div>
 

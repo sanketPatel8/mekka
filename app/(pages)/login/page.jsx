@@ -1,30 +1,27 @@
 "use client";
 
+import Count from "@/app/context/LoginState";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Login from "@/components/pages/Login";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 export default function Page() {
-  const router = useRouter();
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [LoginPer, setLoginPer] = useContext(Count)
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <>
       <main>
-        <Header1 />
-
-        {!isLoggedIn ? (
-          <Login onLoginSuccess={handleLoginSuccess} />
-        ) : (
-          router.push("/customer/db-booking")
-        )}
+        <Header1  />
+        <Login onLoginSuccess={handleLoginSuccess} />
         <FooterTwo />
       </main>
     </>

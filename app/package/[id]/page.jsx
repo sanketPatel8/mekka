@@ -16,9 +16,7 @@ export default function Page() {
   const [PAckageData, setPAckageData] = useState({});
 
   const fetchData = async (id) => {
-    if (id) {
-      console.log('Package ID:', id);
-    }
+   
     
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -29,7 +27,6 @@ export default function Page() {
       const response = await post("tour_details", sendData);
       if (response) {
         setPAckageData(response);
-        console.log("Tours data:", response); // Check the data being set
       } else {
         console.error("Tours data is undefined in the response.");
       }
