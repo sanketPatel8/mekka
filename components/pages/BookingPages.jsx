@@ -93,7 +93,6 @@ export default function BookingPages() {
   };
 
   useEffect(() => {
-    console.log("Selected room type:", roomType);
   }, [roomType]);
 
   useEffect(() => {
@@ -146,7 +145,6 @@ export default function BookingPages() {
 
 
   const { adultNumber, youthNumber, childrenNumber } = useGlobalState();
-  console.log("form count was", adultNumber, youthNumber, childrenNumber);
 
   const initializeFormValues = (count, template) => {
     return Array(count).fill().map(() => ({ ...template }));

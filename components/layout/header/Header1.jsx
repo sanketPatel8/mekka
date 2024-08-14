@@ -32,7 +32,7 @@ export default function Header1({ isLoggedIn }) {
   const LogOutUpdate = () => {
     setLoginPer(false);
   };
-  console.log("Login data for gloal :", loginPer);
+
 
   const { translate } = useTranslation();
 
