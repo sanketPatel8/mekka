@@ -7,8 +7,8 @@ import { MdError } from "react-icons/md";
 
 const MyComponent = () => {
   const [radioValue, setRadioValue] = useState("");
-  const { adultNumber, youthNumber , childrenNumber } = useGlobalState();
-  console.log("form count was " , adultNumber , youthNumber , childrenNumber);
+  const { adultNumber, youthNumber, childrenNumber } = useGlobalState();
+  console.log("form count was", adultNumber, youthNumber, childrenNumber);
 
   const initializeFormValues = (count, template) => {
     return Array(count).fill().map(() => ({ ...template }));
@@ -124,7 +124,7 @@ const MyComponent = () => {
                             ))}
                           </select>
                           <label className="lh-1 text-16 text-light-1">
-                            {field.label}
+                            {formValues[type][i][field.name] ? `${field.label}: ${formValues[type][i][field.name]}` : field.label}
                           </label>
                         </>
                       ) : (
@@ -222,21 +222,16 @@ const MyComponent = () => {
   // Function to handle form submission and print data
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formValues);
+    console.log("Form data:", formValues);
   };
-
   return (
     <div>
       {renderForms("adult", adultNumber)}
       {renderForms("youth", youthNumber)}
       {renderForms("children", childrenNumber)}
-
-      {/* Submit button to print form values */}
-      <div className="text-center mt-4">
-        <button onClick={handleSubmit} className="btn btn-primary">
-          Print Form Data
-        </button>
-      </div>
+      <button type="submit" onClick={handleSubmit}>
+        Submit
+      </button>
     </div>
   );
 };

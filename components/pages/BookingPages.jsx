@@ -144,49 +144,24 @@ export default function BookingPages() {
 
   // for dynamic form data and form
 
+
   const { adultNumber, youthNumber, childrenNumber } = useGlobalState();
-  console.log("form count was ", adultNumber, youthNumber, childrenNumber);
+  console.log("form count was", adultNumber, youthNumber, childrenNumber);
 
   const initializeFormValues = (count, template) => {
-    return Array(count)
-      .fill()
-      .map(() => ({ ...template }));
+    return Array(count).fill().map(() => ({ ...template }));
   };
 
   const [formValues, setFormValues] = useState({
-    adult: initializeFormValues(adultNumber, {
-      name: "",
-      surname: "",
-      email: "",
-      phone: "",
-      city: "",
-      gender: "",
-      birthdayDate: "",
-      nationality: "",
-      houseNo: "",
-      zipCode: "",
-      street: "",
-      from: "",
-    }),
-    youth: initializeFormValues(youthNumber, {
-      name: "",
-      surname: "",
-      gender: "",
-      birthdayDate: "",
-      nationality: "",
-    }),
-    children: initializeFormValues(childrenNumber, {
-      name: "",
-      surname: "",
-      gender: "",
-      birthdayDate: "",
-      nationality: "",
-    }),
+    adult: initializeFormValues(adultNumber, { name: "", surname: "", email: "", phone: "", city: "", gender: "", birthdayDate: "", nationality: "", houseNo: "", zipCode: "", street: "", from: "" }),
+    youth: initializeFormValues(youthNumber, { name: "", surname: "", gender: "", birthdayDate: "", nationality: "" }),
+    children: initializeFormValues(childrenNumber, { name: "", surname: "", gender: "", birthdayDate: "", nationality: "" }),
   });
+
 
   const handleInputChange = (type, index, e) => {
     const { name, value } = e.target;
-    setFormValues((prevValues) => {
+    setFormValues(prevValues => {
       const updatedValues = { ...prevValues };
       updatedValues[type][index][name] = value;
       return updatedValues;
@@ -201,63 +176,28 @@ export default function BookingPages() {
         { label: "Email", type: "text", name: "email" },
         { label: "Phone", type: "text", name: "phone" },
         { label: "City", type: "text", name: "city" },
-        {
-          label: "Gender",
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
+        { label: "Gender", type: "select", name: "gender", options: ["Male", "Female", "Other"] },
         { label: "Birthday Date", type: "date", name: "birthdayDate" },
-        {
-          label: "Nationality",
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
+        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
         { label: "House No", type: "text", name: "houseNo" },
         { label: "ZIP Code", type: "text", name: "zipCode" },
         { label: "Street", type: "text", name: "street" },
-        {
-          label: "From",
-          type: "select",
-          name: "from",
-          options: ["Frankfurt(FRA)"],
-        },
+        { label: "From", type: "select", name: "from", options: ["Frankfurt(FRA)"] }
       ],
       youth: [
         { label: "Name", type: "text", name: "name" },
         { label: "Surname", type: "text", name: "surname" },
-        {
-          label: "Gender",
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
+        { label: "Gender", type: "select", name: "gender", options: ["Male", "Female", "Other"] },
         { label: "Birthday Date", type: "date", name: "birthdayDate" },
-        {
-          label: "Nationality",
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
+        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] }
       ],
       children: [
         { label: "Name", type: "text", name: "name" },
         { label: "Surname", type: "text", name: "surname" },
-        {
-          label: "Gender",
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
+        { label: "Gender", type: "select", name: "gender", options: ["Male", "Female", "Other"] },
         { label: "Birthday Date", type: "date", name: "birthdayDate" },
-        {
-          label: "Nationality",
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
-      ],
+        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] }
+      ]
     };
 
     const shouldShowAdditionalServices = type !== "children";
@@ -319,7 +259,7 @@ export default function BookingPages() {
                             ))}
                           </select>
                           <label className="lh-1 text-16 text-light-1">
-                            {field.label}
+                            {formValues[type][i][field.name] ? `${field.label}: ${formValues[type][i][field.name]}` : field.label}
                           </label>
                         </>
                       ) : (
@@ -354,9 +294,7 @@ export default function BookingPages() {
                 </div>
 
                 <div
-                  className={`my-3 border_b px-md-40 ${
-                    shouldShowAdditionalServices ? "d-block" : "d-none"
-                  }`}
+                  className={`my-3 border_b px-md-40 ${shouldShowAdditionalServices ? "d-block" : "d-none"}`}
                 >
                   <h5 className="text-18 fw-500 my-2">
                     Possible Additional Services Per Person:
@@ -403,8 +341,8 @@ export default function BookingPages() {
 
                 <div className="mt-3 col-md-12">
                   <p>
-                    All Prices Include VAT. The City Tax Is Paid By The Guest On
-                    Arrival.
+                    All Prices Include VAT. The City Tax Is Paid By The Guest
+                    On Arrival.
                   </p>
                 </div>
               </div>
@@ -419,7 +357,7 @@ export default function BookingPages() {
   // Function to handle form submission and print data
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formValues);
+    console.log("Form data:", formValues);
   };
 
   const { translate } = useTranslation();
