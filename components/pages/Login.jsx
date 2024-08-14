@@ -8,7 +8,7 @@ import { FaFacebookF, FaGoogle, FaApple } from "react-icons/fa";
 import { post } from "@/app/utils/api";
 import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
-import Count from "@/app/context/LoginState";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function Login({ onLoginSuccess }) {
   const [LogInData, setLogInData] = useState({
@@ -16,7 +16,7 @@ export default function Login({ onLoginSuccess }) {
     email: "",
     password: "",
   });
-  const [LoginPer, setLoginPer] = useContext(Count)
+  const {LoginPer, setLoginPer} = useGlobalState()
   const [LoginISChacked, setLoginISChacked] = useState(false);
 
   const router = useRouter();

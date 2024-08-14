@@ -56,6 +56,7 @@ export default function TourList4() {
       const sendData = {
         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
         start: activeIndex * 10,
+        type : "",
       };
       try {
         const response = await post("tourlist", sendData);

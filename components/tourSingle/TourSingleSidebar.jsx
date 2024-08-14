@@ -5,7 +5,8 @@ import { State } from "@/data/tourSingleContent";
 import "@/public/css/index.css";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
-
+import { useRouter } from "next/navigation";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function TourSingleSidebar({ PAckageData }) {
   const prices = {
@@ -16,15 +17,20 @@ export default function TourSingleSidebar({ PAckageData }) {
     servicePerPerson: 40,
   };
 
-  const [adultNumber, setAdultNumber] = useState(3);
-  const [youthNumber, setYouthNumber] = useState(2);
-  const [childrenNumber, setChildrenNumber] = useState(4);
+  const {
+    setAdultNumber,
+    setYouthNumber,
+    setChildrenNumber,
+    adultNumber,
+    youthNumber,
+    childrenNumber,
+  } = useGlobalState();
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
   const [radioValue, setRadioValue] = useState("");
   const [selectedCheckbox, setselectedCheckbox] = useState(false);
-  const [SidebarData, setSidebarData] = useState({ })
+  const [SidebarData, setSidebarData] = useState({});
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
@@ -54,15 +60,12 @@ export default function TourSingleSidebar({ PAckageData }) {
   const { translate } = useTranslation();
 
   useEffect(() => {
-    setSidebarData(PAckageData?.Tour_Details)
-  }, [PAckageData])
-  
-  
+    setSidebarData(PAckageData?.Tour_Details);
+  }, [PAckageData]);
+
   return (
     <div className="tourSingleSidebar">
-      <h5 className="text-18 fw-500 mb-20 mt-20">
-        {translate("Tickets") }
-      </h5>
+      <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
       <div>
         <div className="d-flex items-center justify-between">
@@ -75,7 +78,10 @@ export default function TourSingleSidebar({ PAckageData }) {
 
           <div className="d-flex items-center js-counter">
             <button
-              onClick={() => setAdultNumber((pre) => (pre > 1 ? pre - 1 : pre))}
+              onClick={() => {
+                setAdultNumber((pre) => (pre > 1 ? pre - 1 : pre));
+                
+              }}
               className="button size-30 border-1 rounded-full js-down"
             >
               <i className="icon-minus text-10"></i>
@@ -86,7 +92,10 @@ export default function TourSingleSidebar({ PAckageData }) {
             </div>
 
             <button
-              onClick={() => setAdultNumber((pre) => pre + 1)}
+              onClick={() => {
+                setAdultNumber((pre) => pre + 1);
+                
+              }}
               className="button size-30 border-1 rounded-full js-up"
             >
               <i className="icon-plus text-10"></i>
@@ -106,7 +115,10 @@ export default function TourSingleSidebar({ PAckageData }) {
 
           <div className="d-flex items-center js-counter">
             <button
-              onClick={() => setYouthNumber((pre) => (pre > 1 ? pre - 1 : pre))}
+              onClick={() => {
+                setYouthNumber((pre) => (pre > 1 ? pre - 1 : pre));
+                
+              }}
               className="button size-30 border-1 rounded-full js-down"
             >
               <i className="icon-minus text-10"></i>
@@ -117,7 +129,10 @@ export default function TourSingleSidebar({ PAckageData }) {
             </div>
 
             <button
-              onClick={() => setYouthNumber((pre) => pre + 1)}
+              onClick={() => {
+                setYouthNumber((pre) => pre + 1);
+                
+              }}
               className="button size-30 border-1 rounded-full js-up"
             >
               <i className="icon-plus text-10"></i>
@@ -137,9 +152,10 @@ export default function TourSingleSidebar({ PAckageData }) {
 
           <div className="d-flex items-center js-counter">
             <button
-              onClick={() =>
-                setChildrenNumber((pre) => (pre > 1 ? pre - 1 : pre))
-              }
+              onClick={() => {
+                setChildrenNumber((pre) => (pre > 1 ? pre - 1 : pre));
+                
+              }}
               className="button size-30 border-1 rounded-full js-down"
             >
               <i className="icon-minus text-10"></i>
@@ -150,7 +166,10 @@ export default function TourSingleSidebar({ PAckageData }) {
             </div>
 
             <button
-              onClick={() => setChildrenNumber((pre) => pre + 1)}
+              onClick={() => {
+                setChildrenNumber((pre) => pre + 1);
+                
+              }}
               className="button size-30 border-1 rounded-full js-up"
             >
               <i className="icon-plus text-10"></i>
@@ -163,9 +182,9 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <div>
         <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Makka") }
+          {translate("Hotel For Makka")}
         </h5>
-        {SidebarData?.tour_hotels?.mekka_hotels?.map((elm , ind) => (
+        {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
           <div key={ind}>
             <div
               className="d-flex items-center justify-between my-1"
@@ -198,7 +217,7 @@ export default function TourSingleSidebar({ PAckageData }) {
         <hr />
 
         <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Madina") }
+          {translate("Hotel For Madina")}
         </h5>
         {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
           <div>
@@ -234,7 +253,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       <hr />
 
       <h5 className="text-18 fw-500 mb-20 mt-20">
-        {translate("Flight Booking") }
+        {translate("Flight Booking")}
       </h5>
 
       <div className="d-flex items-center justify-between pt-1">
@@ -268,8 +287,8 @@ export default function TourSingleSidebar({ PAckageData }) {
                   </label>
                 </div>
                 <label htmlFor="item4" className="lh-16 ml-15">
-                  Exclude 
-                  {translate(" Flight Booking") }
+                  Exclude
+                  {translate(" Flight Booking")}
                 </label>
               </div>
             </div>
@@ -446,7 +465,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <Link href="/booking">
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
-          {translate("Book Now") }
+          {translate("Book Now")}
         </button>
       </Link>
     </div>

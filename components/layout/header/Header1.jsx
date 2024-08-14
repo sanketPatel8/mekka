@@ -8,16 +8,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Language from "../components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
-import Count from "@/app/context/LoginState";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
-export default function Header1({ isLoggedIn, onLogout }) {
+export default function Header1({ isLoggedIn }) {
   const router = useRouter();
-  const [LoginPer, setLoginPer] = useContext(Count)
+  const {
+    loginPer,
+    setLoginPer
+  } = useGlobalState();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
 
   const handleLogoutClick = () => {
-    setLoginPer(false)
+    localStorage.removeItem("token");
+    LogOutUpdate();
     router.push("/");
   };
 
@@ -25,14 +29,10 @@ export default function Header1({ isLoggedIn, onLogout }) {
     router.push("/login");
   };
 
-  useEffect(() => {
-    // Check if token exists in localStorage
-    const token = localStorage.getItem("token");
-    if (!isLoggedIn && token) {
-      // Synchronize with the Page component's isLoggedIn state
-      console.error('isLoggedIn state does not match localStorage token');
-    }
-  }, [isLoggedIn]);
+  const LogOutUpdate = () => {
+    setLoginPer(false);
+  };
+  console.log("Login data for gloal :", loginPer);
 
   const { translate } = useTranslation();
 
@@ -86,7 +86,7 @@ export default function Header1({ isLoggedIn, onLogout }) {
             </button>
 
             <button
-              onClick={LoginPer ? handleLogoutClick : handleLoginClick}
+              onClick={loginPer ? handleLogoutClick : handleLoginClick}
               className="d-flex ml-10"
             >
               <i className="icon-person text-18"></i>
@@ -100,15 +100,18 @@ export default function Header1({ isLoggedIn, onLogout }) {
 
             <Language />
 
-            <Link href="/register" className={`ml-10 ${LoginPer == true ? "d-none" : "d-block"}`}>
+            <Link
+              href="/register"
+              className={`ml-10 ${loginPer == true ? "d-none" : "d-block"}`}
+            >
               {translate("Register")}
             </Link>
 
             <button
               className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20"
-              onClick={LoginPer ? handleLogoutClick : handleLoginClick}
+              onClick={loginPer ? handleLogoutClick : handleLoginClick}
             >
-              {LoginPer === true ? "Log Out" : "Log In"}
+              {loginPer === true ? "Log Out" : "Log In"}
             </button>
 
             <button
