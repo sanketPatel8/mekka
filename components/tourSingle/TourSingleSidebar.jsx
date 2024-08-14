@@ -116,7 +116,7 @@ export default function TourSingleSidebar({ PAckageData }) {
           <div className="d-flex items-center js-counter">
             <button
               onClick={() => {
-                setYouthNumber((pre) => (pre > 1 ? pre - 1 : pre));
+                setYouthNumber((pre) => (pre > 1 ? pre - 1 : 0));
                 
               }}
               className="button size-30 border-1 rounded-full js-down"
@@ -153,7 +153,7 @@ export default function TourSingleSidebar({ PAckageData }) {
           <div className="d-flex items-center js-counter">
             <button
               onClick={() => {
-                setChildrenNumber((pre) => (pre > 1 ? pre - 1 : pre));
+                setChildrenNumber((pre) => (pre > 1 ? pre - 1 : 0));
                 
               }}
               className="button size-30 border-1 rounded-full js-down"
