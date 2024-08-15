@@ -48,9 +48,6 @@ const customStyles = {
 export default function BookingPages() {
   const [roomType, setRoomType] = useState("");
   const [bookingStage, setBookingStage] = useState(1);
-  const [gender, setGender] = useState("Gender");
-  const [Nationality, setNationality] = useState("Nationality");
-  const [From, setFrom] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
   const [radioValue, setRadioValue] = useState("");
   const [LoginISChacked, setLoginISChacked] = useState(false);
@@ -59,6 +56,7 @@ export default function BookingPages() {
     email: "",
     password: "",
   });
+  const { adultNumber, youthNumber, childrenNumber , loginPer } = useGlobalState();
 
   const router = useRouter();
 
@@ -79,14 +77,13 @@ export default function BookingPages() {
     setRadioValue(event.target.value);
   };
 
-  let subtitle;
-
   const HandlePaymentClick = () => {
-    if (LoginPer === true) {
+    alert(loginPer)
+    if (loginPer === true) {
       router.push("/payment");
     } else {
       router.push("/login");
-      if (Login === true) {
+      if (loginPer === true) {
         router.push("/payment");
       }
     }
@@ -142,8 +139,7 @@ export default function BookingPages() {
 
   // for dynamic form data and form
 
-  const { adultNumber, youthNumber, childrenNumber } = useGlobalState();
-
+  
   const initializeFormValues = (count, template) => {
     return Array(count)
       .fill()
@@ -155,7 +151,7 @@ export default function BookingPages() {
       name: "",
       surname: "",
       email: "",
-      phone: "",
+      mobile: "",
       city: "",
       gender: "",
       birthday: "",
@@ -193,129 +189,66 @@ export default function BookingPages() {
   const renderForms = (type, count) => {
     const fields = {
       adult: [
-        { label: "Name", type: "text", name: "name" },
-        { label: "Surname", type: "text", name: "surname" },
-        { label: "Email", type: "text", name: "email" },
-        { label: "Phone", type: "text", name: "phone" },
-        { label: "City", type: "text", name: "city" },
-        {
-          label: "Gender",
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: "Birthday Date", type: "date", name: "birthday" },
-        {
-          label: "Nationality",
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
-        { label: "House No", type: "text", name: "houseno" },
-        { label: "ZIP Code", type: "text", name: "zipcode" },
-        { label: "Street", type: "text", name: "street" },
-        {
-          label: "From",
-          type: "select",
-          name: "from",
-          options: ["Frankfurt(FRA)"],
-        },
+        { label: translate("Name"), type: "text", name: "name" },
+        { label: translate("Surname"), type: "text", name: "surname" },
+        { label: translate("Email"), type: "text", name: "email" },
+        { label: translate("Phone"), type: "text", name: "mobile" },
+        { label: translate("City"), type: "text", name: "city" },
+        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
+        { label: translate("Birthday Date"), type: "date", name: "birthday" },
+        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
+        { label: translate("House No"), type: "text", name: "houseno" },
+        { label: translate("ZIP Code"), type: "text", name: "zipcode" },
+        { label: translate("Street"), type: "text", name: "street" },
+        { label: translate("From"), type: "select", name: "from", options: ["Frankfurt(FRA)"] },
       ],
       adultFieldsForExtraAdults: [
-        { label: "Name", type: "text", name: "name" },
-        { label: "Surname", type: "text", name: "surname" },
-        {
-          label: "Gender",
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: "Birthday Date", type: "date", name: "birthday" },
-        {
-          label: "Nationality",
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
-        
+        { label: translate("Name"), type: "text", name: "name" },
+        { label: translate("Surname"), type: "text", name: "surname" },
+        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
+        { label: translate("Birthday Date"), type: "date", name: "birthday" },
+        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
       ],
       child: [
-        { label: "Name", type: "text", name: "name" },
-        { label: "Surname", type: "text", name: "surname" },
-        {
-          label: "Gender",
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: "Birthday Date", type: "date", name: "birthday" },
-        {
-          label: "Nationality",
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
+        { label: translate("Name"), type: "text", name: "name" },
+        { label: translate("Surname"), type: "text", name: "surname" },
+        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
+        { label: translate("Birthday Date"), type: "date", name: "birthday" },
+        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
       ],
       baby: [
-        { label: "Name", type: "text", name: "name" },
-        { label: "Surname", type: "text", name: "surname" },
-        {
-          label: "Gender",
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: "Birthday Date", type: "date", name: "birthday" },
-        {
-          label: "Nationality",
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
+        { label: translate("Name"), type: "text", name: "name" },
+        { label: translate("Surname"), type: "text", name: "surname" },
+        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
+        { label: translate("Birthday Date"), type: "date", name: "birthday" },
+        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
       ],
     };
-
-    const shouldShowAdditionalServices = type !== "children";
-
-    let forms = [];
-    for (let i = 0; i < count; i++) {
-
-      forms.push(
+  
+    const shouldShowAdditionalServices = type !== "baby";
+  
+    return Array.from({ length: count }).map((_, i) => {
+      const isExtraAdult = type === "adult" && i >= 1;
+      const currentFields = isExtraAdult ? fields.adultFieldsForExtraAdults : fields[type];
+      
+      return (
         <div key={`${type}-${i}`} className="row">
           <div className="form_1 mx-auto">
             <div className="px-50 py-5 yellow_bg">
               <p>
-                <span>
-                  <FaUser />
-                </span>
-                <span>
-                  <b>{`${i + 1}. ${
-                    type.charAt(0).toUpperCase() + type.slice(1)
-                  } Information`}</b>
-                </span>
+                <span><FaUser /></span>
+                <span><b>{`${i + 1}. ${type.charAt(0).toUpperCase() + type.slice(1)} Information`}</b></span>
               </p>
               <p>
-                <span>
-                  <MdError />
-                </span>
-                <span>
-                  {" "}
-                  {`Is Also The Contact Person For The Reservation.`}
-                </span>
+                <span><MdError /></span>
+                <span>{` Is Also The Contact Person For The Reservation.`}</span>
               </p>
             </div>
-
+  
             <form className="y-gap-30 contactForm px-20 py-20">
               <div className="my-3 row">
-                {/* Use youth fields if it's an extra adult, otherwise use the regular type fields */}
-                {(type === "adult" && i >= 1
-                  ? fields.adultFieldsForExtraAdults
-                  : fields[type]
-                )?.map((field, index) => (
-                  <div
-                    key={index}
-                    className={`col-md-${field.type === "select" ? "6" : "6"}`}
-                  >
+                {currentFields?.map((field, index) => (
+                  <div key={index} className={`col-md-${field.type === "select" ? "6" : "6"}`}>
                     <div className="form-input my-1">
                       {field.type === "select" ? (
                         <>
@@ -326,24 +259,13 @@ export default function BookingPages() {
                             required
                             className="form-control"
                           >
-                            <option value="" disabled>
-                              {field.label}
-                            </option>
+                            <option value="" disabled>{field.label}</option>
                             {field.options.map((option, optIndex) => (
-                              <option
-                                key={optIndex}
-                                value={option.toLowerCase()}
-                              >
-                                {option}
-                              </option>
+                              <option key={optIndex} value={option.toLowerCase()}>{option}</option>
                             ))}
                           </select>
                           <label className="lh-1 text-16 text-light-1">
-                            {formValues[type][i][field.name]
-                              ? `${field.label}: ${
-                                  formValues[type][i][field.name]
-                                }`
-                              : field.label}
+                            {formValues[type][i][field.name] ? `${field.label}: ${formValues[type][i][field.name]}` : field.label}
                           </label>
                         </>
                       ) : (
@@ -355,15 +277,13 @@ export default function BookingPages() {
                             onChange={(e) => handleInputChange(type, i, e)}
                             required
                           />
-                          <label className="lh-1 text-16 text-light-1">
-                            {field.label}
-                          </label>
+                          <label className="lh-1 text-16 text-light-1">{field.label}</label>
                         </>
                       )}
                     </div>
                   </div>
                 ))}
-
+  
                 <div className="col-12">
                   <div className="row y-gap-20 items-center justify-between">
                     <div className="col-12 tb-border">
@@ -376,27 +296,12 @@ export default function BookingPages() {
                     </div>
                   </div>
                 </div>
-
-                <div
-                  className={`my-3 border_b px-md-40 ${
-                    shouldShowAdditionalServices ? "d-block" : "d-none"
-                  }`}
-                >
-                  <h5 className="text-18 fw-500 my-2">
-                    Possible Additional Services Per Person:
-                  </h5>
-
+  
+                <div className={`my-3 border_b px-md-40 ${shouldShowAdditionalServices ? "d-block" : "d-none"}`}>
+                  <h5 className="text-18 fw-500 my-2">Possible Additional Services Per Person:</h5>
                   <div>
-                    {[
-                      "4 Bettzimmer (Standard)",
-                      "3 Bettzimmer",
-                      "2 Bettzimmer",
-                      "1 Bettzimmer",
-                    ].map((option, idx) => (
-                      <div
-                        key={idx}
-                        className="d-flex items-center justify-between radio_hight"
-                      >
+                    {["4 Bettzimmer (Standard)", "3 Bettzimmer", "2 Bettzimmer", "1 Bettzimmer"].map((option, idx) => (
+                      <div key={idx} className="d-flex items-center justify-between radio_hight">
                         <div className="d-flex items-center">
                           <div className="form-radio d-flex items-center">
                             <label className="radio d-flex items-center">
@@ -407,27 +312,19 @@ export default function BookingPages() {
                                 checked={radioValue === `ad-1-${idx + 1}bad`}
                                 onChange={handleRadioChange}
                               />
-                              <span className="radio__mark">
-                                <span className="radio__icon"></span>
-                              </span>
-                              <span className="text-14 lh-1 ml-10">
-                                {option}
-                              </span>
+                              <span className="radio__mark"><span className="radio__icon"></span></span>
+                              <span className="text-14 lh-1 ml-10">{option}</span>
                             </label>
                           </div>
                         </div>
-                        <div className="text-14">
-                          {idx === 0 ? "0,00 €" : `+${(idx + 1) * 100},00€`}
-                        </div>
+                        <div className="text-14">{idx === 0 ? "0,00 €" : `+${(idx + 1) * 100},00€`}</div>
                       </div>
                     ))}
                   </div>
                 </div>
-
+  
                 <div className="mt-3 col-md-12">
-                  <h5 className="booking-form-price">
-                    Subtotal <span>1.749,00 €</span>
-                  </h5>
+                  <h5 className="booking-form-price">Subtotal <span>1.749,00 €</span></h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
               </div>
@@ -435,20 +332,33 @@ export default function BookingPages() {
           </div>
         </div>
       );
-    }
-    return forms;
+    });
   };
+  
 
   // Function to handle form submission and print data
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("adult information 1 : " , formValues.adult[0]);
-    const filteredAdultInfo = formValues.adult.filter((_, index) => index !== 0);
-    console.log("adult information ", filteredAdultInfo);
-    console.log("child information : " , formValues.child);
-    console.log("baby information : " , formValues.baby);
-    
+  
+    console.log("First adult information:", formValues.adult[0]);
+  
+    const filteredAdultInfo = formValues.adult
+      .filter((_, index) => index !== 0) // Exclude the first adult
+      .map(adult => {
+        // Remove empty values from each adult's info
+        return Object.fromEntries(
+          Object.entries(adult).filter(([key, value]) => value !== "")
+        );
+      });
+  
+    console.log("Remaining adults' information (excluding the first and without empty values):", filteredAdultInfo);
+  
+    console.log("Youth information:", formValues.child);
+    console.log("Children information:", formValues.baby);
   };
+  
+  
 
   const { translate } = useTranslation();
 
@@ -480,8 +390,8 @@ export default function BookingPages() {
                   <div className="border-1 rounded-12 overflow-hidden shadow-1">
                     <div>
                       {renderForms("adult", adultNumber)}
-                      {renderForms("youth", youthNumber)}
-                      {renderForms("children", childrenNumber)}
+                      {renderForms("child", youthNumber)}
+                      {renderForms("baby", childrenNumber)}
 
                       {/* Submit button to print form values */}
                       <div className="text-center mt-4">
