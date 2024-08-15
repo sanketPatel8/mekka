@@ -158,25 +158,25 @@ export default function BookingPages() {
       phone: "",
       city: "",
       gender: "",
-      birthdayDate: "",
+      birthday: "",
       nationality: "",
-      houseNo: "",
-      zipCode: "",
+      houseno: "",
+      zipcode: "",
       street: "",
       from: "",
-    }),
-    youth: initializeFormValues(youthNumber, {
+    }), 
+    child: initializeFormValues(youthNumber, {
       name: "",
       surname: "",
       gender: "",
-      birthdayDate: "",
+      birthday: "",
       nationality: "",
     }),
-    children: initializeFormValues(childrenNumber, {
+    baby: initializeFormValues(childrenNumber, {
       name: "",
       surname: "",
       gender: "",
-      birthdayDate: "",
+      birthday: "",
       nationality: "",
     }),
   });
@@ -204,15 +204,15 @@ export default function BookingPages() {
           name: "gender",
           options: ["Male", "Female", "Other"],
         },
-        { label: "Birthday Date", type: "date", name: "birthdayDate" },
+        { label: "Birthday Date", type: "date", name: "birthday" },
         {
           label: "Nationality",
           type: "select",
           name: "nationality",
           options: ["Indian", "German", "Canadian"],
         },
-        { label: "House No", type: "text", name: "houseNo" },
-        { label: "ZIP Code", type: "text", name: "zipCode" },
+        { label: "House No", type: "text", name: "houseno" },
+        { label: "ZIP Code", type: "text", name: "zipcode" },
         { label: "Street", type: "text", name: "street" },
         {
           label: "From",
@@ -230,7 +230,7 @@ export default function BookingPages() {
           name: "gender",
           options: ["Male", "Female", "Other"],
         },
-        { label: "Birthday Date", type: "date", name: "birthdayDate" },
+        { label: "Birthday Date", type: "date", name: "birthday" },
         {
           label: "Nationality",
           type: "select",
@@ -239,7 +239,7 @@ export default function BookingPages() {
         },
         
       ],
-      youth: [
+      child: [
         { label: "Name", type: "text", name: "name" },
         { label: "Surname", type: "text", name: "surname" },
         {
@@ -248,7 +248,7 @@ export default function BookingPages() {
           name: "gender",
           options: ["Male", "Female", "Other"],
         },
-        { label: "Birthday Date", type: "date", name: "birthdayDate" },
+        { label: "Birthday Date", type: "date", name: "birthday" },
         {
           label: "Nationality",
           type: "select",
@@ -256,7 +256,7 @@ export default function BookingPages() {
           options: ["Indian", "German", "Canadian"],
         },
       ],
-      children: [
+      baby: [
         { label: "Name", type: "text", name: "name" },
         { label: "Surname", type: "text", name: "surname" },
         {
@@ -265,7 +265,7 @@ export default function BookingPages() {
           name: "gender",
           options: ["Male", "Female", "Other"],
         },
-        { label: "Birthday Date", type: "date", name: "birthdayDate" },
+        { label: "Birthday Date", type: "date", name: "birthday" },
         {
           label: "Nationality",
           type: "select",
@@ -279,7 +279,6 @@ export default function BookingPages() {
 
     let forms = [];
     for (let i = 0; i < count; i++) {
-      const isExtraAdult = type === "adult" && i >= 1;
 
       forms.push(
         <div key={`${type}-${i}`} className="row">
@@ -446,8 +445,8 @@ export default function BookingPages() {
     console.log("adult information 1 : " , formValues.adult[0]);
     const filteredAdultInfo = formValues.adult.filter((_, index) => index !== 0);
     console.log("adult information ", filteredAdultInfo);
-    console.log("youth information : " , formValues.youth);
-    console.log("children information : " , formValues.children);
+    console.log("child information : " , formValues.child);
+    console.log("baby information : " , formValues.baby);
     
   };
 
