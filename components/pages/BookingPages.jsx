@@ -443,7 +443,12 @@ export default function BookingPages() {
   // Function to handle form submission and print data
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form data:", formValues);
+    console.log("adult information 1 : " , formValues.adult[0]);
+    const filteredAdultInfo = formValues.adult.filter((_, index) => index !== 0);
+    console.log("adult information ", filteredAdultInfo);
+    console.log("youth information : " , formValues.youth);
+    console.log("children information : " , formValues.children);
+    
   };
 
   const { translate } = useTranslation();
