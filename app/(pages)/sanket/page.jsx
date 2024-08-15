@@ -49,12 +49,13 @@ const MyComponent = () => {
         { label: "Street", type: "text", name: "street" },
         { label: "From", type: "select", name: "from", options: ["Frankfurt(FRA)"] }
       ],
-      youth: [
+      youthFieldsForExtraAdults: [
         { label: "Name", type: "text", name: "name" },
         { label: "Surname", type: "text", name: "surname" },
         { label: "Gender", type: "select", name: "gender", options: ["Male", "Female", "Other"] },
         { label: "Birthday Date", type: "date", name: "birthdayDate" },
-        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] }
+        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
+        { label: "City", type: "text", name: "city" }, // Extra field example
       ],
       children: [
         { label: "Name", type: "text", name: "name" },
@@ -69,6 +70,8 @@ const MyComponent = () => {
 
     let forms = [];
     for (let i = 0; i < count; i++) {
+      const isExtraAdult = type === "adult" && i >= 1; // Assuming 1 is the threshold
+
       forms.push(
         <div key={`${type}-${i}`} className="row">
           <div className="form_1 col-6 mx-auto">
@@ -96,7 +99,7 @@ const MyComponent = () => {
 
             <form className="y-gap-30 contactForm px-20 py-20">
               <div className="my-3 row">
-                {fields[type].map((field, index) => (
+                {(isExtraAdult ? fields.youthFieldsForExtraAdults : fields[type])?.map((field, index) => (
                   <div
                     key={index}
                     className={`col-md-${field.type === "select" ? "6" : "6"}`}
@@ -216,22 +219,23 @@ const MyComponent = () => {
         </div>
       );
     }
+
     return forms;
   };
 
-  // Function to handle form submission and print data
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form data:", formValues);
-  };
   return (
-    <div>
-      {renderForms("adult", adultNumber)}
-      {renderForms("youth", youthNumber)}
-      {renderForms("children", childrenNumber)}
-      <button type="submit" onClick={handleSubmit}>
-        Submit
-      </button>
+    <div className="container mt-3">
+      <div className="row">
+        <div className="col-12">
+          <div>{renderForms("adult", adultNumber)}</div>
+        </div>
+        <div className="col-12">
+          <div>{renderForms("youth", youthNumber)}</div>
+        </div>
+        <div className="col-12">
+          <div>{renderForms("children", childrenNumber)}</div>
+        </div>
+      </div>
     </div>
   );
 };

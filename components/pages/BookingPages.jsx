@@ -92,8 +92,7 @@ export default function BookingPages() {
     }
   };
 
-  useEffect(() => {
-  }, [roomType]);
+  useEffect(() => {}, [roomType]);
 
   useEffect(() => {
     Modal.setAppElement("#openSignIn");
@@ -143,23 +142,48 @@ export default function BookingPages() {
 
   // for dynamic form data and form
 
-
   const { adultNumber, youthNumber, childrenNumber } = useGlobalState();
 
   const initializeFormValues = (count, template) => {
-    return Array(count).fill().map(() => ({ ...template }));
+    return Array(count)
+      .fill()
+      .map(() => ({ ...template }));
   };
 
   const [formValues, setFormValues] = useState({
-    adult: initializeFormValues(adultNumber, { name: "", surname: "", email: "", phone: "", city: "", gender: "", birthdayDate: "", nationality: "", houseNo: "", zipCode: "", street: "", from: "" }),
-    youth: initializeFormValues(youthNumber, { name: "", surname: "", gender: "", birthdayDate: "", nationality: "" }),
-    children: initializeFormValues(childrenNumber, { name: "", surname: "", gender: "", birthdayDate: "", nationality: "" }),
+    adult: initializeFormValues(adultNumber, {
+      name: "",
+      surname: "",
+      email: "",
+      phone: "",
+      city: "",
+      gender: "",
+      birthdayDate: "",
+      nationality: "",
+      houseNo: "",
+      zipCode: "",
+      street: "",
+      from: "",
+    }),
+    youth: initializeFormValues(youthNumber, {
+      name: "",
+      surname: "",
+      gender: "",
+      birthdayDate: "",
+      nationality: "",
+    }),
+    children: initializeFormValues(childrenNumber, {
+      name: "",
+      surname: "",
+      gender: "",
+      birthdayDate: "",
+      nationality: "",
+    }),
   });
-
 
   const handleInputChange = (type, index, e) => {
     const { name, value } = e.target;
-    setFormValues(prevValues => {
+    setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
       updatedValues[type][index][name] = value;
       return updatedValues;
@@ -174,37 +198,92 @@ export default function BookingPages() {
         { label: "Email", type: "text", name: "email" },
         { label: "Phone", type: "text", name: "phone" },
         { label: "City", type: "text", name: "city" },
-        { label: "Gender", type: "select", name: "gender", options: ["Male", "Female", "Other"] },
+        {
+          label: "Gender",
+          type: "select",
+          name: "gender",
+          options: ["Male", "Female", "Other"],
+        },
         { label: "Birthday Date", type: "date", name: "birthdayDate" },
-        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
+        {
+          label: "Nationality",
+          type: "select",
+          name: "nationality",
+          options: ["Indian", "German", "Canadian"],
+        },
         { label: "House No", type: "text", name: "houseNo" },
         { label: "ZIP Code", type: "text", name: "zipCode" },
         { label: "Street", type: "text", name: "street" },
-        { label: "From", type: "select", name: "from", options: ["Frankfurt(FRA)"] }
+        {
+          label: "From",
+          type: "select",
+          name: "from",
+          options: ["Frankfurt(FRA)"],
+        },
+      ],
+      adultFieldsForExtraAdults: [
+        { label: "Name", type: "text", name: "name" },
+        { label: "Surname", type: "text", name: "surname" },
+        {
+          label: "Gender",
+          type: "select",
+          name: "gender",
+          options: ["Male", "Female", "Other"],
+        },
+        { label: "Birthday Date", type: "date", name: "birthdayDate" },
+        {
+          label: "Nationality",
+          type: "select",
+          name: "nationality",
+          options: ["Indian", "German", "Canadian"],
+        },
+        
       ],
       youth: [
         { label: "Name", type: "text", name: "name" },
         { label: "Surname", type: "text", name: "surname" },
-        { label: "Gender", type: "select", name: "gender", options: ["Male", "Female", "Other"] },
+        {
+          label: "Gender",
+          type: "select",
+          name: "gender",
+          options: ["Male", "Female", "Other"],
+        },
         { label: "Birthday Date", type: "date", name: "birthdayDate" },
-        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] }
+        {
+          label: "Nationality",
+          type: "select",
+          name: "nationality",
+          options: ["Indian", "German", "Canadian"],
+        },
       ],
       children: [
         { label: "Name", type: "text", name: "name" },
         { label: "Surname", type: "text", name: "surname" },
-        { label: "Gender", type: "select", name: "gender", options: ["Male", "Female", "Other"] },
+        {
+          label: "Gender",
+          type: "select",
+          name: "gender",
+          options: ["Male", "Female", "Other"],
+        },
         { label: "Birthday Date", type: "date", name: "birthdayDate" },
-        { label: "Nationality", type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] }
-      ]
+        {
+          label: "Nationality",
+          type: "select",
+          name: "nationality",
+          options: ["Indian", "German", "Canadian"],
+        },
+      ],
     };
 
     const shouldShowAdditionalServices = type !== "children";
 
     let forms = [];
     for (let i = 0; i < count; i++) {
+      const isExtraAdult = type === "adult" && i >= 1;
+
       forms.push(
         <div key={`${type}-${i}`} className="row">
-          <div className="form_1  mx-auto">
+          <div className="form_1 mx-auto">
             <div className="px-50 py-5 yellow_bg">
               <p>
                 <span>
@@ -229,7 +308,11 @@ export default function BookingPages() {
 
             <form className="y-gap-30 contactForm px-20 py-20">
               <div className="my-3 row">
-                {fields[type].map((field, index) => (
+                {/* Use youth fields if it's an extra adult, otherwise use the regular type fields */}
+                {(type === "adult" && i >= 1
+                  ? fields.adultFieldsForExtraAdults
+                  : fields[type]
+                )?.map((field, index) => (
                   <div
                     key={index}
                     className={`col-md-${field.type === "select" ? "6" : "6"}`}
@@ -257,7 +340,11 @@ export default function BookingPages() {
                             ))}
                           </select>
                           <label className="lh-1 text-16 text-light-1">
-                            {formValues[type][i][field.name] ? `${field.label}: ${formValues[type][i][field.name]}` : field.label}
+                            {formValues[type][i][field.name]
+                              ? `${field.label}: ${
+                                  formValues[type][i][field.name]
+                                }`
+                              : field.label}
                           </label>
                         </>
                       ) : (
@@ -292,14 +379,15 @@ export default function BookingPages() {
                 </div>
 
                 <div
-                  className={`my-3 border_b px-md-40 ${shouldShowAdditionalServices ? "d-block" : "d-none"}`}
+                  className={`my-3 border_b px-md-40 ${
+                    shouldShowAdditionalServices ? "d-block" : "d-none"
+                  }`}
                 >
                   <h5 className="text-18 fw-500 my-2">
                     Possible Additional Services Per Person:
                   </h5>
 
                   <div>
-                    {/* Radio buttons for additional services */}
                     {[
                       "4 Bettzimmer (Standard)",
                       "3 Bettzimmer",
@@ -315,7 +403,7 @@ export default function BookingPages() {
                             <label className="radio d-flex items-center">
                               <input
                                 type="radio"
-                                name={`radioGroup-${i}`} // Ensure unique radio group names
+                                name={`radioGroup-${i}`}
                                 value={`ad-1-${idx + 1}bad`}
                                 checked={radioValue === `ad-1-${idx + 1}bad`}
                                 onChange={handleRadioChange}
@@ -338,10 +426,10 @@ export default function BookingPages() {
                 </div>
 
                 <div className="mt-3 col-md-12">
-                  <p>
-                    All Prices Include VAT. The City Tax Is Paid By The Guest
-                    On Arrival.
-                  </p>
+                  <h5 className="booking-form-price">
+                    Subtotal <span>1.749,00 €</span>
+                  </h5>
+                  <p className="text-right">Including Taxes And Fee</p>
                 </div>
               </div>
             </form>
@@ -429,7 +517,7 @@ export default function BookingPages() {
                         <FaTelegramPlane size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        d Airline: Royal Jordanian, Egyptair
+                        Airline: Royal Jordanian, Egyptair
                       </div>
                     </div>
 

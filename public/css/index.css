@@ -499,6 +499,16 @@ hr{
     padding-top: 50px !important;
    }
 
+   .booking-form-price > span{
+      font-size: 1em;
+      color: #DABF4F;
+   }
+   .booking-form-price{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 5px;
+   }
 
 
    
