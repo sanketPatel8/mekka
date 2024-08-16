@@ -9,6 +9,10 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
 
+import { useGlobalState } from "@/app/context/GlobalStateContext";
+import { showErrorToast } from "@/app/utils/tost";
+import { post } from "@/app/utils/api";
+
 const slides = [
   {
     id: 1,
@@ -19,25 +23,29 @@ const slides = [
   {
     id: 2,
     imageSrc: "/img/hero/7/image 2.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 3,
     imageSrc: "/img/hero/7/image 3.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 4,
     imageSrc: "/img/hero/7/image 4.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
   {
     id: 5,
     imageSrc: "/img/hero/7/image 1.jpg",
-    subtitle: "Search, compare and book 15,000+ multiday tours all over the world.",
+    subtitle:
+      "Search, compare and book 15,000+ multiday tours all over the world.",
     title: "Tours and Trip packages, Globally",
   },
 ];
@@ -45,15 +53,20 @@ const slides = [
 export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
-  const [location, setLocation] = useState("");
-  const [calender, setCalender] = useState("");
-  const [tourType, setTourType] = useState("");
   const [tourMambar, setTourMambar] = useState("");
 
+  const {location , setLocation , calender , tourType } = useGlobalState()
+
   useEffect(() => {
-    // Close dropdown when clicking outside
+    setCurrentActiveDD("");
+  }, [location, calender, tourType, setCurrentActiveDD]);
+  const dropDownContainer = useRef();
+  useEffect(() => {
     const handleClick = (event) => {
-      if (dropDownContainer.current && !dropDownContainer.current.contains(event.target)) {
+      if (
+        dropDownContainer.current &&
+        !dropDownContainer.current.contains(event.target)
+      ) {
         setCurrentActiveDD("");
       }
     };
@@ -65,12 +78,36 @@ export default function Hero7() {
     };
   }, []);
 
-  const dropDownContainer = useRef();
-
-  const handleDropdownClick = (dropdown) => {
-    // Set the clicked dropdown as active or close if already active
-    setCurrentActiveDD((prev) => (prev === dropdown ? "" : dropdown));
+  const handleFormClick = () => {
+    const fetchData = async () => {
+      const sendData = {
+        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        Keyword : "",
+        type : location,
+        start_date : calender[0],
+        end_date : calender[1]
+      };
+      try {
+        const response = await post("search_tour", sendData);
+        console.log(response);
+      } catch (error) {
+        console.error("Error caught:", error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast("Please verify your email");
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+    };
+    fetchData();
+    console.log("Form Data was hero 7", location, calender, tourType);
+    router.push('/tour')
   };
+
 
   return (
     <>
@@ -163,15 +200,19 @@ export default function Hero7() {
               <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
-                  onClick={() => handleDropdownClick("location")}
+                  onClick={() =>
+                    setCurrentActiveDD((pre) =>
+                      pre == "location" ? "" : "location"
+                    )
+                  }
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-pin"></i>
                   </div>
                   <div className="searchFormItem__content">
-                    <h5>All</h5>
+                    <h5>Tour Type</h5>
                     <div className="js-select-control-chosen">
-                      {location ? location : "All Tour"}
+                      {location ? location : "Search destinations"}
                     </div>
                   </div>
                 </div>
@@ -185,7 +226,11 @@ export default function Hero7() {
               <div className="searchFormItem js-select-control js-form-dd js-calendar">
                 <div
                   className="searchFormItem__button"
-                  onClick={() => handleDropdownClick("calender")}
+                  onClick={() =>
+                    setCurrentActiveDD((pre) =>
+                      pre == "calender" ? "" : "calender"
+                    )
+                  }
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-calendar"></i>
@@ -205,7 +250,11 @@ export default function Hero7() {
               <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
-                  onClick={() => handleDropdownClick("tourType")}
+                  onClick={() =>
+                    setCurrentActiveDD((pre) =>
+                      pre == "tourType" ? "" : "tourType"
+                    )
+                  }
                 >
                   <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
                     <i className="text-20 icon-flag"></i>
@@ -217,6 +266,7 @@ export default function Hero7() {
                     </div>
                   </div>
                 </div>
+
                 <NumberOfTravellers
                   setTourType={setTourMambar}
                   active={currentActiveDD === "tourType"}
@@ -224,10 +274,7 @@ export default function Hero7() {
               </div>
             </div>
 
-            <div
-              onClick={() => router.push("/tour")}
-              className="searchForm__button"
-            >
+            <div onClick={handleFormClick} className="searchForm__button">
               <button className="button -info-2 bg-accent-1 rounded-200 text-white">
                 <i className="icon-search text-16 mr-10"></i>
                 Search

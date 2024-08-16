@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { locations } from "@/data/searchDDLocations";
-export default function Location({ active, setLocation }) {
+export default function Demo1({ active, setLocation }) {
   return (
     <div
       className={`searchFormItemDropdown -location ${

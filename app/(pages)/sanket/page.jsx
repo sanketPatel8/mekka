@@ -1,249 +1,177 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { FaUser } from 'react-icons/fa';
-import { MdError } from 'react-icons/md';
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import { useEffect, useState } from "react";
+import { FaPersonWalking } from "react-icons/fa6";
+import Stars from "@/components/common/Stars";
+// import { tourData } from "@/data/tours";
+import Image from "next/image";
+import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { useGlobalState } from '@/app/context/GlobalStateContext';
+import { showErrorToast } from "@/app/utils/tost";
+import { post } from "@/app/utils/api";
 
-const initializeFormValues = (count, template) => {
-  return Array(count)
-    .fill()
-    .map(() => ({ ...template }));
-};
-
-const FormComponent = () => {
-  const { adultNumber, youthNumber, childrenNumber , loginPer } = useGlobalState();
-  const { translate } = useTranslation();
-  const [formValues, setFormValues] = useState({
-    adult: initializeFormValues(adultNumber, {
-      name: "",
-      surname: "",
-      email: "",
-      mobile: "",
-      city: "",
-      gender: "",
-      birthday: "",
-      nationality: "",
-      houseno: "",
-      zipcode: "",
-      street: "",
-      from: "",
-      roomPreference: "", // Add this field
-    }), 
-    child: initializeFormValues(youthNumber, {
-      name: "",
-      surname: "",
-      gender: "",
-      birthday: "",
-      nationality: "",
-    }),
-    baby: initializeFormValues(childrenNumber, {
-      name: "",
-      surname: "",
-      gender: "",
-      birthday: "",
-      nationality: "",
-    }),
-  });
+export default function TourSlderOne() {
+  const [showSwiper, setShowSwiper] = useState(false);
+  const [TopTranding, setTopTranding] = useState([]);
 
   useEffect(() => {
-    // Client-side only logic if needed
+    setShowSwiper(true);
+    fetchData();
   }, []);
 
-  const handleInputChange = (type, index, e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => {
-      const updatedValues = { ...prevValues };
-      updatedValues[type][index][name] = value;
-      return updatedValues;
-    });
-  };
-
-  const handleRadioChange = (type, index, e) => {
-    handleInputChange(type, index, e); // Use handleInputChange to update the radio button value
-  };
-
-  const renderForms = (type, count) => {
-    const fields = {
-      adult: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        { label: translate("Email"), type: "text", name: "email" },
-        { label: translate("Phone"), type: "text", name: "mobile" },
-        { label: translate("City"), type: "text", name: "city" },
-        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
-        { label: translate("House No"), type: "text", name: "houseno" },
-        { label: translate("ZIP Code"), type: "text", name: "zipcode" },
-        { label: translate("Street"), type: "text", name: "street" },
-        { label: translate("From"), type: "select", name: "from", options: ["Frankfurt(FRA)"] },
-        { label: translate("Room Preference"), type: "radio", name: "roomPreference", options: ["4 Bettzimmer (Standard)", "3 Bettzimmer", "2 Bettzimmer", "1 Bettzimmer"] },
-      ],
-      adultFieldsForExtraAdults: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
-        { label: translate("Room Preference"), type: "radio", name: "roomPreference", options: ["4 Bettzimmer (Standard)", "3 Bettzimmer", "2 Bettzimmer", "1 Bettzimmer"] },
-      ],
-      child: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
-      ],
-      baby: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        { label: translate("Gender"), type: "select", name: "gender", options: ["Male", "Female", "Other"] },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        { label: translate("Nationality"), type: "select", name: "nationality", options: ["Indian", "German", "Canadian"] },
-      ],
+  const fetchData = async (id) => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     };
-  
-    const shouldShowAdditionalServices = type !== "baby";
-  
-    return Array.from({ length: count }).map((_, i) => {
-      const isExtraAdult = type === "adult" && i >= 1;
-      const currentFields = isExtraAdult ? fields.adultFieldsForExtraAdults : fields[type];
-      
-      return (
-        <div key={`${type}-${i}`} className="row">
-          <div className="form_1 mx-auto">
-            <div className="px-50 py-5 yellow_bg">
-              <p>
-                <span><FaUser /></span>
-                <span><b>{`${i + 1}. ${type.charAt(0).toUpperCase() + type.slice(1)} Information`}</b></span>
-              </p>
-              <p>
-                <span><MdError /></span>
-                <span>{` Is Also The Contact Person For The Reservation.`}</span>
-              </p>
-            </div>
-  
-            <form className="y-gap-30 contactForm px-20 py-20">
-              <div className="my-3 row">
-                {currentFields?.map((field, index) => (
-                  <div key={index} className={`col-md-${field.type === "select" ? "6" : "6"}`}>
-                    <div className="form-input my-1">
-                      {field.type === "select" ? (
-                        <>
-                          <select
-                            name={field.name}
-                            value={formValues[type][i][field.name]}
-                            onChange={(e) => handleInputChange(type, i, e)}
-                            required
-                            className="form-control"
-                          >
-                            <option value="" disabled>{field.label}</option>
-                            {field.options.map((option, optIndex) => (
-                              <option key={optIndex} value={option.toLowerCase()}>{option}</option>
-                            ))}
-                          </select>
-                          <label className="lh-1 text-16 text-light-1">
-                            {formValues[type][i][field.name] ? `${field.label}: ${formValues[type][i][field.name]}` : field.label}
-                          </label>
-                        </>
-                      ) : field.type === "radio" ? (
-                        <>
-                          {field.options.map((option, optIndex) => (
-                            <div key={optIndex} className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
-                                <div className="form-radio d-flex items-center">
-                                  <label className="radio d-flex items-center">
-                                    <input
-                                      type="radio"
-                                      name={field.name}
-                                      value={option}
-                                      checked={formValues[type][i][field.name] === option}
-                                      onChange={(e) => handleRadioChange(type, i, e)}
-                                    />
-                                    <span className="radio__mark"><span className="radio__icon"></span></span>
-                                    <span className="text-14 lh-1 ml-10">{option}</span>
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </>
-                      ) : (
-                        <>
-                          <input
-                            type={field.type}
-                            name={field.name}
-                            value={formValues[type][i][field.name]}
-                            onChange={(e) => handleInputChange(type, i, e)}
-                            required
-                            className="form-control"
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {formValues[type][i][field.name] ? `${field.label}: ${formValues[type][i][field.name]}` : field.label}
-                          </label>
-                        </>
-                      )}
+
+    try {
+      const response = await post("top_trending", sendData);
+      if (response) {
+        console.log("Top tranding res : ", response.Tours);
+
+        setTopTranding(response.Tours);
+      } else {
+        console.error("Tours data is undefined in the response.");
+      }
+    } catch (error) {
+      console.error("Error caught:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        showErrorToast("Please verify your email");
+      } else {
+        showErrorToast("An error occurred during registration.");
+      }
+    }
+  };
+
+  console.log("TopTranding was : ", TopTranding);
+
+  const { translate } = useTranslation();
+
+  return (
+    <section className="layout-pt-sm layout-pb-sm relative">
+      <div className="sectionBg -w-1530 rounded-12 bg-light-1"> </div>
+
+      <div className="container">
+        <div className="row justify-between items-end y-gap-10">
+          <div className="col-auto">
+            <h2
+              data-aos="fade-up"
+              data-aos-delay=""
+              className="text-30 md:text-24"
+            >
+              {translate("Top Trending")}
+            </h2>
+          </div>
+
+          <div className="col-auto">
+            <Link
+              href={"/tour"}
+              data-aos="fade-right"
+              data-aos-delay=""
+              className="buttonArrow d-flex items-center "
+            >
+              <span> {translate("See all")}</span>
+              <i className="icon-arrow-top-right text-16 ml-10"></i>
+            </Link>
+          </div>
+        </div>
+
+        <div className="relative pt-40 sm:pt-20">
+          <div className="overflow-hidden pb-10 js-section-slider">
+            <div
+              data-aos="fade-up"
+              data-aos-delay=""
+              className="swiper-wrapper"
+            >
+              {TopTranding?.map((elm, i) => (
+                <Link href={`/package/${elm.id}`} key={i}>
+                  <div className="tourCard__header">
+                    <div className="tourCard__image ratio ratio-28:20">
+                      <Image
+                        width={421}
+                        height={301}
+                        src="/_next/image?url=%2Fimg%2FtourCards%2F1%2F13.jpeg&w=1080&q=75"
+                        alt="image"
+                        className="img-ratio rounded-12"
+                      />
                     </div>
+
+                    <button
+                      className={`tourCard__favorite ${
+                        elm.direct_flight == 0 ? "d-block" : "d-none"
+                      }`}
+                    >
+                      Direct Flight
+                    </button>
                   </div>
-                ))}
-  
-                {shouldShowAdditionalServices && (
-                  <div className="col-lg-6">
-                    <label className="lh-1 text-16 text-light-1">Additional Services</label>
-                    <div className="d-flex items-center">
-                      <div className="form-radio d-flex items-center">
-                        <label className="radio d-flex items-center">
-                          <input
-                            type="checkbox"
-                            name="additionalServices"
-                            value="add1"
-                            onChange={(e) => handleInputChange(type, i, e)}
-                          />
-                          <span className="radio__mark"><span className="radio__icon"></span></span>
-                          <span className="text-14 lh-1 ml-10">Extra Luggage</span>
-                        </label>
+
+                  <div className="tourCard__content px-10 pt-10">
+                    <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2">
+                      <FaPersonWalking
+                        color="white"
+                        size={18}
+                        className="mr-2"
+                      />
+                      {elm.distance_to_hotel}
+                    </div>
+
+                    <h3 className="tourCard__title text-16 fw-500 mt-5">
+                      <span>
+                        {" "}
+                        {elm.type} - {elm.name}{" "}
+                      </span>
+                    </h3>
+
+                    <div className="tourCard__rating d-flex items-center text-13 mt-5">
+                      <div className="d-flex x-gap-5">
+                        <Stars star={elm.rating} />
+                      </div>
+                      <p className="text-dark-1 ml-10">
+                        {elm.rating} ({elm.rating})
+                      </p>{" "}
+                      - {elm.company_name}
+                    </div>
+                    <div className="Location">
+                      <span>Departure : {elm.departures}</span>
+                    </div>
+
+                    <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                      <div className="d-flex items-center">
+                        <i className="icon-clock text-16 mr-5"></i>
+                        {elm.days_of_stay}
+                      </div>
+
+                      <div>
+                        From{" "}
+                        <span className="text-16 fw-500">
+                          {elm.tour_price} €
+                        </span>
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
-            </form>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="navAbsolute">
+            <button className="navAbsolute__button bg-white js-slider1-prev prev1">
+              <i className="icon-arrow-left text-14"></i>
+            </button>
+
+            <button className="navAbsolute__button bg-white js-slider1-next next1">
+              <i className="icon-arrow-right text-14"></i>
+            </button>
           </div>
         </div>
-      );
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("First adult information:", formValues.adult[0]);
-
-    const filteredAdultInfo = formValues.adult
-      .filter((_, index) => index !== 0) // Exclude the first adult
-      .map(adult => {
-        // Remove empty values from each adult's info
-        return Object.fromEntries(
-          Object.entries(adult).filter(([key, value]) => value !== "")
-        );
-      });
-
-    console.log("Remaining adults' information (excluding the first and without empty values):", filteredAdultInfo);
-
-    console.log("Youth information:", formValues.child);
-    console.log("Children information:", formValues.baby);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      {renderForms("adult", adultNumber)}
-      {renderForms("child", youthNumber)}
-      {renderForms("baby", childrenNumber)}
-      <button type="submit">Submit</button>
-    </form>
+      </div>
+    </section>
   );
-};
-
-export default FormComponent;
+}

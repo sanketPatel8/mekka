@@ -8,15 +8,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function Hero1() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
-  const [location, setLocation] = useState("");
-  const [calender, setCalender] = useState("");
-  const [tourType, setTourType] = useState("");
   const [tourMambar, setTourMambar] = useState("");
-  const [tourLocation, setTourLocation] = useState("");
+  const {location , setLocation , calender , tourType } = useGlobalState()
 
   useEffect(() => {
     setCurrentActiveDD("");

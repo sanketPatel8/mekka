@@ -1,7 +1,6 @@
 "use client"
 
 import Stars from "@/components/common/Stars";
-import { tourData } from "@/data/tours";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { FaPersonWalking } from "react-icons/fa6";
 import Image from "next/image";
@@ -14,7 +13,7 @@ export default function Tour1() {
 
   const [LatestPackage, setLatestPackage] = useState([])
 
-  console.log( "Latest Package for " , LatestPackage);
+  // console.log( "Latest Package for " , LatestPackage);
   
 
   useEffect(() => {
@@ -120,17 +119,17 @@ export default function Tour1() {
                     </span>
                   </div>
                   <div className="Location">
-                    <span>Departure : From {elm.departures}</span>
+                    <span>Departure :  {elm.departures}</span>
                   </div>
 
                   <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                    <div className="d-flex items-center">
+                    <div className="d-flex items-center items-center">
                       <i className="icon-clock text-16 mr-5"></i>
                        {elm.days_of_stay}
                     </div>
 
                     <div>
-                       <span className="text-16 fw-500">{elm.tour_price} €</span>
+                    From<span className="text-16 fw-500 items-center"> {elm.tour_price} €</span>
                     </div>
                   </div>
                 </div>

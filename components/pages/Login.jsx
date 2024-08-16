@@ -42,7 +42,7 @@ export default function Login({ onLoginSuccess }) {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-    if (LoginISChacked) {
+   
       try {
         const response = await post("login", LogInData);
         localStorage.setItem("token", response.authorisation.token);
@@ -61,10 +61,8 @@ export default function Login({ onLoginSuccess }) {
         } else {
           showErrorToast("An error occurred during login.");
         }
-      }
-    } else {
-      showErrorToast("Please check the checkbox to remember me.");
-    }
+      
+    } 
   };
 
   return (

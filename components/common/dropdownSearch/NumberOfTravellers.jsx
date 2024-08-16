@@ -12,9 +12,9 @@ export default function NumberOfTravellers({ active, setTourType }) {
   });
 
   useEffect(() => {
-    console.log("Initial counts state:", counts);
+    // console.log("Initial counts state:", counts);
   }, []);
-
+ 
   const decr = (type) => {
     setCounts((prevCounts) => ({
       ...prevCounts,

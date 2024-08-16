@@ -64,7 +64,7 @@ export default function TourList4() {
         if (response.Tours) {
           setTourListData(response.Tours);
           setAllPage(response.Total_Page);
-          console.log("Tours data:", response.Tours); // Check the data being set
+          // console.log("Tours data:", response.Tours); // Check the data being set
         } else {
           console.error("Tours data is undefined in the response.");
         }
