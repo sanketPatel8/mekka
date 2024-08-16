@@ -1,6 +1,8 @@
 "use client";
 
+import { showErrorToast } from "@/app/utils/tost";
 import React, { useEffect, useRef, useState } from "react";
+import { post } from "@/app/utils/api";
 
 export default function HeaderSerch({ white }) {
   const [selected, setSelected] = useState("");
@@ -8,8 +10,39 @@ export default function HeaderSerch({ white }) {
 
   useEffect(() => {
     inputRef.current.value = selected;
+    const fetchData = async (id) => {
+   
+    
+      const sendData = {
+        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        keyword: selected // Passing the id to sendData
+      };
+  
+      try {
+        const response = await post("search_tour", sendData);
+        if (response) {
+          // console.log("api response : " , response);
+        } else {
+          console.error("Tours data is undefined in the response.");
+        }
+      } catch (error) {
+        console.error("Error caught:", error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast("Please verify your email");
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+    };
+    fetchData()
   }, [selected]);
-;
+
+  
+  
 
   const dropDownContainer = useRef();
 

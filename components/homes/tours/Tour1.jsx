@@ -1,16 +1,52 @@
+"use client"
+
 import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { FaPersonWalking } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { post } from "@/app/utils/api";
 
 
 export default function Tour1() {
 
+  const [LatestPackage, setLatestPackage] = useState([])
+
+  console.log( "Latest Package for " , LatestPackage);
+  
+
+  useEffect(() => {
+    const fetchData = async (id) => { 
+      const sendData = {
+        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      };
+      try {
+        const response = await post("latest_tourlist", sendData);
+        if (response) {
+          setLatestPackage ( response);
+        } else {
+          console.error("Tours data is undefined in the response.");
+        }
+      } catch (error) {
+        console.error("Error caught:", error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast("Please verify your email");
+        } else {
+          showErrorToast("An error occurred during registration.");
+        }
+      }
+    };
+    fetchData()
+  }, []);
 
   const { translate } = useTranslation();
+    
   return (
     <section className="layout-pt-xl layout-pb-xl">
       <div className="container">
@@ -43,7 +79,7 @@ export default function Tour1() {
           data-aos-delay=""
           className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300"
         >
-          {tourData.map((elm, i) => (
+          {LatestPackage?.Tours?.slice(0, 8)?.map((elm, i) => (
             <div key={i} className="col-lg-3 col-md-6 my-2">
               <Link
                 href={`/package/${elm.id}`}
@@ -54,47 +90,47 @@ export default function Tour1() {
                     <Image
                       width={421}
                       height={301}
-                      src={elm.imageSrc}
+                      src="/_next/image?url=%2Fimg%2FtourCards%2F1%2F13.jpeg&w=1080&q=75"
                       alt="image"
                       className="img-ratio rounded-12"
                     />
                   </div>
 
-                  <button className="tourCard__favorite">Direct Flight</button>
+                  <button className={`tourCard__favorite ${elm.direct_flight == 0 ? 'd-block' : 'd-none'}`}>Direct Flight</button>
                 </div>
 
                 <div className="tourCard__content px-10 pt-10">
                   <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2">
-                    {/* <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i> */}
                     <FaPersonWalking color="white" size={18} />
-                    {elm.location}
+                    Zu Kaaba {elm.distance_to_hotel}
                   </div>
 
                   <h3 className="tourCard__title text-16 fw-500 mt-5">
-                    <span>{elm.title}</span>
+                    <span>{elm.type} - {elm.name}</span>
                   </h3>
 
                   <div className="tourCard__rating d-flex items-center text-13 mt-5">
                     <div className="d-flex x-gap-5">
                       <Stars star={elm.rating} />
+                      {/* <Stars star="4" /> */}
                     </div>
 
                     <span className="text-dark-1 ml-10">
-                      {elm.rating} ({elm.ratingCount}) - IDEALGATE
+                      {elm.rating} ({elm.rating}) - {elm.company_name}
                     </span>
                   </div>
                   <div className="Location">
-                    <span>Departure : London</span>
+                    <span>Departure : From {elm.departures}</span>
                   </div>
 
                   <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                     <div className="d-flex items-center">
                       <i className="icon-clock text-16 mr-5"></i>
-                      {elm.duration}
+                       {elm.days_of_stay}
                     </div>
 
                     <div>
-                      From <span className="text-16 fw-500">{elm.price} €</span>
+                       <span className="text-16 fw-500">{elm.tour_price} €</span>
                     </div>
                   </div>
                 </div>

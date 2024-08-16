@@ -6,8 +6,8 @@ const GlobalStateContext = createContext();
 export const GlobalStateProvider = ({ children }) => {
   const [loginPer, setLoginPer] = useState(false);
   const [adultNumber, setAdultNumber] = useState(1);
-  const [youthNumber, setYouthNumber] = useState(0);
-  const [childrenNumber, setChildrenNumber] = useState(0);
+  const [youthNumber, setYouthNumber] = useState(1);
+  const [childrenNumber, setChildrenNumber] = useState(1);
 
   return (
     <GlobalStateContext.Provider

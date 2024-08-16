@@ -80,7 +80,6 @@ export default function TourSingleSidebar({ PAckageData }) {
             <button
               onClick={() => {
                 setAdultNumber((pre) => (pre > 1 ? pre - 1 : pre));
-                
               }}
               className="button size-30 border-1 rounded-full js-down"
             >
@@ -94,7 +93,6 @@ export default function TourSingleSidebar({ PAckageData }) {
             <button
               onClick={() => {
                 setAdultNumber((pre) => pre + 1);
-                
               }}
               className="button size-30 border-1 rounded-full js-up"
             >
@@ -117,7 +115,6 @@ export default function TourSingleSidebar({ PAckageData }) {
             <button
               onClick={() => {
                 setYouthNumber((pre) => (pre > 1 ? pre - 1 : 0));
-                
               }}
               className="button size-30 border-1 rounded-full js-down"
             >
@@ -131,7 +128,6 @@ export default function TourSingleSidebar({ PAckageData }) {
             <button
               onClick={() => {
                 setYouthNumber((pre) => pre + 1);
-                
               }}
               className="button size-30 border-1 rounded-full js-up"
             >
@@ -154,7 +150,6 @@ export default function TourSingleSidebar({ PAckageData }) {
             <button
               onClick={() => {
                 setChildrenNumber((pre) => (pre > 1 ? pre - 1 : 0));
-                
               }}
               className="button size-30 border-1 rounded-full js-down"
             >
@@ -168,7 +163,6 @@ export default function TourSingleSidebar({ PAckageData }) {
             <button
               onClick={() => {
                 setChildrenNumber((pre) => pre + 1);
-                
               }}
               className="button size-30 border-1 rounded-full js-up"
             >
