@@ -78,7 +78,7 @@ export default function BookingPages() {
   };
 
   const HandlePaymentClick = () => {
-    alert(loginPer)
+
     if (loginPer === true) {
       router.push("/payment");
     } else {

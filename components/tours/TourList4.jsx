@@ -55,9 +55,11 @@ export default function TourList4() {
     const fetchData = async () => {
       const sendData = {
         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        start: activeIndex * 10,
+        start: activeIndex ,
         type : "",
       };
+      console.log("activeIndex was :" , activeIndex);
+      
       try {
         const response = await post("tourlist", sendData);
         setCount(response.Count);
@@ -85,6 +87,10 @@ export default function TourList4() {
     fetchData();
   }, [activeIndex]);
 
+  console.log("Tour list data was : " , TourListData);
+  
+
+  
   // pagination
 
   // Callback function to handle index updates

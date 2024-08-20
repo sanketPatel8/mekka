@@ -10,12 +10,35 @@ import { tourData } from "@/data/tours";
 import Image from "next/image";
 import Link from "next/link";
 import '@/public/css/index.css'
+import { post } from "@/app/utils/api";
 
 export default function TourSliderTwo() {
   const [showSwiper, setShowSwiper] = useState(false);
+  const [BestSellerData, setBestSellerData] = useState([])
   useEffect(() => {
     setShowSwiper(true);
+    HandleLoginSubmite()
   }, []);
+
+  const HandleLoginSubmite = async (e) => {
+    const BookingLoginData = { AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY };
+    try {
+      const response = await post("best_seller_tour", BookingLoginData);
+      setBestSellerData(response?.Tours)
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error); // Log the full error for debugging
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        showErrorToast("Please verify your email");
+      } else {
+        showErrorToast("An error occurred during registration.");
+      }
+    }
+  };
 
   return (
     <section className="relative">
@@ -61,10 +84,10 @@ export default function TourSliderTwo() {
                     },
                   }}
                 >
-                  {tourData.map((elm, i) => (
+                  {BestSellerData.map((elm, i) => (
                     <SwiperSlide key={i}>
                       <Link
-                        href={`/package/${elm.id}`}
+                        href={`/package/${elm?.slug}?id=${elm?.id}`}
                         className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                       >
                         <div className="tourCard__header">
@@ -72,24 +95,26 @@ export default function TourSliderTwo() {
                             <Image
                               width={421}
                               height={301}
-                              src={elm.imageSrc}
+                              src=""
                               alt="image"
                               className="img-ratio rounded-12"
                             />
                           </div>
 
-                          <button className="tourCard__favorite">Direct Flight</button>
+                          <button className={`tourCard__favorite ${
+                          elm?.direct_flight === 0 ? "d-none" : "d-block"
+                        }`}>Direct Flight</button>
                         </div>
 
                         <div className="tourCard__content px-10 pt-10">
                           <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2">
                             {/* <i className="icon-pin d-flex text-16 text-light-2 mr-5"></i> */}
                               <FaPersonWalking  color="white" size={18} />
-                            {elm.location}
+                            Zu Kaaba {elm.distance_to_hotel}
                           </div>
 
                           <h3 className="tourCard__title text-16 fw-500 mt-5">
-                            <span>{elm.title}</span>
+                            <span>{elm.type} - {elm.name}</span>
                           </h3>
 
                           <div className="tourCard__rating d-flex items-center text-13 mt-5">
@@ -98,26 +123,26 @@ export default function TourSliderTwo() {
                             </div>
 
                             <span className="text-dark-1 ml-10">
-                              {elm.rating} ({elm.ratingCount}) 
-                            </span> - IDEALGATE 
+                              {elm.rating} ({elm.rating}) 
+                            </span> - {elm.company_name} 
                           </div>
 
                           <div className="Location">
                           <span>
-                              Departure : London
+                              Departure : {elm.departures}
                             </span>
                           </div>
 
                           <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
                             <div className="d-flex items-center">
                               <i className="icon-clock text-16 mr-5"></i>
-                              {elm.duration}
+                              {elm.days_of_stay}
                             </div>
 
                             <div>
                               From{" "}
                               <span className="text-16 fw-500">
-                              {elm.price} €
+                              {elm.tour_price} €
                               </span>
                             </div>
                           </div>

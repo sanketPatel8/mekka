@@ -1,32 +1,31 @@
-"use client";
-
-import { useState } from "react";
-import DatePicker, { DateObject } from "react-multi-date-picker";
+import React from "react";
+import DatePicker from "react-multi-date-picker";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function Calender() {
-  const [dates, setDates] = useState([
-    new DateObject().setDay(5),
-    new DateObject().setDay(14).add(1, "month"),
-  ]);
+  const { calender, setCalender, setFormattedDates } = useGlobalState();
 
   const handleDateChange = (newDates) => {
-    setDates(newDates);
-    // Format and log the selected dates
-    const formattedDates = newDates.map(date => date.format("MMMM DD YYYY"));
+    setCalender(newDates); // Update the global state with the selected dates
+
+    const formattedDates = newDates.map((date) => date.format("MMMM DD YYYY"));
+    setFormattedDates(formattedDates); // Store the formatted dates globally
+
     console.log("Selected dates:", formattedDates);
   };
 
   return (
     <DatePicker
-      inputClass="custom_input-picker"
-      containerClassName="custom_container-picker"
-      value={dates}
+      value={calender}
       onChange={handleDateChange}
       numberOfMonths={2}
       offsetY={10}
       range
       rangeHover
-      format="MMMM DD YYYY" // Update the format here if needed
+      format="MMMM DD YYYY"
+      inputClass="custom_input-picker"
+      containerClassName="custom_container-picker"
+      placeholder="Please Select Your Date "
     />
   );
 }

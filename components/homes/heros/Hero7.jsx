@@ -8,7 +8,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
-
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
@@ -54,13 +54,19 @@ export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
+  const [dates, setDates] = useState([
+    new DateObject().setDay(5),
+    new DateObject().setDay(14).add(1, "month"),
+  ]);
 
-  const {location , setLocation , calender , tourType } = useGlobalState()
+  const { location, setLocation, calender, tourType } = useGlobalState();
 
   useEffect(() => {
     setCurrentActiveDD("");
   }, [location, calender, tourType, setCurrentActiveDD]);
+
   const dropDownContainer = useRef();
+
   useEffect(() => {
     const handleClick = (event) => {
       if (
@@ -82,10 +88,10 @@ export default function Hero7() {
     const fetchData = async () => {
       const sendData = {
         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        Keyword : "",
-        type : location,
-        start_date : calender[0],
-        end_date : calender[1]
+        Keyword: "",
+        type: location,
+        start_date: calender[0],
+        end_date: calender[1],
       };
       try {
         const response = await post("search_tour", sendData);
@@ -105,9 +111,14 @@ export default function Hero7() {
     };
     fetchData();
     console.log("Form Data was hero 7", location, calender, tourType);
-    router.push('/tour')
+    router.push("/tour");
   };
 
+  const handleDateChange = (newDates) => {
+    setDates(newDates);
+    const formattedDates = newDates.map((date) => date.format("MMMM DD YYYY"));
+    console.log("Selected dates:", formattedDates);
+  };
 
   return (
     <>
@@ -239,7 +250,10 @@ export default function Hero7() {
                     <h5>Start of trip to end of trip</h5>
                     <div>
                       <span className="js-first-date">
-                        <Calender active={currentActiveDD === "calender"} />
+                        <Calender
+                          dates={dates}
+                          onDateChange={handleDateChange}
+                        />
                       </span>
                       <span className="js-last-date"></span>
                     </div>

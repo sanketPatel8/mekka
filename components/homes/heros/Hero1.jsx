@@ -14,7 +14,9 @@ export default function Hero1() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
-  const {location , setLocation , calender , tourType } = useGlobalState()
+  const { location, setLocation, calender, setCalender, tourType , formattedDates } = useGlobalState();
+
+  console.log( "date was : ",formattedDates)
 
   useEffect(() => {
     setCurrentActiveDD("");
@@ -37,8 +39,9 @@ export default function Hero1() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+  
 
-  const { translate } = useTranslation();
+  const { translate } = useTranslation(); 
 
   return (
     <section className="hero -type-1">
@@ -62,7 +65,7 @@ export default function Hero1() {
                 data-aos-delay="100"
                 className="hero__title"
               >
-                {translate("Your world of joy") }
+                {translate("Your world of joy")}
               </h1>
 
               <p
@@ -70,7 +73,7 @@ export default function Hero1() {
                 data-aos-delay="300"
                 className="hero__text"
               >
-                {translate("From local escapes to far-flung adventures, find what makes you happy anytime, anywhere") }
+                {translate("From local escapes to far-flung adventures, find what makes you happy anytime, anywhere")}
               </p>
 
               <div
@@ -96,15 +99,15 @@ export default function Hero1() {
                         <div className="searchFormItem__content">
                           <h5>All</h5>
                           <div className="js-select-control-chosen">
-                            {location ? location : "Search destinations"}
+                            {location}
                           </div>
                         </div>
                       </div>
 
-                      <Location
+                      {/* <Location
                         setLocation={setLocation}
                         active={currentActiveDD === "location"}
-                      />
+                      /> */}
                     </div>
 
                     <div className="searchFormItem js-select-control js-form-dd js-calendar">
@@ -123,14 +126,16 @@ export default function Hero1() {
                           <h5>Start of trip to end of trip</h5>
                           <div>
                             <span className="js-first-date">
-                              <Calender
-                                active={currentActiveDD === "calender"}
-                              />
+                            {calender[0]?.format("MMMM DD YYYY")}
+                            </span> -  
+                            <span className="js-last-date px-1">
+                               {calender[1]?.format("MMMM DD YYYY")}
                             </span>
-                            <span className="js-last-date"></span>
                           </div>
                         </div>
                       </div>
+
+                     
                     </div>
 
                     <div className="searchFormItem js-select-control js-form-dd">
