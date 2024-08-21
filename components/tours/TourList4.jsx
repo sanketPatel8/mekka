@@ -304,7 +304,7 @@ export default function TourList4({heroData}) {
               />
 
               <div className="text-14 text-center mt-20">
-                Showing results 1-10 of {count}
+                Showing results 1-10 of {heroData.Tour_List?.length}
               </div>
             </div>
           </div>
