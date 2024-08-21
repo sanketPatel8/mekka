@@ -208,6 +208,7 @@ export default function Hero7() {
             className="searchForm -type-1 shadow-1 rounded-200"
           >
             <div className="searchForm__form">
+              
               <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
@@ -286,6 +287,7 @@ export default function Hero7() {
                   active={currentActiveDD === "tourType"}
                 />
               </div>
+
             </div>
 
             <div onClick={handleFormClick} className="searchForm__button">
