@@ -58,8 +58,7 @@ export default function TourList4() {
         start: activeIndex ,
         type : "",
       };
-      console.log("activeIndex was :" , activeIndex);
-      
+      console.log("activeIndex was :" , activeIndex); 
       try {
         const response = await post("tourlist", sendData);
         setCount(response.Count);
