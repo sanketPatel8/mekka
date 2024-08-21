@@ -1,24 +1,28 @@
+"use client"
+
 import Hero1 from "@/components/homes/heros/Hero1";
 import FooterOne from "@/components/layout/footers/FooterOne";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourList4 from "@/components/tours/TourList4";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export const metadata = {
-  title: "Tour-list-5 || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "mekkaBooking - Travel & Tour React NextJS Template",
-};
+
 
 export default function page() {
+  const [heroData, setHeroData] = useState([ ]);
+
+  useEffect(() => {
+    console.log('heroData in Page:', heroData); // Log heroData in Page component
+  }, [heroData]);
   return (
     <>
       <main>
         <Header1 />
-        <Hero1 />
+        <Hero1 onDataFetch={setHeroData} />
 
         <div className="mt-50">
-          <TourList4 />
+          <TourList4 heroData={heroData} />
         </div>
 
         <FooterTwo />

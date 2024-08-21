@@ -8,7 +8,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
-import DatePicker, { DateObject } from "react-multi-date-picker";
+import  { DateObject } from "react-multi-date-picker";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
@@ -116,7 +116,7 @@ export default function Hero7() {
 
   const handleDateChange = (newDates) => {
     setDates(newDates);
-    const formattedDates = newDates.map((date) => date.format("MMMM DD YYYY"));
+    const formattedDates = newDates.map((date) => date.format("YYYY-MM-DD"));
     console.log("Selected dates:", formattedDates);
   };
 

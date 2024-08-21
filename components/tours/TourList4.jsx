@@ -18,11 +18,10 @@ import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 
-export default function TourList4() {
+export default function TourList4({ heroData }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
-  const [TourListData, setTourListData] = useState([]);
   const [count, setCount] = useState("");
   const [Dataid, setDataid] = useState("");
   const [AllPage, setAllPage] = useState("");
@@ -55,15 +54,15 @@ export default function TourList4() {
     const fetchData = async () => {
       const sendData = {
         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        start: activeIndex ,
-        type : "",
+        start: activeIndex,
+        type: "",
       };
-      console.log("activeIndex was :" , activeIndex); 
+      console.log("activeIndex was :", activeIndex);
       try {
         const response = await post("tourlist", sendData);
         setCount(response.Count);
         if (response.Tours) {
-          setTourListData(response.Tours);
+          // setTourListData(response.Tours);
           setAllPage(response.Total_Page);
           // console.log("Tours data:", response.Tours); // Check the data being set
         } else {
@@ -86,16 +85,15 @@ export default function TourList4() {
     fetchData();
   }, [activeIndex]);
 
-  console.log("Tour list data was : " , TourListData);
-  
 
-  
   // pagination
 
   // Callback function to handle index updates
   const handleIndexChange = (index) => {
     setActiveIndex(index);
   };
+
+  
 
   return (
     <section className="layout-pb-xl">
@@ -146,7 +144,7 @@ export default function TourList4() {
                   data-main-value=""
                 >
                   <div className="dropdown__menu js-menu-items">
-                    {speedFeatures.map((elm, i) => (
+                    {speedFeatures?.map((elm, i) => (
                       <div
                         onClick={() => {
                           setSortOption((pre) => (pre == elm ? "" : elm));
@@ -164,7 +162,7 @@ export default function TourList4() {
               </div>
             </div>
 
-            {TourListData.map((elm, ind) => (
+            {heroData?.Tour_List?.map((elm, ind) => (
               <div className="row mt-20" key={ind}>
                 <div className="col-12 my-0">
                   <div className="tourCard -type-2">

@@ -20,11 +20,17 @@ export const GlobalStateProvider = ({ children }) => {
     new DateObject().setDay(5),
     new DateObject().setDay(14).add(1, "month"),
   ]);
+  const [counts, setCounts] = useState({
+    Adult: 1,
+    child: 0,
+    baby: 0,
+  });
+
   
 
   return (
     <GlobalStateContext.Provider
-      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates }}
+      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts}}
     >
       {children}
     </GlobalStateContext.Provider>

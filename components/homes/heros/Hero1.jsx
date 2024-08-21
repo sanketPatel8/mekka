@@ -1,45 +1,67 @@
 "use client";
 
-import Calender from "@/components/common/dropdownSearch/Calender";
-import Location from "@/components/common/dropdownSearch/Location";
-import TourType from "@/components/common/dropdownSearch/TourType";
-import Image from "next/image";
-import React, { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
-import { useTranslation } from "@/app/context/TranslationContext";
-import { useGlobalState } from "@/app/context/GlobalStateContext";
+import React, { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { useGlobalState } from '@/app/context/GlobalStateContext';
+import { post } from '@/app/utils/api';
+import { showErrorToast } from '@/app/utils/tost';
+import { useTranslation } from '@/app/context/TranslationContext';
+import NumberOfTravellers from '@/components/common/dropdownSearch/NumberOfTravellers';
+import Image from 'next/image';
 
-export default function Hero1() {
+export default function Hero1({ onDataFetch }) {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
-  const { location, setLocation, calender, setCalender, tourType , formattedDates } = useGlobalState();
-
-  console.log( "date was : ",formattedDates)
-
-  useEffect(() => {
-    setCurrentActiveDD("");
-  }, [location, calender, tourType, setCurrentActiveDD]);
-
+  const { location, calender, tourType } = useGlobalState();
+  
   const dropDownContainer = useRef();
+
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClick = (event) => {
-      if (
-        dropDownContainer.current &&
-        !dropDownContainer.current.contains(event.target)
-      ) {
+      if (dropDownContainer.current && !dropDownContainer.current.contains(event.target)) {
         setCurrentActiveDD("");
       }
     };
-
     document.addEventListener("click", handleClick);
-
     return () => {
       document.removeEventListener("click", handleClick);
     };
   }, []);
-  
+
+  // Fetch data and pass it to the parent component
+  useEffect(() => {
+    const fetchData = async () => {
+      const sendData = {
+        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        Keyword: "",
+        type: location,
+        start_date: calender[0],
+        end_date: calender[1],
+      };
+      try {
+        const response = await post("search_tour", sendData);
+        
+        // Check if response is an object with expected properties
+        if (response && typeof response === 'object' && response.Tour_List) {
+          console.log('Fetched data in Hero1:', response);
+
+          // Pass data to parent component
+          if (onDataFetch) {
+            onDataFetch(response);
+          }
+        } else {
+          console.error("Response is not a valid data object:", response);
+          showErrorToast("Unexpected response format.");
+        }
+      } catch (error) {
+        console.error("Error caught:", error);
+        showErrorToast("An error occurred.");
+      }
+    };
+    fetchData();
+  }, [onDataFetch, location, calender]);
 
   const { translate } = useTranslation(); 
 
@@ -134,8 +156,6 @@ export default function Hero1() {
                           </div>
                         </div>
                       </div>
-
-                     
                     </div>
 
                     <div className="searchFormItem js-select-control js-form-dd">

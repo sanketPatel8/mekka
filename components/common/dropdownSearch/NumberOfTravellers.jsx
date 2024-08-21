@@ -1,16 +1,12 @@
 "use client";
 
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 import React, { useState, useEffect } from "react";
 
-const options = ["Adult", "Children", "Children"];
+const options = ["Adult", "child", "baby"];
 
 export default function NumberOfTravellers({ active, setTourType }) {
-  const [counts, setCounts] = useState({
-    Adult: 1,
-    Children: 0,
-    Babies: 0,
-  });
-
+  const { counts , setCounts } = useGlobalState();
   useEffect(() => {
     // console.log("Initial counts state:", counts);
   }, []);

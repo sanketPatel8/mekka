@@ -10,58 +10,15 @@ export default function HeaderSerch({ white }) {
   const [selected, setSelected] = useState("");
   const [ddActive, setDdActive] = useState(false);
   const [SearchData, setSearchData] = useState([]);
+  const [showSearchbar, setShowSearchbar] = useState(false);
 
   const inputRef = useRef();
+  const dropDownContainer = useRef();
+  const searchResultsRef = useRef();
 
   useEffect(() => {
     inputRef.current.value = selected;
   }, [selected]);
-
-  const searchData = [
-    {
-      id: 1, // Unique ID
-      iconClass: "icon-pin text-20",
-      title: "Phuket",
-      location: "Thailand, Asia",
-    },
-    {
-      id: 2, // Unique ID
-      iconClass: "icon-price-tag text-20",
-      title: "London Day Trips",
-      location: "England",
-    },
-    {
-      id: 3, // Unique ID
-      iconClass: "icon-flag text-20",
-      title: "Europe",
-      location: "Country",
-    },
-    {
-      id: 7, // Unique ID
-      img: `/img/misc/icon.png`,
-      title: "Centipede Tour - Guided Arizona Desert Tour by ATV",
-      location: "Country",
-    },
-    {
-      id: 4, // Unique ID
-      iconClass: "icon-pin text-20",
-      title: "Istanbul",
-      location: "Turkey",
-    },
-    {
-      id: 5, // Unique ID
-      iconClass: "icon-pin text-20",
-      title: "Berlin",
-      location: "Germany, Europe",
-    },
-    {
-      id: 6, // Unique ID
-      iconClass: "icon-pin text-20",
-      title: "London",
-      location: "England, Europe",
-    },
-  ];
-  const dropDownContainer = useRef();
 
   useEffect(() => {
     const handleClick = (event) => {
@@ -69,7 +26,7 @@ export default function HeaderSerch({ white }) {
         dropDownContainer.current &&
         !dropDownContainer.current.contains(event.target)
       ) {
-        setDdActive("");
+        setDdActive(false);
       }
     };
 
@@ -81,31 +38,38 @@ export default function HeaderSerch({ white }) {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const sendData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        keyword: selected,
+    if (selected.length > 0) {
+      const fetchData = async () => {
+        const sendData = {
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          keyword: selected,
+        };
+
+        try {
+          const response = await post("search_tour", sendData);
+          console.log("search response was:", response);
+          setSearchData(response.Tour_List);
+          setShowSearchbar(true);
+          setDdActive(true);
+        } catch (error) {
+          console.error("Error caught:", error);
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            showErrorToast("Please verify your email");
+          } else {
+            showErrorToast("An error occurred during registration.");
+          }
+        }
       };
 
-      try {
-        const response = await post("search_tour", sendData);
-        console.log("search responese was : ", SearchData);
-        setSearchData(response.Tour_List);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-
-    fetchData();
+      fetchData();
+    } else {
+      setShowSearchbar(false);
+      setDdActive(false);
+    }
   }, [selected]);
 
   return (
@@ -116,27 +80,38 @@ export default function HeaderSerch({ white }) {
       >
         <i className="icon-search text-18"></i>
         <input
-          onChange={(e) => setSelected(e.target.value)}
+          onChange={(e) => {
+            setSelected(e.target.value);
+            if (e.target.value.length > 0) {
+              setDdActive(true); // Activate dropdown if text length is greater than 0
+            } else {
+              setDdActive(false); // Hide dropdown if text length is 0
+            }
+          }}
           ref={inputRef}
-          onClick={() => setDdActive((pre) => !pre)}
           type="text"
-          placeholder="Search destinations or activities"
+          placeholder="Search Packages"
           className={`js-search ${white ? "text-white" : ""}`}
         />
 
         <div
+          ref={searchResultsRef}
           className={
             ddActive ? "headerSearchRecent is-active" : "headerSearchRecent"
           }
           data-x="headerSearch"
         >
-          <div className="headerSearchRecent__container">
+          <div
+            className={`headerSearchRecent__container ${
+              showSearchbar === false ? "d-none" : "d-block"
+            }`}
+          >
             <div className="headerSearchRecent__title">
-              <h4 className="text-18 fw-500">Search Your Destination</h4>
+              <h4 className="text-18 fw-500">Search Packages</h4>
             </div>
 
-            <div className="headerSearchRecent__list js-results">
-              {SearchData.map((elm, i) => (
+            <div className={`headerSearchRecent__list js-results `}>
+              {SearchData.slice(0, 10).map((elm, i) => (
                 <Link href={`/package/${elm?.slug}?id=${elm?.id}`} key={i}>
                   <button
                     className="headerSearchRecent__item js-search-option"
