@@ -510,5 +510,8 @@ hr{
     gap: 5px;
    }
 
+   .cur_point { 
+    cursor: pointer;
+   }
 
    

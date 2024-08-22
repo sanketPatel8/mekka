@@ -7,9 +7,9 @@ import { FaHotel } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
 import { MdBed } from "react-icons/md";
-import Stars from "../common/Stars";
-import Pagination from "../common/Pagination";
-import Sidebar2 from "./Sidebar2";
+import Stars from "@/components/common/Stars";
+import Pagination from "@/components/common/Pagination";
+import Sidebar2 from "@/components/tours/Sidebar2";
 import Image from "next/image";
 import { post } from "@/app/utils/api";
 import Link from "next/link";
@@ -17,6 +17,7 @@ import { showErrorToast } from "@/app/utils/tost";
 import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function TourList4({ heroData }) {
   const [sortOption, setSortOption] = useState("");
@@ -26,11 +27,10 @@ export default function TourList4({ heroData }) {
   const [count, setCount] = useState("");
   const [Dataid, setDataid] = useState("");
   const [AllPage, setAllPage] = useState("");
-  // for paination
-
-  const Router = useRouter();
-
   const [activeIndex, setActiveIndex] = useState(1);
+  const [SidebarData, setSidebarData] = useState([]);
+
+  const { FilterData } = useGlobalState();
 
   const dropDownContainer = useRef();
 
@@ -58,7 +58,6 @@ export default function TourList4({ heroData }) {
         start: activeIndex,
         type: "",
       };
-      console.log("activeIndex was :", activeIndex);
 
       try {
         const response = await post("tourlist", sendData);
@@ -66,7 +65,6 @@ export default function TourList4({ heroData }) {
         if (response.Tours) {
           setTourListData(response.Tours);
           setAllPage(response.Total_Page);
-          // console.log("Tours data:", response.Tours); // Check the data being set
         } else {
           console.error("Tours data is undefined in the response.");
         }
@@ -87,23 +85,33 @@ export default function TourList4({ heroData }) {
     fetchData();
   }, [activeIndex]);
 
-  console.log("Tour list data was : ", TourListData);
-  console.log("heroData was : ", heroData);
-
-  // pagination
-
-  // Callback function to handle index updates
   const handleIndexChange = (index) => {
     setActiveIndex(index);
   };
 
+  const combinedTourList = [
+    ...FilterData,
+    ...TourListData,
+    ...(heroData?.Tour_List || []),
+  ];
+
+  const resultsPerPage = 10; // Number of results per page
+
+  // Calculate the range of results to display based on the activeIndex
+  const currentResults = combinedTourList?.slice(
+    (activeIndex - 1) * resultsPerPage,
+    activeIndex * resultsPerPage
+  );
+
+  console.log("FilterData" , FilterData);
+  
   return (
     <section className="layout-pb-xl">
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">
             <div className="lg:d-none">
-              <Sidebar2 />
+              <Sidebar2 setSidebarData={setSidebarData} />
             </div>
 
             <div className="accordion d-none mb-30 lg:d-flex js-accordion">
@@ -125,7 +133,7 @@ export default function TourList4({ heroData }) {
                   style={sidebarActive ? { maxHeight: "2000px" } : {}}
                 >
                   <div className="pt-20">
-                    <Sidebar2 />
+                    <Sidebar2 setSidebarData={setSidebarData} />
                   </div>
                 </div>
               </div>
@@ -135,7 +143,7 @@ export default function TourList4({ heroData }) {
           <div className="col-xl-9 col-lg-8">
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
-                <div>{heroData.Tour_List?.length} results</div>
+                <div>{combinedTourList.length} results</div>
               </div>
 
               <div ref={dropDownContainer} className="col-auto">
@@ -164,14 +172,10 @@ export default function TourList4({ heroData }) {
               </div>
             </div>
 
-            {/* {heroData.Tour_List?.map((elm, ind) => (
-              <div className="row mt-20" key={ind}></div>
-            ))} */}
-
-            {heroData?.Tour_List?.length === 0 ? (
+            {currentResults?.length === 0 ? (
               <h2>No tours available</h2>
             ) : (
-              heroData?.Tour_List?.map((elm, ind) => (
+              currentResults?.map((elm, ind) => (
                 <div className="row mt-20" key={ind}>
                   <div className="col-12 my-0">
                     <div className="tourCard -type-2">
@@ -289,18 +293,18 @@ export default function TourList4({ heroData }) {
 
             <div
               className={`${
-                heroData.Tour_List?.length === 0 ? "d-none" : "d-block"
+                combinedTourList.length === 0 ? "d-none" : "d-block"
               }`}
             >
               <div className="d-flex justify-center flex-column mt-60">
                 <Pagination
-                  range={AllPage}
+                  range={Math.ceil(combinedTourList?.length / resultsPerPage)}
                   activeIndex={activeIndex}
-                  setActiveIndex={handleIndexChange}
+                  setActiveIndex={setActiveIndex}
                 />
 
                 <div className="text-14 text-center mt-20">
-                  Showing results 1-10 of {heroData.Tour_List?.length}
+                  Showing results 1-10 of {combinedTourList.length}
                 </div>
               </div>
             </div>

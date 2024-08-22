@@ -4,20 +4,22 @@ import Slider from "@mui/material/Slider";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { createTheme } from "@mui/material/styles";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#EB662B", // Change this color to your desired primary color
+      main: "#DAC04F", 
     },
     secondary: {
-      main: "#f50057", // Change this color to your desired secondary color
+      main: "#DAC04F", 
     },
   },
 });
 
 export default function RangeSlider() {
-  const [value, setValue] = useState([200, 60000]);
+  const {value , setValue} = useGlobalState()
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

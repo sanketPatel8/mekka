@@ -10,12 +10,12 @@ import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 
-export default function Sidebar2() {
+
+
+export default function Sidebar2({ setSidebarData }) {
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const [LanActives, setLanActives] = useState([]);
   const [TourData, setTourData] = useState({});
-  const { value , setFilterData } = useGlobalState();
-
 
   // Generic handleChange function for all selections
   const useHandleSelection = () => {
@@ -36,7 +36,7 @@ export default function Sidebar2() {
         const sendData = {
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           type: selectedTourTypes.join(", "),
-          language: 1 ,
+          language: selectedLanguages.join(", "),
           departure: selectedCities.join(", "),
           min_price: value[0],
           max_price: value[1],
@@ -48,7 +48,7 @@ export default function Sidebar2() {
 
         try {
           const response = await post("tourfilter", sendData);
-          setFilterData(response.Tours);
+          setSidebarData(response.Tours);
         } catch (error) {
           console.error("Error caught:", error);
           if (
@@ -61,11 +61,10 @@ export default function Sidebar2() {
             showErrorToast("An error occurred during registration.");
           }
         }
-        
       };
 
       fetchData();
-    }, [selections]);
+    }, [selections, setSidebarData]);
 
     return [selections, handleSelectionChange];
   };
@@ -78,8 +77,8 @@ export default function Sidebar2() {
   const [selectedFeatures, handleFeatureChange] = useHandleSelection();
   const [selectedDurations, handleDurationChange] = useHandleSelection();
 
-
-
+  const { value } = useGlobalState();
+  const { Distance } = useGlobalState();
 
   // with tourdata api call
   useEffect(() => {

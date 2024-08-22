@@ -26,11 +26,19 @@ export const GlobalStateProvider = ({ children }) => {
     baby: 0,
   });
 
+  // for rageslide
+
+  const [value, setValue] = useState([200, 60000]);
+  const [Distance, setDistance] = useState([0, 500]);
+
   
+  // fortourfilter data 
+
+  const [FilterData, setFilterData] = useState([])
 
   return (
     <GlobalStateContext.Provider
-      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts}}
+      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts , value , setValue , Distance, setDistance , FilterData, setFilterData }}
     >
       {children}
     </GlobalStateContext.Provider>

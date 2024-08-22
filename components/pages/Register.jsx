@@ -43,7 +43,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isChecked === true) {
+
       if(RegisterData.password === confirm_pass){
         try {
           const response = await post("register", RegisterData);
@@ -67,16 +67,14 @@ export default function Register() {
           password: "",
           
         });
-        alert(RegisterData.AccessKey)
+       
         setConfirm_pass("")
         setIsChecked(false)
       }else{
         showErrorToast("password dose not match")
       }
      
-    } else {
-      showErrorToast("Check that check box");
-    }
+   
   };
 
   const { translate } = useTranslation();

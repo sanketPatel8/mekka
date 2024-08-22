@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export default function Hero1({ blog }) {
+export default function Hero1({ blog , BlogData }) {
   return (
     <section className="hero -type-1 -min-2">
       <div className="hero__bg">
@@ -20,12 +20,12 @@ export default function Hero1({ blog }) {
           <div className="col-xl-12">
             <div className="hero__content">
               <h1 className="hero__title">
-                {blog?.title ? blog?.title : "Your guide to everywhere"}
+                {BlogData?.headOne ? BlogData?.headOne : "Your guide to everywhere"}
               </h1>
 
               <p className="hero__text">
-                {blog?.desc
-                  ? blog?.desc
+                {BlogData?.headOneText
+                  ? BlogData?.headOneText
                   : `Find inspiration, guides and stories for wherever you're going
                 Select a destination`}
               </p>
