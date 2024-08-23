@@ -56,7 +56,7 @@ export default function BookingPages() {
     email: "",
     password: "",
   });
-  const { adultNumber, youthNumber, childrenNumber , loginPer , FlightSelect , HotelSelect , total , setTotal } = useGlobalState();
+  const { adultNumber, youthNumber, childrenNumber , loginPer , FlightSelect , HotelSelect , total , setTotal , selectDeparture } = useGlobalState();
 
   const router = useRouter();
 
@@ -440,7 +440,7 @@ export default function BookingPages() {
                       <div className="mr-5">
                         <MdFlightTakeoff size={25} color="#DAC04F" />
                       </div>
-                      <div className="text-start">From: Frankfurt (FRA)</div>
+                      <div className="text-start">From: {selectDeparture}</div>
                     </div>
 
                     <div className="d-flex items-center justify-content-space-arround">

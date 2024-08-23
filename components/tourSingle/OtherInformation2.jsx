@@ -6,13 +6,13 @@ import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 
-const OtherInformation2 = ({ PAckageData }) => {
+const OtherInformation2 = ({ PAckageData , id}) => {
   const [OtherInfo, setOtherInfo] = useState({});
   const [TourList, setTourList] = useState(null);
 
   useEffect(() => {
     setOtherInfo(PAckageData);
-    const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === "1");
+    const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === id);
     setTourList(foundTour);
   }, [PAckageData]);
 

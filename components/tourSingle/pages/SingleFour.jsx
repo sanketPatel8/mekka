@@ -38,7 +38,7 @@ export default function SingleFour({ PAckageData }) {
     <>
       <section className="py-30 mt-80">
         <div className="container">
-          <MainInformation  PAckageData={PAckageData} />
+          <MainInformation  PAckageData={PAckageData}  />
 
           <Gallery1 />
         </div>
@@ -49,10 +49,10 @@ export default function SingleFour({ PAckageData }) {
           <div className="row y-gap-30 justify-between ml-lg-2 ml-md-0 ml-0 ">
             <div className="col-lg-8 col-11 border-1 single-lft-box-shadow mx-auto">
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
-                <OthersInformation PAckageData={PAckageData} />
+                <OthersInformation PAckageData={PAckageData} id={id}/>
               </div>
               <div className="row y-gap-20 justify-between items-center layout-pb-sm">
-                <OtherInformation2  PAckageData={PAckageData}  />
+                <OtherInformation2  PAckageData={PAckageData} id={id} />
               </div>
 
               <Overview PAckageData={PAckageData} />

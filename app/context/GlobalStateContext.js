@@ -51,6 +51,8 @@ export const GlobalStateProvider = ({ children }) => {
     madinaPrice : 0
   })
   const [FlightSelect, setFlightSelect] = useState('')
+  const [selectDeparture, setselectDeparture] = useState("");
+
 
 
   // for package total maintain 
@@ -59,7 +61,7 @@ export const GlobalStateProvider = ({ children }) => {
 
   return (
     <GlobalStateContext.Provider
-      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts , value , setValue , Distance, setDistance , FilterData, setFilterData , prices, setPrices , HotelSelect, setHotelSelect , FlightSelect, setFlightSelect , total, setTotal }}
+      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts , value , setValue , Distance, setDistance , FilterData, setFilterData , prices, setPrices , HotelSelect, setHotelSelect , FlightSelect, setFlightSelect , total, setTotal , selectDeparture, setselectDeparture}}
     >
       {children}
     </GlobalStateContext.Provider>

@@ -25,6 +25,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     setFlightSelect,
     total,
     setTotal,
+    selectDeparture, setselectDeparture
   } = useGlobalState();
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
@@ -139,7 +140,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   }, [extraService, isServicePerPerson, setExtraCharge]);
 
-  const [selectedTime, setSelectedTime] = useState("");
   const [activeTimeDD, setActiveTimeDD] = useState(false);
 
   const { translate } = useTranslation();
@@ -495,7 +495,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                 <div className="searchFormItem__content">
                   <h5>Departure </h5>
                   <div className="js-select-control-chosen">
-                    {selectedTime ? selectedTime : "Choose City"}
+                    {selectDeparture ? selectDeparture : "Choose City"}
                   </div>
                 </div>
                 <div className="searchFormItem__icon_chevron">
@@ -516,7 +516,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                       <div
                         key={i}
                         onClick={() => {
-                          setSelectedTime((pre) => (pre == elm ? "" : elm));
+                          setselectDeparture((pre) => (pre == elm ? "" : elm));
                           setActiveTimeDD(false);
                         }}
                         className="searchFormItemDropdown__item"
