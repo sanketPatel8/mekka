@@ -56,7 +56,7 @@ export default function BookingPages() {
     email: "",
     password: "",
   });
-  const { adultNumber, youthNumber, childrenNumber , loginPer } = useGlobalState();
+  const { adultNumber, youthNumber, childrenNumber , loginPer , FlightSelect , HotelSelect , total , setTotal } = useGlobalState();
 
   const router = useRouter();
 
@@ -66,7 +66,7 @@ export default function BookingPages() {
       ...prevState,
       [name]: value,
     }));
-  };
+  };3 
 
   const handleLoginCheckboxChange = (e) => {
     setLoginISChacked(e.target.checked);
@@ -358,6 +358,7 @@ export default function BookingPages() {
     console.log("Children information:", formValues.baby);
   };
   
+  console.log("HotelSelect.mekka" , HotelSelect.mekka);
   
 
   const { translate } = useTranslation();
@@ -431,7 +432,7 @@ export default function BookingPages() {
                         <FaTelegramPlane size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Airline: Royal Jordanian, Egyptair
+                        Airline: {FlightSelect == "" ? "Please Flight Select" : FlightSelect}
                       </div>
                     </div>
 
@@ -489,14 +490,14 @@ export default function BookingPages() {
                       <div className="mr-5">
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
-                      <div className="text-start">Mekka - (Hotel Name)</div>
+                      <div className="text-start"> {HotelSelect.mekka == "" ? "Please Hotel Select" : HotelSelect.mekka}</div>
                     </div>
 
                     <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
-                      <div className="text-start">Madina - (Hotel Name)</div>
+                      <div className="text-start">{HotelSelect.madina == "" ? "Please Hotel Select" : HotelSelect.madina}</div>
                     </div>
 
                     <p className="text-12">
@@ -509,7 +510,7 @@ export default function BookingPages() {
                   <div className="">
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Subtotal")}</div>
-                      <div className=""> 182 € </div>
+                      <div className=""> {total} € </div>
                     </div>
 
                     <div className="d-flex items-center justify-between">
@@ -519,7 +520,7 @@ export default function BookingPages() {
 
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">Amount Due</div>
-                      <div className=""> 43,242 € </div>
+                      <div className=""> {total} € </div>
                     </div>
                   </div>
                   <hr />
@@ -530,7 +531,7 @@ export default function BookingPages() {
 
                     <form className="contactForm mt-10">
                       <div className="form-input my-1">
-                        <input type="text" required />
+                        <input type="text"  required />
                         <label className="lh-2 text-16 text-light-1 top-29">
                           Promo Code
                         </label>
@@ -554,7 +555,7 @@ export default function BookingPages() {
           </div>
         </div>
       </section>
-      <div id="openSignIn">
+      <div id="openSignIn"> 
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}

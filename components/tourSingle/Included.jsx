@@ -4,7 +4,7 @@ import React from "react";
 export default function Included() {
   return (
     <div className="row x-gap-130 y-gap-20 pt-20">
-      <div className="col-lg-6">
+      {/* <div className="col-lg-6">
         <div className="y-gap-15">
           {included.map((elm, i) => (
             <div key={i} className="d-flex">
@@ -24,7 +24,7 @@ export default function Included() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

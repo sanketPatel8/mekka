@@ -1,676 +1,438 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { toursTypes, features } from "@/data/tourFilteringOptions";
-import RangeSlider from "@/components/common/RangeSlider";
-import Stars from "@/components/common/Stars";
-import PriceRangeBar from "@/components/common/PriceRangeBar";
+import { State } from "@/data/tourSingleContent";
+import "@/public/css/index.css";
+import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { post } from "@/app/utils/api";
-import { showErrorToast } from "@/app/utils/tost";
+import { useRouter } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 
+export default function TourSingleSidebar({ PAckageData }) {
+  const prices = {
+    adultPrice: 94,
+    youthPrice: 84,
+    childrenPrice: 20,
+    extraService: 40,
+    servicePerPerson: 40,
+  };
+  
+  const {
+    setAdultNumber,
+    setYouthNumber,
+    setChildrenNumber,
+    adultNumber,
+    youthNumber,
+    childrenNumber,
+  } = useGlobalState();
+  const [extraService, setExtraService] = useState("");
+  const [isServicePerPerson, setIsServicePerPerson] = useState(false);
+  const [extraCharge, setExtraCharge] = useState(0);
+  const [radioValue, setRadioValue] = useState("");
+  const [selectedCheckbox, setselectedCheckbox] = useState(false);
+  const [SidebarData, setSidebarData] = useState({});
 
-
-export default function Sidebar2({ setSidebarData }) {
-  const [ddActives, setDdActives] = useState(["tourtype"]);
-  const [LanActives, setLanActives] = useState([]);
-  const [TourData, setTourData] = useState({});
-
-  // Generic handleChange function for all selections
-  const useHandleSelection = () => {
-    const [selections, setSelections] = useState([]);
-
-    const handleSelectionChange = (item) => {
-      setSelections((prevSelections) =>
-        prevSelections.includes(item)
-          ? prevSelections.filter((selection) => selection !== item)
-          : [...prevSelections, item]
-      );
-    };
-
-    useEffect(() => {
-      console.log("update state update useEffect");
-
-      const fetchData = async () => {
-        const sendData = {
-          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-          type: selectedTourTypes.join(", "),
-          language: selectedLanguages.join(", "),
-          departure: selectedCities.join(", "),
-          min_price: value[0],
-          max_price: value[1],
-          hotel_star: selectedDurations.join(", "),
-          agent_rating: selectedRatings.join(", "),
-          amenities: selectedFeatures.join(", "),
-          start: 0,
-        };
-
-        try {
-          const response = await post("tourfilter", sendData);
-          setSidebarData(response.Tours);
-        } catch (error) {
-          console.error("Error caught:", error);
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            showErrorToast("Please verify your email");
-          } else {
-            showErrorToast("An error occurred during registration.");
-          }
-        }
-      };
-
-      fetchData();
-    }, [selections, setSidebarData]);
-
-    return [selections, handleSelectionChange];
+  const handleRadioChange = (event) => {
+    setRadioValue(event.target.value);
   };
 
-  // Using the generic function for each selection type
-  const [selectedTourTypes, handleTourTypeChange] = useHandleSelection();
-  const [selectedLanguages, handleLanguageChange] = useHandleSelection();
-  const [selectedCities, handleCityChange] = useHandleSelection();
-  const [selectedRatings, handleRatingChange] = useHandleSelection();
-  const [selectedFeatures, handleFeatureChange] = useHandleSelection();
-  const [selectedDurations, handleDurationChange] = useHandleSelection();
+  const handleExcludeFlight = () => {
+    if (selectedCheckbox === false) {
+      setselectedCheckbox(true);
+    } else {
+      setselectedCheckbox(false);
+    }
+  };
 
-  const { value } = useGlobalState();
-  const { Distance } = useGlobalState();
-
-  // with tourdata api call
   useEffect(() => {
-    const fetchData = async () => {
-      const sendData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      };
+    setExtraCharge(0);
+    if (extraService) {
+      setExtraCharge((pre) => pre + prices.extraService);
+    }
+    if (isServicePerPerson) {
+      setExtraCharge((pre) => pre + prices.servicePerPerson);
+    }
+  }, [extraService, isServicePerPerson, setExtraCharge]);
 
-      try {
-        const response = await post("tour_data", sendData);
-        setTourData(response.Data);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
+  const [selectedTime, setSelectedTime] = useState("");
+  const [activeTimeDD, setActiveTimeDD] = useState(false);
 
   const { translate } = useTranslation();
 
+  useEffect(() => {
+    setSidebarData(PAckageData?.Tour_Details);
+  }, [PAckageData]);
+
   return (
-    <div className="sidebar -type-1 rounded-12">
-      <div className="sidebar__content">
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item js-accordion-item-active ${
-                ddActives.includes("tourtype") ? "is-active" : ""
-              }`}
+    <div className="tourSingleSidebar">
+      <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
+
+{/* {SidebarData} */}
+
+      <div>
+        <div className="d-flex items-center justify-between">
+          <div className="text-14">
+            Adult (18+ years){" "}
+            <span className="fw-500">
+              {(prices.adultPrice * adultNumber).toFixed(2)} €
+            </span>
+          </div>
+
+          <div className="d-flex items-center js-counter">
+            <button
+              onClick={() => {
+                setAdultNumber((pre) => (pre > 1 ? pre - 1 : pre));
+              }}
+              className="button size-30 border-1 rounded-full js-down"
             >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((prev) =>
-                    prev.includes("tourtype")
-                      ? [...prev.filter((elm) => elm !== "tourtype")]
-                      : [...prev, "tourtype"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">{translate("Tour Type")}</h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
+              <i className="icon-minus text-10"></i>
+            </button>
+
+            <div className="flex-center ml-10 mr-10">
+              <div className="text-14 size-20 js-count">{adultNumber}</div>
+            </div>
+
+            <button
+              onClick={() => {
+                setAdultNumber((pre) => pre + 1);
+              }}
+              className="button size-30 border-1 rounded-full js-up"
+            >
+              <i className="icon-plus text-10"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-15">
+        <div className="d-flex items-center justify-between">
+          <div className="text-14">
+            Youth (13-17 years){" "}
+            <span className="fw-500">
+              {(prices.youthPrice * youthNumber).toFixed(2)} €
+            </span>
+          </div>
+
+          <div className="d-flex items-center js-counter">
+            <button
+              onClick={() => {
+                setYouthNumber((pre) => (pre > 1 ? pre - 1 : 0));
+              }}
+              className="button size-30 border-1 rounded-full js-down"
+            >
+              <i className="icon-minus text-10"></i>
+            </button>
+
+            <div className="flex-center ml-10 mr-10">
+              <div className="text-14 size-20 js-count">{youthNumber}</div>
+            </div>
+
+            <button
+              onClick={() => {
+                setYouthNumber((pre) => pre + 1);
+              }}
+              className="button size-30 border-1 rounded-full js-up"
+            >
+              <i className="icon-plus text-10"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-15">
+        <div className="d-flex items-center justify-between">
+          <div className="text-14">
+            Children (0-12 years)
+            <span className="fw-500">
+              {(prices.childrenPrice * childrenNumber).toFixed(2)} €
+            </span>
+          </div>
+
+          <div className="d-flex items-center js-counter">
+            <button
+              onClick={() => {
+                setChildrenNumber((pre) => (pre > 1 ? pre - 1 : 0));
+              }}
+              className="button size-30 border-1 rounded-full js-down"
+            >
+              <i className="icon-minus text-10"></i>
+            </button>
+
+            <div className="flex-center ml-10 mr-10">
+              <div className="text-14 size-20 js-count">{childrenNumber}</div>
+            </div>
+
+            <button
+              onClick={() => {
+                setChildrenNumber((pre) => pre + 1);
+              }}
+              className="button size-30 border-1 rounded-full js-up"
+            >
+              <i className="icon-plus text-10"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div>
+        <h5 className="text-18 fw-500 mb-20 mt-20">
+          {translate("Hotel For Makka")}
+        </h5>
+        {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
+          <div key={ind}>
+            <div
+              className="d-flex items-center justify-between my-1"
+              key={elm.id}
+            >
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value={`mekka-${elm.hotel_stars}star`}
+                      checked={radioValue === `mekka-${elm.hotel_stars}star`}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.hotel_name} ({elm.hotel_stars} star)
+                    </span>
+                  </label>
                 </div>
               </div>
+              <div className="text-14">40 €</div>
+            </div>
+          </div>
+        ))}
+
+        <hr />
+
+        <h5 className="text-18 fw-500 mb-20 mt-20">
+          {translate("Hotel For Madina")}
+        </h5>
+        {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
+          <div>
+            <div
+              className="d-flex items-center justify-between my-1"
+              key={elm.id}
+            >
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name="radioGroup"
+                      value={`madina-${elm.hotel_stars}star`}
+                      checked={radioValue === `madina-${elm.hotel_stars}star`}
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.hotel_name} ({elm.hotel_stars} star)
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="text-14">40 €</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <hr />
+
+      <h5 className="text-18 fw-500 mb-20 mt-20">
+        {translate("Flight Booking")}
+      </h5>
+
+      <div className="d-flex items-center justify-between pt-1">
+        <div className="d-flex items-center justify-between">
+          <div className="row ">
+            <div className="col-12">
+              <div className="d-flex items-center pointer-check">
+                <div className="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="item4"
+                    name="item4"
+                    checked={selectedCheckbox}
+                    onChange={handleExcludeFlight}
+                  />
+                  <label htmlFor="item4" className="form-checkbox__mark ml-0">
+                    <div className="form-checkbox__icon">
+                      <svg
+                        width="10"
+                        height="8"
+                        viewBox="0 0 10 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                  </label>
+                </div>
+                <label htmlFor="item4" className="lh-16 ml-15">
+                  Exclude
+                  {translate(" Flight Booking")}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-14">40 €</div>
+      </div>
+
+      <hr />
+
+      <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
+        <div>
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-1"
+                    checked={radioValue === "Flight-1"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">IndiGo ( No Stop )</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="text-14">40 €</div>
+          </div>
+
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-2"
+                    checked={radioValue === "Flight-2"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                    Akasa Air ( 1 Stop )
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="text-14">40 €</div>
+          </div>
+
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-3"
+                    checked={radioValue === "Flight-3"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">Vistara ( 2 Stop )</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="text-14">40 €</div>
+          </div>
+
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio  d-flex items-center">
+                  <input
+                    type="radio"
+                    name="radioGroup"
+                    value="Flight-4"
+                    checked={radioValue === "Flight-4"}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                    Club One Air ( 4 Stop )
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="text-14">40 €</div>
+          </div>
+        </div>
+        <hr />
+        <div className="searchForm -type-1 -sidebar mt-20">
+          <div className="searchForm__form">
+            <div className="searchFormItem js-select-control js-form-dd">
               <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("tourtype") ? { maxHeight: "300px" } : {}
-                }
+                className="searchFormItem__button"
+                onClick={() => setActiveTimeDD((pre) => !pre)}
+                data-x-click="time"
               >
-                <div className="pt-15">
-                  <div className="d-flex flex-column y-gap-15">
-                    {toursTypes.map((elm, i) => (
-                      <div key={i}>
-                        <div className="d-flex items-center justify-between">
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="d-flex items-center pointer-check">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id={elm}
-                                    name={elm}
-                                    checked={selectedTourTypes.includes(elm)}
-                                    onChange={() => handleTourTypeChange(elm)}
-                                  />
-                                  <label
-                                    htmlFor={elm}
-                                    className="form-checkbox__mark"
-                                  >
-                                    <div className="form-checkbox__icon">
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label htmlFor={elm} className="lh-16 ml-15">
-                                  {elm}
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                <div className="searchFormItem__content">
+                  <h5>Departure </h5>
+                  <div className="js-select-control-chosen">
+                    {selectedTime ? selectedTime : "Choose City"}
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item ${
-                LanActives.includes("Langauge") ? "is-active" : ""
-              }`}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setLanActives((prev) =>
-                    prev.includes("Langauge")
-                      ? prev.filter((elm) => elm !== "Langauge")
-                      : [...prev, "Langauge"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">{translate("Languages")}</h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
-                </div>
-              </div>
-              <div
-                className="accordion__content"
-                style={
-                  LanActives.includes("Langauge") ? { maxHeight: "300px" } : {}
-                }
-              >
-                <div className="pt-15">
-                  <div className="d-flex flex-column y-gap-15">
-                    {TourData.languages?.map((elm, i) => (
-                      <div key={i}>
-                        <div className="d-flex items-center justify-between">
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="d-flex items-center pointer-check">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id={elm.languages_en}
-                                    name={elm.languages_en}
-                                    checked={selectedLanguages.includes(
-                                      elm.languages_en
-                                    )}
-                                    onChange={() =>
-                                      handleLanguageChange(elm.languages_en)
-                                    }
-                                  />
-                                  <label
-                                    htmlFor={elm.languages_en}
-                                    className="form-checkbox__mark"
-                                  >
-                                    <div className="form-checkbox__icon">
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label
-                                  htmlFor={elm.languages_en}
-                                  className="lh-16 ml-15"
-                                >
-                                  {elm.languages_en}
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item ${
-                ddActives.includes("country") ? "is-active" : ""
-              }`}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((prev) =>
-                    prev.includes("country")
-                      ? [...prev.filter((elm) => elm !== "country")]
-                      : [...prev, "country"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">{translate("Departure")}</h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
-                </div>
-              </div>
-              <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("country") ? { maxHeight: "300px" } : {}
-                }
-              >
-                <div className="pt-15">
-                  <div className="d-flex flex-column y-gap-15">
-                    {TourData.departure?.map((elm, i) => (
-                      <div key={i}>
-                        <div className="d-flex items-center justify-between">
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="d-flex items-center pointer-check">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id={elm.departure}
-                                    name={elm.departure}
-                                    checked={selectedCities.includes(
-                                      elm.departure
-                                    )}
-                                    onChange={() =>
-                                      handleCityChange(elm.departure)
-                                    }
-                                  />
-                                  <label
-                                    htmlFor={elm.departure}
-                                    className="form-checkbox__mark"
-                                  >
-                                    <div className="form-checkbox__icon">
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label
-                                  htmlFor={elm.departure}
-                                  className="lh-16 ml-15"
-                                >
-                                  {elm.departure}
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item ${
-                ddActives.includes("Distance") ? "is-active" : ""
-              }`}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((prev) =>
-                    prev.includes("Distance")
-                      ? [...prev.filter((elm) => elm !== "Distance")]
-                      : [...prev, "Distance"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">
-                  {translate("Distance to Mosque")}
-                </h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
-                </div>
-              </div>
-              <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("Distance") ? { maxHeight: "300px" } : {}
-                }
-              >
-                <PriceRangeBar />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item ${
-                ddActives.includes("pricerange") ? "is-active" : ""
-              }`}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((prev) =>
-                    prev.includes("pricerange")
-                      ? [...prev.filter((elm) => elm !== "pricerange")]
-                      : [...prev, "pricerange"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">{translate("Filter Price")}</h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
-                </div>
-              </div>
-              <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("pricerange") ? { maxHeight: "300px" } : {}
-                }
-              >
-                <RangeSlider min={0} max={1000} step={10} />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item ${
-                ddActives.includes("dur ation") ? "is-active" : ""
-              }`}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((prev) =>
-                    prev.includes("duration")
-                      ? [...prev.filter((elm) => elm !== "duration")]
-                      : [...prev, "duration"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">{translate("Hotel Star")}</h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
-                </div>
-              </div>
-              <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("duration") ? { maxHeight: "300px" } : {}
-                }
-              >
-                <div className="pt-15">
-                  <div className="d-flex flex-column y-gap-15">
-                    {TourData?.hotel_stars?.map((elm, i) => (
-                      <div key={i}>
-                        <div className="d-flex items-center justify-between">
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="d-flex items-center pointer-check">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id={elm}
-                                    name={elm}
-                                    checked={selectedDurations.includes(elm)}
-                                    onChange={() => handleDurationChange(elm)}
-                                  />
-                                  <label
-                                    htmlFor={elm}
-                                    className="form-checkbox__mark"
-                                  >
-                                    <div className="form-checkbox__icon">
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label htmlFor={elm} className="lh-16 ml-15">
-                                  {elm} Star
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item ${
-                ddActives.includes("rating") ? "is-active" : ""
-              }`}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((prev) =>
-                    prev.includes("rating")
-                      ? prev.filter((elm) => elm !== "rating")
-                      : [...prev, "rating"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">{translate("Agent Rating")}</h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
+                <div className="searchFormItem__icon_chevron">
+                  <i className="icon-chevron-down d-flex text-18"></i>
                 </div>
               </div>
 
               <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("rating") ? { maxHeight: "300px" } : {}
-                }
+                className={`searchFormItemDropdown -tour-type ${
+                  activeTimeDD ? "is-active" : ""
+                }`}
+                data-x="time"
+                data-x-toggle="is-active"
               >
-                <div className="pt-15">
-                  <div className="d-flex flex-column y-gap-15">
-                    {TourData.agent_stars?.map((star, i) => (
-                      <div key={i} className="d-flex items-center">
-                        <div className="form-checkbox">
-                          <input
-                            type="checkbox"
-                            id={`rating-${star}`}
-                            name={star}
-                            checked={selectedRatings.includes(star)}
-                            onChange={() => handleRatingChange(star)}
-                          />
-                          <label
-                            htmlFor={`rating-${star}`}
-                            className="form-checkbox__mark"
-                          >
-                            <div className="form-checkbox__icon">
-                              <svg
-                                width="10"
-                                height="8"
-                                viewBox="0 0 10 8"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                  fill="white"
-                                />
-                              </svg>
-                            </div>
-                          </label>
-                        </div>
-                        <label
-                          htmlFor={`rating-${star}`}
-                          className="lh-16 ml-15 d-flex mx-1 cur_point"
-                        >
-                          <Stars star={star} font={13} />
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sidebar__item">
-          <div className="accordion -simple-2 js-accordion">
-            <div
-              className={`accordion__item ${
-                ddActives.includes("features") ? "is-active" : ""
-              }`}
-            >
-              <div
-                className="accordion__button d-flex items-center justify-between"
-                onClick={() =>
-                  setDdActives((prev) =>
-                    prev.includes("features")
-                      ? [...prev.filter((elm) => elm !== "features")]
-                      : [...prev, "features"]
-                  )
-                }
-              >
-                <h5 className="text-18 fw-500">{translate("Amenities")}</h5>
-                <div className="accordion__icon flex-center">
-                  <i className="icon-chevron-down"></i>
-                  <i className="icon-chevron-down"></i>
-                </div>
-              </div>
-              <div
-                className="accordion__content"
-                style={
-                  ddActives.includes("features") ? { maxHeight: "300px" } : {}
-                }
-              >
-                <div className="pt-15">
-                  <div className="d-flex flex-column y-gap-15">
-                    {features.map((elm, i) => (
-                      <div key={i}>
-                        <div className="d-flex items-center justify-between">
-                          <div className="row">
-                            <div className="col-12">
-                              <div className="d-flex items-center pointer-check">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id={elm}
-                                    name={elm}
-                                    checked={selectedFeatures.includes(elm)}
-                                    onChange={() => handleFeatureChange(elm)}
-                                  />
-                                  <label
-                                    htmlFor={elm}
-                                    className="form-checkbox__mark"
-                                  >
-                                    <div className="form-checkbox__icon">
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label htmlFor={elm} className="lh-16 ml-15">
-                                  {elm}
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                <div className="searchFormItemDropdown__container">
+                  <div className="searchFormItemDropdown__list sroll-bar-1">
+                    {State.map((elm, i) => (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          setSelectedTime((pre) => (pre == elm ? "" : elm));
+                          setActiveTimeDD(false);
+                        }}
+                        className="searchFormItemDropdown__item"
+                      >
+                        <button className="js-select-control-button">
+                          <span className="js-select-control-choice">
+                            {elm}
+                          </span>
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -680,6 +442,28 @@ export default function Sidebar2({ setSidebarData }) {
           </div>
         </div>
       </div>
+
+      <div className="d-flex items-center justify-between pt-1">
+        <div className="text-18 fw-500">Total:</div>
+        <div>
+          <div className="text-18 fw-500">
+            {(
+              prices.adultPrice * adultNumber +
+              prices.youthPrice * youthNumber +
+              prices.childrenPrice * childrenNumber +
+              extraCharge * 1
+            ).toFixed(2)}{" "}
+            €
+          </div>
+        </div>
+      </div>
+      <p className="text-right">Including Taxes And Fees</p>
+
+      <Link href="/booking">
+        <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
+          {translate("Book Now")}
+        </button>
+      </Link>
     </div>
   );
 }

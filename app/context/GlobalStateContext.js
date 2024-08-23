@@ -26,6 +26,12 @@ export const GlobalStateProvider = ({ children }) => {
     baby: 0,
   });
 
+  const [prices, setPrices] = useState({
+    adultPrice: 0,
+    youthPrice: 0,
+    childrenPrice: 0,
+  });
+
   // for rageslide
 
   const [value, setValue] = useState([200, 60000]);
@@ -36,9 +42,24 @@ export const GlobalStateProvider = ({ children }) => {
 
   const [FilterData, setFilterData] = useState([])
 
+  // pACKAGEpAGE RADIO BUTTON  
+
+  const [HotelSelect, setHotelSelect] = useState({
+    mekka : "",
+    madina : '',
+    mekkaPrice : 0,
+    madinaPrice : 0
+  })
+  const [FlightSelect, setFlightSelect] = useState('')
+
+
+  // for package total maintain 
+
+  const [total, setTotal] = useState(0);
+
   return (
     <GlobalStateContext.Provider
-      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts , value , setValue , Distance, setDistance , FilterData, setFilterData }}
+      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts , value , setValue , Distance, setDistance , FilterData, setFilterData , prices, setPrices , HotelSelect, setHotelSelect , FlightSelect, setFlightSelect , total, setTotal }}
     >
       {children}
     </GlobalStateContext.Provider>

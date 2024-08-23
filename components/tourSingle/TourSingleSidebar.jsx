@@ -9,14 +9,6 @@ import { useRouter } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function TourSingleSidebar({ PAckageData }) {
-  const prices = {
-    adultPrice: 94,
-    youthPrice: 84,
-    childrenPrice: 20,
-    extraService: 40,
-    servicePerPerson: 40,
-  };
-
   const {
     setAdultNumber,
     setYouthNumber,
@@ -24,6 +16,15 @@ export default function TourSingleSidebar({ PAckageData }) {
     adultNumber,
     youthNumber,
     childrenNumber,
+    prices,
+    setPrices,
+    setCounts,
+    HotelSelect,
+    setHotelSelect,
+    FlightSelect,
+    setFlightSelect,
+    total,
+    setTotal,
   } = useGlobalState();
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
@@ -32,8 +33,24 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [selectedCheckbox, setselectedCheckbox] = useState(false);
   const [SidebarData, setSidebarData] = useState({});
 
-  const handleRadioChange = (event) => {
-    setRadioValue(event.target.value);
+  const group = { setCounts };
+
+  const handleRadioChange = (e) => {
+    const { value, name } = e.target;
+    const selectedHotel = SidebarData?.tour_hotels?.mekka_hotels.find(
+      (hotel) => `Mekka - ${hotel.hotel_name}star` === value
+    );
+
+    setHotelSelect((prev) => ({
+      ...prev,
+      [name]: value,
+      [`${name}Price`]: selectedHotel?.hotel_price || 0,
+    }));
+    
+  };
+
+  const handleHotelchange = (e) => {
+    setFlightSelect(e.target.value);
   };
 
   const handleExcludeFlight = () => {
@@ -43,6 +60,36 @@ export default function TourSingleSidebar({ PAckageData }) {
       setselectedCheckbox(false);
     }
   };
+
+  useEffect(() => {
+    // Ensure SidebarData and tour_price are defined and have at least 3 elements
+    if (
+      SidebarData &&
+      Array.isArray(SidebarData.tour_price) &&
+      SidebarData.tour_price.length >= 3
+    ) {
+      const calculatedTotal =
+        (SidebarData.tour_price[0]?.price || 0) * adultNumber +
+        (SidebarData.tour_price[1]?.price || 0) * youthNumber +
+        (SidebarData.tour_price[2]?.price || 0) * childrenNumber +
+        (HotelSelect.mekkaPrice || 0) + // Include Mekka hotel price
+      (HotelSelect.madinaPrice || 0) +
+        extraCharge * 1;
+
+      setTotal(calculatedTotal.toFixed(2));
+    } else {
+      // Handle cases where SidebarData or tour_price is not defined as expected
+      console.warn("SidebarData or tour_price is not defined correctly.");
+      setTotal(0); // Set a default total if the data is not available
+    }
+  }, [
+    SidebarData,
+    adultNumber,
+    youthNumber,
+    childrenNumber,
+    extraCharge,
+    setTotal,
+  ]);
 
   useEffect(() => {
     setExtraCharge(0);
@@ -63,114 +110,127 @@ export default function TourSingleSidebar({ PAckageData }) {
     setSidebarData(PAckageData?.Tour_Details);
   }, [PAckageData]);
 
+  console.log("SidebarData : ", SidebarData?.tour_price);
+
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
-      <div>
-        <div className="d-flex items-center justify-between">
-          <div className="text-14">
-            Adult (18+ years){" "}
-            <span className="fw-500">
-              {(prices.adultPrice * adultNumber).toFixed(2)} €
-            </span>
-          </div>
+      {/* {SidebarData?.tour_price?.map((group, index) => {
+        let count, setCount;
 
-          <div className="d-flex items-center js-counter">
-            <button
-              onClick={() => {
-                setAdultNumber((pre) => (pre > 1 ? pre - 1 : pre));
-              }}
-              className="button size-30 border-1 rounded-full js-down"
-            >
-              <i className="icon-minus text-10"></i>
-            </button>
+        // Determine the appropriate state and setter function based on price_type
+        if (group.price_type == 1) {
+          count = adultNumber;
+          setCount = setAdultNumber;
+        } else if (group.price_type == 2) {
+          count = youthNumber;
+          setCount = setYouthNumber;
+        } else {
+          count = childrenNumber;
+          setCount = setChildrenNumber;
+        }
 
-            <div className="flex-center ml-10 mr-10">
-              <div className="text-14 size-20 js-count">{adultNumber}</div>
+        return (
+          <div key={index} className="mt-15">
+            <div className="d-flex items-center justify-between">
+              <div className="text-14">
+                {group.price_type == 1
+                  ? "Adult (18+ Years) "
+                  : group.price_type == 2
+                  ? "Youth (13-17 Years) "
+                  : "Children (0-12 Years) "}
+                <span className="fw-500">
+                  {(group.price * count).toFixed(2)} €
+                </span>
+              </div>
+
+              <div className="d-flex items-center js-counter">
+                <button
+                  onClick={() => {
+                    setCount((prev) => (prev > 0 ? prev - 1 : 0)); // Ensure it doesn't go below 0
+                  }}
+                  className="button size-30 border-1 rounded-full js-down"
+                >
+                  <i className="icon-minus text-10"></i>
+                </button>
+
+                <div className="flex-center ml-10 mr-10">
+                  <div className="text-14 size-20 js-count">{count}</div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setCount((prev) => prev + 1);
+                  }}
+                  className="button size-30 border-1 rounded-full js-up"
+                >
+                  <i className="icon-plus text-10"></i>
+                </button>
+              </div>
             </div>
-
-            <button
-              onClick={() => {
-                setAdultNumber((pre) => pre + 1);
-              }}
-              className="button size-30 border-1 rounded-full js-up"
-            >
-              <i className="icon-plus text-10"></i>
-            </button>
           </div>
-        </div>
-      </div>
+        );
+      })} */}
 
-      <div className="mt-15">
-        <div className="d-flex items-center justify-between">
-          <div className="text-14">
-            Youth (13-17 years){" "}
-            <span className="fw-500">
-              {(prices.youthPrice * youthNumber).toFixed(2)} €
-            </span>
-          </div>
+      {SidebarData?.tour_price?.map((group, index) => {
+        let count, setCount;
 
-          <div className="d-flex items-center js-counter">
-            <button
-              onClick={() => {
-                setYouthNumber((pre) => (pre > 1 ? pre - 1 : 0));
-              }}
-              className="button size-30 border-1 rounded-full js-down"
-            >
-              <i className="icon-minus text-10"></i>
-            </button>
+        // Determine the appropriate state and setter function based on price_type
+        if (group.price_type == 1) {
+          count = adultNumber;
+          setCount = setAdultNumber;
+        } else if (group.price_type == 2) {
+          count = youthNumber;
+          setCount = setYouthNumber;
+        } else {
+          count = childrenNumber;
+          setCount = setChildrenNumber;
+        }
 
-            <div className="flex-center ml-10 mr-10">
-              <div className="text-14 size-20 js-count">{youthNumber}</div>
+        return (
+          <div key={index} className="mt-15">
+            <div className="d-flex items-center justify-between">
+              <div className="text-14">
+                {group.price_type == 1
+                  ? "Adult (18+ Years) "
+                  : group.price_type == 2
+                  ? "Youth (13-17 Years) "
+                  : "Children (0-12 Years) "}
+                <span className="fw-500">
+                  {(group.price * count).toFixed(2)} €
+                </span>
+              </div>
+
+              <div className="d-flex items-center js-counter">
+                <button
+                  onClick={() => {
+                    setCount((prev) =>
+                      prev > 0 ? prev - 1 : group.price_type == 1 ? 1 : 0
+                    );
+                  }}
+                  className="button size-30 border-1 rounded-full js-down"
+                >
+                  <i className="icon-minus text-10"></i>
+                </button>
+
+                <div className="flex-center ml-10 mr-10">
+                  <div className="text-14 size-20 js-count">{count}</div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setCount((prev) => prev + 1);
+                  }}
+                  className="button size-30 border-1 rounded-full js-up"
+                >
+                  <i className="icon-plus text-10"></i>
+                </button>
+              </div>
             </div>
-
-            <button
-              onClick={() => {
-                setYouthNumber((pre) => pre + 1);
-              }}
-              className="button size-30 border-1 rounded-full js-up"
-            >
-              <i className="icon-plus text-10"></i>
-            </button>
           </div>
-        </div>
-      </div>
-
-      <div className="mt-15">
-        <div className="d-flex items-center justify-between">
-          <div className="text-14">
-            Children (0-12 years){" "}
-            <span className="fw-500">
-              {(prices.childrenPrice * childrenNumber).toFixed(2)} €
-            </span>
-          </div>
-
-          <div className="d-flex items-center js-counter">
-            <button
-              onClick={() => {
-                setChildrenNumber((pre) => (pre > 1 ? pre - 1 : 0));
-              }}
-              className="button size-30 border-1 rounded-full js-down"
-            >
-              <i className="icon-minus text-10"></i>
-            </button>
-
-            <div className="flex-center ml-10 mr-10">
-              <div className="text-14 size-20 js-count">{childrenNumber}</div>
-            </div>
-
-            <button
-              onClick={() => {
-                setChildrenNumber((pre) => pre + 1);
-              }}
-              className="button size-30 border-1 rounded-full js-up"
-            >
-              <i className="icon-plus text-10"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+        );
+      })}
 
       <hr />
 
@@ -179,34 +239,31 @@ export default function TourSingleSidebar({ PAckageData }) {
           {translate("Hotel For Makka")}
         </h5>
         {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
-          <div key={ind}>
-            <div
-              className="d-flex items-center justify-between my-1"
-              key={elm.id}
-            >
-              <div className="d-flex items-center">
-                <div className="form-radio d-flex items-center">
-                  <label className="radio d-flex items-center">
-                    <input
-                      type="radio"
-                      name="radioGroup"
-                      value={`mekka-${elm.hotel_stars}star`}
-                      checked={radioValue === `mekka-${elm.hotel_stars}star`}
-                      onChange={handleRadioChange}
-                    />
-                    <span className="radio__mark">
-                      <span className="radio__icon"></span>
-                    </span>
-                    <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name} ({elm.hotel_stars} star)
-                    </span>
-                  </label>
-                </div>
+        <div key={ind}>
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio d-flex items-center">
+                  <input
+                    type="radio"
+                    name="mekka"
+                    value={`Mekka - ${elm.hotel_name}star`}
+                    checked={HotelSelect.mekka === `Mekka - ${elm.hotel_name}star`}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                    {elm.hotel_name} ({elm.hotel_stars} star)
+                  </span>
+                </label>
               </div>
-              <div className="text-14">40 €</div>
             </div>
+            <div className="text-14">{elm.hotel_price} €</div>
           </div>
-        ))}
+        </div>
+      ))}
 
         <hr />
 
@@ -224,9 +281,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <label className="radio d-flex items-center">
                     <input
                       type="radio"
-                      name="radioGroup"
-                      value={`madina-${elm.hotel_stars}star`}
-                      checked={radioValue === `madina-${elm.hotel_stars}star`}
+                      name="madina"
+                      value={`Madina - ${elm.hotel_name}star`}
+                      checked={HotelSelect.madina === `Madina - ${elm.hotel_name}star`}
                       onChange={handleRadioChange}
                     />
                     <span className="radio__mark">
@@ -238,7 +295,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                   </label>
                 </div>
               </div>
-              <div className="text-14">40 €</div>
+              <div className="text-14">{elm.hotel_price} €</div>
             </div>
           </div>
         ))}
@@ -302,10 +359,10 @@ export default function TourSingleSidebar({ PAckageData }) {
                 <label className="radio  d-flex items-center">
                   <input
                     type="radio"
-                    name="radioGroup"
-                    value="Flight-1"
-                    checked={radioValue === "Flight-1"}
-                    onChange={handleRadioChange}
+                    name="IndiGo ( No Stop )"
+                    value="IndiGo ( No Stop )"
+                    checked={FlightSelect === "IndiGo ( No Stop )"}
+                    onChange={handleHotelchange}
                   />
                   <span className="radio__mark">
                     <span className="radio__icon"></span>
@@ -325,9 +382,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <input
                     type="radio"
                     name="radioGroup"
-                    value="Flight-2"
-                    checked={radioValue === "Flight-2"}
-                    onChange={handleRadioChange}
+                    value="Akasa Air ( 1 Stop )"
+                    checked={FlightSelect === "Akasa Air ( 1 Stop )"}
+                    onChange={handleHotelchange}
                   />
                   <span className="radio__mark">
                     <span className="radio__icon"></span>
@@ -349,9 +406,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <input
                     type="radio"
                     name="radioGroup"
-                    value="Flight-3"
-                    checked={radioValue === "Flight-3"}
-                    onChange={handleRadioChange}
+                    value="Vistara ( 2 Stop )"
+                    checked={FlightSelect === "Vistara ( 2 Stop )"}
+                    onChange={handleHotelchange}
                   />
                   <span className="radio__mark">
                     <span className="radio__icon"></span>
@@ -371,9 +428,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <input
                     type="radio"
                     name="radioGroup"
-                    value="Flight-4"
-                    checked={radioValue === "Flight-4"}
-                    onChange={handleRadioChange}
+                    value="Club One Air ( 4 Stop )"
+                    checked={FlightSelect === "Club One Air ( 4 Stop )"}
+                    onChange={handleHotelchange}
                   />
                   <span className="radio__mark">
                     <span className="radio__icon"></span>
@@ -445,16 +502,17 @@ export default function TourSingleSidebar({ PAckageData }) {
         <div className="text-18 fw-500">Total:</div>
         <div>
           <div className="text-18 fw-500">
-            {(
-              prices.adultPrice * adultNumber +
-              prices.youthPrice * youthNumber +
-              prices.childrenPrice * childrenNumber +
+            {/* {(
+              SidebarData?.tour_price[0].price * adultNumber +
+              SidebarData?.tour_price[1].price * youthNumber +
+              SidebarData?.tour_price[2].price * childrenNumber +
               extraCharge * 1
-            ).toFixed(2)}{" "}
-            €
+            ).toFixed(2)}{" "} */}
+            {total} €
           </div>
         </div>
       </div>
+
       <p className="text-right">Including Taxes And Fees</p>
 
       <Link href="/booking">

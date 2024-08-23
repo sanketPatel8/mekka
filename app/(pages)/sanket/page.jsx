@@ -20,8 +20,6 @@ export default function page() {
     <>
       <main>
         <Header1 />
-        <Hero1 onDataFetch={setHeroData} />
-
         <div className="mt-50">
           {/* <TourList4 heroData={heroData} /> */}
           <Sanket heroData={heroData} />

@@ -12,13 +12,14 @@ export default function Overview({ PAckageData }) {
       <div className="mt-20">
         {/* Render the HTML content from tour_info */}
         <div
-          dangerouslySetInnerHTML={{ __html: PAckageData?.Tour_Details?.tour_details?.tour_info }}
-          
+          dangerouslySetInnerHTML={{
+            __html: PAckageData?.Tour_Details?.tour_details?.tour_info,
+          }}
         />
       </div>
 
       <h3 className="text-20 fw-500 mt-20">{translate("Tour Highlights")}</h3>
-      <ul className="ulList mt-20">
+      {/* <ul className="ulList mt-20">
         <li>
           Experience the thrill of a speedboat to the stunning Phi Phi Islands
         </li>
@@ -29,7 +30,7 @@ export default function Overview({ PAckageData }) {
         </li>
         <li>Feel the comfort of a tour limited to 35 passengers</li>
         <li>Catch a glimpse of the wild monkeys around Monkey Beach</li>
-      </ul>
+      </ul> */}
     </>
   );
 }

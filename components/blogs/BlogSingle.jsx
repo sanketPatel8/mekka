@@ -1,29 +1,19 @@
 import React from "react";
-import Reviews from "./Reviews";
-import CommentBox from "./CommentBox";
 import Image from "next/image";
 
-export default function BlogSingle({BlogData}) {
+export default function BlogSingle({ BlogData }) {
+  console.log("BlogData?.headOneText" , BlogData?.headOneText);
+  
   return (
     <>
       <section className="layout-pt-md layout-pb-xl">
         <div className="container">
           <div className="row y-gap-30 justify-center">
             <div className="col-lg-8">
-              <h2 className="text-30 md:text-24">{BlogData?.slug}</h2>
-              <p className="mt-20">
-                Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida.
-                Diam phasellus vestibulum lorem sed risus ultricies. Magna sit
-                amet purus gravida quis blandit. Arcu cursus vitae congue
-                mauris. Nunc mattis enim ut tellus elementum sagittis vitae et
-                leo. Semper risus in hendrerit gravida rutrum quisque non. At
-                urna condimentum mattis pellentesque id nibh tortor. A erat nam
-                at lectus urna duis convallis convallis tellus. Sit amet mauris
-                commodo quis imperdiet massa. Vitae congue eu consequat ac
-                felis.
-              </p>
+              <h2 className="text-30 md:text-24">{BlogData?.headOne}</h2>
+              <p className="mt-20" dangerouslySetInnerHTML={{ __html: BlogData?.headOneText }} />
 
-              <ul className="ulList2 mt-20">
+              {/* <ul className="ulList2 mt-20">
                 <li>
                   Sed viverra ipsum nunc aliquet bibendum enim facilisis
                   gravida.
@@ -37,9 +27,9 @@ export default function BlogSingle({BlogData}) {
                   Bibendum est ultricies integer quis. Semper eget duis at
                   tellus.
                 </li>
-              </ul>
+              </ul> */}
 
-              <div className="blockquote bg-accent-1-05 rounded-12 px-30 py-30 mt-20">
+              {/* <div className="blockquote bg-accent-1-05 rounded-12 px-30 py-30 mt-20">
                 <div className="blockquote__icon">
                   <svg
                     width="37"
@@ -171,9 +161,7 @@ export default function BlogSingle({BlogData}) {
                     </div>
                   </div>
                 </div>
-
-               
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
