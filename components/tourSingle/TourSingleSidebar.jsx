@@ -61,6 +61,36 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
+  // useEffect(() => {
+  //   // Ensure SidebarData and tour_price are defined and have at least 3 elements
+  //   if (
+  //     SidebarData &&
+  //     Array.isArray(SidebarData.tour_price) &&
+  //     SidebarData.tour_price.length >= 3
+  //   ) {
+  //     const calculatedTotal =
+  //       (SidebarData.tour_price[0]?.price || 0) * adultNumber +
+  //       (SidebarData.tour_price[1]?.price || 0) * youthNumber +
+  //       (SidebarData.tour_price[2]?.price || 0) * childrenNumber +
+  //       (HotelSelect.mekkaPrice || 0) + // Include Mekka hotel price
+  //     (HotelSelect.madinaPrice || 0) +
+  //       extraCharge * 1;
+
+  //     setTotal(calculatedTotal?.toFixed(2));
+  //   } else {
+  //     // Handle cases where SidebarData or tour_price is not defined as expected
+  //     console.warn("SidebarData or tour_price is not defined correctly.");
+  //     setTotal(0); // Set a default total if the data is not available
+  //   }
+  // }, [
+  //   SidebarData,
+  //   adultNumber,
+  //   youthNumber,
+  //   childrenNumber,
+  //   extraCharge,
+  //   setTotal,
+  // ]);
+
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
     if (
@@ -69,18 +99,23 @@ export default function TourSingleSidebar({ PAckageData }) {
       SidebarData.tour_price.length >= 3
     ) {
       const calculatedTotal =
-        (SidebarData.tour_price[0]?.price || 0) * adultNumber +
-        (SidebarData.tour_price[1]?.price || 0) * youthNumber +
-        (SidebarData.tour_price[2]?.price || 0) * childrenNumber +
-        (HotelSelect.mekkaPrice || 0) + // Include Mekka hotel price
-      (HotelSelect.madinaPrice || 0) +
-        extraCharge * 1;
-
-      setTotal(calculatedTotal.toFixed(2));
+        (Number(SidebarData.tour_price[0]?.price) || 0) * Number(adultNumber) +
+        (Number(SidebarData.tour_price[1]?.price) || 0) * Number(youthNumber) +
+        (Number(SidebarData.tour_price[2]?.price) || 0) * Number(childrenNumber) +
+        (Number(HotelSelect.mekkaPrice) || 0) +
+        (Number(HotelSelect.madinaPrice) || 0) +
+        (Number(extraCharge) || 0);
+  
+      if (!isNaN(calculatedTotal)) {
+        setTotal(calculatedTotal.toFixed(2));
+      } else {
+        console.warn("Calculated total is not a number");
+        setTotal("0.00");
+      }
     } else {
       // Handle cases where SidebarData or tour_price is not defined as expected
       console.warn("SidebarData or tour_price is not defined correctly.");
-      setTotal(0); // Set a default total if the data is not available
+      setTotal("0.00"); // Set a default total if the data is not available
     }
   }, [
     SidebarData,
@@ -88,8 +123,11 @@ export default function TourSingleSidebar({ PAckageData }) {
     youthNumber,
     childrenNumber,
     extraCharge,
+    HotelSelect.mekkaPrice,
+    HotelSelect.madinaPrice,
     setTotal,
   ]);
+  
 
   useEffect(() => {
     setExtraCharge(0);
