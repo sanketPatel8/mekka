@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useRouter } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
+import { showErrorToast } from "@/app/utils/tost";
+import { post } from "@/app/utils/api";
 
 export default function TourSingleSidebar({ PAckageData }) {
   const {
@@ -25,16 +27,16 @@ export default function TourSingleSidebar({ PAckageData }) {
     setFlightSelect,
     total,
     setTotal,
-    selectDeparture, setselectDeparture
+    selectDeparture,
+    setselectDeparture,
   } = useGlobalState();
+
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
-  const [radioValue, setRadioValue] = useState("");
   const [selectedCheckbox, setselectedCheckbox] = useState(false);
   const [SidebarData, setSidebarData] = useState({});
-
-  const group = { setCounts };
+  const [FlightName, setFlightName] = useState([]);
 
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
@@ -47,7 +49,6 @@ export default function TourSingleSidebar({ PAckageData }) {
       [name]: value,
       [`${name}Price`]: selectedHotel?.hotel_price || 0,
     }));
-    
   };
 
   const handleHotelchange = (e) => {
@@ -102,11 +103,12 @@ export default function TourSingleSidebar({ PAckageData }) {
       const calculatedTotal =
         (Number(SidebarData.tour_price[0]?.price) || 0) * Number(adultNumber) +
         (Number(SidebarData.tour_price[1]?.price) || 0) * Number(youthNumber) +
-        (Number(SidebarData.tour_price[2]?.price) || 0) * Number(childrenNumber) +
+        (Number(SidebarData.tour_price[2]?.price) || 0) *
+          Number(childrenNumber) +
         (Number(HotelSelect.mekkaPrice) || 0) +
         (Number(HotelSelect.madinaPrice) || 0) +
         (Number(extraCharge) || 0);
-  
+
       if (!isNaN(calculatedTotal)) {
         setTotal(calculatedTotal.toFixed(2));
       } else {
@@ -128,7 +130,8 @@ export default function TourSingleSidebar({ PAckageData }) {
     HotelSelect.madinaPrice,
     setTotal,
   ]);
-  
+
+  console.log("FlightName?.airlines : ", FlightName.airline);
 
   useEffect(() => {
     setExtraCharge(0);
@@ -148,7 +151,37 @@ export default function TourSingleSidebar({ PAckageData }) {
     setSidebarData(PAckageData?.Tour_Details);
   }, [PAckageData]);
 
-  console.log("SidebarData : ", SidebarData?.tour_price);
+  // for flight name
+
+  const fetchData = async (id) => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    };
+
+    try {
+      const response = await post("tour_data", sendData);
+      if (response) {
+        setFlightName(response.Data);
+      } else {
+        console.error("Tours data is undefined in the response.");
+      }
+    } catch (error) {
+      console.error("Error caught:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        showErrorToast("Please verify your email");
+      } else {
+        showErrorToast("An error occurred during registration.");
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="tourSingleSidebar">
@@ -277,37 +310,40 @@ export default function TourSingleSidebar({ PAckageData }) {
           {translate("Hotel For Makka")}
         </h5>
         {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
-        <div key={ind}>
-          <div className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio d-flex items-center">
-                  <input
-                    type="radio"
-                    name="mekka"
-                    value={`Mekka - ${elm.hotel_name}star`}
-                    checked={HotelSelect.mekka === `Mekka - ${elm.hotel_name}star`}
-                    onChange={handleRadioChange}
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">
-                    {elm.hotel_name} ({elm.hotel_stars} star)
-                  </span>
-                </label>
+          <div key={ind}>
+            <div className="d-flex items-center justify-between my-1">
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name="mekka"
+                      value={`Mekka - ${elm.hotel_name}star`}
+                      checked={
+                        HotelSelect.mekka === `Mekka - ${elm.hotel_name}star`
+                      }
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.hotel_name} ({elm.hotel_stars} star)
+                    </span>
+                  </label>
+                </div>
               </div>
+              <div className="text-14">{elm.hotel_price} €</div>
             </div>
-            <div className="text-14">{elm.hotel_price} €</div>
           </div>
-        </div>
-      ))}
+        ))}
 
         <hr />
 
         <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Madina")}
         </h5>
+
         {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
           <div>
             <div
@@ -321,7 +357,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                       type="radio"
                       name="madina"
                       value={`Madina - ${elm.hotel_name}star`}
-                      checked={HotelSelect.madina === `Madina - ${elm.hotel_name}star`}
+                      checked={
+                        HotelSelect.madina === `Madina - ${elm.hotel_name}star`
+                      }
                       onChange={handleRadioChange}
                     />
                     <span className="radio__mark">
@@ -391,29 +429,35 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
         <div>
-          <div className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio  d-flex items-center">
-                  <input
-                    type="radio"
-                    name="IndiGo ( No Stop )"
-                    value="IndiGo ( No Stop )"
-                    checked={FlightSelect === "IndiGo ( No Stop )"}
-                    onChange={handleHotelchange}
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">IndiGo ( No Stop )</span>
-                </label>
+          {FlightName?.airline?.map((elm, i) => (
+            <div className="d-flex items-center justify-between my-1" key={i}>
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name={`${elm.airline_name} ( No Stop )`}
+                      value={`${elm.airline_name} ( No Stop )`}
+                      checked={
+                        FlightSelect === `${elm.airline_name} ( No Stop )`
+                      }
+                      onChange={handleHotelchange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.airline_name} ( No Stop )
+                    </span>
+                  </label>
+                </div>
               </div>
+
+              <div className="text-14">40 €</div>
             </div>
+          ))}
 
-            <div className="text-14">40 €</div>
-          </div>
-
-          <div className="d-flex items-center justify-between my-1">
+          {/* <div className="d-flex items-center justify-between my-1">
             <div className="d-flex items-center">
               <div className="form-radio d-flex items-center">
                 <label className="radio  d-flex items-center">
@@ -481,9 +525,11 @@ export default function TourSingleSidebar({ PAckageData }) {
             </div>
 
             <div className="text-14">40 €</div>
-          </div>
+          </div> */}
         </div>
+
         <hr />
+
         <div className="searchForm -type-1 -sidebar mt-20">
           <div className="searchForm__form">
             <div className="searchFormItem js-select-control js-form-dd">
