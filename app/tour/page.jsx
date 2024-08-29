@@ -60,7 +60,7 @@ export default function page() {
 
   useEffect(() => {
     console.log("tourlist effect run");
-    FetchTourDataAPi();
+    FetchTourDataAPi(); 
     fetchData();
   }, []);
 
