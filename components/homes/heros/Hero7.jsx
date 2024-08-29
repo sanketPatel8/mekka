@@ -96,7 +96,7 @@ export default function Hero7() {
     };
     try {
       const response = await post("search_tour", sendData);
-      setTourData(response.Tour_List);
+      // setTourData(response.Tour_List);
     } catch (error) {
       console.error("Error caught:", error);
       if (

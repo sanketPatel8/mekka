@@ -15,30 +15,26 @@ import RoadMap2 from "../Roadmap2";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useSearchParams } from "next/navigation";
 
-
-
 export default function SingleFour({ PAckageData }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   const [FlightInc, setFlightInc] = useState(null);
   const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+  const id = searchParams.get("id");
 
   useEffect(() => {
-    const foundTour = PAckageData?.Tour_List?.find(tour => tour.id == id);
+    const foundTour = PAckageData?.Tour_List?.find((tour) => tour.id == id);
     setFlightInc(foundTour);
-    
   }, [PAckageData]);
 
   const { translate } = useTranslation();
-  
+
   // console.log("data was single for data :" + JSON.stringify(PAckageData));
-  
 
   return (
     <>
       <section className="py-30 mt-80">
         <div className="container">
-          <MainInformation  PAckageData={PAckageData}  />
+          <MainInformation PAckageData={PAckageData} />
 
           <Gallery1 />
         </div>
@@ -49,10 +45,10 @@ export default function SingleFour({ PAckageData }) {
           <div className="row y-gap-30 justify-between ml-lg-2 ml-md-0 ml-0 ">
             <div className="col-lg-8 col-11 border-1 single-lft-box-shadow mx-auto">
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
-                <OthersInformation PAckageData={PAckageData} id={id}/>
+                <OthersInformation PAckageData={PAckageData} id={id} />
               </div>
               <div className="row y-gap-20 justify-between items-center layout-pb-sm">
-                <OtherInformation2  PAckageData={PAckageData} id={id} />
+                <OtherInformation2 PAckageData={PAckageData} id={id} />
               </div>
 
               <Overview PAckageData={PAckageData} />
@@ -137,7 +133,9 @@ export default function SingleFour({ PAckageData }) {
                       <div className="pt-20">
                         {/* <Included /> */}
                         <p>
-                          {FlightInc?.flight_info == null ? " Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe des Masjid Al Haram King Abdul Aziz Gate und des  Masjid Al Haram King Abdullah Expension Gate. Zu den Einrichtungen dieser Unterkunft gehören ein Restaurant, Zimmerservice und eine  24-Stunden-Rezeption sowie kostenfreies WLAN. Private Parkplätze stehen vor Ort zur Verfügung. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem  Kleiderschrank, einem Wasserkocher, einem Safe, einem Flachbisss" : FlightInc.flight_info}
+                          {FlightInc?.flight_info == null
+                            ? " Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe des Masjid Al Haram King Abdul Aziz Gate und des  Masjid Al Haram King Abdullah Expension Gate. Zu den Einrichtungen dieser Unterkunft gehören ein Restaurant, Zimmerservice und eine  24-Stunden-Rezeption sowie kostenfreies WLAN. Private Parkplätze stehen vor Ort zur Verfügung. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem  Kleiderschrank, einem Wasserkocher, einem Safe, einem Flachbisss"
+                            : FlightInc.flight_info}
                         </p>
                       </div>
                     </div>

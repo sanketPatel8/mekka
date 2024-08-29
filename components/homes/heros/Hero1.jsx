@@ -11,7 +11,7 @@ import Image from "next/image";
 import Location from "@/components/common/dropdownSearch/Location";
 import Calender from "@/components/common/dropdownSearch/Calender";
 
-export default function Hero1({ setTourData }) {
+export default function Hero1({ fetchSearch1Data }) {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
@@ -19,8 +19,9 @@ export default function Hero1({ setTourData }) {
   const { location, calender, tourType, setLocation, dates } = useGlobalState();
 
   const dropDownContainer = useRef();
-
+ 
   // Close dropdown when clicking outside
+
   useEffect(() => {
     const handleClick = (event) => {
       if (
@@ -40,39 +41,10 @@ export default function Hero1({ setTourData }) {
     setDates(newDates);
   };
 
-  const fetchData = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      Keyword: "",
-      type: location,
-      start_date: calender[0],
-      end_date: calender[1],
-    };
-    try {
-      const response = await post("search_tour", sendData);
-      setTourData(response.Tour_List);
-    } catch (error) {
-      console.error("Error caught:", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        showErrorToast("Please verify your email");
-      } else {
-        showErrorToast("An error occurred during registration.");
-      }
-    }
-  };
-
   const handleFormClick = () => {
-    setHero1Click(true);
+    fetchSearch1Data()
     router.push("/tour");
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [Hero1Click]);
 
   const { translate } = useTranslation();
 

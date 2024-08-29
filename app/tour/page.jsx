@@ -60,7 +60,7 @@ export default function page() {
 
   useEffect(() => {
     console.log("tourlist effect run");
-    FetchTourDataAPi(); 
+    FetchTourDataAPi();
     fetchData();
   }, []);
 
@@ -101,7 +101,37 @@ export default function page() {
     value,
   ]);
 
+  const fetchSearch1Data = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      Keyword: "",
+      type: location,
+      start_date: calender[0],
+      end_date: calender[1],
+    };
+    try {
+      const response = await post("search_tour", sendData);
+      setTourData(response.Tour_List);
+    } catch (error) {
+      console.error("Error caught:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        showErrorToast("Please verify your email");
+      } else {
+        showErrorToast("An error occurred during registration.");
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchSearch1Data();
+  // }, [location, calender]);
+
   // Fetch additional filter data if needed
+
   const FetchTourDataAPi = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -120,7 +150,7 @@ export default function page() {
     <>
       <main>
         <Header1 />
-        <Hero1 setTourData={setTourData} />
+        <Hero1 fetchSearch1Data={fetchSearch1Data} />
 
         <div className="mt-50">
           <TourList4
