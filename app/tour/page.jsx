@@ -34,6 +34,7 @@ export default function page() {
     : [];
 
   // Fetch data for the tour list and hero section combined
+
   const fetchData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -59,10 +60,12 @@ export default function page() {
 
   useEffect(() => {
     console.log("tourlist effect run");
+    FetchTourDataAPi();
     fetchData();
-  }, [location, calender]);
+  }, []);
 
   // Fetch filtered data
+
   const FetchFilterData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -112,10 +115,6 @@ export default function page() {
       showErrorToast("An error occurred during registration.");
     }
   };
-
-  useEffect(() => {
-    FetchTourDataAPi();
-  }, []);
 
   return (
     <>
