@@ -20,9 +20,8 @@ export default function Home() {
   return (
     <main>
       <Hero7 />
-      <Header1 /> {/* If you still want the Header1 component */}
-      {/*<Language onLocaleChange={handleLocaleChange} />*/} {/* Optional: Include if you want to change locale */}
-      <FeaturesOne locale={locale} /> {/* Pass locale to FeaturesOne */}
+      <Header1 />
+      <FeaturesOne locale={locale} /> 
       <Tour1 />
       <Banner />
       <TourSlderOne />

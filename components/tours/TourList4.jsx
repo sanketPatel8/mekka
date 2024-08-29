@@ -25,7 +25,6 @@ export default function TourList4({ heroData }) {
   const [sidebarActive, setSidebarActive] = useState(false);
   const [TourListData, setTourListData] = useState([]);
   const [count, setCount] = useState("");
-  const [Dataid, setDataid] = useState("");
   const [AllPage, setAllPage] = useState("");
   const [activeIndex, setActiveIndex] = useState(1);
   const [SidebarData, setSidebarData] = useState([]);
@@ -90,9 +89,9 @@ export default function TourList4({ heroData }) {
   };
 
   const combinedTourList = [
-    ...FilterData,
+    // ...FilterData,
     ...TourListData,
-    ...(heroData?.Tour_List || []),
+    // ...(heroData?.Tour_List || []),
   ];
 
   const resultsPerPage = 10; // Number of results per page
@@ -103,8 +102,8 @@ export default function TourList4({ heroData }) {
     activeIndex * resultsPerPage
   );
 
-  console.log("FilterData" , FilterData);
-  
+  console.log("FilterData", FilterData);
+
   return (
     <section className="layout-pb-xl">
       <div className="container">
@@ -233,9 +232,7 @@ export default function TourList4({ heroData }) {
                             {elm?.rating_count}) - {elm?.company_name}
                           </div>
                         </div>
-                        <div className="Location">
-                          <span>Departure : {elm?.departures}</span>
-                        </div>
+
                         <div className="row x-gap-20 y-gap-5 pt-30">
                           <div className="col-auto">
                             <div className="d-flex text-14 items-center">
@@ -257,16 +254,17 @@ export default function TourList4({ heroData }) {
                             />
                             {elm?.days_of_stay}
                           </p>
-                          <p
-                            className={`d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ${
-                              elm?.tour_with_service == null
-                                ? "d-none"
-                                : "d-block"
-                            }`}
-                          >
-                            <MdBed className="mx-2" color="#DAC04F" size={20} />
-                            {elm?.tour_with_service}
-                          </p>
+                          {elm?.tour_with_service && (
+                            <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width">
+                              <MdBed
+                                className="mx-2"
+                                color="#DAC04F"
+                                size={20}
+                              />
+                              {elm.tour_with_service}
+                            </p>
+                          )}
+
                           <div className="tourCard__price">
                             <div></div>
                             <div className="d-flex items-center justify-content-center">

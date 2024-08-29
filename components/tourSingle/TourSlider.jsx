@@ -9,16 +9,16 @@ import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { useEffect, useState } from "react";
+import { FaPersonWalking } from "react-icons/fa6";
 
 export default function TourSlider({ PAckageData }) {
   const { translate } = useTranslation();
 
-  const [slibleTourSlider, setslibleTourSlider] = useState({});
+  const [slibleTourSlider, setslibleTourSlider] = useState([]);
 
   useEffect(() => {
     setslibleTourSlider(PAckageData?.Tour_List);
   }, [PAckageData]);
-  
 
   return (
     <section className="">
@@ -65,10 +65,10 @@ export default function TourSlider({ PAckageData }) {
                   },
                 }}
               >
-                {tourData.map((elm, i) => (
+                {slibleTourSlider?.map((elm, i) => (
                   <SwiperSlide key={i}>
                     <Link
-                      href={`/package/${elm?.slug}?id=${elm?.id}`}
+                      href={`/package/${elm.slug}?=${elm.id}`}
                       className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                     >
                       <div className="tourCard__header">
@@ -76,7 +76,7 @@ export default function TourSlider({ PAckageData }) {
                           <Image
                             width={421}
                             height={301}
-                            src="/public/img/hotel photo/madina-2.jpeg"
+                            src="/_next/image?url=%2Fimg%2FtourCards%2F1%2F13.jpeg&w=1080&q=75"
                             alt="image"
                             className="img-ratio rounded-12"
                           />
@@ -84,48 +84,70 @@ export default function TourSlider({ PAckageData }) {
 
                         <button
                           className={`tourCard__favorite ${
-                            elm?.direct_flight === 0 ? "d-none" : "d-block"
+                            elm.direct_flight == "0" ? "d-none" : "d-block"
                           }`}
-                          disabled
                         >
                           Direct Flight
                         </button>
                       </div>
 
                       <div className="tourCard__content px-10 pt-10">
-                        <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow">
-                          <i className="icon-pin d-flex text-16 text-white mr-5"></i>
-                          Zu Kaaba {elm?.travel_duration} m
+                        <div
+                          className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 ${
+                            elm.distance_to_hotel ? "d-none" : "d-block"
+                          }`}
+                        >
+                          <FaPersonWalking color="white" size={18} />
+                          Zu Kaaba {elm.distance_to_hotel} M
                         </div>
 
-                        <h3 className="tourCard__title text-16 fw-500 mt-5">
-                          <span>{elm?.name}</span>
+                        <h3
+                          className={`tourCard__title text-16 fw-500 mt-5 ${
+                            elm.type & elm.name ? "d-none" : "d-block"
+                          }`}
+                        >
+                          <span>
+                            {" "}
+                            {elm.type} - {elm.name}{" "}
+                          </span>
                         </h3>
 
                         <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                          <div className="d-flex x-gap-5">
-                            <Stars star={elm?.rating} />
+                          <div
+                            className={`d-flex x-gap-5 ${
+                              elm.rating ? "d-block" : "d-none"
+                            }`}
+                          >
+                            <Stars star={elm.rating} />
                           </div>
-
-                          <span className="text-dark-1 ml-10">
-                            {elm?.rating} ({elm?.ratingCount}) - IDEALGATE
-                          </span>
+                          <p
+                            className={`text-dark-1 ml-10 ${
+                              elm.rating ? "d-block" : "d-none"
+                            }`}
+                          >
+                            {elm.rating} ({elm.rating}) -
+                          </p>{" "}
+                          {elm.company_name}
                         </div>
 
-                        <div className="Location">
-                          <span>Departure : {elm?.departures}</span>
-                        </div>
-
-                        <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                        <div
+                          className={`d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10 ${
+                            elm.days_of_stay ? "d-none" : "d-block"
+                          }`}
+                        >
                           <div className="d-flex items-center">
                             <i className="icon-clock text-16 mr-5"></i>
-                            {elm.travel_duration} days
+                            {elm.days_of_stay}
                           </div>
 
-                          <div>
+                          <div
+                            className={`${
+                              elm.tour_price == "0" ? "d-none" : "d-block"
+                            }`}
+                          >
                             From{" "}
                             <span className="text-16 fw-500">
-                              {elm?.price} €
+                              {elm.tour_price} €
                             </span>
                           </div>
                         </div>

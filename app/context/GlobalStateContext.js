@@ -59,9 +59,13 @@ export const GlobalStateProvider = ({ children }) => {
 
   const [total, setTotal] = useState(0);
 
+  // for packagedata share to booking-details page 
+
+  const [SharePackageData, setSharePackageData] = useState([])
+
   return (
     <GlobalStateContext.Provider
-      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts , value , setValue , Distance, setDistance , FilterData, setFilterData , prices, setPrices , HotelSelect, setHotelSelect , FlightSelect, setFlightSelect , total, setTotal , selectDeparture, setselectDeparture}}
+      value={{ loginPer, setLoginPer, adultNumber, setAdultNumber, youthNumber, setYouthNumber, childrenNumber, setChildrenNumber , location , setLocation , calender , setCalender , tourType , setTourType , dates , setDates , formattedDates , setFormattedDates , counts , setCounts , value , setValue , Distance, setDistance , FilterData, setFilterData , prices, setPrices , HotelSelect, setHotelSelect , FlightSelect, setFlightSelect , total, setTotal , selectDeparture, setselectDeparture , SharePackageData, setSharePackageData}}
     >
       {children}
     </GlobalStateContext.Provider>

@@ -27,7 +27,7 @@ export default function MainInformation({ PAckageData }) {
               </button>
             </div>
             <div className="col-auto">
-              <button className="button -accent-1 text-14 py-5 px-15 bg-light-1 rounded-200">
+              <button className={`button -accent-1 text-14 py-5 px-15 bg-light-1 rounded-200 ${InformationData?.Tour_Details?.tour_details?.free_cancellation === 0 ? 'd-block' : 'd-none'}`}>
                 Free cancellation
               </button>
             </div>

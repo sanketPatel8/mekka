@@ -183,6 +183,9 @@ export default function TourSingleSidebar({ PAckageData }) {
     fetchData();
   }, []);
 
+  console.log("SidebarData?.tourprice : " , SidebarData);
+  
+
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
@@ -248,24 +251,27 @@ export default function TourSingleSidebar({ PAckageData }) {
         let count, setCount;
 
         // Determine the appropriate state and setter function based on price_type
-        if (group.price_type == 1) {
+        if (group.price_type === 1) {
           count = adultNumber;
           setCount = setAdultNumber;
-        } else if (group.price_type == 2) {
+        } else if (group.price_type === 2) {
           count = youthNumber;
           setCount = setYouthNumber;
-        } else {
+        } else if (group.price_type === 3) {
           count = childrenNumber;
           setCount = setChildrenNumber;
+        } else {
+          // Handle any unexpected price_type
+          return null;
         }
 
         return (
           <div key={index} className="mt-15">
             <div className="d-flex items-center justify-between">
               <div className="text-14">
-                {group.price_type == 1
+                {group.price_type === 1
                   ? "Adult (18+ Years) "
-                  : group.price_type == 2
+                  : group.price_type === 2
                   ? "Youth (13-17 Years) "
                   : "Children (0-12 Years) "}
                 <span className="fw-500">
@@ -275,11 +281,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
               <div className="d-flex items-center js-counter">
                 <button
-                  onClick={() => {
-                    setCount((prev) =>
-                      prev > 0 ? prev - 1 : group.price_type == 1 ? 1 : 0
-                    );
-                  }}
+                  onClick={() => setCount((prev) => (prev > 0 ? prev - 1 : 0))}
                   className="button size-30 border-1 rounded-full js-down"
                 >
                   <i className="icon-minus text-10"></i>
@@ -290,9 +292,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                 </div>
 
                 <button
-                  onClick={() => {
-                    setCount((prev) => prev + 1);
-                  }}
+                  onClick={() => setCount((prev) => prev + 1)}
                   className="button size-30 border-1 rounded-full js-up"
                 >
                   <i className="icon-plus text-10"></i>
@@ -453,79 +453,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                 </div>
               </div>
 
-              <div className="text-14">40 €</div>
+              <div className="text-14">{elm?.price} €</div>
             </div>
           ))}
-
-          {/* <div className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio  d-flex items-center">
-                  <input
-                    type="radio"
-                    name="radioGroup"
-                    value="Akasa Air ( 1 Stop )"
-                    checked={FlightSelect === "Akasa Air ( 1 Stop )"}
-                    onChange={handleHotelchange}
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">
-                    Akasa Air ( 1 Stop )
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            <div className="text-14">40 €</div>
-          </div>
-
-          <div className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio  d-flex items-center">
-                  <input
-                    type="radio"
-                    name="radioGroup"
-                    value="Vistara ( 2 Stop )"
-                    checked={FlightSelect === "Vistara ( 2 Stop )"}
-                    onChange={handleHotelchange}
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">Vistara ( 2 Stop )</span>
-                </label>
-              </div>
-            </div>
-
-            <div className="text-14">40 €</div>
-          </div>
-
-          <div className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio  d-flex items-center">
-                  <input
-                    type="radio"
-                    name="radioGroup"
-                    value="Club One Air ( 4 Stop )"
-                    checked={FlightSelect === "Club One Air ( 4 Stop )"}
-                    onChange={handleHotelchange}
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">
-                    Club One Air ( 4 Stop )
-                  </span>
-                </label>
-              </div>
-            </div>
-
-            <div className="text-14">40 €</div>
-          </div> */}
         </div>
 
         <hr />

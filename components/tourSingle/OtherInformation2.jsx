@@ -11,9 +11,9 @@ const OtherInformation2 = ({ PAckageData , id}) => {
   const [TourList, setTourList] = useState(null);
 
   useEffect(() => {
-    setOtherInfo(PAckageData);
-    const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === id);
-    setTourList(foundTour);
+    // setOtherInfo(PAckageData);
+    // const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === id);
+    setTourList(PAckageData?.Tour_Details);
   }, [PAckageData]);
 
   const { translate } = useTranslation();
@@ -30,7 +30,7 @@ const OtherInformation2 = ({ PAckageData , id}) => {
             <div className="lh-16">
               {translate("Luggages") }
             </div>
-            <div className="text-14 text-light-2 lh-16">{TourList?.baggage}</div>
+            <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.baggage}</div>
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@ const OtherInformation2 = ({ PAckageData , id}) => {
             <div className="lh-16">
               {translate("Flight Included") }
             </div>
-            <div className="text-14 text-light-2 lh-16">{TourList?.flight_included == 1 ? "Included" : "Not Included"} </div>
+            <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.flight_included == 1 ? "Included" : "Not Included"} </div>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@ const OtherInformation2 = ({ PAckageData , id}) => {
               {translate("Hotels Included") }
             </div>
             <div className="text-14 text-light-2 lh-16">
-              {TourList?.hotel_included !== 1 ? "Not Included" : "Included"}
+              {TourList?.tour_details?.hotel_included !== 1 ? "Not Included" : "Included"}
               </div>
           </div>
         </div>
@@ -79,7 +79,7 @@ const OtherInformation2 = ({ PAckageData , id}) => {
               {translate("(Up to 14 Days Before Travel Date)") ||
                 "Find Latest Packages"}
             </div>
-            <div className="text-14 text-light-2 lh-16">{TourList?.free_cancellation}</div>
+            <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.free_cancellation == '0' ? 'Included' : 'Not Included'}</div>
           </div>
         </div>
       </div>

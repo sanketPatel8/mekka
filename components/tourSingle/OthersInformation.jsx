@@ -11,11 +11,14 @@ export default function OthersInformation({ PAckageData , id }) {
   const [TourList, setTourList] = useState(null);
 
   useEffect(() => {
-    setOtherInfo(PAckageData);
-    const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === id);
-    setTourList(foundTour);
+    // setOtherInfo(PAckageData);
+    // const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === id);
+    setTourList(PAckageData?.Tour_Details);
     
   }, [PAckageData]);
+
+  console.log("TourList data for other information : " , TourList);
+  
 
   const { translate } = useTranslation();
 
@@ -30,7 +33,7 @@ export default function OthersInformation({ PAckageData , id }) {
 
             <div className="ml-10">
               <div className="lh-16">{translate("Duration")}</div>
-              <div className="text-14 text-light-2 lh-16">{TourList?.travel_duration} days</div>
+              <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.travel_duration} days</div>
             </div>
           </div>
         </div>
@@ -44,7 +47,7 @@ export default function OthersInformation({ PAckageData , id }) {
             <div className="ml-10">
               <div className="lh-16">{translate("Travel")}</div>
               <div className="text-14 text-light-2 lh-16">
-                {TourList?.travel}
+                {TourList?.tour_details?.travel}
               </div>
             </div>
           </div>
@@ -59,7 +62,7 @@ export default function OthersInformation({ PAckageData , id }) {
             <div className="ml-10">
               <div className="lh-16">{translate("Start Date")}</div>
               <div className="text-14 text-light-2 lh-16">
-                {TourList?.date_begin}
+                {TourList?.tour_details?.date_begin}
               </div>
             </div>
           </div>
@@ -74,7 +77,7 @@ export default function OthersInformation({ PAckageData , id }) {
             <div className="ml-10">
               <div className="lh-16">{translate("Languages")}</div>
               <div className="text-14 text-light-2 lh-16">
-                German, Turkish, Arabic
+              {TourList?.en_language}
               </div>
             </div>
           </div>

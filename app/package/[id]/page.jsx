@@ -1,32 +1,34 @@
 "use client";
 
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourSlider from "@/components/tourSingle/TourSlider";
 import SingleFour from "@/components/tourSingle/pages/SingleFour";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+  const id = searchParams.get("id");
 
   const [PAckageData, setPAckageData] = useState({});
 
+  const { SharePackageData, setSharePackageData } = useGlobalState();
+
   const fetchData = async (id) => {
-   
-    
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      id: id // Passing the id to sendData
+      id: id,
     };
 
     try {
       const response = await post("tour_details", sendData);
       if (response) {
         setPAckageData(response);
+        setSharePackageData(response);
       } else {
         console.error("Tours data is undefined in the response.");
       }
@@ -49,6 +51,8 @@ export default function Page() {
       fetchData(id); // Pass the id to fetchData
     }
   }, [id]);
+
+  console.log("selectDeparture for main package :", SharePackageData);
 
   return (
     <>

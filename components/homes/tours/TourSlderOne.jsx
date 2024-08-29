@@ -122,7 +122,7 @@ export default function TourSlderOne() {
                     <SwiperSlide key={i}>
                       <Link
                         href={`/package/${elm.slug}?=${elm.id}`}
-                        className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow"
+                        className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                       >
                         <div className="tourCard__header">
                           <div className="tourCard__image ratio ratio-28:20">
@@ -137,7 +137,7 @@ export default function TourSlderOne() {
 
                           <button
                             className={`tourCard__favorite ${
-                              elm.direct_flight == 0 ? "d-block" : "d-none"
+                              elm.direct_flight == "0" ? "d-none" : "d-block"
                             }`}
                           >
                             Direct Flight
@@ -145,16 +145,20 @@ export default function TourSlderOne() {
                         </div>
 
                         <div className="tourCard__content px-10 pt-10">
-                          <div className="tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2">
-                            <FaPersonWalking
-                              color="white"
-                              size={18}
-                              className="mr-2"
-                            />
-                            Zu Kaaba {elm.distance_to_hotel}
+                          <div
+                            className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 ${
+                              elm.distance_to_hotel ? "d-none" : "d-block"
+                            }`}
+                          >
+                            <FaPersonWalking color="white" size={18} />
+                            Zu Kaaba {elm.distance_to_hotel} M
                           </div>
 
-                          <h3 className="tourCard__title text-16 fw-500 mt-5">
+                          <h3
+                            className={`tourCard__title text-16 fw-500 mt-5 ${
+                              elm.type & elm.name ? "d-none" : "d-block"
+                            }`}
+                          >
                             <span>
                               {" "}
                               {elm.type} - {elm.name}{" "}
@@ -162,25 +166,38 @@ export default function TourSlderOne() {
                           </h3>
 
                           <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                            <div className="d-flex x-gap-5">
+                            <div
+                              className={`d-flex x-gap-5 ${
+                                elm.rating ? "d-block" : "d-none"
+                              }`}
+                            >
                               <Stars star={elm.rating} />
                             </div>
-                            <p className="text-dark-1 ml-10">
-                              {elm.rating} ({elm.rating})
+                            <p
+                              className={`text-dark-1 ml-10 ${
+                                elm.rating ? "d-block" : "d-none"
+                              }`}
+                            >
+                              {elm.rating} ({elm.rating}) -
                             </p>{" "}
-                            - {elm.company_name}
-                          </div>
-                          <div className="Location">
-                            <span>Departure : {elm.departures}</span>
+                            {elm.company_name}
                           </div>
 
-                          <div className="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                          <div
+                            className={`d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10 ${
+                              elm.days_of_stay ? "d-none" : "d-block"
+                            }`}
+                          >
                             <div className="d-flex items-center">
                               <i className="icon-clock text-16 mr-5"></i>
                               {elm.days_of_stay}
                             </div>
 
-                            <div>
+                            <div
+                              className={`${
+                                elm.tour_price == "0" ? "d-none" : "d-block"
+                              }`}
+                            >
                               From{" "}
                               <span className="text-16 fw-500">
                                 {elm.tour_price} €

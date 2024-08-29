@@ -78,9 +78,6 @@ export default function Sidebar2() {
   const [selectedFeatures, handleFeatureChange] = useHandleSelection();
   const [selectedDurations, handleDurationChange] = useHandleSelection();
 
-
-
-
   // with tourdata api call
   useEffect(() => {
     const fetchData = async () => {

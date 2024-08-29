@@ -86,7 +86,7 @@ export default function ArticlesThree() {
                   />
 
                   {/* <div className="blogCard__badge">{elm.slug}</div> */}
-                  <div className="blogCard__badge"></div>
+                  <div className="blogCard__badge">Trip</div>
                 </div>
 
                 <div className="blogCard__content mt-30">

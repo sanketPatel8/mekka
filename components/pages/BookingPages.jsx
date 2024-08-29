@@ -56,7 +56,7 @@ export default function BookingPages() {
     email: "",
     password: "",
   });
-  const { adultNumber, youthNumber, childrenNumber , loginPer , FlightSelect , HotelSelect , total , setTotal , selectDeparture } = useGlobalState();
+  const { adultNumber, youthNumber, childrenNumber , loginPer , FlightSelect , HotelSelect , total , setTotal , selectDeparture , SharePackageData  } = useGlobalState();
 
   const router = useRouter();
 
@@ -358,7 +358,7 @@ export default function BookingPages() {
     console.log("Children information:", formValues.baby);
   };
   
-  console.log("HotelSelect.mekka" , HotelSelect.mekka);
+  console.log("SharePackageData was booking data :" , SharePackageData);
   
 
   const { translate } = useTranslation();
@@ -440,14 +440,14 @@ export default function BookingPages() {
                       <div className="mr-5">
                         <MdFlightTakeoff size={25} color="#DAC04F" />
                       </div>
-                      <div className="text-start">From: {selectDeparture}</div>
+                      <div className="text-start">From: {FlightSelect}</div>
                     </div>
 
                     <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
                         <MdFlightLand htTakeoff size={25} color="#DAC04F" />
                       </div>
-                      <div className="text-start">To: Medina</div>
+                      <div className="text-start">To: {SharePackageData?.Tour_Details?.tour_details?.travel}</div>
                     </div>
 
                     <div className="d-flex items-center justify-content-space-arround">
@@ -455,7 +455,7 @@ export default function BookingPages() {
                         <MdFlightTakeoff size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Departure : 26.06.2024 18:00
+                        Departure :  {SharePackageData?.Tour_Details?.tour_details?.date_begin}  18:00 
                       </div>
                     </div>
 
@@ -464,7 +464,7 @@ export default function BookingPages() {
                         <MdFlightLand size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Return : 05.07.2024 23:00
+                        Return :   {SharePackageData?.Tour_Details?.tour_details?.date_end} 23:00
                       </div>
                     </div>
 
@@ -473,7 +473,7 @@ export default function BookingPages() {
                         <TbWorld size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Offered Languages: German, Arabic
+                        Offered Languages: {SharePackageData?.Tour_Details?.en_language}
                       </div>
                     </div>
 
@@ -482,7 +482,7 @@ export default function BookingPages() {
                         <FaLuggageCart size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Max Luggage Per Person: 30 kg
+                        Max Luggage Per Person: {SharePackageData?.Tour_Details?.tour_details?.baggage} kg
                       </div>
                     </div>
 
