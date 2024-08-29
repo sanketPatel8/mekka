@@ -10,100 +10,26 @@ import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 
-export default function Sidebar2() {
+export default function Sidebar2({ TourData, FliterData }) {
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const [LanActives, setLanActives] = useState([]);
-  const [TourData, setTourData] = useState({});
-  const { value , setFilterData } = useGlobalState();
-
 
   // Generic handleChange function for all selections
-  const useHandleSelection = () => {
-    const [selections, setSelections] = useState([]);
 
-    const handleSelectionChange = (item) => {
-      setSelections((prevSelections) =>
-        prevSelections.includes(item)
-          ? prevSelections.filter((selection) => selection !== item)
-          : [...prevSelections, item]
-      );
-    };
-
-    useEffect(() => {
-      console.log("update state update useEffect");
-
-      const fetchData = async () => {
-        const sendData = {
-          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-          type: selectedTourTypes.join(", "),
-          language: 1 ,
-          departure: selectedCities.join(", "),
-          min_price: value[0],
-          max_price: value[1],
-          hotel_star: selectedDurations.join(", "),
-          agent_rating: selectedRatings.join(", "),
-          amenities: selectedFeatures.join(", "),
-          start: 0,
-        };
-
-        try {
-          const response = await post("tourfilter", sendData);
-          setFilterData(response.Tours);
-        } catch (error) {
-          console.error("Error caught:", error);
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            showErrorToast("Please verify your email");
-          } else {
-            showErrorToast("An error occurred during registration.");
-          }
-        }
-        
-      };
-
-      fetchData();
-    }, [selections]);
-
-    return [selections, handleSelectionChange];
-  };
-
-  // Using the generic function for each selection type
-  const [selectedTourTypes, handleTourTypeChange] = useHandleSelection();
-  const [selectedLanguages, handleLanguageChange] = useHandleSelection();
-  const [selectedCities, handleCityChange] = useHandleSelection();
-  const [selectedRatings, handleRatingChange] = useHandleSelection();
-  const [selectedFeatures, handleFeatureChange] = useHandleSelection();
-  const [selectedDurations, handleDurationChange] = useHandleSelection();
-
-  // with tourdata api call
-  useEffect(() => {
-    const fetchData = async () => {
-      const sendData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      };
-
-      try {
-        const response = await post("tour_data", sendData);
-        setTourData(response.Data);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
+  const {
+    selectedTourTypes,
+    setSelectedTourTypes,
+    selectedLanguages,
+    setSelectedLanguages,
+    selectedCities,
+    setSelectedCities,
+    selectedRatings,
+    setSelectedRatings,
+    selectedFeatures,
+    setSelectedFeatures,
+    selectedDurations,
+    setSelectedDurations,
+  } = useGlobalState();
 
   const { translate } = useTranslation();
 
@@ -153,7 +79,7 @@ export default function Sidebar2() {
                                     id={elm}
                                     name={elm}
                                     checked={selectedTourTypes.includes(elm)}
-                                    onChange={() => handleTourTypeChange(elm)}
+                                    onChange={() => setSelectedTourTypes(elm)}
                                   />
                                   <label
                                     htmlFor={elm}
@@ -222,7 +148,7 @@ export default function Sidebar2() {
               >
                 <div className="pt-15">
                   <div className="d-flex flex-column y-gap-15">
-                    {TourData.languages?.map((elm, i) => (
+                    {FliterData?.languages?.map((elm, i) => (
                       <div key={i}>
                         <div className="d-flex items-center justify-between">
                           <div className="row">
@@ -237,7 +163,7 @@ export default function Sidebar2() {
                                       elm.languages_en
                                     )}
                                     onChange={() =>
-                                      handleLanguageChange(elm.languages_en)
+                                      setSelectedLanguages(elm.languages_en)
                                     }
                                   />
                                   <label
@@ -310,7 +236,7 @@ export default function Sidebar2() {
               >
                 <div className="pt-15">
                   <div className="d-flex flex-column y-gap-15">
-                    {TourData.departure?.map((elm, i) => (
+                    {FliterData?.departure?.map((elm, i) => (
                       <div key={i}>
                         <div className="d-flex items-center justify-between">
                           <div className="row">
@@ -325,7 +251,7 @@ export default function Sidebar2() {
                                       elm.departure
                                     )}
                                     onChange={() =>
-                                      handleCityChange(elm.departure)
+                                      setSelectedCities(elm.departure)
                                     }
                                   />
                                   <label
@@ -470,7 +396,7 @@ export default function Sidebar2() {
               >
                 <div className="pt-15">
                   <div className="d-flex flex-column y-gap-15">
-                    {TourData?.hotel_stars?.map((elm, i) => (
+                    {FliterData?.hotel_stars?.map((elm, i) => (
                       <div key={i}>
                         <div className="d-flex items-center justify-between">
                           <div className="row">
@@ -482,7 +408,7 @@ export default function Sidebar2() {
                                     id={elm}
                                     name={elm}
                                     checked={selectedDurations.includes(elm)}
-                                    onChange={() => handleDurationChange(elm)}
+                                    onChange={() => setSelectedDurations(elm)}
                                   />
                                   <label
                                     htmlFor={elm}
@@ -552,7 +478,7 @@ export default function Sidebar2() {
               >
                 <div className="pt-15">
                   <div className="d-flex flex-column y-gap-15">
-                    {TourData.agent_stars?.map((star, i) => (
+                    {FliterData?.agent_stars?.map((star, i) => (
                       <div key={i} className="d-flex items-center">
                         <div className="form-checkbox">
                           <input
@@ -560,7 +486,7 @@ export default function Sidebar2() {
                             id={`rating-${star}`}
                             name={star}
                             checked={selectedRatings.includes(star)}
-                            onChange={() => handleRatingChange(star)}
+                            onChange={() => setSelectedRatings(star)}
                           />
                           <label
                             htmlFor={`rating-${star}`}
@@ -628,7 +554,7 @@ export default function Sidebar2() {
               >
                 <div className="pt-15">
                   <div className="d-flex flex-column y-gap-15">
-                    {features.map((elm, i) => (
+                    {FliterData?.amenities?.map((elm, i) => (
                       <div key={i}>
                         <div className="d-flex items-center justify-between">
                           <div className="row">
@@ -637,13 +563,17 @@ export default function Sidebar2() {
                                 <div className="form-checkbox">
                                   <input
                                     type="checkbox"
-                                    id={elm}
-                                    name={elm}
-                                    checked={selectedFeatures.includes(elm)}
-                                    onChange={() => handleFeatureChange(elm)}
+                                    id={elm?.options_en}
+                                    name={elm?.options_en}
+                                    checked={selectedFeatures.includes(
+                                      elm?.options_en
+                                    )}
+                                    onChange={() =>
+                                      setSelectedFeatures(elm?.options_en)
+                                    }
                                   />
                                   <label
-                                    htmlFor={elm}
+                                    htmlFor={elm?.options_en}
                                     className="form-checkbox__mark"
                                   >
                                     <div className="form-checkbox__icon">
@@ -662,8 +592,11 @@ export default function Sidebar2() {
                                     </div>
                                   </label>
                                 </div>
-                                <label htmlFor={elm} className="lh-16 ml-15">
-                                  {elm}
+                                <label
+                                  htmlFor={elm?.options_en}
+                                  className="lh-16 ml-15"
+                                >
+                                  {elm?.options_en}
                                 </label>
                               </div>
                             </div>

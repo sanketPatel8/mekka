@@ -11,10 +11,11 @@ import Image from "next/image";
 import Location from "@/components/common/dropdownSearch/Location";
 import Calender from "@/components/common/dropdownSearch/Calender";
 
-export default function Hero1({ onDataFetch }) {
+export default function Hero1({ setTourData }) {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
+  const [Hero1Click, setHero1Click] = useState(false);
   const { location, calender, tourType, setLocation, dates } = useGlobalState();
 
   const dropDownContainer = useRef();
@@ -35,74 +36,43 @@ export default function Hero1({ onDataFetch }) {
     };
   }, []);
 
-  // Fetch data and pass it to the parent component
-  useEffect(() => {
-    const fetchData = async () => {
-      const sendData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        Keyword: "",
-        type: location,
-        start_date: calender[0],
-        end_date: calender[1],
-      };
-      try {
-        const response = await post("search_tour", sendData);
-
-        // Check if response is an object with expected properties
-        if (response && typeof response === "object" && response.Tour_List) {
-          console.log("Fetched data in Hero1:", response);
-
-          // Pass data to parent component
-          if (onDataFetch) {
-            onDataFetch(response);
-          }
-        } else {
-          console.error("Response is not a valid data object:", response);
-          showErrorToast("Unexpected response format.");
-        }
-      } catch (error) {
-        console.error("Error caught:", error);
-        showErrorToast("An error occurred.");
-      }
-    };
-    fetchData();
-  }, [onDataFetch, location, calender]);
-
   const handleDateChange = (newDates) => {
     setDates(newDates);
-    const formattedDates = newDates.map((date) => date.format("YYYY-MM-DD"));
-    console.log("Selected dates:", formattedDates);
+  };
+
+  const fetchData = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      Keyword: "",
+      type: location,
+      start_date: calender[0],
+      end_date: calender[1],
+    };
+    try {
+      const response = await post("search_tour", sendData);
+      setTourData(response.Tour_List);
+    } catch (error) {
+      console.error("Error caught:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        showErrorToast("Please verify your email");
+      } else {
+        showErrorToast("An error occurred during registration.");
+      }
+    }
   };
 
   const handleFormClick = () => {
-    const fetchData = async () => {
-      const sendData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        Keyword: "",
-        type: location,
-        start_date: calender[0],
-        end_date: calender[1],
-      };
-      try {
-        const response = await post("search_tour", sendData);
-        console.log(response);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-    };
-    fetchData();
-    console.log("Form Data was hero 7", location, calender, tourType);
+    setHero1Click(true);
     router.push("/tour");
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [Hero1Click]);
 
   const { translate } = useTranslation();
 

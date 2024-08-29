@@ -8,7 +8,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
-import  { DateObject } from "react-multi-date-picker";
+import { DateObject } from "react-multi-date-picker";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
@@ -54,12 +54,14 @@ export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
+  const [SearchClick, setSearchClick] = useState(true);
   const [dates, setDates] = useState([
     new DateObject().setDay(5),
     new DateObject().setDay(14).add(1, "month"),
   ]);
 
-  const { location, setLocation, calender, tourType } = useGlobalState();
+  const { location, setLocation, calender, tourType, setTourData } =
+    useGlobalState();
 
   useEffect(() => {
     setCurrentActiveDD("");
@@ -84,35 +86,39 @@ export default function Hero7() {
     };
   }, []);
 
-  const handleFormClick = () => {
-    const fetchData = async () => {
-      const sendData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        Keyword: "",
-        type: location,
-        start_date: calender[0],
-        end_date: calender[1],
-      };
-      try {
-        const response = await post("search_tour", sendData);
-        console.log(response);
-      } catch (error) {
-        console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
+  const fetchData = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      Keyword: "",
+      type: location,
+      start_date: calender[0],
+      end_date: calender[1],
     };
-    fetchData();
-    console.log("Form Data was hero 7", location, calender, tourType);
+    try {
+      const response = await post("search_tour", sendData);
+      setTourData(response.Tour_List);
+    } catch (error) {
+      console.error("Error caught:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        showErrorToast("Please verify your email");
+      } else {
+        showErrorToast("An error occurred during registration.");
+      }
+    }
+  };
+
+  const handleFormClick = () => {
+    setSearchClick(false);
     router.push("/tour");
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [SearchClick]);
 
   const handleDateChange = (newDates) => {
     setDates(newDates);
@@ -208,7 +214,6 @@ export default function Hero7() {
             className="searchForm -type-1 shadow-1 rounded-200"
           >
             <div className="searchForm__form">
-              
               <div className="searchFormItem js-select-control js-form-dd">
                 <div
                   className="searchFormItem__button"
@@ -287,7 +292,6 @@ export default function Hero7() {
                   active={currentActiveDD === "tourType"}
                 />
               </div>
-
             </div>
 
             <div onClick={handleFormClick} className="searchForm__button">
