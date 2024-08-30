@@ -49,7 +49,7 @@ export default function Login({ onLoginSuccess }) {
         showSuccessToast("Login successful!");
         setTimeout(() => {
           setLoginPer(true) 
-          router.push('/');
+          router.push('/vendor/db-main');
         }, 2000);
       } catch (error) {
         if (
