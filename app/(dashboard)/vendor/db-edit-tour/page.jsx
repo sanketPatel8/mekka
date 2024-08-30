@@ -1464,7 +1464,7 @@ export default function AddTour() {
                             <div className=" y-gap-30 contactForm py-20 ">
                               {flightRow.map((row, index) => {
                                 return (
-                                  <div className="row">
+                                  <div className="row" key={index}>
                                     <div className="col-md-5">
                                       <CreatableSelect
                                         value={row.Flight}

@@ -20,9 +20,11 @@ export const POST = {
 
     request: async ({ form, url, header, token }) => {
         let formData;
-
+        
         if (form && form.tagName === "FORM") {
             formData = new FormData(form);
+            
+            
         } else if (form instanceof FormData) {
             formData = form;
         } else {
@@ -32,6 +34,7 @@ export const POST = {
                     formData.append(key, form[key]);
                 }
             }
+            
         }
 
         let requestHeader = { ...headers };
@@ -50,8 +53,11 @@ export const POST = {
         }
 
         if (formData) {
+            formData.append("AccessKey", process.env.NEXT_PUBLIC_ACCESS_KEY);
+
         }
         try {
+
             const response = await axios.post(`${serverURL}${url}`, formData || {}, { headers: requestHeader });
             if (response.status === 401) {
                 return { data: '', accessError: true };

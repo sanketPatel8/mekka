@@ -31,22 +31,35 @@ const tabs = [
 export default function AddTour() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [SelectedTour, setSelectedTour] = useState("");
+  const [name, setName] = useState("");
+  const [capacity, setCapacity] = useState(0);
+  const [date_begin, setDateBegin] = useState("");
+  const [date_end, setDateEnd] = useState("");
+  const [tour_languages, setTourLanguages] = useState("");
+  
+  const [adult_price, setAdultPrice] = useState("");
   const [gender, setGender] = useState("");
+  const [child_price, setChildPrice] = useState("");
+  const [baby_price, setBabyPrice] = useState("");
   const [activeTab, setActiveTab] = useState("Content");
   const [image1, setImage1] = useState("");
   const [radioValue, setRadioValue] = useState("");
-  const [image2, setImage2] = useState("/img/dashboard/addtour/1.jpg");
-  const [image3, setImage3] = useState("/img/dashboard/addtour/2.jpg");
-  const [image4, setImage4] = useState("/img/dashboard/addtour/3.jpg");
+  const [image2, setImage2] = useState([]);
+  const [route_data, setRouteData] = useState([]);
+  const [hotel_data, setHotelData] = useState([]);
+  const [tour_included, setTourIncluded] = useState(0);
+  const [tour_info, setTourInfo] = useState("");
+  const [free_cancellation, setFreeCancellation] = useState(0);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState({
-    bedroom1: { checked: false, price: "" },
-    bedroom2: { checked: false, price: "" },
-    bedroom3: { checked: false, price: "" },
-    bedroom4: { checked: false, price: "" },
+    bedroom1: { checked: false,title:"1 Bed-Room", price: "" },
+    bedroom2: { checked: false, title:"2 Bed-Room",price: "" },
+    bedroom3: { checked: false,title:"3 Bed-Room", price: "" },
+    bedroom4: { checked: false,title:"4 Bed-Room", price: "" },
   });
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -83,10 +96,30 @@ export default function AddTour() {
       [id]: { ...prev[id], price: value },
     }));
   };
-
+  const handleDeleteImage2 = (index) => {
+    const newImages = [...image2];
+    newImages.splice(index, 1);
+    setImage2(newImages);
+  };
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
+
+  const handleImageChange2 = (event) => {
+    const files = event.target.files;
+    const newImages = [...image2];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+
+        newImages.push(reader.result);
+        setImage2(newImages);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   const handleImageChange = (event, func) => {
     const file = event.target.files[0];
@@ -110,11 +143,9 @@ export default function AddTour() {
 
   const HandleTourChange = (newValue, actionMeta) => {
     setSelectedTour(newValue);
-    console.log(newValue);
   };
 
   const handleRadioChange = (event) => {
-    console.log(event.target.value);
     setRadioValue(event.target.value);
   };
 
@@ -447,202 +478,54 @@ export default function AddTour() {
                               </h4>
 
                               <div className="row x-gap-20 y-gap-20">
-                                {image1 ? (
-                                  <div className="col-auto  ">
-                                    <div className="relative">
-                                      <Image
-                                        width={200}
-                                        height={200}
-                                        src={image1}
-                                        alt="image"
-                                        className="size-200 rounded-12 object-cover"
-                                      />
-                                      <button
-                                        onClick={() => {
-                                          setImage1("");
-                                        }}
-                                        className="absoluteIcon1 button -dark-1"
-                                      >
-                                        <i className="icon-delete text-18"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <div className="col-auto  ">
-                                    <label
-                                      htmlFor="imageInp1"
-                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                    >
-                                      <Image
-                                        width="40"
-                                        height="40"
-                                        alt="image"
-                                        src={"/img/dashboard/upload.svg"}
-                                      />
+                              {image2.map((image, index) => (
+          <div className="col-auto my-2" key={index}>
+            <div className="relative">
+              <Image
+                width={200}
+                height={200}
+                src={image}
+                alt={`image-${index}`}
+                className="size-200 rounded-12 object-cover"
+              />
+              <button
+                onClick={() => handleDeleteImage2(index)}
+                className="absoluteIcon1 button -dark-1"
+              >
+                <i className="icon-delete text-18"></i>
+              </button>
 
-                                      <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        {translate("Upload Images") ||
-                                          "Find Latest Packages"}
-                                      </div>
-                                    </label>
-                                    <input
-                                      onChange={(e) =>
-                                        handleImageChange(e, setImage1)
-                                      }
-                                      accept="image/*"
-                                      id="imageInp1"
-                                      type="file"
-                                      style={{ display: "none" }}
-                                    />
-                                  </div>
-                                )}
-                                {image2 ? (
-                                  <div className="col-auto  ">
-                                    <div className="relative">
-                                      <Image
-                                        width={200}
-                                        height={200}
-                                        src={image2}
-                                        alt="image"
-                                        className="size-200 rounded-12 object-cover"
-                                      />
-                                      <button
-                                        onClick={() => {
-                                          setImage2("");
-                                        }}
-                                        className="absoluteIcon1 button -dark-1"
-                                      >
-                                        <i className="icon-delete text-18"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <div className="col-auto  ">
-                                    <label
-                                      htmlFor="imageInp2"
-                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                    >
-                                      <Image
-                                        width="40"
-                                        height="40"
-                                        alt="image"
-                                        src={"/img/dashboard/upload.svg"}
-                                      />
+              <div>Image {index + 1} rendered</div>
 
-                                      <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        {translate("Upload Images") ||
-                                          "Find Latest Packages"}
-                                      </div>
-                                    </label>
-                                    <input
-                                      onChange={(e) =>
-                                        handleImageChange(e, setImage2)
-                                      }
-                                      accept="image/*"
-                                      id="imageInp2"
-                                      type="file"
-                                      style={{ display: "none" }}
-                                    />
-                                  </div>
-                                )}
-                                {image3 ? (
-                                  <div className="col-auto ">
-                                    <div className="relative">
-                                      <Image
-                                        width={200}
-                                        height={200}
-                                        src={image3}
-                                        alt="image"
-                                        className="size-200 rounded-12 object-cover"
-                                      />
-                                      <button
-                                        onClick={() => {
-                                          setImage3("");
-                                        }}
-                                        className="absoluteIcon1 button -dark-1"
-                                      >
-                                        <i className="icon-delete text-18"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <div className="col-auto ">
-                                    <label
-                                      htmlFor="imageInp3"
-                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                    >
-                                      <Image
-                                        width="40"
-                                        height="40"
-                                        alt="image"
-                                        src={"/img/dashboard/upload.svg"}
-                                      />
+            </div>
+          </div>
+        ))}
 
-                                      <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        {translate("Upload Images") ||
-                                          "Find Latest Packages"}
-                                      </div>
-                                    </label>
-                                    <input
-                                      onChange={(e) =>
-                                        handleImageChange(e, setImage3)
-                                      }
-                                      accept="image/*"
-                                      id="imageInp3"
-                                      type="file"
-                                      style={{ display: "none" }}
-                                    />
-                                  </div>
-                                )}
-                                {image4 ? (
-                                  <div className="col-auto ">
-                                    <div className="relative">
-                                      <Image
-                                        width={200}
-                                        height={200}
-                                        src={image4}
-                                        alt="image"
-                                        className="size-200 rounded-12 object-cover"
-                                      />
-                                      <button
-                                        onClick={() => {
-                                          setImage4("");
-                                        }}
-                                        className="absoluteIcon1 button -dark-1"
-                                      >
-                                        <i className="icon-delete text-18"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <div className="col-auto ">
-                                    <label
-                                      htmlFor="imageInp4"
-                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                    >
-                                      <Image
-                                        width="40"
-                                        height="40"
-                                        alt="image"
-                                        src={"/img/dashboard/upload.svg"}
-                                      />
+        <div className="col-auto my-2">
+          <label
+            htmlFor="imageInp2"
+            className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+          >
+            <Image
+              width="40"
+              height="40"
+              alt="image"
+              src={"/img/dashboard/upload.svg"}
+            />
 
-                                      <div className="text-16 fw-500 text-accent-1 mt-10">
-                                        {translate("Upload Images") ||
-                                          "Find Latest Packages"}
-                                      </div>
-                                    </label>
-                                    <input
-                                      onChange={(e) =>
-                                        handleImageChange(e, setImage4)
-                                      }
-                                      accept="image/*"
-                                      id="imageInp4"
-                                      type="file"
-                                      style={{ display: "none" }}
-                                    />
-                                  </div>
-                                )}
+            <div className="text-16 fw-500 text-accent-1 mt-10">
+               {translate("Upload Images") }
+            </div>
+          </label>
+          <input
+            onChange={handleImageChange2}
+            accept="image/*"
+            id="imageInp2"
+            type="file"
+            multiple
+            style={{ display: "none" }}
+          />
+        </div>
                               </div>
 
                               <div className="text-14 mt-20">
