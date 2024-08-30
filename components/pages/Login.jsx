@@ -9,6 +9,8 @@ import { post } from "@/app/utils/api";
 import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
+import { Auth } from "@/app/utils/api/authenticate";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 export default function Login({ onLoginSuccess }) {
   const [LogInData, setLogInData] = useState({
@@ -18,6 +20,7 @@ export default function Login({ onLoginSuccess }) {
   });
   const {LoginPer, setLoginPer} = useGlobalState()
   const [LoginISChacked, setLoginISChacked] = useState(false);
+  const { dispatch } = useAuthContext();
 
   const router = useRouter();
 
@@ -30,7 +33,6 @@ export default function Login({ onLoginSuccess }) {
       ...prevState,
       [name]: value,
     }));
-    localStorage.setItem(name, value);
   };
 
   const handleLoginCheckboxChange = (e) => {
@@ -43,27 +45,89 @@ export default function Login({ onLoginSuccess }) {
     e.preventDefault();
 
    
-      try {
-        const response = await post("login", LogInData);
-        localStorage.setItem("token", response.authorisation.token);
-        showSuccessToast("Login successful!");
-        setTimeout(() => {
-          setLoginPer(true) 
-          router.push('/vendor/db-main');
-        }, 2000);
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast(error.response.data.message || "An error occurred.");
-        } else {
-          showErrorToast("An error occurred during login.");
-        }
+    //   try {
+    //     const response = await post("login", LogInData);
+    //     localStorage.setItem("token", response.authorisation.token);
+    //     localStorage.setItem("user", JSON.stringify(response.user));
+    //     showSuccessToast("Login successful!");
+    //     setTimeout(() => {
+    //       setLoginPer(true) 
+    //       router.push('/vendor/db-main');
+    //     }, 2000);
+    //   } catch (error) {
+    //     if (
+    //       error.response &&
+    //       error.response.data &&
+    //       error.response.data.message
+    //     ) {
+    //       showErrorToast(error.response.data.message || "An error occurred.");
+    //     } else {
+    //       showErrorToast("An error occurred during login.");
+    //     }
       
-    } 
+    // } 
+    Auth.handleForm({ form: e, url: 'login', type: 'Add User', post: post });
+
   };
+
+  const post = (data) => {
+    // const form = document.querySelector("form");
+    // form.classList.remove("was-validated");
+    // setLoading(true);
+    Auth.user(data)
+      .then((resp) => {
+        if(resp.user.user_type == "vendor"){
+          localStorage.setItem("user", JSON.stringify(resp));
+          dispatch({ type: "LOGIN", payload: resp.data });
+          showSuccessToast("Login successful!");
+          setTimeout(() => {
+            setLoginPer(true) 
+            router.push('/vendor/dashboard');
+          }, 1000);
+        }
+        else if(resp.user.user_type == "customer"){
+          localStorage.setItem("user", JSON.stringify(resp));
+          dispatch({ type: "LOGIN", payload: resp.data });
+          showSuccessToast("Login successful!");
+          setTimeout(() => {
+            setLoginPer(true) 
+            router.push('/customer/booking-details');
+          }, 1000);
+        }else{
+          showErrorToast("Unauthorized User");
+        }
+        // if (resp.data == "" || resp.data == null) {
+        //   toast.error(resp.error);
+        //   setLoading(false);
+        // }
+        // else if (resp.data.business_verified == 0) {
+        //   toast.success("Logged In successfully. Please setup your business now.");
+        //   localStorage.setItem("user", JSON.stringify(resp.data));
+        //   dispatch({ type: "LOGIN", payload: resp.data });
+        //   setLoading(false);
+        //   setTimeout(() => {
+        //     router.push('/vendor/business-information');
+        //   }, 1000);
+        // }
+        // else if (resp.data.business_verified == 1) {
+        //   toast.success("Logged In Successfully.");
+        //   localStorage.setItem("user", JSON.stringify(resp.data));
+        //   dispatch({ type: "LOGIN", payload: resp.data });
+        //   setLoading(false);
+        //   setTimeout(() => {
+        //     router.push('/vendor/booking');
+        //   }, 1000);
+        // } else {
+        //   toast.error(resp.error);
+        //   setLoading(false);
+        // }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
+
 
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">

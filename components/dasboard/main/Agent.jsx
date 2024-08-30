@@ -9,10 +9,11 @@ import Header from "../Header";
 // import SidebarAgent from "../SidebarAgent";
 import AgentDBsideBar from "../AgentDBsideBar";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-
+  const {user} = useAuthContext();
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1000) {

@@ -10,6 +10,7 @@ import ScrollTopBehaviour from "@/components/common/ScrollTopBehavier";
 import Wrapper from "@/components/layout/Wrapper";
 import { TranslationProvider } from "@/app/context/TranslationContext";
 import { GlobalStateProvider } from "@/app/context/GlobalStateContext";
+import { AuthContextProvider } from "./context/authContext";
 
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -26,17 +27,21 @@ if (typeof window !== "undefined") {
 
 export default function RootLayout({ children }) {
   return (
-    <TranslationProvider>
-      <GlobalStateProvider >
-        <html lang="en">
-          <head></head>
-          <body className={dmsans.className}>
-            <Wrapper>{children}</Wrapper>
-            <ScrollToTop />
-            <ScrollTopBehaviour />
-          </body>
-        </html>
-      </GlobalStateProvider>
-    </TranslationProvider>
+    <AuthContextProvider>
+
+
+      <TranslationProvider>
+        <GlobalStateProvider >
+          <html lang="en">
+            <head></head>
+            <body className={dmsans.className}>
+              <Wrapper>{children}</Wrapper>
+              <ScrollToTop />
+              <ScrollTopBehaviour />
+            </body>
+          </html>
+        </GlobalStateProvider>
+      </TranslationProvider>
+    </AuthContextProvider>
   );
 }

@@ -8,12 +8,15 @@ import $ from "jquery";
 import "select2/dist/css/select2.css";
 import CreatableSelect from "react-select/creatable";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("/img/dashboard/addtour/1.jpg");
   const [SelectedCountry, setSelectedCountry] = useState("");
+
+  const {user} = useAuthContext();
 
   const handleImageChange = (event, func) => {
     const file = event.target.files[0];
