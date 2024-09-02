@@ -81,6 +81,14 @@ export const GlobalStateProvider = ({ children }) => {
     );
   };
 
+  // for hero7 run function
+
+  const [SearchTourData, setSearchTourData] = useState(false);
+
+  // no flight booking logic package
+
+  const [selectedCheckbox, setselectedCheckbox] = useState(false);
+
   return (
     <GlobalStateContext.Provider
       value={{
@@ -142,6 +150,10 @@ export const GlobalStateProvider = ({ children }) => {
           handleSelectionChange(selection, setSelectedDurations),
         TourData,
         setTourData,
+        selectedCheckbox,
+        setselectedCheckbox,
+        SearchTourData,
+        setSearchTourData,
       }}
     >
       {children}

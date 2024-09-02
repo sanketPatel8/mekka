@@ -121,7 +121,7 @@ export default function TourSlderOne() {
                   {TopTranding?.map((elm, i) => (
                     <SwiperSlide key={i}>
                       <Link
-                        href={`/package/${elm.slug}?=${elm.id}`}
+                        href={`/package/${elm?.slug}?id=${elm?.id}`}
                         className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                       >
                         <div className="tourCard__header">
@@ -129,7 +129,7 @@ export default function TourSlderOne() {
                             <Image
                               width={421}
                               height={301}
-                              src="/_next/image?url=%2Fimg%2FtourCards%2F1%2F13.jpeg&w=1080&q=75"
+                              src={elm.tour_image ? elm.tour_image : "/img/404/imgnotFound.png"}
                               alt="image"
                               className="img-ratio rounded-12"
                             />
@@ -137,10 +137,10 @@ export default function TourSlderOne() {
 
                           <button
                             className={`tourCard__favorite ${
-                              elm.direct_flight == "0" ? "d-none" : "d-block"
+                              elm.direct_flight === "0" || elm.direct_flight == null ? "d-none" : "d-block"
                             }`}
                           >
-                            Direct Flight
+                            {translate("Direct Flight")}
                           </button>
                         </div>
 
@@ -151,7 +151,7 @@ export default function TourSlderOne() {
                             }`}
                           >
                             <FaPersonWalking color="white" size={18} />
-                            Zu Kaaba {elm.distance_to_hotel} M
+                            Zu Kaaba {elm.distance_to_hotel} m
                           </div>
 
                           <h3
@@ -166,21 +166,18 @@ export default function TourSlderOne() {
                           </h3>
 
                           <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                            <div
-                              className={`d-flex x-gap-5 ${
-                                elm.rating ? "d-block" : "d-none"
-                              }`}
-                            >
-                              <Stars star={elm.rating} />
+                            <div className="d-flex items-center mt-5">
+                              <div className="d-flex items-center x-gap-5">
+                                <Stars star={elm?.rating_count} font={12} />
+                              </div>
+                              <div className="text-14 ml-5">
+                                <span className="fw-500">{elm?.rating}</span> (
+                                {elm?.rating_count}) -{" "}
+                                {elm?.company_name == null
+                                  ? "No Compny  "
+                                  : elm?.company_name}
+                              </div>
                             </div>
-                            <p
-                              className={`text-dark-1 ml-10 ${
-                                elm.rating ? "d-block" : "d-none"
-                              }`}
-                            >
-                              {elm.rating} ({elm.rating}) -
-                            </p>{" "}
-                            {elm.company_name}
                           </div>
 
                           <div

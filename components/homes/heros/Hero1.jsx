@@ -10,16 +10,17 @@ import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTrave
 import Image from "next/image";
 import Location from "@/components/common/dropdownSearch/Location";
 import Calender from "@/components/common/dropdownSearch/Calender";
+import HeroSearch from "@/components/HeroSearch";
 
 export default function Hero1({ fetchSearch1Data }) {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
-  const [Hero1Click, setHero1Click] = useState(false);
+
   const { location, calender, tourType, setLocation, dates } = useGlobalState();
 
   const dropDownContainer = useRef();
- 
+
   // Close dropdown when clicking outside
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function Hero1({ fetchSearch1Data }) {
   };
 
   const handleFormClick = () => {
-    fetchSearch1Data()
+    fetchSearch1Data();
     router.push("/tour");
   };
 
@@ -95,103 +96,7 @@ export default function Hero1({ fetchSearch1Data }) {
                 className="mt-60 md:mt-35"
               >
                 <div className="searchForm -type-1">
-                  <div className="searchForm__form">
-                    <div
-                      className={`searchFormItem js-select-control js-form-dd ${
-                        currentActiveDD === "location" ? "active" : ""
-                      }`}
-                    >
-                      <div
-                        className="searchFormItem__button"
-                        onClick={() =>
-                          setCurrentActiveDD((prev) =>
-                            prev === "location" ? "" : "location"
-                          )
-                        }
-                      >
-                        <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                          <i className="text-20 icon-pin"></i>
-                        </div>
-                        <div className="searchFormItem__content">
-                          <h5>Tour Type</h5>
-                          <div className="js-select-control-chosen">
-                            {location ? location : "Search destinations"}
-                          </div>
-                        </div>
-                      </div>
-
-                      <Location
-                        setLocation={(value) => {
-                          setLocation(value);
-                          setCurrentActiveDD("");
-                        }}
-                        active={currentActiveDD === "location"}
-                      />
-                    </div>
-
-                    <div className="searchFormItem js-select-control js-form-dd js-calendar">
-                      <div
-                        className="searchFormItem__button"
-                        onClick={() =>
-                          setCurrentActiveDD((pre) =>
-                            pre == "calender" ? "" : "calender"
-                          )
-                        }
-                      >
-                        <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                          <i className="text-20 icon-calendar"></i>
-                        </div>
-                        <div className="searchFormItem__content">
-                          <h5>Start of trip to end of trip</h5>
-                          <div>
-                            <span className="js-first-date">
-                              <Calender
-                                dates={dates}
-                                onDateChange={handleDateChange}
-                              />
-                            </span>
-                            <span className="js-last-date"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="searchFormItem js-select-control js-form-dd">
-                      <div
-                        className="searchFormItem__button"
-                        onClick={() =>
-                          setCurrentActiveDD((pre) =>
-                            pre == "tourType" ? "" : "tourType"
-                          )
-                        }
-                      >
-                        <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                          <i className="text-20 icon-flag"></i>
-                        </div>
-                        <div className="searchFormItem__content">
-                          <h5>Passenger</h5>
-                          <div className="js-select-control-chosen">
-                            {tourType ? tourType : "All tour"}
-                          </div>
-                        </div>
-                      </div>
-
-                      <NumberOfTravellers
-                        setTourType={setTourMambar}
-                        active={currentActiveDD === "tourType"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="searchForm__button">
-                    <button
-                      onClick={handleFormClick}
-                      className="button -info-2 bg-accent-1 text-white"
-                    >
-                      <i className="icon-search text-16 mr-10"></i>
-                      Search
-                    </button>
-                  </div>
+                  <HeroSearch  />
                 </div>
               </div>
             </div>

@@ -80,7 +80,7 @@ export default function ArticlesThree() {
                   <Image
                     width={616}
                     height={451}
-                    src="/_next/image?url=%2Fimg%2FblogCards%2F1%2Fsimple.jpg&w=1920&q=75"
+                    src={elm.tour_image ? elm.tour_image : "/img/404/imgnotFound.png"}
                     alt="image"
                     className="img-ratio rounded-12"
                   />
@@ -91,7 +91,7 @@ export default function ArticlesThree() {
 
                 <div className="blogCard__content mt-30">
                   <div className="blogCard__info text-14">
-                    <div className="lh-13">{elm.created_at}</div>
+                    <div className="lh-13">No Date Found</div> 
                     <div className="blogCard__line"></div>
                     <div className="lh-13">By {elm.headOne}</div>
                   </div>

@@ -11,8 +11,6 @@ import { post } from "@/app/utils/api";
 export default function Tour1() {
   const [LatestPackage, setLatestPackage] = useState([]);
 
-  // console.log( "Latest Package for " , LatestPackage);
-
   useEffect(() => {
     const fetchData = async (id) => {
       const sendData = {
@@ -39,7 +37,7 @@ export default function Tour1() {
       }
     };
     fetchData();
-  }, []);
+  } , []);
 
   const { translate } = useTranslation();
 
@@ -78,7 +76,7 @@ export default function Tour1() {
           {LatestPackage?.Tours?.slice(0, 8)?.map((elm, i) => (
             <div key={i} className="col-lg-3 col-md-6 my-2">
               <Link
-                href={`/package/${elm.id}`}
+                href={`/package/${elm?.slug}?id=${elm?.id}`}
                 className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow"
               >
                 <div className="tourCard__header">
@@ -86,7 +84,7 @@ export default function Tour1() {
                     <Image
                       width={421}
                       height={301}
-                      src="/_next/image?url=%2Fimg%2FtourCards%2F1%2F13.jpeg&w=1080&q=75"
+                      src={elm?.tour_image ? elm?.tour_image : "/img/404/imgnotFound.png"}
                       alt="image"
                       className="img-ratio rounded-12"
                     />
@@ -94,17 +92,23 @@ export default function Tour1() {
 
                   <button
                     className={`tourCard__favorite ${
-                      elm.direct_flight == "0" ? "d-none" : "d-block"
+                      elm.direct_flight === "0" || elm.direct_flight == null
+                        ? "d-none"
+                        : "d-block"
                     }`}
                   >
-                    Direct Flight
+                    {translate("Direct Flight")}
                   </button>
                 </div>
 
                 <div className="tourCard__content px-10 pt-10">
-                  <div className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 ${elm.distance_to_hotel ? 'd-none' : 'd-block'}`}>
+                  <div
+                    className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 ${
+                      elm.distance_to_hotel ? "d-none" : "d-block"
+                    }`}
+                  >
                     <FaPersonWalking color="white" size={18} />
-                    Zu Kaaba {elm.distance_to_hotel} M
+                    Zu Kaaba {elm.distance_to_hotel} m
                   </div>
 
                   <h3 className="tourCard__title text-16 fw-500 mt-5">
@@ -114,21 +118,18 @@ export default function Tour1() {
                   </h3>
 
                   <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                    <div
-                      className={`d-flex x-gap-5 ${
-                        elm.rating ? "d-block" : "d-none"
-                      }`}
-                    >
-                      <Stars star={elm.rating} />
+                    <div className="d-flex items-center mt-5">
+                      <div className="d-flex items-center x-gap-5">
+                        <Stars star={elm?.rating_count} font={12} />
+                      </div>
+                      <div className="text-14 ml-5">
+                        <span className="fw-500">{elm?.rating}</span> (
+                        {elm?.rating_count}) -{" "}
+                        {elm?.company_name == null
+                          ? "No Compny  "
+                          : elm?.company_name}
+                      </div>
                     </div>
-                    <p
-                      className={`text-dark-1 ml-10 ${
-                        elm.rating ? "d-block" : "d-none"
-                      }`}
-                    >
-                      {elm.rating} ({elm.rating}) -
-                    </p>{" "}
-                    {elm.company_name}
                   </div>
 
                   <div

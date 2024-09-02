@@ -1,7 +1,6 @@
 "use client";
 
 import Hero1 from "@/components/homes/heros/Hero1";
-import FooterOne from "@/components/layout/footers/FooterOne";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourList4 from "@/components/tours/TourList4";
@@ -10,10 +9,11 @@ import { post } from "../utils/api";
 import { showErrorToast } from "../utils/tost";
 import { useGlobalState } from "../context/GlobalStateContext";
 
-export default function page() {
+export default function Page() {
   const [count, setCount] = useState("");
   const [activeIndex, setActiveIndex] = useState(1);
   const [FliterData, setFliterData] = useState([]);
+  const [lanArray, setLanArray] = useState([]);
 
   const {
     location,
@@ -27,13 +27,13 @@ export default function page() {
     selectedDurations,
     TourData,
     setTourData,
+    SearchTourData,
+    setSearchTourData,
   } = useGlobalState();
 
   const currentResults = Array.isArray(TourData)
     ? TourData.slice((activeIndex - 1) * 10, activeIndex * 10)
     : [];
-
-  // Fetch data for the tour list and hero section combined
 
   const fetchData = async () => {
     const sendData = {
@@ -58,19 +58,11 @@ export default function page() {
     }
   };
 
-  useEffect(() => {
-    console.log("tourlist effect run");
-    FetchTourDataAPi();
-    fetchData();
-  }, []);
-
-  // Fetch filtered data
-
   const FetchFilterData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       type: selectedTourTypes.join(", "),
-      language: selectedLanguages.join(", "),
+      language: lanArray.join(","),
       departure: selectedCities.join(", "),
       min_price: value[0],
       max_price: value[1],
@@ -89,17 +81,19 @@ export default function page() {
     }
   };
 
-  useEffect(() => {
-    FetchFilterData();
-  }, [
-    selectedTourTypes,
-    selectedLanguages,
-    selectedCities,
-    selectedRatings,
-    selectedFeatures,
-    selectedDurations,
-    value,
-  ]);
+  const FetchTourDataAPi = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    };
+
+    try {
+      const response = await post("tour_data", sendData);
+      setFliterData(response.Data);
+    } catch (error) {
+      console.error("Error caught:", error);
+      showErrorToast("An error occurred during registration.");
+    }
+  };
 
   const fetchSearch1Data = async () => {
     const sendData = {
@@ -126,44 +120,51 @@ export default function page() {
     }
   };
 
-  // useEffect(() => {
-  //   fetchSearch1Data();
-  // }, [location, calender]);
-
-  // Fetch additional filter data if needed
-
-  const FetchTourDataAPi = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      if (SearchTourData) {
+        await fetchSearch1Data();
+        setSearchTourData(false);
+      } else {
+        await FetchTourDataAPi();
+      }
+      fetchData();
     };
 
-    try {
-      const response = await post("tour_data", sendData);
-      setFliterData(response.Data);
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
-    }
-  };
+    fetchInitialData();
+  }, []); // Empty dependency array to run only once when the component mounts
+
+  useEffect(() => {
+    const newLanArray = selectedLanguages.map((_, index) => index);
+    setLanArray(newLanArray);
+  }, [selectedLanguages]);
+
+  useEffect(() => {
+    FetchFilterData();
+  }, [
+    selectedTourTypes,
+    lanArray, // Directly use the array
+    selectedCities,
+    selectedRatings,
+    selectedFeatures,
+    selectedDurations,
+    value,
+  ]);
 
   return (
-    <>
-      <main>
-        <Header1 />
-        <Hero1 fetchSearch1Data={fetchSearch1Data} />
-
-        <div className="mt-50">
-          <TourList4
-            TourData={TourData}
-            currentResults={currentResults}
-            setActiveIndex={setActiveIndex}
-            activeIndex={activeIndex}
-            FliterData={FliterData}
-          />
-        </div>
-
-        <FooterTwo />
-      </main>
-    </>
+    <main>
+      <Header1 />
+      <Hero1 />
+      <div className="mt-50">
+        <TourList4
+          TourData={TourData}
+          currentResults={currentResults}
+          setActiveIndex={setActiveIndex}
+          activeIndex={activeIndex}
+          FliterData={FliterData}
+        />
+      </div>
+      <FooterTwo />
+    </main>
   );
 }

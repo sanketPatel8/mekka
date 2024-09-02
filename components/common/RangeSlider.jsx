@@ -25,7 +25,7 @@ export default function RangeSlider() {
   };
   return (
     <>
-      <div className="js-price-rangeSlider" style={{ padding: "20px 15px" }}>
+      <div className="js-price-rangeSlider" style={{ padding: "40px 15px" }}>
         <div className="px-5">
           <ThemeProvider theme={theme}>
             <Slider

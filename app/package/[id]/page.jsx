@@ -52,8 +52,6 @@ export default function Page() {
     }
   }, [id]);
 
-  console.log("selectDeparture for main package :", SharePackageData);
-
   return (
     <>
       <Header1 />

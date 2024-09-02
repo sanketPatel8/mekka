@@ -30,7 +30,7 @@ const OtherInformation2 = ({ PAckageData , id}) => {
             <div className="lh-16">
               {translate("Luggages") }
             </div>
-            <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.baggage}</div>
+            <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.baggage} kg</div>
           </div>
         </div>
       </div>

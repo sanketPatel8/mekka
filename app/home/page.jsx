@@ -23,7 +23,7 @@ export default function Home() {
       <Header1 />
       <FeaturesOne locale={locale} /> 
       <Tour1 />
-      <Banner />
+      <Banner /> 
       <TourSlderOne />
       <TestimonialOne />
       <BannerOne />

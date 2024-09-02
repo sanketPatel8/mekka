@@ -17,9 +17,6 @@ export default function OthersInformation({ PAckageData , id }) {
     
   }, [PAckageData]);
 
-  console.log("TourList data for other information : " , TourList);
-  
-
   const { translate } = useTranslation();
 
   return (

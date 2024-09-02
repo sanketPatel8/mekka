@@ -244,6 +244,7 @@
   "Method" : "Method" , 
   "Flight" : "Flight",
   "Initiated By" : "Initiated By" , 
-  "Bookings" : "Bookings"
+  "Bookings" : "Bookings",
+  "Direct Flight" : "Direct Flight"
   
  }

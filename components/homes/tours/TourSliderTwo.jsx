@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "@/public/css/index.css";
 import { post } from "@/app/utils/api";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function TourSliderTwo() {
   const [showSwiper, setShowSwiper] = useState(false);
@@ -39,6 +40,8 @@ export default function TourSliderTwo() {
       }
     }
   };
+
+  const { translate } = useTranslation();
 
   return (
     <section className="relative">
@@ -93,7 +96,7 @@ export default function TourSliderTwo() {
                             <Image
                               width={421}
                               height={301}
-                              src=""
+                              src={elm.tour_image ? elm.tour_image : "/img/404/imgnotFound.png"}
                               alt="image"
                               className="img-ratio rounded-12"
                             />
@@ -101,18 +104,22 @@ export default function TourSliderTwo() {
 
                           <button
                             className={`tourCard__favorite ${
-                              elm?.direct_flight == "0" ? "d-none" : "d-block"
+                              elm.direct_flight === "0" || elm.direct_flight == null ? "d-none" : "d-block"
                             }`}
                           >
-                            Direct Flight
+                              {translate("Direct Flight")}
                           </button>
                         </div>
 
                         <div className="tourCard__content px-10 pt-10">
-                        <div className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 ${elm.distance_to_hotel ? 'd-none' : 'd-block'}`}>
-                    <FaPersonWalking color="white" size={18} />
-                    Zu Kaaba {elm.distance_to_hotel} M
-                  </div>
+                          <div
+                            className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 ${
+                              elm.distance_to_hotel ? "d-none" : "d-block"
+                            }`}
+                          >
+                            <FaPersonWalking color="white" size={18} />
+                            Zu Kaaba {elm.distance_to_hotel} m
+                          </div>
 
                           <h3
                             className={`tourCard__title text-16 fw-500 mt-5 ${
@@ -125,21 +132,18 @@ export default function TourSliderTwo() {
                           </h3>
 
                           <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                            <div
-                              className={`d-flex x-gap-5 ${
-                                elm.rating ? "d-block" : "d-none"
-                              }`}
-                            >
-                              <Stars star={elm.rating} />
+                            <div className="d-flex items-center mt-5">
+                              <div className="d-flex items-center x-gap-5">
+                                <Stars star={elm?.rating_count} font={12} />
+                              </div>
+                              <div className="text-14 ml-5">
+                                <span className="fw-500">{elm?.rating}</span> (
+                                {elm?.rating_count}) -{" "}
+                                {elm?.company_name == null
+                                  ? "No Compny  "
+                                  : elm?.company_name}
+                              </div>
                             </div>
-                            <p
-                              className={`text-dark-1 ml-10 ${
-                                elm.rating ? "d-block" : "d-none"
-                              }`}
-                            >
-                              {elm.rating} ({elm.rating}) -
-                            </p>{" "}
-                            {elm.company_name}
                           </div>
 
                           <div

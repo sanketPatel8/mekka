@@ -23,11 +23,11 @@ export default function Hero1({ blog , BlogData }) {
                 {BlogData?.headOne ? BlogData?.headOne : "Your guide to everywhere"}
               </h1>
 
-              <p className="hero__text">
-                {BlogData?.headOneText
+              <p className="hero__text" dangerouslySetInnerHTML={{ __html: BlogData?.headOneText }}>
+                {/* {BlogData?.headOneText
                   ? BlogData?.headOneText
                   : `Find inspiration, guides and stories for wherever you're going
-                Select a destination`}
+                Select a destination`} */}
               </p>
             </div>
           </div>

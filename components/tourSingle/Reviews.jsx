@@ -12,8 +12,7 @@ export default function Reviews({ PAckageData }) {
   useEffect(() => {
     setReviewsData(PAckageData?.Tour_Details?.customer_review || []);
   }, [PAckageData]);
-
-  console.log("A Review Data was : ", ReviewsData);
+  
   return (
     <>
       {ReviewsData.map((elm, i) => (

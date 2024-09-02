@@ -28,8 +28,6 @@ export default function SingleFour({ PAckageData }) {
 
   const { translate } = useTranslation();
 
-  // console.log("data was single for data :" + JSON.stringify(PAckageData));
-
   return (
     <>
       <section className="py-30 mt-80">

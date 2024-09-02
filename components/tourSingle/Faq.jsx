@@ -10,8 +10,6 @@ export default function Faq({ PAckageData }) {
     setFAQData(PAckageData?.Tour_Details?.faqs || []);
   }, [PAckageData]);
 
-  console.log("A Faq Data was : ", FAQData);
-
   return (
     <>
       {FAQData?.map((elm, i) => (

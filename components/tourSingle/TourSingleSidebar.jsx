@@ -29,12 +29,13 @@ export default function TourSingleSidebar({ PAckageData }) {
     setTotal,
     selectDeparture,
     setselectDeparture,
+    selectedCheckbox,
+    setselectedCheckbox,
   } = useGlobalState();
 
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
-  const [selectedCheckbox, setselectedCheckbox] = useState(false);
   const [SidebarData, setSidebarData] = useState({});
   const [FlightName, setFlightName] = useState([]);
 
@@ -93,6 +94,7 @@ export default function TourSingleSidebar({ PAckageData }) {
   //   setTotal,
   // ]);
 
+  
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
     if (
@@ -130,8 +132,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     HotelSelect.madinaPrice,
     setTotal,
   ]);
-
-  console.log("FlightName?.airlines : ", FlightName.airline);
 
   useEffect(() => {
     setExtraCharge(0);
@@ -183,8 +183,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     fetchData();
   }, []);
 
-  console.log("SidebarData?.tourprice : " , SidebarData);
-  
+  console.log("SidebarData was :", SidebarData?.tour_price);
 
   return (
     <div className="tourSingleSidebar">
@@ -251,17 +250,16 @@ export default function TourSingleSidebar({ PAckageData }) {
         let count, setCount;
 
         // Determine the appropriate state and setter function based on price_type
-        if (group.price_type === 1) {
+        if (group.price_type === "1") {
           count = adultNumber;
           setCount = setAdultNumber;
-        } else if (group.price_type === 2) {
+        } else if (group.price_type === "2") {
           count = youthNumber;
           setCount = setYouthNumber;
-        } else if (group.price_type === 3) {
+        } else if (group.price_type === "3") {
           count = childrenNumber;
           setCount = setChildrenNumber;
         } else {
-          // Handle any unexpected price_type
           return null;
         }
 
@@ -269,11 +267,11 @@ export default function TourSingleSidebar({ PAckageData }) {
           <div key={index} className="mt-15">
             <div className="d-flex items-center justify-between">
               <div className="text-14">
-                {group.price_type === 1
+                {group.price_type === "1"
                   ? "Adult (18+ Years) "
-                  : group.price_type === 2
-                  ? "Youth (13-17 Years) "
-                  : "Children (0-12 Years) "}
+                  : group.price_type === "2"
+                  ? "Child (13-17 Years) "
+                  : "Baby (0-12 Years) "}
                 <span className="fw-500">
                   {(group.price * count).toFixed(2)} €
                 </span>
@@ -281,7 +279,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
               <div className="d-flex items-center js-counter">
                 <button
-                  onClick={() => setCount((prev) => (prev > 0 ? prev - 1 : 0))}
+                  onClick={() => setCount((prev) => Math.max(prev - 1, 0))}
                   className="button size-30 border-1 rounded-full js-down"
                 >
                   <i className="icon-minus text-10"></i>
@@ -422,7 +420,7 @@ export default function TourSingleSidebar({ PAckageData }) {
           </div>
         </div>
 
-        <div className="text-14">40 €</div>
+        {/* <div className="text-14">40 €</div> */}
       </div>
 
       <hr />

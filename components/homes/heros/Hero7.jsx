@@ -12,6 +12,7 @@ import { DateObject } from "react-multi-date-picker";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
+import HeroSearch from "@/components/HeroSearch";
 
 const slides = [
   {
@@ -53,15 +54,12 @@ const slides = [
 export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
-  const [tourMambar, setTourMambar] = useState("");
-  const [SearchClick, setSearchClick] = useState(true);
-  const [dates, setDates] = useState([
-    new DateObject().setDay(5),
-    new DateObject().setDay(14).add(1, "month"),
-  ]);
 
-  const { location, setLocation, calender, tourType, setTourData } =
-    useGlobalState();
+  const {
+    location,
+    calender,
+    tourType,
+  } = useGlobalState();
 
   useEffect(() => {
     setCurrentActiveDD("");
@@ -85,46 +83,6 @@ export default function Hero7() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
-
-  const fetchData = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      Keyword: "",
-      type: location,
-      start_date: calender[0],
-      end_date: calender[1],
-    };
-    try {
-      const response = await post("search_tour", sendData);
-      // setTourData(response.Tour_List);
-    } catch (error) {
-      console.error("Error caught:", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        showErrorToast("Please verify your email");
-      } else {
-        showErrorToast("An error occurred during registration.");
-      }
-    }
-  };
-
-  const handleFormClick = () => {
-    setSearchClick(false);
-    router.push("/tour");
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [SearchClick]);
-
-  const handleDateChange = (newDates) => {
-    setDates(newDates);
-    const formattedDates = newDates.map((date) => date.format("YYYY-MM-DD"));
-    console.log("Selected dates:", formattedDates);
-  };
 
   return (
     <>
@@ -213,93 +171,8 @@ export default function Hero7() {
             ref={dropDownContainer}
             className="searchForm -type-1 shadow-1 rounded-200"
           >
-            <div className="searchForm__form">
-              <div className="searchFormItem js-select-control js-form-dd">
-                <div
-                  className="searchFormItem__button"
-                  onClick={() =>
-                    setCurrentActiveDD((pre) =>
-                      pre == "location" ? "" : "location"
-                    )
-                  }
-                >
-                  <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                    <i className="text-20 icon-pin"></i>
-                  </div>
-                  <div className="searchFormItem__content">
-                    <h5>Tour Type</h5>
-                    <div className="js-select-control-chosen">
-                      {location ? location : "Search destinations"}
-                    </div>
-                  </div>
-                </div>
-
-                <Location
-                  setLocation={setLocation}
-                  active={currentActiveDD === "location"}
-                />
-              </div>
-
-              <div className="searchFormItem js-select-control js-form-dd js-calendar">
-                <div
-                  className="searchFormItem__button"
-                  onClick={() =>
-                    setCurrentActiveDD((pre) =>
-                      pre == "calender" ? "" : "calender"
-                    )
-                  }
-                >
-                  <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                    <i className="text-20 icon-calendar"></i>
-                  </div>
-                  <div className="searchFormItem__content">
-                    <h5>Start of trip to end of trip</h5>
-                    <div>
-                      <span className="js-first-date">
-                        <Calender
-                          dates={dates}
-                          onDateChange={handleDateChange}
-                        />
-                      </span>
-                      <span className="js-last-date"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="searchFormItem js-select-control js-form-dd">
-                <div
-                  className="searchFormItem__button"
-                  onClick={() =>
-                    setCurrentActiveDD((pre) =>
-                      pre == "tourType" ? "" : "tourType"
-                    )
-                  }
-                >
-                  <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                    <i className="text-20 icon-flag"></i>
-                  </div>
-                  <div className="searchFormItem__content">
-                    <h5>Passenger</h5>
-                    <div className="js-select-control-chosen">
-                      {tourType ? tourType : "All tour"}
-                    </div>
-                  </div>
-                </div>
-
-                <NumberOfTravellers
-                  setTourType={setTourMambar}
-                  active={currentActiveDD === "tourType"}
-                />
-              </div>
-            </div>
-
-            <div onClick={handleFormClick} className="searchForm__button">
-              <button className="button -info-2 bg-accent-1 rounded-200 text-white">
-                <i className="icon-search text-16 mr-10"></i>
-                Search
-              </button>
-            </div>
+            
+            <HeroSearch CustomClass="rounded-200" />
           </div>
         </div>
       </section>
