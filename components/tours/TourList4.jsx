@@ -26,30 +26,17 @@ export default function TourList4({
   activeIndex,
   useHandleSelection,
   FliterData,
-  Route
+  Route,
+  setRoute,
+  FilterSidebar,
+  setFilterSidebar,
+  setTourData,
 }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
   const [SidebarData, setSidebarData] = useState([]);
 
-
-  useEffect(() => {
-    const handleClick = (event) => {
-      if (
-        dropDownContainer.current &&
-        !dropDownContainer.current.contains(event.target)
-      ) {
-        setDdActives(false);
-      }
-    };
-
-    document.addEventListener("click", handleClick);
-
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
 
   const dropDownContainer = useRef(null);
 
@@ -63,8 +50,12 @@ export default function TourList4({
             <div className="lg:d-none">
               <Sidebar2
                 TourData={TourData}
+                setTourData={setTourData}
                 useHandleSelection={useHandleSelection}
                 FliterData={FliterData}
+                FilterSidebar={FilterSidebar}
+                setFilterSidebar={setFilterSidebar}
+                setRoute={setRoute}
               />
             </div>
 
@@ -97,7 +88,9 @@ export default function TourList4({
           <div className="col-xl-9 col-lg-8">
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
-                <div>{TourData.length} results from {Route} </div>
+                <div>
+                  {TourData.length} results from {Route}{" "}
+                </div>
               </div>
 
               <div ref={dropDownContainer} className="col-auto">
@@ -138,7 +131,11 @@ export default function TourList4({
                         <Image
                           width={420}
                           height={390}
-                          src={elm.tour_image ? elm.tour_image : "/img/404/imgnotFound.png"}
+                          src={
+                            elm.tour_image
+                              ? elm.tour_image
+                              : "/img/404/imgnotFound.png"
+                          }
                           alt="image"
                         />
                         <button
@@ -152,7 +149,7 @@ export default function TourList4({
                       <div className="tourCard__content">
                         <div className="tourCard__location border_yellow">
                           <FaPersonWalking color="white" size={18} />
-                          zu Kaaba {elm?.distance_to_hotel} m
+                          zu Kaaba {elm?.distance_to_hotel} 
                         </div>
                         <h3 className="tourCard__title mt-5">
                           <span>

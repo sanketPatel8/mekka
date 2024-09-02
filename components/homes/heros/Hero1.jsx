@@ -12,7 +12,7 @@ import Location from "@/components/common/dropdownSearch/Location";
 import Calender from "@/components/common/dropdownSearch/Calender";
 import HeroSearch from "@/components/HeroSearch";
 
-export default function Hero1({ fetchSearch1Data }) {
+export default function Hero1({}) {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [tourMambar, setTourMambar] = useState("");
@@ -20,17 +20,11 @@ export default function Hero1({ fetchSearch1Data }) {
   const { location, calender, tourType, setLocation, dates } = useGlobalState();
 
   const dropDownContainer = useRef();
+  
 
-
-
-  const handleDateChange = (newDates) => {
-    setDates(newDates);
-  };
-
-  const handleFormClick = () => {
-    fetchSearch1Data();
-    router.push("/tour");
-  };
+  // const handleDateChange = (newDates) => {
+  //   setDates(newDates);
+  // };
 
   const { translate } = useTranslation();
 
@@ -81,7 +75,8 @@ export default function Hero1({ fetchSearch1Data }) {
                 className="mt-60 md:mt-35"
               >
                 <div className="searchForm -type-1">
-                  <HeroSearch  />
+                  <HeroSearch
+                  />
                 </div>
               </div>
             </div>

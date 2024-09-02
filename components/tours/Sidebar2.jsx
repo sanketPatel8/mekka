@@ -10,28 +10,102 @@ import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 
-export default function Sidebar2({ TourData, FliterData }) {
+export default function Sidebar2({
+  FliterData,
+  setRoute,
+  setTourData,
+  // FilterSidebar,
+  // setFilterSidebar,
+}) {
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const [LanActives, setLanActives] = useState([]);
+  const [FilterSidebar, setFilterSidebar] = useState({
+    selectedTourTypes: [],
+    selectedLanguages: [],
+    selectedCities: [],
+    selectedRatings: [],
+    selectedFeatures: [],
+    selectedDurations: [],
+  });
 
-  // Generic handleChange function for all selections
+  const { value } = useGlobalState();
 
-  const {
-    selectedTourTypes,
-    setSelectedTourTypes,
-    selectedLanguages,
-    setSelectedLanguages,
-    selectedCities,
-    setSelectedCities,
-    selectedRatings,
-    setSelectedRatings,
-    selectedFeatures,
-    setSelectedFeatures,
-    selectedDurations,
-    setSelectedDurations,
-  } = useGlobalState();
+  const [lanArray, setLanArray] = useState([]);
+
+  const handleSelectionChange = (key, value) => {
+    setFilterSidebar((prevState) => {
+      const isSelected = prevState[key].includes(value);
+      return {
+        ...prevState,
+        [key]: isSelected
+          ? prevState[key].filter((item) => item !== value)
+          : [...prevState[key], value],
+      };
+    });
+  };
+
+  // useEffect to detect changes in the FilterSidebar state
+  useEffect(() => {
+    console.log("FilterSidebar state changed:", FilterSidebar);
+  }, [FilterSidebar]);
+
+  // useEffect(() => {
+  //   const handleClick = (event) => {
+  //     if (
+  //       dropDownContainer.current &&
+  //       !dropDownContainer.current.contains(event.target)
+  //     ) {
+  //       setDdActives(false);
+  //     }
+  //   };
+
+  //   document.addEventListener("click", handleClick);
+
+  //   return () => {
+  //     document.removeEventListener("click", handleClick);
+  //   };
+  // }, []);
+
+  // console.log(" FilterSidebar : ", FilterSidebar);
 
   const { translate } = useTranslation();
+
+  useEffect(() => {
+    const newLanArray = FilterSidebar?.selectedLanguages.map(
+      (_, index) => index
+    );
+    setLanArray(newLanArray);
+  }, [FilterSidebar?.selectedLanguages]);
+
+  const FetchFilterData = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      type: FilterSidebar?.selectedTourTypes.join(", "),
+      language: lanArray.join(","),
+      departure: FilterSidebar?.selectedCities.join(", "),
+      min_price: value[0],
+      max_price: value[1],
+      hotel_star: FilterSidebar?.selectedDurations.join(", "),
+      agent_rating: FilterSidebar?.selectedRatings.join(", "),
+      amenities: FilterSidebar?.selectedFeatures.join(", "),
+      start: 0,
+    };
+
+    try {
+      const response = await post("tourfilter", sendData);
+      setTourData(response.Tours);
+      setRoute("filter data");
+    } catch (error) {
+      console.error("Error caught:", error);
+      showErrorToast("An error occurred during registration.");
+    }
+  };
+
+  useEffect(() => {
+    console.log("update function for tour filter");
+
+    FetchFilterData();
+  }, [FilterSidebar]);
 
   return (
     <div className="sidebar -type-1 rounded-12">
@@ -78,8 +152,15 @@ export default function Sidebar2({ TourData, FliterData }) {
                                     type="checkbox"
                                     id={elm}
                                     name={elm}
-                                    checked={selectedTourTypes.includes(elm)}
-                                    onChange={() => setSelectedTourTypes(elm)}
+                                    checked={FilterSidebar?.selectedTourTypes.includes(
+                                      elm
+                                    )}
+                                    onChange={() =>
+                                      handleSelectionChange(
+                                        "selectedTourTypes",
+                                        elm
+                                      )
+                                    }
                                   />
                                   <label
                                     htmlFor={elm}
@@ -159,11 +240,14 @@ export default function Sidebar2({ TourData, FliterData }) {
                                     type="checkbox"
                                     id={elm.languages_en}
                                     name={elm.languages_en}
-                                    checked={selectedLanguages.includes(
-                                      elm.languages_en
+                                    checked={FilterSidebar?.selectedLanguages.includes(
+                                      elm
                                     )}
                                     onChange={() =>
-                                      setSelectedLanguages(elm.languages_en)
+                                      handleSelectionChange(
+                                        "selectedLanguages",
+                                        elm
+                                      )
                                     }
                                   />
                                   <label
@@ -247,11 +331,14 @@ export default function Sidebar2({ TourData, FliterData }) {
                                     type="checkbox"
                                     id={elm.departure}
                                     name={elm.departure}
-                                    checked={selectedCities.includes(
-                                      elm.departure
+                                    checked={FilterSidebar?.selectedCities.includes(
+                                      elm
                                     )}
                                     onChange={() =>
-                                      setSelectedCities(elm.departure)
+                                      handleSelectionChange(
+                                        "selectedCities",
+                                        elm
+                                      )
                                     }
                                   />
                                   <label
@@ -407,8 +494,15 @@ export default function Sidebar2({ TourData, FliterData }) {
                                     type="checkbox"
                                     id={elm}
                                     name={elm}
-                                    checked={selectedDurations.includes(elm)}
-                                    onChange={() => setSelectedDurations(elm)}
+                                    checked={FilterSidebar?.selectedDurations.includes(
+                                      elm
+                                    )}
+                                    onChange={() =>
+                                      handleSelectionChange(
+                                        "selectedDurations",
+                                        elm
+                                      )
+                                    }
                                   />
                                   <label
                                     htmlFor={elm}
@@ -485,8 +579,12 @@ export default function Sidebar2({ TourData, FliterData }) {
                             type="checkbox"
                             id={`rating-${star}`}
                             name={star}
-                            checked={selectedRatings.includes(star)}
-                            onChange={() => setSelectedRatings(star)}
+                            checked={FilterSidebar?.selectedRatings.includes(
+                              star
+                            )}
+                            onChange={() =>
+                              handleSelectionChange("selectedRatings", star)
+                            }
                           />
                           <label
                             htmlFor={`rating-${star}`}
@@ -565,11 +663,14 @@ export default function Sidebar2({ TourData, FliterData }) {
                                     type="checkbox"
                                     id={elm?.options_en}
                                     name={elm?.options_en}
-                                    checked={selectedFeatures.includes(
-                                      elm?.options_en
+                                    checked={FilterSidebar?.selectedFeatures.includes(
+                                      elm
                                     )}
                                     onChange={() =>
-                                      setSelectedFeatures(elm?.options_en)
+                                      handleSelectionChange(
+                                        "selectedFeatures",
+                                        elm
+                                      )
                                     }
                                   />
                                   <label

@@ -125,7 +125,7 @@ export default function TourSliderTwo() {
                             }`}
                           >
                             <FaPersonWalking color="white" size={18} />
-                            Zu Kaaba {elm.distance_to_hotel} m
+                            Zu Kaaba {elm.distance_to_hotel} 
                           </div>
 
                           <h3

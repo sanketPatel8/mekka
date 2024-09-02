@@ -60,30 +60,9 @@ export const GlobalStateProvider = ({ children }) => {
 
   const [SharePackageData, setSharePackageData] = useState([]);
 
-  // for demo  tourlist filter data
-
-  // main state of all data
-
-  const [TourData, setTourData] = useState([]);
-
-  const [selectedTourTypes, setSelectedTourTypes] = useState([]);
-  const [selectedLanguages, setSelectedLanguages] = useState([]);
-  const [selectedCities, setSelectedCities] = useState([]);
-  const [selectedRatings, setSelectedRatings] = useState([]);
-  const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [selectedDurations, setSelectedDurations] = useState([]);
-
-  const handleSelectionChange = (selection, setter) => {
-    setter((prevSelections) =>
-      prevSelections.includes(selection)
-        ? prevSelections.filter((item) => item !== selection)
-        : [...prevSelections, selection]
-    );
-  };
 
   // for hero7 run function
 
-  const [SearchTourData, setSearchTourData] = useState(false);
 
   // no flight booking logic package
 
@@ -91,7 +70,8 @@ export const GlobalStateProvider = ({ children }) => {
 
   return (
     <GlobalStateContext.Provider
-      value={{
+      value={
+        {
         loginPer,
         setLoginPer,
         adultNumber,
@@ -130,30 +110,9 @@ export const GlobalStateProvider = ({ children }) => {
         setselectDeparture,
         SharePackageData,
         setSharePackageData,
-        selectedTourTypes,
-        setSelectedTourTypes: (selection) =>
-          handleSelectionChange(selection, setSelectedTourTypes),
-        selectedLanguages,
-        setSelectedLanguages: (selection) =>
-          handleSelectionChange(selection, setSelectedLanguages),
-        selectedCities,
-        setSelectedCities: (selection) =>
-          handleSelectionChange(selection, setSelectedCities),
-        selectedRatings,
-        setSelectedRatings: (selection) =>
-          handleSelectionChange(selection, setSelectedRatings),
-        selectedFeatures,
-        setSelectedFeatures: (selection) =>
-          handleSelectionChange(selection, setSelectedFeatures),
-        selectedDurations,
-        setSelectedDurations: (selection) =>
-          handleSelectionChange(selection, setSelectedDurations),
-        TourData,
-        setTourData,
         selectedCheckbox,
         setselectedCheckbox,
-        SearchTourData,
-        setSearchTourData,
+        
       }}
     >
       {children}

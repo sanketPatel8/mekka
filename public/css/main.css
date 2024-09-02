@@ -4539,16 +4539,20 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 767px) {
   .searchForm.-type-1 .searchForm__form {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     padding: 0;
   }
   .searchForm.-type-1 .searchForm__form > * + * {
     border-top: 1px solid #E7E6E6;
   }
+  .searchForm.-type-1 .searchForm__button{
+    width: 100%;
+  }
 }
 
 .searchForm.-type-1 .searchForm__button {
   flex-shrink: 0;
+ 
 }
 
 .searchForm.-type-1 .searchForm__button button {
@@ -4566,6 +4570,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .searchForm.-type-1 .searchFormItem {
   position: relative;
+  width: 100%;
 }
 
 .searchForm.-type-1 .searchFormItem__button {

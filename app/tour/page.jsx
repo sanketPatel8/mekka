@@ -11,42 +11,30 @@ import { useGlobalState } from "../context/GlobalStateContext";
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
+  const searchParams = useSearchParams();
+
   const [count, setCount] = useState("");
   const [activeIndex, setActiveIndex] = useState(1);
   const [FliterData, setFliterData] = useState([]);
   const [lanArray, setLanArray] = useState([]);
   const [Route, setRoute] = useState("");
+  const [TourData, setTourData] = useState([]);
 
-  const {
-    location,
-    calender,
-    value,
-    selectedTourTypes,
-    selectedLanguages,
-    selectedCities,
-    selectedRatings,
-    selectedFeatures,
-    selectedDurations,
-    TourData,
-    setTourData,
-    SearchTourData,
-    setSearchTourData,
-  } = useGlobalState();
+
+  const [FilterSidebar, setFilterSidebar] = useState({
+    selectedTourTypes: [],
+    selectedLanguages: [],
+    selectedCities: [],
+    selectedRatings: [],
+    selectedFeatures: [],
+    selectedDurations: [],
+  });
+
+  const { location, calender, value } = useGlobalState();
 
   const currentResults = Array.isArray(TourData)
     ? TourData.slice((activeIndex - 1) * 10, activeIndex * 10)
     : [];
-
-  const searchParams = useSearchParams();
-
-  // Extract query parameters
-  const tourType = searchParams.get("TourType") || "Default Tour Type";
-  const startDate = searchParams.get("StartDate") || "Default Start Date";
-  const endDate = searchParams.get("enddate") || "Default End Date";
-
-  // console.log("Tour Type:", tourType);
-  // console.log("Start Date:", startDate);
-  // console.log("End Date:", endDate);
 
   const fetchData = async () => {
     const sendData = {
@@ -72,30 +60,6 @@ export default function Page() {
     }
   };
 
-  const FetchFilterData = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      type: selectedTourTypes.join(", "),
-      language: lanArray.join(","),
-      departure: selectedCities.join(", "),
-      min_price: value[0],
-      max_price: value[1],
-      hotel_star: selectedDurations.join(", "),
-      agent_rating: selectedRatings.join(", "),
-      amenities: selectedFeatures.join(", "),
-      start: 0,
-    };
-
-    try {
-      const response = await post("tourfilter", sendData);
-      setTourData(response.Tours);
-      setRoute("filter data");
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
-    }
-  };
-
   const FetchTourDataAPi = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -110,13 +74,14 @@ export default function Page() {
     }
   };
 
-  const fetchSearch1Data = async () => {
+  const fetchSearch1Data = async ({ tourType, startDate, endDate }) => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       Keyword: "",
       type: tourType,
       start_date: startDate,
       end_date: endDate,
+      
     };
     try {
       const response = await post("search_tour", sendData);
@@ -137,50 +102,21 @@ export default function Page() {
   };
 
   useEffect(() => {
-    const fetchInitialData = async () => {
-      if (SearchTourData) {
-        await fetchSearch1Data();
-        setSearchTourData(false);
-      } else {
-        await FetchTourDataAPi();
-      }
-      fetchData();
-    };
-
-    fetchInitialData();
-  }, []); // Empty dependency array to run only once when the component mounts
+    FetchTourDataAPi();
+    fetchData();
+  }, []);
 
   useEffect(() => {
-    const newLanArray = selectedLanguages.map((_, index) => index);
-    setLanArray(newLanArray);
-  }, [selectedLanguages]);
-
-  useEffect(() => {
-    FetchFilterData();
-  }, [
-    selectedTourTypes,
-    lanArray, // Directly use the array
-    selectedCities,
-    selectedRatings,
-    selectedFeatures,
-    selectedDurations,
-    value,
-  ]);
-
-  useEffect(() => {
-
-  console.log(tourType, startDate, endDate , "this value is updated");
-  
-    fetchSearch1Data();
-  }, [tourType, startDate, endDate]);
-
-
-
+    const tourType = searchParams.get("TourType") || "Default Tour Type";
+    const startDate = searchParams.get("StartDate") || "Default Start Date";
+    const endDate = searchParams.get("enddate") || "Default End Date";
+    fetchSearch1Data({ tourType, startDate, endDate });
+  }, [searchParams]);
 
   return (
     <main>
       <Header1 />
-      <Hero1 />
+      <Hero1  />
       <div className="mt-50">
         <TourList4
           TourData={TourData}
@@ -189,6 +125,8 @@ export default function Page() {
           activeIndex={activeIndex}
           FliterData={FliterData}
           Route={Route}
+          setTourData={setTourData}
+          setRoute={setRoute}
         />
       </div>
       <FooterTwo />

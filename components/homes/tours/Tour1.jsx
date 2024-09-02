@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
+import { showErrorToast } from "@/app/utils/tost";
 
 export default function Tour1() {
   const [LatestPackage, setLatestPackage] = useState([]);
@@ -108,7 +109,7 @@ export default function Tour1() {
                     }`}
                   >
                     <FaPersonWalking color="white" size={18} />
-                    Zu Kaaba {elm.distance_to_hotel} m
+                    Zu Kaaba {elm.distance_to_hotel} 
                   </div>
 
                   <h3 className="tourCard__title text-16 fw-500 mt-5">

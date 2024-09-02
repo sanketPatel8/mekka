@@ -18,7 +18,7 @@ const HeroSearch = ({ CustomClass }) => {
   const router = useRouter();
   const dropDownContainer = useRef(null);
 
-  const { location, setLocation, calender, tourType, setTourData } =
+  const { location, setLocation, calender, tourType, setTourData , counts , setCounts} =
     useGlobalState();
 
   const handleDateChange = (newDates) => {
@@ -67,6 +67,9 @@ const HeroSearch = ({ CustomClass }) => {
   };
 
   console.log("dates", calender);
+
+  const person = Object.values(counts).reduce((total, count) => total + count, 0);
+
 
   return (
     <div ref={dropDownContainer}>
@@ -136,16 +139,15 @@ const HeroSearch = ({ CustomClass }) => {
         </div>
 
         <Link
-          href={`/tour/?TourType=${location}&StartDate=${calender[0]}&enddate=${calender[1]}`}
+          href={`/tour/?TourType=${location}&StartDate=${calender[0]}&enddate=${calender[1]}&person=${person}`}
+          className="searchForm__button"
         >
-          <div className="searchForm__button">
-            <button
-              className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}
-            >
-              <i className="icon-search text-16 mr-10"></i>
-              Search
-            </button>
-          </div>
+          <button
+            className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}
+          >
+            <i className="icon-search text-16 mr-10"></i>
+            Search
+          </button>
         </Link>
       </div>
     </div>
