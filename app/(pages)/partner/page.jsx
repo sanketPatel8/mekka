@@ -5,13 +5,17 @@ import Header1 from "@/components/layout/header/Header1";
 import $ from "jquery";
 import "select2/dist/css/select2.min.css"
 import { POST } from "@/app/utils/api/post";
+import FooterTwo from "@/components/layout/footers/FooterTwo";
+import { showSuccessToast } from "@/app/utils/tost";
+import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 // import "select2/dist/js/select2.min.js";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
   const [gender, setGender] = useState("");
   const [Nationality, setNationality] = useState("");
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState("mosque");
   const [customGender, setCustomGender] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -24,8 +28,11 @@ const page = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [companyName, setCompanyName] = useState("");
+  const [company_email, setCompanyEmail] = useState("");
+  const [company_mobile, setCompanyMobile] = useState("");
   const [error, setError] = useState("");
-
+  const [passwordError, setPasswordError] = useState("");
+  const router = useRouter();
   const options = [
     { value: "1", label: "Zip Code" },
     { value: "2", label: "152523" },
@@ -86,9 +93,9 @@ const handlePassword = (e) => {
   const passwordValue = e.target.value;
   setPassword(passwordValue);
   if (!passwordRegex.test(passwordValue)) {
-    setError("Invalid password. ");
+    setPasswordError("Invalid password. ");
   }  else {
-    setError("");
+    setPasswordError("");
   }
 };
 
@@ -99,7 +106,6 @@ const handleSubmit = async (e) => {
   // }
 
   e.preventDefault();
-
   const formData = new FormData();
   formData.append("name", name);
   formData.append("surname", surname);
@@ -112,13 +118,16 @@ const handleSubmit = async (e) => {
   formData.append("city", city);
   formData.append("state", state);
   formData.append("companyName", companyName);
-
+  formData.append("company_email", company_email);
+  formData.append("company_mobile", company_mobile);
+  formData.append("is_mosque", radioValue === "mosque" ? 1 : 0);
 
   const url= `vendor_register`;
   try{
     const response = await POST.request({form:formData, url:url, header: { "Content-Type": "multipart/form-data" }});
+    showSuccessToast(response.message);
+    router.push("/login");
 
-    console.log(response.data)
   }catch(err){
     console.log(err)
   }
@@ -126,8 +135,9 @@ const handleSubmit = async (e) => {
 
   return (
     <>
+      <ToastContainer/>
       <Header1 />
-      <div className="mt-80">
+      <div className="mt-80 mb-80">
         <h1 className="text-center my-5">Partner Registration </h1>
         <div className="container">
         <form
@@ -148,8 +158,8 @@ const handleSubmit = async (e) => {
                             <input
                               type="radio"
                               name="radioGroup"
-                              value="f-1-bed-4"
-                              checked={radioValue === "f-1-bed-4"}
+                              value="mosque"
+                              checked={radioValue === "mosque"}
                               onChange={handleRadioChange}
                             />
                             <span className="radio__mark">
@@ -166,8 +176,8 @@ const handleSubmit = async (e) => {
                             <input
                               type="radio"
                               name="radioGroup"
-                              value="f-1-bed-3"
-                              checked={radioValue === "f-1-bed-3"}
+                              value="travel_agency"
+                              checked={radioValue === "travel_agency"}
                               onChange={handleRadioChange}
                             />
                             <span className="radio__mark">
@@ -197,7 +207,7 @@ const handleSubmit = async (e) => {
                         </div>
                       </div>
                       <div className="col-md-6">
-                        <div>
+                        {/* <div>
                           <div className="">
                             <select id="my-select"  value={zipcode} onChange={handleInputChange(setZipcode)} className="form-control">
                               {options.map((option, index) => (
@@ -207,7 +217,14 @@ const handleSubmit = async (e) => {
                               ))}
                             </select>
                           </div>
+                        </div> */}
+                        <div className="form-input spacing">
+                          <input type="text" required value={zipcode} onChange={handleInputChange(setZipcode)} />
+                          <label className="lh-1 text-16 text-light-1">
+                          Zip Code
+                          </label>
                         </div>
+
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
@@ -235,7 +252,7 @@ const handleSubmit = async (e) => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={email} onChange={handleInputChange(setEmail)}/>
+                          <input type="text" required  value={company_email} onChange={handleInputChange(setCompanyEmail)}/>
                           <label className="lh-1 text-16 text-light-1">
                             E-Mail Address
                           </label>
@@ -243,7 +260,7 @@ const handleSubmit = async (e) => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={mobile} onChange={handleInputChange(setMobile)}/>
+                          <input type="text" required  value={company_mobile} onChange={handleInputChange(setCompanyMobile)}/>
                           <label className="lh-1 text-16 text-light-1">
                             Phone Number
                           </label>
@@ -306,7 +323,7 @@ const handleSubmit = async (e) => {
                             At least 8 characters include uppercase and lowercase
                             letters, numbers and special characters
                           </span>
-                          {error && <div className="text-danger">{error}</div>}
+                          {passwordError && <div className="text-red">{passwordError}</div>}
                         </div>
                       </div>
                       <div className="col-md-12">
@@ -315,7 +332,7 @@ const handleSubmit = async (e) => {
                           <label className="lh-1 text-16 text-light-1">
                             Confirm Password*
                           </label>
-                          {error && <div className="text-danger">{error}</div>}
+                          {error && <div className="text-red">{error}</div>}
                         </div>
                       </div>
                       <div className="d-flex items-center">
@@ -363,6 +380,8 @@ const handleSubmit = async (e) => {
           </form>
         </div>
       </div>
+      <FooterTwo/>
+      
     </>
   );
 };

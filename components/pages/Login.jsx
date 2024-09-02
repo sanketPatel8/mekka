@@ -123,7 +123,6 @@ export default function Login({ onLoginSuccess }) {
         // }
       })
       .catch((err) => {
-        setLoading(false);
         console.log(err);
       });
   };

@@ -518,4 +518,12 @@ hr{
     visibility: hidden;
   }
   
-   
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  
+.contactForm .form-input textarea + label,
+.contactForm .form-input input + label {
+  transform: translateY(-29px);
+}
