@@ -63,6 +63,9 @@ const customStylesForPendingPayment = {
 };
 
 const CustomerDetaTable = () => {
+  
+  const { translate } = useTranslation();
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const [paymentModalIsOpen, setPaymentModalIsOpen] = useState(false);
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
@@ -351,7 +354,7 @@ const CustomerDetaTable = () => {
 
   // FOR CANGE LANGAUGE
 
-  const { translate } = useTranslation();
+
 
   return (
     <div>
