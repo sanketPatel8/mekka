@@ -92,9 +92,9 @@ export default function Tour1() {
 
                   <button
                     className={`tourCard__favorite ${
-                      elm.direct_flight === "0" || elm.direct_flight == null
-                        ? "d-none"
-                        : "d-block"
+                      elm.direct_flight == "0" || elm.direct_flight == null
+                        ? "d-block"
+                        : "d-none"
                     }`}
                   >
                     {translate("Direct Flight")}

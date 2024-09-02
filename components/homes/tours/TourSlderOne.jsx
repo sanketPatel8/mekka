@@ -30,8 +30,6 @@ export default function TourSlderOne() {
     try {
       const response = await post("top_trending", sendData);
       if (response) {
-        console.log("Top tranding res : ", response.Tours);
-
         setTopTranding(response.Tours);
       } else {
         console.error("Tours data is undefined in the response.");
@@ -50,7 +48,6 @@ export default function TourSlderOne() {
     }
   };
 
-  console.log("TopTranding was : ", TopTranding);
 
   const { translate } = useTranslation();
 
