@@ -26,7 +26,7 @@ export default function TourSliderTwo() {
     try {
       const response = await post("best_seller_tour", BookingLoginData);
       setBestSellerData(response?.Tours);
-      console.log(response);
+    
     } catch (error) {
       console.error("Error:", error); // Log the full error for debugging
       if (
@@ -96,7 +96,11 @@ export default function TourSliderTwo() {
                             <Image
                               width={421}
                               height={301}
-                              src={elm.tour_image ? elm.tour_image : "/img/404/imgnotFound.png"}
+                              src={
+                                elm.tour_image
+                                  ? elm.tour_image
+                                  : "/img/404/imgnotFound.png"
+                              }
                               alt="image"
                               className="img-ratio rounded-12"
                             />
@@ -104,10 +108,13 @@ export default function TourSliderTwo() {
 
                           <button
                             className={`tourCard__favorite ${
-                              elm.direct_flight === "0" || elm.direct_flight == null ? "d-none" : "d-block"
+                              elm.direct_flight === "0" ||
+                              elm.direct_flight == null
+                                ? "d-block"
+                                : "d-none"
                             }`}
                           >
-                              {translate("Direct Flight")}
+                            {translate("Direct Flight")}
                           </button>
                         </div>
 

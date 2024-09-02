@@ -21,22 +21,7 @@ export default function Hero1({ fetchSearch1Data }) {
 
   const dropDownContainer = useRef();
 
-  // Close dropdown when clicking outside
 
-  useEffect(() => {
-    const handleClick = (event) => {
-      if (
-        dropDownContainer.current &&
-        !dropDownContainer.current.contains(event.target)
-      ) {
-        setCurrentActiveDD("");
-      }
-    };
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, []);
 
   const handleDateChange = (newDates) => {
     setDates(newDates);

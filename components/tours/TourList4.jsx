@@ -22,20 +22,17 @@ import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function TourList4({
   TourData,
-  currentResults,
-  combinedTourList,
   setActiveIndex,
   activeIndex,
   useHandleSelection,
   FliterData,
+  Route
 }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
-
   const [SidebarData, setSidebarData] = useState([]);
 
-  const dropDownContainer = useRef();
 
   useEffect(() => {
     const handleClick = (event) => {
@@ -53,6 +50,8 @@ export default function TourList4({
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
+  const dropDownContainer = useRef(null);
 
   const { translate } = useTranslation();
 
@@ -98,7 +97,7 @@ export default function TourList4({
           <div className="col-xl-9 col-lg-8">
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
-                <div>{TourData.length} results</div>
+                <div>{TourData.length} results from {Route} </div>
               </div>
 
               <div ref={dropDownContainer} className="col-auto">

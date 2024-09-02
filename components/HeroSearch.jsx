@@ -1,12 +1,11 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Location from "@/components/common/dropdownSearch/Location";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import Calender from "./common/dropdownSearch/Calender";
 import { DateObject } from "react-multi-date-picker";
 import NumberOfTravellers from "./common/dropdownSearch/NumberOfTravellers";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const HeroSearch = ({ CustomClass }) => {
   const [currentActiveDD, setCurrentActiveDD] = useState("");
@@ -17,34 +16,65 @@ const HeroSearch = ({ CustomClass }) => {
   const [tourMambar, setTourMambar] = useState("");
 
   const router = useRouter();
+  const dropDownContainer = useRef(null);
 
-  const {
-    location,
-    setLocation,
-    calender,
-    tourType,
-    setTourData,
-  } = useGlobalState();
+  const { location, setLocation, calender, tourType, setTourData } =
+    useGlobalState();
 
   const handleDateChange = (newDates) => {
     setDates(newDates);
     const formattedDates = newDates.map((date) => date.format("YYYY-MM-DD"));
   };
 
-  const handleFormClick = () => {
-    // fetchSearch1Data();
-    router.push("/tour");
+  const closeDropdown = () => setCurrentActiveDD("");
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (
+        dropDownContainer.current &&
+        !dropDownContainer.current.contains(event.target)
+      ) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
+
+  const handleLocationChange = () => {
+    setCurrentActiveDD((prev) => (prev === "location" ? "" : "location"));
   };
 
+  const handleCalenderChange = () => {
+    setCurrentActiveDD((prev) => (prev === "calender" ? "" : "calender"));
+  };
+
+  const handleTourTypeChange = () => {
+    setCurrentActiveDD((prev) => (prev === "tourType" ? "" : "tourType"));
+  };
+
+  const handleLocationSelection = (value) => {
+    setLocation(value);
+    closeDropdown();
+  };
+
+  const handleTourTypeSelection = (value) => {
+    setTourMambar(value);
+    closeDropdown();
+  };
+
+  console.log("dates", calender);
+
   return (
-    <div>
+    <div ref={dropDownContainer}>
       <div className="searchForm__form">
         <div className="searchFormItem js-select-control js-form-dd">
           <div
             className="searchFormItem__button"
-            onClick={() =>
-              setCurrentActiveDD((pre) => (pre == "location" ? "" : "location"))
-            }
+            onClick={handleLocationChange}
           >
             <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
               <i className="text-20 icon-pin"></i>
@@ -58,7 +88,7 @@ const HeroSearch = ({ CustomClass }) => {
           </div>
 
           <Location
-            setLocation={setLocation}
+            setLocation={handleLocationSelection}
             active={currentActiveDD === "location"}
           />
         </div>
@@ -66,9 +96,7 @@ const HeroSearch = ({ CustomClass }) => {
         <div className="searchFormItem js-select-control js-form-dd js-calendar">
           <div
             className="searchFormItem__button"
-            onClick={() =>
-              setCurrentActiveDD((pre) => (pre == "calender" ? "" : "calender"))
-            }
+            onClick={handleCalenderChange}
           >
             <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
               <i className="text-20 icon-calendar"></i>
@@ -88,9 +116,7 @@ const HeroSearch = ({ CustomClass }) => {
         <div className="searchFormItem js-select-control js-form-dd">
           <div
             className="searchFormItem__button"
-            onClick={() =>
-              setCurrentActiveDD((pre) => (pre == "tourType" ? "" : "tourType"))
-            }
+            onClick={handleTourTypeChange}
           >
             <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
               <i className="text-20 icon-flag"></i>
@@ -104,17 +130,23 @@ const HeroSearch = ({ CustomClass }) => {
           </div>
 
           <NumberOfTravellers
-            setTourType={setTourMambar}
+            setTourType={handleTourTypeSelection}
             active={currentActiveDD === "tourType"}
           />
         </div>
 
-        <div onClick={handleFormClick} className="searchForm__button">
-          <button className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}>
-            <i className="icon-search text-16 mr-10"></i>
-            Search
-          </button>
-        </div>
+        <Link
+          href={`/tour/?TourType=${location}&StartDate=${calender[0]}&enddate=${calender[1]}`}
+        >
+          <div className="searchForm__button">
+            <button
+              className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}
+            >
+              <i className="icon-search text-16 mr-10"></i>
+              Search
+            </button>
+          </div>
+        </Link>
       </div>
     </div>
   );
