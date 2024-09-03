@@ -11,33 +11,41 @@ import Stars from "@/components/common/Stars";
 import Pagination from "@/components/common/Pagination";
 import Sidebar2 from "@/components/tours/Sidebar2";
 import Image from "next/image";
-import { post } from "@/app/utils/api";
-import Link from "next/link";
-import { showErrorToast } from "@/app/utils/tost";
 import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/navigation";
-import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { useTranslation } from "@/app/context/TranslationContext";
+import Link from "next/link";
 
 export default function TourList4({
   TourData,
   setActiveIndex,
   activeIndex,
-  useHandleSelection,
   FliterData,
   Route,
   setRoute,
-  FilterSidebar,
-  setFilterSidebar,
   setTourData,
+  Page,
+  count,
 }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
-  const [SidebarData, setSidebarData] = useState([]);
 
   const dropDownContainer = useRef(null);
+
+  const [screenSize, setScreenSize] = React.useState("");
+
+  useEffect(() => {
+    setScreenSize([window.innerWidth, window.innerHeight]);
+    window.addEventListener("resize", () => {
+      setScreenSize([window.innerWidth, window.innerHeight]);
+    });
+    return () => {
+      window.removeEventListener("resize", () => {
+        setScreenSize([window.innerWidth, window.innerHeight]);
+      });
+    };
+  }, []);
 
   const { translate } = useTranslation();
 
@@ -46,44 +54,46 @@ export default function TourList4({
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">
-            <div className="lg:d-none">
-              <Sidebar2
-                TourData={TourData}
-                setTourData={setTourData}
-                FliterData={FliterData}
-                setRoute={setRoute}
-              />
-            </div>
-
-            <div className="accordion d-none mb-30 lg:d-flex js-accordion">
-              <div
-                className={`accordion__item col-12 ${
-                  sidebarActive ? "is-active" : ""
-                } `}
-              >
-                <button
-                  className="accordion__button button -dark-1 bg-light-1 px-25 py-10 border-1 rounded-12"
-                  onClick={() => setSidebarActive((pre) => !pre)}
-                >
-                  <i className="icon-sort-down mr-10 text-16"></i>
-                  Filter
-                </button>
-
+            {screenSize[0] && screenSize[0] <= 900 ? (
+              <div className="accordion d-none mb-30 lg:d-flex js-accordion">
                 <div
-                  className="accordion__content"
-                  style={sidebarActive ? { maxHeight: "2000px" } : {}}
+                  className={`accordion__item col-12 ${
+                    sidebarActive ? "is-active" : ""
+                  } `}
                 >
-                  <div className="pt-20">
-                    <Sidebar2
-                      TourData={TourData}
-                      setTourData={setTourData}
-                      FliterData={FliterData}
-                      setRoute={setRoute}
-                    />
+                  <button
+                    className="accordion__button button -info-2 bg-light-1 px-25 py-10 border-1 rounded-12"
+                    onClick={() => setSidebarActive((prev) => !prev)}
+                  >
+                    <i className="icon-sort-down mr-10 text-16"></i>
+                    Filter
+                  </button>
+
+                  <div
+                    className="accordion__content"
+                    style={sidebarActive ? { maxHeight: "2000px" } : {}}
+                  >
+                    <div className="pt-20">
+                      <Sidebar2
+                        TourData={TourData}
+                        setTourData={setTourData}
+                        FliterData={FliterData}
+                        setRoute={setRoute}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="">
+                <Sidebar2
+                  TourData={TourData}
+                  setTourData={setTourData}
+                  FliterData={FliterData}
+                  setRoute={setRoute}
+                />
+              </div>
+            )}
           </div>
 
           <div className="col-xl-9 col-lg-8">
@@ -246,13 +256,13 @@ export default function TourList4({
             <div className={`${TourData.length === 0 ? "d-none" : "d-block"}`}>
               <div className="d-flex justify-center flex-column mt-60">
                 <Pagination
-                  range={Math.ceil(TourData?.length / 10)}
-                  activeIndex={activeIndex}
-                  setActiveIndex={setActiveIndex}
+                  range= {Page} // કુલ પેજોની સંખ્યા
+                  activeIndex={activeIndex} // હાલની Active Page Index
+                  setActiveIndex={setActiveIndex} // Page Index Update કરવાની Function
                 />
 
                 <div className="text-14 text-center mt-20">
-                  Showing results 1-10 of {TourData.length}
+                  Showing results 1 - {TourData.length} of {count}
                 </div>
               </div>
             </div>

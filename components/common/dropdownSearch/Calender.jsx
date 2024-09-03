@@ -24,6 +24,7 @@ export default function Calender() {
       inputClass="custom_input-picker"
       containerClassName="custom_container-picker"
       placeholder="Please Select Your Date "
+      minDate={new Date()} 
     />
   );
 }

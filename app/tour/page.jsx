@@ -10,17 +10,16 @@ import { showErrorToast } from "../utils/tost";
 import { useGlobalState } from "../context/GlobalStateContext";
 import { useSearchParams } from "next/navigation";
 
+
 export default function Page() {
   const searchParams = useSearchParams();
 
-  const [count, setCount] = useState("");
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [count, setCount] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [FliterData, setFliterData] = useState([]);
-  const [lanArray, setLanArray] = useState([]);
   const [Route, setRoute] = useState("");
   const [TourData, setTourData] = useState([]);
-
-  const { location, calender, value } = useGlobalState();
+  const [Page, setPage] = useState(0);
 
   const currentResults = Array.isArray(TourData)
     ? TourData.slice((activeIndex - 1) * 10, activeIndex * 10)
@@ -29,17 +28,15 @@ export default function Page() {
   const fetchData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      start: activeIndex,
-      type: location,
-      start_date: calender[0],
-      end_date: calender[1],
+      start:  activeIndex ,
     };
 
     try {
       const response = await post("tourlist", sendData);
       if (response.Tours) {
         setTourData(response.Tours);
-        setCount(response.count);
+        setCount(response.Count);
+        setPage(response.Total_Page);
         setRoute("Tourlist data");
       } else {
         console.error("Tours data is undefined in the response.");
@@ -57,7 +54,7 @@ export default function Page() {
 
     try {
       const response = await post("tour_data", sendData);
-      // setFliterData(response.Data);
+      setFliterData(response.Data);
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast("An error occurred during registration.");
@@ -78,15 +75,8 @@ export default function Page() {
       setRoute("search data");
     } catch (error) {
       console.error("Error caught:", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        showErrorToast("Please verify your email");
-      } else {
-        showErrorToast("An error occurred during registration.");
-      }
+
+      showErrorToast("An error occurred during registration.");
     }
   };
 
@@ -96,11 +86,28 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    const tourType = searchParams.get("TourType") === undefined ? "" : searchParams.get("TourType") ;
-    const startDate = searchParams.get("StartDate") === undefined ? "" : searchParams.get("StartDate");
-    const endDate = searchParams.get("enddate")  === undefined ? "" : searchParams.get("enddate") ;
-    fetchSearch1Data({ tourType, startDate, endDate });
+    const tourType =
+      searchParams.get("TourType") === undefined
+        ? ""
+        : searchParams.get("TourType");
+    const startDate =
+      searchParams.get("StartDate") === undefined
+        ? ""
+        : searchParams.get("StartDate");
+    const endDate =
+      searchParams.get("enddate") === undefined
+        ? ""
+        : searchParams.get("enddate");
+    if (tourType !== null || startDate !== null || endDate !== null) {
+      fetchSearch1Data({ tourType, startDate, endDate });
+    }
   }, [searchParams]);
+
+  useEffect(() => {
+    fetchData();
+  }, [activeIndex]);
+
+  console.log("searchParams : ", searchParams);
 
   return (
     <main>
@@ -116,6 +123,8 @@ export default function Page() {
           Route={Route}
           setTourData={setTourData}
           setRoute={setRoute}
+          Page={Page}
+          count={count}
         />
       </div>
       <FooterTwo />

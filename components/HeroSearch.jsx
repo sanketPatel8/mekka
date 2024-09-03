@@ -6,8 +6,12 @@ import { DateObject } from "react-multi-date-picker";
 import NumberOfTravellers from "./common/dropdownSearch/NumberOfTravellers";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const HeroSearch = ({ CustomClass }) => {
+
+  const { translate } = useTranslation();
+
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [dates, setDates] = useState([
     new DateObject().setDay(5),
@@ -87,7 +91,7 @@ const HeroSearch = ({ CustomClass }) => {
               <i className="text-20 icon-pin"></i>
             </div>
             <div className="searchFormItem__content">
-              <h5>Tour Type</h5>
+              <h5> {translate("Tour Type")}</h5>
               <div className="js-select-control-chosen">
                 {location ? location : "Search Destanations"}
               </div>
@@ -109,7 +113,7 @@ const HeroSearch = ({ CustomClass }) => {
               <i className="text-20 icon-calendar"></i>
             </div>
             <div className="searchFormItem__content">
-              <h5>Start of trip to end of trip</h5>
+              <h5>{translate("Start of trip to end of trip")} </h5>
               <div>
                 <span className="js-first-date">
                   <Calender dates={dates} onDateChange={handleDateChange} />
@@ -129,9 +133,9 @@ const HeroSearch = ({ CustomClass }) => {
               <i className="text-20 icon-flag"></i>
             </div>
             <div className="searchFormItem__content">
-              <h5>Passenger</h5>
+              <h5> {translate("Passenger")} </h5>
               <div className="js-select-control-chosen">
-                {tourType ? tourType : "All tour"}
+              {translate("Passenger")} {person ? person : "person"}
               </div>
             </div>
           </div>

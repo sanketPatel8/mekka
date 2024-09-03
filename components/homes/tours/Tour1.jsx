@@ -26,19 +26,11 @@ export default function Tour1() {
         }
       } catch (error) {
         console.error("Error caught:", error);
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
+        showErrorToast(error?.message  + " " + "in Latest Package");
       }
     };
     fetchData();
-  } , []);
+  }, []);
 
   const { translate } = useTranslation();
 
@@ -85,7 +77,11 @@ export default function Tour1() {
                     <Image
                       width={421}
                       height={301}
-                      src={elm?.tour_image ? elm?.tour_image : "/img/404/imgnotFound.png"}
+                      src={
+                        elm?.tour_image
+                          ? elm?.tour_image
+                          : "/img/404/imgnotFound.png"
+                      }
                       alt="image"
                       className="img-ratio rounded-12"
                     />
@@ -109,7 +105,7 @@ export default function Tour1() {
                     }`}
                   >
                     <FaPersonWalking color="white" size={18} />
-                    Zu Kaaba {elm.distance_to_hotel} 
+                    Zu Kaaba {elm.distance_to_hotel}
                   </div>
 
                   <h3 className="tourCard__title text-16 fw-500 mt-5">

@@ -245,6 +245,8 @@
   "Flight" : "Flight",
   "Initiated By" : "Initiated By" , 
   "Bookings" : "Bookings",
-  "Direct Flight" : "Direct Flight"
+  "Direct Flight" : "Direct Flight",
+  "Passenger" : "Passenger",
+  "Start of trip to end of trip" : "Start of trip to end of trip"
   
  }

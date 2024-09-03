@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toursTypes, features } from "@/data/tourFilteringOptions";
 import RangeSlider from "@/components/common/RangeSlider";
 import Stars from "@/components/common/Stars";
@@ -14,11 +14,12 @@ export default function Sidebar2({
   FliterData,
   setRoute,
   setTourData,
-  // FilterSidebar,
-  // setFilterSidebar,
+  //FilterSidebar,
+  //setFilterSidebar,
 }) {
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const [LanActives, setLanActives] = useState([]);
+  const [LanArray, setLanArray] = useState([]);
   const [FilterSidebar, setFilterSidebar] = useState({
     selectedTourTypes: [],
     selectedLanguages: [],
@@ -29,8 +30,7 @@ export default function Sidebar2({
   });
 
   const { value } = useGlobalState();
-
-  const [lanArray, setLanArray] = useState([]);
+  const isMounted = useRef(false);
 
   const handleSelectionChange = (key, value) => {
     setFilterSidebar((prevState) => {
@@ -44,26 +44,11 @@ export default function Sidebar2({
     });
   };
 
-  // useEffect to detect changes in the FilterSidebar state
-
-  useEffect(() => {
-    console.log("FilterSidebar state changed:", FilterSidebar);
-  }, [FilterSidebar]);
-
-  const { translate } = useTranslation();
-
-  useEffect(() => {
-    const newLanArray = FilterSidebar?.selectedLanguages.map(
-      (_, index) => index
-    );
-    setLanArray(newLanArray);
-  }, [FilterSidebar?.selectedLanguages]);
-
   const FetchFilterData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       type: FilterSidebar?.selectedTourTypes.join(", "),
-      language: lanArray.join(","),
+      language: LanArray.join(","),
       departure: FilterSidebar?.selectedCities.join(", "),
       min_price: value[0],
       max_price: value[1],
@@ -84,8 +69,21 @@ export default function Sidebar2({
   };
 
   useEffect(() => {
-    FetchFilterData();
+    const newLanArray = FilterSidebar?.selectedLanguages.map(
+      (_, index) => index
+    );
+    setLanArray(newLanArray);
+  }, [FilterSidebar?.selectedLanguages]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      FetchFilterData();
+    } else {
+      isMounted.current = true;
+    }
   }, [FilterSidebar]);
+
+  const { translate } = useTranslation();
 
   return (
     <div className="sidebar -type-1 rounded-12">

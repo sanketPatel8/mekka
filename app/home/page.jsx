@@ -14,14 +14,14 @@ import FeaturesOne from "@/components/homes/features/FeaturesOne";
 // import Language from "@/components/Langauge"; // Import Language component for locale changes
 
 export default function Home() {
-  const [locale, setLocale] = useState("EN"); // Initialize locale state
+ 
 
   
   return (
     <main>
       <Hero7 />
       <Header1 />
-      <FeaturesOne locale={locale} /> 
+      <FeaturesOne  /> 
       <Tour1 />
       <Banner /> 
       <TourSlderOne />

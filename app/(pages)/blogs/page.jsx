@@ -1,3 +1,5 @@
+"use client"
+
 import { articles } from "@/data/articles";
 import { blogs } from "@/data/blogs";
 import Image from "next/image";
@@ -7,6 +9,9 @@ import "@/public/css/index.css";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
+import Header1 from "@/components/layout/header/Header1";
+
+import FooterTwo from "@/components/layout/footers/FooterTwo";
 
 export default function ArticlesThree() {
   const [ArticalDAta, setArticalDAta] = useState([]);
@@ -40,37 +45,14 @@ export default function ArticlesThree() {
   const { translate } = useTranslation();
   return (
     <section className="layout-pt-xl">
+        <Header1 />
       <div className="container">
-        <div className="row justify-between items-end y-gap-10">
-          <div className="col-auto">
-            <h2
-              data-aos="fade-up"
-              data-aos-delay=""
-              className="text-30 md:text-24 "
-            >
-              {translate("Travel Articles")}
-            </h2>
-          </div>
-
-          <div className="col-auto">
-            <Link
-              href={"/blogs"}
-              data-aos="fade-right"
-              data-aos-delay=""
-              className="buttonArrow d-flex items-center"
-            >
-              <span> {translate("See all")}</span>
-              <i className="icon-arrow-top-right text-16 ml-10"></i>
-            </Link>
-          </div>
-        </div>
-
-        <div
+      <div
           data-aos="fade-up"
           data-aos-delay=""
           className="row justify-content-center mb-10"
         >
-          {ArticalDAta.slice(0, 3).map((elm, i) => (
+          {ArticalDAta.map((elm, i) => (
             <div
               key={i}
               className="col-lg-3 col-md-5 my-lg-5  my-2 border-1 -hover-shadow rounded-12 mx-2 py-10 px-10 shadow"
@@ -111,7 +93,10 @@ export default function ArticlesThree() {
             </div>
           ))}
         </div>
+
+       
       </div>
+      <FooterTwo />
     </section>
   );
 }

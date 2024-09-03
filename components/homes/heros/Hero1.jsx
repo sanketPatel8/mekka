@@ -1,32 +1,13 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useGlobalState } from "@/app/context/GlobalStateContext";
-import { post } from "@/app/utils/api";
-import { showErrorToast } from "@/app/utils/tost";
 import { useTranslation } from "@/app/context/TranslationContext";
-import NumberOfTravellers from "@/components/common/dropdownSearch/NumberOfTravellers";
 import Image from "next/image";
-import Location from "@/components/common/dropdownSearch/Location";
-import Calender from "@/components/common/dropdownSearch/Calender";
 import HeroSearch from "@/components/HeroSearch";
 
 export default function Hero1({}) {
-  const router = useRouter();
-  const [currentActiveDD, setCurrentActiveDD] = useState("");
-  const [tourMambar, setTourMambar] = useState("");
-
-  const { location, calender, tourType, setLocation, dates } = useGlobalState();
-
-
-
   const dropDownContainer = useRef();
-  
-
-  // const handleDateChange = (newDates) => {
-  //   setDates(newDates);
-  // };
 
   const { translate } = useTranslation();
 
@@ -77,8 +58,7 @@ export default function Hero1({}) {
                 className="mt-60 md:mt-35"
               >
                 <div className="searchForm -type-1">
-                  <HeroSearch
-                  />
+                  <HeroSearch />
                 </div>
               </div>
             </div>
