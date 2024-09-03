@@ -51,10 +51,7 @@ export default function TourList4({
               <Sidebar2
                 TourData={TourData}
                 setTourData={setTourData}
-                useHandleSelection={useHandleSelection}
                 FliterData={FliterData}
-                FilterSidebar={FilterSidebar}
-                setFilterSidebar={setFilterSidebar}
                 setRoute={setRoute}
               />
             </div>

@@ -53,7 +53,7 @@ export default function TourList1() {
         <div className="row">
           <div className="col-xl-3 col-lg-4">
             <div className="lg:d-none">
-              <Sidebar2 />
+              {/* <Sidebar2 /> */}
             </div>
 
             <div className="accordion d-none mb-30 lg:d-flex js-accordion">
