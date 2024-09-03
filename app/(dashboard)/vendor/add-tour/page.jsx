@@ -263,6 +263,7 @@ export default function AddTour() {
   //     [id]: { ...prev[id], price: value },
   //   }));
   // };
+  
   const handleDeleteImage2 = (index) => {
     const newImages = [...image2];
     newImages.splice(index, 1);
@@ -271,6 +272,7 @@ export default function AddTour() {
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
+
   // const handleImageChange2 = (event) => {
   //   const files = event.target.files;
   //   const uploadedImages = [...image2];
@@ -286,6 +288,7 @@ export default function AddTour() {
   //     reader.readAsDataURL(file);
   //   }
   // };
+  
   const handleImageChange2 = (event) => {
     const files = event.target.files;
     const promises = [];

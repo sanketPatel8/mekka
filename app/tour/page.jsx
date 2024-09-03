@@ -20,16 +20,6 @@ export default function Page() {
   const [Route, setRoute] = useState("");
   const [TourData, setTourData] = useState([]);
 
-
-  const [FilterSidebar, setFilterSidebar] = useState({
-    selectedTourTypes: [],
-    selectedLanguages: [],
-    selectedCities: [],
-    selectedRatings: [],
-    selectedFeatures: [],
-    selectedDurations: [],
-  });
-
   const { location, calender, value } = useGlobalState();
 
   const currentResults = Array.isArray(TourData)
@@ -67,7 +57,7 @@ export default function Page() {
 
     try {
       const response = await post("tour_data", sendData);
-      setFliterData(response.Data);
+      // setFliterData(response.Data);
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast("An error occurred during registration.");
@@ -81,7 +71,6 @@ export default function Page() {
       type: tourType,
       start_date: startDate,
       end_date: endDate,
-      
     };
     try {
       const response = await post("search_tour", sendData);
@@ -116,7 +105,7 @@ export default function Page() {
   return (
     <main>
       <Header1 />
-      <Hero1  />
+      <Hero1 />
       <div className="mt-50">
         <TourList4
           TourData={TourData}
