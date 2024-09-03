@@ -96,9 +96,9 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    const tourType = searchParams.get("TourType") || "Default Tour Type";
-    const startDate = searchParams.get("StartDate") || "Default Start Date";
-    const endDate = searchParams.get("enddate") || "Default End Date";
+    const tourType = searchParams.get("TourType") === undefined ? "" : searchParams.get("TourType") ;
+    const startDate = searchParams.get("StartDate") === undefined ? "" : searchParams.get("StartDate");
+    const endDate = searchParams.get("enddate")  === undefined ? "" : searchParams.get("enddate") ;
     fetchSearch1Data({ tourType, startDate, endDate });
   }, [searchParams]);
 

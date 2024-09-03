@@ -37,7 +37,6 @@ export default function TourList4({
   const [sidebarActive, setSidebarActive] = useState(false);
   const [SidebarData, setSidebarData] = useState([]);
 
-
   const dropDownContainer = useRef(null);
 
   const { translate } = useTranslation();
@@ -75,7 +74,12 @@ export default function TourList4({
                   style={sidebarActive ? { maxHeight: "2000px" } : {}}
                 >
                   <div className="pt-20">
-                    <Sidebar2 setSidebarData={setSidebarData} />
+                    <Sidebar2
+                      TourData={TourData}
+                      setTourData={setTourData}
+                      FliterData={FliterData}
+                      setRoute={setRoute}
+                    />
                   </div>
                 </div>
               </div>
@@ -146,7 +150,7 @@ export default function TourList4({
                       <div className="tourCard__content">
                         <div className="tourCard__location border_yellow">
                           <FaPersonWalking color="white" size={18} />
-                          zu Kaaba {elm?.distance_to_hotel} 
+                          zu Kaaba {elm?.distance_to_hotel}
                         </div>
                         <h3 className="tourCard__title mt-5">
                           <span>

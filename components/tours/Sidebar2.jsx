@@ -45,7 +45,7 @@ export default function Sidebar2({
   };
 
   // useEffect to detect changes in the FilterSidebar state
-  
+
   useEffect(() => {
     console.log("FilterSidebar state changed:", FilterSidebar);
   }, [FilterSidebar]);
@@ -89,7 +89,7 @@ export default function Sidebar2({
 
   return (
     <div className="sidebar -type-1 rounded-12">
-      {/* <div className="sidebar__content">
+      <div className="sidebar__content">
         <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
             <div
@@ -426,7 +426,7 @@ export default function Sidebar2({
                   ddActives.includes("pricerange") ? { maxHeight: "300px" } : {}
                 }
               >
-                <RangeSlider min={0} max={1000} step={10}  />
+                <RangeSlider min={0} max={1000} step={10} />
               </div>
             </div>
           </div>
@@ -691,7 +691,7 @@ export default function Sidebar2({
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

@@ -19,6 +19,8 @@ export default function Hero1({}) {
 
   const { location, calender, tourType, setLocation, dates } = useGlobalState();
 
+
+
   const dropDownContainer = useRef();
   
 

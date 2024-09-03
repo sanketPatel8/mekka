@@ -21,6 +21,10 @@ const HeroSearch = ({ CustomClass }) => {
   const { location, setLocation, calender, tourType, setTourData , counts , setCounts} =
     useGlobalState();
 
+    const startDate = calender[0]  === undefined ? "" : calender[0];
+
+    const EndDate = calender[1]  === undefined ? "" : calender[1];
+
   const handleDateChange = (newDates) => {
     setDates(newDates);
     const formattedDates = newDates.map((date) => date.format("YYYY-MM-DD"));
@@ -85,7 +89,7 @@ const HeroSearch = ({ CustomClass }) => {
             <div className="searchFormItem__content">
               <h5>Tour Type</h5>
               <div className="js-select-control-chosen">
-                {location ? location : "Search destinations"}
+                {location ? location : "Search Destanations"}
               </div>
             </div>
           </div>
@@ -139,7 +143,7 @@ const HeroSearch = ({ CustomClass }) => {
         </div>
 
         <Link
-          href={`/tour/?TourType=${location}&StartDate=${calender[0]}&enddate=${calender[1]}&person=${person}`}
+          href={`/tour/?TourType=${location}&StartDate=${startDate}&enddate=${EndDate}&person=${person}`}
           className="searchForm__button"
         >
           <button

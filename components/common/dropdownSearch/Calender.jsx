@@ -10,8 +10,6 @@ export default function Calender() {
 
     const formattedDates = newDates.map((date) => date.format("YYYY.MM.DD"));
     setFormattedDates(formattedDates); // Store the formatted dates globally
-
-    console.log("Selected dates:", formattedDates);
   };
 
   return (

@@ -7,7 +7,7 @@ const currencies = ["DE", "EN"];
 
 export default function Language({ parentClass, onLocaleChange }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("EN");
+  const [selectedCurrency, setSelectedCurrency] = useState("DE");
   const dropDownContainer = useRef();
 
   useEffect(() => {
