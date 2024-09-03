@@ -37,7 +37,7 @@ export const sidebarItemsAgentDB = [
     iconClass: "icon-payment text-26",
     label: "Payment History",
   },
-  { id: 7, href: "/", iconClass: "icon-logout text-26", label: "Logout" },
+  { id: 7,  iconClass: "icon-logout text-26", label: "Logout" },
 ];
 
 export const sidebarItemsCustomerDB = [

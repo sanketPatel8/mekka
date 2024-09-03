@@ -7,7 +7,7 @@ const currencies = ["DE", "EN"];
 
 export default function Language({ parentClass, onLocaleChange }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("DE");
+  const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem("locale") || "DE");
   const dropDownContainer = useRef();
 
   useEffect(() => {

@@ -77,6 +77,7 @@ export default function Login({ onLoginSuccess }) {
     Auth.user(data)
       .then((resp) => {
         if(resp.user.user_type == "vendor"){
+          console.log("hi")
           localStorage.setItem("user", JSON.stringify(resp));
           dispatch({ type: "LOGIN", payload: resp.data });
           showSuccessToast("Login successful!");
@@ -93,8 +94,9 @@ export default function Login({ onLoginSuccess }) {
             setLoginPer(true) 
             router.push('/customer/booking-details');
           }, 1000);
-        }else{
-          showErrorToast("Unauthorized User");
+        }else if(!resp || resp.status == "error"){
+          console.log("hi")
+          showErrorToast(resp.message);
         }
         // if (resp.data == "" || resp.data == null) {
         //   toast.error(resp.error);
@@ -123,7 +125,7 @@ export default function Login({ onLoginSuccess }) {
         // }
       })
       .catch((err) => {
-        console.log(err);
+        showErrorToast("Invalid Email or Password");
       });
   };
 

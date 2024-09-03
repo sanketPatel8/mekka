@@ -12,6 +12,11 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 
 export default function Profile() {
+  const {user} = useAuthContext();
+  console.log(user)
+  const existingUser = typeof window != 'undefined' && (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))) || null;
+  const { translate } = useTranslation();
+
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [image1, setImage1] = useState(""); //company logo
   const [image2, setImage2] = useState([]); //documents
@@ -27,13 +32,29 @@ export default function Profile() {
   const [houseNumber, setHouseNumber] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [website, setWebsite] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [tax_number, setTaxNumber] = useState("");
   const [type, setType] = useState("");
   const [bank_name, setBankName] = useState("");
   const [owner_name, setOwnerName] = useState("");
   const [IBAN, setIBAN] = useState("");
-  const {user} = useAuthContext();
+  const [userData, setUserData] = useState({});
 
+  useEffect(() => {
+    if(existingUser){
+
+      fetchProfile();
+    }
+  },[existingUser])
+
+
+  const fetchProfile = async() => {
+    const url ='my_profile'
+    const response = await POST.request({url:url,token: `${existingUser?.authorisation.token}` });
+    if(response.user){
+      setUserData(response.user)
+    }
+  }
   // const handleImageChange = (event, func) => {
   //   const file = event.target.files[0];
 
@@ -47,7 +68,13 @@ export default function Profile() {
   //     reader.readAsDataURL(file);
   //   }
   // };
+  const handleChange = (e) => {
+      console.log("handleChange called");
 
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  
+}
   const handleImageChange1 = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -58,24 +85,45 @@ export default function Profile() {
       reader.readAsDataURL(file);
     }
   };
+  // const handleImageChange2 = (event) => {
+  //   const files = event.target.files;
+  //   const newImages = [...image2];
+  //   for (let i = 0; i < files.length; i++) {
+  //     const file = files[i];
+  //     console.log(`Reading file ${i + 1} of ${files.length}`);
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       console.log(`File ${i + 1} read successfully`);
+
+  //       newImages.push(reader.result);
+  //       console.log(newImages,"new images")
+  //       setImage2(newImages);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
   const handleImageChange2 = (event) => {
     const files = event.target.files;
-    const newImages = [...image2];
+    const promises = [];
+    const uploadedImages = [...image2];
+  
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      console.log(`Reading file ${i + 1} of ${files.length}`);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        console.log(`File ${i + 1} read successfully`);
-
-        newImages.push(reader.result);
-        console.log(newImages,"new images")
-        setImage2(newImages);
-      };
-      reader.readAsDataURL(file);
+      const promise = new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          uploadedImages.push(reader.result);
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+      promises.push(promise);
     }
+  
+    Promise.all(promises).then(() => {
+      setImage2(uploadedImages);
+    });
   };
-
   const handleSubmit = async(e) =>{
 
     e.preventDefault();
@@ -85,22 +133,27 @@ export default function Profile() {
     // Determine the type of form being submitted
     const formType = e.target.name;
     console.log(formType)
+    console.log(userData)
     switch (formType) {
       case 'profile':
         formData.append('id', user?.user.id);
-        formData.append('name', name);
-        formData.append('surname', surname);
-        formData.append('email', email);
-        formData.append('mobile', mobile);
-        formData.append('country', SelectedCountry);
-        formData.append('city', city);
-        formData.append('street', street);
-        formData.append('houseNumber', houseNumber);
-        formData.append('zipcode', zipcode);
-        formData.append('website', website);
-        formData.append('tax_number', tax_number);
+        formData.append('name', userData.name || name);
+        formData.append('surname', userData.surname || surname);
+        formData.append('email', userData.email || email);
+        formData.append('mobile', userData.mobile || mobile);
+        formData.append('country', userData.country || SelectedCountry);
+        formData.append('city', userData.city || city);
+        formData.append('street', userData.street || street);
+        formData.append('houseNumber', userData.houseNumber || houseNumber);
+        formData.append('zipcode', userData.zipcode || zipcode);
+        formData.append('website', userData.website || website);
+        formData.append('tax_number', userData.tax_number || tax_number);
         formData.append('image', image1);
-        formData.append('company_document', image2);
+        // formData.append('company_document', image2);
+        formData.append('companyName', userData.companyName || companyName);
+        formData.append('info', userData.info || info);
+        formData.append('company_id', userData.company === null ? 0 : userData.company.id);
+        formData.append('type', formType);
         break;
       case 'bank_details':
         formData.append('id', user?.user.id);
@@ -119,10 +172,9 @@ export default function Profile() {
         return;
     }
     
-    console.log(formData.append,"formData")
     const url = `update_profile`
-
-      const response = await POST.request({form: formData, url:url,header: { 'Content-Type': 'multipart/form-data', }, token: `${user.authorisation.token}` });
+    console.log(name)
+      const response = await POST.request({form: formData, url:url,header: { 'Content-Type': 'multipart/form-data', } });
 
       console.log(response.data);
    
@@ -185,7 +237,6 @@ const handleDeleteImage2 = (index) => {
     }
   }, []);
 
-  const { translate } = useTranslation();
 
   return (
     <>
@@ -213,45 +264,50 @@ const handleDeleteImage2 = (index) => {
               <div className="contactForm row my-1">
                 <div className="col-md-6">
                   <div className="form-input m-0 ">
-                    <input type="text" required value={name}  onChange={handleInputChange(setName)} />
-                    <label className="lh-1 text-16 text-light-1">
-                       {translate("First Name") }
+                        <input
+                          type="text"
+                          required
+                          defaultValue={userData.name ? userData.name : name}
+                          onChange={handleInputChange(setName)}
+                        />
+                        <label className="lh-1 text-16 text-light-1">
+                       {translate("First Name") } <span className="text-red">*</span>
                     </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required value={surname} onChange={handleInputChange(setSurname)}/>
+                    <input type="text" required defaultValue={userData.surname ? userData.surname : name} onChange={handleInputChange(setSurname)}/>
                     <label className="lh-1 text-16 text-light-1">
-                       {translate("Last Name") }
-                    </label>
-                  </div>
-                </div>
-
-                {/* <div className="col-md-6">
-                  <div className="form-input m-0">
-                    <input type="text" />
-                    <label className="lh-1 text-16 text-light-1">
-                       {translate("Company Name") }
-                    </label>
-                  </div>
-                </div> */}
-
-                <div className="col-md-6">
-                  <div className="form-input m-0">
-                    <input type="email" required value={email} onChange={handleInputChange(setEmail)}/>
-                    <label className="lh-1 text-16 text-light-1">
-                       {translate("Email Id") }
+                       {translate("Last Name") } <span className="text-red">*</span>
                     </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required value={mobile} onChange={handleInputChange(setMobile)} />
+                    <input type="text" required defaultValue={userData.companyName ? userData.companyName : companyName} onChange={handleInputChange(setCompanyName)} />
                     <label className="lh-1 text-16 text-light-1">
-                       {translate("Contact No") }
+                       {translate("Company Name") } <span className="text-red">*</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-input m-0">
+                    <input type="email" required  defaultValue={userData.email ? userData.email : email}  onChange={handleInputChange(setEmail)}/>
+                    <label className="lh-1 text-16 text-light-1">
+                       {translate("Email Id") } <span className="text-red">*</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-input m-0">
+                    <input type="text" required defaultValue={userData.mobile ? userData.mobile : mobile} onChange={handleInputChange(setMobile)} />
+                    <label className="lh-1 text-16 text-light-1">
+                       {translate("Contact No") } <span className="text-red">*</span>
                     </label>
                   </div>
                 </div>
@@ -261,11 +317,11 @@ const handleDeleteImage2 = (index) => {
                 <div className="col-md-6">
                 <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
                     <CreatableSelect
-                      value={SelectedCountry}
+                      value={userData.country ? userData.country :SelectedCountry}
                       onChange={HandleCountryChange}
                       options={CountryOptions}
                       className="custom-select"
-                      placeholder="Select Country  "
+                      placeholder="Select Country(required) "
                       classNamePrefix="react-select"
                       isClearable
                       formatCreateLabel={(inputValue) =>
@@ -277,61 +333,61 @@ const handleDeleteImage2 = (index) => {
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required  value={city} onChange={handleInputChange(setCity)}/>
-                    <label className="lh-1 text-16 text-light-1"> {translate("City") }</label>
+                    <input type="text" required  defaultValue={userData.city ? userData.city : city} onChange={handleInputChange(setCity)}/>
+                    <label className="lh-1 text-16 text-light-1"> {translate("City") } <span className="text-red">*</span></label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required  value={street} onChange={handleInputChange(setStreet)}/>
-                    <label className="lh-1 text-16 text-light-1"> {translate("Street") }</label>
+                    <input type="text" required  defaultValue={userData.street ? userData.street : street} onChange={handleInputChange(setStreet)}/>
+                    <label className="lh-1 text-16 text-light-1"> {translate("Street") } <span className="text-red">*</span></label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required  value={houseNumber} onChange={handleInputChange(setHouseNumber)}/>
+                    <input type="text" required  defaultValue={userData.houseNumber ? userData.houseNumber : houseNumber} onChange={handleInputChange(setHouseNumber)}/>
                     <label className="lh-1 text-16 text-light-1">
-                       {translate("House No") }
+                       {translate("House No") } <span className="text-red">*</span>
                     </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required  value={zipcode} onChange={handleInputChange(setZipcode)}/>
+                    <input type="text" required  defaultValue={userData.zipcode ? userData.zipcode : zipcode} onChange={handleInputChange(setZipcode)}/>
                     <label className="lh-1 text-16 text-light-1">
-                       {translate("ZIP Code") }
+                       {translate("ZIP Code") } <span className="text-red">*</span>
                     </label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required  value={website} onChange={handleInputChange(setWebsite)}/>
-                    <label className="lh-1 text-16 text-light-1"> {translate("Website") }</label>
+                    <input type="text" required  defaultValue={userData.website ? userData.website : website} onChange={handleInputChange(setWebsite)}/>
+                    <label className="lh-1 text-16 text-light-1"> {translate("Website") } <span className="text-red">*</span></label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0 ">
-                    <input type="text" required  value={tax_number} onChange={handleInputChange(setTaxNumber)} />
+                    <input type="text" required  defaultValue={userData.tax_number ? userData.tax_number : tax_number} onChange={handleInputChange(setTaxNumber)} />
                     <label className="lh-1 text-16 text-light-1">
-                       {translate("Tax Number") }
+                       {translate("Tax Number") } <span className="text-red">*</span>
                     </label>
                   </div>
                 </div>
 
                 <div className="col-md-12">
                   <div className="form-input m-0">
-                    <textarea required rows="2"  value={info} onChange={handleInputChange(setInfo)}></textarea>
-                    <label className="lh-1 text-16 text-light-1"> {translate("Info") }</label>
+                    <textarea required rows="2"  defaultValue={userData.info ? userData.info : info} onChange={handleInputChange(setInfo)}></textarea>
+                    <label className="lh-1 text-16 text-light-1"> {translate("Info") } <span className="text-red">*</span></label>
                   </div>
                 </div>
 
                 <div className="col-12">
-                  <h4 className="text-18 fw-500 mb-20"> {translate("Company Logo") }</h4>
+                  <h4 className="text-18 fw-500 mb-20"> {translate("Company Logo") } <span className="text-red">*</span></h4>
                   <div className="row x-gap-20 y-gap my-1">
                     {image1 ? (
                       <div className="col-auto">
@@ -379,7 +435,7 @@ const handleDeleteImage2 = (index) => {
                     )}
                   </div>
 
-                  <h4 className="text-18 fw-500 mb-20 mt-20"> {translate("Documents") }</h4>
+                  <h4 className="text-18 fw-500 mb-20 mt-20"> {translate("Documents") } <span className="text-red">*</span></h4>
                   <div className="row x-gap-20 y-gap">
                     {/* {image1 ? (
                       <div className="col-auto">
@@ -444,7 +500,6 @@ const handleDeleteImage2 = (index) => {
                 <i className="icon-delete text-18"></i>
               </button>
 
-              <div>Image {index + 1} rendered</div>
 
             </div>
           </div>
@@ -506,7 +561,7 @@ const handleDeleteImage2 = (index) => {
                     <div className="form-input my-1 ">
                       <input type="text" required  value={bank_name} onChange={handleInputChange(setBankName)}/>
                       <label className="lh-1 text-16 text-light-1">
-                         {translate("Bank Name") }
+                         {translate("Bank Name") } <span className="text-red">*</span>
                       </label>
                     </div>
                   </div>
@@ -517,7 +572,7 @@ const handleDeleteImage2 = (index) => {
                     <div className="form-input my-1 ">
                       <input type="text" required  value={owner_name} onChange={handleInputChange(setOwnerName)}/>
                       <label className="lh-1 te xt-16 text-light-1">
-                         {translate("Owner Name") }
+                         {translate("Owner Name") } <span className="text-red">*</span>
                       </label>
                     </div>
                   </div>
@@ -527,7 +582,7 @@ const handleDeleteImage2 = (index) => {
                   <div className="col-md-6">
                     <div className="form-input my-1 ">
                       <input type="text" required  value={IBAN} onChange={handleInputChange(setIBAN)}/>
-                      <label className="lh-1 text-16 text-light-1"> {translate("IBAN") }</label>
+                      <label className="lh-1 text-16 text-light-1"> {translate("IBAN") } <span className="text-red">*</span></label>
                     </div>
                   </div>
                 </div>
@@ -558,7 +613,7 @@ const handleDeleteImage2 = (index) => {
                       <div className="form-input m-0 ">
                         <input type="text" required />
                         <label className="lh-1 text-16 text-light-1">
-                          {translate("Old password") }
+                          {translate("Old password") } <span className="text-red">*</span>
                         </label>
                       </div>
                     </div>
@@ -569,7 +624,7 @@ const handleDeleteImage2 = (index) => {
                       <div className="form-input m-0 ">
                         <input type="text" required />
                         <label className="lh-1 text-16 text-light-1">
-                          {translate("New password") }
+                          {translate("New password") } <span className="text-red">*</span>
                         </label>
                       </div>
                     </div>
@@ -580,7 +635,7 @@ const handleDeleteImage2 = (index) => {
                       <div className="form-input m-0 ">
                         <input type="text" required />
                         <label className="lh-1 text-16 text-light-1">
-                          {translate("Confirm new password") }
+                          {translate("Confirm new password") } <span className="text-red">*</span>
                         </label>
                       </div>
                     </div>

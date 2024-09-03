@@ -1,14 +1,17 @@
-"use client";
-
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const TranslationContext = createContext();
 
 export const TranslationProvider = ({ children }) => {
-  const [locale, setLocale] = useState("DE");
+  const [locale, setLocale] = useState(() => {
+    const savedLocale = localStorage.getItem("locale");
+    return savedLocale || "DE";
+  });
   const [translations, setTranslations] = useState({});
 
   useEffect(() => {
+    localStorage.setItem("locale", locale);
+
     // Fetch the translation file for the current locale
     fetch(`/locales/${locale}.json`)
       .then((response) => response.json())

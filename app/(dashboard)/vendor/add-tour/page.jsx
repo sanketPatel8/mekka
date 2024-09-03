@@ -69,7 +69,7 @@ export default function AddTour() {
   const [isNextClicked, setIsNextClicked] = useState(false);
   const [enabledTabs, setEnabledTabs] = useState([0]);
   const [visa_processing, setVisaProcessing] = useState(0);
-
+  const [dayData,setDayData] = useState("");
   const [daysCount, setDaysCount] = useState(0);
   const [dayDescription, setDayDescription] = useState("");
   const [included,setIncluded] = useState([
@@ -181,11 +181,10 @@ export default function AddTour() {
   //   }
 
   } 
-
-  const handleDayDescriptionChange = (dayNumber, description) => {
+  const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
       const newData = [...prevData];
-      newData[dayNumber - 1] = { day: dayNumber, description };
+      newData[dayNumber - 1] = { day: dayNumber, dayData, description };
       return newData;
     });
   };
@@ -555,7 +554,12 @@ const isCurrentTabValid = () => {
 
     const editorValue = convertToRaw(editorState.getCurrentContent()).blocks[0].text;
   
-    
+    const newRouteData = route_data.map((day, index) => (
+      {
+        day:day.dayData,
+        description:day.description
+      }
+    ));
     // const itineraryData = {
     //   itinerary: route_data.map((day, index) => ({
     //     day: index + 1,
@@ -564,38 +568,38 @@ const isCurrentTabValid = () => {
     // };
     
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append("type", SelectedTour.value);
-    formData.append("name", name);
-    formData.append("capacity", capacity);
-    formData.append("date_begin", start_date);
-    formData.append("date_end", end_date);
-    formData.append("tour_languages", languageString);
-    formData.append("adult_price", adult_price);
-    formData.append("child_price", child_price);
-    formData.append("baby_price", baby_price);
-    formData.append("addition_service", JSON.stringify(servicesData));
-    formData.append("tour_included", includedData);
-    formData.append("tour_info", editorValue);
-    formData.append("route_data", JSON.stringify(route_data));
-    formData.append("hotel_data", JSON.stringify(hotel_data));
-    formData.append("flight_data", JSON.stringify(flightData));
-    formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
-    formData.append("user_id", user?.user.id);
-    // formData.append("company_id", user?.user.company_id);
+    // formData.append("type", SelectedTour.value);
+    // formData.append("name", name);
+    // formData.append("capacity", capacity);
+    // formData.append("date_begin", start_date);
+    // formData.append("date_end", end_date);
+    // formData.append("tour_languages", languageString);
+    // formData.append("adult_price", adult_price);
+    // formData.append("child_price", child_price);
+    // formData.append("baby_price", baby_price);
+    // formData.append("addition_service", JSON.stringify(servicesData));
+    // formData.append("tour_included", includedData);
+    // formData.append("tour_info", editorValue);
+    // formData.append("route_data", JSON.stringify(newRouteData));
+    // formData.append("hotel_data", JSON.stringify(hotel_data));
+    // formData.append("flight_data", JSON.stringify(flightData));
+    // formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
+    // formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
+    // formData.append("user_id", user?.user.id);
+    // // formData.append("company_id", user?.user.company_id);
 
-    const url = "addtour";
+    // const url = "addtour";
 
-    try{
-      const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
-      if(response){
-        toast.success("Tour Added Successfully");
-      }
-    }catch(error){
-      console.error(error);
-    }
+    // try{
+    //   const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
+    //   if(response){
+    //     toast.success("Tour Added Successfully");
+    //   }
+    // }catch(error){
+    //   console.error(error);
+    // }
   }
 
 
@@ -662,7 +666,7 @@ const isCurrentTabValid = () => {
                                       onChange={HandleTourChange}
                                       options={options}
                                       className="custom-select"
-                                      placeholder="Select or Tour Type"
+                                      placeholder="Select or Tour Type (required)"
                                       classNamePrefix="react-select"
                                       isClearable
                                       formatCreateLabel={(inputValue) =>
@@ -687,8 +691,8 @@ const isCurrentTabValid = () => {
                                   <div className="form-input my-1">
                                     <input type="text" required value={name} onChange={handleInputChange(setName)}/>
                                     <label className="lh-1 text-16 text-light-1">
-                                      {translate("Tour Name") ||
-                                        "Find Latest Packages"}
+                                      {translate("Tour Name")  ||
+                                        "Find Latest Packages"} <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
@@ -698,7 +702,7 @@ const isCurrentTabValid = () => {
                                     <input type="number" min={1} required value={capacity} onChange={handleInputChange(setCapacity)}/>
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Seat Availibility") ||
-                                        "Find Latest Packages"}
+                                        "Find Latest Packages"} <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
@@ -708,7 +712,7 @@ const isCurrentTabValid = () => {
                                     <input type="date" required value={date_begin? formatDateToMMDDYYYY(date_begin) : ''} onChange={handleInputChange(setDateBegin)}/>
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Start Date of Tour") ||
-                                        "Find Latest Packages"}
+                                        "Find Latest Packages"} <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
@@ -718,7 +722,7 @@ const isCurrentTabValid = () => {
                                     <input type="date" required value={date_end? formatDateToMMDDYYYY(date_end) : ''} onChange={handleInputChange(setDateEnd)}/>
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("End Date of Tour") ||
-                                        "Find Latest Packages"}
+                                        "Find Latest Packages"} <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
@@ -761,7 +765,7 @@ const isCurrentTabValid = () => {
                                     </select>
                                     <label className="multi-lan-select">
                                       {translate("Langauge") ||
-                                        "Find Latest Packages"}
+                                        "Find Latest Packages"} <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
@@ -770,57 +774,57 @@ const isCurrentTabValid = () => {
                               <div className="col-12">
                                 <h4 className="text-18 fw-500 mb-20">
                                   {" "}
-                                  {translate("Gallery") }
+                                  {translate("Gallery") } <span className="text-red">*</span>
                                 </h4>
 
                                 <div className="row x-gap-20 y-gap-20">
-                                {image2.map((image, index) => (
-            <div className="col-auto my-2" key={index}>
-              <div className="relative">
-                <Image
-                  width={200}
-                  height={200}
-                  src={image}
-                  alt={`image-${index}`}
-                  className="size-200 rounded-12 object-cover"
-                />
-                <button
-                  onClick={() => handleDeleteImage2(index)}
-                  className="absoluteIcon1 button -dark-1"
-                >
-                  <i className="icon-delete text-18"></i>
-                </button>
+                                  {image2.map((image, index) => (
+                                    <div className="col-auto my-2" key={index}>
+                                      <div className="relative">
+                                        <Image
+                                          width={200}
+                                          height={200}
+                                          src={image}
+                                          alt={`image-${index}`}
+                                          className="size-200 rounded-12 object-cover"
+                                        />
+                                        <button
+                                          onClick={() => handleDeleteImage2(index)}
+                                          className="absoluteIcon1 button -dark-1"
+                                        >
+                                          <i className="icon-delete text-18"></i>
+                                        </button>
 
 
-              </div>
-            </div>
-          ))}
+                                      </div>
+                                    </div>
+                                  ))}
 
-          <div className="col-auto my-2">
-            <label
-              htmlFor="imageInp2"
-              className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-            >
-              <Image
-                width="40"
-                height="40"
-                alt="image"
-                src={"/img/dashboard/upload.svg"}
-              />
+                                  <div className="col-auto my-2">
+                                    <label
+                                      htmlFor="imageInp2"
+                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                                    >
+                                      <Image
+                                        width="40"
+                                        height="40"
+                                        alt="image"
+                                        src={"/img/dashboard/upload.svg"}
+                                      />
 
-              <div className="text-16 fw-500 text-accent-1 mt-10">
-                {translate("Upload Images") }
-              </div>
-            </label>
-            <input
-              onChange={handleImageChange2}
-              accept="image/*"
-              id="imageInp2"
-              type="file"
-              multiple
-              style={{ display: "none" }}
-            />
-          </div>
+                                      <div className="text-16 fw-500 text-accent-1 mt-10">
+                                        {translate("Upload Images") }
+                                      </div>
+                                    </label>
+                                    <input
+                                      onChange={handleImageChange2}
+                                      accept="image/*"
+                                      id="imageInp2"
+                                      type="file"
+                                      multiple
+                                      style={{ display: "none" }}
+                                    />
+                                  </div>
                                 </div>
 
                                 <div className="text-14 mt-20">
@@ -833,22 +837,14 @@ const isCurrentTabValid = () => {
                           </div>
                           {activeTabIndex < tabs.length - 1 && (
                             <button
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
                               onClick={handleNextTab }
                               type="button"
                             >
                               Next
                             </button>
                           )}
-                          {activeTabIndex > tabs.length -1 && (
-                            <button
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
-                              onClick={handleNextTab }
-                              type="button"
-                            >
-                              Previous
-                            </button>
-                          )}
+                         
                         </div>
 
                         <div
@@ -863,25 +859,25 @@ const isCurrentTabValid = () => {
                                   <input type="number" required value={adult_price} onChange={handleInputChange(setAdultPrice)}/>
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Adult") ||
-                                      "Find Latest Packages"}
+                                      "Find Latest Packages"} <span className="text-red">*</span>
                                   </label>
                                 </div>
                               </div>
                               <div className="col-lg-4">
                                 <div className="form-input my-1">
-                                  <input type="text" required value={child_price} onChange={handleInputChange(setChildPrice)} />
+                                  <input type="number" required value={child_price} onChange={handleInputChange(setChildPrice)} />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Child") ||
-                                      "Find Latest Packages"}
+                                      "Find Latest Packages"} <span className="text-red">*</span>
                                   </label>
                                 </div>
                               </div>
                               <div className="col-lg-4">
                                 <div className="form-input my-1">
-                                  <input type="text" required value={baby_price} onChange={handleInputChange(setBabyPrice)}/>
+                                  <input type="number" required value={baby_price} onChange={handleInputChange(setBabyPrice)}/>
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Baby") ||
-                                      "Find Latest Packages"}
+                                      "Find Latest Packages"} <span className="text-red">*</span>
                                   </label>
                                 </div>
                               </div>
@@ -1137,11 +1133,11 @@ const isCurrentTabValid = () => {
                                   <div className="row">
                                   <div className="col-md-6">
                                     <div className="form-input my-1">
-                                      <input
+                                    <input
                                         type="text"
                                         required
-                                        value={dayNumber}
-                                        disabled
+                                        value={route_data.find((day) => day.day === dayNumber)?.dayData || ""}
+                                        onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, "")}
                                         className=""
                                       />
                                       <label className="lh-1 text-16 text-light-1">Day {dayNumber} :</label>
@@ -1149,13 +1145,13 @@ const isCurrentTabValid = () => {
                                   </div>
                                   <div className="col-md-6">
                                     <div className="form-input my-1">
-                                      <textarea
-                                        type="text"
-                                        required
-                                        rows="1"
-                                        cols="80"
-                                        value={route_data.find((day) => day.day === dayNumber)?.description || ""}
-                                        onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value)}
+                                    <textarea
+                                          type="text"
+                                          required
+                                          rows="1"
+                                          cols="80"
+                                          value={route_data.find((day) => day.day === dayNumber)?.description || ""}
+                                          onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
                                         />
                                       <label className="lh-1 text-16 text-light-1">Description :</label>
                                     </div>

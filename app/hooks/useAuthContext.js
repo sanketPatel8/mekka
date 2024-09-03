@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import {  useContext } from "react"
+import {  useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/authContext";
 
 export const useAuthContext = () => {  
@@ -7,9 +7,15 @@ export const useAuthContext = () => {
 
     const context = useContext(AuthContext)
 
-    if (!context) {
-        throw Error('useAuthContext must be used inside an AuthContextProvider')
-    }
+    const [user, setUser] = useState(null);
 
-    return context
+    useEffect(() => {
+      const existingUser = localStorage.getItem('user');
+      if (existingUser) {
+        setUser(JSON.parse(existingUser));
+      }
+    }, []);
+  
+    return { user, ...context };
+  
 }
