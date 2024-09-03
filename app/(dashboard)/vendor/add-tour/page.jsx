@@ -489,7 +489,7 @@ const isCurrentTabValid = () => {
     return editorState !== EditorState.createEmpty();
   } else if (activeTab === "Itinerary") {
     
-    return convertToRaw(editorState.getCurrentContent()).blocks[0].text;
+    return route_data.every((day) => day.dayData && day.description);
   } else if (activeTab === "Flight Hotel And Visa") {
 
     return mekkaRows.every((mekka) => mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop);
@@ -568,38 +568,39 @@ const isCurrentTabValid = () => {
     // };
     
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // formData.append("type", SelectedTour.value);
-    // formData.append("name", name);
-    // formData.append("capacity", capacity);
-    // formData.append("date_begin", start_date);
-    // formData.append("date_end", end_date);
-    // formData.append("tour_languages", languageString);
-    // formData.append("adult_price", adult_price);
-    // formData.append("child_price", child_price);
-    // formData.append("baby_price", baby_price);
-    // formData.append("addition_service", JSON.stringify(servicesData));
-    // formData.append("tour_included", includedData);
-    // formData.append("tour_info", editorValue);
-    // formData.append("route_data", JSON.stringify(newRouteData));
-    // formData.append("hotel_data", JSON.stringify(hotel_data));
-    // formData.append("flight_data", JSON.stringify(flightData));
-    // formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    // formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
-    // formData.append("user_id", user?.user.id);
-    // // formData.append("company_id", user?.user.company_id);
+    formData.append("type", SelectedTour.value);
+    formData.append("name", name);
+    formData.append("capacity", capacity);
+    formData.append("date_begin", start_date);
+    formData.append("date_end", end_date);
+    formData.append("tour_languages", languageString);
+    formData.append("adult_price", adult_price);
+    formData.append("child_price", child_price);
+    formData.append("baby_price", baby_price);
+    formData.append("addition_service", JSON.stringify(servicesData));
+    formData.append("tour_included", includedData);
+    formData.append("tour_info", editorValue);
+    formData.append("route_data", JSON.stringify(newRouteData));
+    formData.append("hotel_data", JSON.stringify(hotel_data));
+    formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData):"");
+    formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
+    formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
+    formData.append("user_id", user?.user.id);
+    formData.append("company_id", user?.user.company_id);
 
-    // const url = "addtour";
+    const url = "addtour";
 
-    // try{
-    //   const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
-    //   if(response){
-    //     toast.success("Tour Added Successfully");
-    //   }
-    // }catch(error){
-    //   console.error(error);
-    // }
+    try{
+      const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
+      console.log(response)
+      if(response){
+        // toast.success("Tour Added Successfully");
+      }
+    }catch(error){
+      console.error(error);
+    }
   }
 
 
@@ -731,7 +732,7 @@ const isCurrentTabValid = () => {
                                   <div className="form-input my-1 position-relative">
                                     <select
                                       ref={selectRef}
-                                      className="js-example-basic-multiple"
+                                      className="js-example-basic-multiple w-100"
                                       name="states[]"
                                       multiple="multiple"
                                       placeholder="Langauge"

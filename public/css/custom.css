@@ -331,3 +331,8 @@ opacity: 1;
 .ButtonBooking{
   transition: 0.4s;
 }
+
+
+.w-100{
+  width: 100% !important;
+}

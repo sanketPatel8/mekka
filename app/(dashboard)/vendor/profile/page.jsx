@@ -10,10 +10,12 @@ import CreatableSelect from "react-select/creatable";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
+import { showSuccessToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
 
 export default function Profile() {
-  const {user} = useAuthContext();
-  console.log(user)
+  // const {user} = useAuthContext();
+  // console.log(user)
   const existingUser = typeof window != 'undefined' && (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))) || null;
   const { translate } = useTranslation();
 
@@ -39,13 +41,14 @@ export default function Profile() {
   const [owner_name, setOwnerName] = useState("");
   const [IBAN, setIBAN] = useState("");
   const [userData, setUserData] = useState({});
+  const [companyData, setCompanyData] = useState({});
 
   useEffect(() => {
     if(existingUser){
 
       fetchProfile();
     }
-  },[existingUser])
+  },[])
 
 
   const fetchProfile = async() => {
@@ -53,6 +56,7 @@ export default function Profile() {
     const response = await POST.request({url:url,token: `${existingUser?.authorisation.token}` });
     if(response.user){
       setUserData(response.user)
+      setCompanyData(response.user.company)
     }
   }
   // const handleImageChange = (event, func) => {
@@ -132,11 +136,14 @@ export default function Profile() {
     console.log(image2,"image2")
     // Determine the type of form being submitted
     const formType = e.target.name;
+
+    const image2File = document.querySelector('input[name="image2"]').files[0];
+    console.log(image2File)
     console.log(formType)
     console.log(userData)
     switch (formType) {
       case 'profile':
-        formData.append('id', user?.user.id);
+        formData.append('id', existingUser?.user.id);
         formData.append('name', userData.name || name);
         formData.append('surname', userData.surname || surname);
         formData.append('email', userData.email || email);
@@ -145,18 +152,18 @@ export default function Profile() {
         formData.append('city', userData.city || city);
         formData.append('street', userData.street || street);
         formData.append('houseNumber', userData.houseNumber || houseNumber);
-        formData.append('zipcode', userData.zipcode || zipcode);
+        formData.append('zipcode', userData.plz || zipcode);
         formData.append('website', userData.website || website);
         formData.append('tax_number', userData.tax_number || tax_number);
         formData.append('image', image1);
-        // formData.append('company_document', image2);
-        formData.append('companyName', userData.companyName || companyName);
+        formData.append('company_document', image2File);
+        formData.append('companyName', userData?.company.companyName || companyName);
         formData.append('info', userData.info || info);
-        formData.append('company_id', userData.company === null ? 0 : userData.company.id);
+        formData.append('company_id', userData.company === null ? 0 : userData?.company.id);
         formData.append('type', formType);
         break;
       case 'bank_details':
-        formData.append('id', user?.user.id);
+        formData.append('id', existingUser?.user.id);
         formData.append('bank_name', bank_name);
         formData.append('owner_name', owner_name);
         formData.append('iban', IBAN);
@@ -176,7 +183,10 @@ export default function Profile() {
     console.log(name)
       const response = await POST.request({form: formData, url:url,header: { 'Content-Type': 'multipart/form-data', } });
 
-      console.log(response.data);
+      if(response){
+        showSuccessToast(response.message);
+        fetchProfile();
+      }
    
 
   }
@@ -240,6 +250,7 @@ const handleDeleteImage2 = (index) => {
 
   return (
     <>
+      <ToastContainer/>
       <div
         className={`dashboard ${
           sideBarOpen ? "-is-sidebar-visible" : ""
@@ -287,7 +298,7 @@ const handleDeleteImage2 = (index) => {
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required defaultValue={userData.companyName ? userData.companyName : companyName} onChange={handleInputChange(setCompanyName)} />
+                    <input type="text" required defaultValue={companyData.companyName ? companyData.companyName : companyName} onChange={handleInputChange(setCompanyName)} />
                     <label className="lh-1 text-16 text-light-1">
                        {translate("Company Name") } <span className="text-red">*</span>
                     </label>
@@ -356,7 +367,7 @@ const handleDeleteImage2 = (index) => {
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required  defaultValue={userData.zipcode ? userData.zipcode : zipcode} onChange={handleInputChange(setZipcode)}/>
+                    <input type="text" required  defaultValue={userData.plz ? userData.plz : zipcode} onChange={handleInputChange(setZipcode)}/>
                     <label className="lh-1 text-16 text-light-1">
                        {translate("ZIP Code") } <span className="text-red">*</span>
                     </label>
@@ -365,14 +376,14 @@ const handleDeleteImage2 = (index) => {
 
                 <div className="col-md-6">
                   <div className="form-input m-0">
-                    <input type="text" required  defaultValue={userData.website ? userData.website : website} onChange={handleInputChange(setWebsite)}/>
+                    <input type="text" required  defaultValue={companyData.Link ? companyData.Link : website} onChange={handleInputChange(setWebsite)}/>
                     <label className="lh-1 text-16 text-light-1"> {translate("Website") } <span className="text-red">*</span></label>
                   </div>
                 </div>
 
                 <div className="col-md-6">
                   <div className="form-input m-0 ">
-                    <input type="text" required  defaultValue={userData.tax_number ? userData.tax_number : tax_number} onChange={handleInputChange(setTaxNumber)} />
+                    <input type="text" required  defaultValue={companyData.tax_number ? companyData.tax_number : tax_number} onChange={handleInputChange(setTaxNumber)} />
                     <label className="lh-1 text-16 text-light-1">
                        {translate("Tax Number") } <span className="text-red">*</span>
                     </label>
@@ -381,7 +392,7 @@ const handleDeleteImage2 = (index) => {
 
                 <div className="col-md-12">
                   <div className="form-input m-0">
-                    <textarea required rows="2"  defaultValue={userData.info ? userData.info : info} onChange={handleInputChange(setInfo)}></textarea>
+                    <textarea required rows="2"  defaultValue={companyData.info ? companyData.info : info} onChange={handleInputChange(setInfo)}></textarea>
                     <label className="lh-1 text-16 text-light-1"> {translate("Info") } <span className="text-red">*</span></label>
                   </div>
                 </div>
@@ -395,7 +406,7 @@ const handleDeleteImage2 = (index) => {
                           <Image
                             width={200}
                             height={200}
-                            src={image1}
+                            src={userData.company.image || image1}
                             alt="image"
                             className="size-200 rounded-12 object-cover"
                           />
@@ -483,7 +494,7 @@ const handleDeleteImage2 = (index) => {
                         />
                       </div>
                     )} */}
-                     {image2.map((image, index) => (
+                     {/* {image2.map((image, index) => (
           <div className="col-auto my-2" key={index}>
             <div className="relative">
               <Image
@@ -503,7 +514,7 @@ const handleDeleteImage2 = (index) => {
 
             </div>
           </div>
-        ))}
+        ))} */}
 
         <div className="col-auto my-2">
           <label
@@ -523,13 +534,20 @@ const handleDeleteImage2 = (index) => {
           </label>
           <input
             onChange={handleImageChange2}
-            accept="image/*"
+            accept=".pdf, .png, .jpg, .doc"
             id="imageInp2"
             type="file"
+            name="image2"
             multiple
             style={{ display: "none" }}
           />
         </div>
+        {
+          image2.length > 0 &&
+
+        <div>{image2.length}files selected</div>
+        }
+
                   </div>
 
 
