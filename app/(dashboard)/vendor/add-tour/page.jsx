@@ -17,6 +17,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { showErrorToast } from "@/app/utils/tost";
 import ItineraryDayInput from "@/components/dasboard/addTour/ItineraryDayInput";
 import { POST } from "@/app/utils/api/post";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 
 const Editor = dynamic(
@@ -34,6 +35,7 @@ const tabs = [
 ];
 
 export default function AddTour() {
+  const {user} = useAuthContext();
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [SelectedTour, setSelectedTour] = useState("");
   const [name, setName] = useState("");
@@ -71,14 +73,13 @@ export default function AddTour() {
   const [daysCount, setDaysCount] = useState(0);
   const [dayDescription, setDayDescription] = useState("");
   const [included,setIncluded] = useState([
-    { title: "Beverages, drinking water, morning tea an buffet lunch", value: "1", checked: false },
-    { title: "Wifi", value: "2", checked: false },
-    { title: "InsuranceTransfer to a private pier", value: "3", checked: false },
-    { title: "Local taxes", value: "4", checked: false },
-    { title: "Hotel pickup and drop-off by air-conditioned minivan", value: "5", checked: false },
-    { title: "Soft drinks", value: "6", checked: false },
-    { title: "Tour Guide", value: "7", checked: false },
-    // Add more items as needed
+    // { title: "Beverages, drinking water, morning tea an buffet lunch", value: "1", checked: false },
+    // { title: "Wifi", value: "2", checked: false },
+    // { title: "InsuranceTransfer to a private pier", value: "3", checked: false },
+    // { title: "Local taxes", value: "4", checked: false },
+    // { title: "Hotel pickup and drop-off by air-conditioned minivan", value: "5", checked: false },
+    // { title: "Soft drinks", value: "6", checked: false },
+    // { title: "Tour Guide", value: "7", checked: false },
   ]);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -88,9 +89,20 @@ export default function AddTour() {
   const [madinaRows, setMadinaRows] = useState([
     { hotel_name: null, hotel_price: "",hotel_info:"" },
   ]);
+  const [flightRow, setFlightRow] = useState([
+    { flight_id: " ", flight_amount: " ", no_of_stop: " " },
+  ]);
 
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
+  const [flightDetails, setFlightDetails] = useState([]);
+  const [tourType, setTourType] = useState([]);
+  const [amenities, setAmenities] = useState([]);
+  const [languagesData, setlanguagesData] = useState([]);
+  const [radioValueVisa, setRadioValueVisa] = useState('No');
+  const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
+  const [radioValueFlight, setRadioValueFlight] = useState('No');
+
 
   const { translate } = useTranslation();
 
@@ -115,10 +127,13 @@ export default function AddTour() {
 
     try{
       const response = await POST.request({url:url})
-      console.log(response.Data)
       if(response.Data){
         setMekkaHotel(response.Data.mekka_hotels)
         setMadinaHotel(response.Data.medina_hotels)
+        setFlightDetails(response.Data.airline)
+        setTourType(response.Data.tour_type)
+        setlanguagesData(response.Data.languages)
+        setIncluded(response.Data.amenities)
       }
     }catch(error){
       console.error(error);
@@ -138,42 +153,32 @@ export default function AddTour() {
     
   };
 
-  const isCurrentTabValid = () => {
-    if (activeTab === "Content") {
-      return SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value && image2.length > 0;
-    } else if (activeTab === "Pricing") {
-      return adult_price && child_price && baby_price ;
-    } else if (activeTab === "Included") {
-      return true
-    } else if (activeTab === "Overview") {
-      return editorState !== EditorState.createEmpty();
-    } else if (activeTab === "Itinerary") {
-      // Add your validation logic here for this tab
-      return true;
-    } else if (activeTab === "Flight Hotel And Visa") {
-      // Add your validation logic here for this tab
-      return true;
+  const handlePrevTab = () => {
+    const prevTabIndex = activeTabIndex - 1;
+    if (prevTabIndex >= 0) {
+      setActiveTabIndex(prevTabIndex);
+      setActiveTab(tabs[prevTabIndex]);
     }
-    return false;
   };
 
   const handleNextTab = () => {
-  //   if (isCurrentTabValid()) {
-  //   const nextTabIndex = activeTabIndex + 1;
-  //   if (nextTabIndex < tabs.length) {
-  //     setActiveTabIndex(nextTabIndex);
-  //     setActiveTab(tabs[nextTabIndex]);
-  //     setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
-  //   }
-  // } else {
-  //   showErrorToast("Please fill in all required fields before proceeding.");
-  // }
-  const nextTabIndex = activeTabIndex + 1;
+    if (isCurrentTabValid()) {
+    const nextTabIndex = activeTabIndex + 1;
     if (nextTabIndex < tabs.length) {
       setActiveTabIndex(nextTabIndex);
       setActiveTab(tabs[nextTabIndex]);
       setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
     }
+  } else {
+    console.log("hi")
+    showErrorToast("Please fill in all required fields before proceeding.");
+  }
+  // const nextTabIndex = activeTabIndex + 1;
+  //   if (nextTabIndex < tabs.length) {
+  //     setActiveTabIndex(nextTabIndex);
+  //     setActiveTab(tabs[nextTabIndex]);
+  //     setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
+  //   }
 
   } 
 
@@ -323,23 +328,20 @@ export default function AddTour() {
     }
   };
 
-  const options = [
-    { value: "Umrah", label: "Umrah" },
-    { value: "Hajj", label: "Hajj" },
-    { value: "ALl", label: "All" },
-  ];
-
+  
   const HandleTourChange = (newValue, actionMeta) => {
     setSelectedTour(newValue);
   };
-
+  
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
+  
+  const options = tourType.map((type) => ({
+    value: type,
+    label: `${type}`,
+  }));
 
-  // for add hotel and remove hotels
-
-  // hotels for makka and madina
 
   const options2 =mekkaHotel.map((hotel) => ({
     value: hotel.hotel_name,
@@ -349,6 +351,11 @@ export default function AddTour() {
   const Madina = madinaHotel.map((hotel) => ({
     value: hotel.hotel_name,
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
+  }));
+
+  const ChooseFlight = flightDetails.map((flight) => ({
+    value: flight.id,
+    label: `${flight.airline_name}`,
   }));
 
 
@@ -415,9 +422,7 @@ export default function AddTour() {
 
   // for add flight name and amount booking
 
-  const [flightRow, setFlightRow] = useState([
-    { Flight: " ", price: " ", Stop: " " },
-  ]);
+
 
   const handleFlightChange = (e, index, field) => {
     const { value } = e.target;
@@ -427,7 +432,8 @@ export default function AddTour() {
   };
 
   const HandleAddFlightRow = () => {
-    setFlightRow([...flightRow, { Flight: " ", price: " ", Stop: " " }]);
+    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " " },
+    ]);
   };
 
   const HandleRemoveFlightRow = (index) => {
@@ -439,41 +445,11 @@ export default function AddTour() {
     setFlightRow(newRows);
   };
 
-  const ChooseFlight = [
-    { value: "Indigo ", label: "Indigo" },
-    {
-      value: "Air India ",
-      label: "Air India",
-    },
-    {
-      value: "Air India Express ",
-      label: "Air India Express",
-    },
-    {
-      value: "Air Asia India ",
-      label: "Air Asia India",
-    },
-    {
-      value: "Air Asia ",
-      label: "Air Asia",
-    },
-    {
-      value: "Akasa Air ",
-      label: "Akasa Air",
-    },
-    {
-      value: "Vistara ",
-      label: "Vistara",
-    },
-    {
-      value: "SpiceJet ",
-      label: "SpiceJet",
-    },
-  ];
+  
 
   const handleFlightSelectChange = (value, index) => {
     const newRows = [...flightRow];
-    newRows[index].Flight = value;
+    newRows[index].flight_id = value;
     setFlightRow(newRows);
   };
 
@@ -500,8 +476,30 @@ const formatDateToMMDDYYYY = (date) => {
     return `${year}-${month}-${day}`;
 };
 
-  const handleSubmit = (e) => {
+const isCurrentTabValid = () => {
+  if (activeTab === "Content") {
+    return SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value && image2.length > 0;
+  } else if (activeTab === "Pricing") {
+    return adult_price && child_price && baby_price ;
+  } else if (activeTab === "Included") {
+    return true
+  } else if (activeTab === "Overview") {
+    return editorState !== EditorState.createEmpty();
+  } else if (activeTab === "Itinerary") {
+    
+    return convertToRaw(editorState.getCurrentContent()).blocks[0].text;
+  } else if (activeTab === "Flight Hotel And Visa") {
+
+    return mekkaRows.every((mekka) => mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop);
+  }
+  return false;
+};
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
+ 
+
+  
     const end_date = formatDateToMMDDYYYY(date_end);
     const start_date = formatDateToMMDDYYYY(date_begin);
 
@@ -509,10 +507,38 @@ const formatDateToMMDDYYYY = (date) => {
 
     // Convert language values to a comma-separated string
     const languageString = languageValues.join(',');
-    const mekkaData =mekkaRows.map((mekka)=>({hotel_type:1,hotel_name:mekka.hotel_name.value,hotel_price:mekka.hotel_price,hotel_info:mekka.hotel_info}))
-    const madinaData =madinaRows.map((madina)=>({hotel_type:2,hotel_name:madina.hotel_name.value,hotel_price:madina.hotel_price,hotel_info:madina.hotel_info}))
+
+    const mekkaData =mekkaRows.map((mekka)=>({
+      hotel_type:1,
+      hotel_name: mekka.hotel_name ? mekka.hotel_name.value : '', 
+      hotel_price:mekka.hotel_price,
+      hotel_info:mekka.hotel_info
+    }))
+
+    const madinaData =madinaRows.map((madina)=>({
+      hotel_type:2,
+      hotel_name: madina.hotel_name ? madina.hotel_name.value : '',
+      hotel_price:madina.hotel_price,
+      hotel_info:madina.hotel_info
+    }))
+    
+    const flightData =flightRow.map((flight)=>({ 
+      flight_id: flight.flight_id ? flight.flight_id.value : '',
+      flight_amount: flight.flight_amount,
+      no_of_stop: flight.no_of_stop
+    }))
+
+    if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) ||
+    !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
+    (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop) : false)) {
+      console.log("hi")
+      showErrorToast("Please fill in all required fields before proceeding.");
+      return;
+    }
+
+
     const hotel_data = [...mekkaData, ...madinaData];
-    console.log(hotel_data,"hotel_data");
+
     const checkedServices = services.filter((service) => service.checked);
     const servicesData = checkedServices.reduce((acc, service) => {
       if (service.price !== "") {
@@ -522,11 +548,10 @@ const formatDateToMMDDYYYY = (date) => {
     }, []);
 
     const checkedIncluded = included.filter((item) => item.checked);
-    const includedData = checkedIncluded.map((item) => item.value).join(",");
+    const includedData = checkedIncluded.map((item) => item.id).join(",");
 
     const editorValue = convertToRaw(editorState.getCurrentContent()).blocks[0].text;
   
-    console.log(JSON.stringify(editorValue),"editor");
     
     // const itineraryData = {
     //   itinerary: route_data.map((day, index) => ({
@@ -535,7 +560,7 @@ const formatDateToMMDDYYYY = (date) => {
     //   })),
     // };
     
-  
+
     const formData = new FormData();
 
     formData.append("type", SelectedTour.value);
@@ -552,12 +577,28 @@ const formatDateToMMDDYYYY = (date) => {
     formData.append("tour_info", editorValue);
     formData.append("route_data", JSON.stringify(route_data));
     formData.append("hotel_data", JSON.stringify(hotel_data));
+    formData.append("flight_data", JSON.stringify(flightData));
+    formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
+    formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
+    formData.append("user_id", user?.user.id);
+    // formData.append("company_id", user?.user.company_id);
+
+    const url = "addtour";
+
+    try{
+      const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
+      if(response){
+        toast.success("Tour Added Successfully");
+      }
+    }catch(error){
+      console.error(error);
+    }
   }
 
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <div
         className={`dashboard overflow-hidden ${
           sideBarOpen ? "-is-sidebar-visible" : ""
@@ -688,7 +729,13 @@ const formatDateToMMDDYYYY = (date) => {
                                       multiple="multiple"
                                       placeholder="Langauge"
                                     >
-                                      <option value="ENG">
+                                      {languagesData.map((language) => (
+                                        <option key={language.id} value={language.id}>
+                                          {translate(language.languages_en) ||
+                                          "Find Latest Packages"}
+                                        </option>
+                                      ))}
+                                      {/* <option value="ENG">
                                         {" "}
                                         {translate("English") ||
                                           "Find Latest Packages"}
@@ -707,7 +754,7 @@ const formatDateToMMDDYYYY = (date) => {
                                         {" "}
                                         {translate("Arbic") ||
                                           "Find Latest Packages"}
-                                      </option>
+                                      </option> */}
                                     </select>
                                     <label className="multi-lan-select">
                                       {translate("Langauge") ||
@@ -741,7 +788,6 @@ const formatDateToMMDDYYYY = (date) => {
                   <i className="icon-delete text-18"></i>
                 </button>
 
-                <div>Image {index + 1} rendered</div>
 
               </div>
             </div>
@@ -786,8 +832,18 @@ const formatDateToMMDDYYYY = (date) => {
                             <button
                               className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
                               onClick={handleNextTab }
+                              type="button"
                             >
                               Next
+                            </button>
+                          )}
+                          {activeTabIndex > tabs.length -1 && (
+                            <button
+                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
+                              onClick={handleNextTab }
+                              type="button"
+                            >
+                              Previous
                             </button>
                           )}
                         </div>
@@ -914,14 +970,28 @@ const formatDateToMMDDYYYY = (date) => {
                             
                             </div>
                           </div>
+                          <div className=" flex_start">
+
                           {activeTabIndex < tabs.length - 1 && (
                             <button
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
                               onClick={handleNextTab}
+                              type="button"
                             >
                               Next
                             </button>
                           )}
+                          {activeTabIndex > 0 && (
+                            <button
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                              onClick={handlePrevTab}
+                              type="button"
+                            >
+                              Previous
+                            </button>
+                          )}
+                          </div>
+
                         </div>
 
                         <div
@@ -940,12 +1010,12 @@ const formatDateToMMDDYYYY = (date) => {
                                               
                                                 <input
                                                   type="checkbox"
-                                                  id={`item-${item.value}`}
-                                                  name={`item-${item.value}`}
+                                                  id={`item-${item.id}`}
+                                                  name={`item-${item.id}`}
                                                   checked={item.checked}
                                                 onChange={(e) => {
                                                   const updatedIncluded = included.map((includedItem) =>
-                                                    includedItem.value === item.value
+                                                    includedItem.id === item.id
                                                       ? { ...includedItem, checked: e.target.checked }
                                                       : includedItem
                                                   );
@@ -954,7 +1024,7 @@ const formatDateToMMDDYYYY = (date) => {
 
                                                 />
                                                 <label
-                                                  htmlFor={`item-${item.value}`}
+                                                  htmlFor={`item-${item.id}`}
                                                   className="form-checkbox__mark"
                                                 >
                                                   <div className="form-checkbox__icon">
@@ -974,10 +1044,10 @@ const formatDateToMMDDYYYY = (date) => {
                                                 </label>
                                               </div>
                                               <label
-                                                htmlFor={`item-${item.value}`}
+                                                htmlFor={`item-${item.id}`}
                                                 className="lh-16 ml-15"
                                               >
-                                                {translate(item.title) || "Find Latest Packages" }
+                                                {translate(item.options_en) || "Find Latest Packages" }
                                               </label>
                                             </div>
                                           </div>
@@ -989,14 +1059,27 @@ const formatDateToMMDDYYYY = (date) => {
 
                           
                           </div>
-                          {activeTabIndex < tabs.length - 1 && (
-                            <button
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
-                              onClick={handleNextTab}
-                            >
-                              Next
-                            </button>
-                          )}
+                          <div className=" flex_start">
+
+                              {activeTabIndex < tabs.length - 1 && (
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                  onClick={handleNextTab}
+                                  type="button"
+                                >
+                                  Next
+                                </button>
+                              )}
+                              {activeTabIndex > 0 && (
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                  onClick={handlePrevTab}
+                                  type="button"
+                                >
+                                  Previous
+                                </button>
+                              )}
+                            </div>
                       
                         </div>
 
@@ -1015,14 +1098,27 @@ const formatDateToMMDDYYYY = (date) => {
                             />
                   
                           </div>
-                          {activeTabIndex < tabs.length - 1 && (
-                            <button
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
-                              onClick={handleNextTab}
-                            >
-                              Next
-                            </button>
-                          )}
+                          <div className=" flex_start">
+
+                              {activeTabIndex < tabs.length - 1 && (
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                  onClick={handleNextTab}
+                                  type="button"
+                                >
+                                  Next
+                                </button>
+                              )}
+                              {activeTabIndex > 0 && (
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                  onClick={handlePrevTab}
+                                  type="button"
+                                >
+                                  Previous
+                                </button>
+                              )}
+                            </div>
                         </div>
 
                         <div
@@ -1067,14 +1163,27 @@ const formatDateToMMDDYYYY = (date) => {
                       
                             </div>
                           </div>
-                          {activeTabIndex < tabs.length - 1 && (
-                            <button
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6"
-                              onClick={handleNextTab}
-                            >
-                              Next
-                            </button>
-                          )}
+                          <div className=" flex_start">
+
+                              {activeTabIndex < tabs.length - 1 && (
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                  onClick={handleNextTab}
+                                  type="button"
+                                >
+                                  Next
+                                </button>
+                              )}
+                              {activeTabIndex > 0 && (
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                  onClick={handlePrevTab}
+                                  type="button"
+                                >
+                                  Previous
+                                </button>
+                              )}
+                          </div>
                         </div>
 
                         <div
@@ -1095,12 +1204,12 @@ const formatDateToMMDDYYYY = (date) => {
                                   <div className="form-radio d-flex items-center">
                                     <label className="radio d-flex items-center">
                                       <input
-                                        type="radio"
-                                        name="radioGroup"
-                                        value="Yes"
-                                        checked={radioValue === "Yes"}
-                                        onChange={handleRadioChange}
-                                      />
+                                          type="radio"
+                                          name="radioGroupVisa"
+                                          value="Yes"
+                                          checked={radioValueVisa === "Yes"}
+                                          onChange={(event) => setRadioValueVisa(event.target.value)}
+                                        />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
                                       </span>
@@ -1114,12 +1223,12 @@ const formatDateToMMDDYYYY = (date) => {
                                 <div className="d-flex items-center mx-2">
                                   <div className="form-radio d-flex items-center">
                                     <label className="radio d-flex items-center">
-                                      <input
+                                    <input
                                         type="radio"
-                                        name="radioGroup"
+                                        name="radioGroupVisa"
                                         value="No"
-                                        checked={radioValue === "No"}
-                                        onChange={handleRadioChange}
+                                        checked={radioValueVisa === "No"}
+                                        onChange={(event) => setRadioValueVisa(event.target.value)}
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1338,12 +1447,12 @@ const formatDateToMMDDYYYY = (date) => {
                                 <div className="d-flex items-center mx-2">
                                   <div className="form-radio d-flex items-center">
                                     <label className="radio d-flex items-center">
-                                      <input
+                                    <input
                                         type="radio"
-                                        name="radioGroup"
-                                        value="FreeCancel_Yes"
-                                        checked={radioValue === "FreeCancel_Yes"}
-                                        onChange={handleRadioChange}
+                                        name="radioGroupFreeCancel"
+                                        value="Yes"
+                                        checked={radioValueFreeCancel === "Yes"}
+                                        onChange={(event) => setRadioValueFreeCancel(event.target.value)}
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1358,12 +1467,12 @@ const formatDateToMMDDYYYY = (date) => {
                                 <div className="d-flex items-center mx-2">
                                   <div className="form-radio d-flex items-center">
                                     <label className="radio d-flex items-center">
-                                      <input
+                                    <input
                                         type="radio"
-                                        name="radioGroup"
-                                        value="FreeCancel_No"
-                                        checked={radioValue === "FreeCancel_No"}
-                                        onChange={handleRadioChange}
+                                        name="radioGroupFreeCancel"
+                                        value="No"
+                                        checked={radioValueFreeCancel === "No"}
+                                        onChange={(event) => setRadioValueFreeCancel(event.target.value)}
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1387,10 +1496,10 @@ const formatDateToMMDDYYYY = (date) => {
                                     <label className="radio d-flex items-center">
                                       <input
                                         type="radio"
-                                        name="radioGroup"
-                                        value="Flight_Yes"
-                                        checked={radioValue === "Flight_Yes"}
-                                        onChange={handleRadioChange}
+                                        name="radioGroupFlight"
+                                        value="Yes"
+                                        checked={radioValueFlight === "Yes"}
+                                        onChange={(event) => setRadioValueFlight(event.target.value)}
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1407,10 +1516,10 @@ const formatDateToMMDDYYYY = (date) => {
                                     <label className="radio d-flex items-center">
                                       <input
                                         type="radio"
-                                        name="radioGroup"
-                                        value="Flight_No"
-                                        checked={radioValue === "Flight_No"}
-                                        onChange={handleRadioChange}
+                                        name="radioGroupFlight"
+                                        value="No"
+                                        checked={radioValueFlight === "No"}
+                                        onChange={(event) => setRadioValueFlight(event.target.value)}
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1424,7 +1533,7 @@ const formatDateToMMDDYYYY = (date) => {
                                 </div>
                               </div>
                             </div>
-                            {radioValue === "Flight_Yes" && (
+                            {radioValueFlight === "Yes" && (
                             <>
                             <div className="d-flex item-center justify-content-between pt-10">
                               <h6>
@@ -1439,7 +1548,7 @@ const formatDateToMMDDYYYY = (date) => {
                                     <div className="row">
                                       <div className="col-md-5">
                                         <CreatableSelect
-                                          value={row.Flight}
+                                          value={row.flight_id}
                                           onChange={(value) =>
                                             handleFlightSelectChange(value, index)
                                           }
@@ -1456,16 +1565,14 @@ const formatDateToMMDDYYYY = (date) => {
                                       <div className="col-md-2">
                                         <div className="form-input spacing">
                                           <input
-                                            type="text"
+                                            type="number"
                                             required
-                                            value={row.price}
-                                            onChange={(e) =>
-                                              handleFlightChange(
-                                                e,
-                                                index,
-                                                "price"
-                                              )
-                                            }
+                                            value={flightRow[index].flight_amount}
+                                            onChange={(e) => setFlightRow(prevRows => {
+                                              const newRows = [...prevRows];
+                                              newRows[index].flight_amount = e.target.value;
+                                              return newRows;
+                                            })}
                                           />
                                           <label className="lh-1 text-16 text-light-1">
                                             {" "}
@@ -1479,10 +1586,12 @@ const formatDateToMMDDYYYY = (date) => {
                                           <input
                                             type="number"
                                             required
-                                            value={row.Stop}
-                                            onChange={(e) =>
-                                              handleFlightChange(e, index, "Stop")
-                                            }
+                                            value={flightRow[index].no_of_stop}
+                                            onChange={(e) => setFlightRow(prevRows => {
+                                              const newRows = [...prevRows];
+                                              newRows[index].no_of_stop = e.target.value;
+                                              return newRows;
+                                            })}
                                           />
                                           <label className="lh-1 text-16 text-light-1">
                                             {" "}
@@ -1524,10 +1633,23 @@ const formatDateToMMDDYYYY = (date) => {
                             )}
                         
                           </div>
-                          <button type="submit" className="button -sm -info-2 bg-accent-1 text-white col-lg-3 mt-4 col-sm-6 ">
+                          <div className=" flex_start">
+
+                          <button type="submit" className="button -sm -info-2 bg-accent-1 text-white  mt-4  ">
                             {" "}
                             {translate("SAVE DETAILS") }
                           </button>
+                              {activeTabIndex > 0 && (
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                  onClick={handlePrevTab}
+                                  type="button"
+                                >
+                                  Previous
+                                </button>
+                              )}
+                          </div>
+                         
                         </div>
                       </div>
                      
