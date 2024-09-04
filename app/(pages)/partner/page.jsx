@@ -102,11 +102,15 @@ const handlePassword = (e) => {
 const validate = () => {
   let tempErrors = {};
 
-  // if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-  //     tempErrors.email = '(Invalid email address)';
-  // }
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      tempErrors.email = '(Invalid email address)';
+  }
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(company_email)) {
       tempErrors.company_email = 'Invalid email address';
+  }
+
+  if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=])[a-zA-Z\d@#$%^&+=]{8,}$/.test(password)) {
+    tempErrors.password = 'Invalid password';
   }
   console.log("tempErrors", tempErrors)
   return tempErrors;
@@ -115,6 +119,8 @@ const validate = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+
+  
   const tempErrors = validate();
   console.log(tempErrors)
 
@@ -390,6 +396,8 @@ const handleMobileNumberChange = (e) => {
                             At least 8 characters include uppercase and lowercase
                             letters, numbers and special characters
                           </span>
+                          {errors.password && <span className='text-red'> {errors.password}</span>}
+
                           {passwordError && <div className="text-red">{passwordError}</div>}
                         </div>
                       </div>
