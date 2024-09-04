@@ -20,7 +20,7 @@ export default function Header1({ isLoggedIn }) {
   const [addClass, setAddClass] = useState(false);
 
   const handleLogoutClick = () => {
-    localStorage.removeItem("token");
+    typeof window != 'undefined' ? localStorage.removeItem("token") : null;
     LogOutUpdate();
     router.push("/");
   };

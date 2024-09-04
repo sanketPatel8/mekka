@@ -126,7 +126,7 @@ export default function BookingPages() {
     if (LoginISChacked === true) {
       try {
         const response = await post("login", BookingLoginData);
-        localStorage.setItem("token", response.authorisation.token);
+        typeof window != 'undefined' ?  localStorage.setItem("token", response.authorisation.token) : '';
         showSuccessToast("Login successful!");
 
         setTimeout(() => {

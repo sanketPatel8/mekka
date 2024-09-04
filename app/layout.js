@@ -27,21 +27,19 @@ if (typeof window !== "undefined") {
 
 export default function RootLayout({ children }) {
   return (
-    <AuthContextProvider>
-
-
-      <TranslationProvider>
-        <GlobalStateProvider >
-          <html lang="en">
-            <head></head>
-            <body className={dmsans.className}>
+    <html lang="en">
+      <head></head>
+      <body className={dmsans.className}>
+        <AuthContextProvider>
+          <TranslationProvider>
+            <GlobalStateProvider >
               <Wrapper>{children}</Wrapper>
               <ScrollToTop />
               <ScrollTopBehaviour />
-            </body>
-          </html>
-        </GlobalStateProvider>
-      </TranslationProvider>
-    </AuthContextProvider>
+            </GlobalStateProvider>
+          </TranslationProvider>
+        </AuthContextProvider>
+      </body>
+    </html>
   );
 }

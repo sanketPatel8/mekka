@@ -4,7 +4,7 @@ const TranslationContext = createContext();
 
 export const TranslationProvider = ({ children }) => {
   const [locale, setLocale] = useState(() => {
-    const savedLocale = localStorage.getItem("locale");
+    const savedLocale = typeof window != 'undefined' ? localStorage.getItem("locale") : '';
     return savedLocale || "DE";
   });
   const [translations, setTranslations] = useState({});

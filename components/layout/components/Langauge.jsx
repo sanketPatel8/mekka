@@ -7,7 +7,7 @@ const currencies = ["DE", "EN"];
 
 export default function Language({ parentClass, onLocaleChange }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem("locale") || "DE");
+  const [selectedCurrency, setSelectedCurrency] = useState(typeof window != 'undefined' ? localStorage.getItem("locale") : "DE");
   const dropDownContainer = useRef();
 
   useEffect(() => {
@@ -54,9 +54,8 @@ export default function Language({ parentClass, onLocaleChange }) {
       </div>
 
       <div
-        className={`headerDropdown__content ${
-          currentdd === "currency" ? "is-active" : ""
-        }`}
+        className={`headerDropdown__content ${currentdd === "currency" ? "is-active" : ""
+          }`}
       >
         <div className="headerDropdown">
           <div className="headerDropdown__container">
@@ -69,7 +68,7 @@ export default function Language({ parentClass, onLocaleChange }) {
                     setSelectedCurrency(currency);
                     handleLocaleChange(currency);
                   }}
-                > 
+                >
                   {currency === "EN" ? "EN" : "DE"}
                 </button>
               ))}

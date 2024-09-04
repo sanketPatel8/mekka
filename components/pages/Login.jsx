@@ -18,7 +18,7 @@ export default function Login({ onLoginSuccess }) {
     email: "",
     password: "",
   });
-  const {LoginPer, setLoginPer} = useGlobalState()
+  const { LoginPer, setLoginPer } = useGlobalState()
   const [LoginISChacked, setLoginISChacked] = useState(false);
   const { dispatch } = useAuthContext();
 
@@ -38,13 +38,13 @@ export default function Login({ onLoginSuccess }) {
   const handleLoginCheckboxChange = (e) => {
     const isChecked = e.target.checked;
     setLoginISChacked(isChecked);
-    localStorage.setItem("LoginISChacked", isChecked);
+    typeof window != 'undefined' ? localStorage.setItem("LoginISChacked", isChecked) : '';
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-   
+
     //   try {
     //     const response = await post("login", LogInData);
     //     localStorage.setItem("token", response.authorisation.token);
@@ -64,7 +64,7 @@ export default function Login({ onLoginSuccess }) {
     //     } else {
     //       showErrorToast("An error occurred during login.");
     //     }
-      
+
     // } 
     Auth.handleForm({ form: e, url: 'login', type: 'Add User', post: post });
 
@@ -76,24 +76,24 @@ export default function Login({ onLoginSuccess }) {
     // setLoading(true);
     Auth.user(data)
       .then((resp) => {
-        if(resp.user.user_type == "vendor"){
-          localStorage.setItem("user", JSON.stringify(resp));
-          dispatch({ type: "LOGIN", payload: resp.data });
+        if (resp.user.user_type == "vendor") {
+          typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
+          dispatch({ type: "LOGIN", payload: resp });
           showSuccessToast("Login successful!");
           setTimeout(() => {
-            setLoginPer(true) 
+            setLoginPer(true)
             router.push('/vendor/dashboard');
           }, 1000);
         }
-        else if(resp.user.user_type == "customer"){
-          localStorage.setItem("user", JSON.stringify(resp));
+        else if (resp.user.user_type == "customer") {
+          typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
           dispatch({ type: "LOGIN", payload: resp.data });
           showSuccessToast("Login successful!");
           setTimeout(() => {
-            setLoginPer(true) 
+            setLoginPer(true)
             router.push('/customer/booking-details');
           }, 1000);
-        }else if(!resp || resp.status == "error"){
+        } else if (!resp || resp.status == "error") {
           console.log("hi")
           showErrorToast(resp.message);
         }
