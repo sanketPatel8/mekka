@@ -1,8 +1,14 @@
 "use client";
 
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function Header({ setSideBarOpen }) {
+  const {handleRedirect} = Useauthredirect();
+  useEffect(() => {
+    handleRedirect();
+  }, []);
   return (
     <div className="dashboard__content_header">
       <div className="d-flex items-center">

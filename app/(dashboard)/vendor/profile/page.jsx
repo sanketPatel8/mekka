@@ -10,13 +10,12 @@ import CreatableSelect from "react-select/creatable";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
-import { showSuccessToast } from "@/app/utils/tost";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 
 export default function Profile() {
   const { user } = useAuthContext();
   console.log('profile', user)
-  const existingUser = typeof window != 'undefined' && (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))) || null;
   const { translate } = useTranslation();
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -42,9 +41,13 @@ export default function Profile() {
   const [IBAN, setIBAN] = useState("");
   const [userData, setUserData] = useState({});
   const [companyData, setCompanyData] = useState({});
+  const [old_password, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (existingUser) {
+    if (user) {
 
       fetchProfile();
     }
@@ -53,7 +56,7 @@ export default function Profile() {
 
   const fetchProfile = async () => {
     const url = 'my_profile'
-    const response = await POST.request({ url: url, token: `${existingUser?.authorisation.token}` });
+    const response = await POST.request({ url: url, token: `${user?.authorisation.token}` });
     if (response.user) {
       setUserData(response.user)
       setCompanyData(response.user.company)
@@ -143,7 +146,7 @@ export default function Profile() {
     console.log(userData)
     switch (formType) {
       case 'profile':
-        formData.append('id', existingUser?.user.id);
+        formData.append('id', user?.user.id);
         formData.append('name', userData.name || name);
         formData.append('surname', userData.surname || surname);
         formData.append('email', userData.email || email);
@@ -159,20 +162,23 @@ export default function Profile() {
         formData.append('company_document', image2File);
         formData.append('companyName', userData?.company.companyName || companyName);
         formData.append('info', userData.info || info);
-        formData.append('company_id', userData.company === null ? 0 : userData?.company.id);
+        formData.append('company_id', userData.company === "{}" || userData.company === null ? 0 : userData?.company.id);
         formData.append('type', formType);
         break;
       case 'bank_details':
-        formData.append('id', existingUser?.user.id);
-        formData.append('bank_name', bank_name);
-        formData.append('owner_name', owner_name);
-        formData.append('iban', IBAN);
+        formData.append('id', user?.user.id);
+        formData.append('company_id', userData.company === "{}" || userData.company === null ? 0 : userData?.company.id);
+        formData.append('type', formType);
+        formData.append('bankName', bank_name);
+        formData.append('account_owner', owner_name);
+        formData.append('bankIban', IBAN);
         break;
       case 'change_password':
         formData.append('id', user?.user.id);
+        formData.append('company_id', userData.company === "{}" || userData.company === null ? 0 : userData?.company.id);
+        formData.append('type', formType);
         formData.append('old_password', old_password);
-        formData.append('new_password', new_password);
-        formData.append('confirm_new_password', confirm_new_password);
+        formData.append('password', password);
         break;
       default:
         console.log('Invalid form type');
@@ -186,6 +192,8 @@ export default function Profile() {
     if (response) {
       showSuccessToast(response.message);
       fetchProfile();
+    }else{
+      showErrorToast(response.message);
     }
 
 
@@ -246,6 +254,15 @@ export default function Profile() {
       };
     }
   }, []);
+
+  const handlePassword = (e) => {
+    setConfirmPassword(e.target.value)
+    if(e.target.value !== password){
+      setError("Password does not match")
+    }else{
+      setError("")
+    }
+  }
 
 
   return (
@@ -628,7 +645,7 @@ export default function Profile() {
                   <div className="row my-1">
                     <div className="col-md-6">
                       <div className="form-input m-0 ">
-                        <input type="text" required />
+                        <input type="password" required value={old_password} onChange={handleInputChange(setOldPassword)}/>
                         <label className="lh-1 text-16 text-light-1">
                           {translate("Old password")} <span className="text-red">*</span>
                         </label>
@@ -639,7 +656,7 @@ export default function Profile() {
                   <div className="row my-1">
                     <div className="col-md-6">
                       <div className="form-input m-0 ">
-                        <input type="text" required />
+                        <input type="password" required value={password} onChange={handleInputChange(setPassword)} />
                         <label className="lh-1 text-16 text-light-1">
                           {translate("New password")} <span className="text-red">*</span>
                         </label>
@@ -650,10 +667,11 @@ export default function Profile() {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-input m-0 ">
-                        <input type="text" required />
+                        <input type="password" required value={confirm_password} onChange={handlePassword} />
                         <label className="lh-1 text-16 text-light-1">
                           {translate("Confirm new password")} <span className="text-red">*</span>
                         </label>
+                        {error && <div className="text-red">{error}</div>}
                       </div>
                     </div>
                   </div>

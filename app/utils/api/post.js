@@ -60,13 +60,15 @@ export const POST = {
 
             const response = await axios.post(`${serverURL}${url}`, formData || {}, { headers: requestHeader });
             if (response.status === 401) {
+                
                 return { data: '', accessError: true };
             } else {
                 return response.data;
             }
         } catch (error) {
             // console.error('Error Response:', error.response || error.message || error);
-            if (error.response && error.response.status === 401 && (window.location.pathname !== "/vendor/login" || window.location.pathname !== "/login")) {
+            if (error.response && error.response.status === 401 &&  window.location.pathname !== "/login") {
+
                 // window.location.href = "/vendor/login";
                 return { data: '', accessError: true };
             } else if (error.response && error.response.status === 401) {

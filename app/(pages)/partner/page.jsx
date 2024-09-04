@@ -6,7 +6,7 @@ import $ from "jquery";
 import "select2/dist/css/select2.min.css"
 import { POST } from "@/app/utils/api/post";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
-import { showSuccessToast } from "@/app/utils/tost";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 // import "select2/dist/js/select2.min.js";
@@ -31,6 +31,7 @@ const page = () => {
   const [company_email, setCompanyEmail] = useState("");
   const [company_mobile, setCompanyMobile] = useState("");
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const router = useRouter();
   const options = [
@@ -89,7 +90,6 @@ const handlePasswordChange = (e) => {
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 const handlePassword = (e) => {
-  console.log("hi")
   const passwordValue = e.target.value;
   setPassword(passwordValue);
   if (!passwordRegex.test(passwordValue)) {
@@ -99,13 +99,38 @@ const handlePassword = (e) => {
   }
 };
 
-const handleSubmit = async (e) => {
-  console.log("hi")
-  // if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName) {
-  //   return;
-  // }
+const validate = () => {
+  let tempErrors = {};
 
+  // if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+  //     tempErrors.email = '(Invalid email address)';
+  // }
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(company_email)) {
+      tempErrors.company_email = 'Invalid email address';
+  }
+  console.log("tempErrors", tempErrors)
+  return tempErrors;
+};
+
+
+const handleSubmit = async (e) => {
   e.preventDefault();
+  const tempErrors = validate();
+  console.log(tempErrors)
+
+  if (Object.keys(tempErrors).length > 0) {
+    console.log("hi")
+      setErrors(tempErrors);
+      return;
+  }
+
+  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !company_email || !company_mobile){ 
+    showErrorToast("Please fill all the fields");
+    return;
+  }
+
+  
+
   const formData = new FormData();
   formData.append("name", name);
   formData.append("surname", surname);
@@ -125,14 +150,53 @@ const handleSubmit = async (e) => {
   const url= `vendor_register`;
   try{
     const response = await POST.request({form:formData, url:url, header: { "Content-Type": "multipart/form-data" }});
-    showSuccessToast(response.message);
-    router.push("/login");
+    if(response.status == "success"){
+      console.log("success")
+      
+      showSuccessToast(response.message);
+      router.push("/login");
+    }else if(response.status === "error"){
+      console.log("error")
+      showErrorToast(response.message);
+    }
+
+    if(response.data == null || response.data == ""){
+      showErrorToast("Email already exists");
+    }
+    // if(response.error){
+    //   console.log("error1")
+    //   showErrorToast(response.message);
+    // }
+
+    // if(!response){
+    //   console.log("error2")
+    //   showErrorToast("Something went wrong");
+    // }
+
+    // if(response.status == "error"){
+    //   console.log("error3")
+    //   showErrorToast("Unauthorized");
+    // }
+
+    // if(!response){
+    //   console.log("error4")
+    //   showErrorToast("Unauthorized");
+    // }
 
   }catch(err){
-    console.log(err)
+    console.log("error5")
+    showErrorToast("Something went wrong");
   }
-}
 
+}
+const handleCompanyMobileNumberChange = (e) => {
+  const value = e.target.value.replace(/[^0-9.]/g, '');
+  setCompanyMobile(value);
+};
+const handleMobileNumberChange = (e) => {
+  const value = e.target.value.replace(/[^0-9.]/g, '');
+  setMobile(value);
+};
   return (
     <>
       <ToastContainer/>
@@ -252,15 +316,17 @@ const handleSubmit = async (e) => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={company_email} onChange={handleInputChange(setCompanyEmail)}/>
+                          <input type="email" required  value={company_email} onChange={handleInputChange(setCompanyEmail)}/>
                           <label className="lh-1 text-16 text-light-1">
                             E-Mail Address
                           </label>
+                          {errors.company_email && <span className='text-red'> {errors.company_email}</span>}
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={company_mobile} onChange={handleInputChange(setCompanyMobile)}/>
+                          <input type="text" min={0} max={10}   pattern="[0-9]{10}"
+ maxLength={10} required  value={company_mobile} onChange={handleCompanyMobileNumberChange}/>
                           <label className="lh-1 text-16 text-light-1">
                             Phone Number
                           </label>
@@ -303,11 +369,12 @@ const handleSubmit = async (e) => {
                           <label className="lh-1 text-16 text-light-1">
                             E-mail Address
                           </label>
+                          {errors.email && <span className='text-red'> {errors.email}</span>}
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={mobile} onChange={handleInputChange(setMobile)}/>
+                          <input type="text" required maxLength={10}  value={mobile} onChange={handleMobileNumberChange}/>
                           <label className="lh-1 text-16 text-light-1">
                             Phone Number
                           </label>

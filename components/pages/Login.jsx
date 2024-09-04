@@ -76,6 +76,7 @@ export default function Login({ onLoginSuccess }) {
     // setLoading(true);
     Auth.user(data)
       .then((resp) => {
+        console.log(resp)
         if (resp.user.user_type == "vendor") {
           typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
           dispatch({ type: "LOGIN", payload: resp });
@@ -87,7 +88,7 @@ export default function Login({ onLoginSuccess }) {
         }
         else if (resp.user.user_type == "customer") {
           typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
-          dispatch({ type: "LOGIN", payload: resp.data });
+          dispatch({ type: "LOGIN", payload: resp });
           showSuccessToast("Login successful!");
           setTimeout(() => {
             setLoginPer(true)

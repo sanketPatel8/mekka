@@ -1,4 +1,5 @@
 import axios from "axios";
+import { headers } from "./headers";
 let serverURL = process.env.NEXT_PUBLIC_API_URL;
 
 
@@ -25,10 +26,7 @@ export const Auth = {
         formdata.AccessKey = process.env.NEXT_PUBLIC_ACCESS_KEY; 
         try {
             const response = await axios.post(`${serverURL}${url}`, formdata, {
-                headers: {
-                    "apikey": "Ti99nbZ4zl9fu3AfUv8afirAiyXWAWtas7Kgm8jWY2wEUGthZ3jLsUO7kNWpcPng22mnIC0LM4torLEEjrgMBVcpmHrY40CLzXBBqredshUNRtrkXehq5a8pnwVC533f",
-                    "Content-Type": "application/json",
-                },
+                headers: headers,
             })
             return response.data;
         } catch (error) {

@@ -39,6 +39,10 @@ const customStyles = {
 
 export default function DBListing() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(1);
+  const startParam = 'start';
+  const range = 10;
+  const [pageStart, setPageStart] = useState(activeIndex);
 
 
   // for opent rejected pop-up box 
@@ -83,6 +87,10 @@ export default function DBListing() {
       };
     }
   }, []);
+  const onPageChange = (pageIndex) => {
+    console.log(`Page changed to ${pageIndex+1}`);
+    
+  };
 
   const { translate } = useTranslation();
 
@@ -223,8 +231,14 @@ export default function DBListing() {
             </div>
 
             <div className="mt-4">
-              <Pagination />
-            </div>
+            <Pagination
+                  range={range}
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                  startParam={startParam}
+                  onPageChange={onPageChange}
+                />
+                </div>
 
             <div id="invoice">
               <Modal
