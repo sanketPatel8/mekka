@@ -10,7 +10,6 @@ import { showErrorToast } from "../utils/tost";
 import { useGlobalState } from "../context/GlobalStateContext";
 import { useSearchParams } from "next/navigation";
 
-
 export default function Page() {
   const searchParams = useSearchParams();
 
@@ -28,7 +27,7 @@ export default function Page() {
   const fetchData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      start:  activeIndex ,
+      start: activeIndex,
     };
 
     try {
@@ -61,13 +60,14 @@ export default function Page() {
     }
   };
 
-  const fetchSearch1Data = async ({ tourType, startDate, endDate }) => {
+  const fetchSearch1Data = async ({ tourType, startDate, endDate, person }) => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       Keyword: "",
       type: tourType,
       start_date: startDate,
       end_date: endDate,
+      person: person,
     };
     try {
       const response = await post("search_tour", sendData);
@@ -82,7 +82,6 @@ export default function Page() {
 
   useEffect(() => {
     FetchTourDataAPi();
-    fetchData();
   }, []);
 
   useEffect(() => {
@@ -98,8 +97,19 @@ export default function Page() {
       searchParams.get("enddate") === undefined
         ? ""
         : searchParams.get("enddate");
-    if (tourType !== null || startDate !== null || endDate !== null) {
-      fetchSearch1Data({ tourType, startDate, endDate });
+    const person =
+      searchParams.get("person") === undefined
+        ? ""
+        : searchParams.get("person");
+    if (
+      tourType !== null ||
+      startDate !== null ||
+      endDate !== null ||
+      person !== null
+    ) {
+      fetchSearch1Data({ tourType, startDate, endDate, person });
+    } else {
+      fetchData();
     }
   }, [searchParams]);
 
