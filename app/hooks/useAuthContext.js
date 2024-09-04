@@ -7,12 +7,12 @@ export const useAuthContext = () => {
 
     const context = useContext(AuthContext)
 
-    const [user, setUser] = useState(null);
+    const existingUser = typeof window != 'undefined' && (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))) || "{}";
+    const [user, setUser] = useState(existingUser);
 
     useEffect(() => {
-      const existingUser = localStorage.getItem('user');
       if (existingUser) {
-        setUser(JSON.parse(existingUser));
+        setUser(existingUser);
       }
     }, []);
   

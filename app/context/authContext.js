@@ -5,19 +5,10 @@ export const authReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
             return { user: action.payload }
-        // case 'LOGIN_CUSTOMER':
-        //     return { ...state, customer: action.payload }
+      
         case 'LOGOUT':
             return { user: null }
-        // case 'LOGOUT_CUSTOMER':
-        //     return { customer: null }
-    //     case 'SET_CLIENT':
-    //         return { ...state, client: action.payload }
-    //     case 'CLEAR_CLIENT':
-    //         return { ...state, client: null };
-    // case 'UPDATE_WALLET':
-    //     state.user['wallet'] = action.payload;
-    //     return { ...state,user: state.user }
+  
         default:
             return state
     }
@@ -25,6 +16,7 @@ export const authReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
     const existingUser = typeof window != 'undefined' && (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))) || null;
+    console.log(existingUser)
     // const existingCustomer = typeof window != 'undefined' && localStorage.getItem('customer') && JSON.parse(localStorage.getItem('customer')) || null;
 
     const [state, dispatch] = useReducer(authReducer, {

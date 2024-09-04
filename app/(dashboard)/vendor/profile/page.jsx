@@ -14,8 +14,8 @@ import { showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 
 export default function Profile() {
-  // const {user} = useAuthContext();
-  // console.log(user)
+  const {user} = useAuthContext();
+  console.log(user)
   const existingUser = typeof window != 'undefined' && (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))) || null;
   const { translate } = useTranslation();
 

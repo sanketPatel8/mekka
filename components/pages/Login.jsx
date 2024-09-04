@@ -77,7 +77,6 @@ export default function Login({ onLoginSuccess }) {
     Auth.user(data)
       .then((resp) => {
         if(resp.user.user_type == "vendor"){
-          console.log("hi")
           localStorage.setItem("user", JSON.stringify(resp));
           dispatch({ type: "LOGIN", payload: resp.data });
           showSuccessToast("Login successful!");
