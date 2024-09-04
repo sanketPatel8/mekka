@@ -15,11 +15,12 @@ import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
+import PaginationForTourList from "../common/PaginationForTourList";
 
 export default function TourList4({
   TourData,
-  setActiveIndex,
-  activeIndex,
+  setTourIndex,
+  TourIndex,
   FliterData,
   Route,
   setRoute,
@@ -100,7 +101,8 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData.length} results from {Route}{" "}
+                  {TourData.length} results 
+                  {/* from {Route}{" "} */}
                 </div>
               </div>
 
@@ -255,10 +257,10 @@ export default function TourList4({
 
             <div className={`${TourData.length === 0 ? "d-none" : "d-block"}`}>
               <div className="d-flex justify-center flex-column mt-60">
-                <Pagination
+                <PaginationForTourList
                   range= {Page} // કુલ પેજોની સંખ્યા
-                  activeIndex={activeIndex} // હાલની Active Page Index
-                  setActiveIndex={setActiveIndex} // Page Index Update કરવાની Function
+                  TourIndex={TourIndex} // હાલની Active Page Index
+                  setTourIndex={setTourIndex} // Page Index Update કરવાની Function
                 />
 
                 <div className="text-14 text-center mt-20">

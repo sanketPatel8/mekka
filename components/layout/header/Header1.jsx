@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Language from "../components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
+import Currency from "../components/Currency";
 
 export default function Header1({ isLoggedIn }) {
   const router = useRouter();
@@ -97,6 +98,8 @@ export default function Header1({ isLoggedIn }) {
             <div className="xl:d-none ml-10">
               <HeaderSerch />
             </div>
+
+            <Currency />
 
             <Language />
 

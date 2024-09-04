@@ -254,7 +254,7 @@ export default function SingleFour({ PAckageData }) {
                     </div>
                   </div>
 
-                  <div
+                  {/* <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("review") ? "is-active" : ""
                     }`}
@@ -288,17 +288,17 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        {/* <Rating /> */}
+            
                         <Reviews PAckageData={PAckageData} />
 
                         <button className="button -md -outline-accent-1 text-accent-1 mt-30">
                           See more reviews
                           <i className="icon-arrow-top-right text-16 ml-10"></i>
                         </button>
-                        {/* <CommentBox /> */}
+                
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div
                     className={`accordion__item py-30 border-1-top ${

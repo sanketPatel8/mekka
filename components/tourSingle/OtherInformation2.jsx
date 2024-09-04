@@ -67,7 +67,7 @@ const OtherInformation2 = ({ PAckageData , id}) => {
         </div>
       </div>
 
-      <div className="col-lg-3 col-12">
+      {/* <div className="col-lg-3 col-12">
         <div className="d-flex items-center">
           <div className="flex-center size-50 rounded-12 border-1">
             <i className="text-20 icon-translate"></i>
@@ -82,7 +82,7 @@ const OtherInformation2 = ({ PAckageData , id}) => {
             <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.free_cancellation == '0' ? 'Included' : 'Not Included'}</div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

@@ -14,20 +14,20 @@ export default function Page() {
   const searchParams = useSearchParams();
 
   const [count, setCount] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [TourIndex, setTourIndex] = useState(0);
   const [FliterData, setFliterData] = useState([]);
   const [Route, setRoute] = useState("");
   const [TourData, setTourData] = useState([]);
   const [Page, setPage] = useState(0);
 
   const currentResults = Array.isArray(TourData)
-    ? TourData.slice((activeIndex - 1) * 10, activeIndex * 10)
+    ? TourData.slice((TourIndex - 1) * 10, TourIndex * 10)
     : [];
 
   const fetchData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      start: activeIndex,
+      start: TourIndex,
     };
 
     try {
@@ -115,7 +115,7 @@ export default function Page() {
 
   useEffect(() => {
     fetchData();
-  }, [activeIndex]);
+  }, [TourIndex]);
 
   console.log("searchParams : ", searchParams);
 
@@ -127,8 +127,8 @@ export default function Page() {
         <TourList4
           TourData={TourData}
           currentResults={currentResults}
-          setActiveIndex={setActiveIndex}
-          activeIndex={activeIndex}
+          setTourIndex={setTourIndex}
+          TourIndex={TourIndex}
           FliterData={FliterData}
           Route={Route}
           setTourData={setTourData}
