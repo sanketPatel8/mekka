@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 
 export default function ImageLightBox({
-  images,
+  imag,
   setActiveLightBox,
   activeLightBox,
   currentSlideIndex,
@@ -25,7 +25,7 @@ export default function ImageLightBox({
         <span>&times;</span>
       </div>
       <div className="modal-content">
-        {images.map((elm, i) => (
+        {imag?.map((elm, i) => (
           <div
             key={i}
             className={`mySlides ${currentSlideIndex == i ? "fadein" : ""} `}
@@ -36,12 +36,12 @@ export default function ImageLightBox({
             }
           >
             <div className="numbertext">
-              {i + 1} / {images.length}
+              {i + 1} / {imag.length}
             </div>
             <Image
               width={850}
               height={510}
-              src={elm.image}
+              src={elm}
               style={{
                 height: "100%",
                 width: "100%",
@@ -57,7 +57,7 @@ export default function ImageLightBox({
           className="prev"
           onClick={() =>
             setCurrentSlideIndex((pre) =>
-              pre == 0 ? images.length - 1 : pre - 1,
+              pre == 0 ? imag.length - 1 : pre - 1,
             )
           }
         >
@@ -67,7 +67,7 @@ export default function ImageLightBox({
           className="next"
           onClick={() =>
             setCurrentSlideIndex((pre) =>
-              pre == images.length - 1 ? 0 : pre + 1,
+              pre == imag.length - 1 ? 0 : pre + 1,
             )
           }
         >

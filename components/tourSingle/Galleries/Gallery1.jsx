@@ -21,37 +21,59 @@ const images = [
     image: `/img/tourSingle/1/4.png`,
   },
 ];
-export default function Gallery1() {
+export default function Gallery1({ PAckageData }) {
   const [activeLightBox, setActiveLightBox] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(1);
+
+  const imag = PAckageData?.Tour_Details?.tour_details?.tour_image;
+
   return (
     <>
       <div className="tourSingleGrid -type-1 mt-30">
         <div className="tourSingleGrid__grid mobile-css-slider-2">
-          <Image
+          {/* <Image
             width={1155}
             height={765}
-            src="/img/tourSingle/1/1.png"
+            src={imag[0]}
             alt="image"
+            className="obj-cover"
           />
           <Image
             width={765}
             height={375}
-            src="/img/tourSingle/1/2.png"
+            src={imag[1]}
             alt="image"
+            className="obj-cover"
           />
           <Image
             width={375}
             height={375}
-            src="/img/tourSingle/1/3.png"
+            src={imag[2]}
             alt="image"
+            className="obj-cover"
           />
           <Image
             width={375}
             height={375}
-            src="/img/tourSingle/1/4.png"
+            src={imag[3]}
             alt="image"
-          />
+            className="obj-cover"
+          /> */}
+
+          {imag &&
+            imag.length > 0 &&
+            imag
+              .slice(0, 4)
+              .map((img, index) => (
+                <Image
+                  key={index}
+                  width={index === 0 ? 1155 : index === 1 ? 765 : 375}
+                  height={index === 0 ? 765 : 375}
+                  src={img}
+                  alt={`image-${index + 1}`}
+                  className="obj-cover"
+                />
+              ))}
         </div>
 
         <div className="tourSingleGrid__button">
@@ -85,7 +107,7 @@ export default function Gallery1() {
         </div>
       </div>
       <ImageLightBox
-        images={images}
+        imag={imag}
         activeLightBox={activeLightBox}
         setActiveLightBox={setActiveLightBox}
         currentSlideIndex={currentSlideIndex}

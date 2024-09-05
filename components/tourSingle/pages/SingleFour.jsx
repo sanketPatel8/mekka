@@ -6,7 +6,7 @@ import Gallery1 from "../Galleries/Gallery1";
 import OthersInformation from "../OthersInformation";
 import Overview from "../Overview";
 import Included from "../Included";
-import RoadMap from "../RoadMap";
+import HotelInformation from "../HotelInformation";
 import Faq from "../Faq";
 import Reviews from "../Reviews";
 import TourSingleSidebar from "../TourSingleSidebar";
@@ -14,6 +14,7 @@ import OtherInformation2 from "../OtherInformation2";
 import RoadMap2 from "../Roadmap2";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useSearchParams } from "next/navigation";
+import FlightInformation from "../FlightInformation";
 
 export default function SingleFour({ PAckageData }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
@@ -34,7 +35,7 @@ export default function SingleFour({ PAckageData }) {
         <div className="container">
           <MainInformation PAckageData={PAckageData} />
 
-          <Gallery1 />
+          <Gallery1 PAckageData={PAckageData} />
         </div>
       </section>
 
@@ -87,7 +88,7 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        <Included />
+                        <Included  PAckageData={PAckageData} />
                       </div>
                     </div>
                   </div>
@@ -110,8 +111,7 @@ export default function SingleFour({ PAckageData }) {
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        {translate("Flight Information") ||
-                          "Find Latest Packages"}
+                        {translate("Flight Information")}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -129,12 +129,8 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        {/* <Included /> */}
-                        <p>
-                          {FlightInc?.flight_info == null
-                            ? " Das Al Ebaa Hotel bietet Zimmer in Mekka in der Nähe des Masjid Al Haram King Abdul Aziz Gate und des  Masjid Al Haram King Abdullah Expension Gate. Zu den Einrichtungen dieser Unterkunft gehören ein Restaurant, Zimmerservice und eine  24-Stunden-Rezeption sowie kostenfreies WLAN. Private Parkplätze stehen vor Ort zur Verfügung. Das Hotel bietet Ihnen klimatisierte Zimmer mit einem  Kleiderschrank, einem Wasserkocher, einem Safe, einem Flachbisss"
-                            : FlightInc.flight_info}
-                        </p>
+                        <FlightInformation PAckageData={PAckageData} />
+                        
                       </div>
                     </div>
                   </div>
@@ -194,8 +190,7 @@ export default function SingleFour({ PAckageData }) {
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        {translate("Hotel Information") ||
-                          "Find Latest Packages"}
+                        {translate("Hotel Information") }
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -213,7 +208,7 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        <RoadMap PAckageData={PAckageData} />
+                        <HotelInformation PAckageData={PAckageData} />
                       </div>
                     </div>
                   </div>
@@ -259,7 +254,7 @@ export default function SingleFour({ PAckageData }) {
                     </div>
                   </div>
 
-                  <div
+                  {/* <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("review") ? "is-active" : ""
                     }`}
@@ -293,17 +288,17 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        {/* <Rating /> */}
+            
                         <Reviews PAckageData={PAckageData} />
 
                         <button className="button -md -outline-accent-1 text-accent-1 mt-30">
                           See more reviews
                           <i className="icon-arrow-top-right text-16 ml-10"></i>
                         </button>
-                        {/* <CommentBox /> */}
+                
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div
                     className={`accordion__item py-30 border-1-top ${

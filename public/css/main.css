@@ -14080,3 +14080,7 @@ button.gm-ui-hover-effect::after {
     z-index: 1000; /* Ensure it’s above other content */
   }
 }
+
+.obj-cover{
+  object-fit: cover;
+}

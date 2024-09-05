@@ -56,7 +56,7 @@ const Pagination = ({
         <p>Loading...</p>
       ) : (
         <div>
-          <p>Current Active Index: {activeIndex}</p>
+          {/* <p>Current Active Index: {activeIndex}</p> */}
           <div className="pagination justify-center">
             <button
               onClick={() => handleClick('prev')}
