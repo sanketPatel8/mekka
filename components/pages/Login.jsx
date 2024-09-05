@@ -77,6 +77,11 @@ export default function Login({ onLoginSuccess }) {
     Auth.user(data)
       .then((resp) => {
         console.log(resp)
+        if (resp.status == "error") {
+          showErrorToast(resp.message);
+        }
+
+        
         if (resp.user.user_type == "vendor") {
           typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
           dispatch({ type: "LOGIN", payload: resp });
@@ -94,10 +99,8 @@ export default function Login({ onLoginSuccess }) {
             setLoginPer(true)
             router.push('/customer/booking-details');
           }, 1000);
-        } else if (!resp || resp.status == "error") {
-          console.log("hi")
-          showErrorToast(resp.message);
-        }
+        } 
+        
         // if (resp.data == "" || resp.data == null) {
         //   toast.error(resp.error);
         //   setLoading(false);
@@ -125,7 +128,7 @@ export default function Login({ onLoginSuccess }) {
         // }
       })
       .catch((err) => {
-        showErrorToast("Invalid Email or Password");
+        // showErrorToast("Invalid Email or Password");
       });
   };
 

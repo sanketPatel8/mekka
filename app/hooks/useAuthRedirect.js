@@ -4,7 +4,6 @@ import { AuthContext } from '../context/authContext';
 function Useauthredirect() {
     const authContext = useContext(AuthContext);
 
-    console.log(authContext)
 
     const handleRedirect = (status) => {
         if (status === 404) {

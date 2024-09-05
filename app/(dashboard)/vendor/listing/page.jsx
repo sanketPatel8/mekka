@@ -15,6 +15,8 @@ import Link from "next/link";
 import Modal from "react-modal";
 import { IoClose } from "react-icons/io5";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
+import { POST } from "@/app/utils/api/post";
 
 const customStyles = {
   overlay: {
@@ -38,13 +40,14 @@ const customStyles = {
 };
 
 export default function DBListing() {
+  const {user} = useAuthContext();
+  console.log(user)
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const startParam = 'start';
-  const range = 10;
-  const [pageStart, setPageStart] = useState(activeIndex);
-
-
+  const [range, setRange] = useState(1);
+  const [pageStart, setPageStart] = useState(1);
+  const [tourList,setTourList] = useState([]);
   // for opent rejected pop-up box 
 
   const [invoice, setinvoice] = useState(false)
@@ -60,6 +63,24 @@ export default function DBListing() {
 
   function closeInvoice() {
     setinvoice(false);
+  }
+
+  const fetchListing = async(pageIndex)=>{
+    
+    const formData = new FormData();
+    formData.append("company_id",user?.user.company_id );
+    formData.append("start", pageIndex || 0);
+
+
+    try{
+      const response = await POST.request({form: formData, url: "my_tourlist"});
+      console.log(response);
+      setTourList(response.Tours);
+      setRange(response.Total_Page);
+    }catch(e){
+      console.log(e);
+    }
+
   }
 
   useEffect(() => {
@@ -78,6 +99,8 @@ export default function DBListing() {
       // Set the initial state based on the screen size
       handleResize();
 
+      fetchListing();
+
       // Add event listener to update state on resize
       window.addEventListener("resize", handleResize);
 
@@ -89,6 +112,7 @@ export default function DBListing() {
   }, []);
   const onPageChange = (pageIndex) => {
     console.log(`Page changed to ${pageIndex+1}`);
+    fetchListing(pageIndex);
     
   };
 

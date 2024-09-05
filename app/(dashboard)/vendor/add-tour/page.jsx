@@ -90,7 +90,7 @@ export default function AddTour() {
     { hotel_name: null, hotel_price: "",hotel_info:"" },
   ]);
   const [flightRow, setFlightRow] = useState([
-    { flight_id: " ", flight_amount: " ", no_of_stop: " " },
+    { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
   ]);
 
   const [mekkaHotel, setMekkaHotel] = useState([]);
@@ -434,7 +434,7 @@ export default function AddTour() {
   };
 
   const HandleAddFlightRow = () => {
-    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " " },
+    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
     ]);
   };
 
@@ -492,7 +492,7 @@ const isCurrentTabValid = () => {
     return route_data.every((day) => day.dayData && day.description);
   } else if (activeTab === "Flight Hotel And Visa") {
 
-    return mekkaRows.every((mekka) => mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop);
+    return mekkaRows.every((mekka) => mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage);
   }
   return false;
 };
@@ -527,12 +527,13 @@ const isCurrentTabValid = () => {
     const flightData =flightRow.map((flight)=>({ 
       flight_id: flight.flight_id ? flight.flight_id.value : '',
       flight_amount: flight.flight_amount,
-      no_of_stop: flight.no_of_stop
+      no_of_stop: flight.no_of_stop,
+      luggage: flight.luggage
     }))
 
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) ||
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
-    (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop) : false)) {
+    (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false)) {
       console.log("hi")
       showErrorToast("Please fill in all required fields before proceeding.");
       return;
@@ -598,7 +599,41 @@ const isCurrentTabValid = () => {
       const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
       console.log(response)
       if(response){
-        // toast.success("Tour Added Successfully");
+        toast.success("Tour Added Successfully");
+        setActiveTab("Content");
+        setActiveTabIndex(0);
+        setSelectedTour("");  
+        setName("");
+        setCapacity("");
+        setDateBegin("");
+        setDateEnd("");
+        setTourLanguages("");
+        setAdultPrice("");
+        setChildPrice("");
+        setBabyPrice("");
+        setGender("");
+        setEditorState(EditorState.createEmpty());
+        $(selectRef.current).val('').trigger('change');
+        setImage2([]);
+        services.forEach((service) => {
+          service.checked = false;
+          service.price = "";
+        })
+        setIncluded(included.map((item) => ({ ...item, checked: false })));
+        setRouteData([]);
+        setHotelData([]);
+        setTourIncluded(0);
+        setTourInfo("");
+        setFreeCancellation(0);
+        setPrice("123");
+        setAmenities([]);
+        setDaysCount(0);
+        setDayData("");
+        setDayDescription("");
+        setMekkaRows([{ hotel_name: null, hotel_price: "",hotel_info:"" }]);
+        setMadinaRows([{ hotel_name: null, hotel_price: "",hotel_info:"" }]);
+        setFlightRow([{ flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" }]);
+        setRadioValueFlight('No');
       }
     }catch(error){
       console.error(error);
@@ -1549,59 +1584,84 @@ const isCurrentTabValid = () => {
                                 {flightRow.map((row, index) => {
                                   return (
                                     <div className="row">
-                                      <div className="col-md-5">
-                                        <CreatableSelect
-                                          value={row.flight_id}
-                                          onChange={(value) =>
-                                            handleFlightSelectChange(value, index)
-                                          }
-                                          options={ChooseFlight}
-                                          className="custom-select Flight-selected-dd"
-                                          placeholder="Select Flight"
-                                          classNamePrefix="react-select"
-                                          isClearable
-                                          formatCreateLabel={(inputValue) =>
-                                            `Not Found: "${inputValue}"`
-                                          }
-                                        />
-                                      </div>
-                                      <div className="col-md-2">
-                                        <div className="form-input spacing">
-                                          <input
-                                            type="number"
-                                            required
-                                            value={flightRow[index].flight_amount}
-                                            onChange={(e) => setFlightRow(prevRows => {
-                                              const newRows = [...prevRows];
-                                              newRows[index].flight_amount = e.target.value;
-                                              return newRows;
-                                            })}
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">
-                                            {" "}
-                                            {translate("Flight Amount") ||
-                                              "Find Latest Packages"}
-                                          </label>
+                                      <div className="col-md-9">
+                                        <div className="row">
+
+                                            <div className="col-md-6">
+                                              <CreatableSelect
+                                                value={row.flight_id}
+                                                onChange={(value) =>
+                                                  handleFlightSelectChange(value, index)
+                                                }
+                                                options={ChooseFlight}
+                                                className="custom-select Flight-selected-dd"
+                                                placeholder="Select Flight"
+                                                classNamePrefix="react-select"
+                                                isClearable
+                                                formatCreateLabel={(inputValue) =>
+                                                  `Not Found: "${inputValue}"`
+                                                }
+                                              />
+                                            </div>
+                                            <div className="col-md-6">
+                                              <div className="form-input spacing">
+                                                <input
+                                                  type="number"
+                                                  required
+                                                  value={flightRow[index].flight_amount}
+                                                  onChange={(e) => setFlightRow(prevRows => {
+                                                    const newRows = [...prevRows];
+                                                    newRows[index].flight_amount = e.target.value;
+                                                    return newRows;
+                                                  })}
+                                                />
+                                                <label className="lh-1 text-16 text-light-1">
+                                                  {" "}
+                                                  {translate("Flight Amount") ||
+                                                    "Find Latest Packages"}
+                                                </label>
+                                              </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                              <div className="form-input spacing">
+                                                <input
+                                                  type="number"
+                                                  required
+                                                  value={flightRow[index].no_of_stop}
+                                                  onChange={(e) => setFlightRow(prevRows => {
+                                                    const newRows = [...prevRows];
+                                                    newRows[index].no_of_stop = e.target.value;
+                                                    return newRows;
+                                                  })}
+                                                />
+                                                <label className="lh-1 text-16 text-light-1">
+                                                  {" "}
+                                                  {translate("No of Flight Stops") ||
+                                                    "Find Latest Packages"}
+                                                </label>
+                                              </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                              <div className="form-input spacing">
+                                                <input
+                                                  type="number"
+                                                  required
+                                                  value={flightRow[index].luggage}
+                                                  onChange={(e) => setFlightRow(prevRows => {
+                                                    const newRows = [...prevRows];
+                                                    newRows[index].luggage = e.target.value;
+                                                    return newRows;
+                                                  })}
+                                                />
+                                                <label className="lh-1 text-16 text-light-1">
+                                                  {" "}
+                                                  {translate("Luggage") ||
+                                                    "Find Latest Packages"}
+                                                </label>
+                                              </div>
+                                            </div>
                                         </div>
-                                      </div>
-                                      <div className="col-md-2">
-                                        <div className="form-input spacing">
-                                          <input
-                                            type="number"
-                                            required
-                                            value={flightRow[index].no_of_stop}
-                                            onChange={(e) => setFlightRow(prevRows => {
-                                              const newRows = [...prevRows];
-                                              newRows[index].no_of_stop = e.target.value;
-                                              return newRows;
-                                            })}
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">
-                                            {" "}
-                                            {translate("No of Flight Stops") ||
-                                              "Find Latest Packages"}
-                                          </label>
-                                        </div>
+
                                       </div>
                                       <div className="col-md-2 col-lg-auto col-12 d-flex">
                                         <button
@@ -1640,7 +1700,7 @@ const isCurrentTabValid = () => {
 
                           <button type="submit" className="button -sm -info-2 bg-accent-1 text-white  mt-4  ">
                             {" "}
-                            {translate("SAVE DETAILS") }
+                            {translate("Save Details") }
                           </button>
                               {activeTabIndex > 0 && (
                                 <button

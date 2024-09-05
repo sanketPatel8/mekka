@@ -28,7 +28,7 @@ const Pagination = ({
     } else if (type === 'next') {
       setActiveIndex((prev) => Math.min(prev + 1, range - 1));
     } else if (type === 'page') {
-      setActiveIndex(index+1);
+      setActiveIndex(index);
       onPageChange(index);
     }
   };
