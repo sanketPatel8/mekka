@@ -5,7 +5,7 @@ import { State } from "@/data/tourSingleContent";
 import "@/public/css/index.css";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
@@ -19,8 +19,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     youthNumber,
     childrenNumber,
     prices,
-    setPrices,
-    setCounts,
     HotelSelect,
     setHotelSelect,
     FlightSelect,
@@ -32,6 +30,9 @@ export default function TourSingleSidebar({ PAckageData }) {
     selectedCheckbox,
     setselectedCheckbox,
   } = useGlobalState();
+
+  const searchParams = useSearchParams();
+  const Tourid = searchParams.get("id");
 
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
@@ -52,8 +53,10 @@ export default function TourSingleSidebar({ PAckageData }) {
     }));
   };
 
-  const handleHotelchange = (e) => {
-    setFlightSelect(e.target.value);
+  const handleHotelchange = (event) => {
+    const selectedId = event.target.value; // Get the id value of the selected radio button
+    setFlightSelect(selectedId);
+    alert(FlightSelect);
   };
 
   const handleExcludeFlight = () => {
@@ -94,7 +97,6 @@ export default function TourSingleSidebar({ PAckageData }) {
   //   setTotal,
   // ]);
 
-  
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
     if (
@@ -434,12 +436,10 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <label className="radio d-flex items-center">
                     <input
                       type="radio"
-                      name={`${elm.airline_name} ( No Stop )`}
-                      value={`${elm.airline_name} ( No Stop )`}
-                      checked={
-                        FlightSelect === `${elm.airline_name} ( No Stop )`
-                      }
-                      onChange={handleHotelchange}
+                      name={`${elm.id} ( No Stop )`}
+                      value={elm.id} // Use elm.id as the value
+                      checked={FlightSelect === elm.id} // Check if the selected ID matches the current elm.id
+                      onChange={handleHotelchange} // Call the handler to store the selected ID
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
@@ -527,7 +527,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <p className="text-right">Including Taxes And Fees</p>
 
-      <Link href="/booking">
+      <Link href={`/booking/?id=${Tourid}`}>
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
           {translate("Book Now")}
         </button>

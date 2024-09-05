@@ -15,25 +15,19 @@ import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
-import PaginationForTourList from "../common/PaginationForTourList";
+
 
 export default function TourList4({
   TourData,
   FliterData,
-  Route,
-  setRoute,
-  setTourData,
   count,
   range,
   onPageChange,
-  setRange,
-  setFilterData,
   setLanActives,
   FilterSidebar,
   LanActives,
   value,
   setValue,
-  setFilterSidebar,
   handleSelectionChange,
 }) {
   console.log(handleSelectionChange, "handleSelectionChange tourlist");
@@ -45,11 +39,8 @@ export default function TourList4({
 
   const [activeIndex, setActiveIndex] = useState(0);
   const startParam = "start";
-  const [pageStart, setPageStart] = useState(1);
 
   // for pagination
-
-  const [isFilteredDataFetched, setIsFilteredDataFetched] = useState(false);
 
   const dropDownContainer = useRef(null);
 
@@ -95,21 +86,12 @@ export default function TourList4({
                   >
                     <div className="pt-20">
                       <Sidebar2
-                        TourData={TourData}
-                        setTourData={setTourData}
                         FliterData={FliterData}
-                        setRoute={setRoute}
-                        FilterIndex={FilterIndex}
-                        setisFilteredDataFetched={isFilteredDataFetched}
-                        activeIndex={activeIndex}
-                        setRange={setRange}
-                        setFilterData={setFilterData}
                         setLanActives={setLanActives}
                         FilterSidebar={FilterSidebar}
                         LanActives={LanActives}
                         value={value}
                         setValue={setValue}
-                        setFilterSidebar={setFilterSidebar}
                         handleSelectionChange={handleSelectionChange}
                       />
                     </div>
@@ -119,21 +101,12 @@ export default function TourList4({
             ) : (
               <div className="">
                 <Sidebar2
-                  TourData={TourData}
-                  setTourData={setTourData}
                   FliterData={FliterData}
-                  setRoute={setRoute}
-                  FilterIndex={FilterIndex}
-                  setisFilteredDataFetched={isFilteredDataFetched}
-                  activeIndex={activeIndex}
-                  setRange={setRange}
-                  setFilterData={setFilterData}
                   setLanActives={setLanActives}
                   FilterSidebar={FilterSidebar}
                   LanActives={LanActives}
                   value={value}
                   setValue={setValue}
-                  setFilterSidebar={setFilterSidebar}
                   handleSelectionChange={handleSelectionChange}
                 />
               </div>
@@ -144,7 +117,7 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData.length} results 
+                  {TourData.length} results
                   {/* from {Route}{" "} */}
                 </div>
               </div>

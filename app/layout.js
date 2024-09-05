@@ -11,6 +11,7 @@ import Wrapper from "@/components/layout/Wrapper";
 import { TranslationProvider } from "@/app/context/TranslationContext";
 import { GlobalStateProvider } from "@/app/context/GlobalStateContext";
 import { AuthContextProvider } from "./context/authContext";
+import { PeopleProvider } from "./context/PeopleContext";
 
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -33,9 +34,11 @@ export default function RootLayout({ children }) {
         <AuthContextProvider>
           <TranslationProvider>
             <GlobalStateProvider >
-              <Wrapper>{children}</Wrapper>
-              <ScrollToTop />
-              <ScrollTopBehaviour />
+            <PeopleProvider>
+                <Wrapper>{children}</Wrapper>
+                <ScrollToTop />
+                <ScrollTopBehaviour />
+              </PeopleProvider>
             </GlobalStateProvider>
           </TranslationProvider>
         </AuthContextProvider>

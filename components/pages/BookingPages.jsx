@@ -64,7 +64,6 @@ export default function BookingPages() {
     FlightSelect,
     HotelSelect,
     total,
-    setTotal,
     selectDeparture,
     SharePackageData,
     selectedCheckbox,
@@ -126,7 +125,9 @@ export default function BookingPages() {
     if (LoginISChacked === true) {
       try {
         const response = await post("login", BookingLoginData);
-        typeof window != 'undefined' ?  localStorage.setItem("token", response.authorisation.token) : '';
+        typeof window != "undefined"
+          ? localStorage.setItem("token", response.authorisation.token)
+          : "";
         showSuccessToast("Login successful!");
 
         setTimeout(() => {
@@ -572,12 +573,11 @@ export default function BookingPages() {
                           <MdFlightTakeoff size={25} color="#DAC04F" />
                         </div>
                         <div className="text-start">
-                          Departure :{" "}
-                          {selectDeparture} - {
+                          Departure : {selectDeparture} -{" "}
+                          {
                             SharePackageData?.Tour_Details?.tour_details
                               ?.date_begin
                           }{" "}
-                          
                         </div>
                       </div>
                     </div>

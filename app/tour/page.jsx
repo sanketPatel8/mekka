@@ -45,7 +45,6 @@ export default function Page() {
     });
   };
 
-
   const [range, setRange] = useState(1);
 
   const fetchListing = async (pageIndex) => {
@@ -61,14 +60,13 @@ export default function Page() {
       console.log(response);
       setTourData(response.Tours);
       setRange(response.Total_Page);
-      setCount(response.Count)
+      setCount(response.Count);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const onPageChange = async(pageIndex) => {
-
+  const onPageChange = async (pageIndex) => {
     const tourType =
       searchParams.get("TourType") === undefined
         ? ""
@@ -86,15 +84,14 @@ export default function Page() {
         ? ""
         : searchParams.get("person");
 
-        if (tourType || startDate || endDate || person) {
-          await fetchSearch1Data({ tourType, startDate, endDate, person });
-        }else if(FilterSidebar){
-          await FetchFilterData(pageIndex);
-        } 
-        else {
-          await fetchListing(pageIndex);
-        }
-      };
+    if (tourType || startDate || endDate || person) {
+      await fetchSearch1Data({ tourType, startDate, endDate, person });
+    } else if (FilterSidebar) {
+      await FetchFilterData(pageIndex);
+    } else {
+      await fetchListing(pageIndex);
+    }
+  };
 
   useEffect(() => {
     fetchListing();
@@ -103,12 +100,11 @@ export default function Page() {
   // useEffect(() => {
   //   if (filterParams) {
   //     console.log("filterParams : " , filterParams);
-      
+
   //       // Assuming filterParams has a property initialIndex
   //     setFilterIndex(filterParams.initialIndex);
   //   }
   // }, [filterParams, setFilterIndex]);
-
 
   // const { value } = useGlobalState();
   const isMounted = useRef(false);
@@ -137,13 +133,12 @@ export default function Page() {
     formData.append("hotel_star", FilterSidebar?.selectedDurations.join(", "));
     formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
     formData.append("amenities", FilterSidebar?.selectedFeatures.join(", "));
-    
 
     // try {
     //   const response = await post("tourfilter", sendData);
     //   setTourData(response.Tours);
     //   setRoute("filter data");
-      
+
     //   setRange(response.Total_Page)
     // } catch (error) {
     //   console.error("Error caught:", error);
@@ -158,7 +153,7 @@ export default function Page() {
       console.log(response);
       setTourData(response.Tours);
       setRange(response.Total_Page);
-      setCount(response.Count)
+      setCount(response.Count);
     } catch (e) {
       console.log(e);
     }
@@ -177,7 +172,7 @@ export default function Page() {
     } else {
       isMounted.current = true;
     }
-  }, [FilterSidebar ]);
+  }, [FilterSidebar]);
 
   // const currentResults = Array.isArray(TourData)
   //   ? TourData.slice((TourIndex - 1) * 10, TourIndex * 10)
@@ -271,10 +266,9 @@ export default function Page() {
       fetchSearch1Data({ tourType, startDate, endDate, person });
     } else {
       // fetchData();
-      fetchListing()
+      fetchListing();
     }
   }, [searchParams]);
-  
 
   return (
     <main>
@@ -283,27 +277,15 @@ export default function Page() {
       <div className="mt-50">
         <TourList4
           TourData={TourData}
-          setTourIndex={setTourListIndex}
           FliterData={FliterData}
-          Route={Route}
-          setTourData={setTourData}
-          setRoute={setRoute}
-          Page={Page}
           count={count}
-          TourListIndex={TourListIndex}
-          // forpagination
-          isTourDataFetched={isTourDataFetched}
-          setisTourDataFetched={setIsTourDataFetched}
           range={range}
-          setRange={setRange}
           onPageChange={onPageChange}
-          setFliterData={setFliterData}
           setLanActives={setLanActives}
           FilterSidebar={FilterSidebar}
-          LanActives ={LanActives}
+          LanActives={LanActives}
           value={value}
           setValue={setValue}
-          setFilterSidebar={setFilterSidebar}
           handleSelectionChange={handleSelectionChange}
         />
       </div>

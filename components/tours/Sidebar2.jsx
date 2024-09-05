@@ -12,15 +12,6 @@ import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function Sidebar2({
   FliterData,
-  setRoute,
-  setTourData,
-  FilterIndex,
-  setisFilteredDataFetched,
-  filterParams,
-  setFilterIndex,
-  activeIndex,
-  setRange,
-  setFilterSidebar,
   setLanActives,
   FilterSidebar,
   LanActives,
