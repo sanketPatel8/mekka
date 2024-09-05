@@ -11,33 +11,27 @@ export default function PaginationForTourList({
 
   // Handler for pagination number clicks
   const handlePaginationClick = (pageIndex) => {
-    if(pageIndex == 0){
-      setTourIndex(0);
-    }else{
-      setTourIndex(pageIndex * 10);
-    }
+    setTourIndex(pageIndex * 10);
   };
 
   // Handler for next button click
   const handleNextClick = () => {
-    setTourIndex((prev) => Math.min(prev + 1, range - 1));
+    setTourIndex((prev) => Math.min(prev + 10, (range - 1) * 10));
   };
 
   // Handler for previous button click
   const handlePreviousClick = () => {
-    setTourIndex((prev) => Math.max(prev - 1, 0));
+    setTourIndex((prev) => Math.max(prev - 10, 0));
   };
 
   const generatePaginationButtons = () => {
-    let start = Math.max(0, TourIndex - Math.floor(visibleRange / 2));
+    let currentIndex = TourIndex / 10; // Current active page index
+    let start = Math.max(0, currentIndex - Math.floor(visibleRange / 2));
     let end = Math.min(range - 1, start + visibleRange - 1);
 
-    if (end === range - 1) {
-      start = Math.max(0, range - visibleRange);
-    }
-
-    if (start === 0) {
-      end = Math.min(visibleRange - 1, range - 1);
+    // Adjust start and end if range is small
+    if (end - start + 1 < visibleRange) {
+      start = Math.max(0, end - visibleRange + 1);
     }
 
     const buttons = [];
@@ -47,7 +41,7 @@ export default function PaginationForTourList({
           key={i}
           style={{ cursor: "pointer" }}
           onClick={() => handlePaginationClick(i)}
-          className={TourIndex === i ? "is-active" : ""}
+          className={currentIndex === i ? "is-active" : ""}
         >
           {i + 1}
         </div>
@@ -58,7 +52,7 @@ export default function PaginationForTourList({
 
   return (
     <div>
-      <p>Current Active Index: {TourIndex + 1}</p>
+      <p>Current Active Index: {TourIndex / 10}</p>
 
       <div className="pagination justify-center">
         <button
@@ -70,7 +64,8 @@ export default function PaginationForTourList({
         </button>
 
         <div className="pagination__count">
-          {TourIndex > Math.floor(visibleRange / 2) && (
+          {/* Display "1" button and "..." before current range if necessary */}
+          {TourIndex / 10 > Math.floor(visibleRange / 2) && (
             <>
               <div
                 style={{ cursor: "pointer" }}
@@ -79,19 +74,20 @@ export default function PaginationForTourList({
               >
                 1
               </div>
-              {TourIndex > Math.floor(visibleRange / 2) && <div>...</div>}
+              {TourIndex / 10 > Math.floor(visibleRange / 2) && <div>...</div>}
             </>
           )}
 
           {generatePaginationButtons()}
 
-          {TourIndex < range - Math.floor(visibleRange / 2) && (
+          {/* Display "..." and last button if necessary */}
+          {TourIndex / 10 < range - Math.floor(visibleRange / 2) - 1 && (
             <>
-              {TourIndex < range - visibleRange && <div>...</div>}
+              {TourIndex / 10 < range - visibleRange && <div>...</div>}
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => handlePaginationClick(range - 1)}
-                className={TourIndex === range - 1 ? "is-active" : ""}
+                className={TourIndex / 10 === range - 1 ? "is-active" : ""}
               >
                 {range}
               </div>
@@ -102,7 +98,7 @@ export default function PaginationForTourList({
         <button
           onClick={handleNextClick}
           className="pagination__button customStylePaginationNext button -accent-1 ml-15 -next"
-          disabled={TourIndex === range - 1}
+          disabled={TourIndex >= (range - 1) * 10}
         >
           <i className="icon-arrow-right text-15"></i>
         </button>

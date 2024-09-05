@@ -13,15 +13,12 @@ import Currency from "../components/Currency";
 
 export default function Header1({ isLoggedIn }) {
   const router = useRouter();
-  const {
-    loginPer,
-    setLoginPer
-  } = useGlobalState();
+  const { loginPer, setLoginPer } = useGlobalState();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
 
   const handleLogoutClick = () => {
-    typeof window != 'undefined' ? localStorage.removeItem("token") : null;
+    typeof window != "undefined" ? localStorage.removeItem("token") : null;
     LogOutUpdate();
     router.push("/");
   };
@@ -33,7 +30,6 @@ export default function Header1({ isLoggedIn }) {
   const LogOutUpdate = () => {
     setLoginPer(false);
   };
-
 
   const { translate } = useTranslation();
 
@@ -99,23 +95,25 @@ export default function Header1({ isLoggedIn }) {
               <HeaderSerch />
             </div>
 
-            <Currency />
+            <div className="d-flex items-center">
+              <Currency />
 
-            <Language />
+              <Language />
 
-            <Link
-              href="/register"
-              className={`ml-10 ${loginPer == true ? "d-none" : "d-block"}`}
-            >
-              {translate("Register")}
-            </Link>
+              <Link
+                href="/register"
+                className={`ml-5 ${loginPer == true ? "d-none" : "d-block"}`}
+              >
+                {translate("Register")}
+              </Link>
 
-            <button
-              className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-20"
-              onClick={loginPer ? handleLogoutClick : handleLoginClick}
-            >
-              {loginPer === true ? "Log Out" : "Log In"}
-            </button>
+              <button
+                className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                onClick={loginPer ? handleLogoutClick : handleLoginClick}
+              >
+                {loginPer === true ? "Log Out" : "Log In"}
+              </button>
+            </div>
 
             <button
               onClick={() => setMobileMenuOpen(true)}

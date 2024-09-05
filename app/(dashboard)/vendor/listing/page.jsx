@@ -110,6 +110,7 @@ export default function DBListing() {
       };
     }
   }, []);
+  
   const onPageChange = (pageIndex) => {
     console.log(`Page changed to ${pageIndex+1}`);
     fetchListing(pageIndex);
@@ -261,7 +262,7 @@ export default function DBListing() {
                   setActiveIndex={setActiveIndex}
                   startParam={startParam}
                   onPageChange={onPageChange}
-                />
+            />
                 </div>
 
             <div id="invoice">

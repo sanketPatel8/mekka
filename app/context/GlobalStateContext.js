@@ -34,7 +34,7 @@ export const GlobalStateProvider = ({ children }) => {
 
   // for rageslide
 
-  const [value, setValue] = useState([200, 60000]);
+ 
   const [Distance, setDistance] = useState([0, 500]);
 
   // fortourfilter data
@@ -92,8 +92,6 @@ export const GlobalStateProvider = ({ children }) => {
         setFormattedDates,
         counts,
         setCounts,
-        value,
-        setValue,
         Distance,
         setDistance,
         FilterData,

@@ -9,16 +9,16 @@ import { useGlobalState } from "@/app/context/GlobalStateContext";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#DAC04F", 
+      main: "#DAC04F",
     },
     secondary: {
-      main: "#DAC04F", 
+      main: "#DAC04F",
     },
   },
 });
 
-export default function RangeSlider() {
-  const {value , setValue} = useGlobalState()
+export default function RangeSlider({ value, setvalue }) {
+  // const {value , setValue} = useGlobalState()
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

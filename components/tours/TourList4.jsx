@@ -19,18 +19,30 @@ import PaginationForTourList from "../common/PaginationForTourList";
 
 export default function TourList4({
   TourData,
-  setTourIndex,
-  TourIndex,
   FliterData,
   Route,
   setRoute,
   setTourData,
-  Page,
   count,
+  range,
+  onPageChange,
+  setRange
 }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
+  const [FilterIndex, setFilterIndex] = useState(0);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const startParam = "start";
+  const [pageStart, setPageStart] = useState(1);
+
+
+  
+
+  // for pagination
+
+  const [isFilteredDataFetched, setIsFilteredDataFetched] = useState(false);
 
   const dropDownContainer = useRef(null);
 
@@ -80,6 +92,10 @@ export default function TourList4({
                         setTourData={setTourData}
                         FliterData={FliterData}
                         setRoute={setRoute}
+                        FilterIndex={FilterIndex}
+                        setisFilteredDataFetched={isFilteredDataFetched}
+                        activeIndex={activeIndex} 
+                        setRange={setRange}
                       />
                     </div>
                   </div>
@@ -92,6 +108,10 @@ export default function TourList4({
                   setTourData={setTourData}
                   FliterData={FliterData}
                   setRoute={setRoute}
+                  FilterIndex={FilterIndex}
+                  setisFilteredDataFetched={isFilteredDataFetched}
+                  activeIndex={activeIndex}
+                  setRange={setRange}
                 />
               </div>
             )}
@@ -101,8 +121,7 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData.length} results 
-                  {/* from {Route}{" "} */}
+                  {TourData.length} results from {Route}{" "}
                 </div>
               </div>
 
@@ -257,11 +276,19 @@ export default function TourList4({
 
             <div className={`${TourData.length === 0 ? "d-none" : "d-block"}`}>
               <div className="d-flex justify-center flex-column mt-60">
-                <PaginationForTourList
-                  range= {Page} // કુલ પેજોની સંખ્યા
-                  TourIndex={TourIndex} // હાલની Active Page Index
-                  setTourIndex={setTourIndex} // Page Index Update કરવાની Function
+              <Pagination
+                  range={range}
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                  startParam={startParam}
+                  onPageChange={onPageChange}
                 />
+
+                {/* <PaginationForTourList
+                 range={Page} 
+                  TourIndex={FilterIndex} 
+                  setTourIndex={setFilterIndex} 
+                />  */}
 
                 <div className="text-14 text-center mt-20">
                   Showing results 1 - {TourData.length} of {count}

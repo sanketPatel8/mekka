@@ -29,7 +29,11 @@ const Pagination = ({
       setActiveIndex((prev) => Math.min(prev + 1, range - 1));
     } else if (type === 'page') {
       setActiveIndex(index);
-      onPageChange(index);
+      if(index === 0){
+      onPageChange(index );
+      }else{
+        onPageChange(index * 10 );
+      }
     }
   };
 

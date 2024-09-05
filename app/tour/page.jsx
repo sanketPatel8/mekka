@@ -9,42 +9,76 @@ import { post } from "../utils/api";
 import { showErrorToast } from "../utils/tost";
 import { useGlobalState } from "../context/GlobalStateContext";
 import { useSearchParams } from "next/navigation";
+import { POST } from "../utils/api/post";
 
 export default function Page() {
   const searchParams = useSearchParams();
 
   const [count, setCount] = useState(0);
-  const [TourIndex, setTourIndex] = useState(0);
+  const [TourListIndex, setTourListIndex] = useState(0);
   const [FliterData, setFliterData] = useState([]);
   const [Route, setRoute] = useState("");
   const [TourData, setTourData] = useState([]);
   const [Page, setPage] = useState(0);
+  const [isTourDataFetched, setIsTourDataFetched] = useState(false);
 
-  const currentResults = Array.isArray(TourData)
-    ? TourData.slice((TourIndex - 1) * 10, TourIndex * 10)
-    : [];
 
-  const fetchData = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      start: TourIndex,
-    };
+
+  const [range, setRange] = useState(1);
+
+  const fetchListing = async (pageIndex) => {
+    const formData = new FormData();
+
+    formData.append("start", pageIndex || 0);
 
     try {
-      const response = await post("tourlist", sendData);
-      if (response.Tours) {
-        setTourData(response.Tours);
-        setCount(response.Count);
-        setPage(response.Total_Page);
-        setRoute("Tourlist data");
-      } else {
-        console.error("Tours data is undefined in the response.");
-      }
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
+      const response = await POST.request({
+        form: formData,
+        url: "tourlist",
+      });
+      console.log(response);
+      setTourData(response.Tours);
+      setRange(response.Total_Page);
+    } catch (e) {
+      console.log(e);
     }
   };
+
+  const onPageChange = (pageIndex) => {
+    console.log(`Page changed to ${pageIndex + 1}`);
+    fetchListing(pageIndex);
+  };
+
+  useEffect(() => {
+    fetchListing();
+  }, []);
+
+  // const currentResults = Array.isArray(TourData)
+  //   ? TourData.slice((TourIndex - 1) * 10, TourIndex * 10)
+  //   : [];
+
+  // const fetchData = async (PageIndex) => {
+  //   const sendData = {
+  //     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  //     start: PageIndex,
+  //   };
+
+  //   try {
+  //     const response = await post("tourlist", sendData);
+  //     if (response.Tours) {
+  //       setTourData(response.Tours);
+  //       setCount(response.Count);
+  //       setPage(response.Total_Page);
+  //       setRoute("Tourlist data");
+  //       setIsTourDataFetched(true);
+  //     } else {
+  //       console.error("Tours data is undefined in the response.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error caught:", error);
+  //     showErrorToast("An error occurred during registration.");
+  //   }
+  // };
 
   const FetchTourDataAPi = async () => {
     const sendData = {
@@ -109,15 +143,11 @@ export default function Page() {
     ) {
       fetchSearch1Data({ tourType, startDate, endDate, person });
     } else {
-      fetchData();
+      // fetchData();
+      fetchListing()
     }
   }, [searchParams]);
-
-  useEffect(() => {
-    fetchData();
-  }, [TourIndex]);
-
-  console.log("searchParams : ", searchParams);
+  
 
   return (
     <main>
@@ -126,15 +156,20 @@ export default function Page() {
       <div className="mt-50">
         <TourList4
           TourData={TourData}
-          currentResults={currentResults}
-          setTourIndex={setTourIndex}
-          TourIndex={TourIndex}
+          setTourIndex={setTourListIndex}
           FliterData={FliterData}
           Route={Route}
           setTourData={setTourData}
           setRoute={setRoute}
           Page={Page}
           count={count}
+          TourListIndex={TourListIndex}
+          // forpagination
+          isTourDataFetched={isTourDataFetched}
+          setisTourDataFetched={setIsTourDataFetched}
+          range={range}
+          setRange={setRange}
+          onPageChange={onPageChange}
         />
       </div>
       <FooterTwo />

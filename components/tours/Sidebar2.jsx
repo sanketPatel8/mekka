@@ -14,8 +14,12 @@ export default function Sidebar2({
   FliterData,
   setRoute,
   setTourData,
-  //FilterSidebar,
-  //setFilterSidebar,
+  FilterIndex,
+  setisFilteredDataFetched,
+  filterParams,
+  setFilterIndex,
+  activeIndex,
+  setRange
 }) {
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const [LanActives, setLanActives] = useState([]);
@@ -29,7 +33,18 @@ export default function Sidebar2({
     selectedDurations: [],
   });
 
-  const { value } = useGlobalState();
+  useEffect(() => {
+    if (filterParams) {
+      console.log("filterParams : " , filterParams);
+      
+        // Assuming filterParams has a property initialIndex
+      setFilterIndex(filterParams.initialIndex);
+    }
+  }, [filterParams, setFilterIndex]);
+
+  const [value, setValue] = useState([0, 0]);
+
+  // const { value } = useGlobalState();
   const isMounted = useRef(false);
 
   const handleSelectionChange = (key, value) => {
@@ -44,7 +59,7 @@ export default function Sidebar2({
     });
   };
 
-  const FetchFilterData = async () => {
+  const FetchFilterData = async (pageIndex) => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       type: FilterSidebar?.selectedTourTypes.join(", "),
@@ -55,13 +70,15 @@ export default function Sidebar2({
       hotel_star: FilterSidebar?.selectedDurations.join(", "),
       agent_rating: FilterSidebar?.selectedRatings.join(", "),
       amenities: FilterSidebar?.selectedFeatures.join(", "),
-      start: 0,
+      start: pageIndex,
     };
 
     try {
       const response = await post("tourfilter", sendData);
       setTourData(response.Tours);
       setRoute("filter data");
+      setisFilteredDataFetched(false)
+      setRange(response.Total_Page)
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast("An error occurred during registration.");
@@ -77,11 +94,11 @@ export default function Sidebar2({
 
   useEffect(() => {
     if (isMounted.current) {
-      FetchFilterData();
+      FetchFilterData(activeIndex);
     } else {
       isMounted.current = true;
     }
-  }, [FilterSidebar]);
+  }, [FilterSidebar , FilterIndex]);
 
   const { translate } = useTranslation();
 
@@ -424,7 +441,7 @@ export default function Sidebar2({
                   ddActives.includes("pricerange") ? { maxHeight: "300px" } : {}
                 }
               >
-                <RangeSlider min={0} max={1000} step={10} />
+                <RangeSlider min={0} max={1000} step={10} value={value} setvalue={value} />
               </div>
             </div>
           </div>

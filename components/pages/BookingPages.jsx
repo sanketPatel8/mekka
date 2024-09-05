@@ -221,12 +221,7 @@ export default function BookingPages() {
         { label: translate("House No"), type: "text", name: "houseno" },
         { label: translate("ZIP Code"), type: "text", name: "zipcode" },
         { label: translate("Street"), type: "text", name: "street" },
-        {
-          label: translate("From"),
-          type: "select",
-          name: "from",
-          options: ["Frankfurt(FRA)"],
-        },
+        ,
       ],
       adultFieldsForExtraAdults: [
         { label: translate("Name"), type: "text", name: "name" },
@@ -550,12 +545,12 @@ export default function BookingPages() {
                       </div>
                     </div>
 
-                    <div className="d-flex items-center justify-content-space-arround">
+                    {/* <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
                         <MdFlightTakeoff size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">From: {FlightSelect}</div>
-                    </div>
+                    </div> */}
 
                     <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
