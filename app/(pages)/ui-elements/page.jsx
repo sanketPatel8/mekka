@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 export default function page() {
-  return (
+  return (  
     <>
       <main>
         <Header1 />

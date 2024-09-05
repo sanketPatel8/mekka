@@ -26,12 +26,11 @@ export default function Sidebar2({
   LanActives,
   value,
   setValue,
-  handleSelectionChange
+  handleSelectionChange,
 }) {
-// console.log(handleSelectionChange,"handleSelectionChange")
+  // console.log(handleSelectionChange,"handleSelectionChange")
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const handleChange = (key, value) => {
-    
     handleSelectionChange(key, value);
   };
   // const [LanActives, setLanActives] = useState([]);
@@ -48,7 +47,7 @@ export default function Sidebar2({
   // useEffect(() => {
   //   if (filterParams) {
   //     console.log("filterParams : " , filterParams);
-      
+
   //       // Assuming filterParams has a property initialIndex
   //     setFilterIndex(filterParams.initialIndex);
   //   }
@@ -70,9 +69,9 @@ export default function Sidebar2({
   //     };
   //   });
   // };
-  useEffect(()=>{
-    console.log(FilterSidebar)
-  },[FilterSidebar])
+  useEffect(() => {
+    console.log(FilterSidebar);
+  }, [FilterSidebar]);
 
   // const FetchFilterData = async (pageIndex) => {
   //   const sendData = {
@@ -166,10 +165,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleChange(
-                                        "selectedTourTypes",
-                                        elm
-                                      )
+                                      handleChange("selectedTourTypes", elm)
                                     }
                                   />
                                   <label
@@ -254,10 +250,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleChange(
-                                        "selectedLanguages",
-                                        elm
-                                      )
+                                      handleChange("selectedLanguages", elm)
                                     }
                                   />
                                   <label
@@ -345,10 +338,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleChange(
-                                        "selectedCities",
-                                        elm
-                                      )
+                                      handleChange("selectedCities", elm)
                                     }
                                   />
                                   <label
@@ -453,10 +443,18 @@ export default function Sidebar2({
               <div
                 className="accordion__content"
                 style={
-                  ddActives?.includes("pricerange") ? { maxHeight: "300px" } : {}
+                  ddActives?.includes("pricerange")
+                    ? { maxHeight: "300px" }
+                    : {}
                 }
               >
-                <RangeSlider min={0} max={1000} step={10} value={value} setValue={setValue} />
+                <RangeSlider
+                  min={0}
+                  max={1000}
+                  step={10}
+                  value={value}
+                  setValue={setValue}
+                />
               </div>
             </div>
           </div>
@@ -508,10 +506,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleChange(
-                                        "selectedDurations",
-                                        elm
-                                      )
+                                      handleChange("selectedDurations", elm)
                                     }
                                   />
                                   <label
@@ -677,10 +672,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleChange(
-                                        "selectedFeatures",
-                                        elm
-                                      )
+                                      handleChange("selectedFeatures", elm)
                                     }
                                   />
                                   <label
