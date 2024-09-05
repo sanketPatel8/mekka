@@ -7,6 +7,7 @@ function Useauthredirect() {
 
     const handleRedirect = (status) => {
         if (status === 404) {
+            console.log(status , "404")
             if (authContext.user) {
                 // window.location.href = "/vendor/login";
                 window.location.href = "/login";
@@ -15,9 +16,11 @@ function Useauthredirect() {
             //     window.location.href = "/login";
             // }
         } else if (status === 401 && window.location.pathname !== "/login") {
+            console.log(status , "401")
             window.location.href = "/login";
         } 
         if (!authContext.user) {
+            console.log(authContext.user , "user not found")
             window.location.href = "/login";
           }
 

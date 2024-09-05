@@ -135,15 +135,16 @@ export default function DBListing() {
             <h1 className="text-30">  {translate("My Listings") }</h1>
 
             <div className="row y-gap-30 mt-20">
-              {tourDataTwoOne.map((elm, i) => (
+              {tourList.map((elm, i) => (
                 <div className="col-12 mb-15" key={i}>
                   <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
                       <Image
                         width={420}
                         height={390}
-                        src={elm.imageSrc}
+                        src={elm.tour_image}
                         alt="image"
+                        style={{ aspectRatio : "1"}}
                       />
                       <button className="tourCard__favorite">
                         Direct Flight
@@ -157,7 +158,7 @@ export default function DBListing() {
                       </div>
 
                       <h3 className="tourCard__title mt-5">
-                        <span>{elm.title}</span>
+                        <span>{elm.type}</span>
                       </h3>
 
                       <p className="tourCard__text mt-5 items-center d-flex">
@@ -173,7 +174,7 @@ export default function DBListing() {
                           icon={faHotel}
                           className="px-1 text-accent-1"
                         />
-                        {elm.description2} (5{" "}
+                        {elm.hotel_name} (5{" "}
                         <FaStar
                           color="#dabf4f"
                           className="mx-1 text-accent-1"
@@ -238,7 +239,7 @@ export default function DBListing() {
                         <p className="text-cente text-Danger">
                           Available Seats : 5 / 100
                         </p>
-                        <p className="text-center">Total : {elm.price} €</p>
+                        <p className="text-center">Total : €{elm.tour_price} </p>
                       </div>
 
                       <label className="badge bg-secondary"></label>
