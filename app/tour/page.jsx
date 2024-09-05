@@ -61,6 +61,7 @@ export default function Page() {
       console.log(response);
       setTourData(response.Tours);
       setRange(response.Total_Page);
+      setCount(response.Count)
     } catch (e) {
       console.log(e);
     }
@@ -157,6 +158,7 @@ export default function Page() {
       console.log(response);
       setTourData(response.Tours);
       setRange(response.Total_Page);
+      setCount(response.Count)
     } catch (e) {
       console.log(e);
     }

@@ -34,10 +34,9 @@ export default function TourList4({
   value,
   setValue,
   setFilterSidebar,
-  handleSelectionChange
+  handleSelectionChange,
 }) {
-
-  console.log(handleSelectionChange,"handleSelectionChange tourlist")
+  console.log(handleSelectionChange, "handleSelectionChange tourlist");
 
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
@@ -47,9 +46,6 @@ export default function TourList4({
   const [activeIndex, setActiveIndex] = useState(0);
   const startParam = "start";
   const [pageStart, setPageStart] = useState(1);
-
-
-  
 
   // for pagination
 
@@ -105,7 +101,7 @@ export default function TourList4({
                         setRoute={setRoute}
                         FilterIndex={FilterIndex}
                         setisFilteredDataFetched={isFilteredDataFetched}
-                        activeIndex={activeIndex} 
+                        activeIndex={activeIndex}
                         setRange={setRange}
                         setFilterData={setFilterData}
                         setLanActives={setLanActives}
@@ -129,7 +125,7 @@ export default function TourList4({
                   setRoute={setRoute}
                   FilterIndex={FilterIndex}
                   setisFilteredDataFetched={isFilteredDataFetched}
-                  activeIndex={activeIndex} 
+                  activeIndex={activeIndex}
                   setRange={setRange}
                   setFilterData={setFilterData}
                   setLanActives={setLanActives}
@@ -148,7 +144,8 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData.length} results from {Route}{" "}
+                  {TourData.length} results 
+                  {/* from {Route}{" "} */}
                 </div>
               </div>
 
@@ -303,7 +300,7 @@ export default function TourList4({
 
             <div className={`${TourData.length === 0 ? "d-none" : "d-block"}`}>
               <div className="d-flex justify-center flex-column mt-60">
-              <Pagination
+                <Pagination
                   range={range}
                   activeIndex={activeIndex}
                   setActiveIndex={setActiveIndex}
