@@ -26,8 +26,19 @@ export default function TourList4({
   count,
   range,
   onPageChange,
-  setRange
+  setRange,
+  setFilterData,
+  setLanActives,
+  FilterSidebar,
+  LanActives,
+  value,
+  setValue,
+  setFilterSidebar,
+  handleSelectionChange
 }) {
+
+  console.log(handleSelectionChange,"handleSelectionChange tourlist")
+
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -96,6 +107,14 @@ export default function TourList4({
                         setisFilteredDataFetched={isFilteredDataFetched}
                         activeIndex={activeIndex} 
                         setRange={setRange}
+                        setFilterData={setFilterData}
+                        setLanActives={setLanActives}
+                        FilterSidebar={FilterSidebar}
+                        LanActives={LanActives}
+                        value={value}
+                        setValue={setValue}
+                        setFilterSidebar={setFilterSidebar}
+                        handleSelectionChange={handleSelectionChange}
                       />
                     </div>
                   </div>
@@ -110,8 +129,16 @@ export default function TourList4({
                   setRoute={setRoute}
                   FilterIndex={FilterIndex}
                   setisFilteredDataFetched={isFilteredDataFetched}
-                  activeIndex={activeIndex}
+                  activeIndex={activeIndex} 
                   setRange={setRange}
+                  setFilterData={setFilterData}
+                  setLanActives={setLanActives}
+                  FilterSidebar={FilterSidebar}
+                  LanActives={LanActives}
+                  value={value}
+                  setValue={setValue}
+                  setFilterSidebar={setFilterSidebar}
+                  handleSelectionChange={handleSelectionChange}
                 />
               </div>
             )}

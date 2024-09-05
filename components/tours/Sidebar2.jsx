@@ -19,86 +19,101 @@ export default function Sidebar2({
   filterParams,
   setFilterIndex,
   activeIndex,
-  setRange
+  setRange,
+  setFilterSidebar,
+  setLanActives,
+  FilterSidebar,
+  LanActives,
+  value,
+  setValue,
+  handleSelectionChange
 }) {
+// console.log(handleSelectionChange,"handleSelectionChange")
   const [ddActives, setDdActives] = useState(["tourtype"]);
-  const [LanActives, setLanActives] = useState([]);
-  const [LanArray, setLanArray] = useState([]);
-  const [FilterSidebar, setFilterSidebar] = useState({
-    selectedTourTypes: [],
-    selectedLanguages: [],
-    selectedCities: [],
-    selectedRatings: [],
-    selectedFeatures: [],
-    selectedDurations: [],
-  });
+  const handleChange = (key, value) => {
+    
+    handleSelectionChange(key, value);
+  };
+  // const [LanActives, setLanActives] = useState([]);
+  // const [LanArray, setLanArray] = useState([]);
+  // const [FilterSidebar, setFilterSidebar] = useState({
+  //   selectedTourTypes: [],
+  //   selectedLanguages: [],
+  //   selectedCities: [],
+  //   selectedRatings: [],
+  //   selectedFeatures: [],
+  //   selectedDurations: [],
+  // });
 
-  useEffect(() => {
-    if (filterParams) {
-      console.log("filterParams : " , filterParams);
+  // useEffect(() => {
+  //   if (filterParams) {
+  //     console.log("filterParams : " , filterParams);
       
-        // Assuming filterParams has a property initialIndex
-      setFilterIndex(filterParams.initialIndex);
-    }
-  }, [filterParams, setFilterIndex]);
+  //       // Assuming filterParams has a property initialIndex
+  //     setFilterIndex(filterParams.initialIndex);
+  //   }
+  // }, [filterParams, setFilterIndex]);
 
-  const [value, setValue] = useState([0, 0]);
+  // const [value, setValue] = useState([0, 0]);
 
-  // const { value } = useGlobalState();
-  const isMounted = useRef(false);
+  // // const { value } = useGlobalState();
+  // const isMounted = useRef(false);
 
-  const handleSelectionChange = (key, value) => {
-    setFilterSidebar((prevState) => {
-      const isSelected = prevState[key].includes(value);
-      return {
-        ...prevState,
-        [key]: isSelected
-          ? prevState[key].filter((item) => item !== value)
-          : [...prevState[key], value],
-      };
-    });
-  };
+  // const handleSelectionChange = (key, value) => {
+  //   setFilterSidebar((prevState) => {
+  //     const isSelected = prevState[key].includes(value);
+  //     return {
+  //       ...prevState,
+  //       [key]: isSelected
+  //         ? prevState[key].filter((item) => item !== value)
+  //         : [...prevState[key], value],
+  //     };
+  //   });
+  // };
+  useEffect(()=>{
+    console.log(FilterSidebar)
+  },[FilterSidebar])
 
-  const FetchFilterData = async (pageIndex) => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      type: FilterSidebar?.selectedTourTypes.join(", "),
-      language: LanArray.join(","),
-      departure: FilterSidebar?.selectedCities.join(", "),
-      min_price: value[0],
-      max_price: value[1],
-      hotel_star: FilterSidebar?.selectedDurations.join(", "),
-      agent_rating: FilterSidebar?.selectedRatings.join(", "),
-      amenities: FilterSidebar?.selectedFeatures.join(", "),
-      start: pageIndex,
-    };
+  // const FetchFilterData = async (pageIndex) => {
+  //   const sendData = {
+  //     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  //     type: FilterSidebar?.selectedTourTypes.join(", "),
+  //     language: LanArray.join(","),
+  //     departure: FilterSidebar?.selectedCities.join(", "),
+  //     min_price: value[0],
+  //     max_price: value[1],
+  //     hotel_star: FilterSidebar?.selectedDurations.join(", "),
+  //     agent_rating: FilterSidebar?.selectedRatings.join(", "),
+  //     amenities: FilterSidebar?.selectedFeatures.join(", "),
+  //     start: pageIndex,
+  //   };
 
-    try {
-      const response = await post("tourfilter", sendData);
-      setTourData(response.Tours);
-      setRoute("filter data");
-      setisFilteredDataFetched(false)
-      setRange(response.Total_Page)
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
-    }
-  };
+  //   try {
+  //     const response = await post("tourfilter", sendData);
+  //     setTourData(response.Tours);
+  //     setRoute("filter data");
+  //     setisFilteredDataFetched(false)
+  //     setRange(response.Total_Page)
+  //   } catch (error) {
+  //     console.error("Error caught:", error);
+  //     showErrorToast("An error occurred during registration.");
+  //   }
+  // };
 
-  useEffect(() => {
-    const newLanArray = FilterSidebar?.selectedLanguages.map(
-      (_, index) => index
-    );
-    setLanArray(newLanArray);
-  }, [FilterSidebar?.selectedLanguages]);
+  // useEffect(() => {
+  //   const newLanArray = FilterSidebar?.selectedLanguages.map(
+  //     (_, index) => index
+  //   );
+  //   setLanArray(newLanArray);
+  // }, [FilterSidebar?.selectedLanguages]);
 
-  useEffect(() => {
-    if (isMounted.current) {
-      FetchFilterData(activeIndex);
-    } else {
-      isMounted.current = true;
-    }
-  }, [FilterSidebar , FilterIndex]);
+  // useEffect(() => {
+  //   if (isMounted.current) {
+  //     FetchFilterData(activeIndex);
+  //   } else {
+  //     isMounted.current = true;
+  //   }
+  // }, [FilterSidebar , FilterIndex]);
 
   const { translate } = useTranslation();
 
@@ -151,7 +166,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleSelectionChange(
+                                      handleChange(
                                         "selectedTourTypes",
                                         elm
                                       )
@@ -197,7 +212,7 @@ export default function Sidebar2({
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
-                LanActives.includes("Langauge") ? "is-active" : ""
+                LanActives?.includes("Langauge") ? "is-active" : ""
               }`}
             >
               <div
@@ -219,7 +234,7 @@ export default function Sidebar2({
               <div
                 className="accordion__content"
                 style={
-                  LanActives.includes("Langauge") ? { maxHeight: "300px" } : {}
+                  LanActives?.includes("Langauge") ? { maxHeight: "300px" } : {}
                 }
               >
                 <div className="pt-15">
@@ -239,7 +254,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleSelectionChange(
+                                      handleChange(
                                         "selectedLanguages",
                                         elm
                                       )
@@ -288,7 +303,7 @@ export default function Sidebar2({
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
-                ddActives.includes("country") ? "is-active" : ""
+                ddActives?.includes("country") ? "is-active" : ""
               }`}
             >
               <div
@@ -310,7 +325,7 @@ export default function Sidebar2({
               <div
                 className="accordion__content"
                 style={
-                  ddActives.includes("country") ? { maxHeight: "300px" } : {}
+                  ddActives?.includes("country") ? { maxHeight: "300px" } : {}
                 }
               >
                 <div className="pt-15">
@@ -330,7 +345,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleSelectionChange(
+                                      handleChange(
                                         "selectedCities",
                                         elm
                                       )
@@ -379,7 +394,7 @@ export default function Sidebar2({
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
-                ddActives.includes("Distance") ? "is-active" : ""
+                ddActives?.includes("Distance") ? "is-active" : ""
               }`}
             >
               <div
@@ -416,7 +431,7 @@ export default function Sidebar2({
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
-                ddActives.includes("pricerange") ? "is-active" : ""
+                ddActives?.includes("pricerange") ? "is-active" : ""
               }`}
             >
               <div
@@ -438,10 +453,10 @@ export default function Sidebar2({
               <div
                 className="accordion__content"
                 style={
-                  ddActives.includes("pricerange") ? { maxHeight: "300px" } : {}
+                  ddActives?.includes("pricerange") ? { maxHeight: "300px" } : {}
                 }
               >
-                <RangeSlider min={0} max={1000} step={10} value={value} setvalue={value} />
+                <RangeSlider min={0} max={1000} step={10} value={value} setValue={setValue} />
               </div>
             </div>
           </div>
@@ -451,7 +466,7 @@ export default function Sidebar2({
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
-                ddActives.includes("dur ation") ? "is-active" : ""
+                ddActives?.includes("dur ation") ? "is-active" : ""
               }`}
             >
               <div
@@ -473,7 +488,7 @@ export default function Sidebar2({
               <div
                 className="accordion__content"
                 style={
-                  ddActives.includes("duration") ? { maxHeight: "300px" } : {}
+                  ddActives?.includes("duration") ? { maxHeight: "300px" } : {}
                 }
               >
                 <div className="pt-15">
@@ -493,7 +508,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleSelectionChange(
+                                      handleChange(
                                         "selectedDurations",
                                         elm
                                       )
@@ -539,7 +554,7 @@ export default function Sidebar2({
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
-                ddActives.includes("rating") ? "is-active" : ""
+                ddActives?.includes("rating") ? "is-active" : ""
               }`}
             >
               <div
@@ -562,7 +577,7 @@ export default function Sidebar2({
               <div
                 className="accordion__content"
                 style={
-                  ddActives.includes("rating") ? { maxHeight: "300px" } : {}
+                  ddActives?.includes("rating") ? { maxHeight: "300px" } : {}
                 }
               >
                 <div className="pt-15">
@@ -578,7 +593,7 @@ export default function Sidebar2({
                               star
                             )}
                             onChange={() =>
-                              handleSelectionChange("selectedRatings", star)
+                              handleChange("selectedRatings", star)
                             }
                           />
                           <label
@@ -662,7 +677,7 @@ export default function Sidebar2({
                                       elm
                                     )}
                                     onChange={() =>
-                                      handleSelectionChange(
+                                      handleChange(
                                         "selectedFeatures",
                                         elm
                                       )
