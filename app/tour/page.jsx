@@ -44,10 +44,31 @@ export default function Page() {
     }
   };
 
-  const onPageChange = (pageIndex) => {
-    console.log(`Page changed to ${pageIndex + 1}`);
-    fetchListing(pageIndex);
-  };
+  const onPageChange = async(pageIndex) => {
+
+    const tourType =
+      searchParams.get("TourType") === undefined
+        ? ""
+        : searchParams.get("TourType");
+    const startDate =
+      searchParams.get("StartDate") === undefined
+        ? ""
+        : searchParams.get("StartDate");
+    const endDate =
+      searchParams.get("enddate") === undefined
+        ? ""
+        : searchParams.get("enddate");
+    const person =
+      searchParams.get("person") === undefined
+        ? ""
+        : searchParams.get("person");
+
+        if (tourType || startDate || endDate || person) {
+          await fetchSearch1Data({ tourType, startDate, endDate, person });
+        } else {
+          await fetchListing(pageIndex);
+        }
+      };
 
   useEffect(() => {
     fetchListing();
@@ -87,7 +108,7 @@ export default function Page() {
 
     try {
       const response = await post("tour_data", sendData);
-      setFliterData(response.Data);
+      setFliterData(response.Tours);
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast("An error occurred during registration.");
@@ -106,6 +127,7 @@ export default function Page() {
     try {
       const response = await post("search_tour", sendData);
       setTourData(response.Tour_List);
+      setRange(response.Total_Page);
       setRoute("search data");
     } catch (error) {
       console.error("Error caught:", error);
