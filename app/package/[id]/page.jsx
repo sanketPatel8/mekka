@@ -48,7 +48,7 @@ export default function Page() {
 
   useEffect(() => {
     if (id) {
-      fetchData(id); // Pass the id to fetchData
+      fetchData(id); 
     }
   }, [id]);
 

@@ -247,5 +247,12 @@
   "Bookings": "Buchungen",
   "Direct Flight": "Direktflug",
   "Passenger": "Passagier",
-  "Start of trip to end of trip": "Reisebeginn bis Reiseende"
+  "Start of trip to end of trip": "Reisebeginn bis Reiseende",
+  "Proceed to Payment" : "Weiter zur Zahlung",
+  "Offered Languages" : "Angebotene Sprachen",
+  "Max Luggage Per Person" : "Maximales Gepäck pro Person",
+  "Tax" : "Steuer",
+  "Amount Due" : "Fälliger Betrag",
+  "Do you have a promo code?" : "Haben Sie einen Promo-Code?",
+  "Promo Code" : "Aktionscode"
 }

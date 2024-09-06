@@ -48,7 +48,10 @@ export const GlobalStateProvider = ({ children }) => {
     madina: "",
     mekkaPrice: 0,
     madinaPrice: 0,
+    mekkaId: "", // Add mekkaId to the state
+    madinaId: "", // Add madinaId to the state
   });
+  
   const [FlightSelect, setFlightSelect] = useState("");
   const [selectDeparture, setselectDeparture] = useState("");
 
@@ -67,6 +70,7 @@ export const GlobalStateProvider = ({ children }) => {
   // no flight booking logic package
 
   const [selectedCheckbox, setselectedCheckbox] = useState(false);
+  const [ExcludeFlight, setExcludeFlight] = useState(0)
 
   return (
     <GlobalStateContext.Provider
@@ -110,6 +114,8 @@ export const GlobalStateProvider = ({ children }) => {
         setSharePackageData,
         selectedCheckbox,
         setselectedCheckbox,
+        ExcludeFlight,
+        setExcludeFlight
         
       }}
     >

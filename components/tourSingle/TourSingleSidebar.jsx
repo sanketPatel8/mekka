@@ -12,12 +12,6 @@ import { post } from "@/app/utils/api";
 
 export default function TourSingleSidebar({ PAckageData }) {
   const {
-    setAdultNumber,
-    setYouthNumber,
-    setChildrenNumber,
-    adultNumber,
-    youthNumber,
-    childrenNumber,
     prices,
     HotelSelect,
     setHotelSelect,
@@ -29,6 +23,8 @@ export default function TourSingleSidebar({ PAckageData }) {
     setselectDeparture,
     selectedCheckbox,
     setselectedCheckbox,
+    ExcludeFlight,
+    setExcludeFlight,
   } = useGlobalState();
 
   const searchParams = useSearchParams();
@@ -39,63 +35,56 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [extraCharge, setExtraCharge] = useState(0);
   const [SidebarData, setSidebarData] = useState({});
   const [FlightName, setFlightName] = useState([]);
+  const [Departure, setDeparture] = useState("");
+
+  const [adultNumber, setAdultNumber] = useState(1);
+  const [youthNumber, setYouthNumber] = useState(0);
+  const [childrenNumber, setChildrenNumber] = useState(0);
 
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
-    const selectedHotel = SidebarData?.tour_hotels?.mekka_hotels.find(
-      (hotel) => `Mekka - ${hotel.hotel_name}star` === value
-    );
+    const selectedHotel = JSON.parse(value);
 
-    setHotelSelect((prev) => ({
-      ...prev,
-      [name]: value,
-      [`${name}Price`]: selectedHotel?.hotel_price || 0,
-    }));
+    if (name === "mekka") {
+      // Update the HotelSelect state with the selected Mekka hotel details
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        mekka: value,
+        mekkaPrice:
+          SidebarData?.tour_hotels?.mekka_hotels.find(
+            (hotel) => hotel.id === selectedHotel.hotel_id
+          )?.hotel_price || 0,
+        mekkaId: selectedHotel.hotel_id,
+      }));
+    } else if (name === "madina") {
+      // Update the HotelSelect state with the selected Madina hotel details
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        madina: value,
+        madinaPrice:
+          SidebarData?.tour_hotels?.medina_hotels.find(
+            (hotel) => hotel.id === selectedHotel.hotel_id
+          )?.hotel_price || 0,
+        madinaId: selectedHotel.hotel_id,
+      }));
+    }
   };
 
   const handleHotelchange = (event) => {
     const selectedId = event.target.value; // Get the id value of the selected radio button
     setFlightSelect(selectedId);
-    alert(FlightSelect);
+    // console.log("id" , FlightSelect);
   };
 
   const handleExcludeFlight = () => {
     if (selectedCheckbox === false) {
+      setExcludeFlight(1);
       setselectedCheckbox(true);
     } else {
+      setExcludeFlight(0);
       setselectedCheckbox(false);
     }
   };
-
-  // useEffect(() => {
-  //   // Ensure SidebarData and tour_price are defined and have at least 3 elements
-  //   if (
-  //     SidebarData &&
-  //     Array.isArray(SidebarData.tour_price) &&
-  //     SidebarData.tour_price.length >= 3
-  //   ) {
-  //     const calculatedTotal =
-  //       (SidebarData.tour_price[0]?.price || 0) * adultNumber +
-  //       (SidebarData.tour_price[1]?.price || 0) * youthNumber +
-  //       (SidebarData.tour_price[2]?.price || 0) * childrenNumber +
-  //       (HotelSelect.mekkaPrice || 0) + // Include Mekka hotel price
-  //     (HotelSelect.madinaPrice || 0) +
-  //       extraCharge * 1;
-
-  //     setTotal(calculatedTotal?.toFixed(2));
-  //   } else {
-  //     // Handle cases where SidebarData or tour_price is not defined as expected
-  //     console.warn("SidebarData or tour_price is not defined correctly.");
-  //     setTotal(0); // Set a default total if the data is not available
-  //   }
-  // }, [
-  //   SidebarData,
-  //   adultNumber,
-  //   youthNumber,
-  //   childrenNumber,
-  //   extraCharge,
-  //   setTotal,
-  // ]);
 
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
@@ -164,6 +153,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       const response = await post("tour_data", sendData);
       if (response) {
         setFlightName(response.Data);
+        setDeparture(response.Data);
       } else {
         console.error("Tours data is undefined in the response.");
       }
@@ -185,82 +175,71 @@ export default function TourSingleSidebar({ PAckageData }) {
     fetchData();
   }, []);
 
-  console.log("SidebarData was :", SidebarData?.tour_price);
+  // local storage
+
+  const [priceObject, setPriceObject] = useState({});
+
+  const updatePriceObject = () => {
+    const newPriceObject = {};
+
+    SidebarData?.tour_price?.forEach((group) => {
+      let count;
+      let label;
+
+      if (group.price_type === "1") {
+        count = adultNumber;
+        label = "Adult";
+      } else if (group.price_type === "2") {
+        count = youthNumber;
+        label = "Youth";
+      } else if (group.price_type === "3") {
+        count = childrenNumber;
+        label = "Children";
+      }
+
+      if (count !== undefined) {
+        const totalPrice = group.price * count;
+        newPriceObject[label] = {
+          count,
+          totalPrice: totalPrice.toFixed(2),
+        };
+      }
+    });
+
+    setPriceObject(newPriceObject);
+  };
+
+  useEffect(() => {
+    updatePriceObject();
+  }, [SidebarData, adultNumber, youthNumber, childrenNumber]);
+
+  useEffect(() => {
+    // Ensure localStorage operations are only performed on the client side
+    if (typeof window !== "undefined") {
+      localStorage.setItem("AdultPrice&count", JSON.stringify(priceObject));
+    }
+  }, [priceObject]);
 
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
-      {/* {SidebarData?.tour_price?.map((group, index) => {
-        let count, setCount;
-
-        // Determine the appropriate state and setter function based on price_type
-        if (group.price_type == 1) {
-          count = adultNumber;
-          setCount = setAdultNumber;
-        } else if (group.price_type == 2) {
-          count = youthNumber;
-          setCount = setYouthNumber;
-        } else {
-          count = childrenNumber;
-          setCount = setChildrenNumber;
-        }
-
-        return (
-          <div key={index} className="mt-15">
-            <div className="d-flex items-center justify-between">
-              <div className="text-14">
-                {group.price_type == 1
-                  ? "Adult (18+ Years) "
-                  : group.price_type == 2
-                  ? "Youth (13-17 Years) "
-                  : "Children (0-12 Years) "}
-                <span className="fw-500">
-                  {(group.price * count).toFixed(2)} €
-                </span>
-              </div>
-
-              <div className="d-flex items-center js-counter">
-                <button
-                  onClick={() => {
-                    setCount((prev) => (prev > 0 ? prev - 1 : 0)); // Ensure it doesn't go below 0
-                  }}
-                  className="button size-30 border-1 rounded-full js-down"
-                >
-                  <i className="icon-minus text-10"></i>
-                </button>
-
-                <div className="flex-center ml-10 mr-10">
-                  <div className="text-14 size-20 js-count">{count}</div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    setCount((prev) => prev + 1);
-                  }}
-                  className="button size-30 border-1 rounded-full js-up"
-                >
-                  <i className="icon-plus text-10"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-      })} */}
-
       {SidebarData?.tour_price?.map((group, index) => {
-        let count, setCount;
+        let count, setCount, typeLabel;
 
-        // Determine the appropriate state and setter function based on price_type
+        // Determine the appropriate state and label based on price_type
         if (group.price_type === "1") {
           count = adultNumber;
           setCount = setAdultNumber;
+          typeLabel = "Adult";
         } else if (group.price_type === "2") {
           count = youthNumber;
           setCount = setYouthNumber;
+          typeLabel = "Youth";
         } else if (group.price_type === "3") {
           count = childrenNumber;
           setCount = setChildrenNumber;
+          typeLabel = "Children";
         } else {
           return null;
         }
@@ -268,7 +247,7 @@ export default function TourSingleSidebar({ PAckageData }) {
         return (
           <div key={index} className="mt-15">
             <div className="d-flex items-center justify-between">
-              <div className="text-14">
+              <div className="text-14 col-8">
                 {group.price_type === "1"
                   ? "Adult (18+ Years) "
                   : group.price_type === "2"
@@ -279,15 +258,15 @@ export default function TourSingleSidebar({ PAckageData }) {
                 </span>
               </div>
 
-              <div className="d-flex items-center js-counter">
+              <div className="d-flex items-center js-counter col-3">
                 <button
                   onClick={() => setCount((prev) => Math.max(prev - 1, 0))}
-                  className="button size-30 border-1 rounded-full js-down"
+                  className="button size-30 border-1 rounded-full js-down col-2"
                 >
-                  <i className="icon-minus text-10"></i>
+                  <i className="icon-minus text-10 col-3"></i>
                 </button>
 
-                <div className="flex-center ml-10 mr-10">
+                <div className="flex-center ml-10 mr-10 col-2">
                   <div className="text-14 size-20 js-count">{count}</div>
                 </div>
 
@@ -305,7 +284,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <hr />
 
-      <div>
+      {/* <div>
         <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Makka")}
         </h5>
@@ -377,7 +356,86 @@ export default function TourSingleSidebar({ PAckageData }) {
         ))}
       </div>
 
-      <hr />
+      <hr /> */}
+
+      <div>
+        <h5 className="text-18 fw-500 mb-20 mt-20">
+          {translate("Hotel For Mekka")}
+        </h5>
+        {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
+          <div key={ind}>
+            <div className="d-flex items-center justify-between my-1">
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name="mekka"
+                      value={JSON.stringify({
+                        hotel_name: elm.hotel_name,
+                        hotel_id: elm.id,
+                      })}
+                      checked={
+                        HotelSelect.mekka &&
+                        JSON.parse(HotelSelect.mekka).hotel_name ===
+                          elm.hotel_name
+                      }
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.hotel_name} ({elm.hotel_stars} star)
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="text-14">{elm.hotel_price} €</div>
+            </div>
+          </div>
+        ))}
+
+        <hr />
+
+        <h5 className="text-18 fw-500 mb-20 mt-20">
+          {translate("Hotel For Madina")}
+        </h5>
+
+        {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
+          <div key={elm.id}>
+            <div className="d-flex items-center justify-between my-1">
+              <div className="d-flex items-center">
+                <div className="form-radio d-flex items-center">
+                  <label className="radio d-flex items-center">
+                    <input
+                      type="radio"
+                      name="madina"
+                      value={JSON.stringify({
+                        hotel_name: elm.hotel_name,
+                        hotel_id: elm.id,
+                      })}
+                      checked={
+                        HotelSelect.madina &&
+                        JSON.parse(HotelSelect.madina).hotel_name ===
+                          elm.hotel_name
+                      }
+                      onChange={handleRadioChange}
+                    />
+                    <span className="radio__mark">
+                      <span className="radio__icon"></span>
+                    </span>
+                    <span className="text-14 lh-1 ml-10">
+                      {elm.hotel_name} ({elm.hotel_stars} star)
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="text-14">{elm.hotel_price} €</div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <h5 className="text-18 fw-500 mb-20 mt-20">
         {translate("Flight Booking")}
@@ -486,7 +544,7 @@ export default function TourSingleSidebar({ PAckageData }) {
               >
                 <div className="searchFormItemDropdown__container">
                   <div className="searchFormItemDropdown__list sroll-bar-1">
-                    {State.map((elm, i) => (
+                    {Departure?.departure?.map((elm, i) => (
                       <div
                         key={i}
                         onClick={() => {
@@ -497,7 +555,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                       >
                         <button className="js-select-control-button">
                           <span className="js-select-control-choice">
-                            {elm}
+                            {elm.departure}
                           </span>
                         </button>
                       </div>
@@ -527,7 +585,9 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <p className="text-right">Including Taxes And Fees</p>
 
-      <Link href={`/booking/?id=${Tourid}`}>
+      <Link
+        href={`/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${FlightSelect}`}
+      >
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
           {translate("Book Now")}
         </button>

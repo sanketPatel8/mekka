@@ -247,6 +247,13 @@
   "Bookings" : "Bookings",
   "Direct Flight" : "Direct Flight",
   "Passenger" : "Passenger",
-  "Start of trip to end of trip" : "Start of trip to end of trip"
-  
+  "Start of trip to end of trip" : "Start of trip to end of trip",
+  "Proceed to Payment" : "Proceed to Payment",
+
+  "Offered Languages" : "Offered Languages",
+  "Max Luggage Per Person" : "Max Luggage Per Person",
+  "Tax" : "Tax",
+  "Amount Due" : "Amount Due",
+  "Do you have a promo code?" : "Do you have a promo code?",
+  "Promo Code" : "Promo Code"
  }
