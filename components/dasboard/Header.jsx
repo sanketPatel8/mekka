@@ -4,12 +4,17 @@ import Useauthredirect from "@/app/hooks/useAuthRedirect";
 import Image from "next/image";
 import { useEffect } from "react";
 import Language from "../layout/components/Langauge";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Header({ setSideBarOpen }) {
   const {handleRedirect} = Useauthredirect();
   useEffect(() => {
     handleRedirect();
   }, []);
+  const { translate } = useTranslation();
+
+  const locale = "DE"; 
+
   return (
     <div className="dashboard__content_header">
       <div className="d-flex items-center">
@@ -30,7 +35,7 @@ export default function Header({ setSideBarOpen }) {
 
       <div>
         <div>
-          <Language />
+          <Language  parentClass="headerDropdown" onLocaleChange={() => {}} locale={locale} />
         </div>
 
         

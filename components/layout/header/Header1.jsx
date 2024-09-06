@@ -32,7 +32,7 @@ export default function Header1({ isLoggedIn }) {
   };
 
   const { translate } = useTranslation();
-
+  const locale = "DE"; 
   return (
     <>
       <header
@@ -98,7 +98,7 @@ export default function Header1({ isLoggedIn }) {
             <div className="d-flex items-center">
               <Currency />
 
-              <Language />
+              <Language parentClass="headerDropdown" onLocaleChange={() => {}} locale={locale} />
 
               <Link
                 href="/register"

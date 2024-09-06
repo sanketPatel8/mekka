@@ -1,13 +1,11 @@
-"use client";
-
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useState, useEffect, useRef } from "react";
 
 const currencies = ["DE", "EN"];
 
-export default function Language({ parentClass, onLocaleChange }) {
+export default function Language({ parentClass, onLocaleChange, locale }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState(typeof window != 'undefined' ? localStorage.getItem("locale") : "DE");
+  const [selectedCurrency, setSelectedCurrency] = useState(locale);
   const dropDownContainer = useRef();
 
   useEffect(() => {

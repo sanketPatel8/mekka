@@ -74,7 +74,7 @@ export default function DBListing() {
 
     try{
       const response = await POST.request({form: formData, url: "my_tourlist"});
-      console.log(response);
+      console.log(response,"tourlist");
       setTourList(response.Tours);
       setRange(response.Total_Page);
     }catch(e){
@@ -245,7 +245,7 @@ export default function DBListing() {
                       <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
-                        <Link href="/vendor/db-edit-tour">EDIT TOUR</Link>
+                        <Link href="/vendor/edit-tour">EDIT TOUR</Link>
                       </button>
                       <a href="#" className="mt-5 text-center">
                         <span>Duplicate Tour</span>
