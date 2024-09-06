@@ -17,6 +17,7 @@ import { IoClose } from "react-icons/io5";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
+import { useRouter } from "next/navigation";
 
 const customStyles = {
   overlay: {
@@ -40,8 +41,13 @@ const customStyles = {
 };
 
 export default function DBListing() {
+
+  const router = useRouter();
   const {user} = useAuthContext();
   console.log(user)
+
+
+
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const startParam = 'start';
@@ -233,20 +239,26 @@ export default function DBListing() {
 
                         <div className="d-flex items-center text-14 ">
                           <i className="icon-clock mr-10"></i>
-                          {elm.duration}
+                          {elm.days_of_stay}
                         </div>
 
                         <p className="text-cente text-Danger">
-                          Available Seats : 5 / 100
+                          Available Seats : {elm.capacity_empty === null ? 0 : elm.capacity_empty} / {elm.capacity}
                         </p>
                         <p className="text-center">Total : €{elm.tour_price} </p>
                       </div>
 
                       <label className="badge bg-secondary"></label>
+                      <button
+  className="button -sm -outline-accent-1 text-accent-1"
+>
+  <Link
+    href={`/vendor/edit-tour/${elm.id}`}
+  >
+    <div>EDIT TOUR</div>
+  </Link>
+</button>
 
-                      <button className="button -sm -outline-accent-1 text-accent-1">
-                        <Link href="/vendor/edit-tour">EDIT TOUR</Link>
-                      </button>
                       <a href="#" className="mt-5 text-center">
                         <span>Duplicate Tour</span>
                       </a>
