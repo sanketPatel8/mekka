@@ -6,7 +6,8 @@ const currencies = ["DE", "EN"];
 
 export default function Language({ parentClass, onLocaleChange, locale }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState(locale || "DE");
+  // const [selectedCurrency, setSelectedCurrency] = useState(locale );
+  // console.log(selectedCurrency, "selectedCurrency");
   const dropDownContainer = useRef();
   useEffect(() => {
     const handleClick = (event) => {
@@ -26,7 +27,6 @@ export default function Language({ parentClass, onLocaleChange, locale }) {
   }, []);
 
   const handleLocaleChange = (locale) => {
-    setSelectedCurrency(locale);
     setLocale(locale);
     if (onLocaleChange) {
       onLocaleChange(locale);
@@ -49,7 +49,7 @@ export default function Language({ parentClass, onLocaleChange, locale }) {
           setCurrentdd((prev) => (prev === "currency" ? "" : "currency"))
         }
       >
-        {selectedCurrency === "EN" ? "EN" : "DE"}
+        {locale === "EN" ? "EN" : "DE"}
         <i className="icon-chevron-down text-18"></i>
       </div>
 
@@ -65,7 +65,7 @@ export default function Language({ parentClass, onLocaleChange, locale }) {
                   key={currency}
                   onClick={() => {
                     setLocale(currency);
-                    setSelectedCurrency(currency);
+                    // setSelectedCurrency(currency);
                     handleLocaleChange(currency);
                   }}
                 >

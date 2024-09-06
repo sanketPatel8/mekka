@@ -31,8 +31,23 @@ export default function Header1({ isLoggedIn }) {
     setLoginPer(false);
   };
 
-  const { translate } = useTranslation();
-  const locale = "DE"; 
+  const [locale, setLocale] = useState("DE"); // default locale
+
+  useEffect(() => {
+    const cookies = document.cookie.split(";").reduce((acc, cookie) => {
+      const [key, value] = cookie.split("=");
+      acc[key.trim()] = value;
+      return acc;
+    }, {});
+    console.log(cookies)
+    if (cookies.locale) {
+      setLocale(cookies.locale);
+    }
+  }, []);
+
+  const { translate } = useTranslation(locale);
+
+  console.log(translate("hello"), "translate"); 
   return (
     <>
       <header
@@ -98,7 +113,7 @@ export default function Header1({ isLoggedIn }) {
             <div className="d-flex items-center">
               <Currency />
 
-              <Language parentClass="headerDropdown" onLocaleChange={() => {}} locale={locale} />
+              <Language parentClass="headerDropdown" onLocaleChange={setLocale} locale={locale} />
 
               <Link
                 href="/register"

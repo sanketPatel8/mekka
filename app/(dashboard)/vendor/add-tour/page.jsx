@@ -95,6 +95,7 @@ export default function AddTour() {
 
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
+  const [departures, setDepartures] = useState([]);
   const [flightDetails, setFlightDetails] = useState([]);
   const [tourType, setTourType] = useState([]);
   const [amenities, setAmenities] = useState([]);
@@ -134,6 +135,7 @@ export default function AddTour() {
         setTourType(response.Data.tour_type)
         setlanguagesData(response.Data.languages)
         setIncluded(response.Data.amenities)
+        setDepartures(response.Data.departure)
       }
     }catch(error){
       console.error(error);
@@ -344,14 +346,13 @@ export default function AddTour() {
     label: `${type}`,
   }));
 
-
-  const options2 =mekkaHotel.map((hotel) => ({
-    value: hotel.hotel_name,
+  const options2 = mekkaHotel.map((hotel) => ({
+    value: hotel.id,
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
   }));
 
   const Madina = madinaHotel.map((hotel) => ({
-    value: hotel.hotel_name,
+    value: hotel.id,
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
   }));
 
@@ -393,20 +394,38 @@ export default function AddTour() {
     newRows.splice(index, 1);
     setMadinaRows(newRows);
   };
-
   const handleMekkaChange = (value, index) => {
+    if (!value) return; // add this line to check if value is null or undefined
+    const selectedOption = mekkaHotel.find((option) => option.id === value.value);
+  
+    const mekkaData = {
+      ...mekkaRows[index],
+      hotel_id: selectedOption?.id || "",
+      hotel_name: selectedOption?.hotel_name || "",
+    };
     const newRows = [...mekkaRows];
-    newRows[index].hotel_name = value;
+    newRows[index] = mekkaData;
     setMekkaRows(newRows);
   };
 
   const handleMadinaChange = (value, index) => {
+    if (!value) return; // add this line to check if value is null or undefined
+    const selectedOption = madinaHotel.find((option) => option.id === value.value);
+    console.log(selectedOption?.id,"selectedOptionId")
+    console.log(selectedOption?.hotel_name,"selectedOption")
+    const madinaData = {
+      ...madinaRows[index],
+      hotel_id: selectedOption?.id || "",
+      hotel_name: selectedOption?.hotel_name || "",
+    };
     const newRows = [...madinaRows];
-    newRows[index].hotel_name = value;
+    newRows[index] = madinaData;
     setMadinaRows(newRows);
+    
   };
 
   const selectRef = useRef(null);
+  const selectDepartureRef = useRef(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -415,6 +434,19 @@ export default function AddTour() {
         $(selectRef.current).select2();
         return () => {
           $(selectRef.current).select2("destroy");
+        };
+      });
+    }
+
+
+  }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.$ = window.jQuery = $;
+      import("select2").then(() => {
+        $(selectDepartureRef.current).select2();
+        return () => {
+          $(selectDepartureRef.current).select2("destroy");
         };
       });
     }
@@ -480,7 +512,7 @@ const formatDateToMMDDYYYY = (date) => {
 
 const isCurrentTabValid = () => {
   if (activeTab === "Content") {
-    return SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value && image2.length > 0;
+    return SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value && selectDepartureRef.current.value && image2.length > 0;
   } else if (activeTab === "Pricing") {
     return adult_price && child_price && baby_price ;
   } else if (activeTab === "Included") {
@@ -510,19 +542,26 @@ const isCurrentTabValid = () => {
     // Convert language values to a comma-separated string
     const languageString = languageValues.join(',');
 
+    const departuresValues = $(selectDepartureRef.current).val();
+    const departuresString = departuresValues.join(',');
     const mekkaData =mekkaRows.map((mekka)=>({
       hotel_type:1,
-      hotel_name: mekka.hotel_name ? mekka.hotel_name.value : '', 
+      hotel_name: mekka.hotel_name ? mekka.hotel_name : '', 
+      hotel_id: mekka.hotel_id ? mekka.hotel_id : '', 
       hotel_price:mekka.hotel_price,
-      hotel_info:mekka.hotel_info
+      hotel_info:mekka.hotel_info,
+
     }))
 
     const madinaData =madinaRows.map((madina)=>({
       hotel_type:2,
-      hotel_name: madina.hotel_name ? madina.hotel_name.value : '',
+      hotel_name: madina.hotel_name ? madina.hotel_name : '', 
+      hotel_id: madina.hotel_id ? madina.hotel_id : '',
       hotel_price:madina.hotel_price,
       hotel_info:madina.hotel_info
     }))
+
+    console.log(madinaData)
     
     const flightData =flightRow.map((flight)=>({ 
       flight_id: flight.flight_id ? flight.flight_id.value : '',
@@ -578,6 +617,7 @@ const isCurrentTabValid = () => {
     formData.append("date_begin", start_date);
     formData.append("date_end", end_date);
     formData.append("tour_languages", languageString);
+    formData.append("departures ", departuresString);
     formData.append("adult_price", adult_price);
     formData.append("child_price", child_price);
     formData.append("baby_price", baby_price);
@@ -614,6 +654,7 @@ const isCurrentTabValid = () => {
         setGender("");
         setEditorState(EditorState.createEmpty());
         $(selectRef.current).val('').trigger('change');
+        $(selectDepartureRef.current).val('').trigger('change');
         setImage2([]);
         services.forEach((service) => {
           service.checked = false;
@@ -803,6 +844,48 @@ const isCurrentTabValid = () => {
                                     </select>
                                     <label className="multi-lan-select">
                                       {translate("Langauge") ||
+                                        "Find Latest Packages"} <span className="text-red">*</span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="col-md-6">
+                                  <div className="form-input my-1 position-relative">
+                                    <select
+                                      ref={selectDepartureRef}
+                                      className="js-example-basic-multiple w-100"
+                                      name="states[]"
+                                      multiple="multiple"
+                                      placeholder="Langauge"
+                                    >
+                                      {departures.map((departure) => (
+                                        <option key={departure.id} value={departure.id}>
+                                          {translate(departure.departure) ||
+                                          "Find Latest Packages"}
+                                        </option>
+                                      ))}
+                                      {/* <option value="ENG">
+                                        {" "}
+                                        {translate("English") ||
+                                          "Find Latest Packages"}
+                                      </option>
+                                      <option value="GER">
+                                        {" "}
+                                        {translate("German") ||
+                                          "Find Latest Packages"}
+                                      </option>
+                                      <option value="TUR">
+                                        {" "}
+                                        {translate("Turkis") ||
+                                          "Find Latest Packages"}
+                                      </option>
+                                      <option value="ARB">
+                                        {" "}
+                                        {translate("Arbic") ||
+                                          "Find Latest Packages"}
+                                      </option> */}
+                                    </select>
+                                    <label className="multi-lan-select">
+                                      {translate("Departure") ||
                                         "Find Latest Packages"} <span className="text-red">*</span>
                                     </label>
                                   </div>
@@ -1295,7 +1378,7 @@ const isCurrentTabValid = () => {
 
                                           <div className="col-lg-6 col-md-auto col-12 form-input spacing d-flex flex-column align-items-center hotel-mekka">
                                             <CreatableSelect
-                                              value={row.hotel_name}
+                                              value={row.id}
                                               onChange={(value) =>
                                                 handleMekkaChange(value, index)
                                               }
@@ -1392,7 +1475,7 @@ const isCurrentTabValid = () => {
                                         <div className="row">
                                           <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
                                             <CreatableSelect
-                                              value={row.hotel_name}
+                                              value={row.id}
                                               onChange={(value) =>
                                                 handleMadinaChange(value, index)
                                               }

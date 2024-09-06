@@ -12,6 +12,7 @@ const HeroSearch = ({ CustomClass }) => {
 
   const { translate } = useTranslation();
 
+
   const [currentActiveDD, setCurrentActiveDD] = useState("");
   const [dates, setDates] = useState([
     new DateObject().setDay(5),

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Language from "../layout/components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { parseCookies } from "cookies";
 
 export default function Header({ setSideBarOpen }) {
   const {handleRedirect} = Useauthredirect();
@@ -28,7 +27,7 @@ export default function Header({ setSideBarOpen }) {
 
   const { translate } = useTranslation(locale);
 
-
+  console.log(translate("hello"), "translate");
 
   return (
     <div className="dashboard__content_header">
@@ -50,7 +49,7 @@ export default function Header({ setSideBarOpen }) {
 
       <div>
         <div>
-          <Language  parentClass="headerDropdown" onLocaleChange={() => {}} locale={locale}  />
+          <Language  parentClass="headerDropdown" onLocaleChange={setLocale} locale={locale}  />
         </div>
 
         
