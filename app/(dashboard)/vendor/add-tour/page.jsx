@@ -1179,7 +1179,7 @@ const isCurrentTabValid = () => {
                                         onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, "")}
                                         className=""
                                       />
-                                      <label className="lh-1 text-16 text-light-1">Day {dayNumber} :</label>
+                                      <label className="lh-1 text-16 text-light-1">Day {dayNumber} <span className="text-red">*</span></label>
                                     </div>
                                   </div>
                                   <div className="col-md-6">
@@ -1192,7 +1192,7 @@ const isCurrentTabValid = () => {
                                           value={route_data.find((day) => day.day === dayNumber)?.description || ""}
                                           onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
                                         />
-                                      <label className="lh-1 text-16 text-light-1">Description :</label>
+                                      <label className="lh-1 text-16 text-light-1">Description <span className="text-red">*</span></label>
                                     </div>
                                   </div>
                                 </div>
@@ -1301,7 +1301,7 @@ const isCurrentTabValid = () => {
                                               }
                                               options={options2}
                                               className="custom-select Hotel-Mekka-dd"
-                                              placeholder="Select Hotel For Mekka"
+                                              placeholder="Select Hotel For Mekka(required)"
                                               classNamePrefix="react-select"
                                               isClearable
                                               formatCreateLabel={(inputValue) =>
@@ -1323,7 +1323,7 @@ const isCurrentTabValid = () => {
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Hotel Price") ||
-                                                  "Find Latest Packages"}
+                                                  "Find Latest Packages"} <span className="text-red">*</span>
                                               </label>
                                             </div>
                                           </div>
@@ -1341,7 +1341,7 @@ const isCurrentTabValid = () => {
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Description") ||
-                                                  "Find Latest Packages"}
+                                                  "Find Latest Packages"} <span className="text-red">*</span>
                                               </label>
                                             </div>
                                           </div>
@@ -1398,7 +1398,7 @@ const isCurrentTabValid = () => {
                                               }
                                               options={Madina}
                                               className="custom-select Hotel-Madina-dd"
-                                              placeholder="Select Hotel For Madina"
+                                              placeholder="Select Hotel For Madina (required)"
                                               classNamePrefix="react-select"
                                               isClearable
                                               formatCreateLabel={(inputValue) =>
@@ -1419,7 +1419,7 @@ const isCurrentTabValid = () => {
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Hotel Price") ||
-                                                  "Find Latest Packages"}
+                                                  "Find Latest Packages"} <span className="text-red">*</span>
                                               </label>
                                             </div>
                                           </div>
@@ -1438,7 +1438,7 @@ const isCurrentTabValid = () => {
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Description") ||
-                                                  "Find Latest Packages"}
+                                                  "Find Latest Packages"} <span className="text-red">*</span>
                                               </label>
                                             </div>
                                           </div>
