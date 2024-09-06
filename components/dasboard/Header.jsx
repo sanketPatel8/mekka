@@ -2,18 +2,33 @@
 
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Language from "../layout/components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { parseCookies } from "cookies";
 
 export default function Header({ setSideBarOpen }) {
   const {handleRedirect} = Useauthredirect();
   useEffect(() => {
     handleRedirect();
   }, []);
-  const { translate } = useTranslation();
+  const [locale, setLocale] = useState("DE"); // default locale
 
-  const locale = "DE"; 
+  useEffect(() => {
+    const cookies = document.cookie.split(";").reduce((acc, cookie) => {
+      const [key, value] = cookie.split("=");
+      acc[key.trim()] = value;
+      return acc;
+    }, {});
+    console.log(cookies)
+    if (cookies.locale) {
+      setLocale(cookies.locale);
+    }
+  }, []);
+
+  const { translate } = useTranslation(locale);
+
+
 
   return (
     <div className="dashboard__content_header">
@@ -35,7 +50,7 @@ export default function Header({ setSideBarOpen }) {
 
       <div>
         <div>
-          <Language  parentClass="headerDropdown" onLocaleChange={() => {}} locale={locale} />
+          <Language  parentClass="headerDropdown" onLocaleChange={() => {}} locale={locale}  />
         </div>
 
         

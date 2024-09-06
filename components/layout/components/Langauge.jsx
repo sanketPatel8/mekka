@@ -1,13 +1,13 @@
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useState, useEffect, useRef } from "react";
+import { parseCookies } from "cookies";
 
 const currencies = ["DE", "EN"];
 
 export default function Language({ parentClass, onLocaleChange, locale }) {
   const [currentdd, setCurrentdd] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState(locale);
+  const [selectedCurrency, setSelectedCurrency] = useState(locale || "DE");
   const dropDownContainer = useRef();
-
   useEffect(() => {
     const handleClick = (event) => {
       if (
@@ -26,12 +26,14 @@ export default function Language({ parentClass, onLocaleChange, locale }) {
   }, []);
 
   const handleLocaleChange = (locale) => {
-    console.log("Changing locale to:", locale); // Debugging statement
     setSelectedCurrency(locale);
+    setLocale(locale);
     if (onLocaleChange) {
       onLocaleChange(locale);
     }
     setCurrentdd("");
+    document.cookie = `locale=${locale}; max-age=31536000; path=/`;
+
   };
 
   const { setLocale } = useTranslation();
