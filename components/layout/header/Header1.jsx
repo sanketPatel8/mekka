@@ -116,10 +116,12 @@ export default function Header1({ isLoggedIn }) {
               <Language parentClass="headerDropdown" onLocaleChange={setLocale} locale={locale} />
 
               <Link
-                href="/register"
-                className={`ml-5 ${loginPer == true ? "d-none" : "d-block"}`}
+                href={`  ${loginPer == true ? "/Profile-customer" : "/register"} `}
+                className={`ml-5`}
               >
-                {translate("Register")}
+
+                
+                {loginPer === true ? translate("Profile") : translate("Register")}
               </Link>
 
               <button

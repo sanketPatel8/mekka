@@ -1,6 +1,6 @@
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useState, useEffect, useRef } from "react";
-import { parseCookies } from "cookies";
+
 
 const currencies = ["DE", "EN"];
 
