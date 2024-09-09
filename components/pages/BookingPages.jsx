@@ -269,43 +269,14 @@ export default function BookingPages({ BookingData }) {
   const handleInputChange = (type, index, e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => {
-      console.log("prevValues:", prevValues);
-      console.log("type:", type);
-      console.log("index:", index);
-      console.log("name:", name);
-
       const updatedValues = { ...prevValues };
-
-      if (!updatedValues[type]) {
-        updatedValues[type] = [];
-      }
-
-      if (!updatedValues[type][index]) {
-        updatedValues[type][index] = {};
-      }
-
-      updatedValues[type][index][name] = value;
-
+      updatedValues[type][index] = {
+        ...updatedValues[type][index],
+        [name]: value,
+      };
       return updatedValues;
     });
   };
-
-  // const handleRadioChange = (event, type, index) => {
-  //   const { value } = event.target;
-
-  //   // Update the form values based on the type (adult, child, baby) and index
-  //   setFormValues((prevState) => ({
-  //     ...prevState,
-  //     [type]: prevState[type].map((formValue, i) =>
-  //       i === index
-  //         ? {
-  //             ...formValue,
-  //             selectedService: value, // Store the selected radio value
-  //           }
-  //         : formValue
-  //     ),
-  //   }));
-  // };
 
   const [selectedPrice, setSelectedPrice] = useState("0.00");
 
@@ -326,15 +297,16 @@ export default function BookingPages({ BookingData }) {
 
     setFormValues((prevValues) => ({
       ...prevValues,
-      [type]: {
-        ...prevValues[type],
-        [index]: {
-          ...prevValues[type][index],
-          selectedService: value,
-        },
-      },
+      [type]: prevValues[type].map((person, idx) =>
+        idx === index ? { ...person, selectedService: value } : person
+      ),
     }));
+
     setSelectedPrice(price);
+
+    const calculateTotalPrice = (basePrice, selectedServicePrice) => {
+      return Number(basePrice) + Number(selectedServicePrice);
+    };
   };
 
   const renderForms = (type, count) => {
@@ -483,7 +455,7 @@ export default function BookingPages({ BookingData }) {
                         <>
                           <select
                             name={field.name}
-                            value={formValues[type][i]?.[field.name] || ""}
+                            value={formValues[type]?.[i]?.[field.name] || ""}
                             onChange={(e) => handleInputChange(type, i, e)}
                             required
                             className="form-control"
@@ -513,7 +485,7 @@ export default function BookingPages({ BookingData }) {
                           <input
                             type={field.type}
                             name={field.name}
-                            value={formValues[type][i]?.[field.name] || ""} // Add a default value fallback
+                            value={formValues[type]?.[i]?.[field.name] || ""} // Add a default value fallback
                             onChange={(e) => handleInputChange(type, i, e)}
                             required
                           />
@@ -600,22 +572,12 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const [OtherAdultInfo, setOtherAdultInfo] = useState([]);
-
-  const [firstAdult, ...otherAdults] = Array.isArray(formValues.adult)
-    ? formValues.adult
-    : [];
-
-  // console.log("selectDeparture.value :", selectDeparture.value);
-  console.log("firstAdult : ", formValues.adult);
-  // console.log("otherAdults : ", otherAdults);
-
   const bookingData = {
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     user_id: UserID.id,
     tour_id: TourId,
     person: formValues.adult[0],
-    adult: formValues.adult,
+    adult: formValues.adult.slice(1),
     child: formValues.child,
     baby: formValues.baby,
     departure: selectDeparture?.value,
@@ -633,8 +595,6 @@ export default function BookingPages({ BookingData }) {
     exclude_flight: ExcludeFlight,
   };
 
-  // fathch all booking data
-
   const [ReservationID, setReservationID] = useState("");
 
   const FatchallBooking = async (data) => {
@@ -650,29 +610,6 @@ export default function BookingPages({ BookingData }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // const filteredAdultInfo = formValues.adult
-    //   .filter((_, index) => index !== 0) // Exclude the first adult
-    //   .map((adult) =>
-    //     Object.fromEntries(
-    //       Object.entries(adult).filter(([key, value]) => value !== "")
-    //     )
-    //   );
-
-    // setOtherAdultInfo(filteredAdultInfo);
-
-    // try {
-    //   await FatchallBooking(bookingData);
-    //   // Uncomment if you need to handle routing based on login status
-    //   // if (loginPer) {
-    //   //   router.push("/payment");
-    //   // } else {
-    //   //   router.push("/login");
-    //   // }
-    // } catch (error) {
-    //   console.error("Error fetching booking data:", error);
-    //   // Handle error
-    // }
 
     if (loginPer) {
       FatchallBooking(bookingData);
