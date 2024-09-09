@@ -52,8 +52,8 @@ export const GlobalStateProvider = ({ children }) => {
     madinaId: "", // Add madinaId to the state
   });
   
-  const [FlightSelect, setFlightSelect] = useState("");
-  const [selectDeparture, setselectDeparture] = useState("");
+  const [selectedFlights, setSelectedFlights] = useState({});
+  const [selectDeparture, setselectDeparture] = useState({});
 
   // for package total maintain
 
@@ -104,8 +104,7 @@ export const GlobalStateProvider = ({ children }) => {
         setPrices,
         HotelSelect,
         setHotelSelect,
-        FlightSelect,
-        setFlightSelect,
+        selectedFlights, setSelectedFlights,
         total,
         setTotal,
         selectDeparture,

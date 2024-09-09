@@ -23,6 +23,7 @@ import { ToastContainer } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { ReservationData } from "@/data/CustomerBookingData";
+import { usePeople } from "@/app/context/PeopleContext";
 
 const customStyles = {
   overlay: {
@@ -47,7 +48,6 @@ const customStyles = {
 };
 
 export default function BookingPages({ BookingData }) {
-
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -67,7 +67,7 @@ export default function BookingPages({ BookingData }) {
   const [UserID, setUserID] = useState({});
   const {
     loginPer,
-    FlightSelect,
+    selectedFlights,
     HotelSelect,
     total,
     selectDeparture,
@@ -76,28 +76,31 @@ export default function BookingPages({ BookingData }) {
     ExcludeFlight,
   } = useGlobalState();
 
+  const { people, addPeople } = usePeople();
+
   const [adultData, setAdultData] = useState(null);
   const [Childrendata, setChildrendata] = useState(null);
   const [babyData, setbabyData] = useState(null);
-  
-  const [AdditionalServices, setAdditionalServices] = useState([])
+  const [ToursPrice, setToursPrice] = useState([]);
+  const [AdditionalServices, setAdditionalServices] = useState([]);
+  const [selectedFlight, setselectedFlight] = useState([]);
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
-  }, [BookingData])
-  
+    setToursPrice(BookingData?.Tour_Details?.tour_price);
+    setselectedFlight();
+  }, [BookingData]);
 
   useEffect(() => {
-    
     Modal.setAppElement("#openSignIn");
-    
+
     if (typeof window !== "undefined") {
       // Retrieve and parse the priceObject data from localStorage
       const savedData = localStorage.getItem("AdultPrice&count");
       const userData = localStorage.getItem("user");
 
       if (savedData !== null) {
-        const parsedData = JSON.parse(savedData); 
+        const parsedData = JSON.parse(savedData);
 
         // Extract the Adult object
         if (parsedData && parsedData.Adult) {
@@ -120,12 +123,15 @@ export default function BookingPages({ BookingData }) {
 
   let mekkaHotelName = "no select";
   let madinaHotelName = "no select";
+  let mekkaid = 0;
+  let Madinaid = 0;
 
   try {
     // Ensure HotelSelect.mekka is a valid JSON string
     if (HotelSelect.mekka) {
       const mekkaHotelData = JSON.parse(HotelSelect.mekka);
       mekkaHotelName = mekkaHotelData.hotel_name || "No Selected";
+      mekkaid = mekkaid.hotel_id || 0;
     }
   } catch (error) {
     console.error("Error parsing JSON:", error);
@@ -135,6 +141,7 @@ export default function BookingPages({ BookingData }) {
     if (HotelSelect.madina) {
       const madinaHotel = JSON.parse(HotelSelect.madina);
       madinaHotelName = madinaHotel.hotel_name || "No Selected";
+      Madinaid = madinaHotel.hotel_id || 0;
     }
   } catch (error) {
     console.error("Error parsing JSON:", error);
@@ -221,29 +228,12 @@ export default function BookingPages({ BookingData }) {
 
   // for dynamic form data and form
 
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleRadioChange = (event) => {
-    const { value } = event.target;
-
-    // Assuming value format: ad-1-{idx + 1}bad
-    const [prefix, index] = value.split("-").slice(1, 3);
-
-    const selectedOption = AdditionalServices.find(
-      (option, idx) => `ad-1-${idx + 1}bad` === value
-    );
-
-    setSelectedOption(selectedOption);
-  };
-
-  const initializeFormValues = (count, template) => {
-    return Array(count)
-      .fill()
-      .map(() => ({ ...template }));
+  const initializeFormValues = (count, defaultValue) => {
+    return Array.from({ length: count }, () => ({ ...defaultValue }));
   };
 
   const [formValues, setFormValues] = useState({
-    adult: initializeFormValues(adultData?.count, {
+    adult: initializeFormValues(adultData?.count || 0, {
       name: "",
       surname: "",
       email: "",
@@ -256,30 +246,95 @@ export default function BookingPages({ BookingData }) {
       zipcode: "",
       street: "",
       from: "",
+      selectedService: "", // Add field for storing selected service
     }),
-    child: initializeFormValues(Childrendata?.count, {
+    child: initializeFormValues(Childrendata?.count || 0, {
       name: "",
       surname: "",
       gender: "",
       birthday: "",
       nationality: "",
+      selectedService: "", // Add field for storing selected service
     }),
-    baby: initializeFormValues(babyData?.count, {
+    baby: initializeFormValues(babyData?.count || 0, {
       name: "",
       surname: "",
       gender: "",
       birthday: "",
       nationality: "",
+      selectedService: "", // Add field for storing selected service
     }),
   });
 
   const handleInputChange = (type, index, e) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => {
+      console.log("prevValues:", prevValues);
+      console.log("type:", type);
+      console.log("index:", index);
+      console.log("name:", name);
+
       const updatedValues = { ...prevValues };
+
+      if (!updatedValues[type]) {
+        updatedValues[type] = [];
+      }
+
+      if (!updatedValues[type][index]) {
+        updatedValues[type][index] = {};
+      }
+
       updatedValues[type][index][name] = value;
+
       return updatedValues;
     });
+  };
+
+  // const handleRadioChange = (event, type, index) => {
+  //   const { value } = event.target;
+
+  //   // Update the form values based on the type (adult, child, baby) and index
+  //   setFormValues((prevState) => ({
+  //     ...prevState,
+  //     [type]: prevState[type].map((formValue, i) =>
+  //       i === index
+  //         ? {
+  //             ...formValue,
+  //             selectedService: value, // Store the selected radio value
+  //           }
+  //         : formValue
+  //     ),
+  //   }));
+  // };
+
+  const [selectedPrice, setSelectedPrice] = useState("0.00");
+
+  const handleRadioChange = (event, type, index) => {
+    const { value } = event.target;
+
+    // Find the service object based on the value
+    const foundService = AdditionalServices.find((service) => {
+      // Construct the value to match
+      const constructedValue = `${type}-${index}-ad-${service.id}-${service.title}`;
+      // Debugging log to check the constructed value
+      // console.log("Constructed Value:", constructedValue);
+      // console.log("Comparing with:", value);
+      return constructedValue === value;
+    });
+
+    const price = foundService?.price || "0.00";
+
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [type]: {
+        ...prevValues[type],
+        [index]: {
+          ...prevValues[type][index],
+          selectedService: value,
+        },
+      },
+    }));
+    setSelectedPrice(price);
   };
 
   const renderForms = (type, count) => {
@@ -361,6 +416,23 @@ export default function BookingPages({ BookingData }) {
       ],
     };
 
+    const [AdultsType, setAdultsType] = useState(0);
+
+    useEffect(() => {
+      if (type === "adult") {
+        setAdultsType(1);
+      } else if (type === "child") {
+        setAdultsType(2);
+      } else {
+        setAdultsType(3);
+      }
+    }, [type]);
+
+    const selectedPriceObj = ToursPrice?.find(
+      (priceObj) => priceObj.price_type == AdultsType
+    );
+    const price = selectedPriceObj ? selectedPriceObj.price : "0.00";
+
     const shouldShowAdditionalServices = type !== "baby";
 
     return Array.from({ length: count }).map((_, i) => {
@@ -368,6 +440,14 @@ export default function BookingPages({ BookingData }) {
       const currentFields = isExtraAdult
         ? fields.adultFieldsForExtraAdults
         : fields[type];
+
+      // console.log("adult Type is :- ", AdultsType);
+
+      var totalprice = price + selectedPrice;
+      var numberofPrice = Number(price);
+      var numberofadditionservice = Number(selectedPrice);
+
+      totalprice = numberofPrice + numberofadditionservice;
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -403,7 +483,7 @@ export default function BookingPages({ BookingData }) {
                         <>
                           <select
                             name={field.name}
-                            value={formValues[type][i][field.name]}
+                            value={formValues[type][i]?.[field.name] || ""}
                             onChange={(e) => handleInputChange(type, i, e)}
                             required
                             className="form-control"
@@ -421,9 +501,9 @@ export default function BookingPages({ BookingData }) {
                             ))}
                           </select>
                           <label className="lh-1 text-16 text-light-1">
-                            {formValues[type][i][field.name]
+                            {formValues[type][i]?.[field.name]
                               ? `${field.label}: ${
-                                  formValues[type][i][field.name]
+                                  formValues[type][i]?.[field.name]
                                 }`
                               : field.label}
                           </label>
@@ -433,10 +513,11 @@ export default function BookingPages({ BookingData }) {
                           <input
                             type={field.type}
                             name={field.name}
-                            value={formValues[type][i][field.name]}
+                            value={formValues[type][i]?.[field.name] || ""} // Add a default value fallback
                             onChange={(e) => handleInputChange(type, i, e)}
                             required
                           />
+
                           <label className="lh-1 text-16 text-light-1">
                             {field.label}
                           </label>
@@ -445,15 +526,14 @@ export default function BookingPages({ BookingData }) {
                     </div>
                   </div>
                 ))}
-                
 
                 <div className="col-12">
                   <div className="row y-gap-20 items-center justify-between">
                     <div className="col-12 tb-border">
                       <div className="text-14">
                         <p className="d-flex justify-content-between">
-                          <span>Tour Price Per Person</span>
-                          <span>1.339,00 €</span>
+                          <span>{translate("Tour Price Per Person")}</span>
+                          <span>{`${price} €`}</span>
                         </p>
                       </div>
                     </div>
@@ -479,10 +559,13 @@ export default function BookingPages({ BookingData }) {
                             <label className="radio d-flex items-center">
                               <input
                                 type="radio"
-                                name={`radioGroup-${i}`}
-                                value={`ad-1-${idx + 1}bad`} // Ensure this value is unique
-                                checked={selectedOption?.id === option.id}
-                                onChange={handleRadioChange}
+                                name={`radioGroup-${type}-${i}`} // Ensure this is unique with type and index
+                                value={`${type}-${i}-ad-${option.id}-${option.title}`} // Form index and type included in value
+                                checked={
+                                  formValues[type][i]?.selectedService ===
+                                  `${type}-${i}-ad-${option.id}-${option.title}`
+                                } // Check state based on type and index
+                                onChange={(e) => handleRadioChange(e, type, i)} // Pass type and index to the handler
                               />
                               <span className="radio__mark">
                                 <span className="radio__icon"></span>
@@ -493,15 +576,19 @@ export default function BookingPages({ BookingData }) {
                             </label>
                           </div>
                         </div>
-                        <div className="text-14">+{option.price} €</div>
+                        <div className="text-14">+ {option.price} €</div>
                       </div>
                     ))}
                   </div>
                 </div>
 
+                {/* <h5 className="booking-form-price">
+                  Selected Service Price: <span>{selectedPrice} €</span>
+                </h5> */}
+
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal <span>1.749,00 €</span>
+                    Subtotal <span>{`${totalprice} €`}</span>
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
@@ -515,30 +602,37 @@ export default function BookingPages({ BookingData }) {
 
   const [OtherAdultInfo, setOtherAdultInfo] = useState([]);
 
+  const [firstAdult, ...otherAdults] = Array.isArray(formValues.adult)
+    ? formValues.adult
+    : [];
+
+  // console.log("selectDeparture.value :", selectDeparture.value);
+  console.log("firstAdult : ", formValues.adult);
+  // console.log("otherAdults : ", otherAdults);
+
   const bookingData = {
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     user_id: UserID.id,
     tour_id: TourId,
     person: formValues.adult[0],
-    adult: OtherAdultInfo,
+    adult: formValues.adult,
     child: formValues.child,
     baby: formValues.baby,
-    departure: "",
+    departure: selectDeparture?.value,
     adult_price: adultData?.totalPrice,
     child_price: Childrendata?.totalPrice,
     baby_price: babyData?.totalPrice,
     total: 20000,
-    amount_paid: "",
+    amount_paid: 2000,
     coupon_name: "",
     coupon_amount: "",
     coupon_percentage: "",
-    mekka_hotel: HotelSelect?.mekka?.hotel_id,
-    madina_hotel: HotelSelect?.madina?.hotel_id,
-    flight_id: FlightSelect,
+    mekka_hotel: mekkaid,
+    madina_hotel: Madinaid,
+    flight_id: selectedFlights?.id,
     exclude_flight: ExcludeFlight,
   };
 
-  
   // fathch all booking data
 
   const [ReservationID, setReservationID] = useState("");
@@ -554,61 +648,70 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  // Function to handle form submission and print data
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const filteredAdultInfo = formValues.adult
-      .filter((_, index) => index !== 0) // Exclude the first adult
-      .map((adult) => {
-        // Remove empty values from each adult's info
-        return Object.fromEntries(
-          Object.entries(adult).filter(([key, value]) => value !== "")
-        );
-      });
+    // const filteredAdultInfo = formValues.adult
+    //   .filter((_, index) => index !== 0) // Exclude the first adult
+    //   .map((adult) =>
+    //     Object.fromEntries(
+    //       Object.entries(adult).filter(([key, value]) => value !== "")
+    //     )
+    //   );
 
-    setOtherAdultInfo(filteredAdultInfo);
+    // setOtherAdultInfo(filteredAdultInfo);
 
-    // FetchPromoApi();
-    FatchallBooking(bookingData);
-
-    // if (loginPer === true) {
-    //   router.push("/payment");
-    // } else {
-    //   router.push("/login");
-    //   if (loginPer === true) {
-    //     router.push("/payment");
-    //   }
+    // try {
+    //   await FatchallBooking(bookingData);
+    //   // Uncomment if you need to handle routing based on login status
+    //   // if (loginPer) {
+    //   //   router.push("/payment");
+    //   // } else {
+    //   //   router.push("/login");
+    //   // }
+    // } catch (error) {
+    //   console.error("Error fetching booking data:", error);
+    //   // Handle error
     // }
 
-    // console.log("First adult information:", formValues.adult[0]);
+    if (loginPer) {
+      FatchallBooking(bookingData);
 
-    // console.log("Youth information:", formValues.child);
-    // console.log("Children information:", formValues.baby);
+      console.log(bookingData);
+
+      addPeople("adults", formValues.adult);
+      addPeople("child", formValues.child);
+      addPeople("baby", formValues.baby);
+    } else {
+      router.push("/login");
+    }
   };
 
   const { translate } = useTranslation();
 
   return (
     <>
-      <section className="layout-pt-md layout-pb-lg mt-header"> 
+      <section className="layout-pt-md layout-pb-lg mt-header">
         <ToastContainer />
         <div className="container">
           <div className="row">
-
             <div className="col-lg-8 col-11 mx-auto px-0">
               <div className="bg-white rounded-12  py-15">
-                <button
-                  onClick={() => {
-                    openModal();
-                  }}
-                >
-                  <a className="text-accent-1 px-1"> {translate("Sign in")} </a>{" "}
-                </button>
-                {translate(
-                  " Book With Your Saved Details or Continue As a Guest To Book Your Travel."
-                )}
+                <div className={loginPer === true ? "d-none" : "d-block"}>
+                  <button
+                    onClick={() => {
+                      openModal();
+                    }}
+                  >
+                    <a className="text-accent-1 px-1">
+                      {" "}
+                      {translate("Sign in")}{" "}
+                    </a>{" "}
+                  </button>
+                  {translate(
+                    " Book With Your Saved Details or Continue As a Guest To Book Your Travel."
+                  )}
+                </div>
               </div>
               <h2 className="text-30 md:text-24 fw-700 bg-Primary">
                 {translate("Steps to reserve")}
@@ -619,7 +722,7 @@ export default function BookingPages({ BookingData }) {
                   <div className="border-1 rounded-12 overflow-hidden shadow-1">
                     <div>
                       {renderForms("adult", adultData?.count)}
-                      {renderForms("Youth", Childrendata?.count)}
+                      {renderForms("child", Childrendata?.count)}
                       {renderForms("baby", babyData?.count)}
                     </div>
                   </div>
@@ -660,9 +763,9 @@ export default function BookingPages({ BookingData }) {
                         </div>
                         <div className="text-start">
                           {translate("Airline")}:{" "}
-                          {FlightSelect == ""
+                          {selectedFlights?.name == ""
                             ? "Please Flight Select"
-                            : FlightSelect}
+                            : selectedFlights?.name}
                         </div>
                       </div>
                     </div>
@@ -687,7 +790,7 @@ export default function BookingPages({ BookingData }) {
                           <MdFlightTakeoff size={25} color="#DAC04F" />
                         </div>
                         <div className="text-start">
-                          {translate("Departure")} : {selectDeparture} -{" "}
+                          {translate("Departure")} : {selectDeparture?.name} -{" "}
                           {
                             SharePackageData?.Tour_Details?.tour_details
                               ?.date_begin
@@ -810,7 +913,6 @@ export default function BookingPages({ BookingData }) {
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </section>

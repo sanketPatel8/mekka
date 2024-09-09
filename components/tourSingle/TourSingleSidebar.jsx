@@ -15,8 +15,8 @@ export default function TourSingleSidebar({ PAckageData }) {
     prices,
     HotelSelect,
     setHotelSelect,
-    FlightSelect,
-    setFlightSelect,
+    selectedFlights,
+    setSelectedFlights,
     total,
     setTotal,
     selectDeparture,
@@ -70,10 +70,14 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
-  const handleHotelchange = (event) => {
-    const selectedId = event.target.value; // Get the id value of the selected radio button
-    setFlightSelect(selectedId);
-    // console.log("id" , FlightSelect);
+  const handleHotelChange = (e, elm) => {
+    const selectedFlight = {
+      id: elm.id,
+      name: elm.airline_name,
+    };
+
+    // Since it's a radio button, store the selected flight as an object (not an array)
+    setSelectedFlights(selectedFlight); // Replace with the selected flight object
   };
 
   const handleExcludeFlight = () => {
@@ -220,6 +224,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   }, [priceObject]);
 
+
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
@@ -354,6 +359,7 @@ export default function TourSingleSidebar({ PAckageData }) {
             </div>
           </div>
         ))}
+
       </div>
 
       <hr /> */}
@@ -386,12 +392,12 @@ export default function TourSingleSidebar({ PAckageData }) {
                       <span className="radio__icon"></span>
                     </span>
                     <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name} ({elm.hotel_stars} star)
+                      {elm.hotel_name != null ?  elm.hotel_name : "not found"} ({elm.hotel_stars} star)
                     </span>
                   </label>
                 </div>
               </div>
-              <div className="text-14">{elm.hotel_price} €</div>
+              <div className="text-14">{elm.hotel_price } €</div>
             </div>
           </div>
         ))}
@@ -426,7 +432,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                       <span className="radio__icon"></span>
                     </span>
                     <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name} ({elm.hotel_stars} star)
+                      {elm.hotel_name != null ? elm.hotel_name : "not found"} ({elm.hotel_stars} star)
                     </span>
                   </label>
                 </div>
@@ -495,15 +501,15 @@ export default function TourSingleSidebar({ PAckageData }) {
                     <input
                       type="radio"
                       name={`${elm.id} ( No Stop )`}
-                      value={elm.id} // Use elm.id as the value
-                      checked={FlightSelect === elm.id} // Check if the selected ID matches the current elm.id
-                      onChange={handleHotelchange} // Call the handler to store the selected ID
+                      value={elm.id}
+                      checked={selectedFlights?.id === elm.id} // Check if the flight is selected
+                      onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
                     </span>
                     <span className="text-14 lh-1 ml-10">
-                      {elm.airline_name} ( No Stop )
+                      {elm.airline_name != null ? elm.airline_name : "not found"} ( No Stop )
                     </span>
                   </label>
                 </div>
@@ -519,15 +525,18 @@ export default function TourSingleSidebar({ PAckageData }) {
         <div className="searchForm -type-1 -sidebar mt-20">
           <div className="searchForm__form">
             <div className="searchFormItem js-select-control js-form-dd">
+              {/* Dropdown Button */}
               <div
                 className="searchFormItem__button"
-                onClick={() => setActiveTimeDD((pre) => !pre)}
+                onClick={() => setActiveTimeDD((pre) => !pre)} // Toggle dropdown
                 data-x-click="time"
               >
                 <div className="searchFormItem__content">
-                  <h5>Departure </h5>
+                  <h5>Departure</h5>
                   <div className="js-select-control-chosen">
-                    {selectDeparture ? selectDeparture : "Choose City"}
+                    {selectDeparture?.name
+                      ? selectDeparture?.name
+                      : "Choose City"}
                   </div>
                 </div>
                 <div className="searchFormItem__icon_chevron">
@@ -535,6 +544,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                 </div>
               </div>
 
+              {/* Dropdown List */}
               <div
                 className={`searchFormItemDropdown -tour-type ${
                   activeTimeDD ? "is-active" : ""
@@ -548,8 +558,13 @@ export default function TourSingleSidebar({ PAckageData }) {
                       <div
                         key={i}
                         onClick={() => {
-                          setselectDeparture((pre) => (pre == elm ? "" : elm));
-                          setActiveTimeDD(false);
+                          // Handle selection of departure
+                          setselectDeparture((pre) =>
+                            pre?.name === elm.departure
+                              ? {}
+                              : { name: elm.departure, value: elm.id }
+                          );
+                          setActiveTimeDD(false); // Close dropdown after selection
                         }}
                         className="searchFormItemDropdown__item"
                       >
@@ -586,7 +601,11 @@ export default function TourSingleSidebar({ PAckageData }) {
       <p className="text-right">Including Taxes And Fees</p>
 
       <Link
-        href={`/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${FlightSelect}`}
+        href={`/booking/?id=${Tourid}&name=${
+          PAckageData?.Tour_Details?.tour_details?.name
+        }&type=${
+          PAckageData?.Tour_Details?.tour_details?.type
+        }&selectedflight=${selectedFlights.name}`}
       >
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
           {translate("Book Now")}

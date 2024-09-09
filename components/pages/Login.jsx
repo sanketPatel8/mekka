@@ -97,7 +97,7 @@ export default function Login({ onLoginSuccess }) {
           showSuccessToast("Login successful!");
           setTimeout(() => {
             setLoginPer(true)
-            router.push('/customer/booking-details');
+            router.push('/');
           }, 1000);
         } 
         
