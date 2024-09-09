@@ -152,22 +152,25 @@ export default function DBListing() {
                         alt="image"
                         style={{ aspectRatio : "1"}}
                       />
+                      {elm.direct_flight && 
+                      
                       <button className="tourCard__favorite">
-                        Direct Flight
+                        {elm.direct_flight}
                       </button>
+                      }
                     </div>
 
                     <div className="tourCard__content">
-                      <div className="tourCard__location border_yellow px-2">
+                      {/* <div className="tourCard__location border_yellow px-2">
                         <FaPersonWalking color="white" size={18} />
                         {elm.location}
-                      </div>
+                      </div> */}
 
                       <h3 className="tourCard__title mt-5">
                         <span>{elm.type}</span>
                       </h3>
 
-                      <p className="tourCard__text mt-5 items-center d-flex">
+                      {/* <p className="tourCard__text mt-5 items-center d-flex">
                         <FontAwesomeIcon
                           icon={faHotel}
                           className="px-1 text-accent-1"
@@ -193,9 +196,9 @@ export default function DBListing() {
                           className="px-1 text-accent-1"
                         />
                         {elm.description3}
-                      </p>
+                      </p> */}
 
-                      <div className="d-flex items-center mt-5">
+                      {/* <div className="d-flex items-center mt-5">
                         <div className="d-flex items-center x-gap-5">
                           <Stars star={elm.rating} font={12} />
                         </div>
@@ -204,11 +207,13 @@ export default function DBListing() {
                           <span className="fw-500">{elm.rating}</span> (
                           {elm.ratingCount}) - IDEALGATE
                         </div>
-                      </div>
-
+                      </div> */}
+                      {
+                        elm.departures && 
                       <div className="Location">
-                        <span>Departure : London</span>
+                        <span>Departure : {elm.departures}</span>
                       </div>
+                      }
 
                       <div className="row x-gap-20 y-gap-5 pt-30">
                         {elm.features?.map((elm2, i2) => (
@@ -250,14 +255,14 @@ export default function DBListing() {
 
                       <label className="badge bg-secondary"></label>
                       <button
-  className="button -sm -outline-accent-1 text-accent-1"
->
-  <Link
-    href={`/vendor/edit-tour/${elm.id}`}
-  >
-    <div>EDIT TOUR</div>
-  </Link>
-</button>
+                        className="button -sm -outline-accent-1 text-accent-1"
+                      >
+                        <Link
+                          href={`/vendor/edit-tour/${elm.id}`}
+                        >
+                          <div>EDIT TOUR</div>
+                        </Link>
+                      </button>
 
                       <a href="#" className="mt-5 text-center">
                         <span>Duplicate Tour</span>

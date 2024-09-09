@@ -19,7 +19,6 @@ export default function Header({ setSideBarOpen }) {
       acc[key.trim()] = value;
       return acc;
     }, {});
-    console.log(cookies)
     if (cookies.locale) {
       setLocale(cookies.locale);
     }
@@ -27,7 +26,6 @@ export default function Header({ setSideBarOpen }) {
 
   const { translate } = useTranslation(locale);
 
-  console.log(translate("hello"), "translate");
 
   return (
     <div className="dashboard__content_header">

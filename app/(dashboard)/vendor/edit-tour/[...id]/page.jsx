@@ -8,7 +8,7 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import CreatableSelect from "react-select/creatable";
 import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
-import { EditorState } from "draft-js";
+import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import $ from "jquery";
 import "select2/dist/css/select2.css";
@@ -18,7 +18,7 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { languages } from "@/data/tourFilteringOptions";
 import { showErrorToast } from "@/app/utils/tost";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -37,10 +37,8 @@ const tabs = [
 export default function EditTour() {
   const router = useRouter();
   const {user} = useAuthContext();
-  console.log(user)
 
   const params = useParams();
-  console.log(params)
   const id = params.id[0];
   const [tourDetails,setTourDetails] = useState({});
 
@@ -66,6 +64,7 @@ export default function EditTour() {
   const [tour_info, setTourInfo] = useState("");
   const [free_cancellation, setFreeCancellation] = useState(0);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
@@ -92,7 +91,7 @@ export default function EditTour() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [canGoBack, setCanGoBack] = useState(false);
   const [mekkaRows, setMekkaRows] = useState([
-    { hotel_name: null, hotel_price: "",hotel_info:"" },
+    { hotel_id:"" , hotel_name: null, hotel_price: "",hotel_info:"" },
   ]);
   const [madinaRows, setMadinaRows] = useState([
     { hotel_name: null, hotel_price: "",hotel_info:"" },
@@ -106,18 +105,28 @@ export default function EditTour() {
   const [flightDetails, setFlightDetails] = useState([]);
   const [tourType, setTourType] = useState([]);
   const [amenities, setAmenities] = useState([]);
-  const [languagesData, setlanguagesData] = useState([]);
   const [radioValueVisa, setRadioValueVisa] = useState('No');
+  const [languagesData, setlanguagesData] = useState([]);
+  const [flightData, setFlightData] = useState([]);
+  const [additionalServices, setAdditionalServices] = useState([]);
   const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
   const [radioValueFlight, setRadioValueFlight] = useState('No');
-
+  const options2 = mekkaHotel.map((hotel) => ({
+    value: hotel.id,
+    label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
+  }));
 
   const fetchTour = async (id) => {
     const formData = new FormData();
     formData.append("id", id);
     const response = await POST.request({form:formData , url: "tourdetails"});
-    console.log(response, "response");
-    setTourDetails(response.Tour_Details.details);
+    if(response){
+
+      setTourDetails(response.Tour_Details.details);
+      setAdditionalServices(response.Tour_Details.addition_service);
+      setFlightData(response.Tour_Details.flight_data);
+      setHotelData(response.Tour_Details.hotel_data);
+    }
   }
 
   const accessdata = async() => {
@@ -150,8 +159,7 @@ export default function EditTour() {
 
     fetchTour(id);
     accessdata();
-    if(tourDetails){
-    }
+    
  
     // Set the initial state based on the screen size
     handleResize();
@@ -173,33 +181,158 @@ export default function EditTour() {
   
     return `${day}-${month}-${year}`;
   };
+
   useEffect(() => {
-    if (tourDetails) {
+    console.log(tourDetails,"tourDetails");
+    if(tourDetails){
+      console.log( $(selectDepartureRef.current.val),"selectDepartureRef.current");
       setSelectedTour({value:tourDetails.type,label:tourDetails.type});
       setDateBegin(formatedDate(tourDetails.date_begin));
       setDateEnd(formatedDate(tourDetails.date_end));
-      setImage2(tourDetails.tour_image || []);
+      
+      // setDepartures(SelectRef(tourDetails.departures) || []);
+      // setImage2(tourDetails.tour_image || []);
+      // setImage2(Array.isArray(tourDetails.tour_image) ? tourDetails.tour_image : []);
       setName(tourDetails.name);
       setCapacity(tourDetails.capacity);
       setAdultPrice(tourDetails.adult_price);
+      if (tourDetails.route_data) {
+        try {
+          const newRouteData = JSON.parse(tourDetails.route_data);
+          console.log(newRouteData,"newRouteData");
+          if (newRouteData) {
+            setDaysCount(newRouteData.length);
+            const newRouteDataLen = newRouteData.map((day, index) => ({
+              day: day.day_number,
+              dayData: day.day,
+              description: day.description,
+            }));
+            
+            setRouteData(newRouteDataLen);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+           
+      const tourIncluded = tourDetails.tour_included;
+      if (tourIncluded) {
+        const updatedIncluded = included.map((item) => {
+          if (tourIncluded.includes(item.id)) {
+            return { ...item, checked: true };
+          }
+          return item;
+        });
+        return setIncluded(updatedIncluded);
+      }
+  
+      {tourDetails.visa_processing === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
+      {tourDetails.free_cancellation === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
+
+
+      // const editorContent = ContentState.createFromText(tourDetails.tour_info);
+      // const editorState = EditorState.createWithContent(editorContent);
+      // setEditorState(editorState);
+  
+
+
+      // setEditorState(tourDetails.tour_info);
+      // setImage2(tourDetails.tour_image);
+
+
+  
     }
+    
+    // console.log(image2,"image2");
+    
+    // const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/uploads/${tourDetails.tour_image}`;
+    // const imageUrl = `${process.env.NEXT_PUBLIC_URL}/uploads/${image2.map((image) => image).join('')}`;
+    // const imageUrls = Array.isArray(image2);
+    // console.log(imageUrls,"imageUrls");
   }, [tourDetails]);
+
+
+  useEffect(() => {
+    if(additionalServices){
+      const updatedServices = services.map((service) => {
+        const foundService = additionalServices.find((additionalService) => additionalService.title === service.title);
+
+        if (foundService) {
+          return { ...service, checked: true, price: foundService.price };
+        }
+        return service;
+      });
+      setServices(updatedServices);
+    
+
+    }
+
+  },[additionalServices]);
+
+  useEffect(()=>{
+    if(flightData){
+      {flightData.length > 0 ? setRadioValueFlight("Yes") : setRadioValueFlight("No")}
+      const updatedFlight = flightData.map((flight) => {
+      
+        const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
+        
+        if (foundFlight) {
+          return { ...flight, flight_id: foundFlight.flight_id, flight_amount: foundFlight.flight_amount, no_of_stop: foundFlight.no_of_stop, luggage: foundFlight.luggage };
+        }
+        return flight;
+      });
+      console.log(updatedFlight,"updatedFlight");
+      setFlightRow(updatedFlight);
+    }
+  },[flightData])
+
+  useEffect(() => {
+    if(hotel_data){
+      hotel_data.map((hotel) => {
+        console.log(hotel,"hotel");
+        if (hotel.hotel_type == 1) {
+          console.log(mekkaHotel,"mekkaHotel");
+          const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.id);
+          console.log(foundHotel,"foundHotel");
+          const updatedMekka = mekkaRows.map((mekka) => {
+          
+              return { ...mekka, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
+            
+          });
+          setMekkaRows(updatedMekka);
+        } else {
+          const updatedMadina = madinaRows.map((madina) => {
+          
+            return { ...madina, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
+          
+        });
+         
+          setMadinaRows(updatedMadina);
+        }
+        console.log(mekkaRows,"updatedMekka");
+
+      });
+
+    }
+  },[hotel_data]);
 
   useEffect(() => {
     if (date_begin && date_end) {
       const startDate = new Date(formatDateToMMDDYYYY(date_begin));
-      console.log(startDate,"startDate");
       const endDate = new Date(formatDateToMMDDYYYY(date_end));
       const timeDifference = endDate.getTime() - startDate.getTime();
       const daysDifference = timeDifference / (1000 * 3600 * 24);
       setDaysCount(Math.ceil(daysDifference));
-      console.log(daysDifference,"daysCount");
     }
   }, [date_begin, date_end]);
 
   const onEditorStateChange = (newEditorState) => {
+    const editorContent = newEditorState.getCurrentContent();
+    const rawContent = convertToRaw(editorContent);
+    const plainText = rawContent.blocks[0].text;
+    setTourInfo(plainText);
     setEditorState(newEditorState);
-  };
+    };
 
   const handleDeleteImage2 = (index) => {
     const newImages = [...image2];
@@ -255,7 +388,6 @@ export default function EditTour() {
       setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
     }
   } else {
-    console.log("hi")
     showErrorToast("Please fill in all required fields before proceeding.");
   }
   // const nextTabIndex = activeTabIndex + 1;
@@ -269,8 +401,15 @@ export default function EditTour() {
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
       const newData = [...prevData];
-      newData[dayNumber - 1] = { day: dayNumber, dayData, description };
-      return newData;
+      const existingDay = newData.find((day) => day.day === dayNumber);
+    if (existingDay) {
+      existingDay.dayData = dayData;
+      existingDay.description = description;
+    } else {
+      newData.push({ day: dayNumber, dayData, description });
+    }
+    return newData;
+
     });
   };
 
@@ -368,10 +507,7 @@ export default function EditTour() {
     label: `${type}`,
   }));
 
-  const options2 = mekkaHotel.map((hotel) => ({
-    value: hotel.id,
-    label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
-  }));
+  
 
   const Madina = madinaHotel.map((hotel) => ({
     value: hotel.id,
@@ -419,7 +555,7 @@ export default function EditTour() {
   const handleMekkaChange = (value, index) => {
     if (!value) return; // add this line to check if value is null or undefined
     const selectedOption = mekkaHotel.find((option) => option.id === value.value);
-  
+    console.log(selectedOption,"selectedOption");
     const mekkaData = {
       ...mekkaRows[index],
       hotel_id: selectedOption?.id || "",
@@ -429,12 +565,24 @@ export default function EditTour() {
     newRows[index] = mekkaData;
     setMekkaRows(newRows);
   };
+  // const handleMekkaChange = (value, index) => {
+  //   if (!value) return; // add this line to check if value is null or undefined
+  //   const selectedOption = mekkaHotel.find((option) => option.id === value.value);
+  
+  //   const mekkaData = {
+  //     ...mekkaRows[index],
+  //     hotel_id: selectedOption?.id || "",
+  //     hotel_name: selectedOption?.hotel_name || "",
+  //   };
+  //   const newRows = [...mekkaRows];
+  //   newRows[index] = mekkaData;
+  //   setMekkaRows(newRows);
+  // };
 
   const handleMadinaChange = (value, index) => {
     if (!value) return; // add this line to check if value is null or undefined
     const selectedOption = madinaHotel.find((option) => option.id === value.value);
-    console.log(selectedOption?.id,"selectedOptionId")
-    console.log(selectedOption?.hotel_name,"selectedOption")
+
     const madinaData = {
       ...madinaRows[index],
       hotel_id: selectedOption?.id || "",
@@ -443,6 +591,7 @@ export default function EditTour() {
     const newRows = [...madinaRows];
     newRows[index] = madinaData;
     setMadinaRows(newRows);
+    
     
   };
 
@@ -556,7 +705,6 @@ export default function EditTour() {
       hotel_info:madina.hotel_info
     }))
 
-    console.log(madinaData)
     
     const flightData =flightRow.map((flight)=>({ 
       flight_id: flight.flight_id ? flight.flight_id.value : '',
@@ -568,7 +716,6 @@ export default function EditTour() {
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) ||
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
     (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false)) {
-      console.log("hi")
       showErrorToast("Please fill in all required fields before proceeding.");
       return;
     }
@@ -586,7 +733,7 @@ export default function EditTour() {
 
     const checkedIncluded = included.filter((item) => item.checked);
     const includedData = checkedIncluded.map((item) => item.id).join(",");
-
+    console.log(includedData,"includedData");
     const editorValue = convertToRaw(editorState.getCurrentContent()).blocks[0].text;
   
     const newRouteData = route_data.map((day, index) => (
@@ -618,7 +765,7 @@ export default function EditTour() {
     formData.append("baby_price", baby_price);
     formData.append("addition_service", JSON.stringify(servicesData));
     formData.append("tour_included", includedData);
-    formData.append("tour_info", editorValue);
+    formData.append("tour_info", editorValue || "");
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData):"");
@@ -628,7 +775,7 @@ export default function EditTour() {
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_image[]", image2File);
 
-    const url = "addtour";
+    const url = "updatetour";
 
     try{
       const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
