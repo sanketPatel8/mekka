@@ -57,7 +57,6 @@ export default function BookingPages({ BookingData }) {
 
   const [bookingStage, setBookingStage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [radioValue, setRadioValue] = useState("");
   const [LoginISChacked, setLoginISChacked] = useState(false);
   const [BookingLoginData, setBookingLoginData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -84,6 +83,7 @@ export default function BookingPages({ BookingData }) {
   const [ToursPrice, setToursPrice] = useState([]);
   const [AdditionalServices, setAdditionalServices] = useState([]);
   const [selectedFlight, setselectedFlight] = useState([]);
+  const [GrandFormTotal, setGrandFormTotal] = useState(0);
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
@@ -92,34 +92,47 @@ export default function BookingPages({ BookingData }) {
   }, [BookingData]);
 
   useEffect(() => {
+    // Set modal's app element
     Modal.setAppElement("#openSignIn");
-
+  
+    // Only execute in browser environment
     if (typeof window !== "undefined") {
       // Retrieve and parse the priceObject data from localStorage
       const savedData = localStorage.getItem("AdultPrice&count");
       const userData = localStorage.getItem("user");
-
-      if (savedData !== null) {
-        const parsedData = JSON.parse(savedData);
-
-        // Extract the Adult object
-        if (parsedData && parsedData.Adult) {
-          setAdultData(parsedData.Adult);
-          setChildrendata(parsedData.Youth);
-          setbabyData(parsedData.Children);
+  
+      // Check if savedData exists and is valid JSON
+      if (savedData && savedData !== 'undefined') {
+        try {
+          const parsedData = JSON.parse(savedData);
+  
+          // Extract the Adult object
+          if (parsedData && parsedData.Adult) {
+            setAdultData(parsedData.Adult);
+            setChildrendata(parsedData.Youth);
+            setbabyData(parsedData.Children);
+          }
+        } catch (error) {
+          console.error("Error parsing savedData:", error);
         }
       }
-
-      if (userData !== null) {
-        const userid = JSON.parse(userData);
-
-        // Extract the Adult object
-        if (userid && userid.user) {
-          setUserID(userid.user);
+  
+      // Check if userData exists and is valid JSON
+      if (userData && userData !== 'undefined') {
+        try {
+          const userid = JSON.parse(userData);
+  
+          // Extract the user object
+          if (userid && userid.user) {
+            setUserID(userid.user);
+          }
+        } catch (error) {
+          console.error("Error parsing userData:", error);
         }
       }
     }
   }, []);
+  
 
   let mekkaHotelName = "no select";
   let madinaHotelName = "no select";
@@ -209,27 +222,10 @@ export default function BookingPages({ BookingData }) {
     setpromo(e.target.value);
   };
 
-  const FetchPromoApi = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      coupon_code: promo,
-      total_amount: 5000,
-    };
-
-    try {
-      const response = await post("check_coupon", sendData);
-      showSuccessToast(response.Message);
-      setPromoData(response);
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
-    }
-  };
-
   // for dynamic form data and form
 
-  const initializeFormValues = (count, defaultValue) => {
-    return Array.from({ length: count }, () => ({ ...defaultValue }));
+  const initializeFormValues = (count, defaultValues) => {
+    return Array.from({ length: count }, () => ({ ...defaultValues }));
   };
 
   const [formValues, setFormValues] = useState({
@@ -247,6 +243,7 @@ export default function BookingPages({ BookingData }) {
       street: "",
       from: "",
       selectedService: "", // Add field for storing selected service
+      selectedPrice : ''
     }),
     child: initializeFormValues(Childrendata?.count || 0, {
       name: "",
@@ -255,6 +252,7 @@ export default function BookingPages({ BookingData }) {
       birthday: "",
       nationality: "",
       selectedService: "", // Add field for storing selected service
+      selectedPrice : ''
     }),
     baby: initializeFormValues(babyData?.count || 0, {
       name: "",
@@ -278,35 +276,81 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const [selectedPrice, setSelectedPrice] = useState("0.00");
+  const [selectedPrice, setSelectedPrice] = useState([]);
 
-  const handleRadioChange = (event, type, index) => {
-    const { value } = event.target;
+  // const handleRadioChange = (event, type, index) => {
+  //   const { value } = event.target;
 
-    // Find the service object based on the value
-    const foundService = AdditionalServices.find((service) => {
-      // Construct the value to match
-      const constructedValue = `${type}-${index}-ad-${service.id}-${service.title}`;
-      // Debugging log to check the constructed value
-      // console.log("Constructed Value:", constructedValue);
-      // console.log("Comparing with:", value);
-      return constructedValue === value;
+  //   // Get the current form values for the given type
+  //   const currentFormValues = formValues[type] || [];
+
+  //   // Log debugging information
+  //   console.log("Selected Value:", value);
+
+  //   // Update form values with the new selected service
+  //   setFormValues((prevValues) => ({
+  //     ...prevValues,
+  //     [type]: prevValues[type].map((person, idx) =>
+  //       idx === index ? { ...person, selectedService: value } : person
+  //     ),
+  //   }));
+
+  //   // Find the selected service price
+  //   const foundService = AdditionalServices.find(
+  //     (service) =>
+  //       `${type}-${index}-ad-${service.id}-${service.title}` === value
+  //   );
+
+  //   // Set the selected price
+  //   const price = foundService?.price || "0.00";
+  //   setSelectedPrice(price);
+  // };
+
+  const updateSelectedPrice = (index, type, price) => {
+    setSelectedPrice(prevState => {
+      // Find if an entry with the same index already exists
+      const existingIndex = prevState.findIndex(entry => entry.index === index);
+  
+      if (existingIndex > -1) {
+        // Update existing entry
+        const updatedArray = [...prevState];
+        updatedArray[existingIndex] = { index, type, price };
+        return updatedArray;
+      } else {
+        // Add new entry
+        return [...prevState, { index, type, price }];
+      }
     });
+  };
 
-    const price = foundService?.price || "0.00";
+  const [PricesArray, setPricesArray] = useState([])
+  
+  const handleRadioChange = (e, type, i, idx, price) => {
+    const selectedValue = e.target.value;
 
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [type]: prevValues[type].map((person, idx) =>
-        idx === index ? { ...person, selectedService: value } : person
-      ),
-    }));
+    // Update form values state
+    setFormValues((prevValues) => {
+      const updatedValues = { ...prevValues };
 
-    setSelectedPrice(price);
+      // Ensure the correct path exists in the state
+      if (!updatedValues[type]) {
+        updatedValues[type] = {};
+      }
+      if (!updatedValues[type][i]) {
+        updatedValues[type][i] = {};
+      }
 
-    const calculateTotalPrice = (basePrice, selectedServicePrice) => {
-      return Number(basePrice) + Number(selectedServicePrice);
-    };
+      // Set the selected service value
+      updatedValues[type][i].selectedService = selectedValue;
+      updatedValues[type][i].selectedPrice  = price;
+      
+      return updatedValues;
+
+    });
+  
+    console.log("formValues[type]" , formValues[type][i]?.selectedPrice);
+    
+   
   };
 
   const renderForms = (type, count) => {
@@ -388,38 +432,32 @@ export default function BookingPages({ BookingData }) {
       ],
     };
 
-    const [AdultsType, setAdultsType] = useState(0);
+    const [AdultsType, setAdultsType] = useState(0)
+
 
     useEffect(() => {
-      if (type === "adult") {
-        setAdultsType(1);
-      } else if (type === "child") {
-        setAdultsType(2);
-      } else {
-        setAdultsType(3);
-      }
+      setAdultsType(type === "adult" ? 1 : type === "child" ? 2 : 3);
     }, [type]);
 
     const selectedPriceObj = ToursPrice?.find(
       (priceObj) => priceObj.price_type == AdultsType
     );
+
     const price = selectedPriceObj ? selectedPriceObj.price : "0.00";
 
     const shouldShowAdditionalServices = type !== "baby";
 
     return Array.from({ length: count }).map((_, i) => {
+
       const isExtraAdult = type === "adult" && i >= 1;
       const currentFields = isExtraAdult
         ? fields.adultFieldsForExtraAdults
         : fields[type];
 
-      // console.log("adult Type is :- ", AdultsType);
+      const individualPrice = parseFloat(price);
+      const selectedPrice = parseFloat(formValues[type][i]?.selectedPrice) || 0;
 
-      var totalprice = price + selectedPrice;
-      var numberofPrice = Number(price);
-      var numberofadditionservice = Number(selectedPrice);
-
-      totalprice = numberofPrice + numberofadditionservice;
+      const concatSubValue = individualPrice + selectedPrice
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -455,7 +493,7 @@ export default function BookingPages({ BookingData }) {
                         <>
                           <select
                             name={field.name}
-                            value={formValues[type]?.[i]?.[field.name] || ""}
+                            value={formValues[type]?.[i]?.[field.name] || ""} // Safe access to formValues[type] and formValues[type][i]
                             onChange={(e) => handleInputChange(type, i, e)}
                             required
                             className="form-control"
@@ -473,9 +511,9 @@ export default function BookingPages({ BookingData }) {
                             ))}
                           </select>
                           <label className="lh-1 text-16 text-light-1">
-                            {formValues[type][i]?.[field.name]
+                            {formValues[type]?.[i]?.[field.name]
                               ? `${field.label}: ${
-                                  formValues[type][i]?.[field.name]
+                                  formValues[type]?.[i]?.[field.name]
                                 }`
                               : field.label}
                           </label>
@@ -485,11 +523,10 @@ export default function BookingPages({ BookingData }) {
                           <input
                             type={field.type}
                             name={field.name}
-                            value={formValues[type]?.[i]?.[field.name] || ""} // Add a default value fallback
+                            value={formValues[type]?.[i]?.[field.name] || ""} // Ensure formValues[type][i] is safely accessed
                             onChange={(e) => handleInputChange(type, i, e)}
                             required
                           />
-
                           <label className="lh-1 text-16 text-light-1">
                             {field.label}
                           </label>
@@ -505,7 +542,7 @@ export default function BookingPages({ BookingData }) {
                       <div className="text-14">
                         <p className="d-flex justify-content-between">
                           <span>{translate("Tour Price Per Person")}</span>
-                          <span>{`${price} €`}</span>
+                          <span>{`${individualPrice} €`}</span>
                         </p>
                       </div>
                     </div>
@@ -531,14 +568,23 @@ export default function BookingPages({ BookingData }) {
                             <label className="radio d-flex items-center">
                               <input
                                 type="radio"
-                                name={`radioGroup-${type}-${i}`} // Ensure this is unique with type and index
-                                value={`${type}-${i}-ad-${option.id}-${option.title}`} // Form index and type included in value
+                                name={`radioGroup-${type}-${i}`}
+                                value={`${type}-${i}-${idx}-ad-${option.id}-${option.title}`}
                                 checked={
-                                  formValues[type][i]?.selectedService ===
-                                  `${type}-${i}-ad-${option.id}-${option.title}`
-                                } // Check state based on type and index
-                                onChange={(e) => handleRadioChange(e, type, i)} // Pass type and index to the handler
+                                  formValues[type]?.[i]?.selectedService ==
+                                  `${type}-${i}-${idx}-ad-${option.id}-${option.title}`
+                                }
+                                onChange={(e) =>
+                                  handleRadioChange(
+                                    e,
+                                    type,
+                                    i,
+                                    idx,
+                                    option.price
+                                  )
+                                } // Ensure type and index are correctly passed
                               />
+
                               <span className="radio__mark">
                                 <span className="radio__icon"></span>
                               </span>
@@ -554,13 +600,9 @@ export default function BookingPages({ BookingData }) {
                   </div>
                 </div>
 
-                {/* <h5 className="booking-form-price">
-                  Selected Service Price: <span>{selectedPrice} €</span>
-                </h5> */}
-
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal <span>{`${totalprice} €`}</span>
+                    Subtotal <span>{`${concatSubValue } €`}</span> 
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
@@ -570,32 +612,95 @@ export default function BookingPages({ BookingData }) {
         </div>
       );
     });
-  };
 
-  const bookingData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    user_id: UserID.id,
-    tour_id: TourId,
-    person: formValues.adult[0],
-    adult: formValues.adult.slice(1),
-    child: formValues.child,
-    baby: formValues.baby,
-    departure: selectDeparture?.value,
-    adult_price: adultData?.totalPrice,
-    child_price: Childrendata?.totalPrice,
-    baby_price: babyData?.totalPrice,
-    total: 20000,
-    amount_paid: 2000,
-    coupon_name: "",
-    coupon_amount: "",
-    coupon_percentage: "",
-    mekka_hotel: mekkaid,
-    madina_hotel: Madinaid,
-    flight_id: selectedFlights?.id,
-    exclude_flight: ExcludeFlight,
-  };
+    
+  };  
+  
 
   const [ReservationID, setReservationID] = useState("");
+
+  // calling api
+
+  // fathch promo code api
+
+  const FetchPromoApi = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      coupon_code: promo,
+      total_amount: 5000,
+    };
+
+    try {
+      const PromoResponse = await post("check_coupon", sendData);
+      showSuccessToast(PromoResponse.Message);
+      setPromoData(PromoResponse);
+      return PromoResponse;
+    } catch (error) {
+      console.error("Error caught:", error);
+      showErrorToast("Invalid promo code.");
+      return null;
+    }
+  };
+
+  // for form sunmiter button onclick event
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (loginPer) {
+  //     FatchallBooking(bookingData);
+
+  //     console.log(bookingData);
+
+  //     addPeople("adults", formValues.adult);
+  //     addPeople("child", formValues.child);
+  //     addPeople("baby", formValues.baby);
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // };
+
+  const handleSubmit = async () => {
+    try {
+      let promoResponse = null;
+
+      // Check if promo is entered and valid
+      if (promo) {
+        promoResponse = await FetchPromoApi();
+      }
+
+      // Create booking data
+      const bookingData = {
+        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        user_id: UserID.id,
+        tour_id: TourId,
+        person: formValues.adult[0],
+        adult: formValues.adult.slice(1),
+        child: formValues.child,
+        baby: formValues.baby,
+        departure: selectDeparture?.value,
+        adult_price: adultData?.totalPrice,
+        child_price: Childrendata?.totalPrice,
+        baby_price: babyData?.totalPrice,
+        total: 20000,
+        amount_paid: 2000,
+        coupon_name: promoResponse ? promoResponse.coupon_name : "", // Use promo data if available
+        coupon_amount: promoResponse ? promoResponse.total_amount : 0,
+        coupon_percentage: promoResponse ? promoResponse.percentage : 0,
+        mekka_hotel: mekkaid,
+        madina_hotel: Madinaid,
+        flight_id: selectedFlights?.id,
+        exclude_flight: ExcludeFlight,
+      };
+
+      // Print booking data to console
+      console.log("Booking Data:", bookingData);
+    } catch (error) {
+      console.error("Error during booking:", error);
+    }
+  };
+
+  // fathch new booking api
 
   const FatchallBooking = async (data) => {
     try {
@@ -605,22 +710,6 @@ export default function BookingPages({ BookingData }) {
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast("An error occurred during registration.");
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (loginPer) {
-      FatchallBooking(bookingData);
-
-      console.log(bookingData);
-
-      addPeople("adults", formValues.adult);
-      addPeople("child", formValues.child);
-      addPeople("baby", formValues.baby);
-    } else {
-      router.push("/login");
     }
   };
 
@@ -801,7 +890,7 @@ export default function BookingPages({ BookingData }) {
                   <div className="">
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Subtotal")}</div>
-                      <div className=""> {total} € </div>
+                      <div className=""> {GrandFormTotal} € </div>
                     </div>
 
                     <div className="d-flex items-center justify-between">
@@ -814,7 +903,9 @@ export default function BookingPages({ BookingData }) {
                       <div className=""> {adultData?.totalPrice} € </div>
                     </div>
                   </div>
+
                   <hr />
+
                   <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-10 ">
                     <h2 className="text-20 fw-500 ">
                       {translate("Do you have a promo code?")}
