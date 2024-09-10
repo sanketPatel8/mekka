@@ -275,55 +275,6 @@ export default function BookingPages({ BookingData }) {
       return updatedValues;
     });
   };
-
-  const [selectedPrice, setSelectedPrice] = useState([]);
-
-  // const handleRadioChange = (event, type, index) => {
-  //   const { value } = event.target;
-
-  //   // Get the current form values for the given type
-  //   const currentFormValues = formValues[type] || [];
-
-  //   // Log debugging information
-  //   console.log("Selected Value:", value);
-
-  //   // Update form values with the new selected service
-  //   setFormValues((prevValues) => ({
-  //     ...prevValues,
-  //     [type]: prevValues[type].map((person, idx) =>
-  //       idx === index ? { ...person, selectedService: value } : person
-  //     ),
-  //   }));
-
-  //   // Find the selected service price
-  //   const foundService = AdditionalServices.find(
-  //     (service) =>
-  //       `${type}-${index}-ad-${service.id}-${service.title}` === value
-  //   );
-
-  //   // Set the selected price
-  //   const price = foundService?.price || "0.00";
-  //   setSelectedPrice(price);
-  // };
-
-  const updateSelectedPrice = (index, type, price) => {
-    setSelectedPrice(prevState => {
-      // Find if an entry with the same index already exists
-      const existingIndex = prevState.findIndex(entry => entry.index === index);
-  
-      if (existingIndex > -1) {
-        // Update existing entry
-        const updatedArray = [...prevState];
-        updatedArray[existingIndex] = { index, type, price };
-        return updatedArray;
-      } else {
-        // Add new entry
-        return [...prevState, { index, type, price }];
-      }
-    });
-  };
-
-  const [PricesArray, setPricesArray] = useState([])
   
   const handleRadioChange = (e, type, i, idx, price) => {
     const selectedValue = e.target.value;
@@ -348,10 +299,12 @@ export default function BookingPages({ BookingData }) {
 
     });
   
-    console.log("formValues[type]" , formValues[type][i]?.selectedPrice);
     
    
   };
+
+  
+
 
   const renderForms = (type, count) => {
     const fields = {
@@ -443,6 +396,8 @@ export default function BookingPages({ BookingData }) {
       (priceObj) => priceObj.price_type == AdultsType
     );
 
+   
+
     const price = selectedPriceObj ? selectedPriceObj.price : "0.00";
 
     const shouldShowAdditionalServices = type !== "baby";
@@ -454,10 +409,7 @@ export default function BookingPages({ BookingData }) {
         ? fields.adultFieldsForExtraAdults
         : fields[type];
 
-      const individualPrice = parseFloat(price);
-      const selectedPrice = parseFloat(formValues[type][i]?.selectedPrice) || 0;
-
-      const concatSubValue = individualPrice + selectedPrice
+      console.log("formValues[type]" , formValues[type][i]);
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -542,7 +494,7 @@ export default function BookingPages({ BookingData }) {
                       <div className="text-14">
                         <p className="d-flex justify-content-between">
                           <span>{translate("Tour Price Per Person")}</span>
-                          <span>{`${individualPrice} €`}</span>
+                          <span>{` ${type == "adult" ? adultData?.totalPrice/adultData?.count : type == "child" ? Childrendata?.totalPrice/Childrendata?.count : babyData?.totalPrice/babyData?.count}`} €</span>
                         </p>
                       </div>
                     </div>
@@ -602,7 +554,7 @@ export default function BookingPages({ BookingData }) {
 
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal <span>{`${concatSubValue } €`}</span> 
+                    Subtotal <span>{`${123 } €`}</span> 
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
