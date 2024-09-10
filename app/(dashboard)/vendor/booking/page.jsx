@@ -7,17 +7,129 @@ import DataTable from "react-data-table-component";
 import { bookingData } from "@/data/dashboard";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
+import { POST } from "@/app/utils/api/post";
 
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
 export default function DbBooking() {
+  const { translate } = useTranslation();
+
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("All");
-  const [filteredData, setFilteredData] = useState(bookingData);
+  const [bookings, setBookings] = useState([]);
   const [filterText, setFilterText] = useState('');
+  const [filteredData, setFilteredData] = useState(bookings);
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [VendorBookings, setVendorBookings] = useState([]);
 
+  const {user} = useAuthContext();
+  console.log(user?.user.id)
+
+  const fetchBookings = async () => {
+    console.log("hi")
+    const formData = new FormData();
+    formData.append("user_id", user?.user.id);
+    const response = await POST.request({form:formData , url: "my_bookings"});
+    console.log(response)
+
+    const bookingsData  = response.Bookings.map((booking) => ({
+      BookingNo: booking.id,
+      // Status: booking.status,
+      Full_Name: booking.name + " " + booking.surname,
+      Tour_name: booking.tour_details.company_name,
+      Total_Payment: booking.total,
+      Pending_Payment: booking.due_payment,
+      // Payment_Terms: booking.payment_terms,
+      // Payment_Method: booking.payment_method,
+      // Visas: booking.visas,
+      Flight: booking.tour_details.flight_included,
+      // Initiated_By_Admin: booking.initiated_by_admin,
+    }));
+    console.log(bookingsData )
+    setBookings(bookingsData );
+    const BookingsData = [
+      {
+        name: "Booking No.",
+        selector: (row) => row.BookingNo,
+        sortable: true,
+      },
+      {
+        name: "Status",
+        selector: (row) => row.status,
+        sortable: true,
+      },
+      {
+        name: "Full Name",
+        selector: (row) => row.Full_Name,
+        width: "190px",
+        sortable: true,
+      },
+      {
+        name: "Tour Name",
+        selector: (row) => row.Tour_name,
+        width: "150px",
+        sortable: true,
+      },
+      {
+        name: "Total (€) ",
+        selector: (row) => row.Total_Payment,
+        sortable: true,
+      },
+      {
+        name: "Pending (€) ",
+        selector: (row) => row.Pending_Payment,
+        sortable: true,
+      },
+      {
+      name: "Terms ",
+      selector: (row) => row.Payment_Terms,
+      sortable: true,
+    }, 
+    {
+      name: "Method ",
+      selector: (row) => row.Payment_Method,
+      sortable: true,
+    }, 
+    {
+      name: "Visas",
+      selector: (row) => row.Visas,
+      width: "150px",
+      sortable: true,
+    },
+      {
+        name: "Flight",
+        selector: (row) => row.Flight,
+        width: "150px",
+        sortable: true,
+      },
+        {
+      name: "Initiated By",
+      selector: (row) => row.Initiated_By_Admin,
+      width: "150px",
+      sortable: true,
+    }, 
+      {
+        name: "Action",
+        selector: (row) => (
+          <Link href={`/vendor/edit-booking/${row.BookingNo}`}>
+            <button
+              className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            >
+               {translate("Edit") }
+            </button>
+          </Link>
+        ),
+        width: "110px",
+      },
+    ];
+   
+
+    console.log(BookingsData, "BookingsData")
+  
+    setVendorBookings(BookingsData);
+  }
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
@@ -42,21 +154,35 @@ export default function DbBooking() {
         window.removeEventListener("resize", handleResize);
       };
     }
+
   }, []);
+
+
 
   useEffect(() => {
     setIsClient(true);
+    fetchBookings();
+
   }, []);
 
   // Memoized filtered items based on filterText
-  const filteredItems = useMemo(() => {
-    return filteredData.filter(item => {
+  // const filteredItems = useMemo(() => {
+  //   return bookings.filter(item => {
+  //     return Object.keys(item).some(key =>
+  //       item[key].toString().toLowerCase().includes(filterText.toLowerCase())
+  //     );
+  //   });
+  // }, [filterText, bookings]);
+
+  useEffect(() => {
+    const filteredItems = bookings.filter(item => {
       return Object.keys(item).some(key =>
         item[key].toString().toLowerCase().includes(filterText.toLowerCase())
       );
     });
-  }, [filterText, filteredData]);
-
+    setFilteredData(filteredItems);
+  }, [filterText, bookings]);
+  
   // Function to handle clearing filter and resetting pagination
   const handleClear = () => {
     if (filterText) {
@@ -69,9 +195,9 @@ export default function DbBooking() {
     // Filter data based on currentTab
     let filtered = [];
     if (currentTab === "All") {
-      filtered = bookingData;
+      filtered = bookings;
     } else {
-      filtered = bookingData.filter((item) => item.Status === currentTab);
+      filtered = bookings.filter((item) => item.Status === currentTab);
     }
     setFilteredData(filtered);
   }, [currentTab]);
@@ -90,47 +216,46 @@ export default function DbBooking() {
     return <span style={statusStyles}>{row.Status}</span>;
   };
 
-  const VandorBookings = [
-    { name: "Booking No.", selector: (row) => row.BookingNo, width: "170px", sortable: true },
-    {
-      name: "Status",
-      selector: (row) => row.Status,
-      cell: (row) => <StatusCell row={row} />,
-      sortable: true,
-    },
-    { name: "Full Name", selector: (row) => row.Full_Name, width: "190px", sortable: true },
-    { name: "Tour Name", selector: (row) => row.Tour_name, width: "150px", sortable: true },
-    { name: "Total (€) ", selector: (row) => row.Total_Payment, sortable: true },
-    { name: "Pending (€) ", selector: (row) => row.Pending_Payment, sortable: true },
-    { name: "Terms ", selector: (row) => row.Payment_Terms, sortable: true },
-    { name: "Method ", selector: (row) => row.Payment_Method, sortable: true },
-    { name: "Visas", selector: (row) => row.Visas, width: "150px", sortable: true },
-    { name: "Flight", selector: (row) => row.Flight, width: "150px", sortable: true },
-    {
-      name: "Initiated By",
-      selector: (row) => row.Initiated_By_Admin,
-      width: "150px", sortable: true,
-    },
-    {
-      name: "Action",
-      selector: (row) => (
-        <Link href={`/vendor/db-edit-booking/${row.BookingNo}`}>
-          <button
-            className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-          >
-             {translate("Edit") }
-          </button>
-        </Link>
-      ),
-      width: "110px",
-    },
-  ];
+  // const VandorBookings = [
+  //   { name: "Booking No.", selector: (row) => row.BookingNo, width: "170px", sortable: true },
+  //   {
+  //     name: "Status",
+  //     selector: (row) => row.Status,
+  //     cell: (row) => <StatusCell row={row} />,
+  //     sortable: true,
+  //   },
+  //   { name: "Full Name", selector: (row) => row.Full_Name, width: "190px", sortable: true },
+  //   { name: "Tour Name", selector: (row) => row.Tour_name, width: "150px", sortable: true },
+  //   { name: "Total (€) ", selector: (row) => row.Total_Payment, sortable: true },
+  //   { name: "Pending (€) ", selector: (row) => row.Pending_Payment, sortable: true },
+  //   { name: "Terms ", selector: (row) => row.Payment_Terms, sortable: true },
+  //   { name: "Method ", selector: (row) => row.Payment_Method, sortable: true },
+  //   { name: "Visas", selector: (row) => row.Visas, width: "150px", sortable: true },
+  //   { name: "Flight", selector: (row) => row.Flight, width: "150px", sortable: true },
+  //   {
+  //     name: "Initiated By",
+  //     selector: (row) => row.Initiated_By_Admin,
+  //     width: "150px", sortable: true,
+  //   },
+  //   {
+  //     name: "Action",
+  //     selector: (row) => (
+  //       <Link href={`/vendor/db-edit-booking/${row.BookingNo}`}>
+  //         <button
+  //           className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+  //         >
+  //            {translate("Edit") }
+  //         </button>
+  //       </Link>
+  //     ),
+  //     width: "110px",
+  //   },
+  // ];
 
   if (!isClient) {
     return null;
   }
 
-  const { translate } = useTranslation();
 
   return (
     <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
@@ -157,8 +282,8 @@ export default function DbBooking() {
                 ))}
               </div>
               <DataTable
-                columns={VandorBookings}
-                data={filteredItems}
+                columns={VendorBookings}
+                data={filteredData}
                 highlightOnHover
                 pagination
                 subHeader

@@ -8,7 +8,7 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import CreatableSelect from "react-select/creatable";
 import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
-import { convertToRaw, EditorState } from "draft-js";
+import { ContentState, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import $ from "jquery";
 import "select2/dist/css/select2.css";
@@ -62,6 +62,7 @@ export default function EditTour() {
   const [hotel_data, setHotelData] = useState([]);
   const [tour_included, setTourIncluded] = useState(0);
   const [tour_info, setTourInfo] = useState("");
+  const [tourInformation, setTourInformation] = useState("");
   const [free_cancellation, setFreeCancellation] = useState(0);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -121,7 +122,7 @@ export default function EditTour() {
     formData.append("id", id);
     const response = await POST.request({form:formData , url: "tourdetails"});
     if(response){
-
+      setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
       setAdditionalServices(response.Tour_Details.addition_service);
       setFlightData(response.Tour_Details.flight_data);
@@ -182,10 +183,23 @@ export default function EditTour() {
     return `${day}-${month}-${year}`;
   };
 
+  useEffect(()=>{
+
+    if(tourInformation){
+      const editorContent = ContentState.createFromText(tourInformation);
+    const editorState = EditorState.createWithContent(editorContent);
+    const rawContent = convertToRaw(editorState.getCurrentContent());
+    const plainText = rawContent.blocks[0].text;
+    setTourInfo(plainText);
+    setEditorState(editorState);
+      console.log(editorState,"editorState");
+    }
+
+
+  },[tourInformation])
+
   useEffect(() => {
-    console.log(tourDetails,"tourDetails");
     if(tourDetails){
-      console.log( $(selectDepartureRef.current.val),"selectDepartureRef.current");
       setSelectedTour({value:tourDetails.type,label:tourDetails.type});
       setDateBegin(formatedDate(tourDetails.date_begin));
       setDateEnd(formatedDate(tourDetails.date_end));
@@ -199,7 +213,6 @@ export default function EditTour() {
       if (tourDetails.route_data) {
         try {
           const newRouteData = JSON.parse(tourDetails.route_data);
-          console.log(newRouteData,"newRouteData");
           if (newRouteData) {
             setDaysCount(newRouteData.length);
             const newRouteDataLen = newRouteData.map((day, index) => ({
@@ -228,7 +241,13 @@ export default function EditTour() {
   
       {tourDetails.visa_processing === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
       {tourDetails.free_cancellation === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
-
+      // if(tourDetails){
+      //   console.log(tourDetails.tour_info,"tourDetails.tour_info");
+      //   const editorContent = ContentState.createFromText(tourDetails.tour_info);
+      //     const editorState = EditorState.createWithContent(editorContent);
+      //     setEditorState(editorState);
+      //     console.log(editorState,"editorState");
+      // }
 
       // const editorContent = ContentState.createFromText(tourDetails.tour_info);
       // const editorState = EditorState.createWithContent(editorContent);
@@ -272,28 +291,27 @@ export default function EditTour() {
   useEffect(()=>{
     if(flightData){
       {flightData.length > 0 ? setRadioValueFlight("Yes") : setRadioValueFlight("No")}
-      const updatedFlight = flightData.map((flight) => {
-      
-        const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
-        
-        if (foundFlight) {
-          return { ...flight, flight_id: foundFlight.flight_id, flight_amount: foundFlight.flight_amount, no_of_stop: foundFlight.no_of_stop, luggage: foundFlight.luggage };
-        }
-        return flight;
-      });
-      console.log(updatedFlight,"updatedFlight");
-      setFlightRow(updatedFlight);
+      if(flightData.length > 0){
+        const updatedFlight = flightData.map((flight) => {
+          const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
+          if (foundFlight) {
+            return { ...flight, flight_id: foundFlight.flight_id, flight_amount: foundFlight.flight_amount, no_of_stop: foundFlight.no_of_stop, luggage: foundFlight.luggage };
+          }
+          return flight;
+        });
+        setFlightRow(updatedFlight);
+      }else{
+
+        setFlightData(...flightRow);
+      }
     }
   },[flightData])
 
   useEffect(() => {
     if(hotel_data){
       hotel_data.map((hotel) => {
-        console.log(hotel,"hotel");
         if (hotel.hotel_type == 1) {
-          console.log(mekkaHotel,"mekkaHotel");
-          const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.id);
-          console.log(foundHotel,"foundHotel");
+          const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.hotel_id);
           const updatedMekka = mekkaRows.map((mekka) => {
           
               return { ...mekka, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
@@ -309,7 +327,6 @@ export default function EditTour() {
          
           setMadinaRows(updatedMadina);
         }
-        console.log(mekkaRows,"updatedMekka");
 
       });
 
@@ -555,7 +572,6 @@ export default function EditTour() {
   const handleMekkaChange = (value, index) => {
     if (!value) return; // add this line to check if value is null or undefined
     const selectedOption = mekkaHotel.find((option) => option.id === value.value);
-    console.log(selectedOption,"selectedOption");
     const mekkaData = {
       ...mekkaRows[index],
       hotel_id: selectedOption?.id || "",
@@ -733,7 +749,6 @@ export default function EditTour() {
 
     const checkedIncluded = included.filter((item) => item.checked);
     const includedData = checkedIncluded.map((item) => item.id).join(",");
-    console.log(includedData,"includedData");
     const editorValue = convertToRaw(editorState.getCurrentContent()).blocks[0].text;
   
     const newRouteData = route_data.map((day, index) => (
@@ -779,7 +794,6 @@ export default function EditTour() {
 
     try{
       const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
-      console.log(response)
       if(response){
         toast.success("Tour Added Successfully");
         setActiveTab("Content");
