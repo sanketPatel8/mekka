@@ -23,63 +23,134 @@ export default function DbBooking() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [VendorBookings, setVendorBookings] = useState([]);
+  const [bookingRender, setBookingRender] = useState([]);
 
   const {user} = useAuthContext();
   console.log(user?.user.id)
 
-  const fetchBookings = async () => {
-    console.log("hi")
+  const fetchBookings = async (tab) => {
+    
+    
     const formData = new FormData();
-    formData.append("user_id", user?.user.id);
-    const response = await POST.request({form:formData , url: "my_bookings"});
-    console.log(response)
+    formData.append("company_id", user?.user.company_id);
+    const response = await POST.request({form:formData , url: "tour_bookings"});
+    setBookingRender(response);
+    if(tab === "All"){
+    
+      const bookingsData  = bookingRender.Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name ,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      console.log(bookingsData )
+      setBookings(bookingsData );
+    }
+    else if(tab === "Completed"){
+    
+      const bookingsData  = bookingRender.Completed_Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name ,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData );
+    }
+    else if(tab === "In Progress"){
+     
+      const bookingsData  = bookingRender.In_Progress_Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name ,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData );
+    }
+    else if(tab === "Cancelled"){
+      
+      const bookingsData  = bookingRender.Cancelled_Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name ,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData );
+    }
 
-    const bookingsData  = response.Bookings.map((booking) => ({
-      BookingNo: booking.id,
-      // Status: booking.status,
-      Full_Name: booking.name + " " + booking.surname,
-      Tour_name: booking.tour_details.company_name,
-      Total_Payment: booking.total,
-      Pending_Payment: booking.due_payment,
-      // Payment_Terms: booking.payment_terms,
-      // Payment_Method: booking.payment_method,
-      // Visas: booking.visas,
-      Flight: booking.tour_details.flight_included,
-      // Initiated_By_Admin: booking.initiated_by_admin,
-    }));
-    console.log(bookingsData )
-    setBookings(bookingsData );
     const BookingsData = [
+      {
+        name: "Booking Id",
+        selector: (row) => row.BookingId,
+        width: "120px",
+        sortable: true,
+      },
       {
         name: "Booking No.",
         selector: (row) => row.BookingNo,
+        width: "150px",
+
         sortable: true,
       },
       {
         name: "Status",
-        selector: (row) => row.status,
+        selector: (row) => row.Status,
+        width: "170px",
         sortable: true,
       },
       {
         name: "Full Name",
         selector: (row) => row.Full_Name,
-        width: "190px",
+        width: "150px",
         sortable: true,
       },
       {
         name: "Tour Name",
         selector: (row) => row.Tour_name,
-        width: "150px",
+        width: "120px",
         sortable: true,
       },
       {
         name: "Total (€) ",
         selector: (row) => row.Total_Payment,
+        width: "100px",
         sortable: true,
       },
       {
         name: "Pending (€) ",
         selector: (row) => row.Pending_Payment,
+        width: "120px",
         sortable: true,
       },
       {
@@ -95,25 +166,25 @@ export default function DbBooking() {
     {
       name: "Visas",
       selector: (row) => row.Visas,
-      width: "150px",
+      width: "80px",
       sortable: true,
     },
       {
         name: "Flight",
         selector: (row) => row.Flight,
-        width: "150px",
+        width: "80px",
         sortable: true,
       },
         {
       name: "Initiated By",
       selector: (row) => row.Initiated_By_Admin,
-      width: "150px",
+      width: "120px",
       sortable: true,
     }, 
       {
         name: "Action",
         selector: (row) => (
-          <Link href={`/vendor/edit-booking/${row.BookingNo}`}>
+          <Link href={`/vendor/edit-booking/${row.BookingId}`}>
             <button
               className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             >
@@ -182,7 +253,7 @@ export default function DbBooking() {
     });
     setFilteredData(filteredItems);
   }, [filterText, bookings]);
-  
+
   // Function to handle clearing filter and resetting pagination
   const handleClear = () => {
     if (filterText) {
@@ -256,6 +327,12 @@ export default function DbBooking() {
     return null;
   }
 
+  
+const setCurrentTab = (tab) => {
+  setcurrentTab(tab);
+  fetchBookings(tab);
+};
+
 
   return (
     <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
@@ -271,8 +348,8 @@ export default function DbBooking() {
                   <div
                     key={index}
                     className="col-auto"
-                    onClick={() => setcurrentTab(tab)}
-                  >
+                    onClick={() => setCurrentTab(tab)}
+                    >
                     <button
                       className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${tab === currentTab ? "is-tab-el-active" : ""}`}
                     >
