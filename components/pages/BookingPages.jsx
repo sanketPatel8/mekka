@@ -690,6 +690,8 @@ export default function BookingPages({ BookingData }) {
 
   const totalWithTax = totalSum + taxAmount;
 
+  const formattedTaxAmount = taxAmount.toFixed(2);
+
   const [HandlePromo, setHandlePromo] = useState(false)
 
   const TotalPaidAmount = HandlePromo == false ? totalWithTax : PromoData.total_amount
@@ -765,6 +767,7 @@ export default function BookingPages({ BookingData }) {
         madina_hotel: Madinaid,
         flight_id: selectedFlights?.id,
         exclude_flight: ExcludeFlight,
+        tax : formattedTaxAmount ,
       };
 
       // Print booking data to console
@@ -960,7 +963,7 @@ export default function BookingPages({ BookingData }) {
 
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Tax")}</div>
-                      <div className=""> {taxAmount} € </div>
+                      <div className=""> {formattedTaxAmount} € </div>
                     </div>
 
                     <div className="d-flex items-center justify-between">
