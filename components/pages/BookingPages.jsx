@@ -98,7 +98,7 @@ export default function BookingPages({ BookingData }) {
       // Retrieve and parse the priceObject data from localStorage
       const savedData = localStorage.getItem("AdultPrice&count");
       // console.log("savedData :", savedData);
-
+      const Login = localStorage.getItem("LoginISChacked");
       const userData = localStorage.getItem("user");
 
       // Check if savedData exists and is valid JSON
@@ -147,6 +147,19 @@ export default function BookingPages({ BookingData }) {
           // Extract the user object
           if (userid && userid.user) {
             setUserID(userid.user);
+          }
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+      }
+
+      if (Login && Login !== "undefined") {
+        try {
+          const asLogin = JSON.parse(Login);
+
+          // Extract the user object
+          if (asLogin && asLogin.user) {
+            setUserID(asLogin.user);
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -269,6 +282,10 @@ export default function BookingPages({ BookingData }) {
       from: "",
       selectedService: "", // Add field for storing selected service
       selectedPrice: "",
+      selectedTitel : "",
+      selectedOrder : "" ,
+      selectedID : ""
+      
     }),
     Child: initializeFormValues(Childrendata?.length || 0, {
       name: "",
@@ -278,6 +295,9 @@ export default function BookingPages({ BookingData }) {
       nationality: "",
       selectedService: "", // Add field for storing selected service
       selectedPrice: "",
+      selectedTitel : "",
+      selectedOrder : "" ,
+      selectedID : ""
     }),
     Baby: initializeFormValues(babyData.length || 0, {
       name: "",
@@ -327,7 +347,7 @@ export default function BookingPages({ BookingData }) {
     return Number(personPrice[idx]?.default); // Ensure price is a number
   };
 
-  const handleRadioChange = (e, type, i, idx, price) => {
+  const handleRadioChange = (e, type, i, idx, price , order , tital , id) => {
     const selectedValue = e.target.value;
 
     // Update form values state
@@ -345,6 +365,9 @@ export default function BookingPages({ BookingData }) {
       // Set the selected service value
       updatedValues[type][i].selectedService = selectedValue;
       updatedValues[type][i].selectedPrice = price;
+      updatedValues[type][i].selectedTitel = tital,
+      updatedValues[type][i].selectedOrder = order ,
+      updatedValues[type][i].selectedID = id
 
       return updatedValues;
     });
@@ -642,7 +665,10 @@ export default function BookingPages({ BookingData }) {
                                     type,
                                     i,
                                     idx,
-                                    option.price
+                                    option.price,
+                                    option.additinoal_order,
+                                    option.title,
+                                    option.id
                                   )
                                 } // Ensure type and index are correctly passed
                               />
@@ -748,32 +774,33 @@ export default function BookingPages({ BookingData }) {
       // Create booking data
       const bookingData = {
         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        user_id: UserID.id !== null ? UserID.id : "",
-        tour_id: TourId,
+        user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
+        tour_id: JSON.parse(TourId),
         person: formValues.Adult[0],
-        adult: formValues.Adult.slice(1),
+        adult: formValues.Adult.slice(1).length == 0 ? "" : formValues.Adult.slice(1),
         child: formValues.Child,
         baby: formValues.Baby,
-        departure: selectDeparture?.value,
-        adult_price: adultData[0]?.default,
-        child_price: Childrendata[0]?.default,
-        baby_price: babyData[0]?.default,
+        departure: JSON.parse(selectDeparture?.value),
+        adult_price: JSON.parse(adultData[0]?.default),
+        child_price: JSON.parse(Childrendata[0]?.default),
+        baby_price: JSON.parse(babyData[0]?.default),
         total: totalSum,
-        amount_paid: TotalPaidAmount,  
+        amount_paid: JSON.parse(TotalPaidAmount),  
         coupon_name: promoResponse ? promoResponse.coupon_name : "", // Use promo data if available
-        coupon_amount: promoResponse ? promoResponse.total_amount : 0,
-        coupon_percentage: promoResponse ? promoResponse.percentage : 0,
+        coupon_amount: JSON.parse(promoResponse ? promoResponse.total_amount : 0),
+        coupon_percentage: JSON.parse(promoResponse ? promoResponse.percentage : 0),
         mekka_hotel: mekkaid,
-        madina_hotel: Madinaid,
-        flight_id: selectedFlights?.id,
-        exclude_flight: ExcludeFlight,
-        tax : formattedTaxAmount ,
+        madina_hotel: JSON.parse(Madinaid),
+        flight_id: JSON.parse(selectedFlights?.id),
+        exclude_flight: JSON.parse(ExcludeFlight),
+        tax : JSON.parse(formattedTaxAmount) ,
       };
 
       // Print booking data to console
       console.log("bookingData" , bookingData);
       
       FatchallBooking(bookingData);
+
     } catch (error) {
       console.error("Error during booking:", error);
     }
