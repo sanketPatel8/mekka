@@ -14,8 +14,8 @@ import Image from "next/image";
 import { faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { ClipLoader } from "react-spinners";
 import Link from "next/link";
-
 
 export default function TourList4({
   TourData,
@@ -35,10 +35,24 @@ export default function TourList4({
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
-  const [FilterIndex, setFilterIndex] = useState(0);
+
 
   const [activeIndex, setActiveIndex] = useState(0);
   const startParam = "start";
+
+  // for loader 
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (TourData && TourData.length === 0) {
+      setIsLoading(false);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+  }, [TourData]);
 
   // for pagination
 
@@ -148,7 +162,14 @@ export default function TourList4({
               </div>
             </div>
 
-            {Array.isArray(TourData) && TourData.length === 0 ? (
+            {isLoading ? (
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: "200px" }}
+              >
+                <ClipLoader color="#DAC04F" size={50} />
+              </div>
+            ) : Array.isArray(TourData) && TourData.length === 0 ? (
               <h2>No tours available</h2>
             ) : (
               Array.isArray(TourData) &&

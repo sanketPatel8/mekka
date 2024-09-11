@@ -350,7 +350,6 @@ export default function BookingPages({ BookingData }) {
   const handleRadioChange = (e, type, i, idx, price , order , tital , id) => {
     const selectedValue = e.target.value;
 
-    // Update form values state
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
 
@@ -374,7 +373,6 @@ export default function BookingPages({ BookingData }) {
 
     updatePriceByTypeAndIndex(type, i, price);
 
-    // console.log("formValues[type]", formValues[type][i]?.selectedPrice);
   };
 
   const updatePriceByTypeAndIndex = (type, index, newPrice) => {
@@ -426,7 +424,10 @@ export default function BookingPages({ BookingData }) {
 
   const [PriceValue, setPriceValue] = useState(0);
 
-  const renderForms = (type, mainCount) => {
+  console.log("AlladultsData" , AlladultsData);
+  
+
+  const renderForms = (type, count) => {
     const fields = {
       Adult: [
         { label: translate("Name"), type: "text", name: "name" },
@@ -505,7 +506,10 @@ export default function BookingPages({ BookingData }) {
       ],
     };
 
-    const count = mainCount == 0 ? 1 : mainCount;
+    // console.log(type , mainCount);
+    
+
+    // const count = mainCount == 0 ? 1 : mainCount;
 
     const [AdultsType, setAdultsType] = useState(0);
     const [convertedPrices, setConvertedPrices] = useState([]);

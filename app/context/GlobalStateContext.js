@@ -44,16 +44,16 @@ export const GlobalStateProvider = ({ children }) => {
   // pACKAGEpAGE RADIO BUTTON
 
   const [HotelSelect, setHotelSelect] = useState({
-    mekka: "",
-    madina: "",
+    mekka: null,
+    madina: null,
     mekkaPrice: 0,
     madinaPrice: 0,
-    mekkaId: "", // Add mekkaId to the state
-    madinaId: "", // Add madinaId to the state
+    mekkaId: null, // Add mekkaId to the state
+    madinaId: null, // Add madinaId to the state
   });
   
-  const [selectedFlights, setSelectedFlights] = useState({});
-  const [selectDeparture, setselectDeparture] = useState({});
+  const [selectedFlights, setSelectedFlights] = useState(null);
+  const [selectDeparture, setselectDeparture] = useState(null);
 
   // for package total maintain
 

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageLightBox from "./ImageLightBox";
 import Image from "next/image";
-const images = [
+const imagessss = [
   {
     id: 1,
     image: `/img/tourSingle/1/1.png`,
@@ -24,8 +24,20 @@ const images = [
 export default function Gallery1({ PAckageData }) {
   const [activeLightBox, setActiveLightBox] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(1);
+  const [Images, setImages] = useState([]);
 
-  const imag = PAckageData?.Tour_Details?.tour_details?.tour_image;
+  useEffect(() => {
+    setImages(PAckageData?.Tour_Details?.tour_details?.tour_image);
+  }, [PAckageData]);
+
+  console.log("Images", Images);
+
+  const imagesWithDimensions = [
+    { width: 1155, height: 765 }, // Size for first image
+    { width: 765, height: 375 }, // Size for second image
+    { width: 375, height: 375 }, // Size for third image
+    { width: 375, height: 375 }, // Size for fourth image
+  ];
 
   return (
     <>
@@ -34,35 +46,35 @@ export default function Gallery1({ PAckageData }) {
           {/* <Image
             width={1155}
             height={765}
-            src={imag[0]}
+            src={Images[0].image}
             alt="image"
             className="obj-cover"
           />
           <Image
             width={765}
             height={375}
-            src={imag[1]}
+            src={Images[1].image}
             alt="image"
             className="obj-cover"
           />
           <Image
             width={375}
             height={375}
-            src={imag[2]}
+            src={Images[2].image}
             alt="image"
             className="obj-cover"
-          />
+          />  
           <Image
             width={375}
             height={375}
-            src={imag[3]}
+            src={Images[3].image}
             alt="image"
             className="obj-cover"
           /> */}
 
-          {imag &&
-            imag.length > 0 &&
-            imag
+          {/* {Images &&
+            Images.length > 0 &&
+            Images
               .slice(0, 4)
               .map((img, index) => (
                 <Image
@@ -73,7 +85,18 @@ export default function Gallery1({ PAckageData }) {
                   alt={`image-${index + 1}`}
                   className="obj-cover"
                 />
-              ))}
+              ))} */}
+
+          {Images && Images.length > 0 && Images.slice(0 , 4)?.map((img, index) => (
+            <Image
+              key={index} 
+              width={imagesWithDimensions[index]?.width || 100}
+              height={imagesWithDimensions[index]?.height || 100} 
+              src={img} 
+              alt={`image-${index}`} 
+              className="obj-cover" 
+            />
+          ))}
         </div>
 
         <div className="tourSingleGrid__button">
@@ -107,7 +130,7 @@ export default function Gallery1({ PAckageData }) {
         </div>
       </div>
       <ImageLightBox
-        imag={imag}
+        imag={Images}
         activeLightBox={activeLightBox}
         setActiveLightBox={setActiveLightBox}
         currentSlideIndex={currentSlideIndex}

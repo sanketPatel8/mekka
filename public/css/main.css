@@ -5902,8 +5902,9 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   flex-shrink: 0;
   width: 280px;
-  min-height: 260px;
+  max-height: 260px;
   z-index: 0;
+  object-fit: cover;
 }
 
 .tourCard.-type-2 .tourCard__image img {
@@ -12553,7 +12554,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .tourSingleGrid.-type-1 img {
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
 }

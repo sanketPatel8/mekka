@@ -1,281 +1,192 @@
 "use client"
 
-import { useTranslation } from '@/app/context/TranslationContext';
-import React, { useState } from 'react';
-import { FaUser } from 'react-icons/fa';
-import { MdError } from 'react-icons/md';
+import React, { useState, useEffect } from 'react';
 
-const MyFormComponent = ({
-  adultData,
-  Childrendata,
-  babyData,
-  AdditionalServices,
-  
-}) => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  // Function to handle radio button changes for each group
-  const handleRadioChange = (groupIdx, option) => {
-    setSelectedOptions((prevSelected) => {
-      const newSelected = [...prevSelected];
-      newSelected[groupIdx] = option; // Update the option for the specific group
-      return newSelected;
-    });
-  };
-
-  const initializeFormValues = (count, template) => {
-    return Array(count)
-      .fill()
-      .map(() => ({ ...template }));
-  };
-
-  const [formValues, setFormValues] = useState({
-    adult: initializeFormValues(adultData?.count, {
-      name: "",
-      surname: "",
-      email: "",
-      mobile: "",
-      city: "",
-      gender: "",
-      birthday: "",
-      nationality: "",
-      houseno: "",
-      zipcode: "",
-      street: "",
-    }),
-    child: initializeFormValues(Childrendata?.count, {
-      name: "",
-      surname: "",
-      gender: "",
-      birthday: "",
-      nationality: "",
-    }),
-    baby: initializeFormValues(babyData?.count, {
-      name: "",
-      surname: "",
-      gender: "",
-      birthday: "",
-      nationality: "",
-    }),
+const HotelAndFlightSelection = ({ SidebarData }) => {
+  const [HotelSelect, setHotelSelect] = useState({
+    mekka: null,
+    madina: null,
+    mekkaPrice: 0,
+    madinaPrice: 0,
+    mekkaId: null,
+    madinaId: null,
   });
+  const [selectedFlights, setSelectedFlights] = useState(null);
 
-  const handleInputChange = (type, index, e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => {
-      const updatedValues = { ...prevValues };
-      updatedValues[type][index][name] = value;
-      return updatedValues;
-    });
+  useEffect(() => {
+    // Set default selection for Mekka and Madina hotels if available
+    const defaultMekkaHotel = SidebarData?.tour_hotels?.mekka_hotels?.[0];
+    const defaultMadinaHotel = SidebarData?.tour_hotels?.medina_hotels?.[0];
+
+    if (defaultMekkaHotel) {
+      const mekkaValue = JSON.stringify({
+        hotel_name: defaultMekkaHotel.hotel_name,
+        hotel_id: defaultMekkaHotel.id,
+      });
+
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        mekka: mekkaValue,
+        mekkaPrice: defaultMekkaHotel.hotel_price || 0,
+        mekkaId: defaultMekkaHotel.id,
+      }));
+    }
+
+    if (defaultMadinaHotel) {
+      const madinaValue = JSON.stringify({
+        hotel_name: defaultMadinaHotel.hotel_name,
+        hotel_id: defaultMadinaHotel.id,
+      });
+
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        madina: madinaValue,
+        madinaPrice: defaultMadinaHotel.hotel_price || 0,
+        madinaId: defaultMadinaHotel.id,
+      }));
+    }
+
+    // Set default flight selection if available
+    const defaultFlight = SidebarData?.flights?.[0];
+    if (defaultFlight) {
+      setSelectedFlights({
+        id: defaultFlight.id,
+        name: defaultFlight.airline_name,
+      });
+    }
+  }, [SidebarData]);
+
+
+  const handleHotelChange = (e, elm) => {
+    const selectedHotel = JSON.parse(e.target.value);
+
+    if (e.target.name === 'mekka') {
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        mekka: e.target.value,
+        mekkaPrice: elm.hotel_price || 0,
+        mekkaId: elm.id,
+      }));
+    } else if (e.target.name === 'madina') {
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        madina: e.target.value,
+        madinaPrice: elm.hotel_price || 0,
+        madinaId: elm.id,
+      }));
+    }
   };
 
-  const renderForms = (type, count) => {
-    const fields = {
-      adult: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        { label: translate("Email"), type: "text", name: "email" },
-        { label: translate("Phone"), type: "text", name: "mobile" },
-        { label: translate("City"), type: "text", name: "city" },
-        {
-          label: translate("Gender"),
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        {
-          label: translate("Nationality"),
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
-        { label: translate("House No"), type: "text", name: "houseno" },
-        { label: translate("ZIP Code"), type: "text", name: "zipcode" },
-        { label: translate("Street"), type: "text", name: "street" },
-      ],
-      adultFieldsForExtraAdults: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        {
-          label: translate("Gender"),
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        {
-          label: translate("Nationality"),
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
-      ],
-      child: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        {
-          label: translate("Gender"),
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        {
-          label: translate("Nationality"),
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
-      ],
-      baby: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        {
-          label: translate("Gender"),
-          type: "select",
-          name: "gender",
-          options: ["Male", "Female", "Other"],
-        },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
-        {
-          label: translate("Nationality"),
-          type: "select",
-          name: "nationality",
-          options: ["Indian", "German", "Canadian"],
-        },
-      ],
-    };
-
-    const shouldShowAdditionalServices = type !== "baby";
-
-    return Array.from({ length: count }).map((_, i) => {
-      const isExtraAdult = type === "adult" && i >= 1;
-      const currentFields = isExtraAdult
-        ? fields.adultFieldsForExtraAdults
-        : fields[type];
-
-      return (
-        <div key={`${type}-${i}`} className="row">
-          <div className="form_1 mx-auto">
-            <div className="px-50 py-5 yellow_bg">
-              <p>
-                <span><FaUser /></span>
-                <span><b>{`${i + 1}. ${type.charAt(0).toUpperCase() + type.slice(1)} Information`}</b></span>
-              </p>
-              <p>
-                <span><MdError /></span>
-                <span> Is Also The Contact Person For The Reservation.</span>
-              </p>
-            </div>
-
-            <form className="y-gap-30 contactForm px-20 py-20">
-              <div className="my-3 row">
-                {currentFields?.map((field, index) => (
-                  <div key={index} className={`col-md-${field.type === "select" ? "6" : "6"}`}>
-                    <div className="form-input my-1">
-                      {field.type === "select" ? (
-                        <>
-                          <select
-                            name={field.name}
-                            value={formValues[type][i][field.name]}
-                            onChange={(e) => handleInputChange(type, i, e)}
-                            required
-                            className="form-control"
-                          >
-                            <option value="" disabled>{field.label}</option>
-                            {field.options.map((option, optIndex) => (
-                              <option key={optIndex} value={option.toLowerCase()}>
-                                {option}
-                              </option>
-                            ))}
-                          </select>
-                          <label className="lh-1 text-16 text-light-1">
-                            {formValues[type][i][field.name]
-                              ? `${field.label}: ${formValues[type][i][field.name]}`
-                              : field.label}
-                          </label>
-                        </>
-                      ) : (
-                        <>
-                          <input
-                            type={field.type}
-                            name={field.name}
-                            value={formValues[type][i][field.name]}
-                            onChange={(e) => handleInputChange(type, i, e)}
-                            required
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {field.label}
-                          </label>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ))}
-
-                <div className="col-12">
-                  <div className="row y-gap-20 items-center justify-between">
-                    <div className="col-12 tb-border">
-                      <div className="text-14">
-                        <p className="d-flex justify-content-between">
-                          <span>Tour Price Per Person</span>
-                          <span>1.339,00 €</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {shouldShowAdditionalServices && (
-                  <div className="my-3 border_b px-md-40">
-                    <h5 className="text-18 fw-500 my-2">Possible Additional Services Per Person:</h5>
-                    <div>
-                      {AdditionalServices?.map((group, groupIdx) => (
-                        <div key={groupIdx} className="service-group">
-                          {group.map((option, idx) => (
-                            <div key={option.id} className="d-flex items-center justify-between radio_hight">
-                              <div className="d-flex items-center">
-                                <div className="form-radio d-flex items-center">
-                                  <label className="radio d-flex items-center">
-                                    <input
-                                      type="radio"
-                                      name={`radioGroup-${groupIdx}`}
-                                      value={option.id}
-                                      checked={selectedOptions[groupIdx]?.id === option.id}
-                                      onChange={() => handleRadioChange(groupIdx, option)}
-                                    />
-                                    <span className="radio__mark">
-                                      <span className="radio__icon"></span>
-                                    </span>
-                                    <span className="text-14 lh-1 ml-10">{option.title}</span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="text-14">+{option.price} €</div>
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </form>
-          </div>
-        </div>
-      );
-    });
+  const handleFlightChange = (e, flight) => {
+    setSelectedFlights(flight); // Replace with the selected flight object
   };
-
-  const { translate } = useTranslation();
 
   return (
     <div>
-      {renderForms('adult', adultData?.count)}
-      {renderForms('child', Childrendata?.count)}
-      {renderForms('baby', babyData?.count)}
+      {/* Mekka Hotels */}
+      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Mekka</h5>
+      {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
+        <div key={ind}>
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio d-flex items-center">
+                  <input
+                    type="radio"
+                    name="mekka"
+                    value={JSON.stringify({
+                      hotel_name: elm.hotel_name,
+                      hotel_id: elm.id,
+                    })}
+                    checked={
+                      HotelSelect.mekka &&
+                      JSON.parse(HotelSelect.mekka).hotel_name === elm.hotel_name
+                    }
+                    onChange={(e) => handleHotelChange(e, elm)}
+                    disabled
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                    {elm.hotel_name || 'not found'} ({elm.hotel_stars} star)
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div className="text-14">{elm.hotel_price} €</div>
+          </div>
+        </div>
+      ))}
+
+      <hr />
+
+      {/* Madina Hotels */}
+      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Madina</h5>
+      {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
+        <div key={elm.id}>
+          <div className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio d-flex items-center">
+                  <input
+                    type="radio"
+                    name="madina"
+                    value={JSON.stringify({
+                      hotel_name: elm.hotel_name,
+                      hotel_id: elm.id,
+                    })}
+                    checked={
+                      HotelSelect.madina &&
+                      JSON.parse(HotelSelect.madina).hotel_name === elm.hotel_name
+                    }
+                    onChange={(e) => handleHotelChange(e, elm)}
+                    disabled
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                    {elm.hotel_name || 'not found'} ({elm.hotel_stars} star)
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div className="text-14">{elm.hotel_price} €</div>
+          </div>
+        </div>
+      ))}
+
+      {/* Flight Selection */}
+      <div>
+        <h5 className="text-18 fw-500 mb-20 mt-20">Select Flight</h5>
+        {SidebarData?.flights?.map((flight) => (
+          <div key={flight.id} className="d-flex items-center justify-between my-1">
+            <div className="d-flex items-center">
+              <div className="form-radio d-flex items-center">
+                <label className="radio d-flex items-center">
+                  <input
+                    type="radio"
+                    name="flight"
+                    value={flight.id}
+                    checked={selectedFlights?.id === flight.id}
+                    onChange={(e) => handleFlightChange(e, flight)}
+                  />
+                  <span className="radio__mark">
+                    <span className="radio__icon"></span>
+                  </span>
+                  <span className="text-14 lh-1 ml-10">
+                    {flight.airline_name || 'not found'} ({flight.price} €)
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div className="text-14">{flight.price} €</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default MyFormComponent;
+export default HotelAndFlightSelection;

@@ -70,14 +70,60 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
-  const handleHotelChange = (e, elm) => {
+  useEffect(() => {
+    const defaultMekkaHotel = SidebarData?.tour_hotels?.mekka_hotels?.[0];
+    const defaultMadinaHotel = SidebarData?.tour_hotels?.medina_hotels?.[0];
+
+    if (defaultMekkaHotel) {
+      const mekkaValue = JSON.stringify({
+        hotel_name: defaultMekkaHotel.hotel_name,
+        hotel_id: defaultMekkaHotel.id,
+      });
+
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        mekka: mekkaValue,
+      }));
+    }
+
+    if (defaultMadinaHotel) {
+      const madinaValue = JSON.stringify({
+        hotel_name: defaultMadinaHotel.hotel_name,
+        hotel_id: defaultMadinaHotel.id,
+      });
+
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        madina: madinaValue,
+      }));
+    }
+  }, [SidebarData]);
+
+  const handleHotelChange = (e) => {
+    const { name, value } = e.target;
+    setHotelSelect((prevSelect) => ({
+      ...prevSelect,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    const defaultFlight = FlightName?.airline?.[0]; // Default to the first airline
+    if (defaultFlight) {
+      setSelectedFlights({
+        id: defaultFlight.id,
+        name: defaultFlight.airline_name,
+      });
+    }
+  }, [FlightName]);
+
+  // Handle flight selection change
+  const handleFlightChange = (e, elm) => {
     const selectedFlight = {
       id: elm.id,
       name: elm.airline_name,
     };
-
-    // Since it's a radio button, store the selected flight as an object (not an array)
-    setSelectedFlights(selectedFlight); // Replace with the selected flight object
+    setSelectedFlights(selectedFlight);
   };
 
   const handleExcludeFlight = () => {
@@ -181,15 +227,13 @@ export default function TourSingleSidebar({ PAckageData }) {
 
   // local storage
 
-  const [priceObject, setPriceObject] = useState([]);
+  const [priceObject, setPriceObject] = useState({});
 
   const updatePriceObject = () => {
     // const newPriceObject = {};
-
     // SidebarData?.tour_price?.forEach((group) => {
     //   let count;
     //   let label;
-
     //   if (group.price_type === "1") {
     //     count = adultNumber;
     //     label = "Adult";
@@ -200,7 +244,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     //     count = childrenNumber;
     //     label = "Children";
     //   }
-
     //   if (count !== undefined) {
     //     const totalPrice = group.price * count;
     //     newPriceObject[label] = {
@@ -209,92 +252,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     //     };
     //   }
     // });
-
     // setPriceObject(newPriceObject);
-
-    const newPriceArray = [];
-
-    // Separate counters for each label (Adult, Youth, Children)
-    let adultCounter = 0;
-    let youthCounter = 0;
-    let childrenCounter = 0;
-
-    // Loop through the tour_price array
-    SidebarData?.tour_price?.forEach((group) => {
-      let count;
-      let label;
-      let individualCount;
-
-      // Determine the count and label based on price_type
-      if (group.price_type === "1") {
-        count = adultNumber;
-        label = "Adult";
-      } else if (group.price_type === "2") {
-        count = youthNumber;
-        label = "Child";
-      } else if (group.price_type === "3") {
-        count = childrenNumber;
-        label = "Baby";
-      }
-
-      if (label === "Adult") {
-        individualCount = ++adultCounter;
-      } else if (label === "Child") {
-        individualCount = ++youthCounter;
-      } else if (label === "Baby") {
-        individualCount = ++childrenCounter;
-      }
-
-      // If count is defined, process the group
-      if (count !== undefined) {
-        // For each person (adult/youth/children), add an entry to the array
-       
-        for (let i = 0; i < count; i++) {
-          newPriceArray.push({
-            label, // 'Adult', 'Youth', 'Children'
-            individualCount,
-            price: group.price,
-            count: count,
-            grandTotal: group.price * count,
-            index : i,
-            default : group.price
-          });
-        }
-      }
-
-      // Assuming newPriceArray contains the list of individual entries
-      // const adultCount = newPriceArray.filter(
-      //   (item) => item.label === "Adult"
-      // ).length;
-      // const youthCount = newPriceArray.filter(
-      //   (item) => item.label === "Youth"
-      // ).length;
-      // const childrenCount = newPriceArray.filter(
-      //   (item) => item.label === "Children"
-      // ).length;
-
-      // console.log(`Number of Adults: ${adultCount}`);
-      // console.log(`Number of Youth: ${youthCount}`);
-      // console.log(`Number of Children: ${childrenCount}`);
-    });
-
-    // Now we can calculate total prices per category (e.g., all adults)
-    const totalPrices = {
-      Adult: 0,
-      Youth: 0,
-      Children: 0,
-    };
-
-    // Calculate the total price for each category
-    newPriceArray.forEach((entry) => {
-      totalPrices[entry.label] += parseFloat(entry.price);
-    });
-
-    // Output: array of individuals and the total price for each category
-    // console.log("newPriceArray :", newPriceArray); // Array of individuals with price
-    // console.log("totalPrices :", totalPrices);
-    
-    setPriceObject(newPriceArray)// Total price for Adults, Youth, and Children
   };
 
   useEffect(() => {
@@ -323,11 +281,11 @@ export default function TourSingleSidebar({ PAckageData }) {
         } else if (group.price_type === "2") {
           count = youthNumber;
           setCount = setYouthNumber;
-          typeLabel = "child";
+          typeLabel = "Youth";
         } else if (group.price_type === "3") {
           count = childrenNumber;
           setCount = setChildrenNumber;
-          typeLabel = "baby";
+          typeLabel = "Children";
         } else {
           return null;
         }
@@ -372,81 +330,6 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <hr />
 
-      {/* <div>
-        <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Makka")}
-        </h5>
-        {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
-          <div key={ind}>
-            <div className="d-flex items-center justify-between my-1">
-              <div className="d-flex items-center">
-                <div className="form-radio d-flex items-center">
-                  <label className="radio d-flex items-center">
-                    <input
-                      type="radio"
-                      name="mekka"
-                      value={`Mekka - ${elm.hotel_name}star`}
-                      checked={
-                        HotelSelect.mekka === `Mekka - ${elm.hotel_name}star`
-                      }
-                      onChange={handleRadioChange}
-                    />
-                    <span className="radio__mark">
-                      <span className="radio__icon"></span>
-                    </span>
-                    <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name} ({elm.hotel_stars} star)
-                    </span>
-                  </label>
-                </div>
-              </div>
-              <div className="text-14">{elm.hotel_price} €</div>
-            </div>
-          </div>
-        ))}
-
-        <hr />
-
-        <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Madina")}
-        </h5>
-
-        {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
-          <div>
-            <div
-              className="d-flex items-center justify-between my-1"
-              key={elm.id}
-            >
-              <div className="d-flex items-center">
-                <div className="form-radio d-flex items-center">
-                  <label className="radio d-flex items-center">
-                    <input
-                      type="radio"
-                      name="madina"
-                      value={`Madina - ${elm.hotel_name}star`}
-                      checked={
-                        HotelSelect.madina === `Madina - ${elm.hotel_name}star`
-                      }
-                      onChange={handleRadioChange}
-                    />
-                    <span className="radio__mark">
-                      <span className="radio__icon"></span>
-                    </span>
-                    <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name} ({elm.hotel_stars} star)
-                    </span>
-                  </label>
-                </div>
-              </div>
-              <div className="text-14">{elm.hotel_price} €</div>
-            </div>
-          </div>
-        ))}
-
-      </div>
-
-      <hr /> */}
-
       <div>
         <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Mekka")}
@@ -466,10 +349,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                       })}
                       checked={
                         HotelSelect.mekka &&
-                        JSON.parse(HotelSelect.mekka).hotel_name ===
-                          elm.hotel_name
+                        JSON.parse(HotelSelect.mekka).hotel_id === elm.id
                       }
-                      onChange={handleRadioChange}
+                      onChange={handleHotelChange}
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
@@ -488,7 +370,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
         <hr />
 
-        <h5 className="text-18 fw-500 mb-20 mt-20">
+        <h5 className="text-18 fw-500 mb-20 mt-20">s
           {translate("Hotel For Madina")}
         </h5>
 
@@ -507,10 +389,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                       })}
                       checked={
                         HotelSelect.madina &&
-                        JSON.parse(HotelSelect.madina).hotel_name ===
-                          elm.hotel_name
+                        JSON.parse(HotelSelect.madina).hotel_id === elm.id
                       }
-                      onChange={handleRadioChange}
+                      onChange={handleHotelChange}
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
@@ -585,10 +466,10 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <label className="radio d-flex items-center">
                     <input
                       type="radio"
-                      name={`${elm.id} ( No Stop )`}
+                      name="flight"
                       value={elm.id}
                       checked={selectedFlights?.id === elm.id} // Check if the flight is selected
-                      onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
+                      onChange={(e) => handleFlightChange(e, elm)} // Handle flight change
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
@@ -597,7 +478,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                       {elm.airline_name != null
                         ? elm.airline_name
                         : "not found"}{" "}
-                      ( No Stop )
+                      (No Stop)
                     </span>
                   </label>
                 </div>
@@ -689,7 +570,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       <p className="text-right">Including Taxes And Fees</p>
 
       <Link
-        href={`/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights.name}`}
+        href={`/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights?.name}`}
       >
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
           {translate("Book Now")}

@@ -208,7 +208,7 @@ export default function Page() {
 
     try {
       const response = await post("tour_data", sendData);
-      setFliterData(response.Tours);
+      setFliterData(response.Data);
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast("An error occurred during registration.");

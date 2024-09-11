@@ -24,86 +24,10 @@ export default function Sidebar2({
   const handleChange = (key, value) => {
     handleSelectionChange(key, value);
   };
-  // const [LanActives, setLanActives] = useState([]);
-  // const [LanArray, setLanArray] = useState([]);
-  // const [FilterSidebar, setFilterSidebar] = useState({
-  //   selectedTourTypes: [],
-  //   selectedLanguages: [],
-  //   selectedCities: [],
-  //   selectedRatings: [],
-  //   selectedFeatures: [],
-  //   selectedDurations: [],
-  // });
 
-  // useEffect(() => {
-  //   if (filterParams) {
-  //     console.log("filterParams : " , filterParams);
-
-  //       // Assuming filterParams has a property initialIndex
-  //     setFilterIndex(filterParams.initialIndex);
-  //   }
-  // }, [filterParams, setFilterIndex]);
-
-  // const [value, setValue] = useState([0, 0]);
-
-  // // const { value } = useGlobalState();
-  // const isMounted = useRef(false);
-
-  // const handleSelectionChange = (key, value) => {
-  //   setFilterSidebar((prevState) => {
-  //     const isSelected = prevState[key].includes(value);
-  //     return {
-  //       ...prevState,
-  //       [key]: isSelected
-  //         ? prevState[key].filter((item) => item !== value)
-  //         : [...prevState[key], value],
-  //     };
-  //   });
-  // };
   useEffect(() => {
-    console.log(FilterSidebar);
+    console.log("FilterSidebar" , FilterSidebar);
   }, [FilterSidebar]);
-
-  // const FetchFilterData = async (pageIndex) => {
-  //   const sendData = {
-  //     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-  //     type: FilterSidebar?.selectedTourTypes.join(", "),
-  //     language: LanArray.join(","),
-  //     departure: FilterSidebar?.selectedCities.join(", "),
-  //     min_price: value[0],
-  //     max_price: value[1],
-  //     hotel_star: FilterSidebar?.selectedDurations.join(", "),
-  //     agent_rating: FilterSidebar?.selectedRatings.join(", "),
-  //     amenities: FilterSidebar?.selectedFeatures.join(", "),
-  //     start: pageIndex,
-  //   };
-
-  //   try {
-  //     const response = await post("tourfilter", sendData);
-  //     setTourData(response.Tours);
-  //     setRoute("filter data");
-  //     setisFilteredDataFetched(false)
-  //     setRange(response.Total_Page)
-  //   } catch (error) {
-  //     console.error("Error caught:", error);
-  //     showErrorToast("An error occurred during registration.");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const newLanArray = FilterSidebar?.selectedLanguages.map(
-  //     (_, index) => index
-  //   );
-  //   setLanArray(newLanArray);
-  // }, [FilterSidebar?.selectedLanguages]);
-
-  // useEffect(() => {
-  //   if (isMounted.current) {
-  //     FetchFilterData(activeIndex);
-  //   } else {
-  //     isMounted.current = true;
-  //   }
-  // }, [FilterSidebar , FilterIndex]);
 
   const { translate } = useTranslation();
 
