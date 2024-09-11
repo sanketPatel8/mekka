@@ -23,21 +23,23 @@ export default function DbBooking() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [VendorBookings, setVendorBookings] = useState([]);
-  const [bookingRender, setBookingRender] = useState([]);
+  const [bookingRender, setBookingRender] = useState({});
+  const [AllBookings, setAllBookings] = useState([]);
 
   const {user} = useAuthContext();
   console.log(user?.user.id)
 
   const fetchBookings = async (tab) => {
     
-    
+    console.log(tab, "tab")
     const formData = new FormData();
     formData.append("company_id", user?.user.company_id);
     const response = await POST.request({form:formData , url: "tour_bookings"});
-    setBookingRender(response);
-    if(tab === "All"){
     
-      const bookingsData  = bookingRender.Bookings.map((booking) => ({
+    if(tab === "All"){
+      console.log("all")
+      console.log(AllBookings, "bookingRender.Bookings")
+      const bookingsData  = response.Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
         Status: booking.reservation_status,
@@ -56,7 +58,7 @@ export default function DbBooking() {
     }
     else if(tab === "Completed"){
     
-      const bookingsData  = bookingRender.Completed_Bookings.map((booking) => ({
+      const bookingsData  = response.Completed_Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
         Status: booking.reservation_status,
@@ -74,7 +76,7 @@ export default function DbBooking() {
     }
     else if(tab === "In Progress"){
      
-      const bookingsData  = bookingRender.In_Progress_Bookings.map((booking) => ({
+      const bookingsData  = response.In_Progress_Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
         Status: booking.reservation_status,
@@ -92,7 +94,7 @@ export default function DbBooking() {
     }
     else if(tab === "Cancelled"){
       
-      const bookingsData  = bookingRender.Cancelled_Bookings.map((booking) => ({
+      const bookingsData  = response.Cancelled_Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
         Status: booking.reservation_status,
@@ -197,7 +199,6 @@ export default function DbBooking() {
     ];
    
 
-    console.log(BookingsData, "BookingsData")
   
     setVendorBookings(BookingsData);
   }
@@ -232,9 +233,9 @@ export default function DbBooking() {
 
   useEffect(() => {
     setIsClient(true);
-    fetchBookings();
+    fetchBookings(currentTab);
 
-  }, []);
+  }, [currentTab]);
 
   // Memoized filtered items based on filterText
   // const filteredItems = useMemo(() => {

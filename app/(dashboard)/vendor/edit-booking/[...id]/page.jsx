@@ -17,7 +17,8 @@ export default function DbBooking({ params }) {
   const [currentTab, setcurrentTab] = useState("All");
   const [filteredData, setFilteredData] = useState([]);
   const [radioValue, setRadioValue] = useState("");
-
+  console.log(params.id[0], "params");
+  const id = params.id[0];
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
