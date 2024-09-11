@@ -181,36 +181,120 @@ export default function TourSingleSidebar({ PAckageData }) {
 
   // local storage
 
-  const [priceObject, setPriceObject] = useState({});
+  const [priceObject, setPriceObject] = useState([]);
 
   const updatePriceObject = () => {
-    const newPriceObject = {};
+    // const newPriceObject = {};
 
+    // SidebarData?.tour_price?.forEach((group) => {
+    //   let count;
+    //   let label;
+
+    //   if (group.price_type === "1") {
+    //     count = adultNumber;
+    //     label = "Adult";
+    //   } else if (group.price_type === "2") {
+    //     count = youthNumber;
+    //     label = "Youth";
+    //   } else if (group.price_type === "3") {
+    //     count = childrenNumber;
+    //     label = "Children";
+    //   }
+
+    //   if (count !== undefined) {
+    //     const totalPrice = group.price * count;
+    //     newPriceObject[label] = {
+    //       count,
+    //       totalPrice: totalPrice.toFixed(2),
+    //     };
+    //   }
+    // });
+
+    // setPriceObject(newPriceObject);
+
+    const newPriceArray = [];
+
+    // Separate counters for each label (Adult, Youth, Children)
+    let adultCounter = 0;
+    let youthCounter = 0;
+    let childrenCounter = 0;
+
+    // Loop through the tour_price array
     SidebarData?.tour_price?.forEach((group) => {
       let count;
       let label;
+      let individualCount;
 
+      // Determine the count and label based on price_type
       if (group.price_type === "1") {
         count = adultNumber;
         label = "Adult";
       } else if (group.price_type === "2") {
         count = youthNumber;
-        label = "Youth";
+        label = "Child";
       } else if (group.price_type === "3") {
         count = childrenNumber;
-        label = "Children";
+        label = "Baby";
       }
 
-      if (count !== undefined) {
-        const totalPrice = group.price * count;
-        newPriceObject[label] = {
-          count,
-          totalPrice: totalPrice.toFixed(2),
-        };
+      if (label === "Adult") {
+        individualCount = ++adultCounter;
+      } else if (label === "Child") {
+        individualCount = ++youthCounter;
+      } else if (label === "Baby") {
+        individualCount = ++childrenCounter;
       }
+
+      // If count is defined, process the group
+      if (count !== undefined) {
+        // For each person (adult/youth/children), add an entry to the array
+       
+        for (let i = 0; i < count; i++) {
+          newPriceArray.push({
+            label, // 'Adult', 'Youth', 'Children'
+            individualCount,
+            price: group.price,
+            count: count,
+            grandTotal: group.price * count,
+            index : i,
+            default : group.price
+          });
+        }
+      }
+
+      // Assuming newPriceArray contains the list of individual entries
+      // const adultCount = newPriceArray.filter(
+      //   (item) => item.label === "Adult"
+      // ).length;
+      // const youthCount = newPriceArray.filter(
+      //   (item) => item.label === "Youth"
+      // ).length;
+      // const childrenCount = newPriceArray.filter(
+      //   (item) => item.label === "Children"
+      // ).length;
+
+      // console.log(`Number of Adults: ${adultCount}`);
+      // console.log(`Number of Youth: ${youthCount}`);
+      // console.log(`Number of Children: ${childrenCount}`);
     });
 
-    setPriceObject(newPriceObject);
+    // Now we can calculate total prices per category (e.g., all adults)
+    const totalPrices = {
+      Adult: 0,
+      Youth: 0,
+      Children: 0,
+    };
+
+    // Calculate the total price for each category
+    newPriceArray.forEach((entry) => {
+      totalPrices[entry.label] += parseFloat(entry.price);
+    });
+
+    // Output: array of individuals and the total price for each category
+    // console.log("newPriceArray :", newPriceArray); // Array of individuals with price
+    // console.log("totalPrices :", totalPrices);
+    
+    setPriceObject(newPriceArray)// Total price for Adults, Youth, and Children
   };
 
   useEffect(() => {
@@ -223,7 +307,6 @@ export default function TourSingleSidebar({ PAckageData }) {
       localStorage.setItem("AdultPrice&count", JSON.stringify(priceObject));
     }
   }, [priceObject]);
-
 
   return (
     <div className="tourSingleSidebar">
@@ -240,11 +323,11 @@ export default function TourSingleSidebar({ PAckageData }) {
         } else if (group.price_type === "2") {
           count = youthNumber;
           setCount = setYouthNumber;
-          typeLabel = "Youth";
+          typeLabel = "child";
         } else if (group.price_type === "3") {
           count = childrenNumber;
           setCount = setChildrenNumber;
-          typeLabel = "Children";
+          typeLabel = "baby";
         } else {
           return null;
         }
@@ -392,12 +475,13 @@ export default function TourSingleSidebar({ PAckageData }) {
                       <span className="radio__icon"></span>
                     </span>
                     <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name != null ?  elm.hotel_name : "not found"} ({elm.hotel_stars} star)
+                      {elm.hotel_name != null ? elm.hotel_name : "not found"} (
+                      {elm.hotel_stars} star)
                     </span>
                   </label>
                 </div>
               </div>
-              <div className="text-14">{elm.hotel_price } €</div>
+              <div className="text-14">{elm.hotel_price} €</div>
             </div>
           </div>
         ))}
@@ -432,7 +516,8 @@ export default function TourSingleSidebar({ PAckageData }) {
                       <span className="radio__icon"></span>
                     </span>
                     <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name != null ? elm.hotel_name : "not found"} ({elm.hotel_stars} star)
+                      {elm.hotel_name != null ? elm.hotel_name : "not found"} (
+                      {elm.hotel_stars} star)
                     </span>
                   </label>
                 </div>
@@ -509,7 +594,10 @@ export default function TourSingleSidebar({ PAckageData }) {
                       <span className="radio__icon"></span>
                     </span>
                     <span className="text-14 lh-1 ml-10">
-                      {elm.airline_name != null ? elm.airline_name : "not found"} ( No Stop )
+                      {elm.airline_name != null
+                        ? elm.airline_name
+                        : "not found"}{" "}
+                      ( No Stop )
                     </span>
                   </label>
                 </div>
@@ -601,11 +689,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       <p className="text-right">Including Taxes And Fees</p>
 
       <Link
-        href={`/booking/?id=${Tourid}&name=${
-          PAckageData?.Tour_Details?.tour_details?.name
-        }&type=${
-          PAckageData?.Tour_Details?.tour_details?.type
-        }&selectedflight=${selectedFlights.name}`}
+        href={`/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights.name}`}
       >
         <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
           {translate("Book Now")}

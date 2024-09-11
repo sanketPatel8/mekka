@@ -22,7 +22,7 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
-import { ReservationData } from "@/data/CustomerBookingData";
+import { BabyData, ReservationData } from "@/data/CustomerBookingData";
 import { usePeople } from "@/app/context/PeopleContext";
 
 const customStyles = {
@@ -75,15 +75,13 @@ export default function BookingPages({ BookingData }) {
     ExcludeFlight,
   } = useGlobalState();
 
-  const { people, addPeople } = usePeople();
-
-  const [adultData, setAdultData] = useState(null);
-  const [Childrendata, setChildrendata] = useState(null);
-  const [babyData, setbabyData] = useState(null);
+  const [adultData, setAdultData] = useState([]);
+  const [Childrendata, setChildrendata] = useState([]);
+  const [babyData, setbabyData] = useState([]);
+  const [AlladultsData, setAlladultsData] = useState([]);
   const [ToursPrice, setToursPrice] = useState([]);
   const [AdditionalServices, setAdditionalServices] = useState([]);
   const [selectedFlight, setselectedFlight] = useState([]);
-  const [GrandFormTotal, setGrandFormTotal] = useState(0);
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
@@ -94,34 +92,58 @@ export default function BookingPages({ BookingData }) {
   useEffect(() => {
     // Set modal's app element
     Modal.setAppElement("#openSignIn");
-  
+
     // Only execute in browser environment
     if (typeof window !== "undefined") {
       // Retrieve and parse the priceObject data from localStorage
       const savedData = localStorage.getItem("AdultPrice&count");
+      // console.log("savedData :", savedData);
+
       const userData = localStorage.getItem("user");
-  
+
       // Check if savedData exists and is valid JSON
-      if (savedData && savedData !== 'undefined') {
+      if (savedData && savedData !== "undefined") {
         try {
           const parsedData = JSON.parse(savedData);
-  
+
+          // console.log("parsedData :", parsedData);
+
+          setAlladultsData(parsedData);
+
+          const adultData = parsedData?.filter(
+            (item) => item.label === "Adult"
+          );
+
+          // Filter for Youth
+          const youthData = parsedData?.filter(
+            (item) => item.label === "Child"
+          );
+
+          // Filter for Children
+          const childrenData = parsedData?.filter(
+            (item) => item.label === "Baby"
+          );
+
+          setAdultData(adultData);
+          setChildrendata(youthData);
+          setbabyData(childrenData);
+
           // Extract the Adult object
-          if (parsedData && parsedData.Adult) {
-            setAdultData(parsedData.Adult);
-            setChildrendata(parsedData.Youth);
-            setbabyData(parsedData.Children);
-          }
+          // if (parsedData && parsedData.Adult) {
+          //   setAdultData(parsedData.Adult);
+          //   setChildrendata(parsedData.Youth);
+          //   setbabyData(parsedData.Children);
+          // }
         } catch (error) {
           console.error("Error parsing savedData:", error);
         }
       }
-  
+
       // Check if userData exists and is valid JSON
-      if (userData && userData !== 'undefined') {
+      if (userData && userData !== "undefined") {
         try {
           const userid = JSON.parse(userData);
-  
+
           // Extract the user object
           if (userid && userid.user) {
             setUserID(userid.user);
@@ -132,7 +154,10 @@ export default function BookingPages({ BookingData }) {
       }
     }
   }, []);
-  
+
+  // for adult prices array
+
+  let foundPrices = AlladultsData?.map((item) => item.price);
 
   let mekkaHotelName = "no select";
   let madinaHotelName = "no select";
@@ -229,7 +254,7 @@ export default function BookingPages({ BookingData }) {
   };
 
   const [formValues, setFormValues] = useState({
-    adult: initializeFormValues(adultData?.count || 0, {
+    Adult: initializeFormValues(adultData?.length || 0, {
       name: "",
       surname: "",
       email: "",
@@ -243,18 +268,18 @@ export default function BookingPages({ BookingData }) {
       street: "",
       from: "",
       selectedService: "", // Add field for storing selected service
-      selectedPrice : ''
+      selectedPrice: "",
     }),
-    child: initializeFormValues(Childrendata?.count || 0, {
+    Child: initializeFormValues(Childrendata?.length || 0, {
       name: "",
       surname: "",
       gender: "",
       birthday: "",
       nationality: "",
       selectedService: "", // Add field for storing selected service
-      selectedPrice : ''
+      selectedPrice: "",
     }),
-    baby: initializeFormValues(babyData?.count || 0, {
+    Baby: initializeFormValues(babyData.length || 0, {
       name: "",
       surname: "",
       gender: "",
@@ -275,7 +300,33 @@ export default function BookingPages({ BookingData }) {
       return updatedValues;
     });
   };
-  
+
+  const getPriceForType = (type, idx) => {
+    const personPrice = AlladultsData?.filter((item) => item.label === type);
+
+    // console.log("personPrice for function" , personPrice[idx]?.price);
+
+    // console.log(personPrice[idx]);
+
+    if (!personPrice) {
+      return 0; // Default value if no price is found
+    }
+    return Number(personPrice[idx]?.price); // Ensure price is a number
+  };
+
+  const getdefaultPriceforType = (type, idx) => {
+    const personPrice = AlladultsData?.filter((item) => item.label === type);
+
+    // console.log("personPrice for function" , personPrice[idx]?.price);
+
+    // console.log(personPrice[idx]);
+
+    if (!personPrice) {
+      return 0; // Default value if no price is found
+    }
+    return Number(personPrice[idx]?.default); // Ensure price is a number
+  };
+
   const handleRadioChange = (e, type, i, idx, price) => {
     const selectedValue = e.target.value;
 
@@ -293,22 +344,68 @@ export default function BookingPages({ BookingData }) {
 
       // Set the selected service value
       updatedValues[type][i].selectedService = selectedValue;
-      updatedValues[type][i].selectedPrice  = price;
-      
-      return updatedValues;
+      updatedValues[type][i].selectedPrice = price;
 
+      return updatedValues;
     });
-  
-    
-   
+
+    updatePriceByTypeAndIndex(type, i, price);
+
+    // console.log("formValues[type]", formValues[type][i]?.selectedPrice);
   };
 
-  
+  const updatePriceByTypeAndIndex = (type, index, newPrice) => {
+    console.log("price was change");
 
+    console.log("AlladultsData", AlladultsData);
 
-  const renderForms = (type, count) => {
+    const itemsOfType = AlladultsData?.filter((item) => item.label == type);
+
+    console.log("itemsOfType", itemsOfType[index]);
+
+    console.log("index", index);
+
+    // Step 2: Find the item with the specified index
+    if (index <= itemsOfType[index]?.index) {
+      // Log the item before updating
+      // console.log("itemsOfType", itemsOfType[index]);
+
+      const prevPrice = getPriceForType(type, index);
+      const addivalue = JSON.parse(newPrice);
+      const multiPrice = prevPrice + addivalue;
+
+      // Step 3: Update the price of the item
+      const updatedItem = { ...itemsOfType[index], price: multiPrice };
+
+      // Update the state with the new price
+      setAlladultsData((prevData) => {
+        // Step 1: Filter out the item that needs to be updated
+        const updatedData = prevData.map((item) => {
+          // Check if the current item matches both type and index
+          if (item.label === type && item.index === index) {
+            // Return a new object with the updated price
+            return { ...item, price: multiPrice };
+          }
+          // Return the item unchanged if it doesn't match
+          return item;
+        });
+
+        // Log the updated data
+        console.log("Updated data:", updatedData);
+
+        // Return the updated data to update the state
+        return updatedData;
+      });
+    } else {
+      console.log("Index out of range");
+    }
+  };
+
+  const [PriceValue, setPriceValue] = useState(0);
+
+  const renderForms = (type, mainCount) => {
     const fields = {
-      adult: [
+      Adult: [
         { label: translate("Name"), type: "text", name: "name" },
         { label: translate("Surname"), type: "text", name: "surname" },
         { label: translate("Email"), type: "text", name: "email" },
@@ -349,7 +446,7 @@ export default function BookingPages({ BookingData }) {
           options: ["Indian", "German", "Canadian"],
         },
       ],
-      child: [
+      Child: [
         { label: translate("Name"), type: "text", name: "name" },
         { label: translate("Surname"), type: "text", name: "surname" },
         {
@@ -366,7 +463,7 @@ export default function BookingPages({ BookingData }) {
           options: ["Indian", "German", "Canadian"],
         },
       ],
-      baby: [
+      Baby: [
         { label: translate("Name"), type: "text", name: "name" },
         { label: translate("Surname"), type: "text", name: "surname" },
         {
@@ -385,31 +482,44 @@ export default function BookingPages({ BookingData }) {
       ],
     };
 
-    const [AdultsType, setAdultsType] = useState(0)
+    const count = mainCount == 0 ? 1 : mainCount;
 
+    const [AdultsType, setAdultsType] = useState(0);
+    const [convertedPrices, setConvertedPrices] = useState([]);
 
     useEffect(() => {
-      setAdultsType(type === "adult" ? 1 : type === "child" ? 2 : 3);
+      setAdultsType(type === "Adult" ? 1 : type === "Child" ? 2 : 3);
     }, [type]);
 
-    const selectedPriceObj = ToursPrice?.find(
-      (priceObj) => priceObj.price_type == AdultsType
-    );
+    const totalSum = convertedPrices?.reduce((acc, value) => acc + value, 0);
 
-   
+    // console.log("totalSum" , totalSum);
 
-    const price = selectedPriceObj ? selectedPriceObj.price : "0.00";
+    useEffect(() => {
+      setPriceValue(totalSum);
+    }, [totalSum]);
 
-    const shouldShowAdditionalServices = type !== "baby";
+    // for price
 
-    return Array.from({ length: count }).map((_, i) => {
+    const PrpersonPrice = AlladultsData?.filter((item) => item.label === type);
 
-      const isExtraAdult = type === "adult" && i >= 1;
+    let resultPrice;
+
+    if (PrpersonPrice?.length == 0) {
+      // If no data is found, assign a default value (e.g., 0)
+      resultPrice = 0;
+    } else {
+      // If data exists, map through it to get the 'price'
+      resultPrice = PrpersonPrice?.map((item) => item.price);
+    }
+
+    const shouldShowAdditionalServices = type !== "Baby";
+
+    return Array.from({ length: count })?.map((_, i) => {
+      const isExtraAdult = type === "Adult" && i >= 1;
       const currentFields = isExtraAdult
         ? fields.adultFieldsForExtraAdults
-        : fields[type];
-
-      console.log("formValues[type]" , formValues[type][i]);
+        : fields[type] || [];
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -453,7 +563,7 @@ export default function BookingPages({ BookingData }) {
                             <option value="" disabled>
                               {field.label}
                             </option>
-                            {field.options.map((option, optIndex) => (
+                            {field.options?.map((option, optIndex) => (
                               <option
                                 key={optIndex}
                                 value={option.toLowerCase()}
@@ -494,7 +604,7 @@ export default function BookingPages({ BookingData }) {
                       <div className="text-14">
                         <p className="d-flex justify-content-between">
                           <span>{translate("Tour Price Per Person")}</span>
-                          <span>{` ${type == "adult" ? adultData?.totalPrice/adultData?.count : type == "child" ? Childrendata?.totalPrice/Childrendata?.count : babyData?.totalPrice/babyData?.count}`} €</span>
+                          <span>{`${getdefaultPriceforType(type, i)} €`}</span>
                         </p>
                       </div>
                     </div>
@@ -554,7 +664,7 @@ export default function BookingPages({ BookingData }) {
 
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal <span>{`${123 } €`}</span> 
+                    Subtotal <span>{`${getPriceForType(type, i)} €`}</span>
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
@@ -564,12 +674,26 @@ export default function BookingPages({ BookingData }) {
         </div>
       );
     });
-
-    
-  };  
-  
+  };
 
   const [ReservationID, setReservationID] = useState("");
+
+  console.log("foundPrices", foundPrices);
+
+  const totalSum = foundPrices
+    ?.map((price) => Number(price)) // Convert each price to a number
+    ?.reduce((acc, curr) => acc + curr, 0); // Sum all the numbers
+
+  const taxRate = 0.19;
+
+  const taxAmount = totalSum * taxRate;
+
+  const totalWithTax = totalSum + taxAmount;
+
+  const [HandlePromo, setHandlePromo] = useState(false)
+
+  const TotalPaidAmount = HandlePromo == false ? totalWithTax : PromoData.total_amount
+  
 
   // calling api
 
@@ -579,13 +703,14 @@ export default function BookingPages({ BookingData }) {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       coupon_code: promo,
-      total_amount: 5000,
+      total_amount: totalWithTax,
     };
 
     try {
       const PromoResponse = await post("check_coupon", sendData);
       showSuccessToast(PromoResponse.Message);
       setPromoData(PromoResponse);
+      setHandlePromo(true)
       return PromoResponse;
     } catch (error) {
       console.error("Error caught:", error);
@@ -594,23 +719,20 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
+    // fathch new booking api
+
+    const FatchallBooking = async (data) => {
+      try {
+        const response = await post("addbooking", data);
+        showSuccessToast(response.Message);
+        setReservationID(response.Reservations_id);
+      } catch (error) {
+        console.error("Error caught:", error);
+        showErrorToast("An error occurred during registration.");
+      }
+    };
+
   // for form sunmiter button onclick event
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (loginPer) {
-  //     FatchallBooking(bookingData);
-
-  //     console.log(bookingData);
-
-  //     addPeople("adults", formValues.adult);
-  //     addPeople("child", formValues.child);
-  //     addPeople("baby", formValues.baby);
-  //   } else {
-  //     router.push("/login");
-  //   }
-  // };
 
   const handleSubmit = async () => {
     try {
@@ -624,18 +746,18 @@ export default function BookingPages({ BookingData }) {
       // Create booking data
       const bookingData = {
         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        user_id: UserID.id,
+        user_id: UserID.id !== null ? UserID.id : "",
         tour_id: TourId,
-        person: formValues.adult[0],
-        adult: formValues.adult.slice(1),
-        child: formValues.child,
-        baby: formValues.baby,
+        person: formValues.Adult[0],
+        adult: formValues.Adult.slice(1),
+        child: formValues.Child,
+        baby: formValues.Baby,
         departure: selectDeparture?.value,
-        adult_price: adultData?.totalPrice,
-        child_price: Childrendata?.totalPrice,
-        baby_price: babyData?.totalPrice,
-        total: 20000,
-        amount_paid: 2000,
+        adult_price: adultData[0]?.default,
+        child_price: Childrendata[0]?.default,
+        baby_price: babyData[0]?.default,
+        total: totalSum,
+        amount_paid: TotalPaidAmount,  
         coupon_name: promoResponse ? promoResponse.coupon_name : "", // Use promo data if available
         coupon_amount: promoResponse ? promoResponse.total_amount : 0,
         coupon_percentage: promoResponse ? promoResponse.percentage : 0,
@@ -646,24 +768,15 @@ export default function BookingPages({ BookingData }) {
       };
 
       // Print booking data to console
-      console.log("Booking Data:", bookingData);
+      console.log("bookingData" , bookingData);
+      
+      FatchallBooking(bookingData);
     } catch (error) {
       console.error("Error during booking:", error);
     }
   };
 
-  // fathch new booking api
 
-  const FatchallBooking = async (data) => {
-    try {
-      const response = await post("addbooking", data);
-      showSuccessToast(response.Message);
-      setReservationID(response.Reservations_id);
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
-    }
-  };
 
   const { translate } = useTranslation();
 
@@ -699,9 +812,9 @@ export default function BookingPages({ BookingData }) {
                 {bookingStage == 1 && (
                   <div className="border-1 rounded-12 overflow-hidden shadow-1">
                     <div>
-                      {renderForms("adult", adultData?.count)}
-                      {renderForms("child", Childrendata?.count)}
-                      {renderForms("baby", babyData?.count)}
+                      {renderForms("Adult", adultData.length)}
+                      {renderForms("Child", Childrendata.length)}
+                      {renderForms("Baby", babyData.length)}
                     </div>
                   </div>
                 )}
@@ -842,17 +955,17 @@ export default function BookingPages({ BookingData }) {
                   <div className="">
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Subtotal")}</div>
-                      <div className=""> {GrandFormTotal} € </div>
+                      <div className=""> {totalSum} € </div>
                     </div>
 
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Tax")}</div>
-                      <div className=""> 23 € </div>
+                      <div className=""> {taxAmount} € </div>
                     </div>
 
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Amount Due")} </div>
-                      <div className=""> {adultData?.totalPrice} € </div>
+                      <div className=""> {TotalPaidAmount} € </div>
                     </div>
                   </div>
 
