@@ -47,7 +47,6 @@ export default function Header1({ isLoggedIn }) {
 
   const { translate } = useTranslation(locale);
 
-  console.log(translate("hello"), "translate"); 
   return (
     <>
       <header

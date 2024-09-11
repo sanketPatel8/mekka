@@ -33,6 +33,8 @@ const page = () => {
   const [error, setError] = useState("");
   const [errors, setErrors] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
+
   const router = useRouter();
   const options = [
     { value: "1", label: "Zip Code" },
@@ -97,13 +99,19 @@ const handlePassword = (e) => {
   }  else {
     setPasswordError("");
   }
+  if(!passwordValue){
+    setPasswordError("");
+  }
+};
+const handleCheckboxChange = (e) => {
+  setAgreeToTerms(e.target.checked);
 };
 
 const validate = () => {
   let tempErrors = {};
 
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      tempErrors.email = '(Invalid email address)';
+      tempErrors.email = 'Invalid email address';
   }
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(company_email)) {
       tempErrors.company_email = 'Invalid email address';
@@ -120,6 +128,10 @@ const validate = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !company_email || !company_mobile || !agreeToTerms){ 
+    showErrorToast("Please fill all the fields");
+    return;
+  }
   
   const tempErrors = validate();
   console.log(tempErrors)
@@ -130,10 +142,6 @@ const handleSubmit = async (e) => {
       return;
   }
 
-  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !company_email || !company_mobile){ 
-    showErrorToast("Please fill all the fields");
-    return;
-  }
 
   
 
@@ -322,7 +330,7 @@ const handleMobileNumberChange = (e) => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="email" required  value={company_email} onChange={handleInputChange(setCompanyEmail)}/>
+                          <input type="email" required  value={company_email} className="mb-1" onChange={handleInputChange(setCompanyEmail)}/>
                           <label className="lh-1 text-16 text-light-1">
                             E-Mail Address
                           </label>
@@ -371,7 +379,7 @@ const handleMobileNumberChange = (e) => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={email} onChange={handleInputChange(setEmail)}/>
+                          <input type="text" required  value={email} className="mb-1" onChange={handleInputChange(setEmail)}/>
                           <label className="lh-1 text-16 text-light-1">
                             E-mail Address
                           </label>
@@ -396,26 +404,28 @@ const handleMobileNumberChange = (e) => {
                             At least 8 characters include uppercase and lowercase
                             letters, numbers and special characters
                           </span>
-                          {errors.password && <span className='text-red'> {errors.password}</span>}
+                          {/* {errors.password && <div className='text-red'> {errors.password}</div>} */}
 
                           {passwordError && <div className="text-red">{passwordError}</div>}
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-input spacing">
-                          <input type="password" required  onChange={handlePasswordChange}/>
+                          <input type="password" required className="mb-2"  onChange={handlePasswordChange}/>
                           <label className="lh-1 text-16 text-light-1">
                             Confirm Password*
                           </label>
                           {error && <div className="text-red">{error}</div>}
                         </div>
                       </div>
-                      <div className="d-flex items-center">
+                      <div className="d-flex items-center mt-3">
                         <label className="form-checkbox d-flex align-items-center">
                           <input
                             type="checkbox"
                             name="name"
                             className="form-checkbox__input"
+                            checked={agreeToTerms}
+                            onChange={handleCheckboxChange}
                           />
                           <div className="form-checkbox__mark">
                             <div className="form-checkbox__icon">
@@ -444,7 +454,7 @@ const handleMobileNumberChange = (e) => {
                     <div className="col-12">
                       <div className="flex-center">
                         <button type="submit" className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
-                          Send
+                          Submit
                         </button>
                       </div>
                     </div>
