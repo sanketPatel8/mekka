@@ -92,10 +92,11 @@ export default function EditTour() {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [canGoBack, setCanGoBack] = useState(false);
   const [mekkaRows, setMekkaRows] = useState([
-    { hotel_id:"" , hotel_name: null, hotel_price: "",hotel_info:"" },
+    { hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"" },
+
   ]);
   const [madinaRows, setMadinaRows] = useState([
-    { hotel_name: null, hotel_price: "",hotel_info:"" },
+    {hotel_id:"", hotel_name: null, hotel_price: "",hotel_info:"" },
   ]);
   const [flightRow, setFlightRow] = useState([
     { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
@@ -116,11 +117,11 @@ export default function EditTour() {
     value: hotel.id,
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
   }));
-
   const fetchTour = async (id) => {
     const formData = new FormData();
     formData.append("id", id);
     const response = await POST.request({form:formData , url: "tourdetails"});
+    console.log(response.Tour_Details.details.tour_image)
     if(response){
       setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
@@ -205,11 +206,26 @@ export default function EditTour() {
       setSelectedTour({value:tourDetails.type,label:tourDetails.type});
       setDateBegin(formatedDate(tourDetails.date_begin));
       setDateEnd(formatedDate(tourDetails.date_end));
-      // console.log(tourDetails.tour_image)
 
       // setDepartures(SelectRef(tourDetails.departures) || []);
-      // setImage2(tourDetails.tour_image || []);
-      setImage2(Array.isArray(tourDetails.tour_image) ? tourDetails.tour_image : []);
+      if(tourDetails.tour_image){
+        setImage2(tourDetails.tour_image || []);
+
+        console.log(image2,"image2");
+//         const base64Images = [];
+
+// image2.forEach((file) => {
+//   const reader = new FileReader();
+//   reader.onload = () => {
+//     const base64String = reader.result;
+//     base64Images.push(`data:${file.type};base64,${base64String}`);
+//   };
+//   reader.readAsDataURL(file);
+// });
+
+// console.log(base64Images);
+        
+            }
       setName(tourDetails.name);
       setCapacity(tourDetails.capacity);
       if (tourDetails.route_data) {
@@ -309,34 +325,71 @@ export default function EditTour() {
   },[flightData])
 
   useEffect(() => {
-    if(hotel_data){
-      hotel_data.map((hotel) => {
-        if (hotel.hotel_type == 1) {
-          console.log(hotel,"hotel");
-          console.log(mekkaHotel,"mekkaHotel");
-          const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.hotel_id);
-          console.log(foundHotel,"foundHotel");
-          console.log(mekkaRows,"mekkaRows");
-          const updatedMekka = mekkaRows.map((mekka) => {
-          
-              return { ...mekka, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
-            
-          });
-          setMekkaRows(updatedMekka);
-          
-        } else {
-          const updatedMadina = madinaRows.map((madina) => {
-          
-            return { ...madina, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
-          
-        });
-         
-          setMadinaRows(updatedMadina);
-        }
+    const mekkaHotels = hotel_data.filter((hotel) => hotel.hotel_type == '1');
+    const madinaHotels = hotel_data.filter((hotel) => hotel.hotel_type == '2');
+    // mekkaHotels.map((hotel) => {
+    //   // const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.hotel_id);
+    //   const updatedMekka = mekkaRows.map((mekka) => {
+    //     return { ...mekka, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
+    //   });
+    //   console.log(updatedMekka,"updatedMekka");
+    //   setMekkaRows(updatedMekka);
+    //   console.log(mekkaRows,"mekkaRows");
+    // })
+    if(mekkaHotels){
 
+      const updatedMekka = mekkaHotels.map((hotel) => {
+        return {
+          hotel_id: hotel.id,
+          hotel_name: hotel.hotel_name,
+          hotel_price: hotel.hotel_price,
+          hotel_info: hotel.hotel_info,
+        };
       });
-
+    
+      setMekkaRows(updatedMekka);
     }
+
+    if(madinaHotels){
+      const updatedMadina = madinaHotels.map((hotel) => {
+        return {
+          hotel_id: hotel.id,
+          hotel_name: hotel.hotel_name,
+          hotel_price: hotel.hotel_price,
+          hotel_info: hotel.hotel_info,
+        };
+      });
+      setMadinaRows(updatedMadina);
+  
+    }
+
+    // if(hotel_data){
+    //   hotel_data.map((hotel) => {
+    //     if (hotel.hotel_type == 1) {
+     
+    //       const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.hotel_id);
+     
+    //       const updatedMekka = mekkaHotels.map((mekka) => {
+          
+    //           return { ...mekka, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
+            
+    //       });
+    //       console.log(updatedMekka,"updatedMekka");
+    //       setMekkaRows(updatedMekka);
+          
+    //     } else {
+    //       const updatedMadina = madinaRows.map((madina) => {
+          
+    //         return { ...madina, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
+          
+    //     });
+         
+    //       setMadinaRows(updatedMadina);
+    //     }
+
+    //   });
+
+    // }
   },[hotel_data]);
 
   useEffect(() => {
@@ -412,7 +465,6 @@ export default function EditTour() {
       setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
     }
   } else {
-    console.log(adult_price,child_price,baby_price);
     showErrorToast("Please fill in all required fields before proceeding.");
   }
   // const nextTabIndex = activeTabIndex + 1;
@@ -580,7 +632,6 @@ export default function EditTour() {
   const handleMekkaChange = (value, index) => {
     if (!value) return; // add this line to check if value is null or undefined
     const selectedOption = mekkaHotel.find((option) => option.id === value.value);
-    console.log(selectedOption,"selectedOption");
       const mekkaData = {
         ...mekkaRows[index],
         hotel_id: selectedOption.id,
@@ -774,9 +825,21 @@ export default function EditTour() {
     //     description: day.description,
     //   })),
     // };
-    const image2File = document.querySelector('input[name="image2"]').files[0];
+    const image2File = document.querySelector('input[name="image2"]').files;
     console.log(image2File,"image2File");
+    // const binaryImages = [];
 
+    // for (let i = 0; i < image2File.length; i++) {
+    //   const file = image2File[i];
+    //   const reader = new FileReader();
+    //   reader.onload = () => {
+    //     const binaryData = reader.result;
+    //     binaryImages.push(binaryData);
+    //   };
+    //   reader.readAsBinaryString(file);
+    // }
+    
+    // console.log(binaryImages,"binaryImages");
 
     const formData = new FormData();
 
@@ -1084,9 +1147,7 @@ const formatDateToMMDDYYYY = (date) => {
                                         <Image
                                           width={200}
                                           height={200}
-                                          src={image}
-                                          alt={`image-${index}`}
-                                          className="size-200 rounded-12 object-cover"
+                                          src={image} alt={`image-${index}`} className="size-200 rounded-12 object-cover"
                                         />
                                         <button
                                           onClick={() => handleDeleteImage2(index)}
@@ -1109,6 +1170,7 @@ const formatDateToMMDDYYYY = (date) => {
                                         width="40"
                                         height="40"
                                         alt="image"
+                                        name="image2"
                                         src={"/img/dashboard/upload.svg"}
                                       />
 
@@ -1557,7 +1619,7 @@ const formatDateToMMDDYYYY = (date) => {
 
                                           <div className="col-lg-6 col-md-auto col-12 form-input spacing d-flex flex-column align-items-center hotel-mekka">
                                             <CreatableSelect
-                                              value={{ value: mekkaRows[0].hotel_id, label: mekkaRows[0].hotel_name }}
+                                              value={{ value: mekkaRows[index].hotel_id, label: mekkaRows[index].hotel_name }}
                                               onChange={(value) =>
                                                 handleMekkaChange(value, index)
                                               }
@@ -1654,7 +1716,7 @@ const formatDateToMMDDYYYY = (date) => {
                                         <div className="row">
                                           <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
                                             <CreatableSelect
-                                              value={{ value: madinaRows[0].hotel_id, label: madinaRows[0].hotel_name }}
+                                              value={{ value: madinaRows[index].hotel_id, label: madinaRows[index].hotel_name }}
                                               onChange={(value) =>
                                                 handleMadinaChange(value, index)
                                               }

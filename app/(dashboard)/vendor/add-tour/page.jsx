@@ -606,8 +606,10 @@ const isCurrentTabValid = () => {
     //     description: day.description,
     //   })),
     // };
-    const image2File = document.querySelector('input[name="image2"]').files[0];
-
+    const image2File = document.querySelector('input[name="image2"]').files;
+    console.log(image2File,"image2File")
+    const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
+    console.log(image2FileArray,"image2FileArray")
 
     const formData = new FormData();
 
@@ -631,8 +633,9 @@ const isCurrentTabValid = () => {
     formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
-    formData.append("tour_image[]", image2File);
-
+    image2FileArray.forEach((file, index) => {
+      formData.append(`tour_image[${index}]`, file);
+    });
     const url = "addtour";
 
     try{

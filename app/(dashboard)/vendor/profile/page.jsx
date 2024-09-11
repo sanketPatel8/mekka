@@ -57,6 +57,7 @@ export default function Profile() {
   const fetchProfile = async () => {
     const url = 'my_profile'
     const response = await POST.request({ url: url, token: `${user?.authorisation.token}` });
+    console.log(response.user.country,"userdata")
     if (response.user) {
       setUserData(response.user)
       setCompanyData(response.user.company)
@@ -131,19 +132,41 @@ export default function Profile() {
       setImage2(uploadedImages);
     });
   };
+
+  const dataURItoFile = (dataURI, filename) => {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      ab[i] = byteString.charCodeAt(i);
+    }
+    const file = new Blob([ab], { type: mimeString });
+    file.name = filename;
+    return file;
+  }
+  
   const handleSubmit = async (e) => {
 
     e.preventDefault();
+   
+    // if(!confirm_password || !password || !old_password || !IBAN || !owner_name || !bank_name || !info || !tax_number || !website || !zipcode || !houseNumber || !street || !city || !SelectedCountry || !mobile || !email || !surname || !name || !companyName || image1 == "" || image2.length == 0){
+    //   showErrorToast("Please fill all fields")
+    // }
+
     const formData = new FormData();
-    console.log(image1, "image1")
-    console.log(image2, "image2")
+
     // Determine the type of form being submitted
     const formType = e.target.name;
 
-    const image2File = document.querySelector('input[name="image2"]').files[0];
-    console.log(image2File)
-    console.log(formType)
-    console.log(userData)
+
+
+    const image1File = dataURItoFile(image1, 'image1.png');
+    console.log(image1File,"image1File")
+
+    const image2File = document.querySelector('input[name="image2"]').files;
+    console.log(image2File,"image2File")
+    const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
+    console.log(image2FileArray)
     switch (formType) {
       case 'profile':
         formData.append('id', user?.user.id);
@@ -158,12 +181,15 @@ export default function Profile() {
         formData.append('zipcode', userData.plz || zipcode);
         formData.append('website', userData.website || website);
         formData.append('tax_number', userData.tax_number || tax_number);
-        formData.append('image', image1);
-        formData.append('company_document', image2File);
+        formData.append('image', image1File);
+      
         formData.append('companyName', userData?.company.companyName || companyName);
         formData.append('info', userData.info || info);
         formData.append('company_id', userData.company === "{}" || userData.company === null ? 0 : userData?.company.id);
         formData.append('type', formType);
+        image2FileArray.forEach((file, index) => {
+          formData.append(`company_document[${index}]`, file);
+        });
         break;
       case 'bank_details':
         formData.append('id', user?.user.id);
@@ -185,16 +211,27 @@ export default function Profile() {
         return;
     }
 
-    const url = `update_profile`
-    console.log(name)
-    const response = await POST.request({ form: formData, url: url, header: { 'Content-Type': 'multipart/form-data', } });
-
-    if (response) {
-      showSuccessToast(response.message);
-      fetchProfile();
-    }else{
-      showErrorToast(response.message);
+    if (formType === 'profile') {
+      console.log(name,userData.name , surname, email, mobile, SelectedCountry, userData.country, city, street, houseNumber, zipcode, website, tax_number, info, companyName, image1, image2File)
+      // if((!name || !userData.name) || (!surname || !userData.surname)|| (!email || !userData.email) || (!mobile || !userData.mobile) || (!SelectedCountry || !userData.country) || (!city || !userData.city) || (!street || !userData.street) || (!houseNumber || !userData.houseNumber) || (!zipcode || !userData.plz) || (!website || !userData.website) || (!tax_number || !userData.tax_number) || (!info || !userData.info) || (!companyName || !userData?.company.companyName) || image1 == "" || image2.length == 0){
+      //   showErrorToast("Please fill all fields")
+      //   return;
+      // } 
+      // else{
+        const url = `update_profile`
+        console.log(name)
+        const response = await POST.request({ form: formData, url: url, header: { 'Content-Type': 'multipart/form-data', } });
+    
+        if (response) {
+          showSuccessToast(response.message);
+          fetchProfile();
+        }else{
+          showErrorToast(response.message);
+        }
+      // }
     }
+
+   
 
 
   }
@@ -344,9 +381,11 @@ export default function Profile() {
                   <div className="col-md-6">
                     <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
                       <CreatableSelect
-                        value={userData.country ? userData.country : SelectedCountry}
-                        onChange={HandleCountryChange}
-                        options={CountryOptions}
+      value={userData.country ? { value: userData.country, label: userData.country } : SelectedCountry}
+      onChange={(newValue) => {
+        setSelectedCountry(newValue.value);
+        setUserData({ ...userData, country: newValue.value });
+      }}                        options={CountryOptions}
                         className="custom-select"
                         placeholder="Select Country(required) "
                         classNamePrefix="react-select"
@@ -422,7 +461,7 @@ export default function Profile() {
                             <Image
                               width={200}
                               height={200}
-                              src={userData.company.image || image1}
+                              src={`${process.env.NEXT_PUBLIC_URL}/uploads/${userData.company.image}` || image1}
                               alt="image"
                               className="size-200 rounded-12 object-cover"
                             />
@@ -456,6 +495,7 @@ export default function Profile() {
                             accept="image/*"
                             id="imageInp1"
                             type="file"
+                            name="image1"
                             style={{ display: "none" }}
                           />
                         </div>
