@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
+import { ClipLoader } from "react-spinners";
 
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
@@ -25,6 +26,7 @@ export default function DbBooking() {
   const [VendorBookings, setVendorBookings] = useState([]);
   const [bookingRender, setBookingRender] = useState({});
   const [AllBookings, setAllBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const {user} = useAuthContext();
   console.log(user?.user.id)
@@ -34,11 +36,11 @@ export default function DbBooking() {
     console.log(tab, "tab")
     const formData = new FormData();
     formData.append("company_id", user?.user.company_id);
+    setLoading(true);
     const response = await POST.request({form:formData , url: "tour_bookings"});
     
     if(tab === "All"){
-      console.log("all")
-      console.log(AllBookings, "bookingRender.Bookings")
+     setLoading(false);
       const bookingsData  = response.Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
@@ -57,7 +59,7 @@ export default function DbBooking() {
       setBookings(bookingsData );
     }
     else if(tab === "Completed"){
-    
+      setLoading(false);
       const bookingsData  = response.Completed_Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
@@ -75,7 +77,7 @@ export default function DbBooking() {
       setBookings(bookingsData );
     }
     else if(tab === "In Progress"){
-     
+      setLoading(false);
       const bookingsData  = response.In_Progress_Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
@@ -93,7 +95,7 @@ export default function DbBooking() {
       setBookings(bookingsData );
     }
     else if(tab === "Cancelled"){
-      
+      setLoading(false);
       const bookingsData  = response.Cancelled_Bookings.map((booking) => ({
         BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
@@ -343,6 +345,14 @@ const setCurrentTab = (tab) => {
         <div className="dashboard__content_content">
           <h1 className="text-30"> {translate("My Booking") }</h1>
           <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20 ">
+          { loading ?       
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "200px" }}
+            >
+              <ClipLoader color="#DAC04F" size={50} />
+            </div>
+            :
             <div className="tabs -underline-2 js-tabs">
               <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                 {tabs.map((tab, index) => (
@@ -382,6 +392,7 @@ const setCurrentTab = (tab) => {
                 }
               />
             </div>
+}
           </div>
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

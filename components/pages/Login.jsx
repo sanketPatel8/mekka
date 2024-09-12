@@ -45,27 +45,7 @@ export default function Login({ onLoginSuccess }) {
     e.preventDefault();
 
 
-    //   try {
-    //     const response = await post("login", LogInData);
-    //     localStorage.setItem("token", response.authorisation.token);
-    //     localStorage.setItem("user", JSON.stringify(response.user));
-    //     showSuccessToast("Login successful!");
-    //     setTimeout(() => {
-    //       setLoginPer(true) 
-    //       router.push('/vendor/db-main');
-    //     }, 2000);
-    //   } catch (error) {
-    //     if (
-    //       error.response &&
-    //       error.response.data &&
-    //       error.response.data.message
-    //     ) {
-    //       showErrorToast(error.response.data.message || "An error occurred.");
-    //     } else {
-    //       showErrorToast("An error occurred during login.");
-    //     }
-
-    // } 
+    
     Auth.handleForm({ form: e, url: 'login', type: 'Add User', post: post });
 
   };
@@ -76,7 +56,6 @@ export default function Login({ onLoginSuccess }) {
     // setLoading(true);
     Auth.user(data)
       .then((resp) => {
-        console.log(resp)
         if (resp.status == "error") {
           showErrorToast(resp.message);
         }

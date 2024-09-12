@@ -9,13 +9,18 @@ import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import { MdError } from "react-icons/md";
 import DocumentStatusManager from "@/components/dasboard/DocumentStatusManager";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
+import { POST } from "@/app/utils/api/post";
 
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
 export default function DbBooking({ params }) {
+
+  const {user} = useAuthContext();
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("All");
   const [filteredData, setFilteredData] = useState([]);
+  const [bookings, setBookings] = useState({});
   const [radioValue, setRadioValue] = useState("");
   console.log(params.id[0], "params");
   const id = params.id[0];
@@ -24,16 +29,34 @@ export default function DbBooking({ params }) {
   };
 
 
-  useEffect(() => {
-    // Filter data based on currentTab
-    let filtered = [];
-    if (currentTab === "All") {
-      filtered = bookingData;
-    } else {
-      filtered = bookingData.filter((item) => item.Status === currentTab);
+  // useEffect(() => {
+  //   // Filter data based on currentTab
+  //   let filtered = [];
+  //   if (currentTab === "All") {
+  //     filtered = bookingData;
+  //   } else {
+  //     filtered = bookingData.filter((item) => item.Status === currentTab);
+  //   }
+  //   setFilteredData(filtered);
+
+    
+  // }, [currentTab]);
+
+  const fetchDetails = async () => {
+    const formData = new FormData();
+    formData.append("user_id", user?.user?.id);
+    formData.append("id", id);
+
+    const response = await POST.request({form:formData, url: "booking_details"});
+    if(response){
+      setBookings(response.Bookings)
     }
-    setFilteredData(filtered);
-  }, [currentTab]);
+    console.log(response, "response");
+  }
+
+  useEffect(()=>{
+      fetchDetails();
+  },[user])
 
   const StatusCell = ({ row }) => {
     const statusStyles = {
@@ -127,7 +150,7 @@ export default function DbBooking({ params }) {
         <div className="dashboard__content_content">
          
 
-            <DocumentStatusManager Customerid = {params}/>
+            <DocumentStatusManager Customerid = {params} bookings={bookings}/>
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

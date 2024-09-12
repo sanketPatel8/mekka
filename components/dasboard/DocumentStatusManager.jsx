@@ -42,7 +42,8 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid }) => {
+const DocumentStatusManager = ({ Customerid, bookings }) => {
+
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
 
@@ -289,7 +290,7 @@ const DocumentStatusManager = ({ Customerid }) => {
       <div className="row px-0 pb-10 mt-20">
         <div className="col-lg-6">
           <p className="t_center"> {translate("Booking Date") } : 12.08.2024</p>
-          <p className="t_center">  {translate("Booking Status") } : Cancelled</p>
+          <p className="t_center">  {translate("Booking Status") } : {bookings.reservation.reservation_status}</p>
         </div>
 
         <div className="col-lg-6 flex small-flex-center items-center">
@@ -315,19 +316,30 @@ const DocumentStatusManager = ({ Customerid }) => {
           </div>
         </div>
       </div>
-      <DataTable
-        title="Reservation Details"
-        columns={ColumnReservation_details}
-        data={ReservationData}
-        highlightOnHover
-      />
-      <br />
+      {
+        bookings.flightInfo.length > 0 &&  
+        <>
+        
+        
+        <DataTable
+          title="Reservation Details"
+          columns={ColumnReservation_details}
+          data={ReservationData}
+          highlightOnHover
+        />
+        <br />
+        </>
+      }
+
+      {
+        bookings.reservation.adults > 0 &&
       <DataTable
         title="Adult : Adult Name (Gender)"
         columns={columnAdu_1}
         data={Adult1Data}
         highlightOnHover
       />
+      }
       <br />
       <DataTable
         title="Adult : Adult Name (Gender)"

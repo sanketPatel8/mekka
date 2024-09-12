@@ -39,7 +39,6 @@ export default function Header1({ isLoggedIn }) {
       acc[key.trim()] = value;
       return acc;
     }, {});
-    console.log(cookies)
     if (cookies.locale) {
       setLocale(cookies.locale);
     }

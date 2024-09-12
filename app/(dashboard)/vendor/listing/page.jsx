@@ -18,6 +18,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { useRouter } from "next/navigation";
+import { ClipLoader } from "react-spinners";
 
 const customStyles = {
   overlay: {
@@ -54,6 +55,7 @@ export default function DBListing() {
   const [range, setRange] = useState(1);
   const [pageStart, setPageStart] = useState(1);
   const [tourList,setTourList] = useState([]);
+  const [loading, setLoading] = useState(false);
   // for opent rejected pop-up box 
 
   const [invoice, setinvoice] = useState(false)
@@ -79,7 +81,9 @@ export default function DBListing() {
 
 
     try{
+      setLoading(true);
       const response = await POST.request({form: formData, url: "my_tourlist"});
+      setLoading(false)
       console.log(response,"tourlist");
       setTourList(response.Tours);
       setRange(response.Total_Page);
@@ -134,6 +138,8 @@ export default function DBListing() {
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
 
+        
+         
         <div className="dashboard__content">
           <Header setSideBarOpen={setSideBarOpen} />
 
@@ -141,8 +147,24 @@ export default function DBListing() {
             <h1 className="text-30">  {translate("My Listings") }</h1>
 
             <div className="row y-gap-30 mt-20">
+           { loading ?       
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "200px" }}
+            >
+              <ClipLoader color="#DAC04F" size={50} />
+            </div>
+            :
+              <>
+              
+              {
+                tourList.length === 0 &&
+                <div className="text-center">
+                  <h3>No Tours Found</h3>
+                </div>
+              }
               {tourList.map((elm, i) => (
-                <div className="col-12 mb-15" key={i}>
+                <div className="col-lg-6 mb-15" key={i}>
                   <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
                       <Image
@@ -270,7 +292,11 @@ export default function DBListing() {
                     </div>
                   </div>
                 </div>
+                
               ))}
+              
+              </>
+            }
             </div>
 
             <div className="mt-4">
@@ -306,6 +332,8 @@ export default function DBListing() {
             </div>
           </div>
         </div>
+        
+
       </div>
     </>
   );
