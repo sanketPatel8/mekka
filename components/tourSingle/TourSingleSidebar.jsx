@@ -34,96 +34,151 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
   const [SidebarData, setSidebarData] = useState({});
-  const [FlightName, setFlightName] = useState([]);
-  const [Departure, setDeparture] = useState("");
 
   const [adultNumber, setAdultNumber] = useState(1);
   const [youthNumber, setYouthNumber] = useState(0);
   const [childrenNumber, setChildrenNumber] = useState(0);
 
+  const [selectedmekkaHotelPrice, setselectedmekkaHotelPrice] = useState(0);
+  const [selectedMadinaHotelPrice, setselectedMadinaHotelPrice] = useState(0);
+  const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
+
+  // const handleRadioChange = (e , price) => {
+  //   const { value, name } = e.target;
+  //   const selectedHotel = JSON.parse(value);
+
+  //   if (name === "mekka") {
+  //     // Update the HotelSelect state with the selected Mekka hotel details
+  //     setHotelSelect((prevSelect) => ({
+  //       ...prevSelect,
+  //       mekka: value,
+  //       mekkaPrice:
+  //         SidebarData?.tour_hotels?.mekka_hotels.find(
+  //           (hotel) => hotel.id === selectedHotel.hotel_id
+  //         )?.hotel_price || 0,
+  //       mekkaId: selectedHotel.hotel_id,
+  //     }));
+  //     setselectedmekkaHotelPrice(price)
+  //   } else if (name === "madina") {
+  //     // Update the HotelSelect state with the selected Madina hotel details
+  //     setHotelSelect((prevSelect) => ({
+  //       ...prevSelect,
+  //       madina: value,
+  //       madinaPrice:
+  //         SidebarData?.tour_hotels?.medina_hotels.find(
+  //           (hotel) => hotel.id === selectedHotel.hotel_id
+  //         )?.hotel_price || 0,
+  //       madinaId: selectedHotel.hotel_id,
+  //     }));
+  //   }
+  // };
+
+  // const handleHotelChange = (e, elm , price) => {
+  //   const selectedFlight = {
+  //     id: elm.flight_id,
+  //     name: elm.airline_name,
+  //     price: elm.flight_amount
+  //   };
+  //   setSelectedFlights(selectedFlight); // Replace with the selected flight object
+  //   setSelectedAirlinePrice(selectedFlight.price)
+  // };
+
+  useEffect(() => {
+    if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
+      const firstMekkaHotel = SidebarData.tour_hotels.mekka_hotels[0];
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        mekka: JSON.stringify({
+          hotel_name: firstMekkaHotel.hotel_name,
+          hotel_id: firstMekkaHotel.id,
+        }),
+        mekkaPrice: firstMekkaHotel.hotel_price,
+        mekkaId: firstMekkaHotel.id,
+      }));
+      setselectedmekkaHotelPrice(firstMekkaHotel.hotel_price);
+    }
+
+    if (SidebarData?.tour_hotels?.medina_hotels?.length > 0) {
+      const firstMadinaHotel = SidebarData.tour_hotels.medina_hotels[0];
+      setHotelSelect((prevSelect) => ({
+        ...prevSelect,
+        madina: JSON.stringify({
+          hotel_name: firstMadinaHotel.hotel_name,
+          hotel_id: firstMadinaHotel.id,
+        }),
+        madinaPrice: firstMadinaHotel.hotel_price,
+        madinaId: firstMadinaHotel.id,
+      }));
+      setselectedMadinaHotelPrice(firstMadinaHotel.hotel_price);
+    }
+
+    if (SidebarData?.tour_details?.airlines?.length > 0) {
+      const firstFlight = SidebarData.tour_details.airlines[0];
+      setSelectedFlights({
+        id: firstFlight.flight_id,
+        name: firstFlight.airline_name,
+        price: firstFlight.flight_amount,
+      });
+      setSelectedAirlinePrice(firstFlight.flight_amount);
+    }
+  }, [SidebarData]);
+
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
-    const selectedHotel = JSON.parse(value);
+
+    // Parse the selected hotel details
+    let selectedHotel;
+    try {
+      selectedHotel = JSON.parse(value); // Ensure it's valid JSON
+    } catch (error) {
+      console.error("Invalid JSON format:", value);
+      return; // Exit if value isn't valid JSON
+    }
 
     if (name === "mekka") {
+      // Find the price of the selected Mekka hotel
+      const mekkaPrice =
+        SidebarData?.tour_hotels?.mekka_hotels.find(
+          (hotel) => hotel.id === selectedHotel.hotel_id
+        )?.hotel_price || 0;
+
       // Update the HotelSelect state with the selected Mekka hotel details
       setHotelSelect((prevSelect) => ({
         ...prevSelect,
         mekka: value,
-        mekkaPrice:
-          SidebarData?.tour_hotels?.mekka_hotels.find(
-            (hotel) => hotel.id === selectedHotel.hotel_id
-          )?.hotel_price || 0,
+        mekkaPrice,
         mekkaId: selectedHotel.hotel_id,
       }));
+
+      // Update Mekka hotel price in selectedmekkaHotelPrice state
+      setselectedmekkaHotelPrice(mekkaPrice);
     } else if (name === "madina") {
+      // Find the price of the selected Madina hotel
+      const madinaPrice =
+        SidebarData?.tour_hotels?.medina_hotels.find(
+          (hotel) => hotel.id === selectedHotel.hotel_id
+        )?.hotel_price || 0;
+
       // Update the HotelSelect state with the selected Madina hotel details
       setHotelSelect((prevSelect) => ({
         ...prevSelect,
         madina: value,
-        madinaPrice:
-          SidebarData?.tour_hotels?.medina_hotels.find(
-            (hotel) => hotel.id === selectedHotel.hotel_id
-          )?.hotel_price || 0,
+        madinaPrice,
         madinaId: selectedHotel.hotel_id,
       }));
+
+      setselectedMadinaHotelPrice(madinaPrice);
     }
   };
 
-  useEffect(() => {
-    const defaultMekkaHotel = SidebarData?.tour_hotels?.mekka_hotels?.[0];
-    const defaultMadinaHotel = SidebarData?.tour_hotels?.medina_hotels?.[0];
-
-    if (defaultMekkaHotel) {
-      const mekkaValue = JSON.stringify({
-        hotel_name: defaultMekkaHotel.hotel_name,
-        hotel_id: defaultMekkaHotel.id,
-      });
-
-      setHotelSelect((prevSelect) => ({
-        ...prevSelect,
-        mekka: mekkaValue,
-      }));
-    }
-
-    if (defaultMadinaHotel) {
-      const madinaValue = JSON.stringify({
-        hotel_name: defaultMadinaHotel.hotel_name,
-        hotel_id: defaultMadinaHotel.id,
-      });
-
-      setHotelSelect((prevSelect) => ({
-        ...prevSelect,
-        madina: madinaValue,
-      }));
-    }
-  }, [SidebarData]);
-
-  const handleHotelChange = (e) => {
-    const { name, value } = e.target;
-    setHotelSelect((prevSelect) => ({
-      ...prevSelect,
-      [name]: value,
-    }));
-  };
-
-  useEffect(() => {
-    const defaultFlight = FlightName?.airline?.[0]; // Default to the first airline
-    if (defaultFlight) {
-      setSelectedFlights({
-        id: defaultFlight.id,
-        name: defaultFlight.airline_name,
-      });
-    }
-  }, [FlightName]);
-
-  // Handle flight selection change
-  const handleFlightChange = (e, elm) => {
+  const handleHotelChange = (e, elm) => {
     const selectedFlight = {
-      id: elm.id,
+      id: elm.flight_id,
       name: elm.airline_name,
+      price: elm.flight_amount,
     };
-    setSelectedFlights(selectedFlight);
+    setSelectedFlights(selectedFlight); // Replace with the selected flight object
+    setSelectedAirlinePrice(selectedFlight.price);
   };
 
   const handleExcludeFlight = () => {
@@ -148,11 +203,11 @@ export default function TourSingleSidebar({ PAckageData }) {
         (Number(SidebarData.tour_price[1]?.price) || 0) * Number(youthNumber) +
         (Number(SidebarData.tour_price[2]?.price) || 0) *
           Number(childrenNumber) +
-        (Number(HotelSelect.mekkaPrice) || 0) +
-        (Number(HotelSelect.madinaPrice) || 0) +
         (Number(extraCharge) || 0);
 
       if (!isNaN(calculatedTotal)) {
+        console.log("calculatedTotal", calculatedTotal);
+
         setTotal(calculatedTotal.toFixed(2));
       } else {
         console.warn("Calculated total is not a number");
@@ -192,67 +247,75 @@ export default function TourSingleSidebar({ PAckageData }) {
     setSidebarData(PAckageData?.Tour_Details);
   }, [PAckageData]);
 
-  // for flight name
-
-  const fetchData = async (id) => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    };
-
-    try {
-      const response = await post("tour_data", sendData);
-      if (response) {
-        setFlightName(response.Data);
-        setDeparture(response.Data);
-      } else {
-        console.error("Tours data is undefined in the response.");
-      }
-    } catch (error) {
-      console.error("Error caught:", error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        showErrorToast("Please verify your email");
-      } else {
-        showErrorToast("An error occurred during registration.");
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   // local storage
 
-  const [priceObject, setPriceObject] = useState({});
+  const [priceObject, setPriceObject] = useState([]);
 
   const updatePriceObject = () => {
-    // const newPriceObject = {};
-    // SidebarData?.tour_price?.forEach((group) => {
-    //   let count;
-    //   let label;
-    //   if (group.price_type === "1") {
-    //     count = adultNumber;
-    //     label = "Adult";
-    //   } else if (group.price_type === "2") {
-    //     count = youthNumber;
-    //     label = "Youth";
-    //   } else if (group.price_type === "3") {
-    //     count = childrenNumber;
-    //     label = "Children";
-    //   }
-    //   if (count !== undefined) {
-    //     const totalPrice = group.price * count;
-    //     newPriceObject[label] = {
-    //       count,
-    //       totalPrice: totalPrice.toFixed(2),
-    //     };
-    //   }
-    // });
-    // setPriceObject(newPriceObject);
+    const newPriceArray = [];
+
+    // Separate counters for each label (Adult, Youth, Children)
+    let adultCounter = 0;
+    let youthCounter = 0;
+    let childrenCounter = 0;
+
+    // Loop through the tour_price array
+    SidebarData?.tour_price?.forEach((group) => {
+      let count;
+      let label;
+      let individualCount;
+
+      // Determine the count and label based on price_type
+      if (group.price_type === "1") {
+        count = adultNumber;
+        label = "Adult";
+      } else if (group.price_type === "2") {
+        count = youthNumber;
+        label = "Child";
+      } else if (group.price_type === "3") {
+        count = childrenNumber;
+        label = "Baby";
+      }
+
+      if (label === "Adult") {
+        individualCount = ++adultCounter;
+      } else if (label === "Child") {
+        individualCount = ++youthCounter;
+      } else if (label === "Baby") {
+        individualCount = ++childrenCounter;
+      }
+
+      // If count is defined, process the group
+      if (count !== undefined) {
+        // For each person (adult/youth/children), add an entry to the array
+
+        for (let i = 0; i < count; i++) {
+          newPriceArray.push({
+            label, // 'Adult', 'Youth', 'Children'
+            individualCount,
+            price: group.price,
+            count: count,
+            grandTotal: group.price * count,
+            index: i,
+            default: group.price,
+          });
+        }
+      }
+    });
+
+    // Now we can calculate total prices per category (e.g., all adults)
+    const totalPrices = {
+      Adult: 0,
+      Youth: 0,
+      Children: 0,
+    };
+
+    // Calculate the total price for each category
+    newPriceArray.forEach((entry) => {
+      totalPrices[entry.label] += parseFloat(entry.price);
+    });
+
+    setPriceObject(newPriceArray);
   };
 
   useEffect(() => {
@@ -260,11 +323,50 @@ export default function TourSingleSidebar({ PAckageData }) {
   }, [SidebarData, adultNumber, youthNumber, childrenNumber]);
 
   useEffect(() => {
-    // Ensure localStorage operations are only performed on the client side
     if (typeof window !== "undefined") {
       localStorage.setItem("AdultPrice&count", JSON.stringify(priceObject));
     }
   }, [priceObject]);
+
+  // handle booking
+
+  const router = useRouter();
+
+  const SelectedAllPrice =
+    JSON.parse(total) +
+    JSON.parse(selectedmekkaHotelPrice) +
+    JSON.parse(selectedMadinaHotelPrice) +
+    JSON.parse(SelectedAirlinePrice);
+
+    const FlightAndHotelPrice =  JSON.parse(selectedmekkaHotelPrice) +
+    JSON.parse(selectedMadinaHotelPrice) +
+    JSON.parse(SelectedAirlinePrice);
+
+  const handleBooking = () => {
+    if (
+      HotelSelect.mekkaPrice > 0 &&
+      HotelSelect.madinaPrice > 0 &&
+      selectedFlights !== null &&
+      selectedFlights.price > 0 // Check for valid flight
+    ) {
+      // Proceed to the next step, e.g., form submission or navigation
+      console.log("Proceeding to the next step...");
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          "SelectedPackageHotelNDFlight",
+          JSON.stringify(FlightAndHotelPrice)
+        );
+      }
+      router.push(
+        `/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights.name}`
+      );
+    } else {
+      // Show an alert or disable the proceed button
+      alert(
+        "Please select valid hotels for both Mekka and Madina with valid prices, and a flight."
+      );
+    }
+  };
 
   return (
     <div className="tourSingleSidebar">
@@ -281,11 +383,11 @@ export default function TourSingleSidebar({ PAckageData }) {
         } else if (group.price_type === "2") {
           count = youthNumber;
           setCount = setYouthNumber;
-          typeLabel = "Youth";
+          typeLabel = "child";
         } else if (group.price_type === "3") {
           count = childrenNumber;
           setCount = setChildrenNumber;
-          typeLabel = "Children";
+          typeLabel = "baby";
         } else {
           return null;
         }
@@ -349,9 +451,11 @@ export default function TourSingleSidebar({ PAckageData }) {
                       })}
                       checked={
                         HotelSelect.mekka &&
-                        JSON.parse(HotelSelect.mekka).hotel_id === elm.id
+                        JSON.parse(HotelSelect.mekka).hotel_name ===
+                          elm.hotel_name
                       }
-                      onChange={handleHotelChange}
+                      onChange={handleRadioChange}
+                      required
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
@@ -370,7 +474,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
         <hr />
 
-        <h5 className="text-18 fw-500 mb-20 mt-20">s
+        <h5 className="text-18 fw-500 mb-20 mt-20">
           {translate("Hotel For Madina")}
         </h5>
 
@@ -389,9 +493,10 @@ export default function TourSingleSidebar({ PAckageData }) {
                       })}
                       checked={
                         HotelSelect.madina &&
-                        JSON.parse(HotelSelect.madina).hotel_id === elm.id
+                        JSON.parse(HotelSelect.madina).hotel_name ===
+                          elm.hotel_name
                       }
-                      onChange={handleHotelChange}
+                      onChange={handleRadioChange}
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
@@ -459,17 +564,20 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
         <div>
-          {FlightName?.airline?.map((elm, i) => (
+          <h5 className="text-18 fw-500 mb-20 mt-20">
+            {translate("Select Flight")}
+          </h5>
+          {SidebarData?.tour_details?.airlines?.map((elm, i) => (
             <div className="d-flex items-center justify-between my-1" key={i}>
               <div className="d-flex items-center">
                 <div className="form-radio d-flex items-center">
                   <label className="radio d-flex items-center">
                     <input
                       type="radio"
-                      name="flight"
-                      value={elm.id}
-                      checked={selectedFlights?.id === elm.id} // Check if the flight is selected
-                      onChange={(e) => handleFlightChange(e, elm)} // Handle flight change
+                      name={`${elm.flight_id} ( No Stop )`}
+                      value={elm.flight_id}
+                      checked={selectedFlights?.id === elm.flight_id} // Check if the flight is selected
+                      onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
                     />
                     <span className="radio__mark">
                       <span className="radio__icon"></span>
@@ -478,13 +586,13 @@ export default function TourSingleSidebar({ PAckageData }) {
                       {elm.airline_name != null
                         ? elm.airline_name
                         : "not found"}{" "}
-                      (No Stop)
+                      ( {elm.no_of_stop} Stop )
                     </span>
                   </label>
                 </div>
               </div>
 
-              <div className="text-14">{elm?.price} €</div>
+              <div className="text-14">{elm?.flight_amount} €</div>
             </div>
           ))}
         </div>
@@ -505,7 +613,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <div className="js-select-control-chosen">
                     {selectDeparture?.name
                       ? selectDeparture?.name
-                      : "Choose City"}
+                      : ""}
                   </div>
                 </div>
                 <div className="searchFormItem__icon_chevron">
@@ -523,7 +631,7 @@ export default function TourSingleSidebar({ PAckageData }) {
               >
                 <div className="searchFormItemDropdown__container">
                   <div className="searchFormItemDropdown__list sroll-bar-1">
-                    {Departure?.departure?.map((elm, i) => (
+                    {SidebarData?.tour_details?.departures?.map((elm, i) => (
                       <div
                         key={i}
                         onClick={() => {
@@ -555,27 +663,25 @@ export default function TourSingleSidebar({ PAckageData }) {
       <div className="d-flex items-center justify-between pt-1">
         <div className="text-18 fw-500">Total:</div>
         <div>
-          <div className="text-18 fw-500">
-            {/* {(
-              SidebarData?.tour_price[0].price * adultNumber +
-              SidebarData?.tour_price[1].price * youthNumber +
-              SidebarData?.tour_price[2].price * childrenNumber +
-              extraCharge * 1
-            ).toFixed(2)}{" "} */}
-            {total} €
-          </div>
+          <div className="text-18 fw-500">{SelectedAllPrice} €</div>
         </div>
       </div>
 
       <p className="text-right">Including Taxes And Fees</p>
 
-      <Link
-        href={`/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights?.name}`}
+      <button
+        className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"
+        type="submite"
+        onClick={handleBooking}
+        disabled={
+          HotelSelect.mekkaPrice === 0 ||
+          HotelSelect.madinaPrice === 0 ||
+          !selectedFlights ||
+          selectedFlights.price === 0
+        }
       >
-        <button className="button -md -info-2 col-12 bg-accent-1 text-white mt-20">
-          {translate("Book Now")}
-        </button>
-      </Link>
+        {translate("Book Now")}
+      </button>
     </div>
   );
 }
