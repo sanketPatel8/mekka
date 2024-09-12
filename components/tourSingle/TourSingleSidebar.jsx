@@ -368,6 +368,9 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
+  console.log(selectDeparture.value);
+  
+
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>

@@ -40,10 +40,9 @@ const customStyles = {
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
     padding: "5px",
-    // borderRadius: '10px',
-    width: "100%", // Adjust width as needed
-    maxWidth: "700px", // Adjust max-width as needed
-    height: "90vh", // Set a specific height for the modal
+    width: "100%",
+    maxWidth: "700px",
+    height: "90vh",
     overflowY: "auto",
     backgroundColor: "#fff",
   },
@@ -138,19 +137,11 @@ export default function BookingPages({ BookingData }) {
           setAdultData(adultData);
           setChildrendata(youthData);
           setbabyData(childrenData);
-
-          // Extract the Adult object
-          // if (parsedData && parsedData.Adult) {
-          //   setAdultData(parsedData.Adult);
-          //   setChildrendata(parsedData.Youth);
-          //   setbabyData(parsedData.Children);
-          // }
         } catch (error) {
           console.error("Error parsing savedData:", error);
         }
       }
 
-      // Check if userData exists and is valid JSON
       if (userData && userData !== "undefined") {
         try {
           const userid = JSON.parse(userData);
@@ -288,11 +279,9 @@ export default function BookingPages({ BookingData }) {
     return Array.from({ length }, () => ({ ...defaultValues }));
   };
 
-  console.log("userData.name", userData.name);
-
   const [formValues, setFormValues] = useState({
     Adult: initializeFormValues(adultData?.length || 0, {
-      name: "sanket",
+      name: "",
       surname: "",
       email: "",
       mobile: "",
@@ -483,15 +472,15 @@ export default function BookingPages({ BookingData }) {
   const [ShowbtnName, setShowbtnName] = useState(false);
 
   const adultadiPrices = foundPrices
-    ?.map((price) => Number(price)) // Convert each price to a number
-    ?.reduce((acc, curr) => acc + curr, 0); // Sum all the numbers
+    ?.map((price) => Number(price))
+    ?.reduce((acc, curr) => acc + curr, 0);
 
   const totalSum =
     HandlePromo === false
-      ? PackagePrices + adultadiPrices // If HandlePromo is false, show PackagePrices + adultadiPrices
+      ? PackagePrices + adultadiPrices
       : PromoData.total_amount !== undefined
-      ? PromoData.total_amount // If PromoData.total_amount is defined, show PromoData.total_amount
-      : PackagePrices + adultadiPrices; // If PromoData.total_amount is undefined, fallback to PackagePrices + adultadiPrices
+      ? PromoData.total_amount
+      : PackagePrices + adultadiPrices;
 
   // calling api
 
@@ -528,11 +517,13 @@ export default function BookingPages({ BookingData }) {
   const FatchallBooking = async (data) => {
     try {
       const response = await post("addbooking", data);
+      console.log("response" , response);
+      
       showSuccessToast(response.Message);
       setReservationID(response.Reservations_id);
     } catch (error) {
       console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
+      showErrorToast(error?.data?.message);
     }
   };
 
@@ -573,47 +564,54 @@ export default function BookingPages({ BookingData }) {
     try {
       let promoResponse = null;
 
-      // Check if promo is entered and valid
+      // Check if a promo code is entered and valid
       if (promo) {
         promoResponse = await FetchPromoApi();
       }
 
-      // Create booking data
+      // Create booking data based on whether a promo code was used
       const bookingData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        AccessKey: "Mekka@24",
         user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
         tour_id: JSON.parse(TourId),
-        person: formValues.Adult[0],
+        person: JSON.stringify(formValues.Adult[0]),
         adult:
-          formValues.Adult.slice(1).length == 0
-            ? ""
-            : formValues.Adult.slice(1),
-        child: formValues.Child,
-        baby: formValues.Baby,
-        departure: JSON.parse(selectDeparture?.value),
+          formValues.Adult.slice(1).length === 0
+            ? null
+            : JSON.stringify(formValues.Adult.slice(1)),
+        child: formValues.Child.length === 0 ? undefined : JSON.stringify(formValues.Child),
+        baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+        departure: JSON.parse(
+          selectDeparture?.value === undefined ? 0 : selectDeparture?.value
+        ),
         adult_price: JSON.parse(adultData[0]?.default),
-        child_price: JSON.parse(Childrendata[0]?.default),
-        baby_price: JSON.parse(babyData[0]?.default),
+        child_price: JSON.parse(
+          Childrendata.length === 0 ? 0 : Childrendata[0]?.default.len
+        ),
+        baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
         total: totalSum,
         amount_paid: JSON.parse(TotalPaidAmount),
-        coupon_name: promoResponse ? promoResponse.coupon_name : "", // Use promo data if available
-        coupon_amount: JSON.parse(
-          promoResponse ? promoResponse.total_amount : 0
-        ),
-        coupon_percentage: JSON.parse(
-          promoResponse ? promoResponse.percentage : 0
-        ),
+        coupon_name: promoResponse ? promoResponse.coupon_name : "", // Only include promo data if available
+        coupon_amount: promoResponse ? promoResponse.total_amount : 0,
+        coupon_percentage: promoResponse ? promoResponse.percentage : 0,
         mekka_hotel: mekkaid,
         madina_hotel: JSON.parse(Madinaid),
-        flight_id: JSON.parse(selectedFlights?.id),
+        flight_id: JSON.parse(
+          selectedFlights?.id === undefined ? 0 : selectedFlights?.id
+        ),
         exclude_flight: JSON.parse(ExcludeFlight),
         tax: JSON.parse(formattedTaxAmount),
       };
 
+      // Store the booking data
       setBookingApiData(bookingData);
+      console.log(bookingData);
+      
     } catch (error) {
-      console.error("Error during booking:", error);
+      console.error("Error during promo submission:", error);
     }
+
+    // Reset promo state and show submit button
     setpromo("");
     setShowbtnName(true);
   };
@@ -629,9 +627,52 @@ export default function BookingPages({ BookingData }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // FatchallBooking(BookingApiData);
-    console.log("submited");
-    console.log("formValues[type]?.[i]?.[field.name]", formValues);
+
+    // Create booking data without promo code
+    const bookingData = {
+      AccessKey: "Mekka@24",
+      user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
+      tour_id: JSON.parse(TourId),
+      person: JSON.stringify(formValues.Adult[0]),
+      adult:
+        formValues.Adult.slice(1).length === 0
+          ? null
+          : JSON.stringify(formValues.Adult.slice(1)),
+      child: formValues.Child.length === 0 ? undefined : JSON.stringify(formValues.Child),
+      baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+      departure: JSON.parse(
+        selectDeparture?.value === undefined ? 0 : selectDeparture?.value
+      ),
+      adult_price: JSON.parse(adultData[0]?.default),
+      child_price: JSON.parse(
+        Childrendata.length === 0 ? 0 : Childrendata[0]?.default
+      ),
+      baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
+      total: totalSum,
+      amount_paid: JSON.parse(TotalPaidAmount),
+      coupon_name: BookingApiData?.coupon_name || "", // Use coupon from promo, if any
+      coupon_amount: BookingApiData?.coupon_amount || 0,
+      coupon_percentage: BookingApiData?.coupon_percentage || 0,
+      mekka_hotel: mekkaid,
+      madina_hotel: JSON.parse(Madinaid),
+      flight_id: JSON.parse(
+        selectedFlights?.id === undefined ? 0 : selectedFlights?.id
+      ),
+      exclude_flight: JSON.parse(ExcludeFlight),
+      tax: JSON.parse(formattedTaxAmount),
+    };
+
+    const bookingDataString = JSON.stringify(bookingData);
+
+    // Log or submit the booking data
+    console.log("Booking Data Submitted:", bookingDataString);
+
+    console.log("Booking  Submitted:", bookingData);
+
+    FatchallBooking(bookingData);
+
+    // Example: Call API to submit the booking
+    // FatchallBooking(bookingData);  // Uncomment this to call API
   };
 
   const handleExternalButtonClick = () => {
@@ -647,7 +688,6 @@ export default function BookingPages({ BookingData }) {
       console.log("User not logged in");
     }
   }, [loginPer, user]); // Dependency on `loginPer` and `userData`
-  
 
   const renderForms = (type, count) => {
     const fields = {
@@ -676,13 +716,18 @@ export default function BookingPages({ BookingData }) {
           name: "mobile",
           value: userData.mobile,
         },
-        { label: translate("City"), type: "text", name: "city", value: userData.city },
+        {
+          label: translate("City"),
+          type: "text",
+          name: "city",
+          value: userData.city,
+        },
         {
           label: translate("Gender"),
           type: "select",
           name: "gender",
           options: ["Male", "Female", "Other"],
-          value: "male",
+          value: userData.gender,
         },
         {
           label: translate("Birthday Date"),
@@ -695,6 +740,7 @@ export default function BookingPages({ BookingData }) {
           type: "select",
           name: "nationality",
           options: ["Indian", "German", "Canadian"],
+          value: userData.nationality,
         },
         {
           label: translate("House No"),
@@ -706,7 +752,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("ZIP Code"),
           type: "text",
           name: "zipcode",
-          value: userData.role,
+          value: userData.zipcode,
         },
         {
           label: translate("Street"),
@@ -818,10 +864,12 @@ export default function BookingPages({ BookingData }) {
             <div className="y-gap-30 contactForm px-20 py-20">
               <div className="my-3 row">
                 {currentFields?.map((field, index) => {
-
                   const fieldValue =
                     type === "Adult" && i === 0
-                      ? field.value === null ? formValues[type]?.[i]?.[field.name] : field.value
+                      ? field.value === null || field.value === undefined // aa value backend thi ave che to ane update kai rite kari sakay ~ deval sir 
+
+                        ? formValues[type]?.[i]?.[field.name]
+                        : field.value 
                       : formValues[type]?.[i]?.[field.name];
 
                   return (
@@ -963,6 +1011,9 @@ export default function BookingPages({ BookingData }) {
 
   return (
     <>
+
+    {/* sidebarr no aa badhi data static che to ane jyare page refrash thay tyare kai rite jato na re evu store karavi sakay  */}
+
       <section className="layout-pt-md layout-pb-lg mt-header">
         <ToastContainer />
         <div className="container">
