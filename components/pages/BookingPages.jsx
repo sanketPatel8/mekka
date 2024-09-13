@@ -83,20 +83,14 @@ export default function BookingPages({ BookingData }) {
   const [Childrendata, setChildrendata] = useState([]);
   const [babyData, setbabyData] = useState([]);
   const [AlladultsData, setAlladultsData] = useState([]);
-  const [ToursPrice, setToursPrice] = useState([]);
   const [AdditionalServices, setAdditionalServices] = useState([]);
-  const [selectedFlight, setselectedFlight] = useState([]);
+  const [Discount, setDiscount] = useState(0);
 
   const [PackagePrices, setPackagePrices] = useState(0);
   const [BookingApiData, setBookingApiData] = useState({});
 
-  // for profile data
-  const [userData, setUserData] = useState({});
-
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
-    setToursPrice(BookingData?.Tour_Details?.tour_price);
-    setselectedFlight();
   }, [BookingData]);
 
   useEffect(() => {
@@ -289,15 +283,15 @@ export default function BookingPages({ BookingData }) {
       gender: "",
       birthday: "",
       nationality: "",
-      houseno: "",
+      houseNumber: "",
       zipcode: "",
       street: "",
       from: "",
       selectedService: "", // Add field for storing selected service
-      selectedPrice: "",
-      selectedTitel: "",
-      selectedOrder: "",
-      selectedID: "",
+      price: "",
+      title: "",
+      additional_order: "",
+      additional_price_id: "",
     }),
     Child: initializeFormValues(Childrendata?.length || 0, {
       name: "",
@@ -306,10 +300,10 @@ export default function BookingPages({ BookingData }) {
       birthday: "",
       nationality: "",
       selectedService: "", // Add field for storing selected service
-      selectedPrice: "",
-      selectedTitel: "",
-      selectedOrder: "",
-      selectedID: "",
+      price: "",
+      title: "",
+      additional_order: "",
+      additional_price_id: "",
     }),
     Baby: initializeFormValues(babyData.length || 0, {
       name: "",
@@ -321,6 +315,31 @@ export default function BookingPages({ BookingData }) {
     }),
   });
 
+  // for profile data
+  const [userData, setUserData] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    mobile: "",
+    city: "",
+    gender: "",
+    birthday: "",
+    nationality: "",
+    houseNumber: "",
+    zipcode: "",
+    street: "",
+    from: "",
+    selectedService: "", // Add field for storing selected service
+    price: "",
+    title: "",
+    additional_order: "",
+    additional_price_id: "",
+  });
+
+  const [Additional, setAdditional] = useState([]);
+
+  // for form validation
+
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
@@ -331,31 +350,6 @@ export default function BookingPages({ BookingData }) {
     );
     setIsFormValid(isValid);
   }, [formValues]);
-
-  const handleInputChange = (type, index, e) => {
-    const { name, value } = e.target;
-
-    setFormValues((prevValues) => {
-      // Create a copy of the previous values
-      const updatedValues = { ...prevValues };
-
-      // Ensure the correct path exists in the state
-      if (!updatedValues[type]) {
-        updatedValues[type] = [];
-      }
-      if (!updatedValues[type][index]) {
-        updatedValues[type][index] = {};
-      }
-
-      // Update the specific field in the form values
-      updatedValues[type][index] = {
-        ...updatedValues[type][index],
-        [name]: value,
-      };
-
-      return updatedValues;
-    });
-  };
 
   const getPriceForType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -375,7 +369,38 @@ export default function BookingPages({ BookingData }) {
     return Number(personPrice[idx]?.default); // Ensure price is a number
   };
 
-  const handleRadioChange = (e, type, i, idx, price, order, tital, id) => {
+  const handleInputChange = (type, index, e) => {
+    const { name, value } = e.target;
+
+    setFormValues((prevValues) => {
+      const updatedValues = { ...prevValues };
+
+      if (!updatedValues[type]) {
+        updatedValues[type] = [];
+      }
+      if (!updatedValues[type][index]) {
+        updatedValues[type][index] = {};
+      }
+
+      // Update the form values
+      updatedValues[type][index] = {
+        ...updatedValues[type][index],
+        [name]: value,
+      };
+
+      // Optional: Update userData if type is 'Adult' and index is 0
+      if (type === "Adult" && index === 0) {
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          [name]: value, // Update userData if necessary
+        }));
+      }
+
+      return updatedValues;
+    });
+  };
+
+  const handleRadioChange = (e, type, index, price, order, title, id) => {
     const selectedValue = e.target.value;
 
     setFormValues((prevValues) => {
@@ -383,23 +408,51 @@ export default function BookingPages({ BookingData }) {
 
       // Ensure the correct path exists in the state
       if (!updatedValues[type]) {
-        updatedValues[type] = {};
+        updatedValues[type] = [];
       }
-      if (!updatedValues[type][i]) {
-        updatedValues[type][i] = {};
+      if (!updatedValues[type][index]) {
+        updatedValues[type][index] = {};
       }
 
-      // Set the selected service value
-      updatedValues[type][i].selectedService = selectedValue;
-      updatedValues[type][i].selectedPrice = price;
-      (updatedValues[type][i].selectedTitel = tital),
-        (updatedValues[type][i].selectedOrder = order),
-        (updatedValues[type][i].selectedID = id);
+      // Update the form values with the new radio button selection
+      updatedValues[type][index] = {
+        ...updatedValues[type][index],
+        selectedService: selectedValue,
+        price: price,
+        title: title,
+        additional_order: order,
+        additional_price_id: id,
+      };
+
+      // Optional: Update userData if type is 'Adult' and index is 0
+      if (type === "Adult" && index === 0) {
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          selectedService: selectedValue,
+          price: price,
+          title: title,
+          additional_order: order,
+          additional_price_id: id,
+        }));
+      }
 
       return updatedValues;
     });
 
-    updatePriceByTypeAndIndex(type, i, price);
+    setAdditional((prevAdditional) => [
+      ...prevAdditional,
+      {
+        type,
+        index,
+        price,
+        order,
+        title,
+        id,
+      },
+    ]);
+
+    // Call any function to update additional values based on the type and index
+    updatePriceByTypeAndIndex(type, index, price);
   };
 
   const updatePriceByTypeAndIndex = (type, index, newPrice) => {
@@ -497,6 +550,7 @@ export default function BookingPages({ BookingData }) {
       const PromoResponse = await post("check_coupon", sendData);
       if (PromoResponse.Status == 1) {
         showSuccessToast(PromoResponse.Message);
+        setDiscount(PromoResponse.Discount);
         setHandlePromo(true);
       } else {
         showErrorToast("Invalid promo code.");
@@ -517,9 +571,12 @@ export default function BookingPages({ BookingData }) {
   const FatchallBooking = async (data) => {
     try {
       const response = await post("addbooking", data);
-      console.log("response" , response);
-      
+      console.log("response", response);
+
       showSuccessToast(response.Message);
+      setTimeout(() => {
+        showSuccessToast(response.Reservations_id);
+      }, 2000);
       setReservationID(response.Reservations_id);
     } catch (error) {
       console.error("Error caught:", error);
@@ -536,16 +593,36 @@ export default function BookingPages({ BookingData }) {
       token: `${user?.authorisation.token}`,
     });
 
-    setUserData(response.user);
+    // Handle case where response.user is a single object
+    if (response.user && typeof response.user === "object") {
+      const userProfile = response.user;
+      setUserData({
+        name: userProfile.name || "",
+        surname: userProfile.surname || "",
+        email: userProfile.email || "",
+        mobile: userProfile.mobile || "",
+        city: userProfile.city || "",
+        gender: userProfile.gender || "",
+        birthday: userProfile.birthday || "",
+        nationality: userProfile.nationality || "",
+        houseNumber: userProfile.houseNumber || "",
+        zipcode: userProfile.zipcode || "",
+        street: userProfile.street || "",
+        from: userProfile.from || "",
+        selectedService: userProfile.selectedService || "",
+        price: userProfile.price || "",
+        title: userProfile.title || "",
+        additional_order: userProfile.additional_order || "",
+        additional_price_id: userProfile.additional_price_id || "",
+        address: userProfile.address || "",
+      });
+    } else {
+      console.error("Unexpected response structure:", response);
+    }
 
     console.log("response", response);
 
-    if (Array.isArray(response.user) && response.user.length > 0) {
-      // Assuming response.user is an array of profiles
-      return response.user;
-    }
-
-    return [];
+    return response.user ? [response.user] : [];
   };
 
   const taxRate = 0.19;
@@ -556,7 +633,7 @@ export default function BookingPages({ BookingData }) {
 
   const formattedTaxAmount = taxAmount.toFixed(2);
 
-  const TotalPaidAmount = totalWithTax;
+  const TotalPaidAmount = totalWithTax.toFixed(2);
 
   // for form sunmiter button onclick event
 
@@ -579,8 +656,12 @@ export default function BookingPages({ BookingData }) {
           formValues.Adult.slice(1).length === 0
             ? null
             : JSON.stringify(formValues.Adult.slice(1)),
-        child: formValues.Child.length === 0 ? undefined : JSON.stringify(formValues.Child),
-        baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+        child:
+          formValues.Child.length === 0
+            ? undefined
+            : JSON.stringify(formValues.Child),
+        baby:
+          formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
         departure: JSON.parse(
           selectDeparture?.value === undefined ? 0 : selectDeparture?.value
         ),
@@ -588,7 +669,9 @@ export default function BookingPages({ BookingData }) {
         child_price: JSON.parse(
           Childrendata.length === 0 ? 0 : Childrendata[0]?.default.len
         ),
-        baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
+        baby_price: JSON.parse(
+          babyData.length === 0 ? 0 : babyData[0]?.default
+        ),
         total: totalSum,
         amount_paid: JSON.parse(TotalPaidAmount),
         coupon_name: promoResponse ? promoResponse.coupon_name : "", // Only include promo data if available
@@ -606,7 +689,6 @@ export default function BookingPages({ BookingData }) {
       // Store the booking data
       setBookingApiData(bookingData);
       console.log(bookingData);
-      
     } catch (error) {
       console.error("Error during promo submission:", error);
     }
@@ -625,69 +707,13 @@ export default function BookingPages({ BookingData }) {
     setShowbtnName(false);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Create booking data without promo code
-    const bookingData = {
-      AccessKey: "Mekka@24",
-      user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
-      tour_id: JSON.parse(TourId),
-      person: JSON.stringify(formValues.Adult[0]),
-      adult:
-        formValues.Adult.slice(1).length === 0
-          ? null
-          : JSON.stringify(formValues.Adult.slice(1)),
-      child: formValues.Child.length === 0 ? undefined : JSON.stringify(formValues.Child),
-      baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
-      departure: JSON.parse(
-        selectDeparture?.value === undefined ? 0 : selectDeparture?.value
-      ),
-      adult_price: JSON.parse(adultData[0]?.default),
-      child_price: JSON.parse(
-        Childrendata.length === 0 ? 0 : Childrendata[0]?.default
-      ),
-      baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
-      total: totalSum,
-      amount_paid: JSON.parse(TotalPaidAmount),
-      coupon_name: BookingApiData?.coupon_name || "", // Use coupon from promo, if any
-      coupon_amount: BookingApiData?.coupon_amount || 0,
-      coupon_percentage: BookingApiData?.coupon_percentage || 0,
-      mekka_hotel: mekkaid,
-      madina_hotel: JSON.parse(Madinaid),
-      flight_id: JSON.parse(
-        selectedFlights?.id === undefined ? 0 : selectedFlights?.id
-      ),
-      exclude_flight: JSON.parse(ExcludeFlight),
-      tax: JSON.parse(formattedTaxAmount),
-    };
-
-    const bookingDataString = JSON.stringify(bookingData);
-
-    // Log or submit the booking data
-    console.log("Booking Data Submitted:", bookingDataString);
-
-    console.log("Booking  Submitted:", bookingData);
-
-    FatchallBooking(bookingData);
-
-    // Example: Call API to submit the booking
-    // FatchallBooking(bookingData);  // Uncomment this to call API
-  };
-
-  const handleExternalButtonClick = () => {
-    if (formRef.current) {
-      formRef.current.requestSubmit(); // This triggers form submission
-    }
-  };
-
   useEffect(() => {
     if (loginPer === true) {
       fetchProfile();
     } else {
       console.log("User not logged in");
     }
-  }, [loginPer, user]); // Dependency on `loginPer` and `userData`
+  }, [loginPer, user]);
 
   const renderForms = (type, count) => {
     const fields = {
@@ -745,7 +771,7 @@ export default function BookingPages({ BookingData }) {
         {
           label: translate("House No"),
           type: "text",
-          name: "houseno",
+          name: "houseNumber",
           value: userData.houseNumber,
         },
         {
@@ -760,7 +786,6 @@ export default function BookingPages({ BookingData }) {
           name: "street",
           value: userData.street,
         },
-        ,
       ],
       adultFieldsForExtraAdults: [
         { label: translate("Name"), type: "text", name: "name" },
@@ -865,11 +890,8 @@ export default function BookingPages({ BookingData }) {
               <div className="my-3 row">
                 {currentFields?.map((field, index) => {
                   const fieldValue =
-                    type === "Adult" && i === 0
-                      ? field.value === null || field.value === undefined // aa value backend thi ave che to ane update kai rite kari sakay ~ deval sir 
-
-                        ? formValues[type]?.[i]?.[field.name]
-                        : field.value 
+                    loginPer === true && type === "Adult" && i === 0
+                      ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 
                   return (
@@ -1007,12 +1029,89 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  const PackageBookingData = {
+    Airline: selectedFlights?.name == "" ? "Please Flight Select" : selectedFlights?.name,
+    To: SharePackageData?.Tour_Details?.tour_details?.travel ,
+    Departure: SharePackageData?.Tour_Details?.tour_details?.date_begin,
+    Return: SharePackageData?.Tour_Details?.tour_details?.date_end,
+    OfferedLanguages: SharePackageData?.Tour_Details?.en_language,
+    MaxLuggagePerPerson: SharePackageData?.Tour_Details?.tour_details?.baggage,
+    MakkaHotel:  mekkaHotelName == "" ? "Please Hotel Select" : mekkaHotelName,
+    MadinaHotel:  madinaHotelName == "" ? "Please Hotel Select" : madinaHotelName,
+    additionService: Additional,
+    Subtotal: totalSum ,
+    Tax: formattedTaxAmount,
+    Discount: Discount,
+    AmountDue: TotalPaidAmount,
+  };
+
+  const bookingData = {
+    AccessKey: "Mekka@24",
+    user_id:
+      loginPer === true ? JSON.parse(UserID.id !== null ? UserID.id : 0) : 0,
+    tour_id: JSON.parse(TourId),
+    person:
+      loginPer == true
+        ? JSON.stringify(userData)
+        : JSON.stringify(formValues.Adult[0]),
+    adult:
+      formValues.Adult.slice(1).length === 0
+        ? null
+        : JSON.stringify(formValues.Adult.slice(1)),
+    child:
+      formValues.Child.length === 0
+        ? undefined
+        : JSON.stringify(formValues.Child),
+    baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+    departure: JSON.parse(
+      selectDeparture?.value === undefined ? 0 : selectDeparture?.value
+    ),
+    adult_price: JSON.parse(adultData.length === 0 ? 0 : adultData[0]?.default),
+    child_price: JSON.parse(
+      Childrendata.length === 0 ? 0 : Childrendata[0]?.default
+    ),
+    baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
+    total: totalSum,
+    amount_paid: JSON.parse(TotalPaidAmount),
+    coupon_name: BookingApiData?.coupon_name || "",
+    coupon_amount: BookingApiData?.coupon_amount || 0,
+    coupon_percentage: BookingApiData?.coupon_percentage || 0,
+    mekka_hotel: mekkaid,
+    madina_hotel: JSON.parse(Madinaid),
+    flight_id: JSON.parse(
+      selectedFlights?.id === undefined ? 0 : selectedFlights?.id
+    ),
+    exclude_flight: JSON.parse(ExcludeFlight),
+    tax: JSON.parse(formattedTaxAmount),
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Booking  Submitted:", bookingData);
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("BookingData", JSON.stringify(bookingData));
+      localStorage.setItem(
+        "PackageBookingData",
+        JSON.stringify(PackageBookingData)
+      );
+    }
+
+    router.push("/payment");
+  };
+
+  const handleExternalButtonClick = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit(); // This triggers form submission
+    }
+  };
+
   const { translate } = useTranslation();
 
   return (
     <>
-
-    {/* sidebarr no aa badhi data static che to ane jyare page refrash thay tyare kai rite jato na re evu store karavi sakay  */}
+      {/* sidebarr no aa badhi data static che to ane jyare page refrash thay tyare kai rite jato na re evu store karavi sakay  */}
 
       <section className="layout-pt-md layout-pb-lg mt-header">
         <ToastContainer />
@@ -1142,7 +1241,6 @@ export default function BookingPages({ BookingData }) {
                       <div className="text-start">
                         {translate("Return")}:{" "}
                         {SharePackageData?.Tour_Details?.tour_details?.date_end}{" "}
-                        23:00
                       </div>
                     </div>
 

@@ -23,6 +23,7 @@ export default function Payment() {
   const [selectedOption, setSelectedOption] = useState("adPay");
   const [installmentChecked, setInstallmentChecked] = useState(false);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+  const [SideBarData, setSideBarData] = useState({});
 
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
@@ -41,12 +42,29 @@ export default function Payment() {
     console.log("Selected room type:", roomType);
   }, [roomType]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const sidebardata = localStorage.getItem("PackageBookingData");
+
+      if (sidebardata && sidebardata !== "undefined") {
+        try {
+          const asSidebarrData = JSON.parse(sidebardata);
+
+          setSideBarData(asSidebarrData);
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+      }
+    }
+  }, []);
+
+  console.log("SideBarData", SideBarData.additionService);
+
   const { translate } = useTranslation();
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
       <div className="container">
-
         <div className="row">
           <div className="col-lg-8 px-0 col-11 mx-auto">
             <h2
@@ -54,7 +72,7 @@ export default function Payment() {
                 bookingStage === 2 ? "d-none" : "d-block"
               }`}
             >
-               {translate("Payment Methods") }
+              {translate("Payment Methods")}
             </h2>
 
             <div className="bg-white rounded py-30">
@@ -65,7 +83,7 @@ export default function Payment() {
                     id="ref"
                   >
                     <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
-                      <b> {translate("Payment Methods") }</b>
+                      <b> {translate("Payment Methods")}</b>
                     </p>
                     <div className="px-3">
                       <div className="d-flex items-center pointer-check py-3">
@@ -98,7 +116,9 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="item2" className="lh-16 ml-15">
-                        {translate("Payment in advance. Payment installment is possible.") }
+                          {translate(
+                            "Payment in advance. Payment installment is possible."
+                          )}
                         </label>
                       </div>
 
@@ -140,10 +160,14 @@ export default function Payment() {
                         <div className="col-md-6 col-12 my-md-0 my-3">
                           <div className="p-2 border-5 d-inline-block">
                             <p className="py-2">
-                              {translate("You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well.") }
+                              {translate(
+                                "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
+                              )}
                             </p>
                             <p className="text-red">
-                            {translate("Note: Please make the payment within next 7 days. Post that the order will be cancelled.") }
+                              {translate(
+                                "Note: Please make the payment within next 7 days. Post that the order will be cancelled."
+                              )}
                             </p>
                           </div>
                         </div>
@@ -182,7 +206,9 @@ export default function Payment() {
                                 </label>
                               </div>
                               <label htmlFor="item4" className="lh-16 ml-15">
-                              {translate("Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)") }
+                                {translate(
+                                  "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
+                                )}
                               </label>
                             </div>
                           </div>
@@ -219,7 +245,7 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="installment" className="lh-16 ml-15">
-                        {translate("Click for Installment Payment") }
+                          {translate("Click for Installment Payment")}
                         </label>
                       </div>
 
@@ -344,7 +370,9 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="item5" className="lh-16 ml-15">
-                        {translate("Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH") }
+                          {translate(
+                            "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH"
+                          )}
                         </label>
                       </div>
 
@@ -376,7 +404,9 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="agbAcceptance" className="lh-16 ml-15">
-                        {translate("I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE.") }
+                          {translate(
+                            "I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE."
+                          )}
                         </label>
                       </div>
                     </div>
@@ -386,18 +416,24 @@ export default function Payment() {
                     id="ref"
                   >
                     <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
-                      <b> {translate("Cancellation Rules") }</b>
+                      <b> {translate("Cancellation Rules")}</b>
                     </p>
                     <div className="px-3">
                       <ul className="">
                         <li className="text-center py-1">
-                        {translate("15% if canceled before 90 days of the trip") }
+                          {translate(
+                            "15% if canceled before 90 days of the trip"
+                          )}
                         </li>
                         <li className="text-center py-1">
-                        {translate("60% if canceled before 30 days of the trip") }
+                          {translate(
+                            "60% if canceled before 30 days of the trip"
+                          )}
                         </li>
                         <li className="text-center py-1">
-                        {translate("100% if canceled before 7 days of the trip") }
+                          {translate(
+                            "100% if canceled before 7 days of the trip"
+                          )}
                         </li>
                       </ul>
                     </div>
@@ -414,10 +450,12 @@ export default function Payment() {
                       </div>
 
                       <h2 className="text-30 md:text-24 fw-700 mt-20">
-                      {translate("Your order was submitted successfully!") }
+                        {translate("Your order was submitted successfully!")}
                       </h2>
                       <div className="mt-10">
-                      {translate(" Booking details have been sent to: mekkabooking.com") }
+                        {translate(
+                          " Booking details have been sent to: mekkabooking.com"
+                        )}
                       </div>
                     </div>
 
@@ -493,7 +531,10 @@ export default function Payment() {
           <div className="col-lg-4">
             <div className="">
               <div className="bg-white rounded-12 border-1 shadow-2 py-20 px-20 md:py-20 md:px-20">
-                <h2 className="text-20 fw-500">Reservation Details</h2>
+                <h2 className="text-20 fw-500">
+                  {" "}
+                  {translate("Reservation Details")}
+                </h2>
 
                 <div className="d-flex mt-30">
                   <Image
@@ -513,17 +554,8 @@ export default function Payment() {
                       <FaTelegramPlane size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      Airline: Saudia, Turkish Airlines
+                      {translate("Airline")} : {SideBarData.Airline}
                     </div>
-                  </div>
-
-                  <div className="line mt-5 mb-5"></div>
-
-                  <div className="d-flex items-center justify-content-space-arround">
-                    <div className="mr-5">
-                      <MdFlightTakeoff size={25} color="#DAC04F" />
-                    </div>
-                    <div className="text-start">From: Berlin (BER)</div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -532,7 +564,10 @@ export default function Payment() {
                     <div className="mr-5">
                       <MdFlightLand htTakeoff size={25} color="#DAC04F" />
                     </div>
-                    <div className="text-start">Ankunft: Medina</div>
+                    <div className="text-start">
+                      {" "}
+                      {translate("Arrival")} : Medina {SideBarData.Arrival}
+                    </div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -542,7 +577,7 @@ export default function Payment() {
                       <MdFlightTakeoff size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      Departure : 08.09.2024 : 18:00
+                      {translate("Departure")} : {SideBarData.Departure}
                     </div>
                   </div>
 
@@ -552,7 +587,10 @@ export default function Payment() {
                     <div className="mr-5">
                       <MdFlightLand size={25} color="#DAC04F" />
                     </div>
-                    <div className="text-start">Return : 16.09.2024 23:00</div>
+                    <div className="text-start">
+                      {" "}
+                      {translate("Return")} : {SideBarData.Return}
+                    </div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -562,7 +600,8 @@ export default function Payment() {
                       <TbWorld size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      Offered Languages: German, Turkish, Arabic
+                      {translate("Offered Languages")} :{" "}
+                      {SideBarData.OfferedLanguages} German, Turkish, Arabic
                     </div>
                   </div>
 
@@ -573,7 +612,8 @@ export default function Payment() {
                       <FaLuggageCart size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      Max Luggage Per Person: 30 kg
+                      {translate("Max Luggage Per Person")} :{" "}
+                      {SideBarData.MaxLuggagePerPerson}
                     </div>
                   </div>
 
@@ -583,7 +623,11 @@ export default function Payment() {
                     <div className="mr-5">
                       <FaHotel size={20} color="#DAC04F" />
                     </div>
-                    <div className="text-start">Makka - (Hotel name)</div>
+                    <div className="text-start">
+                      {" "}
+                      {translate("Makka")} - {SideBarData.MakkaHotel} (Hotel
+                      name)
+                    </div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -592,7 +636,11 @@ export default function Payment() {
                     <div className="mr-5">
                       <FaHotel size={20} color="#DAC04F" />
                     </div>
-                    <div className="text-start">Madina - (Hotel name)</div>
+                    <div className="text-start">
+                      {" "}
+                      {translate("Madina")} - {SideBarData.MadinaHotel} (Hotel
+                      name)
+                    </div>
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
@@ -606,64 +654,39 @@ export default function Payment() {
                   </p>
                   <div className="line my-2"></div>
 
-                  <div className="row">
-                    <p className="col-lg-1 col-1">
-                      <IoIosBed color="#dabf4f" size={20} />
-                    </p>
-                    <p className="col-lg-5 col-5">4 Bettzimmer (Standard)</p>
-                    <p className="col-lg-4 col-3">+0,00 € x1</p>
-                    <p className="col-lg-2 col-2">0,0€</p>
-                  </div>
-
-                  <div className="row">
-                    <p className="col-lg-1 col-1">
-                      <IoIosBed color="#dabf4f" size={20} />
-                    </p>
-                    <p className="col-lg-5 col-5">3 Bettzimmer</p>
-                    <p className="col-lg-4 col-3">+ 100,00 € x0 </p>
-                    <p className="col-lg-2 col-2">0,0€</p>
-                  </div>
-
-                  <div className="row">
-                    <p className="col-lg-1 col-1">
-                      <IoIosBed color="#dabf4f" size={20} />
-                    </p>
-                    <p className="col-lg-5 col-5">2 Bettzimmer</p>
-                    <p className="col-lg-4 col-3">+ 230,00 € x0</p>
-                    <p className="col-lg-2 col-2">0,0€</p>
-                  </div>
-
-                  <div className="row">
-                    <p className="col-lg-1 col-1">
-                      <IoIosBed color="#dabf4f" size={20} />
-                    </p>
-                    <p className="col-lg-5 col-5">1 Bettzimmer</p>
-                    <p className="col-lg-4 col-3">+ 450,00 € x0</p>
-                    <p className="col-lg-2 col-2">0,0€</p>
-                  </div>
+                  {SideBarData?.additionService?.map((e) => (
+                    <div key={e.id} className="row">
+                      <p className="col-lg-1 col-1">
+                        <IoIosBed color="#dabf4f" size={20} />
+                      </p>
+                      <p className="col-lg-5 col-5">{e.id}</p>
+                      <p className="col-lg-4 col-3">+0,00 € x1</p>
+                      <p className="col-lg-2 col-2">{e.order}</p>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="line mt-10 mb-10"></div>
 
                 <div className="">
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Subtotal</div>
-                    <div className=""> 182 € </div>
+                    <div className="fw-500"> {translate("Subtotal")}</div>
+                    <div className=""> {SideBarData.Subtotal} € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
-                    <p className="fw-500">Tax</p>
-                    <div className=""> 23 € </div>
+                    <p className="fw-500"> {translate("Tax")}</p>
+                    <div className=""> {SideBarData.Tax} € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Discount</div>
-                    <div className="">-23 € </div>
+                    <div className="fw-500"> {translate("Discount")}</div>
+                    <div className="">-{SideBarData.Discount} € </div>
                   </div>
 
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500">Amount Due</div>
-                    <div className=""> 43,242€ </div>
+                    <div className="fw-500"> {translate("Amount Due")}</div>
+                    <div className=""> {SideBarData.AmountDue}€ </div>
                   </div>
                 </div>
 
