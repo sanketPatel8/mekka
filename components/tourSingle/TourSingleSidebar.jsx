@@ -43,46 +43,6 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [selectedMadinaHotelPrice, setselectedMadinaHotelPrice] = useState(0);
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
 
-  // const handleRadioChange = (e , price) => {
-  //   const { value, name } = e.target;
-  //   const selectedHotel = JSON.parse(value);
-
-  //   if (name === "mekka") {
-  //     // Update the HotelSelect state with the selected Mekka hotel details
-  //     setHotelSelect((prevSelect) => ({
-  //       ...prevSelect,
-  //       mekka: value,
-  //       mekkaPrice:
-  //         SidebarData?.tour_hotels?.mekka_hotels.find(
-  //           (hotel) => hotel.id === selectedHotel.hotel_id
-  //         )?.hotel_price || 0,
-  //       mekkaId: selectedHotel.hotel_id,
-  //     }));
-  //     setselectedmekkaHotelPrice(price)
-  //   } else if (name === "madina") {
-  //     // Update the HotelSelect state with the selected Madina hotel details
-  //     setHotelSelect((prevSelect) => ({
-  //       ...prevSelect,
-  //       madina: value,
-  //       madinaPrice:
-  //         SidebarData?.tour_hotels?.medina_hotels.find(
-  //           (hotel) => hotel.id === selectedHotel.hotel_id
-  //         )?.hotel_price || 0,
-  //       madinaId: selectedHotel.hotel_id,
-  //     }));
-  //   }
-  // };
-
-  // const handleHotelChange = (e, elm , price) => {
-  //   const selectedFlight = {
-  //     id: elm.flight_id,
-  //     name: elm.airline_name,
-  //     price: elm.flight_amount
-  //   };
-  //   setSelectedFlights(selectedFlight); // Replace with the selected flight object
-  //   setSelectedAirlinePrice(selectedFlight.price)
-  // };
-
   useEffect(() => {
     if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
       const firstMekkaHotel = SidebarData.tour_hotels.mekka_hotels[0];
@@ -206,7 +166,7 @@ export default function TourSingleSidebar({ PAckageData }) {
         (Number(extraCharge) || 0);
 
       if (!isNaN(calculatedTotal)) {
-        console.log("calculatedTotal", calculatedTotal);
+ 
 
         setTotal(calculatedTotal.toFixed(2));
       } else {
@@ -338,9 +298,28 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(SelectedAirlinePrice);
 
-    const FlightAndHotelPrice =  JSON.parse(selectedmekkaHotelPrice) +
+  const FlightAndHotelPrice =
+    JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(SelectedAirlinePrice);
+
+    
+    const mekkaHotel = JSON.parse(HotelSelect.mekka);
+    const madinaHotel = JSON.parse(HotelSelect.madina)
+    
+
+  const PackageBookingData = {
+    Airline: selectedFlights,
+    To: SidebarData?.tour_details?.travel,
+    Departure: [ SidebarData?.tour_details?.date_begin , selectDeparture?.name ],
+    Return: SidebarData?.tour_details?.date_end,
+    OfferedLanguages: SidebarData?.en_language,
+    MaxLuggagePerPerson: SidebarData?.tour_details?.baggage,
+    MakkaHotel: mekkaHotel ,
+    MadinaHotel: madinaHotel
+    
+    
+  };
 
   const handleBooking = () => {
     if (
@@ -350,11 +329,16 @@ export default function TourSingleSidebar({ PAckageData }) {
       selectedFlights.price > 0 // Check for valid flight
     ) {
       // Proceed to the next step, e.g., form submission or navigation
-      console.log("Proceeding to the next step...");
+      
       if (typeof window !== "undefined") {
         localStorage.setItem(
           "SelectedPackageHotelNDFlight",
           JSON.stringify(FlightAndHotelPrice)
+        );
+
+        localStorage.setItem(
+          "PackageBookingData",
+          JSON.stringify(PackageBookingData)
         );
       }
       router.push(
@@ -368,8 +352,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
-  console.log(selectDeparture.value);
-  
 
   return (
     <div className="tourSingleSidebar">
@@ -608,15 +590,13 @@ export default function TourSingleSidebar({ PAckageData }) {
               {/* Dropdown Button */}
               <div
                 className="searchFormItem__button"
-                onClick={() => setActiveTimeDD((pre) => !pre)} // Toggle dropdown
+                onClick={() => setActiveTimeDD((pre) => !pre)}
                 data-x-click="time"
               >
                 <div className="searchFormItem__content">
                   <h5>Departure</h5>
                   <div className="js-select-control-chosen">
-                    {selectDeparture?.name
-                      ? selectDeparture?.name
-                      : ""}
+                    {selectDeparture?.name ? selectDeparture?.name : ""}
                   </div>
                 </div>
                 <div className="searchFormItem__icon_chevron">
@@ -674,7 +654,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <button
         className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"
-        type="submite"
+        type="submit"
         onClick={handleBooking}
         disabled={
           HotelSelect.mekkaPrice === 0 ||

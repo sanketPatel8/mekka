@@ -89,6 +89,8 @@ export default function BookingPages({ BookingData }) {
   const [PackagePrices, setPackagePrices] = useState(0);
   const [BookingApiData, setBookingApiData] = useState({});
 
+  const [BookingSideBar, setBookingSideBar] = useState({});
+
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
   }, [BookingData]);
@@ -106,6 +108,8 @@ export default function BookingPages({ BookingData }) {
       const userData = localStorage.getItem("user");
 
       const PackagePrice = localStorage.getItem("SelectedPackageHotelNDFlight");
+
+      const SidebarData = localStorage.getItem("PackageBookingData");
 
       // Check if savedData exists and is valid JSON
       if (savedData && savedData !== "undefined") {
@@ -172,38 +176,21 @@ export default function BookingPages({ BookingData }) {
           console.error("Error parsing savedData:", error);
         }
       }
+
+      if (SidebarData && SidebarData !== "undefined") {
+        try {
+          const BookingSideData = JSON.parse(SidebarData);
+          setBookingSideBar(BookingSideData);
+        } catch (error) {
+          console.error("Error parsing savedData:", error);
+        }
+      }
     }
   }, []);
 
   // for adult prices array
 
   let foundPrices = AlladultsData?.map((item) => item.price);
-
-  let mekkaHotelName = "no select";
-  let madinaHotelName = "no select";
-  let mekkaid = 0;
-  let Madinaid = 0;
-
-  try {
-    // Ensure HotelSelect.mekka is a valid JSON string
-    if (HotelSelect.mekka) {
-      const mekkaHotelData = JSON.parse(HotelSelect.mekka);
-      mekkaHotelName = mekkaHotelData.hotel_name || "No Selected";
-      mekkaid = mekkaid.hotel_id || 0;
-    }
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-  }
-
-  try {
-    if (HotelSelect.madina) {
-      const madinaHotel = JSON.parse(HotelSelect.madina);
-      madinaHotelName = madinaHotel.hotel_name || "No Selected";
-      Madinaid = madinaHotel.hotel_id || 0;
-    }
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-  }
 
   const HandleLogInDataChange = (e) => {
     const { name, value } = e.target;
@@ -520,7 +507,7 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  const [ReservationID, setReservationID] = useState("");
+
   const [HandlePromo, setHandlePromo] = useState(false);
   const [ShowbtnName, setShowbtnName] = useState(false);
 
@@ -567,22 +554,6 @@ export default function BookingPages({ BookingData }) {
   };
 
   // fathch new booking api
-
-  const FatchallBooking = async (data) => {
-    try {
-      const response = await post("addbooking", data);
-      console.log("response", response);
-
-      showSuccessToast(response.Message);
-      setTimeout(() => {
-        showSuccessToast(response.Reservations_id);
-      }, 2000);
-      setReservationID(response.Reservations_id);
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast(error?.data?.message);
-    }
-  };
 
   // fatch profileapi
 
@@ -1029,22 +1000,6 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const PackageBookingData = {
-    Airline: selectedFlights?.name == "" ? "Please Flight Select" : selectedFlights?.name,
-    To: SharePackageData?.Tour_Details?.tour_details?.travel ,
-    Departure: SharePackageData?.Tour_Details?.tour_details?.date_begin,
-    Return: SharePackageData?.Tour_Details?.tour_details?.date_end,
-    OfferedLanguages: SharePackageData?.Tour_Details?.en_language,
-    MaxLuggagePerPerson: SharePackageData?.Tour_Details?.tour_details?.baggage,
-    MakkaHotel:  mekkaHotelName == "" ? "Please Hotel Select" : mekkaHotelName,
-    MadinaHotel:  madinaHotelName == "" ? "Please Hotel Select" : madinaHotelName,
-    additionService: Additional,
-    Subtotal: totalSum ,
-    Tax: formattedTaxAmount,
-    Discount: Discount,
-    AmountDue: TotalPaidAmount,
-  };
-
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id:
@@ -1076,28 +1031,63 @@ export default function BookingPages({ BookingData }) {
     coupon_name: BookingApiData?.coupon_name || "",
     coupon_amount: BookingApiData?.coupon_amount || 0,
     coupon_percentage: BookingApiData?.coupon_percentage || 0,
-    mekka_hotel: mekkaid,
-    madina_hotel: JSON.parse(Madinaid),
-    flight_id: JSON.parse(
-      selectedFlights?.id === undefined ? 0 : selectedFlights?.id
-    ),
+    // mekka_hotel: BookingSideBar,
+    // madina_hotel: JSON.parse(Madinaid),
+    // flight_id: JSON.parse(
+    //   selectedFlights?.id === undefined ? 0 : selectedFlights?.id
+    // ),
     exclude_flight: JSON.parse(ExcludeFlight),
     tax: JSON.parse(formattedTaxAmount),
+  };
+
+  const handleUpdateLocalStorage = () => {
+    const SidebarData = localStorage.getItem("PackageBookingData");
+    if (SidebarData && SidebarData !== "undefined") {
+      try {
+        const BookingSideData = JSON.parse(SidebarData);
+
+        // New price object to add
+        const newPrice = {
+          SubTotal: totalSum,
+          Tax: formattedTaxAmount,
+          Amount_Paid: TotalPaidAmount,
+          Discount : Discount
+        };
+
+        // Add new data to existing storage object
+        BookingSideData.BookingFild = newPrice;
+
+        // Save updated data back to localStorage
+        localStorage.setItem("PackageBookingData", JSON.stringify(BookingSideData));
+
+        // Update state to reflect new data
+        setBookingSideBar(BookingSideData);
+
+        console.log("Object updated successfully in localStorage");
+
+      } catch (error) {
+        console.error("Error updating SidebarData:", error);
+      }
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Booking  Submitted:", bookingData);
-
     if (typeof window !== "undefined") {
       localStorage.setItem("BookingData", JSON.stringify(bookingData));
-      localStorage.setItem(
-        "PackageBookingData",
-        JSON.stringify(PackageBookingData)
-      );
+      // localStorage.setItem(
+      //   "PackageBookingData",
+      //   JSON.stringify(PackageBookingData)
+      // );
+
+    
+  
     }
 
+    handleUpdateLocalStorage()
+
+   
     router.push("/payment");
   };
 
@@ -1198,9 +1188,7 @@ export default function BookingPages({ BookingData }) {
                         </div>
                         <div className="text-start">
                           {translate("Airline")}:{" "}
-                          {selectedFlights?.name == ""
-                            ? "Please Flight Select"
-                            : selectedFlights?.name}
+                          {BookingSideBar?.Airline?.name}
                         </div>
                       </div>
                     </div>
@@ -1210,8 +1198,7 @@ export default function BookingPages({ BookingData }) {
                         <MdFlightLand htTakeoff size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {translate("To")}:{" "}
-                        {SharePackageData?.Tour_Details?.tour_details?.travel}
+                        {translate("To")}: {BookingSideBar?.To}
                       </div>
                     </div>
 
@@ -1225,11 +1212,9 @@ export default function BookingPages({ BookingData }) {
                           <MdFlightTakeoff size={25} color="#DAC04F" />
                         </div>
                         <div className="text-start">
-                          {translate("Departure")} : {selectDeparture?.name} -{" "}
-                          {
-                            SharePackageData?.Tour_Details?.tour_details
-                              ?.date_begin
-                          }{" "}
+                          {translate("Departure")} :{" "}
+                          {BookingSideBar?.Departure?.[1]} -{" "}
+                          {BookingSideBar?.Departure?.[0]}
                         </div>
                       </div>
                     </div>
@@ -1239,8 +1224,7 @@ export default function BookingPages({ BookingData }) {
                         <MdFlightLand size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {translate("Return")}:{" "}
-                        {SharePackageData?.Tour_Details?.tour_details?.date_end}{" "}
+                        {translate("Return")}: {BookingSideBar?.Return}
                       </div>
                     </div>
 
@@ -1250,7 +1234,7 @@ export default function BookingPages({ BookingData }) {
                       </div>
                       <div className="text-start">
                         {translate("Offered Languages")} :{" "}
-                        {SharePackageData?.Tour_Details?.en_language}
+                        {BookingSideBar?.OfferedLanguages}
                       </div>
                     </div>
 
@@ -1260,8 +1244,7 @@ export default function BookingPages({ BookingData }) {
                       </div>
                       <div className="text-start">
                         {translate("Max Luggage Per Person")} :{" "}
-                        {SharePackageData?.Tour_Details?.tour_details?.baggage}{" "}
-                        kg
+                        {BookingSideBar?.MaxLuggagePerPerson} kg
                       </div>
                     </div>
 
@@ -1270,10 +1253,7 @@ export default function BookingPages({ BookingData }) {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {" "}
-                        {mekkaHotelName == ""
-                          ? "Please Hotel Select"
-                          : mekkaHotelName}
+                        {BookingSideBar?.MakkaHotel?.hotel_name}
                       </div>
                     </div>
 
@@ -1282,9 +1262,7 @@ export default function BookingPages({ BookingData }) {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {madinaHotelName == ""
-                          ? "Please Hotel Select"
-                          : madinaHotelName}
+                        {BookingSideBar?.MadinaHotel?.hotel_name}
                       </div>
                     </div>
 
