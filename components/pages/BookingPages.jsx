@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdError } from "react-icons/md";
 import { FaTelegramPlane } from "react-icons/fa";
@@ -24,6 +24,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { BabyData, ReservationData } from "@/data/CustomerBookingData";
 import { usePeople } from "@/app/context/PeopleContext";
+import { POST } from "@/app/utils/api/post";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 const customStyles = {
   overlay: {
@@ -38,10 +40,9 @@ const customStyles = {
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
     padding: "5px",
-    // borderRadius: '10px',
-    width: "100%", // Adjust width as needed
-    maxWidth: "700px", // Adjust max-width as needed
-    height: "90vh", // Set a specific height for the modal
+    width: "100%",
+    maxWidth: "700px",
+    height: "90vh",
     overflowY: "auto",
     backgroundColor: "#fff",
   },
@@ -50,6 +51,7 @@ const customStyles = {
 export default function BookingPages({ BookingData }) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const formRef = useRef(null);
 
   const TourType = searchParams.get("type");
   const TourName = searchParams.get("name");
@@ -58,6 +60,7 @@ export default function BookingPages({ BookingData }) {
   const [bookingStage, setBookingStage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [LoginISChacked, setLoginISChacked] = useState(false);
+  const [asLogin, setasLogin] = useState(false);
   const [BookingLoginData, setBookingLoginData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     email: "",
@@ -74,6 +77,7 @@ export default function BookingPages({ BookingData }) {
     selectedCheckbox,
     ExcludeFlight,
   } = useGlobalState();
+  const { user } = useAuthContext();
 
   const [adultData, setAdultData] = useState([]);
   const [Childrendata, setChildrendata] = useState([]);
@@ -82,6 +86,12 @@ export default function BookingPages({ BookingData }) {
   const [ToursPrice, setToursPrice] = useState([]);
   const [AdditionalServices, setAdditionalServices] = useState([]);
   const [selectedFlight, setselectedFlight] = useState([]);
+
+  const [PackagePrices, setPackagePrices] = useState(0);
+  const [BookingApiData, setBookingApiData] = useState({});
+
+  // for profile data
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
@@ -97,16 +107,16 @@ export default function BookingPages({ BookingData }) {
     if (typeof window !== "undefined") {
       // Retrieve and parse the priceObject data from localStorage
       const savedData = localStorage.getItem("AdultPrice&count");
-      // console.log("savedData :", savedData);
+
       const Login = localStorage.getItem("LoginISChacked");
       const userData = localStorage.getItem("user");
+
+      const PackagePrice = localStorage.getItem("SelectedPackageHotelNDFlight");
 
       // Check if savedData exists and is valid JSON
       if (savedData && savedData !== "undefined") {
         try {
           const parsedData = JSON.parse(savedData);
-
-          // console.log("parsedData :", parsedData);
 
           setAlladultsData(parsedData);
 
@@ -127,19 +137,11 @@ export default function BookingPages({ BookingData }) {
           setAdultData(adultData);
           setChildrendata(youthData);
           setbabyData(childrenData);
-
-          // Extract the Adult object
-          // if (parsedData && parsedData.Adult) {
-          //   setAdultData(parsedData.Adult);
-          //   setChildrendata(parsedData.Youth);
-          //   setbabyData(parsedData.Children);
-          // }
         } catch (error) {
           console.error("Error parsing savedData:", error);
         }
       }
 
-      // Check if userData exists and is valid JSON
       if (userData && userData !== "undefined") {
         try {
           const userid = JSON.parse(userData);
@@ -160,9 +162,20 @@ export default function BookingPages({ BookingData }) {
           // Extract the user object
           if (asLogin && asLogin.user) {
             setUserID(asLogin.user);
+            setasLogin(true);
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
+        }
+      }
+
+      if (PackagePrice && PackagePrice !== "undefined") {
+        try {
+          const parsedPackagePrice = JSON.parse(PackagePrice);
+
+          setPackagePrices(parsedPackagePrice);
+        } catch (error) {
+          console.error("Error parsing savedData:", error);
         }
       }
     }
@@ -263,7 +276,7 @@ export default function BookingPages({ BookingData }) {
   // for dynamic form data and form
 
   const initializeFormValues = (count, defaultValues) => {
-    return Array.from({ length: count }, () => ({ ...defaultValues }));
+    return Array.from({ length }, () => ({ ...defaultValues }));
   };
 
   const [formValues, setFormValues] = useState({
@@ -282,10 +295,9 @@ export default function BookingPages({ BookingData }) {
       from: "",
       selectedService: "", // Add field for storing selected service
       selectedPrice: "",
-      selectedTitel : "",
-      selectedOrder : "" ,
-      selectedID : ""
-      
+      selectedTitel: "",
+      selectedOrder: "",
+      selectedID: "",
     }),
     Child: initializeFormValues(Childrendata?.length || 0, {
       name: "",
@@ -295,9 +307,9 @@ export default function BookingPages({ BookingData }) {
       nationality: "",
       selectedService: "", // Add field for storing selected service
       selectedPrice: "",
-      selectedTitel : "",
-      selectedOrder : "" ,
-      selectedID : ""
+      selectedTitel: "",
+      selectedOrder: "",
+      selectedID: "",
     }),
     Baby: initializeFormValues(babyData.length || 0, {
       name: "",
@@ -309,24 +321,44 @@ export default function BookingPages({ BookingData }) {
     }),
   });
 
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    // Extract form values and validate
+    const allValues = Object.values(formValues).flat();
+    const isValid = validateForm(
+      allValues.map((field) => Object.values(field)).flat()
+    );
+    setIsFormValid(isValid);
+  }, [formValues]);
+
   const handleInputChange = (type, index, e) => {
     const { name, value } = e.target;
+
     setFormValues((prevValues) => {
+      // Create a copy of the previous values
       const updatedValues = { ...prevValues };
+
+      // Ensure the correct path exists in the state
+      if (!updatedValues[type]) {
+        updatedValues[type] = [];
+      }
+      if (!updatedValues[type][index]) {
+        updatedValues[type][index] = {};
+      }
+
+      // Update the specific field in the form values
       updatedValues[type][index] = {
         ...updatedValues[type][index],
         [name]: value,
       };
+
       return updatedValues;
     });
   };
 
   const getPriceForType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
-
-    // console.log("personPrice for function" , personPrice[idx]?.price);
-
-    // console.log(personPrice[idx]);
 
     if (!personPrice) {
       return 0; // Default value if no price is found
@@ -337,17 +369,13 @@ export default function BookingPages({ BookingData }) {
   const getdefaultPriceforType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
 
-    // console.log("personPrice for function" , personPrice[idx]?.price);
-
-    // console.log(personPrice[idx]);
-
     if (!personPrice) {
       return 0; // Default value if no price is found
     }
     return Number(personPrice[idx]?.default); // Ensure price is a number
   };
 
-  const handleRadioChange = (e, type, i, idx, price , order , tital , id) => {
+  const handleRadioChange = (e, type, i, idx, price, order, tital, id) => {
     const selectedValue = e.target.value;
 
     setFormValues((prevValues) => {
@@ -364,32 +392,22 @@ export default function BookingPages({ BookingData }) {
       // Set the selected service value
       updatedValues[type][i].selectedService = selectedValue;
       updatedValues[type][i].selectedPrice = price;
-      updatedValues[type][i].selectedTitel = tital,
-      updatedValues[type][i].selectedOrder = order ,
-      updatedValues[type][i].selectedID = id
+      (updatedValues[type][i].selectedTitel = tital),
+        (updatedValues[type][i].selectedOrder = order),
+        (updatedValues[type][i].selectedID = id);
 
       return updatedValues;
     });
 
     updatePriceByTypeAndIndex(type, i, price);
-
   };
 
   const updatePriceByTypeAndIndex = (type, index, newPrice) => {
-    console.log("price was change");
-
-    console.log("AlladultsData", AlladultsData);
-
     const itemsOfType = AlladultsData?.filter((item) => item.label == type);
-
-    console.log("itemsOfType", itemsOfType[index]);
-
-    console.log("index", index);
 
     // Step 2: Find the item with the specified index
     if (index <= itemsOfType[index]?.index) {
       // Log the item before updating
-      // console.log("itemsOfType", itemsOfType[index]);
 
       const prevPrice = getPriceForType(type, index);
       const addivalue = JSON.parse(newPrice);
@@ -411,46 +429,337 @@ export default function BookingPages({ BookingData }) {
           return item;
         });
 
-        // Log the updated data
-        console.log("Updated data:", updatedData);
-
         // Return the updated data to update the state
         return updatedData;
       });
     } else {
-      console.log("Index out of range");
     }
   };
 
-  const [PriceValue, setPriceValue] = useState(0);
+  const validateForm = () => {
+    const validateGroup = (group, checkFirstOnly = false) => {
+      if (group.length === 0) return false; // Ensure group has at least one item
 
-  console.log("AlladultsData" , AlladultsData);
-  
+      if (checkFirstOnly) {
+        // Only validate the first item in the group
+        const firstItem = group[0]; // Assuming group is an array
+        if (!firstItem) return false; // Ensure firstItem is not undefined or null
+
+        return Object.values(firstItem).every((value) => value !== "");
+      } else {
+        // Validate all items in the group
+        return group.every((item) => {
+          return Object.values(item).every((value) => value !== "");
+        });
+      }
+    };
+
+    if (loginPer === true) {
+      // Validate only the first entry of the Adult group
+      return validateGroup(formValues.Adult, true); // Validate first form for Adult
+    } else {
+      // Validate all groups: Adult, Child, and Baby
+      return (
+        validateGroup(formValues.Adult) &&
+        validateGroup(formValues.Child) &&
+        validateGroup(formValues.Baby)
+      );
+    }
+  };
+
+  const [ReservationID, setReservationID] = useState("");
+  const [HandlePromo, setHandlePromo] = useState(false);
+  const [ShowbtnName, setShowbtnName] = useState(false);
+
+  const adultadiPrices = foundPrices
+    ?.map((price) => Number(price))
+    ?.reduce((acc, curr) => acc + curr, 0);
+
+  const totalSum =
+    HandlePromo === false
+      ? PackagePrices + adultadiPrices
+      : PromoData.total_amount !== undefined
+      ? PromoData.total_amount
+      : PackagePrices + adultadiPrices;
+
+  // calling api
+
+  // fathch promo code api
+
+  const FetchPromoApi = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      coupon_code: promo,
+      total_amount: PackagePrices + adultadiPrices,
+    };
+
+    try {
+      const PromoResponse = await post("check_coupon", sendData);
+      if (PromoResponse.Status == 1) {
+        showSuccessToast(PromoResponse.Message);
+        setHandlePromo(true);
+      } else {
+        showErrorToast("Invalid promo code.");
+        setHandlePromo(false);
+      }
+
+      setPromoData(PromoResponse);
+
+      return PromoResponse;
+    } catch (error) {
+      console.error("Error caught:", error);
+      return null;
+    }
+  };
+
+  // fathch new booking api
+
+  const FatchallBooking = async (data) => {
+    try {
+      const response = await post("addbooking", data);
+      console.log("response" , response);
+      
+      showSuccessToast(response.Message);
+      setReservationID(response.Reservations_id);
+    } catch (error) {
+      console.error("Error caught:", error);
+      showErrorToast(error?.data?.message);
+    }
+  };
+
+  // fatch profileapi
+
+  const fetchProfile = async () => {
+    const url = "my_profile";
+    const response = await POST.request({
+      url: url,
+      token: `${user?.authorisation.token}`,
+    });
+
+    setUserData(response.user);
+
+    console.log("response", response);
+
+    if (Array.isArray(response.user) && response.user.length > 0) {
+      // Assuming response.user is an array of profiles
+      return response.user;
+    }
+
+    return [];
+  };
+
+  const taxRate = 0.19;
+
+  const taxAmount = JSON.parse(totalSum) * taxRate;
+
+  const totalWithTax = JSON.parse(totalSum) + JSON.parse(taxAmount);
+
+  const formattedTaxAmount = taxAmount.toFixed(2);
+
+  const TotalPaidAmount = totalWithTax;
+
+  // for form sunmiter button onclick event
+
+  const handlePromoSubmit = async () => {
+    try {
+      let promoResponse = null;
+
+      // Check if a promo code is entered and valid
+      if (promo) {
+        promoResponse = await FetchPromoApi();
+      }
+
+      // Create booking data based on whether a promo code was used
+      const bookingData = {
+        AccessKey: "Mekka@24",
+        user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
+        tour_id: JSON.parse(TourId),
+        person: JSON.stringify(formValues.Adult[0]),
+        adult:
+          formValues.Adult.slice(1).length === 0
+            ? null
+            : JSON.stringify(formValues.Adult.slice(1)),
+        child: formValues.Child.length === 0 ? undefined : JSON.stringify(formValues.Child),
+        baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+        departure: JSON.parse(
+          selectDeparture?.value === undefined ? 0 : selectDeparture?.value
+        ),
+        adult_price: JSON.parse(adultData[0]?.default),
+        child_price: JSON.parse(
+          Childrendata.length === 0 ? 0 : Childrendata[0]?.default.len
+        ),
+        baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
+        total: totalSum,
+        amount_paid: JSON.parse(TotalPaidAmount),
+        coupon_name: promoResponse ? promoResponse.coupon_name : "", // Only include promo data if available
+        coupon_amount: promoResponse ? promoResponse.total_amount : 0,
+        coupon_percentage: promoResponse ? promoResponse.percentage : 0,
+        mekka_hotel: mekkaid,
+        madina_hotel: JSON.parse(Madinaid),
+        flight_id: JSON.parse(
+          selectedFlights?.id === undefined ? 0 : selectedFlights?.id
+        ),
+        exclude_flight: JSON.parse(ExcludeFlight),
+        tax: JSON.parse(formattedTaxAmount),
+      };
+
+      // Store the booking data
+      setBookingApiData(bookingData);
+      console.log(bookingData);
+      
+    } catch (error) {
+      console.error("Error during promo submission:", error);
+    }
+
+    // Reset promo state and show submit button
+    setpromo("");
+    setShowbtnName(true);
+  };
+
+  const handlePromoremove = () => {
+    if (HandlePromo == true) {
+      setHandlePromo(false);
+    } else if (HandlePromo == false) {
+      setHandlePromo(true);
+    }
+    setShowbtnName(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Create booking data without promo code
+    const bookingData = {
+      AccessKey: "Mekka@24",
+      user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
+      tour_id: JSON.parse(TourId),
+      person: JSON.stringify(formValues.Adult[0]),
+      adult:
+        formValues.Adult.slice(1).length === 0
+          ? null
+          : JSON.stringify(formValues.Adult.slice(1)),
+      child: formValues.Child.length === 0 ? undefined : JSON.stringify(formValues.Child),
+      baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+      departure: JSON.parse(
+        selectDeparture?.value === undefined ? 0 : selectDeparture?.value
+      ),
+      adult_price: JSON.parse(adultData[0]?.default),
+      child_price: JSON.parse(
+        Childrendata.length === 0 ? 0 : Childrendata[0]?.default
+      ),
+      baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
+      total: totalSum,
+      amount_paid: JSON.parse(TotalPaidAmount),
+      coupon_name: BookingApiData?.coupon_name || "", // Use coupon from promo, if any
+      coupon_amount: BookingApiData?.coupon_amount || 0,
+      coupon_percentage: BookingApiData?.coupon_percentage || 0,
+      mekka_hotel: mekkaid,
+      madina_hotel: JSON.parse(Madinaid),
+      flight_id: JSON.parse(
+        selectedFlights?.id === undefined ? 0 : selectedFlights?.id
+      ),
+      exclude_flight: JSON.parse(ExcludeFlight),
+      tax: JSON.parse(formattedTaxAmount),
+    };
+
+    const bookingDataString = JSON.stringify(bookingData);
+
+    // Log or submit the booking data
+    console.log("Booking Data Submitted:", bookingDataString);
+
+    console.log("Booking  Submitted:", bookingData);
+
+    FatchallBooking(bookingData);
+
+    // Example: Call API to submit the booking
+    // FatchallBooking(bookingData);  // Uncomment this to call API
+  };
+
+  const handleExternalButtonClick = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit(); // This triggers form submission
+    }
+  };
+
+  useEffect(() => {
+    if (loginPer === true) {
+      fetchProfile();
+    } else {
+      console.log("User not logged in");
+    }
+  }, [loginPer, user]); // Dependency on `loginPer` and `userData`
 
   const renderForms = (type, count) => {
     const fields = {
       Adult: [
-        { label: translate("Name"), type: "text", name: "name" },
-        { label: translate("Surname"), type: "text", name: "surname" },
-        { label: translate("Email"), type: "text", name: "email" },
-        { label: translate("Phone"), type: "text", name: "mobile" },
-        { label: translate("City"), type: "text", name: "city" },
+        {
+          label: translate("Name"),
+          type: "text",
+          name: "name",
+          value: userData.name,
+        },
+        {
+          label: translate("Surname"),
+          type: "text",
+          name: "surname",
+          value: userData.surname,
+        },
+        {
+          label: translate("Email"),
+          type: "email",
+          name: "email",
+          value: userData.email,
+        },
+        {
+          label: translate("Phone"),
+          type: "number",
+          name: "mobile",
+          value: userData.mobile,
+        },
+        {
+          label: translate("City"),
+          type: "text",
+          name: "city",
+          value: userData.city,
+        },
         {
           label: translate("Gender"),
           type: "select",
           name: "gender",
           options: ["Male", "Female", "Other"],
+          value: userData.gender,
         },
-        { label: translate("Birthday Date"), type: "date", name: "birthday" },
+        {
+          label: translate("Birthday Date"),
+          type: "date",
+          name: "birthday",
+          value: userData.birthday,
+        },
         {
           label: translate("Nationality"),
           type: "select",
           name: "nationality",
           options: ["Indian", "German", "Canadian"],
+          value: userData.nationality,
         },
-        { label: translate("House No"), type: "text", name: "houseno" },
-        { label: translate("ZIP Code"), type: "text", name: "zipcode" },
-        { label: translate("Street"), type: "text", name: "street" },
+        {
+          label: translate("House No"),
+          type: "text",
+          name: "houseno",
+          value: userData.houseNumber,
+        },
+        {
+          label: translate("ZIP Code"),
+          type: "text",
+          name: "zipcode",
+          value: userData.zipcode,
+        },
+        {
+          label: translate("Street"),
+          type: "text",
+          name: "street",
+          value: userData.street,
+        },
         ,
       ],
       adultFieldsForExtraAdults: [
@@ -506,26 +815,6 @@ export default function BookingPages({ BookingData }) {
       ],
     };
 
-    // console.log(type , mainCount);
-    
-
-    // const count = mainCount == 0 ? 1 : mainCount;
-
-    const [AdultsType, setAdultsType] = useState(0);
-    const [convertedPrices, setConvertedPrices] = useState([]);
-
-    useEffect(() => {
-      setAdultsType(type === "Adult" ? 1 : type === "Child" ? 2 : 3);
-    }, [type]);
-
-    const totalSum = convertedPrices?.reduce((acc, value) => acc + value, 0);
-
-    // console.log("totalSum" , totalSum);
-
-    useEffect(() => {
-      setPriceValue(totalSum);
-    }, [totalSum]);
-
     // for price
 
     const PrpersonPrice = AlladultsData?.filter((item) => item.label === type);
@@ -547,6 +836,8 @@ export default function BookingPages({ BookingData }) {
       const currentFields = isExtraAdult
         ? fields.adultFieldsForExtraAdults
         : fields[type] || [];
+
+      const isFormPrefilled = loginPer && i === 0;
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -570,60 +861,70 @@ export default function BookingPages({ BookingData }) {
               </p>
             </div>
 
-            <form className="y-gap-30 contactForm px-20 py-20">
+            <div className="y-gap-30 contactForm px-20 py-20">
               <div className="my-3 row">
-                {currentFields?.map((field, index) => (
-                  <div
-                    key={index}
-                    className={`col-md-${field.type === "select" ? "6" : "6"}`}
-                  >
-                    <div className="form-input my-1">
-                      {field.type === "select" ? (
-                        <>
-                          <select
-                            name={field.name}
-                            value={formValues[type]?.[i]?.[field.name] || ""} // Safe access to formValues[type] and formValues[type][i]
-                            onChange={(e) => handleInputChange(type, i, e)}
-                            required
-                            className="form-control"
-                          >
-                            <option value="" disabled>
-                              {field.label}
-                            </option>
-                            {field.options?.map((option, optIndex) => (
-                              <option
-                                key={optIndex}
-                                value={option.toLowerCase()}
-                              >
-                                {option}
+                {currentFields?.map((field, index) => {
+                  const fieldValue =
+                    type === "Adult" && i === 0
+                      ? field.value === null || field.value === undefined // aa value backend thi ave che to ane update kai rite kari sakay ~ deval sir 
+
+                        ? formValues[type]?.[i]?.[field.name]
+                        : field.value 
+                      : formValues[type]?.[i]?.[field.name];
+
+                  return (
+                    <div
+                      key={index}
+                      className={`col-md-${
+                        field.type === "select" ? "6" : "6"
+                      }`}
+                    >
+                      <div className="form-input my-1">
+                        {field.type === "select" ? (
+                          <>
+                            <select
+                              name={field.name}
+                              value={fieldValue}
+                              onChange={(e) => handleInputChange(type, i, e)}
+                              required
+                              className="form-control"
+                            >
+                              <option value="" disabled>
+                                {field.label}
                               </option>
-                            ))}
-                          </select>
-                          <label className="lh-1 text-16 text-light-1">
-                            {formValues[type]?.[i]?.[field.name]
-                              ? `${field.label}: ${
-                                  formValues[type]?.[i]?.[field.name]
-                                }`
-                              : field.label}
-                          </label>
-                        </>
-                      ) : (
-                        <>
-                          <input
-                            type={field.type}
-                            name={field.name}
-                            value={formValues[type]?.[i]?.[field.name] || ""} // Ensure formValues[type][i] is safely accessed
-                            onChange={(e) => handleInputChange(type, i, e)}
-                            required
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {field.label}
-                          </label>
-                        </>
-                      )}
+                              {field.options?.map((option, optIndex) => (
+                                <option
+                                  key={optIndex}
+                                  value={option.toLowerCase()}
+                                >
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            <label className="lh-1 text-16 text-light-1">
+                              {fieldValue
+                                ? `${field.label}: ${fieldValue}`
+                                : field.label}
+                            </label>
+                          </>
+                        ) : (
+                          <>
+                            <input
+                              type={field.type}
+                              name={field.name}
+                              value={fieldValue}
+                              onChange={(e) => handleInputChange(type, i, e)}
+                              required
+                            />
+                            <label className="lh-1 text-16 text-light-1">
+                              {field.label}
+                            </label>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
 
                 <div className="col-12">
                   <div className="row y-gap-20 items-center justify-between">
@@ -699,123 +1000,20 @@ export default function BookingPages({ BookingData }) {
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       );
     });
   };
 
-  const [ReservationID, setReservationID] = useState("");
-
-  console.log("foundPrices", foundPrices);
-
-  const totalSum = foundPrices
-    ?.map((price) => Number(price)) // Convert each price to a number
-    ?.reduce((acc, curr) => acc + curr, 0); // Sum all the numbers
-
-  const taxRate = 0.19;
-
-  const taxAmount = totalSum * taxRate;
-
-  const totalWithTax = totalSum + taxAmount;
-
-  const formattedTaxAmount = taxAmount.toFixed(2);
-
-  const [HandlePromo, setHandlePromo] = useState(false)
-
-  const TotalPaidAmount = HandlePromo == false ? totalWithTax : PromoData.total_amount
-  
-
-  // calling api
-
-  // fathch promo code api
-
-  const FetchPromoApi = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      coupon_code: promo,
-      total_amount: totalWithTax,
-    };
-
-    try {
-      const PromoResponse = await post("check_coupon", sendData);
-      showSuccessToast(PromoResponse.Message);
-      setPromoData(PromoResponse);
-      setHandlePromo(true)
-      return PromoResponse;
-    } catch (error) {
-      console.error("Error caught:", error);
-      showErrorToast("Invalid promo code.");
-      return null;
-    }
-  };
-
-    // fathch new booking api
-
-    const FatchallBooking = async (data) => {
-      try {
-        const response = await post("addbooking", data);
-        showSuccessToast(response.Message);
-        setReservationID(response.Reservations_id);
-      } catch (error) {
-        console.error("Error caught:", error);
-        showErrorToast("An error occurred during registration.");
-      }
-    };
-
-  // for form sunmiter button onclick event
-
-  const handleSubmit = async () => {
-    try {
-      let promoResponse = null;
-
-      // Check if promo is entered and valid
-      if (promo) {
-        promoResponse = await FetchPromoApi();
-      }
-
-      // Create booking data
-      const bookingData = {
-        AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-        user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
-        tour_id: JSON.parse(TourId),
-        person: formValues.Adult[0],
-        adult: formValues.Adult.slice(1).length == 0 ? "" : formValues.Adult.slice(1),
-        child: formValues.Child,
-        baby: formValues.Baby,
-        departure: JSON.parse(selectDeparture?.value),
-        adult_price: JSON.parse(adultData[0]?.default),
-        child_price: JSON.parse(Childrendata[0]?.default),
-        baby_price: JSON.parse(babyData[0]?.default),
-        total: totalSum,
-        amount_paid: JSON.parse(TotalPaidAmount),  
-        coupon_name: promoResponse ? promoResponse.coupon_name : "", // Use promo data if available
-        coupon_amount: JSON.parse(promoResponse ? promoResponse.total_amount : 0),
-        coupon_percentage: JSON.parse(promoResponse ? promoResponse.percentage : 0),
-        mekka_hotel: mekkaid,
-        madina_hotel: JSON.parse(Madinaid),
-        flight_id: JSON.parse(selectedFlights?.id),
-        exclude_flight: JSON.parse(ExcludeFlight),
-        tax : JSON.parse(formattedTaxAmount) ,
-      };
-
-      // Print booking data to console
-      console.log("bookingData" , bookingData);
-      
-      FatchallBooking(bookingData);
-
-    } catch (error) {
-      console.error("Error during booking:", error);
-    }
-  };
-
-
-
   const { translate } = useTranslation();
 
   return (
     <>
+
+    {/* sidebarr no aa badhi data static che to ane jyare page refrash thay tyare kai rite jato na re evu store karavi sakay  */}
+
       <section className="layout-pt-md layout-pb-lg mt-header">
         <ToastContainer />
         <div className="container">
@@ -845,11 +1043,24 @@ export default function BookingPages({ BookingData }) {
               <div className="bg-white rounded-12 md:py-20 px-md-20 mt-10">
                 {bookingStage == 1 && (
                   <div className="border-1 rounded-12 overflow-hidden shadow-1">
-                    <div>
+                    <form onSubmit={handleSubmit} ref={formRef}>
                       {renderForms("Adult", adultData.length)}
                       {renderForms("Child", Childrendata.length)}
                       {renderForms("Baby", babyData.length)}
-                    </div>
+                      <div className="mt-2">
+                        {/* <Link href="/payment"> */}
+                        <button
+                          className={`button -md -info-2 bg-accent-1 text-white col-12 text-end d-none`}
+                          // onClick={HandlePaymentClick}
+                          // onClick={handleSubmit}
+
+                          type="submit"
+                        >
+                          {translate("Proceed to Payment")}
+                        </button>
+                        {/* </Link> */}
+                      </div>
+                    </form>
                   </div>
                 )}
               </div>
@@ -1011,31 +1222,49 @@ export default function BookingPages({ BookingData }) {
                     </h2>
 
                     <form className="contactForm mt-10">
-                      <div className="form-input my-1">
-                        <input
-                          type="text"
-                          value={promo}
-                          onChange={handlepromochange}
-                          required
-                        />
-                        <label className="lh-2 text-16 text-light-1 top-29">
-                          {translate("Promo Code")}
-                        </label>
+                      <div className="d-flex align-items-center">
+                        <div className="form-input my-1" style={{ flex: 1 }}>
+                          <input
+                            type="text"
+                            value={promo}
+                            onChange={handlepromochange}
+                            required
+                          />
+                          <label className="lh-2 text-16 text-light-1 top-29">
+                            {translate("Promo Code")}
+                          </label>
+                        </div>
+
+                        {ShowbtnName == false ? (
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
+                            onClick={handlePromoSubmit}
+                            style={{ whiteSpace: "nowrap" }}
+                          >
+                            {translate("Apply")}
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="button -sm -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
+                            onClick={handlePromoremove}
+                            style={{ whiteSpace: "nowrap" }}
+                          >
+                            {translate("remove")}
+                          </button>
+                        )}
                       </div>
                     </form>
                   </div>
 
                   <div className="mt-2">
-                    {/* <Link href="/payment"> */}
                     <button
-                      className={`button -md -info-2 bg-accent-1 text-white col-12 text-end} `}
-                      // onClick={HandlePaymentClick}
-                      onClick={handleSubmit}
-                      // type="submit"
+                      className={`button -md -info-2 bg-accent-1 text-white col-12 text-end `}
+                      onClick={handleExternalButtonClick}
                     >
                       {translate("Proceed to Payment")}
                     </button>
-                    {/* </Link> */}
                   </div>
                 </div>
               </div>
@@ -1061,7 +1290,7 @@ export default function BookingPages({ BookingData }) {
               className="contactForm border-1  rounded-12 px-40 py-1 "
             >
               <div className="d-flex justify-content-between">
-                <h2 className="text-center">LOG IN</h2>
+                <h2 className="text-center">SIGN IN</h2>
                 <button onClick={closeModal}>
                   <IoClose size={25} />
                 </button>
