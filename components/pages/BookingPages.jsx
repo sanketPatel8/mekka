@@ -84,7 +84,7 @@ export default function BookingPages({ BookingData }) {
   const [babyData, setbabyData] = useState([]);
   const [AlladultsData, setAlladultsData] = useState([]);
   const [AdditionalServices, setAdditionalServices] = useState([]);
-  const [Discount, setDiscount] = useState(0);
+  const [Discount, setDiscount] = useState({});
 
   const [PackagePrices, setPackagePrices] = useState(0);
   const [BookingApiData, setBookingApiData] = useState({});
@@ -338,14 +338,7 @@ export default function BookingPages({ BookingData }) {
     setIsFormValid(isValid);
   }, [formValues]);
 
-  const getPriceForType = (type, idx) => {
-    const personPrice = AlladultsData?.filter((item) => item.label === type);
 
-    if (!personPrice) {
-      return 0; // Default value if no price is found
-    }
-    return Number(personPrice[idx]?.price); // Ensure price is a number
-  };
 
   const getdefaultPriceforType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -453,6 +446,13 @@ export default function BookingPages({ BookingData }) {
       const addivalue = JSON.parse(newPrice);
       const multiPrice = prevPrice + addivalue;
 
+      console.log("prevPrice" , prevPrice);
+      console.log("addivalue" , addivalue);
+      console.log("multiPrice" , multiPrice);
+      
+      
+      
+
       // Step 3: Update the price of the item
       const updatedItem = { ...itemsOfType[index], price: multiPrice };
 
@@ -474,6 +474,19 @@ export default function BookingPages({ BookingData }) {
       });
     } else {
     }
+  };
+
+  const getPriceForType = (type, idx) => {
+    const personPrice = AlladultsData?.filter((item) => item.label === type);
+    const AdditionalPrice = Additional.filter((item) => item.index === idx)
+
+    console.log("AdditionalPrice" , AdditionalPrice); 
+    
+
+    if (!personPrice) {
+      return 0; // Default value if no price is found
+    }
+    return Number(personPrice[idx]?.price); // Ensure price is a number
   };
 
   const validateForm = () => {
@@ -507,7 +520,6 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-
   const [HandlePromo, setHandlePromo] = useState(false);
   const [ShowbtnName, setShowbtnName] = useState(false);
 
@@ -524,8 +536,6 @@ export default function BookingPages({ BookingData }) {
 
   // calling api
 
-  // fathch promo code api
-
   const FetchPromoApi = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -537,7 +547,7 @@ export default function BookingPages({ BookingData }) {
       const PromoResponse = await post("check_coupon", sendData);
       if (PromoResponse.Status == 1) {
         showSuccessToast(PromoResponse.Message);
-        setDiscount(PromoResponse.Discount);
+        setDiscount(PromoResponse);
         setHandlePromo(true);
       } else {
         showErrorToast("Invalid promo code.");
@@ -609,64 +619,7 @@ export default function BookingPages({ BookingData }) {
   // for form sunmiter button onclick event
 
   const handlePromoSubmit = async () => {
-    try {
-      let promoResponse = null;
-
-      // Check if a promo code is entered and valid
-      if (promo) {
-        promoResponse = await FetchPromoApi();
-      }
-
-      // Create booking data based on whether a promo code was used
-      const bookingData = {
-        AccessKey: "Mekka@24",
-        user_id: JSON.parse(UserID.id !== null ? UserID.id : ""),
-        tour_id: JSON.parse(TourId),
-        person: JSON.stringify(formValues.Adult[0]),
-        adult:
-          formValues.Adult.slice(1).length === 0
-            ? null
-            : JSON.stringify(formValues.Adult.slice(1)),
-        child:
-          formValues.Child.length === 0
-            ? undefined
-            : JSON.stringify(formValues.Child),
-        baby:
-          formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
-        departure: JSON.parse(
-          selectDeparture?.value === undefined ? 0 : selectDeparture?.value
-        ),
-        adult_price: JSON.parse(adultData[0]?.default),
-        child_price: JSON.parse(
-          Childrendata.length === 0 ? 0 : Childrendata[0]?.default.len
-        ),
-        baby_price: JSON.parse(
-          babyData.length === 0 ? 0 : babyData[0]?.default
-        ),
-        total: totalSum,
-        amount_paid: JSON.parse(TotalPaidAmount),
-        coupon_name: promoResponse ? promoResponse.coupon_name : "", // Only include promo data if available
-        coupon_amount: promoResponse ? promoResponse.total_amount : 0,
-        coupon_percentage: promoResponse ? promoResponse.percentage : 0,
-        mekka_hotel: mekkaid,
-        madina_hotel: JSON.parse(Madinaid),
-        flight_id: JSON.parse(
-          selectedFlights?.id === undefined ? 0 : selectedFlights?.id
-        ),
-        exclude_flight: JSON.parse(ExcludeFlight),
-        tax: JSON.parse(formattedTaxAmount),
-      };
-
-      // Store the booking data
-      setBookingApiData(bookingData);
-      console.log(bookingData);
-    } catch (error) {
-      console.error("Error during promo submission:", error);
-    }
-
-    // Reset promo state and show submit button
-    setpromo("");
-    setShowbtnName(true);
+    FetchPromoApi();
   };
 
   const handlePromoremove = () => {
@@ -818,10 +771,8 @@ export default function BookingPages({ BookingData }) {
     let resultPrice;
 
     if (PrpersonPrice?.length == 0) {
-      // If no data is found, assign a default value (e.g., 0)
       resultPrice = 0;
     } else {
-      // If data exists, map through it to get the 'price'
       resultPrice = PrpersonPrice?.map((item) => item.price);
     }
 
@@ -1000,6 +951,8 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  console.log("Additional", Additional);
+
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id:
@@ -1028,14 +981,12 @@ export default function BookingPages({ BookingData }) {
     baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
     total: totalSum,
     amount_paid: JSON.parse(TotalPaidAmount),
-    coupon_name: BookingApiData?.coupon_name || "",
-    coupon_amount: BookingApiData?.coupon_amount || 0,
-    coupon_percentage: BookingApiData?.coupon_percentage || 0,
-    // mekka_hotel: BookingSideBar,
-    // madina_hotel: JSON.parse(Madinaid),
-    // flight_id: JSON.parse(
-    //   selectedFlights?.id === undefined ? 0 : selectedFlights?.id
-    // ),
+    coupon_name: Discount?.coupon_name || "",
+    coupon_amount: Discount?.coupon_amount || 0,
+    coupon_percentage: Discount?.coupon_percentage || 0,
+    mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
+    madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
+    flight_id: BookingSideBar.Airline?.id,
     exclude_flight: JSON.parse(ExcludeFlight),
     tax: JSON.parse(formattedTaxAmount),
   };
@@ -1051,25 +1002,29 @@ export default function BookingPages({ BookingData }) {
           SubTotal: totalSum,
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,
-          Discount : Discount
+          Discount: Discount,
         };
 
         // Add new data to existing storage object
         BookingSideData.BookingFild = newPrice;
 
         // Save updated data back to localStorage
-        localStorage.setItem("PackageBookingData", JSON.stringify(BookingSideData));
+        localStorage.setItem(
+          "PackageBookingData",
+          JSON.stringify(BookingSideData)
+        );
 
         // Update state to reflect new data
         setBookingSideBar(BookingSideData);
 
         console.log("Object updated successfully in localStorage");
-
       } catch (error) {
         console.error("Error updating SidebarData:", error);
       }
     }
   };
+
+  console.log("Discount", Discount);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -1080,14 +1035,10 @@ export default function BookingPages({ BookingData }) {
       //   "PackageBookingData",
       //   JSON.stringify(PackageBookingData)
       // );
-
-    
-  
     }
 
-    handleUpdateLocalStorage()
+    handleUpdateLocalStorage();
 
-   
     router.push("/payment");
   };
 

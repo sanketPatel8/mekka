@@ -611,7 +611,7 @@ export default function Payment() {
                     </div>
                   </div>
 
-                  <div className="line mt-5 mb-5"></div>
+                  {/* <div className="line mt-5 mb-5"></div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5">
@@ -621,7 +621,7 @@ export default function Payment() {
                       {" "}
                       {translate("Arrival")} : {SideBarData.Arrival}
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="line mt-5 mb-5"></div>
 
