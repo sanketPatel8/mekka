@@ -20,6 +20,7 @@ export default function Profile() {
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [image1, setImage1] = useState(""); 
+  const [imagePreview, setImagePreview] = useState(""); 
   const [image2, setImage2] = useState([]); 
   const [SelectedCountry, setSelectedCountry] = useState("");
   const [name, setName] = useState("");
@@ -82,6 +83,7 @@ export default function Profile() {
         setImage2(response.user.company.company_document);
   
       }
+      setImage1(response.user.company.image);
       setBankName(response.user.company.bankName);
       setOwnerName(response.user.company.account_owner);
       setIBAN(response.user.company.bankIban);
@@ -90,18 +92,28 @@ export default function Profile() {
  
  
   const handleImageChange1 = (e) => {
-   
-    const file = e.target.files[0];
-    const allowedType = ['image/jpeg', 'image/x-png', 'image/png'];
-    if (file && allowedType.includes(file?.type)) {
-        
+      const file = e.target.files[0];
+      const allowedType = ['image/jpeg', 'image/x-png', 'image/png'];
+      if (file && allowedType.includes(file?.type)) {
         setImage1(file);
-        setFileBlob(URL.createObjectURL(file));
-    }
+        const blobUrl = URL.createObjectURL(file);
+        setFileBlob(blobUrl);
+      }
+    
+   
+    // const file = e.target.files[0];
+    // const allowedType = ['image/jpeg', 'image/x-png', 'image/png'];
+    // if (file && allowedType.includes(file?.type)) {
+        
+    //     setImage1(file);
+    //     setFileBlob(URL.createObjectURL(file));
+    // }
 
     console.log(image1,"image1")
     console.log(fileBlob,"fileBlob")
   };
+
+  
   // const handleImageChange1 = (e) => {
   //   const file = event.target.files[0];
   //   if (file) {
@@ -315,6 +327,7 @@ export default function Profile() {
 
   const handleDeleteImage1 = () => {
     setImage1("");
+    setFileBlob({});
   };
 
   const handleDeleteImage2 = (index) => {
@@ -518,7 +531,7 @@ export default function Profile() {
                             <Image
                               width={200}
                               height={200}
-                              src={fileBlob}
+                              src={image1? image1 : fileBlob}
                               alt="image"
                               className="size-200 rounded-12 object-cover"
                             />
