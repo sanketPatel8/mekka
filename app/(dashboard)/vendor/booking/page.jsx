@@ -41,22 +41,22 @@ export default function DbBooking() {
     
     if(tab === "All"){
      setLoading(false);
-      const bookingsData  = response.Bookings.map((booking) => ({
-        BookingId: booking.reservation_id,
-        BookingNo: booking.reservationNumber,
-        Status: booking.reservation_status,
-        Full_Name: booking.name ,
-        Tour_name: booking.tour_name,
-        Total_Payment: booking.total,
-        Pending_Payment: booking.pending_payment,
-        Payment_Terms: booking.payment_terms,
-        Payment_Method: booking.payment_method,
-        Visas: booking.visa_confirm,
-        Flight: booking.plane_confirm,
-        Initiated_By_Admin: booking.initiated_by_admin,
-      }));
-      console.log(bookingsData )
-      setBookings(bookingsData );
+      // const bookingsData  = response.Bookings.map((booking) => ({
+      //   BookingId: booking.reservation_id,
+      //   BookingNo: booking.reservationNumber,
+      //   Status: booking.reservation_status,
+      //   Full_Name: booking.name ,
+      //   Tour_name: booking.tour_name,
+      //   Total_Payment: booking.total,
+      //   Pending_Payment: booking.pending_payment,
+      //   Payment_Terms: booking.payment_terms,
+      //   Payment_Method: booking.payment_method,
+      //   Visas: booking.visa_confirm,
+      //   Flight: booking.plane_confirm,
+      //   Initiated_By_Admin: booking.initiated_by_admin,
+      // }));
+      // console.log(bookingsData )
+      // setBookings(bookingsData );
     }
     else if(tab === "Completed"){
       setLoading(false);

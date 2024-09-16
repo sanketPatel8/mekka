@@ -84,6 +84,7 @@ export default function Profile() {
   
       }
       setImage1(response.user.company.image);
+      setFileBlob(response.user.company.image);
       setBankName(response.user.company.bankName);
       setOwnerName(response.user.company.account_owner);
       setIBAN(response.user.company.bankIban);
@@ -169,7 +170,6 @@ export default function Profile() {
   
     Promise.all(promises).then(() => {
       const updatedImages = [ ...newUploadedImages];
-      console.log(updatedImages,"updatedImages")
       setUploadImage(updatedImages);
     });
   };
@@ -531,7 +531,7 @@ export default function Profile() {
                             <Image
                               width={200}
                               height={200}
-                              src={image1? image1 : fileBlob}
+                              src={fileBlob}
                               alt="image"
                               className="size-200 rounded-12 object-cover"
                             />
