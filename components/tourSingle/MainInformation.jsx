@@ -44,7 +44,7 @@ export default function MainInformation({ PAckageData }) {
       transform: "translate(-50%, -50%)",
       padding: "10px",
       width: "100%",
-      maxWidth: "800px",
+      maxWidth: "500px",
       height: "40vh",
       overflowY: "auto",
       backgroundColor: "#fff",
@@ -89,31 +89,7 @@ export default function MainInformation({ PAckageData }) {
     <>
       <div className="row y-gap-20 justify-between items-end">
         <div className="col-auto">
-          <div className="row x-gap-10 y-gap-10 items-center">
-            <div className="col-auto">
-              <button
-                className={`button -accent-1 text-14 py-5 px-15 bg-accent-1-05 text-accent-1 rounded-200 ${
-                  InformationData?.Tour_Details?.tour_details?.bestseller === 0
-                    ? "d-block"
-                    : "d-none"
-                }`}
-              >
-                Bestseller
-              </button>
-            </div>
-            <div className="col-auto">
-              <button
-                className={`button -accent-1 text-14 py-5 px-15 bg-light-1 rounded-200 ${
-                  InformationData?.Tour_Details?.tour_details
-                    ?.free_cancellation === 0
-                    ? "d-block"
-                    : "d-none"
-                }`}
-              >
-                Free cancellation
-              </button>
-            </div>
-          </div>
+        
 
           <h2 className="text-40 sm:text-30 lh-14 mt-20">
             {InformationData?.Tour_Details?.tour_details?.type} -{" "}
@@ -187,7 +163,7 @@ export default function MainInformation({ PAckageData }) {
             </div>
 
             <div className="share-buttons  gap-4 mt-4 row">
-              <div className="row col-8">
+              <div className="row col-8" style={{justifyContent : "center"}} >
                 <FacebookShareButton
                   url={shareUrl}
                   className="flex items-center justify-center rounded-full bg-blue-600 p-2 col-2"

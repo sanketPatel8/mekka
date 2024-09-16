@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 
-export default function OthersInformation({ PAckageData , id }) {
+export default function OthersInformation({ PAckageData, id }) {
   const [OtherInfo, setOtherInfo] = useState({});
   const [TourList, setTourList] = useState(null);
 
@@ -14,7 +14,6 @@ export default function OthersInformation({ PAckageData , id }) {
     // setOtherInfo(PAckageData);
     // const foundTour = OtherInfo?.Tour_List?.find(tour => tour.id === id);
     setTourList(PAckageData?.Tour_Details);
-    
   }, [PAckageData]);
 
   const { translate } = useTranslation();
@@ -30,25 +29,14 @@ export default function OthersInformation({ PAckageData , id }) {
 
             <div className="ml-10">
               <div className="lh-16">{translate("Duration")}</div>
-              <div className="text-14 text-light-2 lh-16">{TourList?.tour_details?.travel_duration} days</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-3 col-6 my-2">
-          <div className="d-flex items-center">
-            <div className="flex-center size-50 rounded-12 border-1">
-              <i className="text-20 icon-teamwork"></i>
-            </div>
-
-            <div className="ml-10">
-              <div className="lh-16">{translate("Travel")}</div>
               <div className="text-14 text-light-2 lh-16">
-                {TourList?.tour_details?.travel}
+                {TourList?.tour_details?.travel_duration} days
               </div>
             </div>
           </div>
         </div>
+
+      
 
         <div className="col-lg-3 col-6 my-2">
           <div className="d-flex items-center">
@@ -68,13 +56,28 @@ export default function OthersInformation({ PAckageData , id }) {
         <div className="col-lg-3 col-6 my-2">
           <div className="d-flex items-center">
             <div className="flex-center size-50 rounded-12 border-1">
+              <i className="text-20 icon-birthday-cake"></i>
+            </div>
+
+            <div className="ml-10">
+              <div className="lh-16">{translate("End Date")}</div>
+              <div className="text-14 text-light-2 lh-16">
+                {TourList?.tour_details?.date_end}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-3 col-6 my-2">
+          <div className="d-flex items-center">
+            <div className="flex-center size-50 rounded-12 border-1">
               <i className="text-20 icon-translate"></i>
             </div>
 
             <div className="ml-10">
               <div className="lh-16">{translate("Languages")}</div>
               <div className="text-14 text-light-2 lh-16">
-              {TourList?.en_language}
+                {TourList?.en_language}
               </div>
             </div>
           </div>

@@ -151,6 +151,9 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
+  console.log("selectedCheckbox" , selectedCheckbox);
+  
+
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
     if (
@@ -277,6 +280,15 @@ export default function TourSingleSidebar({ PAckageData }) {
 
     setPriceObject(newPriceArray);
   };
+
+  useEffect(() => {
+    // Update the checkbox state whenever SidebarData changes
+    if (SidebarData?.tour_details?.flight_included === '1') {
+      setselectedCheckbox(true);
+    } else {
+      setselectedCheckbox(false);
+    }
+  }, [SidebarData]); 
 
   useEffect(() => {
     updatePriceObject();
@@ -515,6 +527,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                     name="item4"
                     checked={selectedCheckbox}
                     onChange={handleExcludeFlight}
+                    
                   />
                   <label htmlFor="item4" className="form-checkbox__mark ml-0">
                     <div className="form-checkbox__icon">
