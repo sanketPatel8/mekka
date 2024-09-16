@@ -104,20 +104,49 @@ export default function AddTour() {
   const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
   const [radioValueFlight, setRadioValueFlight] = useState('No');
 
-
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [minEndDate, setMinEndDate] = useState("");
+  
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+    setMinEndDate(e.target.value);
+    setDateBegin(formatDateToDDMMYYYY(e.target.value));
+  };
+  
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+    setDateEnd(formatDateToDDMMYYYY(e.target.value));
+  };
   const { translate } = useTranslation();
 
+  // useEffect(() => {
+  //   if (date_begin && date_end) {
+  //     const startDate = new Date(formatDateToMMDDYYYY(date_begin));
+  //     console.log(startDate,"startDate");
+  //     const endDate = new Date(formatDateToMMDDYYYY(date_end));
+  //     const timeDifference = endDate.getTime() - startDate.getTime();
+  //     const daysDifference = timeDifference / (1000 * 3600 * 24);
+  //     setDaysCount(Math.ceil(daysDifference));
+  //     console.log(daysDifference,"daysCount");
+  //   }
+  // }, [date_begin, date_end]);
+
   useEffect(() => {
-    if (date_begin && date_end) {
-      const startDate = new Date(formatDateToMMDDYYYY(date_begin));
-      console.log(startDate,"startDate");
-      const endDate = new Date(formatDateToMMDDYYYY(date_end));
-      const timeDifference = endDate.getTime() - startDate.getTime();
-      const daysDifference = timeDifference / (1000 * 3600 * 24);
-      setDaysCount(Math.ceil(daysDifference));
-      console.log(daysDifference,"daysCount");
-    }
-  }, [date_begin, date_end]);
+    const today = new Date();
+    const todayString = today.toISOString().split("T")[0];
+   
+    setDateBegin(todayString);
+    setDateEnd(todayString);
+    setMinEndDate(todayString);
+  }, []);
+  
+  // useEffect(() => {
+  //   if (date_begin) {
+  //     console.log(date_begin,"date_begin")
+  //     setMinEndDate(date_begin);
+  //   }
+  // }, [date_begin]);
 
   useEffect(()=>{
     accessdata()
@@ -791,7 +820,7 @@ const isCurrentTabValid = () => {
 
                                 <div className="col-md-6">
                                   <div className="form-input my-1">
-                                    <input type="date" required value={date_begin? formatDateToMMDDYYYY(date_begin) : ''} onChange={handleInputChange(setDateBegin)}/>
+                                    <input type="date" required value={date_begin? formatDateToMMDDYYYY(date_begin) : ''} onChange={handleStartDateChange} min={minEndDate}/>
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Start Date of Tour") ||
                                         "Find Latest Packages"} <span className="text-red">*</span>
@@ -801,7 +830,8 @@ const isCurrentTabValid = () => {
 
                                 <div className="col-md-6">
                                   <div className="form-input my-1">
-                                    <input type="date" required value={date_end? formatDateToMMDDYYYY(date_end) : ''} onChange={handleInputChange(setDateEnd)}/>
+                                    <input type="date" required value={date_end? formatDateToMMDDYYYY(date_end) : ''} onChange={handleEndDateChange}       min={minEndDate}
+                                    />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("End Date of Tour") ||
                                         "Find Latest Packages"} <span className="text-red">*</span>
