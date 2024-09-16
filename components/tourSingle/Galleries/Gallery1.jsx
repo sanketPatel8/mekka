@@ -40,7 +40,7 @@ export default function Gallery1({ PAckageData }) {
           ))}
         </div>
 
-        <div className="tourSingleGrid__button">
+        <div className={`tourSingleGrid__button ${Images?.length === 1 ? "d-none" : "d-block"}`}>
           <div
             style={{ cursor: "pointer" }}
             className="js-gallery"

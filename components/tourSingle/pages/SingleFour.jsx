@@ -10,7 +10,6 @@ import HotelInformation from "../HotelInformation";
 import Faq from "../Faq";
 import Reviews from "../Reviews";
 import TourSingleSidebar from "../TourSingleSidebar";
-import OtherInformation2 from "../OtherInformation2";
 import RoadMap2 from "../Roadmap2";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useSearchParams } from "next/navigation";
@@ -46,9 +45,7 @@ export default function SingleFour({ PAckageData }) {
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
                 <OthersInformation PAckageData={PAckageData} id={id} />
               </div>
-              <div className="row y-gap-20 justify-between items-center layout-pb-sm">
-                <OtherInformation2 PAckageData={PAckageData} id={id} />
-              </div>
+              
 
               <Overview PAckageData={PAckageData} />
 
@@ -253,52 +250,6 @@ export default function SingleFour({ PAckageData }) {
                       </div>
                     </div>
                   </div>
-
-                  {/* <div
-                    className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("review") ? "is-active" : ""
-                    }`}
-                  >
-                    <div
-                      onClick={() =>
-                        setActiveAcorditions((pre) =>
-                          pre.includes("review")
-                            ? [...pre.filter((elm) => elm != "review")]
-                            : [...pre, "review"]
-                        )
-                      }
-                      className="accordion__button d-flex items-center justify-between"
-                    >
-                      <div className="text-30 md:text-20 lh-13 fw-700">
-                        Customer Reviews
-                      </div>
-
-                      <div className="accordion__icon size-30 text-24 flex-center">
-                        <i className="icon-chevron-down"></i>
-                        <i className="icon-chevron-up"></i>
-                      </div>
-                    </div>
-
-                    <div
-                      className="accordion__content"
-                      style={
-                        activeAcorditions.includes("review")
-                          ? { maxHeight: "500px" }
-                          : {}
-                      }
-                    >
-                      <div className="pt-20">
-            
-                        <Reviews PAckageData={PAckageData} />
-
-                        <button className="button -md -outline-accent-1 text-accent-1 mt-30">
-                          See more reviews
-                          <i className="icon-arrow-top-right text-16 ml-10"></i>
-                        </button>
-                
-                      </div>
-                    </div>
-                  </div> */}
 
                   <div
                     className={`accordion__item py-30 border-1-top ${

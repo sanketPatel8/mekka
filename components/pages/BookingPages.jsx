@@ -323,7 +323,19 @@ export default function BookingPages({ BookingData }) {
     additional_price_id: "",
   });
 
+ 
+
   const [Additional, setAdditional] = useState([]);
+
+  // {
+  //   type : "" ,
+  //   price : "",
+  //   index : 0 ,
+  //   order : "" ,
+  //   title : "" , 
+  //   id : ""
+
+  // }
 
   // for form validation
 
@@ -337,8 +349,6 @@ export default function BookingPages({ BookingData }) {
     );
     setIsFormValid(isValid);
   }, [formValues]);
-
-
 
   const getdefaultPriceforType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -380,7 +390,7 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const handleRadioChange = (e, type, index, price, order, title, id) => {
+  const handleRadioChange = (e, type, i , idx ,  price, order, title, optid) => {
     const selectedValue = e.target.value;
 
     setFormValues((prevValues) => {
@@ -390,50 +400,63 @@ export default function BookingPages({ BookingData }) {
       if (!updatedValues[type]) {
         updatedValues[type] = [];
       }
-      if (!updatedValues[type][index]) {
-        updatedValues[type][index] = {};
+      if (!updatedValues[type][i]) {
+        updatedValues[type][i] = {};
       }
 
       // Update the form values with the new radio button selection
-      updatedValues[type][index] = {
-        ...updatedValues[type][index],
+      updatedValues[type][i] = {
+        ...updatedValues[type][i],
         selectedService: selectedValue,
         price: price,
         title: title,
         additional_order: order,
-        additional_price_id: id,
+        additional_price_id: optid,
       };
 
       // Optional: Update userData if type is 'Adult' and index is 0
-      if (type === "Adult" && index === 0) {
+      if (type === "Adult" && i === 0) {
         setUserData((prevUserData) => ({
           ...prevUserData,
           selectedService: selectedValue,
           price: price,
           title: title,
           additional_order: order,
-          additional_price_id: id,
+          additional_price_id: optid,
         }));
       }
 
       return updatedValues;
     });
 
-    setAdditional((prevAdditional) => [
-      ...prevAdditional,
-      {
-        type,
-        index,
-        price,
-        order,
-        title,
-        id,
-      },
-    ]);
+    setAdditional((prevAdditional) => {
+      console.log("prevAdditional", prevAdditional); // Logging the previous state
+
+      // Create the new item
+      const newItem = {
+        type: type || "", // Default values if not provided
+        price: price || "",
+        title: title || "",
+        index: i !== undefined ? i : 0, // Handle numbers explicitly
+        order: order || "",
+        id: optid || "",
+      };
+
+      // Append the new item to the existing array
+      return [
+        ...prevAdditional, // Spread the previous array
+        newItem // Add the new item
+      ];
+    });
+
+
 
     // Call any function to update additional values based on the type and index
-    updatePriceByTypeAndIndex(type, index, price);
+    updatePriceByTypeAndIndex(type, i, price);
   };
+
+console.log("Additional" , Additional);
+
 
   const updatePriceByTypeAndIndex = (type, index, newPrice) => {
     const itemsOfType = AlladultsData?.filter((item) => item.label == type);
@@ -445,13 +468,6 @@ export default function BookingPages({ BookingData }) {
       const prevPrice = getPriceForType(type, index);
       const addivalue = JSON.parse(newPrice);
       const multiPrice = prevPrice + addivalue;
-
-      console.log("prevPrice" , prevPrice);
-      console.log("addivalue" , addivalue);
-      console.log("multiPrice" , multiPrice);
-      
-      
-      
 
       // Step 3: Update the price of the item
       const updatedItem = { ...itemsOfType[index], price: multiPrice };
@@ -478,10 +494,7 @@ export default function BookingPages({ BookingData }) {
 
   const getPriceForType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
-    const AdditionalPrice = Additional.filter((item) => item.index === idx)
-
-    console.log("AdditionalPrice" , AdditionalPrice); 
-    
+    const AdditionalPrice = Additional.filter((item) => item.index === idx);
 
     if (!personPrice) {
       return 0; // Default value if no price is found
@@ -549,6 +562,7 @@ export default function BookingPages({ BookingData }) {
         showSuccessToast(PromoResponse.Message);
         setDiscount(PromoResponse);
         setHandlePromo(true);
+        setpromo('')
       } else {
         showErrorToast("Invalid promo code.");
         setHandlePromo(false);
@@ -601,8 +615,6 @@ export default function BookingPages({ BookingData }) {
       console.error("Unexpected response structure:", response);
     }
 
-    console.log("response", response);
-
     return response.user ? [response.user] : [];
   };
 
@@ -620,6 +632,8 @@ export default function BookingPages({ BookingData }) {
 
   const handlePromoSubmit = async () => {
     FetchPromoApi();
+    setShowbtnName(true)
+    
   };
 
   const handlePromoremove = () => {
@@ -770,6 +784,8 @@ export default function BookingPages({ BookingData }) {
 
     let resultPrice;
 
+    if(AlladultsData)
+
     if (PrpersonPrice?.length == 0) {
       resultPrice = 0;
     } else {
@@ -785,6 +801,10 @@ export default function BookingPages({ BookingData }) {
         : fields[type] || [];
 
       const isFormPrefilled = loginPer && i === 0;
+
+      const foundItem = AlladultsData.find((item) => item.label === type && item.index === i);
+
+      const priceToDisplay = foundItem ? foundItem.price : "Price not found";
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -908,6 +928,7 @@ export default function BookingPages({ BookingData }) {
                                   formValues[type]?.[i]?.selectedService ==
                                   `${type}-${i}-${idx}-ad-${option.id}-${option.title}`
                                 }
+                                // const handleRadioChange = (e, type, i , idx ,  price, order, title, optid) => {
                                 onChange={(e) =>
                                   handleRadioChange(
                                     e,
@@ -939,7 +960,7 @@ export default function BookingPages({ BookingData }) {
 
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal <span>{`${getPriceForType(type, i)} €`}</span>
+                    Subtotal <span>{`${priceToDisplay} €`}</span>
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
@@ -950,8 +971,6 @@ export default function BookingPages({ BookingData }) {
       );
     });
   };
-
-  console.log("Additional", Additional);
 
   const bookingData = {
     AccessKey: "Mekka@24",
@@ -1024,8 +1043,6 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  console.log("Discount", Discount);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -1047,6 +1064,9 @@ export default function BookingPages({ BookingData }) {
       formRef.current.requestSubmit(); // This triggers form submission
     }
   };
+
+  console.log("Discount" , Discount.Discount);
+  
 
   const { translate } = useTranslation();
 
@@ -1230,8 +1250,15 @@ export default function BookingPages({ BookingData }) {
                       <div className=""> {totalSum} € </div>
                     </div>
 
+                  <div className={`${ShowbtnName === false  ? 'd-none' : 'd-block'}`}>
+                  <div className={`d-flex items-center justify-between `}>
+                      <div className="fw-500">{translate("Discount")}</div>
+                      <div className=""> - {Discount.Discount} € </div>
+                    </div>
+                  </div>
+
                     <div className="d-flex items-center justify-between">
-                      <div className="fw-500">{translate("Tax")}</div>
+                      <div className="fw-500">{translate("Tax")}(19%)</div>
                       <div className=""> {formattedTaxAmount} € </div>
                     </div>
 
@@ -1262,7 +1289,7 @@ export default function BookingPages({ BookingData }) {
                           </label>
                         </div>
 
-                        {ShowbtnName == false ? (
+                        {ShowbtnName === false ? (
                           <button
                             type="button"
                             className="button -sm -info-2 bg-accent-1 text-white col-2 ml-10 text-end"

@@ -42,7 +42,7 @@ export default function RoadMap2({ PAckageData }) {
               className="roadmap__title"
               onClick={() => setActiveRoadmap((pre) => (pre === i ? -1 : i))}
             >
-              Day{elm.day_number} : {elm.day}
+             {elm.day}
             </div>
             {elm.description && (
               <div

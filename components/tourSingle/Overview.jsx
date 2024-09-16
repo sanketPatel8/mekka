@@ -18,7 +18,7 @@ export default function Overview({ PAckageData }) {
         />
       </div>
 
-      <h3 className="text-20 fw-500 mt-20">{translate("Tour Highlights")}</h3>
+      {/* <h3 className="text-20 fw-500 mt-20">{translate("Tour Highlights")}</h3> */}
       {/* <ul className="ulList mt-20">
         <li>
           Experience the thrill of a speedboat to the stunning Phi Phi Islands
