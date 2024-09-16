@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/dasboard/Header";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, use } from "react";
 import Image from "next/image";
 import Map from "@/components/pages/contact/Map";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
@@ -65,7 +65,9 @@ export default function EditTour() {
   const [tourInformation, setTourInformation] = useState("");
   const [free_cancellation, setFreeCancellation] = useState(0);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
+  const [departureRows, setDepartureRows] = useState([
+    { departure_id:"", price: "",id:"" },
+  ]);
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
@@ -104,14 +106,19 @@ export default function EditTour() {
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
   const [departures, setDepartures] = useState([]);
+
   const [flightDetails, setFlightDetails] = useState([]);
   const [tourType, setTourType] = useState([]);
   const [amenities, setAmenities] = useState([]);
+  const [departureDetails, setDepartureDetails] = useState([]);
+  const [tourInclude, setTourInclude] = useState("");
   const [radioValueVisa, setRadioValueVisa] = useState('No');
   const [languagesData, setlanguagesData] = useState([]);
   const [flightData, setFlightData] = useState([]);
   const [additionalServices, setAdditionalServices] = useState([]);
-  const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
+  // const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
+  const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState('No');
+
   const [radioValueFlight, setRadioValueFlight] = useState('No');
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
@@ -127,7 +134,9 @@ export default function EditTour() {
       setTourDetails(response.Tour_Details.details);
       setAdditionalServices(response.Tour_Details.addition_service);
       setFlightData(response.Tour_Details.flight_data);
+      setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
+      setTourInclude(response.Tour_Details.details.tour_included);
       const adultPrice = response.Tour_Details.adult_price.map((price) => (setAdultPrice(price.price)));
       const childPrice = response.Tour_Details.child_price.map((price) => (setChildPrice(price.price)));
       const babyPrice = response.Tour_Details.baby_price.map((price) => (setBabyPrice(price.price)));
@@ -201,6 +210,20 @@ export default function EditTour() {
 
   },[tourInformation])
 
+useEffect(() => {
+  if(departureDetails){
+    const updatedDepartures = departureDetails.map((departure) => {
+      const foundDeparture = departures.find((departureData) => departureData.id === departure.departure_id);
+      if (foundDeparture) {
+        return { ...departure, departure_id: foundDeparture.id };
+      }
+      return departure;
+    });
+    setDepartureRows(updatedDepartures);
+    console.log(departureRows,"updatedDepartures");
+  }
+},[departureDetails])
+
   useEffect(() => {
     if(tourDetails){
       setSelectedTour({value:tourDetails.type,label:tourDetails.type});
@@ -246,16 +269,9 @@ export default function EditTour() {
         }
       }
            
-      const tourIncluded = tourDetails.tour_included;
-      if (tourIncluded) {
-        const updatedIncluded = included.map((item) => {
-          if (tourIncluded.includes(item.id)) {
-            return { ...item, checked: true };
-          }
-          return item;
-        });
-        return setIncluded(updatedIncluded);
-      }
+      // const tourIncluded = tourDetails.tour_included;
+      //   console.log(tourIncluded,"tourIncluded");
+      
   
       {tourDetails.visa_processing === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
       {tourDetails.free_cancellation === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
@@ -287,6 +303,15 @@ export default function EditTour() {
     // console.log(imageUrls,"imageUrls");
   }, [tourDetails]);
 
+  useEffect(() => {
+    if (tourInclude) {
+      const updatedIncluded = included.map((item) => {
+        const isChecked = tourInclude.includes(item.id.toString());
+        return { ...item, checked: isChecked };
+      });
+      setIncluded(updatedIncluded);
+    }
+  }, [tourInclude]);
 
   useEffect(() => {
     if(additionalServices){
@@ -437,8 +462,9 @@ export default function EditTour() {
 
   const isCurrentTabValid = () => {
     if (activeTab === "Content") {
-      return SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value && selectDepartureRef.current.value && image2.length > 0;
-    } else if (activeTab === "Pricing") {
+      return (SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value  && image2.length > 0 && departureRows.length > 0 &&
+        departureRows.every((departure) => departure.departure_id && departure.price));
+      } else if (activeTab === "Pricing") {
       return adult_price && child_price && baby_price ;
     } else if (activeTab === "Included") {
       return true
@@ -556,20 +582,6 @@ export default function EditTour() {
     });
   };
 
-  const handleImageChange = (event, func) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        func(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
   
   const HandleTourChange = (newValue, actionMeta) => {
     setSelectedTour(newValue);
@@ -583,7 +595,26 @@ export default function EditTour() {
     value: type,
     label: `${type}`,
   }));
+  const departureOption = departures.map((departure) => ({
+    value: departure.id,
+    label: `${departure.departure}`,
+  }));
 
+  const handleAddDepartureRow = () => {
+    setDepartureRows([
+      ...departureRows,
+      { departure_id:"", price: "",id:"" },
+    ]);
+  };
+
+  const handleRemoveDepartureRow = (index) => {
+    if (departureRows.length === 1) {
+      return; 
+    }
+    const newRows = [...departureRows];
+    newRows.splice(index, 1);
+    setDepartureRows(newRows);
+  };
   
 
   const Madina = madinaHotel.map((hotel) => ({
@@ -643,6 +674,22 @@ export default function EditTour() {
       setMekkaRows(newRows);
     
   };
+
+  const handleDepartureChange = (value, index) => {
+    if (!value) return; // add this line to check if value is null or undefined
+    const selectedOption = departures.find((option) => option.id === value.value);
+    if (departureRows[index].departure_id !== selectedOption?.id) {
+      const departureData = {
+        ...departureRows[index],
+        departure_id: selectedOption?.id || "",
+        departure: selectedOption?.departure || "",
+      };
+      const newRows = [...departureRows];
+      newRows[index] = departureData;
+      setDepartureRows(newRows);
+      console.log(departureRows, "departureRows");
+    }
+  };
   // const handleMekkaChange = (value, index) => {
   //   if (!value) return; // add this line to check if value is null or undefined
   //   const selectedOption = mekkaHotel.find((option) => option.id === value.value);
@@ -674,7 +721,6 @@ export default function EditTour() {
   };
 
   const selectRef = useRef(null);
-  const selectDepartureRef = useRef(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -689,19 +735,7 @@ export default function EditTour() {
 
 
   }, []);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.$ = window.jQuery = $;
-      import("select2").then(() => {
-        $(selectDepartureRef.current).select2();
-        return () => {
-          $(selectDepartureRef.current).select2("destroy");
-        };
-      });
-    }
 
-
-  }, []);
 
   // for add flight name and amount booking
 
@@ -764,8 +798,7 @@ export default function EditTour() {
     // Convert language values to a comma-separated string
     const languageString = languageValues.join(',');
 
-    const departuresValues = $(selectDepartureRef.current).val();
-    const departuresString = departuresValues.join(',');
+  
     const mekkaData =mekkaRows.map((mekka)=>({
       hotel_type:1,
       hotel_name: mekka.hotel_name ? mekka.hotel_name : '', 
@@ -825,8 +858,11 @@ export default function EditTour() {
     //     description: day.description,
     //   })),
     // };
+
+
     const image2File = document.querySelector('input[name="image2"]').files;
-    console.log(image2File,"image2File");
+    console.log(image2File,"image2File")
+    const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
     // const binaryImages = [];
 
     // for (let i = 0; i < image2File.length; i++) {
@@ -841,6 +877,14 @@ export default function EditTour() {
     
     // console.log(binaryImages,"binaryImages");
 
+    const departureData =departureRows.map((departure)=>({
+      departure_id: departure.departure_id ? departure.departure_id : '',
+      price: departure.price ? departure.price : '',
+      id: departure.id ? departure.id : ''
+    }))
+
+    console.log(departureData)
+
     const formData = new FormData();
 
     formData.append("type", SelectedTour.value);
@@ -849,7 +893,6 @@ export default function EditTour() {
     formData.append("date_begin", start_date);
     formData.append("date_end", end_date);
     formData.append("tour_languages", languageString);
-    formData.append("departures ", departuresString);
     formData.append("adult_price", adult_price);
     formData.append("child_price", child_price);
     formData.append("baby_price", baby_price);
@@ -860,10 +903,13 @@ export default function EditTour() {
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData):"");
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
+    formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
-    formData.append("tour_image[]", image2File);
+    image2FileArray.forEach((file, index) => {
+      formData.append(`tour_image[${index}]`, file);
+    });
+    formData.append("departures ", departureData);
 
     const url = "updatetour";
 
@@ -873,7 +919,7 @@ export default function EditTour() {
         toast.success("Tour Added Successfully");
         setActiveTab("Content");
         setActiveTabIndex(0);
-        
+        fetchTour(id);
         // setSelectedTour({});  
         // setName("");
         // setCapacity("");
@@ -1089,48 +1135,88 @@ const formatDateToMMDDYYYY = (date) => {
                                     </label>
                                   </div>
                                 </div>
-                                <div className="col-md-6">
-                                  <div className="form-input my-1 position-relative">
-                                    <select
-                                      ref={selectDepartureRef}
-                                      className="js-example-basic-multiple w-100"
-                                      name="states[]"
-                                      multiple="multiple"
-                                      placeholder="Langauge"
-                                    >
-                                      {departures.map((departure) => (
-                                        <option key={departure.id} value={departure.id}
-                                        selected={tourDetails.departures && tourDetails.departures.includes(departure.id)}>
-                                          {translate(departure.departure) ||
-                                          "Find Latest Packages"}
-                                        </option>
-                                      ))}
-                                      {/* <option value="ENG">
-                                        {" "}
-                                        {translate("English") ||
-                                          "Find Latest Packages"}
-                                      </option>
-                                      <option value="GER">
-                                        {" "}
-                                        {translate("German") ||
-                                          "Find Latest Packages"}
-                                      </option>
-                                      <option value="TUR">
-                                        {" "}
-                                        {translate("Turkis") ||
-                                          "Find Latest Packages"}
-                                      </option>
-                                      <option value="ARB">
-                                        {" "}
-                                        {translate("Arbic") ||
-                                          "Find Latest Packages"}
-                                      </option> */}
-                                    </select>
-                                    <label className="multi-lan-select">
-                                      {translate("Departure") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
-                                    </label>
-                                  </div>
+                                <div className="col-md-12">
+                                <h6>
+                                {" "}
+                                {translate("Departure ") }
+                              </h6>
+                              <ul className="">
+                                
+                                {departureRows.map((row, index) => (
+                                  <li key={index}>
+                                    <div className=" row">
+                                      <div className="col-lg-8">
+                                        <div className="row">
+                                          <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
+                                            <CreatableSelect
+                                              value={{ value: departureRows[index].departure_id, label: departureRows[index].departure }}
+                                              onChange={(value) =>
+                                                handleDepartureChange(value, index)
+                                              }
+                                              options={departureOption}
+                                              className="custom-select Hotel-Madina-dd"
+                                              placeholder="Select Departure (required)"
+                                              classNamePrefix="react-select"
+                                              isClearable
+                                              formatCreateLabel={(inputValue) =>
+                                                `Not Found: "${inputValue}"`
+                                              }
+                                            />
+                                          </div>
+
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input type="number" required
+                                                value={departureRows[index].price}
+                                                onChange={(e) => setDepartureRows(prevRows => {
+                                                  const newRows = [...prevRows];
+                                                  newRows[index].price = e.target.value;
+                                                  return newRows;
+                                                })} />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate(" Price") ||
+                                                  "Find Latest Packages"} <span className="text-red">*</span>
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          
+                                       
+                                        </div>
+                                      </div>
+
+                                      <div className="col-2 d-flex">
+                                        <button
+                                          type="button"
+                                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                          onClick={handleAddDepartureRow}
+                                          style={{height:"fit-content"}}
+
+                                        >
+                                          +
+                                        </button>
+                                        {index > 0 && (
+                                          <button
+                                            type="button"
+                                            className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                            style={{height:"fit-content"}}
+
+                                            onClick={() =>
+                                              handleRemoveDepartureRow(index)
+                                            }
+                                          >
+                                            -
+                                          </button>
+                                        )}
+                                      </div>
+
+
+                                      <hr />
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
                                 </div>
                               </div>
 
@@ -1511,7 +1597,7 @@ const formatDateToMMDDYYYY = (date) => {
                                     <textarea
                                           type="text"
                                           required
-                                          rows="1"
+                                          rows="2"
                                           cols="80"
                                           value={route_data.find((day) => day.day === dayNumber)?.description || ""}
                                           onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
@@ -1803,7 +1889,7 @@ const formatDateToMMDDYYYY = (date) => {
                             </div>
                             <div className="d-flex item-center justify-content-between">
                               <h6>
-                              {translate("Free cancellation (up to 14 days before travel date)") }
+                              {translate("Exclude Flight Details") }
                               </h6>
                               <div className="flex_start visaYESNOFLEx my-3">
                                 <div className="d-flex items-center mx-2">
@@ -1813,8 +1899,8 @@ const formatDateToMMDDYYYY = (date) => {
                                         type="radio"
                                         name="radioGroupFreeCancel"
                                         value="Yes"
-                                        checked={radioValueFreeCancel === "Yes"}
-                                        onChange={(event) => setRadioValueFreeCancel(event.target.value)}
+                                        checked={radioValueExcludeFlight === "Yes"}
+                                        onChange={(event) => setRadioValueExcludeFlight(event.target.value)}
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1833,8 +1919,8 @@ const formatDateToMMDDYYYY = (date) => {
                                         type="radio"
                                         name="radioGroupFreeCancel"
                                         value="No"
-                                        checked={radioValueFreeCancel === "No"}
-                                        onChange={(event) => setRadioValueFreeCancel(event.target.value)}
+                                        checked={radioValueExcludeFlight === "No"}
+                                        onChange={(event) => setRadioValueExcludeFlight(event.target.value)}
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1913,8 +1999,8 @@ const formatDateToMMDDYYYY = (date) => {
 
                                             <div className="col-md-6">
                                               <CreatableSelect
-                                                value={row.flight_id}
-                                                onChange={(value) =>
+                                              value={{ value: flightRow[index].flight_id, label: flightRow[index].flight_name }}
+                                              onChange={(value) =>
                                                   handleFlightSelectChange(value, index)
                                                 }
                                                 options={ChooseFlight}

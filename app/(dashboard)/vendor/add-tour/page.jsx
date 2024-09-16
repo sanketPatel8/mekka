@@ -89,6 +89,9 @@ export default function AddTour() {
   const [madinaRows, setMadinaRows] = useState([
     { hotel_name: null, hotel_price: "",hotel_info:"" },
   ]);
+  const [departureRows, setDepartureRows] = useState([
+    { departure_id:"", price: "" },
+  ]);
   const [flightRow, setFlightRow] = useState([
     { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
   ]);
@@ -101,7 +104,8 @@ export default function AddTour() {
   const [amenities, setAmenities] = useState([]);
   const [languagesData, setlanguagesData] = useState([]);
   const [radioValueVisa, setRadioValueVisa] = useState('No');
-  const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
+  // const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
+  const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState('No');
   const [radioValueFlight, setRadioValueFlight] = useState('No');
 
   const [startDate, setStartDate] = useState("");
@@ -120,17 +124,17 @@ export default function AddTour() {
   };
   const { translate } = useTranslation();
 
-  // useEffect(() => {
-  //   if (date_begin && date_end) {
-  //     const startDate = new Date(formatDateToMMDDYYYY(date_begin));
-  //     console.log(startDate,"startDate");
-  //     const endDate = new Date(formatDateToMMDDYYYY(date_end));
-  //     const timeDifference = endDate.getTime() - startDate.getTime();
-  //     const daysDifference = timeDifference / (1000 * 3600 * 24);
-  //     setDaysCount(Math.ceil(daysDifference));
-  //     console.log(daysDifference,"daysCount");
-  //   }
-  // }, [date_begin, date_end]);
+  useEffect(() => {
+    if (date_begin && date_end) {
+      const startDate = new Date(formatDateToMMDDYYYY(date_begin));
+      console.log(startDate,"startDate");
+      const endDate = new Date(formatDateToMMDDYYYY(date_end));
+      const timeDifference = endDate.getTime() - startDate.getTime();
+      const daysDifference = timeDifference / (1000 * 3600 * 24);
+      setDaysCount(Math.ceil(daysDifference));
+      console.log(daysDifference,"daysCount");
+    }
+  }, [date_begin, date_end]);
 
   useEffect(() => {
     const today = new Date();
@@ -385,6 +389,11 @@ export default function AddTour() {
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
   }));
 
+  const departureOption = departures.map((departure) => ({
+    value: departure.id,
+    label: `${departure.departure}`,
+  }));
+
   const ChooseFlight = flightDetails.map((flight) => ({
     value: flight.id,
     label: `${flight.airline_name}`,
@@ -423,6 +432,22 @@ export default function AddTour() {
     newRows.splice(index, 1);
     setMadinaRows(newRows);
   };
+
+  const handleAddDepartureRow = () => {
+    setDepartureRows([
+      ...departureRows,
+      { departure_id:"", price: "" },
+    ]);
+  };
+
+  const handleRemoveDepartureRow = (index) => {
+    if (departureRows.length === 1) {
+      return; 
+    }
+    const newRows = [...departureRows];
+    newRows.splice(index, 1);
+    setDepartureRows(newRows);
+  };
   const handleMekkaChange = (value, index) => {
     if (!value) return; // add this line to check if value is null or undefined
     const selectedOption = mekkaHotel.find((option) => option.id === value.value);
@@ -453,8 +478,24 @@ export default function AddTour() {
     
   };
 
+  const handleDepartureChange = (value, index) => {
+    if (!value) return; // add this line to check if value is null or undefined
+    const selectedOption = departures.find((option) => option.id === value.value);
+    console.log(selectedOption?.id,"selectedOptionId")
+    console.log(selectedOption?.hotel_name,"selectedOption")
+    const departureData = {
+      ...departureRows[index],
+      departure_id: selectedOption?.id || "",
+      
+    };
+    const newRows = [...departureRows];
+    newRows[index] = departureData;
+    setDepartureRows(newRows);
+    
+  };
+
   const selectRef = useRef(null);
-  const selectDepartureRef = useRef(null);
+ 
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -469,19 +510,7 @@ export default function AddTour() {
 
 
   }, []);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.$ = window.jQuery = $;
-      import("select2").then(() => {
-        $(selectDepartureRef.current).select2();
-        return () => {
-          $(selectDepartureRef.current).select2("destroy");
-        };
-      });
-    }
-
-
-  }, []);
+ 
 
   // for add flight name and amount booking
 
@@ -541,7 +570,8 @@ const formatDateToMMDDYYYY = (date) => {
 
 const isCurrentTabValid = () => {
   if (activeTab === "Content") {
-    return SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value && selectDepartureRef.current.value && image2.length > 0;
+    return (SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value  && image2.length > 0 && departureRows.length > 0 &&
+    departureRows.every((departure) => departure.departure_id && departure.price));
   } else if (activeTab === "Pricing") {
     return adult_price && child_price && baby_price ;
   } else if (activeTab === "Included") {
@@ -571,8 +601,8 @@ const isCurrentTabValid = () => {
     // Convert language values to a comma-separated string
     const languageString = languageValues.join(',');
 
-    const departuresValues = $(selectDepartureRef.current).val();
-    const departuresString = departuresValues.join(',');
+    // const departuresValues = $(selectDepartureRef.current).val();
+    // const departuresString = departuresValues.join(',');
     const mekkaData =mekkaRows.map((mekka)=>({
       hotel_type:1,
       hotel_name: mekka.hotel_name ? mekka.hotel_name : '', 
@@ -589,8 +619,12 @@ const isCurrentTabValid = () => {
       hotel_price:madina.hotel_price,
       hotel_info:madina.hotel_info
     }))
+    const departureData =departureRows.map((departure)=>({
+      departure_id: departure.departure_id ? departure.departure_id : '',
+      price: departure.price ? departure.price : '',
+    }))
 
-    console.log(madinaData)
+    console.log(departureData)
     
     const flightData =flightRow.map((flight)=>({ 
       flight_id: flight.flight_id ? flight.flight_id.value : '',
@@ -602,7 +636,6 @@ const isCurrentTabValid = () => {
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) ||
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
     (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false)) {
-      console.log("hi")
       showErrorToast("Please fill in all required fields before proceeding.");
       return;
     }
@@ -648,7 +681,7 @@ const isCurrentTabValid = () => {
     formData.append("date_begin", start_date);
     formData.append("date_end", end_date);
     formData.append("tour_languages", languageString);
-    formData.append("departures ", departuresString);
+    formData.append("departures",JSON.stringify(departureData) );
     formData.append("adult_price", adult_price);
     formData.append("child_price", child_price);
     formData.append("baby_price", baby_price);
@@ -659,7 +692,7 @@ const isCurrentTabValid = () => {
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData):"");
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    formData.append("free_cancellation", radioValueFreeCancel === "Yes" ? 1 : 0);
+    formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
     image2FileArray.forEach((file, index) => {
@@ -672,41 +705,42 @@ const isCurrentTabValid = () => {
       console.log(response)
       if(response){
         toast.success("Tour Added Successfully");
-        setActiveTab("Content");
-        setActiveTabIndex(0);
-        setSelectedTour("");  
-        setName("");
-        setCapacity("");
-        setDateBegin("");
-        setDateEnd("");
-        setTourLanguages("");
-        setAdultPrice("");
-        setChildPrice("");
-        setBabyPrice("");
-        setGender("");
-        setEditorState(EditorState.createEmpty());
-        $(selectRef.current).val('').trigger('change');
-        $(selectDepartureRef.current).val('').trigger('change');
-        setImage2([]);
-        services.forEach((service) => {
-          service.checked = false;
-          service.price = "";
-        })
-        setIncluded(included.map((item) => ({ ...item, checked: false })));
-        setRouteData([]);
-        setHotelData([]);
-        setTourIncluded(0);
-        setTourInfo("");
-        setFreeCancellation(0);
-        setPrice("123");
-        setAmenities([]);
-        setDaysCount(0);
-        setDayData("");
-        setDayDescription("");
-        setMekkaRows([{ hotel_name: null, hotel_price: "",hotel_info:"" }]);
-        setMadinaRows([{ hotel_name: null, hotel_price: "",hotel_info:"" }]);
-        setFlightRow([{ flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" }]);
-        setRadioValueFlight('No');
+        // setActiveTab("Content");
+        // setActiveTabIndex(0);
+        // setSelectedTour("");  
+        // setName("");
+        // setCapacity("");
+        // setDateBegin("");
+        // setDateEnd("");
+        // setTourLanguages("");
+        // setAdultPrice("");
+        // setChildPrice("");
+        // setBabyPrice("");
+        // setGender("");
+        // setEditorState(EditorState.createEmpty());
+        // $(selectRef.current).val('').trigger('change');
+        // setImage2([]);
+        // services.forEach((service) => {
+        //   service.checked = false;
+        //   service.price = "";
+        // })
+        // setIncluded(included.map((item) => ({ ...item, checked: false })));
+        // setRouteData([]);
+        // setHotelData([]);
+        // setDepartures([]);
+        // setTourIncluded(0);
+        // setTourInfo("");
+        // setFreeCancellation(0);
+        // setPrice("123");
+        // setAmenities([]);
+        // setDaysCount(0);
+        // setDayData("");
+        // setDayDescription("");
+        // setMekkaRows([{ hotel_name: null, hotel_price: "",hotel_info:"" }]);
+        // setMadinaRows([{ hotel_name: null, hotel_price: "",hotel_info:"" }]);
+        // setDepartureRows([{ departure_id: "", price:"" }]);
+        // setFlightRow([{ flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" }]);
+        // setRadioValueFlight('No');
       }
     }catch(error){
       console.error(error);
@@ -881,47 +915,88 @@ const isCurrentTabValid = () => {
                                     </label>
                                   </div>
                                 </div>
-                                <div className="col-md-6">
-                                  <div className="form-input my-1 position-relative">
-                                    <select
-                                      ref={selectDepartureRef}
-                                      className="js-example-basic-multiple w-100"
-                                      name="states[]"
-                                      multiple="multiple"
-                                      placeholder="Langauge"
-                                    >
-                                      {departures.map((departure) => (
-                                        <option key={departure.id} value={departure.id}>
-                                          {translate(departure.departure) ||
-                                          "Find Latest Packages"}
-                                        </option>
-                                      ))}
-                                      {/* <option value="ENG">
-                                        {" "}
-                                        {translate("English") ||
-                                          "Find Latest Packages"}
-                                      </option>
-                                      <option value="GER">
-                                        {" "}
-                                        {translate("German") ||
-                                          "Find Latest Packages"}
-                                      </option>
-                                      <option value="TUR">
-                                        {" "}
-                                        {translate("Turkis") ||
-                                          "Find Latest Packages"}
-                                      </option>
-                                      <option value="ARB">
-                                        {" "}
-                                        {translate("Arbic") ||
-                                          "Find Latest Packages"}
-                                      </option> */}
-                                    </select>
-                                    <label className="multi-lan-select">
-                                      {translate("Departure") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
-                                    </label>
-                                  </div>
+                                <div className="col-md-12">
+                                <h6>
+                                {" "}
+                                {translate("Departure ") }
+                              </h6>
+                              <ul className="">
+                                
+                                {departureRows.map((row, index) => (
+                                  <li key={index}>
+                                    <div className=" row">
+                                      <div className="col-lg-8">
+                                        <div className="row">
+                                          <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
+                                            <CreatableSelect
+                                              value={row.id}
+                                              onChange={(value) =>
+                                                handleDepartureChange(value, index)
+                                              }
+                                              options={departureOption}
+                                              className="custom-select Hotel-Madina-dd"
+                                              placeholder="Select Departure (required)"
+                                              classNamePrefix="react-select"
+                                              isClearable
+                                              formatCreateLabel={(inputValue) =>
+                                                `Not Found: "${inputValue}"`
+                                              }
+                                            />
+                                          </div>
+
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input type="number" required
+                                                value={departureRows[index].hotel_price}
+                                                onChange={(e) => setDepartureRows(prevRows => {
+                                                  const newRows = [...prevRows];
+                                                  newRows[index].price = e.target.value;
+                                                  return newRows;
+                                                })} />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate(" Price") ||
+                                                  "Find Latest Packages"} <span className="text-red">*</span>
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          
+                                       
+                                        </div>
+                                      </div>
+
+                                      <div className="col-2 d-flex">
+                                        <button
+                                          type="button"
+                                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                          onClick={handleAddDepartureRow}
+                                          style={{height:"fit-content"}}
+
+                                        >
+                                          +
+                                        </button>
+                                        {index > 0 && (
+                                          <button
+                                            type="button"
+                                            className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                            style={{height:"fit-content"}}
+
+                                            onClick={() =>
+                                              handleRemoveDepartureRow(index)
+                                            }
+                                          >
+                                            -
+                                          </button>
+                                        )}
+                                      </div>
+
+
+                                      <hr />
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
                                 </div>
                               </div>
 
@@ -1303,7 +1378,7 @@ const isCurrentTabValid = () => {
                                     <textarea
                                           type="text"
                                           required
-                                          rows="1"
+                                          rows="2"
                                           cols="80"
                                           value={route_data.find((day) => day.day === dayNumber)?.description || ""}
                                           onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
@@ -1595,6 +1670,53 @@ const isCurrentTabValid = () => {
                             </div>
                             <div className="d-flex item-center justify-content-between">
                               <h6>
+                              {translate("Exclude Flight Details") }
+                              </h6>
+                              <div className="flex_start visaYESNOFLEx my-3">
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="radioGroupFreeCancel"
+                                        value="Yes"
+                                        checked={radioValueExcludeFlight === "Yes"}
+                                        onChange={(event) => setRadioValueExcludeFlight(event.target.value)}
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("Yes") }
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="radioGroupFreeCancel"
+                                        value="No"
+                                        checked={radioValueExcludeFlight === "No"}
+                                        onChange={(event) => setRadioValueExcludeFlight(event.target.value)}
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("No") }
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            {/* <div className="d-flex item-center justify-content-between">
+                              <h6>
                               {translate("Free cancellation (up to 14 days before travel date)") }
                               </h6>
                               <div className="flex_start visaYESNOFLEx my-3">
@@ -1639,7 +1761,7 @@ const isCurrentTabValid = () => {
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> */}
                             <div className="d-flex item-center justify-content-between">
                               <h6>
                               {translate("Include Flight Details") }

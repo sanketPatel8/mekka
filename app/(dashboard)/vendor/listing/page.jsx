@@ -164,7 +164,7 @@ export default function DBListing() {
                 </div>
               }
               {tourList.map((elm, i) => (
-                <div className="col-lg-6 mb-15" key={i}>
+                <div className="col-lg-12 mb-15" key={i}>
                   <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
                       <Image
@@ -191,6 +191,10 @@ export default function DBListing() {
                       <h3 className="tourCard__title mt-5">
                         <span>{elm.type}</span>
                       </h3>
+                    
+                      <div className="tourCard__title">
+                        Tour Name: {elm.name}
+                      </div>
 
                       {/* <p className="tourCard__text mt-5 items-center d-flex">
                         <FontAwesomeIcon
@@ -299,7 +303,7 @@ export default function DBListing() {
             }
             </div>
 
-            <div className="mt-4">
+            {/* <div className="mt-4">
             <Pagination
                   range={range}
                   activeIndex={activeIndex}
@@ -307,7 +311,7 @@ export default function DBListing() {
                   startParam={startParam}
                   onPageChange={onPageChange}
             />
-                </div>
+                </div> */}
 
             <div id="invoice">
               <Modal

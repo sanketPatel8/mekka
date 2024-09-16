@@ -29,11 +29,9 @@ export default function DbBooking() {
   const [loading, setLoading] = useState(false);
 
   const {user} = useAuthContext();
-  console.log(user?.user.id)
 
   const fetchBookings = async (tab) => {
     
-    console.log(tab, "tab")
     const formData = new FormData();
     formData.append("company_id", user?.user.company_id);
     setLoading(true);
@@ -41,22 +39,21 @@ export default function DbBooking() {
     
     if(tab === "All"){
      setLoading(false);
-      // const bookingsData  = response.Bookings.map((booking) => ({
-      //   BookingId: booking.reservation_id,
-      //   BookingNo: booking.reservationNumber,
-      //   Status: booking.reservation_status,
-      //   Full_Name: booking.name ,
-      //   Tour_name: booking.tour_name,
-      //   Total_Payment: booking.total,
-      //   Pending_Payment: booking.pending_payment,
-      //   Payment_Terms: booking.payment_terms,
-      //   Payment_Method: booking.payment_method,
-      //   Visas: booking.visa_confirm,
-      //   Flight: booking.plane_confirm,
-      //   Initiated_By_Admin: booking.initiated_by_admin,
-      // }));
-      // console.log(bookingsData )
-      // setBookings(bookingsData );
+      const bookingsData  = response.Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name ,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData );
     }
     else if(tab === "Completed"){
       setLoading(false);
@@ -290,41 +287,6 @@ export default function DbBooking() {
     return <span style={statusStyles}>{row.Status}</span>;
   };
 
-  // const VandorBookings = [
-  //   { name: "Booking No.", selector: (row) => row.BookingNo, width: "170px", sortable: true },
-  //   {
-  //     name: "Status",
-  //     selector: (row) => row.Status,
-  //     cell: (row) => <StatusCell row={row} />,
-  //     sortable: true,
-  //   },
-  //   { name: "Full Name", selector: (row) => row.Full_Name, width: "190px", sortable: true },
-  //   { name: "Tour Name", selector: (row) => row.Tour_name, width: "150px", sortable: true },
-  //   { name: "Total (€) ", selector: (row) => row.Total_Payment, sortable: true },
-  //   { name: "Pending (€) ", selector: (row) => row.Pending_Payment, sortable: true },
-  //   { name: "Terms ", selector: (row) => row.Payment_Terms, sortable: true },
-  //   { name: "Method ", selector: (row) => row.Payment_Method, sortable: true },
-  //   { name: "Visas", selector: (row) => row.Visas, width: "150px", sortable: true },
-  //   { name: "Flight", selector: (row) => row.Flight, width: "150px", sortable: true },
-  //   {
-  //     name: "Initiated By",
-  //     selector: (row) => row.Initiated_By_Admin,
-  //     width: "150px", sortable: true,
-  //   },
-  //   {
-  //     name: "Action",
-  //     selector: (row) => (
-  //       <Link href={`/vendor/db-edit-booking/${row.BookingNo}`}>
-  //         <button
-  //           className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-  //         >
-  //            {translate("Edit") }
-  //         </button>
-  //       </Link>
-  //     ),
-  //     width: "110px",
-  //   },
-  // ];
 
   if (!isClient) {
     return null;
