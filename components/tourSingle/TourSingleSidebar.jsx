@@ -151,8 +151,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
-  console.log("selectedCheckbox" , selectedCheckbox);
-  
+  console.log("selectedCheckbox", selectedCheckbox);
 
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
@@ -169,8 +168,6 @@ export default function TourSingleSidebar({ PAckageData }) {
         (Number(extraCharge) || 0);
 
       if (!isNaN(calculatedTotal)) {
- 
-
         setTotal(calculatedTotal.toFixed(2));
       } else {
         console.warn("Calculated total is not a number");
@@ -281,7 +278,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     setPriceObject(newPriceArray);
   };
 
-  useEffect(() => {
+ useEffect(() => {
     // Update the checkbox state whenever SidebarData changes
     if (SidebarData?.tour_details?.flight_included === '1') {
       setselectedCheckbox(true);
@@ -308,29 +305,34 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(total) +
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    JSON.parse(SelectedAirlinePrice);
+    JSON.parse(
+      SidebarData?.tour_details?.flight_included === "1"
+        ? 0
+        : SelectedAirlinePrice
+    );
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    JSON.parse(SelectedAirlinePrice);
+    JSON.parse(
+      SidebarData?.tour_details?.flight_included === "1"
+        ? 0
+        : SelectedAirlinePrice
+    );
 
-    
-    const mekkaHotel = JSON.parse(HotelSelect.mekka);
-    const madinaHotel = JSON.parse(HotelSelect.madina)
-    
+  const mekkaHotel = JSON.parse(HotelSelect.mekka);
+  const madinaHotel = JSON.parse(HotelSelect.madina);
 
   const PackageBookingData = {
     Airline: selectedFlights,
     To: SidebarData?.tour_details?.travel,
-    Departure: [ SidebarData?.tour_details?.date_begin , selectDeparture?.name ],
+    Departure: [SidebarData?.tour_details?.date_begin, selectDeparture?.name],
     Return: SidebarData?.tour_details?.date_end,
     OfferedLanguages: SidebarData?.en_language,
     MaxLuggagePerPerson: SidebarData?.tour_details?.baggage,
-    MakkaHotel: mekkaHotel ,
-    MadinaHotel: madinaHotel
-    
-    
+    MakkaHotel: mekkaHotel,
+    MadinaHotel: madinaHotel,
+    FlightAndHotel: FlightAndHotelPrice,
   };
 
   const handleBooking = () => {
@@ -341,7 +343,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       selectedFlights.price > 0 // Check for valid flight
     ) {
       // Proceed to the next step, e.g., form submission or navigation
-      
+
       if (typeof window !== "undefined") {
         localStorage.setItem(
           "SelectedPackageHotelNDFlight",
@@ -363,7 +365,6 @@ export default function TourSingleSidebar({ PAckageData }) {
       );
     }
   };
-
 
   return (
     <div className="tourSingleSidebar">
@@ -511,143 +512,150 @@ export default function TourSingleSidebar({ PAckageData }) {
         ))}
       </div>
 
-      <h5 className="text-18 fw-500 mb-20 mt-20">
-        {translate("Flight Booking")}
-      </h5>
+      <div
+        className={`${
+          SidebarData?.tour_details?.flight_included === "1"
+            ? "d-none"
+            : "d-block"
+        }`}
+      >
+        <h5 className="text-18 fw-500 mb-20 mt-20">
+          {translate("Flight Booking")}
+        </h5>
 
-      <div className="d-flex items-center justify-between pt-1">
-        <div className="d-flex items-center justify-between">
-          <div className="row ">
-            <div className="col-12">
-              <div className="d-flex items-center pointer-check">
-                <div className="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="item4"
-                    name="item4"
-                    checked={selectedCheckbox}
-                    onChange={handleExcludeFlight}
-                    
-                  />
-                  <label htmlFor="item4" className="form-checkbox__mark ml-0">
-                    <div className="form-checkbox__icon">
-                      <svg
-                        width="10"
-                        height="8"
-                        viewBox="0 0 10 8"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                          fill="white"
-                        />
-                      </svg>
-                    </div>
+        <div className="d-flex items-center justify-between pt-1">
+          <div className="d-flex items-center justify-between">
+            <div className="row ">
+              <div className="col-12">
+                <div className="d-flex items-center pointer-check">
+                  <div className="form-checkbox">
+                    <input
+                      type="checkbox"
+                      id="item4"
+                      name="item4"
+                      checked={selectedCheckbox}
+                      onChange={handleExcludeFlight}
+                    />
+                    <label htmlFor="item4" className="form-checkbox__mark ml-0">
+                      <div className="form-checkbox__icon">
+                        <svg
+                          width="10"
+                          height="8"
+                          viewBox="0 0 10 8"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                    </label>
+                  </div>
+                  <label htmlFor="item4" className="lh-16 ml-15">
+                    Exclude
+                    {translate(" Flight Booking")}
                   </label>
                 </div>
-                <label htmlFor="item4" className="lh-16 ml-15">
-                  Exclude
-                  {translate(" Flight Booking")}
-                </label>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* <div className="text-14">40 €</div> */}
-      </div>
-
-      <hr />
-
-      <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
-        <div>
-          <h5 className="text-18 fw-500 mb-20 mt-20">
-            {translate("Select Flight")}
-          </h5>
-          {SidebarData?.tour_details?.airlines?.map((elm, i) => (
-            <div className="d-flex items-center justify-between my-1" key={i}>
-              <div className="d-flex items-center">
-                <div className="form-radio d-flex items-center">
-                  <label className="radio d-flex items-center">
-                    <input
-                      type="radio"
-                      name={`${elm.flight_id} ( No Stop )`}
-                      value={elm.flight_id}
-                      checked={selectedFlights?.id === elm.flight_id} // Check if the flight is selected
-                      onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
-                    />
-                    <span className="radio__mark">
-                      <span className="radio__icon"></span>
-                    </span>
-                    <span className="text-14 lh-1 ml-10">
-                      {elm.airline_name != null
-                        ? elm.airline_name
-                        : "not found"}{" "}
-                      ( {elm.no_of_stop} Stop )
-                    </span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="text-14">{elm?.flight_amount} €</div>
-            </div>
-          ))}
+          {/* <div className="text-14">40 €</div> */}
         </div>
 
         <hr />
 
-        <div className="searchForm -type-1 -sidebar mt-20">
-          <div className="searchForm__form">
-            <div className="searchFormItem js-select-control js-form-dd">
-              {/* Dropdown Button */}
-              <div
-                className="searchFormItem__button"
-                onClick={() => setActiveTimeDD((pre) => !pre)}
-                data-x-click="time"
-              >
-                <div className="searchFormItem__content">
-                  <h5>Departure</h5>
-                  <div className="js-select-control-chosen">
-                    {selectDeparture?.name ? selectDeparture?.name : ""}
+        <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
+          <div>
+            <h5 className="text-18 fw-500 mb-20 mt-20">
+              {translate("Select Flight")}
+            </h5>
+            {SidebarData?.tour_details?.airlines?.map((elm, i) => (
+              <div className="d-flex items-center justify-between my-1" key={i}>
+                <div className="d-flex items-center">
+                  <div className="form-radio d-flex items-center">
+                    <label className="radio d-flex items-center">
+                      <input
+                        type="radio"
+                        name={`${elm.flight_id} ( No Stop )`}
+                        value={elm.flight_id}
+                        checked={selectedFlights?.id === elm.flight_id} // Check if the flight is selected
+                        onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
+                      />
+                      <span className="radio__mark">
+                        <span className="radio__icon"></span>
+                      </span>
+                      <span className="text-14 lh-1 ml-10">
+                        {elm.airline_name != null
+                          ? elm.airline_name
+                          : "not found"}{" "}
+                        ( {elm.no_of_stop} Stop )
+                      </span>
+                    </label>
                   </div>
                 </div>
-                <div className="searchFormItem__icon_chevron">
-                  <i className="icon-chevron-down d-flex text-18"></i>
-                </div>
-              </div>
 
-              {/* Dropdown List */}
-              <div
-                className={`searchFormItemDropdown -tour-type ${
-                  activeTimeDD ? "is-active" : ""
-                }`}
-                data-x="time"
-                data-x-toggle="is-active"
-              >
-                <div className="searchFormItemDropdown__container">
-                  <div className="searchFormItemDropdown__list sroll-bar-1">
-                    {SidebarData?.tour_details?.departures?.map((elm, i) => (
-                      <div
-                        key={i}
-                        onClick={() => {
-                          // Handle selection of departure
-                          setselectDeparture((pre) =>
-                            pre?.name === elm.departure
-                              ? {}
-                              : { name: elm.departure, value: elm.id }
-                          );
-                          setActiveTimeDD(false); // Close dropdown after selection
-                        }}
-                        className="searchFormItemDropdown__item"
-                      >
-                        <button className="js-select-control-button">
-                          <span className="js-select-control-choice">
-                            {elm.departure}
-                          </span>
-                        </button>
-                      </div>
-                    ))}
+                <div className="text-14">{elm?.flight_amount} €</div>
+              </div>
+            ))}
+          </div>
+
+          <hr />
+
+          <div className="searchForm -type-1 -sidebar mt-20">
+            <div className="searchForm__form">
+              <div className="searchFormItem js-select-control js-form-dd">
+                {/* Dropdown Button */}
+                <div
+                  className="searchFormItem__button"
+                  onClick={() => setActiveTimeDD((pre) => !pre)}
+                  data-x-click="time"
+                >
+                  <div className="searchFormItem__content">
+                    <h5>Departure</h5>
+                    <div className="js-select-control-chosen">
+                      {selectDeparture?.name ? selectDeparture?.name : ""}
+                    </div>
+                  </div>
+                  <div className="searchFormItem__icon_chevron">
+                    <i className="icon-chevron-down d-flex text-18"></i>
+                  </div>
+                </div>
+
+                {/* Dropdown List */}
+                <div
+                  className={`searchFormItemDropdown -tour-type ${
+                    activeTimeDD ? "is-active" : ""
+                  }`}
+                  data-x="time"
+                  data-x-toggle="is-active"
+                >
+                  <div className="searchFormItemDropdown__container">
+                    <div className="searchFormItemDropdown__list sroll-bar-1">
+                      {SidebarData?.tour_details?.departures?.map((elm, i) => (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            // Handle selection of departure
+                            setselectDeparture((pre) =>
+                              pre?.name === elm.departure
+                                ? {}
+                                : { name: elm.departure, value: elm.id }
+                            );
+                            setActiveTimeDD(false); // Close dropdown after selection
+                          }}
+                          className="searchFormItemDropdown__item"
+                        >
+                          <button className="js-select-control-button">
+                            <span className="js-select-control-choice">
+                              {elm.departure}
+                            </span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

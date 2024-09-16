@@ -48,7 +48,7 @@ export default function MainInformation({ PAckageData }) {
       height: "40vh",
       overflowY: "auto",
       backgroundColor: "#fff",
-    },
+      overflowX : "hidden"    },
   };
 
   // Define the URL you want to share

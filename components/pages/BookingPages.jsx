@@ -26,6 +26,9 @@ import { BabyData, ReservationData } from "@/data/CustomerBookingData";
 import { usePeople } from "@/app/context/PeopleContext";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
+import $ from "jquery";
+import "select2/dist/css/select2.min.css";
+import "select2/dist/js/select2.min.js";
 
 const customStyles = {
   overlay: {
@@ -84,6 +87,7 @@ export default function BookingPages({ BookingData }) {
   const [babyData, setbabyData] = useState([]);
   const [AlladultsData, setAlladultsData] = useState([]);
   const [AdditionalServices, setAdditionalServices] = useState([]);
+  const [existingItemsState, setExistingItemsState] = useState([]);
   const [Discount, setDiscount] = useState({});
 
   const [PackagePrices, setPackagePrices] = useState(0);
@@ -171,7 +175,7 @@ export default function BookingPages({ BookingData }) {
         try {
           const parsedPackagePrice = JSON.parse(PackagePrice);
 
-          setPackagePrices(parsedPackagePrice);
+          // setPackagePrices(parsedPackagePrice);
         } catch (error) {
           console.error("Error parsing savedData:", error);
         }
@@ -181,6 +185,7 @@ export default function BookingPages({ BookingData }) {
         try {
           const BookingSideData = JSON.parse(SidebarData);
           setBookingSideBar(BookingSideData);
+          setPackagePrices(BookingSideData.FlightAndHotel);
         } catch (error) {
           console.error("Error parsing savedData:", error);
         }
@@ -323,19 +328,7 @@ export default function BookingPages({ BookingData }) {
     additional_price_id: "",
   });
 
- 
-
   const [Additional, setAdditional] = useState([]);
-
-  // {
-  //   type : "" ,
-  //   price : "",
-  //   index : 0 ,
-  //   order : "" ,
-  //   title : "" , 
-  //   id : ""
-
-  // }
 
   // for form validation
 
@@ -390,7 +383,9 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const handleRadioChange = (e, type, i , idx ,  price, order, title, optid) => {
+  const [updatedPrice, setUpdatedPrice] = useState(0);
+
+  const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
 
     setFormValues((prevValues) => {
@@ -429,34 +424,76 @@ export default function BookingPages({ BookingData }) {
       return updatedValues;
     });
 
-    setAdditional((prevAdditional) => {
-      console.log("prevAdditional", prevAdditional); // Logging the previous state
+    // setAdditional((prevAdditional) => {
+    //   // Create the new item
+    //   const newItem = {
+    //     type: type || "", // Default values if not provided
+    //     price: price || "",
+    //     title: title || "",
+    //     index: i !== undefined ? i : 0, // Handle numbers explicitly
+    //     order: order || "",
+    //     id: optid || "",
+    //   };
 
-      // Create the new item
+    //   // Find the item with the same index and type
+    //   const existingItem = prevAdditional.find(
+    //     (item) => item.index === newItem.index && item.type === newItem.type
+    //   );
+
+    //   // Log or use the previous item before it's replaced
+    //   if (existingItem) {
+    //     console.log("Previous item:", existingItem);
+    // }
+
+    //   // Filter out the previous item with the same index and type
+    //   const updatedAdditional = prevAdditional.filter(
+    //     (item) => !(item.index === newItem.index && item.type === newItem.type)
+    //   );
+
+    //   // Return the updated array, with the old item removed and the new one added
+    //   return [...updatedAdditional, newItem];
+    // });
+
+    setAdditional((prevAdditional) => {
       const newItem = {
-        type: type || "", // Default values if not provided
+        type: type || "",
         price: price || "",
         title: title || "",
-        index: i !== undefined ? i : 0, // Handle numbers explicitly
+        index: i !== undefined ? i : 0,
         order: order || "",
         id: optid || "",
       };
 
-      // Append the new item to the existing array
-      return [
-        ...prevAdditional, // Spread the previous array
-        newItem // Add the new item
-      ];
+      // Find all existing items with the same index and type
+      const existingItems = prevAdditional.filter(
+        (item) => item.index === newItem.index && item.type === newItem.type
+      );
+
+      // Set existing items in a separate state to access outside of this function
+      if (existingItems.length > 0) {
+        setExistingItemsState(existingItems); // Store the matching items
+      }
+
+      // Filter and update state
+      const updatedAdditional = prevAdditional.filter(
+        (item) => !(item.index === newItem.index && item.type === newItem.type)
+      );
+
+      return [...updatedAdditional, newItem];
     });
 
-
-
-    // Call any function to update additional values based on the type and index
-    updatePriceByTypeAndIndex(type, i, price);
+    getPriceForadditional(type, i);
   };
 
-console.log("Additional" , Additional);
+  const getPriceForadditional = (type, idx) => {
+    const personPrice = AlladultsData?.filter((item) => item.label === type);
+    const AdditionalPrice = Additional.filter((item) => item.index === idx);
 
+    if (!personPrice) {
+      return 0; // Default value if no price is found
+    }
+    return Number(personPrice[idx]?.price); // Ensure price is a number
+  };
 
   const updatePriceByTypeAndIndex = (type, index, newPrice) => {
     const itemsOfType = AlladultsData?.filter((item) => item.label == type);
@@ -469,28 +506,58 @@ console.log("Additional" , Additional);
       const addivalue = JSON.parse(newPrice);
       const multiPrice = prevPrice + addivalue;
 
+      // console.log("addivalue", addivalue);
+
       // Step 3: Update the price of the item
       const updatedItem = { ...itemsOfType[index], price: multiPrice };
 
       // Update the state with the new price
+      // setAlladultsData((prevData) => {
+      //   // Step 1: Filter out the item that needs to be updated
+      //   const updatedData = prevData.map((item) => {
+      //     // Check if the current item matches both type and index
+      //     if (item.label === type && item.index === index) {
+      //       // Return a new object with the updated price
+      //       return { ...item, price: multiPrice };
+      //     }
+      //     // Return the item unchanged if it doesn't match
+      //     return item;
+      //   });
+
+      //   // Return the updated data to update the state
+      //   return updatedData;
+      // });
+
       setAlladultsData((prevData) => {
-        // Step 1: Filter out the item that needs to be updated
-        const updatedData = prevData.map((item) => {
-          // Check if the current item matches both type and index
+        // Step 1: Map through the existing data
+        return prevData.map((item) => {
+          // Step 2: Check if the current item matches the specified type and index
           if (item.label === type && item.index === index) {
-            // Return a new object with the updated price
+            // Step 3: Only update the price for the matching item
             return { ...item, price: multiPrice };
           }
-          // Return the item unchanged if it doesn't match
+          // Step 4: Return the item unchanged if it doesn't match
           return item;
         });
-
-        // Return the updated data to update the state
-        return updatedData;
       });
     } else {
     }
-  };
+  }; 
+
+  const SubtotalPriceWithAdditional =(type , i) => {
+    const Original =  getPriceForType(type , i)
+    const updatePrice = Additional
+    const PrefPrice = existingItemsState
+
+
+    console.log("Original" , Original);
+    console.log("updatedPrice" , Additional);
+    console.log("PrefPrice" , PrefPrice);
+    
+    
+    
+    
+  }
 
   const getPriceForType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -540,6 +607,8 @@ console.log("Additional" , Additional);
     ?.map((price) => Number(price))
     ?.reduce((acc, curr) => acc + curr, 0);
 
+  // allPrice
+
   const totalSum =
     HandlePromo === false
       ? PackagePrices + adultadiPrices
@@ -562,7 +631,7 @@ console.log("Additional" , Additional);
         showSuccessToast(PromoResponse.Message);
         setDiscount(PromoResponse);
         setHandlePromo(true);
-        setpromo('')
+        setpromo("");
       } else {
         showErrorToast("Invalid promo code.");
         setHandlePromo(false);
@@ -632,8 +701,7 @@ console.log("Additional" , Additional);
 
   const handlePromoSubmit = async () => {
     FetchPromoApi();
-    setShowbtnName(true)
-    
+    setShowbtnName(true);
   };
 
   const handlePromoremove = () => {
@@ -784,13 +852,12 @@ console.log("Additional" , Additional);
 
     let resultPrice;
 
-    if(AlladultsData)
-
-    if (PrpersonPrice?.length == 0) {
-      resultPrice = 0;
-    } else {
-      resultPrice = PrpersonPrice?.map((item) => item.price);
-    }
+    if (AlladultsData)
+      if (PrpersonPrice?.length == 0) {
+        resultPrice = 0;
+      } else {
+        resultPrice = PrpersonPrice?.map((item) => item.price);
+      }
 
     const shouldShowAdditionalServices = type !== "Baby";
 
@@ -802,9 +869,15 @@ console.log("Additional" , Additional);
 
       const isFormPrefilled = loginPer && i === 0;
 
-      const foundItem = AlladultsData.find((item) => item.label === type && item.index === i);
+      console.log("existingItemsState", existingItemsState);
+      console.log("Additional", Additional);
 
-      const priceToDisplay = foundItem ? foundItem.price : "Price not found";
+      const currentPrice = AlladultsData.filter((item) => item.type == type && item.index == i);
+
+      console.log("currentPrice" , currentPrice);
+      
+
+   
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -846,7 +919,33 @@ console.log("Additional" , Additional);
                       <div className="form-input my-1">
                         {field.type === "select" ? (
                           <>
+                            {/* <select
+                              name={field.name}
+                              value={fieldValue}
+                              onChange={(e) => handleInputChange(type, i, e)}
+                              required
+                              className="form-control"
+                            >
+                              <option value="" disabled>
+                                {field.label}
+                              </option>
+                              {field.options?.map((option, optIndex) => (
+                                <option
+                                  key={optIndex}
+                                  value={option.toLowerCase()}
+                                >
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
+                            <label className="lh-1 text-16 text-light-1">
+                              {fieldValue
+                                ? `${field.label}: ${fieldValue}`
+                                : field.label}
+                            </label> */}
+
                             <select
+                              id={`select-${i}`} // Use unique id for select2 initialization
                               name={field.name}
                               value={fieldValue}
                               onChange={(e) => handleInputChange(type, i, e)}
@@ -960,7 +1059,7 @@ console.log("Additional" , Additional);
 
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal <span>{`${priceToDisplay} €`}</span>
+                    Subtotal <span>{`${SubtotalPriceWithAdditional(type , i)} €`}</span>
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
@@ -1065,9 +1164,6 @@ console.log("Additional" , Additional);
     }
   };
 
-  console.log("Discount" , Discount.Discount);
-  
-
   const { translate } = useTranslation();
 
   return (
@@ -1169,7 +1265,12 @@ console.log("Additional" , Additional);
                         <MdFlightLand htTakeoff size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {translate("To")}: {BookingSideBar?.To}
+                        {translate("To")}:{" "}
+                        {BookingSideBar?.To === "Umrah"
+                          ? "MED"
+                          : BookingSideBar?.To === "Hajj"
+                          ? "JED"
+                          : "other"}
                       </div>
                     </div>
 
@@ -1224,7 +1325,7 @@ console.log("Additional" , Additional);
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {BookingSideBar?.MakkaHotel?.hotel_name}
+                        Mekka :- {BookingSideBar?.MakkaHotel?.hotel_name}
                       </div>
                     </div>
 
@@ -1233,7 +1334,7 @@ console.log("Additional" , Additional);
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {BookingSideBar?.MadinaHotel?.hotel_name}
+                        Madina :- {BookingSideBar?.MadinaHotel?.hotel_name}
                       </div>
                     </div>
 
@@ -1250,12 +1351,16 @@ console.log("Additional" , Additional);
                       <div className=""> {totalSum} € </div>
                     </div>
 
-                  <div className={`${ShowbtnName === false  ? 'd-none' : 'd-block'}`}>
-                  <div className={`d-flex items-center justify-between `}>
-                      <div className="fw-500">{translate("Discount")}</div>
-                      <div className=""> - {Discount.Discount} € </div>
+                    <div
+                      className={`${
+                        ShowbtnName === false ? "d-none" : "d-block"
+                      }`}
+                    >
+                      <div className={`d-flex items-center justify-between `}>
+                        <div className="fw-500">{translate("Discount")}</div>
+                        <div className=""> - {Discount.Discount} € </div>
+                      </div>
                     </div>
-                  </div>
 
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Tax")}(19%)</div>
