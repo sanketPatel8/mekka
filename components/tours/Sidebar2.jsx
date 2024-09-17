@@ -611,10 +611,10 @@ export default function Sidebar2({
                                   </label>
                                 </div>
                                 <label
-                                  htmlFor={elm?.options_en}
+                                  htmlFor={elm?.option}
                                   className="lh-16 ml-15"
                                 >
-                                  {elm?.options_en}
+                                  {elm?.option}
                                 </label>
                               </div>
                             </div>

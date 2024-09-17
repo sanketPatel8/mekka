@@ -554,8 +554,7 @@ export default function BookingPages({ BookingData }) {
     console.log("updatedPrice" , Additional);
     console.log("PrefPrice" , PrefPrice);
     
-    
-    
+
     
   }
 
