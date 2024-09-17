@@ -36,7 +36,7 @@ export default function DBListing() {
   const [filteredData, setFilteredData] = useState(payment);
   const {user} = useAuthContext();
 
-  const company_id = user.user.company_id;
+  const company_id = user === null ? 0 : user.user.company_id;
   const fetchPayments = async () => {
     const BookingsData = [
       {

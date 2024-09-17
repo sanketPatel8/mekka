@@ -16,7 +16,8 @@ import { ClipLoader } from "react-spinners";
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const {user} = useAuthContext();  
-  const company_id = user.user.company_id;
+
+  const company_id = user === null ? 0 : user.user.company_id;
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
