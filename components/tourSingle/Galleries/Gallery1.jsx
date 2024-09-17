@@ -22,21 +22,23 @@ export default function Gallery1({ PAckageData }) {
     { width: 375, height: 375 }, // Size for fourth image
   ];
 
+  
+
   return (
     <>
       <div className="tourSingleGrid -type-1 mt-30">
         <div className="tourSingleGrid__grid mobile-css-slider-2">
        
-
           {Images && Images.length > 0 && Images.slice(0 , 4)?.map((img, index) => (
             <Image
               key={index} 
               width={imagesWithDimensions[index]?.width || 100}
               height={imagesWithDimensions[index]?.height || 100} 
-              src={img} 
+              src={img == '' && img == null && img ? 'img/404/imgnotFound.png' : img } 
               alt={`image-${index}`} 
               className="obj-cover" 
             />
+            
           ))}
         </div>
 
