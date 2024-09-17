@@ -13,10 +13,7 @@ import { POST } from "../utils/api/post";
 import Head from "next/head";
 
 
-export const metadata = {
-  title: "Tour List ~ Mekkabooking ",
-  description: "mekkabooking - Ihr Hajj & Umra Portal ",
-};
+
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -280,7 +277,9 @@ export default function Page() {
   return (
     <>
       <Head>
-        <meta property="og:title" content="Tour List" />
+        <title>Tour List ~ Mekkabooking</title>
+        <meta name="description" content="mekkabooking - Ihr Hajj & Umra Portal" />
+        {/* Add other metadata tags here */}
       </Head>
       <main>
         <Header1 />

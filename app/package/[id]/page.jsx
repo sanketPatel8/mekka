@@ -10,10 +10,6 @@ import SingleFour from "@/components/tourSingle/pages/SingleFour";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-export const metadata = {
-  title: "Package ~ Mekkabooking ",
-  description: "mekkabooking - Ihr Hajj & Umra Portal ",
-};
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -59,6 +55,11 @@ export default function Page() {
 
   return (
     <>
+    <Head>
+        <title>Package ~ Mekkabooking</title>
+        <meta name="description" content="mekkabooking - Ihr Hajj & Umra Portal" />
+        {/* Add other metadata tags here */}
+      </Head>
       <Header1 />
       <SingleFour PAckageData={PAckageData} />
       <TourSlider PAckageData={PAckageData} />
