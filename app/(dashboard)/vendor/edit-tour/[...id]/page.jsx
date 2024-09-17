@@ -72,9 +72,9 @@ export default function EditTour() {
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
-    { id: 1, title: "1-bed room", price: "", checked: false },
-    { id: 2, title: "2-bed room", price: "", checked: false },
-    { id: 3, title: "3-bed room", price: "", checked: false },
+    { id: 1, title: "1-bed room", price: "", checked: false  },
+    { id: 2, title: "2-bed room", price: "", checked: false  },
+    { id: 3, title: "3-bed room", price: "", checked: false},
     { id: 4, title: "4-bed room", price: "", checked: false },
   ]);
   const [isNextClicked, setIsNextClicked] = useState(false);
@@ -315,32 +315,33 @@ useEffect(() => {
 
 
   useEffect(() => {
-    if(additionalServices){
       const updatedServices = services.map((service) => {
         const foundService = additionalServices.find((additionalService) => additionalService.title === service.title);
-
+        console.log(foundService,"foundService");
         if (foundService) {
-          return { ...service, checked: true, price: foundService.price };
+          return { ...service, checked: true, price: foundService.price, service_id: foundService.id,title:foundService.title };
         }
         return service;
       });
       setServices(updatedServices);
+      console.log(updatedServices,"services");
     
 
-    }
+    
 
-  },[additionalServices]);
+  },[]);
 
   
   useEffect(()=>{
     if(flightData){
+      console.log(flightData,"flightData");
       {flightData.length > 0 ? setRadioValueFlight("Yes") : setRadioValueFlight("No")}
       if(flightData.length > 0){
         const updatedFlight = flightData.map((flight) => {
           const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
           console.log(foundFlight,"foundFlight");
           if (foundFlight) {
-            return { ...flight, flight_id: foundFlight.flight_id, flight_amount: foundFlight.flight_amount, no_of_stop: foundFlight.no_of_stop, luggage: foundFlight.luggage,flight_name:foundFlight.airline_name };
+            return { ...flight, flight_id: foundFlight.id, flight_amount: foundFlight.price,  luggage: foundFlight.luggage,flight_name:foundFlight.airline_name };
           }
           return flight;
         });
@@ -544,10 +545,13 @@ useEffect(() => {
     setActiveTab(tabs[activeTabIndex]);
   }, [activeTabIndex]);
   const handleCheckboxChange = (event, id) => {
+    console.log(services,"services");
     const updatedServices = services.map((service) =>
-      service.id === id ? { ...service, checked: event.target.checked } : service
+      service.id === id ? { ...service, checked: event.target.checked, service_id:service.service_id } : service
     );
     setServices(updatedServices);
+
+    console.log(services,"checkedServices")
   };
   
   const handlePriceChange = (event, id) => {
@@ -672,7 +676,6 @@ useEffect(() => {
         ...mekkaRows[index],
         hotel_id: selectedOption.id,
         hotel_name: selectedOption.hotel_name,
-        id: 0,
        
       };
       const newRows = [...mekkaRows];
@@ -717,7 +720,6 @@ useEffect(() => {
       ...madinaRows[index],
       hotel_id: selectedOption?.id || "",
       hotel_name: selectedOption?.hotel_name || "",
-      id:0,
     };
     const newRows = [...madinaRows];
     newRows[index] = madinaData;
@@ -740,6 +742,8 @@ useEffect(() => {
     const newRows = [...flightRow];
     newRows[index] = flight_data;
     setFlightRow(newRows);
+
+    console.log(flightRow,"flightRow");
   };
 
   const selectRef = useRef(null);
@@ -822,7 +826,7 @@ useEffect(() => {
       hotel_id: mekka.hotel_id ? mekka.hotel_id : '', 
       hotel_price:mekka.hotel_price,
       hotel_info:mekka.hotel_info,
-      id:mekka.id?mekka.id:""
+      id:mekka.id?mekka.id:0
     }))
 
     console.log(madinaRows,"madinaRows");
@@ -836,12 +840,15 @@ useEffect(() => {
     }))
 
     
-    const flightData =flightRow.map((flight)=>({ 
-      flight_id: flight.flight_id ? flight.flight_id.value : '',
+    const flight_data =flightRow.map((flight)=>({ 
+      flight_id: flight.flight_id ? flight.flight_id : '',
       flight_amount: flight.flight_amount,
       no_of_stop: flight.no_of_stop,
       luggage: flight.luggage
     }))
+
+    console.log(flightRow,"flightRow");
+    console.log(flight_data,"flight_data");
 
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) &&
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) &&
@@ -855,12 +862,15 @@ useEffect(() => {
     const hotel_data = [...mekkaData, ...madinaData];
 
     const checkedServices = services.filter((service) => service.checked);
+    console.log(checkedServices,"checkedServices");
     const servicesData = checkedServices.reduce((acc, service) => {
       if (service.price !== "") {
-        acc.push({ title: service.title, price: service.price });
+        acc.push({ title: service.title, price: service.price, service_id: service.service_id });
       }
       return acc;
     }, []);
+
+    console.log(servicesData,"servicesData");
 
     const checkedIncluded = included.filter((item) => item.checked);
     const includedData = checkedIncluded.map((item) => item.id).join(",");
@@ -872,6 +882,8 @@ useEffect(() => {
         description:day.description
       }
     ));
+
+    console.log(newRouteData,"newRouteData");
     // const itineraryData = {
     //   itinerary: route_data.map((day, index) => ({
     //     day: index + 1,
@@ -921,11 +933,12 @@ useEffect(() => {
     // formData.append("flight_info", flightInformation);
     // formData.append("route_data", JSON.stringify(newRouteData));
     // formData.append("hotel_data", JSON.stringify(hotel_data));
-    // formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData):"");
+    // formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flight_data):"");
     // formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
     // formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
     // formData.append("user_id", user?.user.id);
     // formData.append("company_id", user?.user.company_id);
+    // formData.append("tour_id", id);
     
     // if(image2FileArray.length === 0){
     //   formData.append("tour_image", "");
