@@ -49,7 +49,7 @@ export default function EditTour() {
   const [date_begin, setDateBegin] = useState("");
   const [date_end, setDateEnd] = useState("");
   const [tour_languages, setTourLanguages] = useState("");
-  
+  const [flightInformation, setFlightInformation] = useState("");
   const [adult_price, setAdultPrice] = useState("");
   const [gender, setGender] = useState("");
   const [child_price, setChildPrice] = useState("");
@@ -268,7 +268,7 @@ useEffect(() => {
           console.error(error);
         }
       }
-           
+      {tourDetails.flight_info !== ""  ? setFlightInformation(tourDetails.flight_info) : setFlightInformation("")}
       // const tourIncluded = tourDetails.tour_included;
       //   console.log(tourIncluded,"tourIncluded");
       
@@ -337,7 +337,7 @@ useEffect(() => {
         const updatedFlight = flightData.map((flight) => {
           const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
           if (foundFlight) {
-            return { ...flight, flight_id: foundFlight.flight_id, flight_amount: foundFlight.flight_amount, no_of_stop: foundFlight.no_of_stop, luggage: foundFlight.luggage };
+            return { ...flight, flight_id: foundFlight.flight_id, flight_amount: foundFlight.flight_amount, no_of_stop: foundFlight.no_of_stop, luggage: foundFlight.luggage,flight_name:foundFlight.airline_name };
           }
           return flight;
         });
@@ -475,7 +475,7 @@ useEffect(() => {
       return route_data.every((day) => day.dayData && day.description);
     } else if (activeTab === "Flight Hotel And Visa") {
   
-      return mekkaRows.every((mekka) =>mekka.hotel_id, mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_id,madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage);
+      return mekkaRows.every((mekka) =>mekka.hotel_id, mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_id,madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage && flightInformation &&  radioValueVisa && radioValueExcludeFlight);
     }
     return false;
   };
@@ -705,7 +705,7 @@ useEffect(() => {
   // };
 
   const handleMadinaChange = (value, index) => {
-    if (!value) return; // add this line to check if value is null or undefined
+    if (!value) return; 
     const selectedOption = madinaHotel.find((option) => option.id === value.value);
 
     const madinaData = {
@@ -718,6 +718,23 @@ useEffect(() => {
     setMadinaRows(newRows);
     
     
+  };
+
+  
+  const handleFlightSelectChange = (value, index) => {
+    if (!value) return; 
+    const selectedOption = flightDetails.find((option) => option.id === value.value);
+    console.log(selectedOption,"selectedOption")
+
+    const flight_data = {
+      ...flightRow[index],
+      flight_id: selectedOption?.id || "",
+      flight_name: selectedOption?.airline_name || "",
+    };
+
+    const newRows = [...flightRow];
+    newRows[index] = flight_data;
+    setFlightRow(newRows);
   };
 
   const selectRef = useRef(null);
@@ -764,11 +781,6 @@ useEffect(() => {
 
   
 
-  const handleFlightSelectChange = (value, index) => {
-    const newRows = [...flightRow];
-    newRows[index].flight_id = value;
-    setFlightRow(newRows);
-  };
 
 
   const handleInputChange = (setter) => (e) => {
@@ -899,6 +911,7 @@ useEffect(() => {
     formData.append("addition_service", JSON.stringify(servicesData));
     formData.append("tour_included", includedData);
     formData.append("tour_info", editorValue || "");
+    formData.append("flight_info", flightInformation);
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData):"");
@@ -1447,7 +1460,7 @@ const formatDateToMMDDYYYY = (date) => {
                             activeTab == "Included" ? "is-tab-el-active" : ""
                           }`}
                         >
-                          <div className="row justify-between y-gap-30 contactForm px-lg-20 px-0">
+                          <div className="row  y-gap-30 contactForm px-lg-20 px-0">
                                     {included.map((item, index) => (
                                       <div className="col-md-4" key={index}>
                                         <div className="row y-gap-20">
@@ -1495,7 +1508,7 @@ const formatDateToMMDDYYYY = (date) => {
                                                 htmlFor={`item-${item.id}`}
                                                 className="lh-16 ml-15"
                                               >
-                                                {translate(item.options_en) || "Find Latest Packages" }
+                                                {translate(item.option) || "Find Latest Packages" }
                                               </label>
                                             </div>
                                           </div>
@@ -1934,6 +1947,25 @@ const formatDateToMMDDYYYY = (date) => {
                                 </div>
                               </div>
                             </div>
+                            <div className=" ">
+                            <h6>
+                              {translate("Add Flight Information") }
+                              </h6>
+                             
+                                <div className="col-12">
+                                    <div className="form-input my-1">
+                                    <textarea
+                                          type="text"
+                                          required
+                                          rows="3"
+                                          value={flightInformation}
+                                          onChange={(e) => setFlightInformation(e.target.value)}
+                                        />
+                                      <label className="lh-1 text-16 text-light-1">Flight Information <span className="text-red">*</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
                             <div className="d-flex item-center justify-content-between">
                               <h6>
                               {translate("Include Flight Details") }
@@ -1999,7 +2031,7 @@ const formatDateToMMDDYYYY = (date) => {
 
                                             <div className="col-md-6">
                                               <CreatableSelect
-                                              value={{ value: flightRow[index].flight_id, label: flightRow[index].flight_name }}
+                                              value={{ value: flightRow[index].id, label: flightRow[index].flight_name }}
                                               onChange={(value) =>
                                                   handleFlightSelectChange(value, index)
                                                 }

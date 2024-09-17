@@ -72,6 +72,7 @@ export default function AddTour() {
   const [dayData,setDayData] = useState("");
   const [daysCount, setDaysCount] = useState(0);
   const [dayDescription, setDayDescription] = useState("");
+  const [flightInformation, setFlightInformation] = useState("");
   const [included,setIncluded] = useState([
     // { title: "Beverages, drinking water, morning tea an buffet lunch", value: "1", checked: false },
     // { title: "Wifi", value: "2", checked: false },
@@ -583,7 +584,7 @@ const isCurrentTabValid = () => {
     return route_data.every((day) => day.dayData && day.description);
   } else if (activeTab === "Flight Hotel And Visa") {
 
-    return mekkaRows.every((mekka) => mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage);
+    return mekkaRows.every((mekka) => mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) && flightInformation &&  radioValueVisa && radioValueExcludeFlight;
   }
   return false;
 };
@@ -635,7 +636,7 @@ const isCurrentTabValid = () => {
 
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) ||
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
-    (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false)) {
+    (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false) || !flightInformation) {
       showErrorToast("Please fill in all required fields before proceeding.");
       return;
     }
@@ -652,8 +653,9 @@ const isCurrentTabValid = () => {
     }, []);
 
     const checkedIncluded = included.filter((item) => item.checked);
+    console.log(checkedIncluded,"checkedIncluded")
     const includedData = checkedIncluded.map((item) => item.id).join(",");
-
+    console.log(includedData,"includedData")
     const editorValue = convertToRaw(editorState.getCurrentContent()).blocks[0].text;
   
     const newRouteData = route_data.map((day, index) => (
@@ -669,9 +671,7 @@ const isCurrentTabValid = () => {
     //   })),
     // };
     const image2File = document.querySelector('input[name="image2"]').files;
-    console.log(image2File,"image2File")
     const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
-    console.log(image2FileArray,"image2FileArray")
 
     const formData = new FormData();
 
@@ -687,6 +687,7 @@ const isCurrentTabValid = () => {
     formData.append("baby_price", baby_price);
     formData.append("addition_service", JSON.stringify(servicesData));
     formData.append("tour_included", includedData);
+    formData.append("flight_info", flightInformation);
     formData.append("tour_info", editorValue);
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
@@ -1228,7 +1229,7 @@ const isCurrentTabValid = () => {
                             activeTab == "Included" ? "is-tab-el-active" : ""
                           }`}
                         >
-                          <div className="row justify-between y-gap-30 contactForm px-lg-20 px-0">
+                          <div className="row  y-gap-30 contactForm px-lg-20 px-0">
                                     {included.map((item, index) => (
                                       <div className="col-md-4">
                                         <div className="row y-gap-20">
@@ -1276,7 +1277,7 @@ const isCurrentTabValid = () => {
                                                 htmlFor={`item-${item.id}`}
                                                 className="lh-16 ml-15"
                                               >
-                                                {translate(item.options_en) || "Find Latest Packages" }
+                                                {translate(item.option) || "Find Latest Packages" }
                                               </label>
                                             </div>
                                           </div>
@@ -1715,6 +1716,25 @@ const isCurrentTabValid = () => {
                                 </div>
                               </div>
                             </div>
+                            <div className=" ">
+                            <h6>
+                              {translate("Add Flight Information") }
+                              </h6>
+                             
+                                <div className="col-12">
+                                    <div className="form-input my-1">
+                                    <textarea
+                                          type="text"
+                                          required
+                                          rows="3"
+                                          value={flightInformation}
+                                          onChange={(e) => setFlightInformation(e.target.value)}
+                                        />
+                                      <label className="lh-1 text-16 text-light-1">Flight Information <span className="text-red">*</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
                             {/* <div className="d-flex item-center justify-content-between">
                               <h6>
                               {translate("Free cancellation (up to 14 days before travel date)") }
@@ -1934,6 +1954,7 @@ const isCurrentTabValid = () => {
                             )}
                         
                           </div>
+                            
                           <div className=" flex_start">
 
                           <button type="submit" className="button -sm -info-2 bg-accent-1 text-white  mt-4  ">
