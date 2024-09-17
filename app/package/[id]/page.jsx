@@ -7,6 +7,7 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourSlider from "@/components/tourSingle/TourSlider";
 import SingleFour from "@/components/tourSingle/pages/SingleFour";
+import Head from "next/head";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 

@@ -9,6 +9,7 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 import { useEffect, useState } from "react";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
+import Head from "next/head";
 
 // export const metadata = {
 //   title: "Blog-single || ViaTour - Travel & Tour React NextJS Template",
