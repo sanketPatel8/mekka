@@ -27,7 +27,6 @@ import { usePeople } from "@/app/context/PeopleContext";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 
-
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -540,21 +539,28 @@ export default function BookingPages({ BookingData }) {
       });
     } else {
     }
-  }; 
+  };
 
-  const SubtotalPriceWithAdditional =(type , i) => {
-    const Original =  getPriceForType(type , i)
-    const updatePrice = Additional
-    const PrefPrice = existingItemsState
+  useEffect(() => {}, []);
 
+  const SubtotalPriceWithAdditional = (type, i) => {
+    const Original = getPriceForType(type, i);
 
-    console.log("Original" , Original);
-    console.log("updatedPrice" , Additional);
-    console.log("PrefPrice" , PrefPrice);
-    
+    const updatePrice = Additional.filter(
+      (item) => item.type === type && item.index === i
+    ).map((item) => item.price);
 
-    
-  }
+    const PrefPrice = existingItemsState;
+
+    const additionalPrice = isNaN(Number(updatePrice[0]))
+      ? 0
+      : Number(updatePrice[0]);
+
+    const conformSubTotal =
+      (isNaN(Number(Original)) ? 0 : Number(Original)) + additionalPrice;
+
+    return conformSubTotal;
+  };
 
   const getPriceForType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -597,6 +603,8 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
+  
+
   const [HandlePromo, setHandlePromo] = useState(false);
   const [ShowbtnName, setShowbtnName] = useState(false);
 
@@ -606,9 +614,17 @@ export default function BookingPages({ BookingData }) {
 
   // allPrice
 
+  console.log("PackagePrices" , PackagePrices);
+  console.log("Additional" , Additional);
+
+  const adPrice = Additional.map(item => Number(item.price))
+  .reduce((accumulator, currentValue) => accumulator + currentValue, 0); 
+  
+  
+
   const totalSum =
     HandlePromo === false
-      ? PackagePrices + adultadiPrices
+      ? PackagePrices + adultadiPrices + adPrice
       : PromoData.total_amount !== undefined
       ? PromoData.total_amount
       : PackagePrices + adultadiPrices;
@@ -628,7 +644,6 @@ export default function BookingPages({ BookingData }) {
         showSuccessToast(PromoResponse.Message);
         setDiscount(PromoResponse);
         setHandlePromo(true);
-        setpromo("");
       } else {
         showErrorToast("Invalid promo code.");
         setHandlePromo(false);
@@ -866,16 +881,6 @@ export default function BookingPages({ BookingData }) {
 
       const isFormPrefilled = loginPer && i === 0;
 
-      console.log("existingItemsState", existingItemsState);
-      console.log("Additional", Additional);
-
-      const currentPrice = AlladultsData.filter((item) => item.type == type && item.index == i);
-
-      console.log("currentPrice" , currentPrice);
-      
-
-   
-
       return (
         <div key={`${type}-${i}`} className="row">
           <div className="form_1 mx-auto">
@@ -1056,7 +1061,8 @@ export default function BookingPages({ BookingData }) {
 
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal <span>{`${SubtotalPriceWithAdditional(type , i)} €`}</span>
+                    Subtotal{" "}
+                    <span>{`${SubtotalPriceWithAdditional(type, i)} €`}</span>
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
