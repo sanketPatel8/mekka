@@ -5,6 +5,7 @@ import { hotelDAta } from "@/data/tours";
 import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
+import Image from "next/image";
 
 export default function OthersInformation({ PAckageData, id }) {
   const [OtherInfo, setOtherInfo] = useState({});
@@ -36,12 +37,15 @@ export default function OthersInformation({ PAckageData, id }) {
           </div>
         </div>
 
-      
-
         <div className="col-lg-3 col-6 my-2">
           <div className="d-flex items-center">
             <div className="flex-center size-50 rounded-12 border-1">
-              <i className="text-20 icon-birthday-cake"></i>
+              <Image
+                width={20}
+                height={20}
+                src="/img/tourSingle/booking/start date.svg"
+                alt="image"
+              />
             </div>
 
             <div className="ml-10">
@@ -56,7 +60,12 @@ export default function OthersInformation({ PAckageData, id }) {
         <div className="col-lg-3 col-6 my-2">
           <div className="d-flex items-center">
             <div className="flex-center size-50 rounded-12 border-1">
-              <i className="text-20 icon-birthday-cake"></i>
+              <Image
+                width={20}
+                height={20}
+                src="/img/tourSingle/booking/end date.svg"
+                alt="image"
+              />
             </div>
 
             <div className="ml-10">
