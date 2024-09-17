@@ -12,6 +12,7 @@ import { TranslationProvider } from "@/app/context/TranslationContext";
 import { GlobalStateProvider } from "@/app/context/GlobalStateContext";
 import { AuthContextProvider } from "./context/authContext";
 import { PeopleProvider } from "./context/PeopleContext";
+import Head from "next/head";
 
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -29,7 +30,16 @@ if (typeof window !== "undefined") {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head></head>
+        <Head>
+        <title>Home - MekkaBooking</title>
+        <meta name="description" content="Welcome to MekkaBooking, your travel booking partner." />
+        <meta property="og:title" content="Home - MekkaBooking" />
+        <meta property="og:description" content="Welcome to MekkaBooking, your travel booking partner." />
+        <meta property="og:image" content="https://example.com/og-image.jpg" />
+        <meta property="og:url" content="https://www.mekkabooking.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="MekkaBooking" />
+      </Head>
       <body className={dmsans.className}>
         <AuthContextProvider>
           <TranslationProvider>

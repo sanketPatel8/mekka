@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import Header1 from "@/components/layout/header/Header1";
@@ -11,24 +11,27 @@ import BannerOne from "@/components/homes/banners/BannerOne";
 import ArticlesThree from "@/components/homes/articles/ArticlesThree";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import FeaturesOne from "@/components/homes/features/FeaturesOne";
+import Head from "next/head";
 // import Language from "@/components/Langauge"; // Import Language component for locale changes
 
 export default function Home() {
- 
-
-  
   return (
-    <main>
-      <Hero7 />
-      <Header1 />
-      <FeaturesOne  /> 
-      <Tour1 />
-      <Banner /> 
-      <TourSlderOne />
-      <TestimonialOne />
-      <BannerOne />
-      <ArticlesThree />
-      <FooterTwo />
-    </main>
+    <>
+      <Head>
+        <meta property="og:title" content="Title Here" />
+      </Head>
+      <main>
+        <Hero7 />
+        <Header1 />
+        <FeaturesOne />
+        <Tour1 />
+        <Banner />
+        <TourSlderOne />
+        <TestimonialOne />
+        <BannerOne />
+        <ArticlesThree />
+        <FooterTwo />
+      </main>
+    </>
   );
 }

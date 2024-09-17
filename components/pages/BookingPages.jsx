@@ -22,10 +22,12 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
-import { BabyData, ReservationData } from "@/data/CustomerBookingData";
-import { usePeople } from "@/app/context/PeopleContext";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import $ from "jquery";
+import "select2/dist/css/select2.css";
+import CreatableSelect from "react-select/creatable";
 
 const customStyles = {
   overlay: {
@@ -189,6 +191,205 @@ export default function BookingPages({ BookingData }) {
       }
     }
   }, []);
+
+  // for nationality 
+
+  const nationalities = [
+    "Afghan",
+    "Albanian",
+    "Algerian",
+    "American",
+    "Andorran",
+    "Angolan",
+    "Antiguan and Barbudan",
+    "Argentine",
+    "Armenian",
+    "Australian",
+    "Austrian",
+    "Azerbaijani",
+    "Bahamian",
+    "Bahraini",
+    "Bangladeshi",
+    "Barbadian",
+    "Belarusian",
+    "Belgian",
+    "Belizean",
+    "Beninese",
+    "Bhutanese",
+    "Bolivian",
+    "Bosnian",
+    "Botswanan",
+    "Brazilian",
+    "British",
+    "Bruneian",
+    "Bulgarian",
+    "Burkinabé",
+    "Burmese",
+    "Burundian",
+    "Cambodian",
+    "Cameroonian",
+    "Canadian",
+    "Cape Verdean",
+    "Central African",
+    "Chadian",
+    "Chilean",
+    "Chinese",
+    "Colombian",
+    "Comorian",
+    "Congolese",
+    "Costa Rican",
+    "Croatian",
+    "Cuban",
+    "Cypriot",
+    "Czech",
+    "Danish",
+    "Djiboutian",
+    "Dominican",
+    "Dutch",
+    "East Timorese",
+    "Ecuadorean",
+    "Egyptian",
+    "Emirati",
+    "Equatorial Guinean",
+    "Eritrean",
+    "Estonian",
+    "Ethiopian",
+    "Fijian",
+    "Filipino",
+    "Finnish",
+    "French",
+    "Gabonese",
+    "Gambian",
+    "Georgian",
+    "German",
+    "Ghanaian",
+    "Greek",
+    "Grenadian",
+    "Guatemalan",
+    "Guinean",
+    "Guinea-Bissauan",
+    "Guyanese",
+    "Haitian",
+    "Honduran",
+    "Hungarian",
+    "Icelandic",
+    "Indian",
+    "Indonesian",
+    "Iranian",
+    "Iraqi",
+    "Irish",
+    "Israeli",
+    "Italian",
+    "Ivorian",
+    "Jamaican",
+    "Japanese",
+    "Jordanian",
+    "Kazakh",
+    "Kenyan",
+    "Kiribati",
+    "Korean",
+    "Kosovar",
+    "Kuwaiti",
+    "Kyrgyz",
+    "Lao",
+    "Latvian",
+    "Lebanese",
+    "Liberian",
+    "Libyan",
+    "Liechtensteiner",
+    "Lithuanian",
+    "Luxembourger",
+    "Macedonian",
+    "Malagasy",
+    "Malawian",
+    "Malaysian",
+    "Maldivian",
+    "Malian",
+    "Maltese",
+    "Marshallese",
+    "Mauritanian",
+    "Mauritian",
+    "Mexican",
+    "Micronesian",
+    "Moldovan",
+    "Monegasque",
+    "Mongolian",
+    "Montenegrin",
+    "Moroccan",
+    "Mozambican",
+    "Namibian",
+    "Nauruan",
+    "Nepalese",
+    "New Zealander",
+    "Nicaraguan",
+    "Nigerian",
+    "Nigerien",
+    "North Korean",
+    "Norwegian",
+    "Omani",
+    "Pakistani",
+    "Palauan",
+    "Panamanian",
+    "Papua New Guinean",
+    "Paraguayan",
+    "Peruvian",
+    "Polish",
+    "Portuguese",
+    "Qatari",
+    "Romanian",
+    "Russian",
+    "Rwandan",
+    "Saint Kitts and Nevis",
+    "Saint Lucian",
+    "Saint Vincentian",
+    "Salvadoran",
+    "Samoan",
+    "San Marinese",
+    "São Toméan",
+    "Saudi Arabian",
+    "Senegalese",
+    "Serbian",
+    "Seychellois",
+    "Sierra Leonean",
+    "Singaporean",
+    "Slovak",
+    "Slovenian",
+    "Solomon Islander",
+    "Somali",
+    "South African",
+    "South Korean",
+    "South Sudanese",
+    "Spanish",
+    "Sri Lankan",
+    "Sudanese",
+    "Surinamese",
+    "Swazi",
+    "Swedish",
+    "Swiss",
+    "Syrian",
+    "Taiwanese",
+    "Tajik",
+    "Tanzanian",
+    "Thai",
+    "Togolese",
+    "Tongan",
+    "Trinidadian",
+    "Tunisian",
+    "Turkish",
+    "Turkmen",
+    "Tuvaluan",
+    "Ugandan",
+    "Ukrainian",
+    "Uruguayan",
+    "Uzbek",
+    "Vanuatuan",
+    "Venezuelan",
+    "Vietnamese",
+    "Yemeni",
+    "Zambian",
+    "Zimbabwean"
+  ];
+  
 
   // for adult prices array
 
@@ -541,8 +742,6 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  useEffect(() => {}, []);
-
   const SubtotalPriceWithAdditional = (type, i) => {
     const Original = getPriceForType(type, i);
 
@@ -603,8 +802,6 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  
-
   const [HandlePromo, setHandlePromo] = useState(false);
   const [ShowbtnName, setShowbtnName] = useState(false);
 
@@ -614,13 +811,13 @@ export default function BookingPages({ BookingData }) {
 
   // allPrice
 
-  console.log("PackagePrices" , PackagePrices);
-  console.log("Additional" , Additional);
+  console.log("PackagePrices", PackagePrices);
+  console.log("Additional", Additional);
 
-  const adPrice = Additional.map(item => Number(item.price))
-  .reduce((accumulator, currentValue) => accumulator + currentValue, 0); 
-  
-  
+  const adPrice = Additional.map((item) => Number(item.price)).reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
 
   const totalSum =
     HandlePromo === false
@@ -719,10 +916,12 @@ export default function BookingPages({ BookingData }) {
   const handlePromoremove = () => {
     if (HandlePromo == true) {
       setHandlePromo(false);
+      showSuccessToast("Remove Sucessfull")
     } else if (HandlePromo == false) {
       setHandlePromo(true);
     }
     setShowbtnName(false);
+    
   };
 
   useEffect(() => {
@@ -783,7 +982,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Nationality"),
           type: "select",
           name: "nationality",
-          options: ["Indian", "German", "Canadian"],
+          options: nationalities,
           value: userData.nationality,
         },
         {
@@ -921,33 +1120,7 @@ export default function BookingPages({ BookingData }) {
                       <div className="form-input my-1">
                         {field.type === "select" ? (
                           <>
-                            {/* <select
-                              name={field.name}
-                              value={fieldValue}
-                              onChange={(e) => handleInputChange(type, i, e)}
-                              required
-                              className="form-control"
-                            >
-                              <option value="" disabled>
-                                {field.label}
-                              </option>
-                              {field.options?.map((option, optIndex) => (
-                                <option
-                                  key={optIndex}
-                                  value={option.toLowerCase()}
-                                >
-                                  {option}
-                                </option>
-                              ))}
-                            </select>
-                            <label className="lh-1 text-16 text-light-1">
-                              {fieldValue
-                                ? `${field.label}: ${fieldValue}`
-                                : field.label}
-                            </label> */}
-
                             <select
-                              id={`select-${i}`} // Use unique id for select2 initialization
                               name={field.name}
                               value={fieldValue}
                               onChange={(e) => handleInputChange(type, i, e)}
@@ -971,6 +1144,8 @@ export default function BookingPages({ BookingData }) {
                                 ? `${field.label}: ${fieldValue}`
                                 : field.label}
                             </label>
+
+                           
                           </>
                         ) : (
                           <>
@@ -1391,6 +1566,7 @@ export default function BookingPages({ BookingData }) {
                             value={promo}
                             onChange={handlepromochange}
                             required
+                            disabled={ShowbtnName}
                           />
                           <label className="lh-2 text-16 text-light-1 top-29">
                             {translate("Promo Code")}
@@ -1403,6 +1579,7 @@ export default function BookingPages({ BookingData }) {
                             className="button -sm -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
                             onClick={handlePromoSubmit}
                             style={{ whiteSpace: "nowrap" }}
+                            
                           >
                             {translate("Apply")}
                           </button>
@@ -1413,7 +1590,7 @@ export default function BookingPages({ BookingData }) {
                             onClick={handlePromoremove}
                             style={{ whiteSpace: "nowrap" }}
                           >
-                            {translate("remove")}
+                            {translate("Remove")}
                           </button>
                         )}
                       </div>

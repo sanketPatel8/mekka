@@ -23,7 +23,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     setselectDeparture,
     selectedCheckbox,
     setselectedCheckbox,
-    ExcludeFlight,
     setExcludeFlight,
   } = useGlobalState();
 
@@ -42,6 +41,12 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [selectedmekkaHotelPrice, setselectedmekkaHotelPrice] = useState(0);
   const [selectedMadinaHotelPrice, setselectedMadinaHotelPrice] = useState(0);
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
+
+  const [AdultPreprice, setAdultPreprice] = useState(0);
+  const [BabyPrePrice, setBabyPrePrice] = useState(0);
+  const [ChildPrevPrice, setChildPrevPrice] = useState(0);
+
+  const [LocalData, setLocalData] = useState([]);
 
   useEffect(() => {
     if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
@@ -82,6 +87,15 @@ export default function TourSingleSidebar({ PAckageData }) {
       setSelectedAirlinePrice(firstFlight.flight_amount);
     }
   }, [SidebarData]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const PrevPrice = localStorage.getItem("AdultPrice&count");
+      console.log("PrevPrice", PrevPrice);
+
+      setLocalData(JSON.parse(PrevPrice));
+    }
+  }, []);
 
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
@@ -150,8 +164,6 @@ export default function TourSingleSidebar({ PAckageData }) {
       setselectedCheckbox(false);
     }
   };
-
-  console.log("selectedCheckbox", selectedCheckbox);
 
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
@@ -254,7 +266,7 @@ export default function TourSingleSidebar({ PAckageData }) {
             label, // 'Adult', 'Youth', 'Children'
             individualCount,
             price: group.price,
-            count: count,
+            count: i,
             grandTotal: group.price * count,
             index: i,
             default: group.price,
@@ -278,14 +290,14 @@ export default function TourSingleSidebar({ PAckageData }) {
     setPriceObject(newPriceArray);
   };
 
- useEffect(() => {
+  useEffect(() => {
     // Update the checkbox state whenever SidebarData changes
-    if (SidebarData?.tour_details?.flight_included === '1') {
+    if (SidebarData?.tour_details?.flight_included === "1") {
       setselectedCheckbox(true);
     } else {
       setselectedCheckbox(false);
     }
-  }, [SidebarData]); 
+  }, [SidebarData]);
 
   useEffect(() => {
     updatePriceObject();
@@ -337,8 +349,8 @@ export default function TourSingleSidebar({ PAckageData }) {
 
   const handleBooking = () => {
     if (
-      HotelSelect.mekkaPrice > 0 &&
-      HotelSelect.madinaPrice > 0 &&
+      // HotelSelect.mekkaPrice > 0 &&
+      // HotelSelect.madinaPrice > 0 &&
       selectedFlights !== null &&
       selectedFlights.price > 0 // Check for valid flight
     ) {
@@ -366,26 +378,46 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
+  const handleIncrement = (price_type) => {
+    if (price_type === "1") {
+      setAdultNumber((prev) => prev + 1);
+    } else if (price_type === "2") {
+      setYouthNumber((prev) => prev + 1);
+    } else if (price_type === "3") {
+      setChildrenNumber((prev) => prev + 1);
+    }
+  };
+
+  const handleDecrement = (price_type) => {
+    if (price_type === "1") {
+      setAdultNumber((prev) => Math.max(prev - 1, 0));
+    } else if (price_type === "2") {
+      setYouthNumber((prev) => Math.max(prev - 1, 0));
+    } else if (price_type === "3") {
+      setChildrenNumber((prev) => Math.max(prev - 1, 0));
+    }
+  };
+
+  console.log(LocalData);
+
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
-      {SidebarData?.tour_price?.map((group, index) => {
-        let count, setCount, typeLabel;
+      
 
-        // Determine the appropriate state and label based on price_type
+      {SidebarData?.tour_price?.map((group, index) => {
+        let count, typeLabel;
+
         if (group.price_type === "1") {
           count = adultNumber;
-          setCount = setAdultNumber;
           typeLabel = "Adult";
         } else if (group.price_type === "2") {
           count = youthNumber;
-          setCount = setYouthNumber;
-          typeLabel = "child";
+          typeLabel = "Child";
         } else if (group.price_type === "3") {
           count = childrenNumber;
-          setCount = setChildrenNumber;
-          typeLabel = "baby";
+          typeLabel = "Baby";
         } else {
           return null;
         }
@@ -395,10 +427,10 @@ export default function TourSingleSidebar({ PAckageData }) {
             <div className="d-flex items-center justify-between">
               <div className="text-14 col-8">
                 {group.price_type === "1"
-                  ? "Adult (18+ Years) "
+                  ? "Adult (18+ Years)"
                   : group.price_type === "2"
-                  ? "Child (13-17 Years) "
-                  : "Baby (0-12 Years) "}
+                  ? "Child (13-17 Years)"
+                  : "Baby (0-12 Years)"}
                 <span className="fw-500">
                   {(group.price * count).toFixed(2)} €
                 </span>
@@ -406,7 +438,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
               <div className="d-flex items-center js-counter col-3">
                 <button
-                  onClick={() => setCount((prev) => Math.max(prev - 1, 0))}
+                  onClick={() => handleDecrement(group.price_type)}
                   className="button size-30 border-1 rounded-full js-down col-2"
                 >
                   <i className="icon-minus text-10 col-3"></i>
@@ -417,7 +449,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                 </div>
 
                 <button
-                  onClick={() => setCount((prev) => prev + 1)}
+                  onClick={() => handleIncrement(group.price_type)}
                   className="button size-30 border-1 rounded-full js-up"
                 >
                   <i className="icon-plus text-10"></i>

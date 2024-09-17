@@ -10,6 +10,7 @@ import { showErrorToast } from "../utils/tost";
 import { useGlobalState } from "../context/GlobalStateContext";
 import { useSearchParams } from "next/navigation";
 import { POST } from "../utils/api/post";
+import Head from "next/head";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -271,25 +272,30 @@ export default function Page() {
   }, [searchParams]);
 
   return (
-    <main>
-      <Header1 />
-      <Hero1 />
-      <div className="mt-50">
-        <TourList4
-          TourData={TourData}
-          FliterData={FliterData}
-          count={count}
-          range={range}
-          onPageChange={onPageChange}
-          setLanActives={setLanActives}
-          FilterSidebar={FilterSidebar}
-          LanActives={LanActives}
-          value={value}
-          setValue={setValue}
-          handleSelectionChange={handleSelectionChange}
-        />
-      </div>
-      <FooterTwo />
-    </main>
+    <>
+      <Head>
+        <meta property="og:title" content="Tour List" />
+      </Head>
+      <main>
+        <Header1 />
+        <Hero1 />
+        <div className="mt-50">
+          <TourList4
+            TourData={TourData}
+            FliterData={FliterData}
+            count={count}
+            range={range}
+            onPageChange={onPageChange}
+            setLanActives={setLanActives}
+            FilterSidebar={FilterSidebar}
+            LanActives={LanActives}
+            value={value}
+            setValue={setValue}
+            handleSelectionChange={handleSelectionChange}
+          />
+        </div>
+        <FooterTwo />
+      </main>
+    </>
   );
 }
