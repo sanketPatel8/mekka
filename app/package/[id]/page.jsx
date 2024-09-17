@@ -11,7 +11,6 @@ import Head from "next/head";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-
 export default function Page() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -50,21 +49,23 @@ export default function Page() {
 
   useEffect(() => {
     if (id) {
-      fetchData(id); 
+      fetchData(id);
     }
   }, [id]);
 
   return (
     <>
-    <Head>
+      <Head>
         <title>Package ~ Mekkabooking</title>
         <meta name="description" content="mekkabooking - Ihr Hajj & Umra Portal" />
         {/* Add other metadata tags here */}
       </Head>
-      <Header1 />
-      <SingleFour PAckageData={PAckageData} />
-      <TourSlider PAckageData={PAckageData} />
-      <FooterTwo />
+      <main>
+        <Header1 />
+        <SingleFour PAckageData={PAckageData} />
+        <TourSlider PAckageData={PAckageData} />
+        <FooterTwo />
+      </main>
     </>
   );
 }
