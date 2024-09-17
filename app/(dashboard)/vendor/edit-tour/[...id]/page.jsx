@@ -91,6 +91,7 @@ export default function EditTour() {
     // { title: "Soft drinks", value: "6", checked: false },
     // { title: "Tour Guide", value: "7", checked: false },
   ]);
+  const [includedData, setIncludedData] = useState([]);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [canGoBack, setCanGoBack] = useState(false);
   const [mekkaRows, setMekkaRows] = useState([
@@ -128,7 +129,6 @@ export default function EditTour() {
     const formData = new FormData();
     formData.append("id", id);
     const response = await POST.request({form:formData , url: "tourdetails"});
-    console.log(response.Tour_Details.details.tour_image)
     if(response){
       setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
@@ -140,9 +140,11 @@ export default function EditTour() {
       const adultPrice = response.Tour_Details.adult_price.map((price) => (setAdultPrice(price.price)));
       const childPrice = response.Tour_Details.child_price.map((price) => (setChildPrice(price.price)));
       const babyPrice = response.Tour_Details.baby_price.map((price) => (setBabyPrice(price.price)));
+
+      
+
     }
   }
-
   const accessdata = async() => {
     const url ="tour_data"
 
@@ -154,7 +156,7 @@ export default function EditTour() {
         setFlightDetails(response.Data.airline)
         setTourType(response.Data.tour_type)
         setlanguagesData(response.Data.languages)
-        setIncluded(response.Data.amenities)
+        setIncludedData(response.Data.amenities)
         setDepartures(response.Data.departure)
       }
     }catch(error){
@@ -209,7 +211,20 @@ export default function EditTour() {
 
 
   },[tourInformation])
-
+  useEffect(() => {
+    console.log(tourInclude,"tourInclude");
+    console.log(includedData,"included");
+      const updatedIncluded = includedData.map((item) => {
+        console.log(item,"item")
+        const isChecked = tourInclude.includes(item.id);
+        
+        console.log(isChecked,"isChecked");
+        return { ...item, checked: isChecked };
+      });
+      setIncluded(updatedIncluded);
+      console.log(updatedIncluded,"updatedIncluded");
+    
+  }, [ tourInclude,includedData]);
 useEffect(() => {
   if(departureDetails){
     const updatedDepartures = departureDetails.map((departure) => {
@@ -220,7 +235,6 @@ useEffect(() => {
       return departure;
     });
     setDepartureRows(updatedDepartures);
-    console.log(departureRows,"updatedDepartures");
   }
 },[departureDetails])
 
@@ -234,7 +248,6 @@ useEffect(() => {
       if(tourDetails.tour_image){
         setImage2(tourDetails.tour_image || []);
 
-        console.log(image2,"image2");
 //         const base64Images = [];
 
 // image2.forEach((file) => {
@@ -269,10 +282,9 @@ useEffect(() => {
         }
       }
       {tourDetails.flight_info !== ""  ? setFlightInformation(tourDetails.flight_info) : setFlightInformation("")}
-      // const tourIncluded = tourDetails.tour_included;
-      //   console.log(tourIncluded,"tourIncluded");
+      {tourDetails.flight_exclude == 1 ? setRadioValueExcludeFlight("Yes") : setRadioValueExcludeFlight("No")}
+     
       
-  
       {tourDetails.visa_processing === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
       {tourDetails.free_cancellation === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
       // if(tourDetails){
@@ -303,15 +315,7 @@ useEffect(() => {
     // console.log(imageUrls,"imageUrls");
   }, [tourDetails]);
 
-  useEffect(() => {
-    if (tourInclude) {
-      const updatedIncluded = included.map((item) => {
-        const isChecked = tourInclude.includes(item.id.toString());
-        return { ...item, checked: isChecked };
-      });
-      setIncluded(updatedIncluded);
-    }
-  }, [tourInclude]);
+
 
   useEffect(() => {
     if(additionalServices){
@@ -330,6 +334,7 @@ useEffect(() => {
 
   },[additionalServices]);
 
+  
   useEffect(()=>{
     if(flightData){
       {flightData.length > 0 ? setRadioValueFlight("Yes") : setRadioValueFlight("No")}
@@ -687,7 +692,6 @@ useEffect(() => {
       const newRows = [...departureRows];
       newRows[index] = departureData;
       setDepartureRows(newRows);
-      console.log(departureRows, "departureRows");
     }
   };
   // const handleMekkaChange = (value, index) => {
@@ -724,7 +728,6 @@ useEffect(() => {
   const handleFlightSelectChange = (value, index) => {
     if (!value) return; 
     const selectedOption = flightDetails.find((option) => option.id === value.value);
-    console.log(selectedOption,"selectedOption")
 
     const flight_data = {
       ...flightRow[index],
@@ -873,7 +876,6 @@ useEffect(() => {
 
 
     const image2File = document.querySelector('input[name="image2"]').files;
-    console.log(image2File,"image2File")
     const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
     // const binaryImages = [];
 
@@ -895,7 +897,6 @@ useEffect(() => {
       id: departure.id ? departure.id : ''
     }))
 
-    console.log(departureData)
 
     const formData = new FormData();
 
@@ -1110,9 +1111,9 @@ const formatDateToMMDDYYYY = (date) => {
                                       ref={selectRef}
                                       className="js-example-basic-multiple w-100"
                                       name="states[]"
-                                      multiple="multiple"
+                                      multiple={true}
                                       placeholder="Langauge"
-
+                                      defaultValue={tourDetails.tour_languages}
                                     >
                                       {languagesData.map((language) => (
                                         <option key={language.id} value={language.id}

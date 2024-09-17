@@ -254,18 +254,18 @@ export default function DBListing() {
                       <div className="">
                         <button
                           className={
-                            elm.vendor_Listning === "Pending"
+                            elm.tour_status === "Pending"
                               ? "badge-orange"
-                              : elm.vendor_Listning === "Approved"
+                              : elm.tour_status === "Approved"
                               ? "badge-green"
-                              : elm.vendor_Listning === "Rejected"
+                              : elm.tour_status === "Rejected"
                               ? "badge-red"
                               : ""
                           }
 
                           onClick={openInvoice}
                         >
-                          <b>{elm.vendor_Listning}</b>
+                          <b>{elm.tour_status}</b>
                         </button>
 
                         <div className="d-flex items-center text-14 ">
