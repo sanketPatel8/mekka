@@ -40,14 +40,7 @@ export default function page() {
 
   return (
     <>
-      <Head>
-        <title>Booking ~ Mekkabooking</title>
-        <meta
-          name="description"
-          content="mekkabooking - Ihr Hajj & Umra Portal"
-        />
-        {/* Add other metadata tags here */}
-      </Head>
+   
       <main>
         <Header1 />
         <BookingPages BookingData={BookingData} />

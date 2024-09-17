@@ -1,5 +1,8 @@
-"use client";
+"use client"
 
+import Head from "next/head";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
@@ -7,16 +10,13 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourSlider from "@/components/tourSingle/TourSlider";
 import SingleFour from "@/components/tourSingle/pages/SingleFour";
-import Head from "next/head";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
   const [PAckageData, setPAckageData] = useState({});
-
+  const [Title, setTitle] = useState("");
   const { SharePackageData, setSharePackageData } = useGlobalState();
 
   const fetchData = async (id) => {
@@ -53,11 +53,23 @@ export default function Page() {
     }
   }, [id]);
 
+  useEffect(() => {
+    // Fetch some data or perform client-side logic
+    setTitle({
+      title: "Package ~ Mekkabooking",
+      description: "mekkabooking - Ihr Hajj & Umra Portal",
+    });
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Package ~ Mekkabooking</title>
-        <meta name="description" content="mekkabooking - Ihr Hajj & Umra Portal" />
+        <title>{Title?.title || "Default Title"}</title>
+        <meta
+          name="description"
+          content={Title?.description || "Default description"}
+        />
+        <meta name="keywords" content="nextjs, client-side, example" />
         {/* Add other metadata tags here */}
       </Head>
       <main>

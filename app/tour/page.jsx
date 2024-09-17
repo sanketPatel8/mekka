@@ -276,11 +276,7 @@ export default function Page() {
 
   return (
     <>
-      <Head>
-        <title>Tour List ~ Mekkabooking</title>
-        <meta name="description" content="mekkabooking - Ihr Hajj & Umra Portal" />
-        {/* Add other metadata tags here */}
-      </Head>
+     
       <main>
         <Header1 />
         <Hero1 />
