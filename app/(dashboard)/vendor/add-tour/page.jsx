@@ -218,10 +218,23 @@ export default function AddTour() {
 
   } 
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
+    // setRouteData((prevData) => {
+    //   const newData = [...prevData];
+    //   newData[dayNumber - 1] = { day: dayNumber, dayData, description };
+    //   return newData;
+    // });
+
+    console.log('Before update:', route_data);
+
     setRouteData((prevData) => {
-      const newData = [...prevData];
-      newData[dayNumber - 1] = { day: dayNumber, dayData, description };
-      return newData;
+      const updatedData = prevData.map((day, index) => {
+        if (index + 1 === dayNumber) {
+          return { ...day, dayData, description };
+        }
+        return day;
+      });
+      console.log('After update:', route_data);
+      return updatedData;
     });
   };
 
@@ -664,6 +677,7 @@ const isCurrentTabValid = () => {
         description:day.description
       }
     ));
+
     // const itineraryData = {
     //   itinerary: route_data.map((day, index) => ({
     //     day: index + 1,
@@ -750,7 +764,8 @@ const isCurrentTabValid = () => {
 
 
   return (
-    <>
+    <>  
+    
       <ToastContainer />
       <div
         className={`dashboard overflow-hidden ${
@@ -1368,7 +1383,7 @@ const isCurrentTabValid = () => {
                                         type="text"
                                         required
                                         value={route_data.find((day) => day.day === dayNumber)?.dayData || ""}
-                                        onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, "")}
+                                        onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, route_data.find((day) => day.day === dayNumber)?.description || "")}
                                         className=""
                                       />
                                       <label className="lh-1 text-16 text-light-1">Day {dayNumber} <span className="text-red">*</span></label>
@@ -1383,7 +1398,7 @@ const isCurrentTabValid = () => {
                                           cols="80"
                                           value={route_data.find((day) => day.day === dayNumber)?.description || ""}
                                           onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
-                                        />
+                                          />
                                       <label className="lh-1 text-16 text-light-1">Description <span className="text-red">*</span></label>
                                     </div>
                                   </div>
@@ -1722,12 +1737,13 @@ const isCurrentTabValid = () => {
                               </h6>
                              
                                 <div className="col-12">
-                                    <div className="form-input my-1">
+                                    <div className="form-input my-2">
                                     <textarea
                                           type="text"
                                           required
                                           rows="3"
                                           value={flightInformation}
+                                          className="my-0"
                                           onChange={(e) => setFlightInformation(e.target.value)}
                                         />
                                       <label className="lh-1 text-16 text-light-1">Flight Information <span className="text-red">*</span></label>
@@ -1786,7 +1802,7 @@ const isCurrentTabValid = () => {
                               <h6>
                               {translate("Include Flight Details") }
                               </h6>
-                              <div className="flex_start visaYESNOFLEx my-3">
+                              <div className="flex_start visaYESNOFLEx my-2">
                                 <div className="d-flex items-center mx-2">
                                   <div className="form-radio d-flex items-center">
                                     <label className="radio d-flex items-center">

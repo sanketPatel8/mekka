@@ -212,8 +212,7 @@ export default function EditTour() {
 
   },[tourInformation])
   useEffect(() => {
-    console.log(tourInclude,"tourInclude");
-    console.log(includedData,"included");
+  
       const updatedIncluded = includedData.map((item) => {
         console.log(item,"item")
         const isChecked = tourInclude.includes(item.id);

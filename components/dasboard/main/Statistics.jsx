@@ -42,7 +42,7 @@ export default function Statistics() {
 
   const { translate } = useTranslation();
   return (
-    <div className="col-xl-8 col-lg-12 col-md-6 my-3">
+    <div className="col-12 my-3">
       <div className="rounded-12 bg-white shadow-2 h-full">
         <div className="pt-20 px-30">
           <div className="tabs -underline-2 js-tabs">

@@ -93,22 +93,22 @@ export const states = [
   // },
 ];
 
-export const StatusPaymentHistry = [
-  {
-    id: 1,
-    title: "Total Earnings",
-    amount: "10,800 €",
-    today: "50 €",
-    iconClass: "icon-wallet text-accent-1",
-  },
-  {
-    id: 2,
-    title: "Total Pending",
-    amount: "12,800 €",
-    today: "40+",
-    iconClass: "icon-payment text-accent-1",
-  },
-]
+// export const StatusPaymentHistry = [
+//   {
+//     id: 1,
+//     title: "Total Earnings",
+//     amount: "10,800 €",
+//     today: "50 €",
+//     iconClass: "icon-wallet text-accent-1",
+//   },
+//   {
+//     id: 2,
+//     title: "Total Pending",
+//     amount: "12,800 €",
+//     today: "40+",
+//     iconClass: "icon-payment text-accent-1",
+//   },
+// ]
 
 export const notificationData = [
   {
