@@ -9,6 +9,11 @@ import BookingPages from "@/components/pages/BookingPages";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+export const metadata = {
+  title: "Booking ~ Mekkabooking ",
+  description: "mekkabooking - Ihr Hajj & Umra Portal ",
+};
+
 export default function page() {
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");

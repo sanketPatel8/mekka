@@ -12,6 +12,12 @@ import { useSearchParams } from "next/navigation";
 import { POST } from "../utils/api/post";
 import Head from "next/head";
 
+
+export const metadata = {
+  title: "Tour List ~ Mekkabooking ",
+  description: "mekkabooking - Ihr Hajj & Umra Portal ",
+};
+
 export default function Page() {
   const searchParams = useSearchParams();
 
