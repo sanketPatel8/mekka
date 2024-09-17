@@ -26,9 +26,7 @@ import { BabyData, ReservationData } from "@/data/CustomerBookingData";
 import { usePeople } from "@/app/context/PeopleContext";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
-import $ from "jquery";
-import "select2/dist/css/select2.min.css";
-import "select2/dist/js/select2.min.js";
+
 
 const customStyles = {
   overlay: {

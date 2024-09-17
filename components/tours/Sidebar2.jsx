@@ -26,7 +26,7 @@ export default function Sidebar2({
   };
 
   useEffect(() => {
-    console.log("FilterSidebar" , FilterSidebar);
+    console.log("FilterSidebar", FilterSidebar);
   }, [FilterSidebar]);
 
   const { translate } = useTranslation();
