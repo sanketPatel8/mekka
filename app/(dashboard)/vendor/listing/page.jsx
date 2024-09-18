@@ -19,6 +19,7 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
+import VendorFooter from "@/components/dasboard/VendorFooter";
 
 const customStyles = {
   overlay: {
@@ -331,10 +332,9 @@ export default function DBListing() {
               </Modal>
             </div>
 
-            <div className="text-center pt-30">
-              © Copyright MekkaBooking.com {new Date().getFullYear()}
-            </div>
+           
           </div>
+      <VendorFooter/>
         </div>
         
 
