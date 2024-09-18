@@ -20,6 +20,8 @@ import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { ClipLoader } from "react-spinners";
 import draftToHtml from "draftjs-to-html";
+import VendorFooter from "@/components/dasboard/VendorFooter";
+import { useRouter } from "next/navigation";
 
 
 const Editor = dynamic(
@@ -38,6 +40,8 @@ const tabs = [
 
 export default function AddTour() {
   const {user} = useAuthContext();
+
+  const router = useRouter();
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [SelectedTour, setSelectedTour] = useState("");
   const [name, setName] = useState("");
@@ -134,10 +138,16 @@ export default function AddTour() {
       const startDate = new Date(formatDateToMMDDYYYY(date_begin));
       console.log(startDate,"startDate");
       const endDate = new Date(formatDateToMMDDYYYY(date_end));
-      const timeDifference = endDate.getTime() - startDate.getTime();
-      const daysDifference = timeDifference / (1000 * 3600 * 24);
-      setDaysCount(Math.ceil(daysDifference));
-      console.log(daysDifference,"daysCount");
+      console.log(endDate.getTime(),"endDate"); 
+      const daysDifference = Math.round((endDate - startDate) / (1000 * 3600 * 24));
+      console.log(daysDifference,"daysDifference");
+      setDaysCount(daysDifference + 1)
+      // const timeDifference = endDate.getTime() - startDate.getTime();
+      // console.log(timeDifference,"timeDifference");
+      // const daysDifference = timeDifference / (1000 * 3600 * 24);
+      // console.log(daysDifference,"daysDifference");
+      // setDaysCount(Math.ceil(daysDifference));
+      // console.log(daysDifference,"daysCount");
     }
   }, [date_begin, date_end]);
 
@@ -716,6 +726,7 @@ const isCurrentTabValid = () => {
       setLoading(false);
       if(response){
         toast.success("Tour Added Successfully");
+        router.push("/vendor/listing");
         // setActiveTab("Content");
         // setActiveTabIndex(0);
         // setSelectedTour("");  
@@ -1731,18 +1742,18 @@ const isCurrentTabValid = () => {
                                   </div>
                                 </div>
                                 <div className=" ">
-                                <h6>
+                                <h6 className="mb-1">
                                   {translate("Add Flight Information") }
                                   </h6>
                                 
                                     <div className="col-12">
-                                        <div className="form-input my-2">
+                                        <div className="form-input m-0">
                                         <textarea
                                               type="text"
                                               required
                                               rows="3"
                                               value={flightInformation}
-                                              className="my-0"
+                                            
                                               onChange={(e) => setFlightInformation(e.target.value)}
                                             />
                                           <label className="lh-1 text-16 text-light-1">Flight Information <span className="text-red">*</span></label>
@@ -2003,9 +2014,7 @@ const isCurrentTabValid = () => {
                   </div>
                 </div>
               
-              <div className="text-center pt-30">
-                © Copyright MekkaBooking.com {new Date().getFullYear()}
-              </div>
+                <VendorFooter/>
           </div>
         </div>
       </div>

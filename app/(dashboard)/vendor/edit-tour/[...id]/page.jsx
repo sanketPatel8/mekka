@@ -74,7 +74,7 @@ export default function EditTour() {
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
-    { id: 1, title: "1-bed room", price: "", checked: false  },
+    { id: 1, title: "1-bed room", price: "", checked: false },
     { id: 2, title: "2-bed room", price: "", checked: false  },
     { id: 3, title: "3-bed room", price: "", checked: false},
     { id: 4, title: "4-bed room", price: "", checked: false },
@@ -135,7 +135,7 @@ export default function EditTour() {
     if(response){
       setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
-      setAdditionalServices(response.Tour_Details.addition_service);
+      setAdditionalServices(response.Tour_Details.addition_service || "");
       setFlightData(response.Tour_Details.flight_data);
       setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
@@ -221,7 +221,6 @@ export default function EditTour() {
 
     const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
       const editorState = EditorState.createWithContent(contentState);
-    console.log(editorState,"editorState");
     
  
     setEditorState(editorState);
@@ -230,17 +229,39 @@ export default function EditTour() {
 
   },[tourInformation])
   useEffect(() => {
-      console.log(tourInclude,"tourInclude");
 
 
       const updatedIncluded = includedData.map((item) => {
-        const isChecked = tourInclude.includes(item.id);
+        const isChecked = tourInclude.includes(item.id.toString());
         
         return { ...item, checked: isChecked };
       });
       setIncluded(updatedIncluded);
     
   }, [ tourInclude,includedData]);
+
+  
+  useEffect(() => {
+    console.log(additionalServices,"additionalServices");
+   
+
+        const updatedServices = services.map((service) => {
+          console.log(service,"service");
+          const foundService = additionalServices.find((additionalService) => additionalService.title === service.title);
+          console.log(foundService,"foundService");
+          if (foundService) {
+            return { ...service, checked: true, price: foundService.price, service_id: foundService.id,title:foundService.title };
+          }
+          return service;
+        });
+        setServices(updatedServices);
+        console.log(updatedServices,"services");
+      
+    
+
+    
+
+  },[additionalServices]);
 useEffect(() => {
   if(departureDetails){
     const updatedDepartures = departureDetails.map((departure) => {
@@ -300,9 +321,9 @@ useEffect(() => {
       {tourDetails.flight_info !== ""  ? setFlightInformation(tourDetails.flight_info) : setFlightInformation("")}
       {tourDetails.flight_exclude == 1 ? setRadioValueExcludeFlight("Yes") : setRadioValueExcludeFlight("No")}
      
-      
-      {tourDetails.visa_processing === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
-      {tourDetails.free_cancellation === 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
+      console.log(tourDetails.visa_processing,"tourDetails.visa_processing");
+      {tourDetails.visa_processing == 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
+      // {tourDetails.free_cancellation == 1 ? setRadio("Yes") : setRadioValueVisa("No")}
       // if(tourDetails){
       //   console.log(tourDetails.tour_info,"tourDetails.tour_info");
       //   const editorContent = ContentState.createFromText(tourDetails.tour_info);
@@ -333,32 +354,14 @@ useEffect(() => {
 
 
 
-  useEffect(() => {
-      const updatedServices = services.map((service) => {
-        const foundService = additionalServices.find((additionalService) => additionalService.title === service.title);
-        console.log(foundService,"foundService");
-        if (foundService) {
-          return { ...service, checked: true, price: foundService.price, service_id: foundService.id,title:foundService.title };
-        }
-        return service;
-      });
-      setServices(updatedServices);
-      console.log(updatedServices,"services");
-    
-
-    
-
-  },[]);
 
   
   useEffect(()=>{
     if(flightData){
-      console.log(flightData,"flightData");
       {flightData.length > 0 ? setRadioValueFlight("Yes") : setRadioValueFlight("No")}
       if(flightData.length > 0){
         const updatedFlight = flightData.map((flight) => {
           const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
-          console.log(foundFlight,"foundFlight");
           if (foundFlight) {
             return { ...flight, flight_id: foundFlight.id,flight_name:foundFlight.airline_name };
           }
@@ -446,9 +449,9 @@ useEffect(() => {
     if (date_begin && date_end) {
       const startDate = new Date(formatDateToMMDDYYYY(date_begin));
       const endDate = new Date(formatDateToMMDDYYYY(date_end));
-      const timeDifference = endDate.getTime() - startDate.getTime();
-      const daysDifference = timeDifference / (1000 * 3600 * 24);
-      setDaysCount(Math.ceil(daysDifference));
+      const daysDifference = Math.round((endDate - startDate) / (1000 * 3600 * 24));
+      setDaysCount(daysDifference + 1)
+    
     }
   }, [date_begin, date_end]);
 
@@ -564,13 +567,11 @@ useEffect(() => {
     setActiveTab(tabs[activeTabIndex]);
   }, [activeTabIndex]);
   const handleCheckboxChange = (event, id) => {
-    console.log(services,"services");
     const updatedServices = services.map((service) =>
       service.id === id ? { ...service, checked: event.target.checked, service_id:0 } : service
     );
     setServices(updatedServices);
 
-    console.log(services,"checkedServices")
   };
   
   const handlePriceChange = (event, id) => {
@@ -762,7 +763,6 @@ useEffect(() => {
     newRows[index] = flight_data;
     setFlightRow(newRows);
 
-    console.log(flightRow,"flightRow");
   };
 
   const selectRef = useRef(null);
@@ -838,7 +838,6 @@ useEffect(() => {
     // Convert language values to a comma-separated string
     const languageString = languageValues.join(',');
 
-    console.log(mekkaRows,"mekkaRows");
     const mekkaData =mekkaRows.map((mekka)=>({
       hotel_type:1,
       hotel_name: mekka.hotel_name ? mekka.hotel_name : '', 
@@ -848,7 +847,6 @@ useEffect(() => {
       id:mekka.id?mekka.id:0
     }))
 
-    console.log(madinaRows,"madinaRows");
     const madinaData =madinaRows.map((madina)=>({
       hotel_type:2,
       hotel_name: madina.hotel_name ? madina.hotel_name : '', 
@@ -867,7 +865,6 @@ useEffect(() => {
       id: flight.id?flight.id:0
     }))
 
-    console.log(flightData,"flightData");
 
    
 
@@ -883,7 +880,6 @@ useEffect(() => {
     const hotel_data = [...mekkaData, ...madinaData];
 
     const checkedServices = services.filter((service) => service.checked);
-    console.log(checkedServices,"checkedServices");
     const servicesData = checkedServices.reduce((acc, service) => {
       if (service.price !== "") {
         acc.push({ title: service.title, price: service.price, service_id: service.service_id });
@@ -920,7 +916,6 @@ useEffect(() => {
       price: departure.price ? departure.price : '',
       id: departure.id ? departure.id : ''
     }))
-    console.log(JSON.stringify(departureData),"departureData");
 
     const formData = new FormData();
 
@@ -1688,6 +1683,7 @@ const formatDateToMMDDYYYY = (date) => {
                                           type="radio"
                                           name="radioGroupVisa"
                                           value="No"
+
                                           checked={radioValueVisa === "No"}
                                           onChange={(event) => setRadioValueVisa(event.target.value)}
                                         />
@@ -1948,12 +1944,12 @@ const formatDateToMMDDYYYY = (date) => {
                                 </div>
                               </div>
                               <div className=" ">
-                              <h6>
+                              <h6 className="mb-1">
                                 {translate("Add Flight Information") }
                                 </h6>
                               
                                   <div className="col-12">
-                                      <div className="form-input my-1">
+                                      <div className="form-input m-0">
                                       <textarea
                                             type="text"
                                             required
