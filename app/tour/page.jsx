@@ -7,10 +7,8 @@ import TourList4 from "@/components/tours/TourList4";
 import React, { useEffect, useRef, useState } from "react";
 import { post } from "../utils/api";
 import { showErrorToast } from "../utils/tost";
-import { useGlobalState } from "../context/GlobalStateContext";
 import { useSearchParams } from "next/navigation";
 import { POST } from "../utils/api/post";
-import Head from "next/head";
 
 export default function PageData() {
   const searchParams = useSearchParams();
@@ -136,17 +134,6 @@ export default function PageData() {
     formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
     formData.append("amenities", FilterSidebar?.selectedFeatures.join(", "));
 
-    // try {
-    //   const response = await post("tourfilter", sendData);
-    //   setTourData(response.Tours);
-    //   setRoute("filter data");
-
-    //   setRange(response.Total_Page)
-    // } catch (error) {
-    //   console.error("Error caught:", error);
-    //   showErrorToast("An error occurred during registration.");
-    // }
-
     try {
       const response = await POST.request({
         form: formData,
@@ -175,33 +162,6 @@ export default function PageData() {
       isMounted.current = true;
     }
   }, [FilterSidebar]);
-
-  // const currentResults = Array.isArray(TourData)
-  //   ? TourData.slice((TourIndex - 1) * 10, TourIndex * 10)
-  //   : [];
-
-  // const fetchData = async (PageIndex) => {
-  //   const sendData = {
-  //     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-  //     start: PageIndex,
-  //   };
-
-  //   try {
-  //     const response = await post("tourlist", sendData);
-  //     if (response.Tours) {
-  //       setTourData(response.Tours);
-  //       setCount(response.Count);
-  //       setPage(response.Total_Page);
-  //       setRoute("Tourlist data");
-  //       setIsTourDataFetched(true);
-  //     } else {
-  //       console.error("Tours data is undefined in the response.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error caught:", error);
-  //     showErrorToast("An error occurred during registration.");
-  //   }
-  // };
 
   const FetchTourDataAPi = async () => {
     const sendData = {
