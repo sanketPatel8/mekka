@@ -358,3 +358,9 @@ opacity: 1;
     transform: rotate(360deg);
   }
 }
+
+
+.public-DraftStyleDefault-ltr{
+  height: auto!important;
+  line-height:30px;
+}

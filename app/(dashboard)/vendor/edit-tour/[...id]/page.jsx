@@ -9,7 +9,7 @@ import CreatableSelect from "react-select/creatable";
 import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import { ContentState, convertFromRaw, convertToRaw, EditorState, Modifier } from "draft-js";
-import { stateToHTML } from 'draftjs-to-html';
+import draftToHtml, { stateToHTML } from 'draftjs-to-html';
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import $ from "jquery";
@@ -202,41 +202,29 @@ export default function EditTour() {
   };
 
   useEffect(()=>{
-
+    // setEditorState((textContent) => {
+    //   const htmlToDraft = require("html-to-draftjs").default;
+    //   const blocksFromHtml = htmlToDraft(tourinfo); // Add tour info from api
+    //   const { contentBlocks, entityMap } = blocksFromHtml;
+    //   const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+    //   const editorState = EditorState.createWithContent(contentState);
+    //   return editorState;
+    // });
     if(tourInformation){
-      const editorContent = ContentState.createFromText(tourInformation);
-    const editorState = EditorState.createWithContent(editorContent);
-    const rawContent = convertToRaw(editorState.getCurrentContent());
-    rawContent.blocks.forEach((block) => {
-      if (block.type === 'unstyled') {
-        block.entityRanges.push({
-          offset: 0,
-          length: block.text.length,
-          key: 0,
-          type: 'FONT_FAMILY',
-          mutability: 'MUTABLE',
-          data: {
-            fontFamily: 'Arial',
-          },
-        });
-      }
-    });
+      const htmlToDraft = require("html-to-draftjs").default;
+
+      const blocksFromHtml = htmlToDraft(tourInformation); // Add tour info from api
+      const { contentBlocks, entityMap } = blocksFromHtml;
+    //   const editorContent = ContentState.createFromText(tourInformation);
+    // const editorState = EditorState.createWithContent(editorContent);
+    // const rawContent = convertToRaw(editorState.getCurrentContent());
+
+    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+      const editorState = EditorState.createWithContent(contentState);
+    console.log(editorState,"editorState");
     
-    // console.log(newContentState,"newContentState"); 
-
-    const newEditorState = EditorState.createWithContent(convertFromRaw(rawContent));
-
-    // // const plainText = rawContent.blocks[0].text;
-    // // const plainTextContent = plainText.replace(/<[^>]+>/g, '');
-    // // console.log(plainTextContent,"htmlContent");
-    // // const newEditorState = EditorState.push(editorState, ContentState.createFromText(plainTextContent));
-    // const plainTextContent = editorState.getCurrentContent().getPlainText('');
-    // const formattedPlainTextContent = plainTextContent.replace(/\n/g, ''); // remove newline characters
-
-    // Update the editorState with the formatted plain text content
-    // const newEditorState = EditorState.push(editorState, ContentState.createFromText(formattedPlainTextContent));
-    // console.log(newEditorState,"newEditorState");
-    setEditorState(newEditorState);
+ 
+    setEditorState(editorState);
     }
 
 
@@ -903,11 +891,9 @@ useEffect(() => {
       return acc;
     }, []);
 
-    console.log(servicesData,"servicesData");
 
     const checkedIncluded = included.filter((item) => item.checked);
     const includedData = checkedIncluded.map((item) => item.id).join(",");
-    const editorValue = convertToRaw(editorState.getCurrentContent()).blocks[0].text;
   
     const newRouteData = route_data.map((day, index) => (
       {
@@ -916,7 +902,6 @@ useEffect(() => {
       }
     ));
 
-    console.log(newRouteData,"newRouteData");
     // const itineraryData = {
     //   itinerary: route_data.map((day, index) => ({
     //     day: index + 1,
@@ -924,23 +909,11 @@ useEffect(() => {
     //   })),
     // };
 
+    const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
     const image2File = document.querySelector('input[name="image2"]').files;
     const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
-    console.log(image2FileArray,"image2FileArray");
-    // const binaryImages = [];
 
-    // for (let i = 0; i < image2File.length; i++) {
-    //   const file = image2File[i];
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     const binaryData = reader.result;
-    //     binaryImages.push(binaryData);
-    //   };
-    //   reader.readAsBinaryString(file);
-    // }
-    
-    // console.log(binaryImages,"binaryImages");
 
     const departureData =departureRows.map((departure)=>({
       departure_id: departure.departure_id ? departure.departure_id : '',
@@ -949,86 +922,54 @@ useEffect(() => {
     }))
     console.log(JSON.stringify(departureData),"departureData");
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // formData.append("type", SelectedTour.value);
-    // formData.append("name", name);
-    // formData.append("capacity", capacity);
-    // formData.append("date_begin", start_date);
-    // formData.append("date_end", end_date);
-    // formData.append("tour_languages", languageString);
-    // formData.append("adult_price", adult_price);
-    // formData.append("child_price", child_price);
-    // formData.append("baby_price", baby_price);
-    // formData.append("addition_service", JSON.stringify(servicesData));
-    // formData.append("tour_included", includedData);
-    // formData.append("tour_info", editorValue || "");
-    // formData.append("flight_info", flightInformation);
-    // formData.append("route_data", JSON.stringify(newRouteData));
-    // formData.append("hotel_data", JSON.stringify(hotel_data));
-    // formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flight_data):"");
-    // formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    // formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
-    // formData.append("user_id", user?.user.id);
-    // formData.append("company_id", user?.user.company_id);
-    // formData.append("tour_id", id);
+    formData.append("type", SelectedTour.value);
+    formData.append("name", name);
+    formData.append("capacity", capacity);
+    formData.append("date_begin", start_date);
+    formData.append("date_end", end_date);
+    formData.append("tour_languages", languageString);
+    formData.append("adult_price", adult_price);
+    formData.append("child_price", child_price);
+    formData.append("baby_price", baby_price);
+    formData.append("addition_service", JSON.stringify(servicesData));
+    formData.append("tour_included", includedData);
+    formData.append("tour_info", tourInfo);
+    formData.append("flight_info", flightInformation);
+    formData.append("route_data", JSON.stringify(newRouteData));
+    formData.append("hotel_data", JSON.stringify(hotel_data));
+    formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flight_data):"");
+    formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
+    formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
+    formData.append("user_id", user?.user.id);
+    formData.append("company_id", user?.user.company_id);
+    formData.append("tour_id", id);
     
-    // if(image2FileArray.length === 0){
-    //   formData.append("tour_image", "");
-    // }else{
-    //   image2FileArray.forEach((file, index) => {
-    //       formData.append(`tour_image[${index}]`, file);
-    //     });
-    //   }
-    // formData.append("departures ", JSON.stringify(departureData));
+    if(image2FileArray.length === 0){
+      formData.append("tour_image", "");
+    }else{
+      image2FileArray.forEach((file, index) => {
+          formData.append(`tour_image[${index}]`, file);
+        });
+      }
+    formData.append("departures ", JSON.stringify(departureData));
 
-    // const url = "updatetour";
+    const url = "updatetour";
 
-    // try{
-    //   const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
-    //   setLoading(false);
-    //   if(response){
-    //     toast.success("Tour Updated Successfully");
-    //     setActiveTab("Content");
-    //     setActiveTabIndex(0);
-    //     fetchTour(id);
-    //     // setSelectedTour({});  
-    //     // setName("");
-    //     // setCapacity("");
-    //     // setDateBegin("");
-    //     // setDateEnd("");
-    //     // setTourLanguages("");
-    //     // setAdultPrice("");
-    //     // setChildPrice("");
-    //     // setBabyPrice("");
-    //     // setGender("");
-    //     // setEditorState(EditorState.createEmpty());
-    //     // $(selectRef.current).val('').trigger('change');
-    //     // $(selectDepartureRef.current).val('').trigger('change');
-    //     // setImage2([]);
-    //     // services.forEach((service) => {
-    //     //   service.checked = false;
-    //     //   service.price = "";
-    //     // })
-    //     // setIncluded(included.map((item) => ({ ...item, checked: false })));
-    //     // setRouteData([]);
-    //     // setHotelData([]);
-    //     // setTourIncluded(0);
-    //     // setTourInfo("");
-    //     // setFreeCancellation(0);
-    //     // setPrice("123");
-    //     // setAmenities([]);
-    //     // setDaysCount(0);
-    //     // setDayData("");
-    //     // setDayDescription("");
-    //     // setMekkaRows([{ hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"" }]);
-    //     // setMadinaRows([{  hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"" }]);
-    //     // setFlightRow([{ flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" }]);
-    //     // setRadioValueFlight('No');
-    //   }
-    // }catch(error){
-    //   console.error(error);
-    // }
+    try{
+      const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
+      setLoading(false);
+      if(response){
+        toast.success("Tour Updated Successfully");
+        setActiveTab("Content");
+        setActiveTabIndex(0);
+        fetchTour(id);
+        
+      }
+    }catch(error){
+      console.error(error);
+    }
   }
   const formatDateToDDMMYYYY = (date) => {
     const [year, month, day] = date.split('-');
@@ -1614,13 +1555,8 @@ const formatDateToMMDDYYYY = (date) => {
                             }`}
                           >
                             <div className="y-gap-30 contactForm px-lg-20 px-0 ">
-                              <Editor
-                                editorState={editorState}
-                                toolbarClassName="toolbarClassName"
-                                wrapperClassName="wrapperClassName"
-                                editorClassName="editorClassName"
-                                onEditorStateChange={onEditorStateChange}
-                              />
+                            {typeof window != "undefined" && <Editor editorState={editorState} toolbarClassName="border" wrapperClassName="" editorClassName="border px-2" onEditorStateChange={(e) => setEditorState(e)} />}
+                            <input type="hidden" name="Title" id="Title" value={editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
                     
                             </div>
                             <div className=" flex_start">
