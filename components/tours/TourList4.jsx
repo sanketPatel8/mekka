@@ -77,7 +77,7 @@ export default function TourList4({
   return (
     <section className="layout-pb-xl">
       <div className="container">
-        <div className="row">
+        <div className="row"  id="redirect">
           <div className="col-xl-3 col-lg-4">
             {screenSize[0] && screenSize[0] <= 900 ? (
               <div className="accordion d-none mb-30 lg:d-flex js-accordion">
@@ -129,7 +129,7 @@ export default function TourList4({
 
           <div className="col-xl-9 col-lg-8">
             <div className="row y-gap-5 justify-between">
-              <div className="col-auto" id="redirect">
+              <div className="col-auto">
                 <div>
                   {TourData.length} results
                   {/* from {Route}{" "} */}
