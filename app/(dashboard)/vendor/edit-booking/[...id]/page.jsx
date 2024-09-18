@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useState, useEffect } from "react";
 import Header from "@/components/dasboard/Header";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
@@ -13,9 +12,11 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { useTranslation } from "@/app/context/TranslationContext";
 
+
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
 export default function DbBooking({ params }) {
+  console.log('Component rendered on', typeof window === 'undefined' ? 'server-side' : 'client-side');
 
   const {user} = useAuthContext();
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -24,6 +25,8 @@ export default function DbBooking({ params }) {
   const [bookings, setBookings] = useState({});
   const [radioValue, setRadioValue] = useState("");
   const [adultBookings, setAdultBookings] = useState([]);
+  const [childBookings, setChildBookings] = useState([]);
+  const [babyBookings, setBabyBookings] = useState([]);
   const [adultHeaders, setAdultHeaders] = useState([]);
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
   const { translate } = useTranslation();
@@ -64,7 +67,7 @@ export default function DbBooking({ params }) {
 
       console.log(bookings, "bookings");
       const columnAdu_1 = [
-        { name: "id", selector: (row) => row.reservation_id, width: "10%" },
+        { name: "id", selector: (row) => row.id, width: "10%" },
         { name: "Name", selector: (row) => row.name, width: "20%" },
         { name: "Surname", selector: (row) => row.surname,width: "20%" },
         
@@ -92,6 +95,7 @@ export default function DbBooking({ params }) {
 
       setAdultHeaders(columnAdu_1);
 
+      if(response.Bookings.adultData.length > 0){
       const adults = response.Bookings.adultData.map((adult) => ({
         id: adult.reservation_id,
         name: adult.personName,
@@ -105,6 +109,7 @@ export default function DbBooking({ params }) {
 
       console.log(adults, "adults");
       setAdultBookings(adults);
+      }
     }
   }
 
@@ -192,9 +197,19 @@ export default function DbBooking({ params }) {
         window.removeEventListener("resize", handleResize);
       };
     }
+
+ 
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.title = 'Booking Deatils - MekkaBooking';
+    }
   }, []);
 
   return (
+    <>
+   
     <div
       className={`dashboard ${
         sideBarOpen ? "-is-sidebar-visible" : ""
@@ -216,5 +231,6 @@ export default function DbBooking({ params }) {
         </div>
       </div>
     </div>
+    </>
   );
 }

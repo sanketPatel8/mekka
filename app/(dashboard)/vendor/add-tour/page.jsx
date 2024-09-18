@@ -113,7 +113,7 @@ export default function AddTour() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [minEndDate, setMinEndDate] = useState("");
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
     setMinEndDate(e.target.value);
@@ -162,10 +162,8 @@ export default function AddTour() {
     const url ="tour_data"
 
     try{
-      setLoading(true)
       const response = await POST.request({url:url})
       if(response.Data){
-        setLoading(false)
         setMekkaHotel(response.Data.mekka_hotels)
         setMadinaHotel(response.Data.medina_hotels)
         setFlightDetails(response.Data.airline)
@@ -784,14 +782,7 @@ const isCurrentTabValid = () => {
             <h1 className="text-30">
                {translate("Add Tour") }
             </h1>
-            { loading ?       
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ height: "200px" }}
-                >
-                  <ClipLoader color="#DAC04F" size={50} />
-                </div>
-                :
+            
                 <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
                   <div className="tabs -underline-2 js-tabs">
                     <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
@@ -1696,7 +1687,7 @@ const isCurrentTabValid = () => {
                                 </div>
                                 <div className="d-flex item-center justify-content-between">
                                   <h6>
-                                  {translate("Exclude Flight Details") }
+                                  {translate("Allow Exclude Flight Details") }
                                   </h6>
                                   <div className="flex_start visaYESNOFLEx my-3">
                                     <div className="d-flex items-center mx-2">
@@ -1810,7 +1801,7 @@ const isCurrentTabValid = () => {
                                 </div> */}
                                 <div className="d-flex item-center justify-content-between">
                                   <h6>
-                                  {translate("Include Flight Details") }
+                                  {translate("Enter Flight Details") }
                                   </h6>
                                   <div className="flex_start visaYESNOFLEx my-2">
                                     <div className="d-flex items-center mx-2">
@@ -2006,7 +1997,7 @@ const isCurrentTabValid = () => {
                     </form>
                   </div>
                 </div>
-              }
+              
               <div className="text-center pt-30">
                 © Copyright MekkaBooking.com {new Date().getFullYear()}
               </div>

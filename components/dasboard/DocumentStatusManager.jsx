@@ -313,7 +313,7 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
      
       <DataTable
         title="Children : Children Name (Gender)"
-        columns={columnAduInfo_2}
+        columns={adultHeaders}
         data={Adult2InfoData}
         highlightOnHover
       />

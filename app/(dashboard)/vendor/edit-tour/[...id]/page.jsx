@@ -1933,7 +1933,7 @@ const formatDateToMMDDYYYY = (date) => {
                               </div>
                               <div className="d-flex item-center justify-content-between">
                                 <h6>
-                                {translate("Exclude Flight Details") }
+                                {translate("Allow Exclude Flight Details") }
                                 </h6>
                                 <div className="flex_start visaYESNOFLEx my-3">
                                   <div className="d-flex items-center mx-2">
@@ -1999,7 +1999,7 @@ const formatDateToMMDDYYYY = (date) => {
                               </div>
                               <div className="d-flex item-center justify-content-between">
                                 <h6>
-                                {translate("Include Flight Details") }
+                                {translate("Enter Flight Details") }
                                 </h6>
                                 <div className="flex_start visaYESNOFLEx my-3">
                                   <div className="d-flex items-center mx-2">
