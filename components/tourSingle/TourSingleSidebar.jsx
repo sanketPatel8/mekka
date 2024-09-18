@@ -41,7 +41,7 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [selectedmekkaHotelPrice, setselectedmekkaHotelPrice] = useState(0);
   const [selectedMadinaHotelPrice, setselectedMadinaHotelPrice] = useState(0);
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
-  const [Render, setRender] = useState(false)
+  const [Render, setRender] = useState(false);
 
   const [LocalData, setLocalData] = useState([]);
 
@@ -83,18 +83,22 @@ export default function TourSingleSidebar({ PAckageData }) {
       });
       setSelectedAirlinePrice(firstFlight.flight_amount);
     }
-    setRender(true)
   }, [SidebarData]);
 
   useEffect(() => {
-    
     if (typeof window !== "undefined") {
       const PrevPrice = localStorage.getItem("previousAdults");
       console.log("PrevPrice", PrevPrice);
       setLocalData(JSON.parse(PrevPrice));
-
     }
   }, []);
+
+  useEffect(() => {
+    if(Render === true){
+      setRender(true)
+    }
+  }, [Render])
+  
 
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
@@ -220,24 +224,19 @@ export default function TourSingleSidebar({ PAckageData }) {
 
   // local storage
 
+  
+  
+
   const [priceObject, setPriceObject] = useState([]);
   const [PrevAdultSelect, setPrevAdultSelect] = useState([]);
 
   const updatePriceObject = () => {
     const newPriceArray = [];
-    const newPriceAdultArray = [];
+   
 
     let adultCounter = 0;
     let youthCounter = 0;
     let childrenCounter = 0;
-
-    let totalAdultPrice = 0; // Track the grand total for adults
-    let totalYouthPrice = 0; // Track the grand total for youth/children
-    let totalChildrenPrice = 0; // Track the grand total for babies
-
-    let adultCount = 0; // Track the total count for adults
-    let youthCount = 0; // Track the total count for youth/children
-    let childrenCount = 0; // Track the total count for babies
 
     SidebarData?.tour_price?.forEach((group) => {
       let count;
@@ -267,6 +266,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       // If count is defined, process the group
       if (count !== undefined) {
         // For each person (adult/youth/children), add an entry to the array
+
         for (let i = 0; i < count; i++) {
           newPriceArray.push({
             label, // 'Adult', 'Youth', 'Children'
@@ -277,53 +277,122 @@ export default function TourSingleSidebar({ PAckageData }) {
             index: i,
             default: group.price,
           });
-
-          // Update the grand total and count for each label
-          if (label === "Adult") {
-            totalAdultPrice += group.price * count;
-            adultCount += count;
-          } else if (label === "Child") {
-            totalYouthPrice += group.price * count;
-            youthCount += count;
-          } else if (label === "Baby") {
-            totalChildrenPrice += group.price * count;
-            childrenCount += count;
-          }
+       
         }
       }
     });
 
-    // Now push the totals for adults into the newPriceAdultArray
-    newPriceAdultArray.push({
-      label: "Adult",
-      totalCount: adultCount,
-      grandTotal: totalAdultPrice,
-    });
-
-    // If needed, push similar totals for Youth and Children
-    newPriceAdultArray.push({
-      label: "Child",
-      totalCount: youthCount,
-      grandTotal: totalYouthPrice,
-    });
-
-    newPriceAdultArray.push({
-      label: "Baby",
-      totalCount: childrenCount,
-      grandTotal: totalChildrenPrice,
-    });
-
     // Now we can calculate total prices per category (e.g., all adults)
     const totalPrices = {
-      Adult: totalAdultPrice,
-      Youth: totalYouthPrice,
-      Children: totalChildrenPrice,
+      Adult: 0,
+      Youth: 0,
+      Children: 0,
     };
 
+    // Calculate the total price for each category
+    newPriceArray.forEach((entry) => {
+      totalPrices[entry.label] += parseFloat(entry.price);
+    });
+
     setPriceObject(newPriceArray);
-    setPrevAdultSelect(newPriceAdultArray);
-    console.log("newPriceAdultArray", newPriceAdultArray); // Verify the newPriceAdultArray content
   };
+
+  const updateAdultsObject = () => {
+    const newPriceArray = [];
+    const newPriceAdultArray = [];
+  
+    let adultCounter = 0;
+    let youthCounter = 0;
+    let childrenCounter = 0;
+  
+    let adultTotal = 0;
+    let youthTotal = 0;
+    let childrenTotal = 0;
+  
+    SidebarData?.tour_price?.forEach((group) => {
+      let count;
+      let label;
+      let individualCount;
+  
+      // Determine the count and label based on price_type
+      if (group.price_type === "1") {
+        count = adultNumber;
+        label = "Adult";
+      } else if (group.price_type === "2") {
+        count = youthNumber;
+        label = "Child";
+      } else if (group.price_type === "3") {
+        count = childrenNumber;
+        label = "Baby";
+      }
+  
+      if (label === "Adult") {
+        individualCount = ++adultCounter;
+      } else if (label === "Child") {
+        individualCount = ++youthCounter;
+      } else if (label === "Baby") {
+        individualCount = ++childrenCounter;
+      }
+  
+      // If count is defined, process the group
+      if (count !== undefined) {
+        // For each person (adult/youth/children), add an entry to the array
+        for (let i = 0; i < count; i++) {
+          newPriceArray.push({
+            label, // 'Adult', 'Youth', 'Children'
+            individualCount,
+            price: JSON.parse(group.price),
+            count: i,
+            grandTotal: JSON.parse(group.price) * count,
+            index: i,
+            default: JSON.parse(group.price),
+          });
+  
+          // Calculate total for each group (adult, child, baby)
+          if (label === "Adult") {
+            adultTotal += JSON.parse(group.price);
+          } else if (label === "Child") {
+            youthTotal += JSON.parse(group.price);
+          } else if (label === "Baby") {
+            childrenTotal += JSON.parse(group.price);
+          }
+        }
+      }
+    });
+  
+    // Push grand total and count of adults, youth, and children into newPriceAdultArray
+    newPriceAdultArray.push({
+      label: 'Adult',
+      count: adultNumber,
+      grandTotal: adultTotal,
+    });
+  
+    newPriceAdultArray.push({
+      label: 'Child',
+      count: youthNumber,
+      grandTotal: youthTotal,
+    });
+  
+    newPriceAdultArray.push({
+      label: 'Baby',
+      count: childrenNumber,
+      grandTotal: childrenTotal,
+    });
+  
+    // Now we can calculate total prices per category (e.g., all adults)
+    const totalPrices = {
+      Adult: adultTotal,
+      Youth: youthTotal,
+      Children: childrenTotal,
+    };
+
+    console.log("newPriceAdultArray" , newPriceAdultArray);
+    
+  
+    setPriceObject(newPriceArray);
+    setPrevAdultSelect(newPriceAdultArray); // assuming you are setting this somewhere
+  };
+  
 
   useEffect(() => {
     // Update the checkbox state whenever SidebarData changes
@@ -342,6 +411,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     if (typeof window !== "undefined") {
       localStorage.setItem("AdultPrice&count", JSON.stringify(priceObject));
       localStorage.setItem("previousAdults", JSON.stringify(PrevAdultSelect));
+      localStorage.get
     }
   }, [priceObject]);
 
@@ -403,6 +473,10 @@ export default function TourSingleSidebar({ PAckageData }) {
           JSON.stringify(PackageBookingData)
         );
       }
+
+      setRender(true);
+      updateAdultsObject()
+
       router.push(
         `/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights.name}`
       );
@@ -436,112 +510,105 @@ export default function TourSingleSidebar({ PAckageData }) {
 
   console.log("LocalData", LocalData);
 
+
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
-      {Render === true ? 
+      {LocalData.length === 0
+        ? SidebarData?.tour_price?.map((group, index) => {
+            let count, typeLabel;
 
-      (SidebarData?.tour_price?.map((group, index) => {
-        let count, typeLabel;
+            if (group.price_type === "1") {
+              count = adultNumber;
+              typeLabel = "Adult";
+            } else if (group.price_type === "2") {
+              count = youthNumber;
+              typeLabel = "Child";
+            } else if (group.price_type === "3") {
+              count = childrenNumber;
+              typeLabel = "Baby";
+            } else {
+              return null;
+            }
 
-        if (group.price_type === "1") {
-          count = adultNumber;
-          typeLabel = "Adult";
-        } else if (group.price_type === "2") {
-          count = youthNumber;
-          typeLabel = "Child";
-        } else if (group.price_type === "3") {
-          count = childrenNumber;
-          typeLabel = "Baby";
-        } else {
-          return null;
-        }
+            return (
+              <div key={index} className="mt-15">
+                <div className="d-flex items-center justify-between">
+                  <div className="text-14 col-8">
+                    {group.price_type === "1"
+                      ? "Adult (18+ Years)"
+                      : group.price_type === "2"
+                      ? "Child (13-17 Years)"
+                      : "Baby (0-12 Years)"}
+                    <span className="fw-500">
+                      {(group.price * count).toFixed(2)} €
+                    </span>
+                  </div>
 
-        return (
-          <div key={index} className="mt-15">
-            <div className="d-flex items-center justify-between">
-              <div className="text-14 col-8">
-                {group.price_type === "1"
-                  ? "Adult (18+ Years)"
-                  : group.price_type === "2"
-                  ? "Child (13-17 Years)"
-                  : "Baby (0-12 Years)"}
-                <span className="fw-500">
-                  {(group.price * count).toFixed(2)} €
-                </span>
-              </div>
+                  <div className="d-flex items-center js-counter col-3">
+                    <button
+                      onClick={() => handleDecrement(group.price_type)}
+                      className="button size-30 border-1 rounded-full js-down col-2"
+                    >
+                      <i className="icon-minus text-10 col-3"></i>
+                    </button>
 
-              <div className="d-flex items-center js-counter col-3">
-                <button
-                  onClick={() => handleDecrement(group.price_type)}
-                  className="button size-30 border-1 rounded-full js-down col-2"
-                >
-                  <i className="icon-minus text-10 col-3"></i>
-                </button>
+                    <div className="flex-center ml-10 mr-10 col-2">
+                      <div className="text-14 size-20 js-count">{count}</div>
+                    </div>
 
-                <div className="flex-center ml-10 mr-10 col-2">
-                  <div className="text-14 size-20 js-count">{count}</div>
+                    <button
+                      onClick={() => handleIncrement(group.price_type)}
+                      className="button size-30 border-1 rounded-full js-up"
+                    >
+                      <i className="icon-plus text-10"></i>
+                    </button>
+                  </div>
                 </div>
-
-                <button
-                  onClick={() => handleIncrement(group.price_type)}
-                  className="button size-30 border-1 rounded-full js-up"
-                >
-                  <i className="icon-plus text-10"></i>
-                </button>
               </div>
-            </div>
-          </div>
-        );
-      }))
+            );
+          })
+        : LocalData.map((group, index) => {
+            let count, typeLabel;
+          
+            return (
+              <div key={index} className="mt-15">
+                <div className="d-flex items-center justify-between">
+                  <div className="text-14 col-8">
+                    {group.label == "Adult"
+                      ? "Adult (18+ Years)"
+                      : group.label === "Child"
+                      ? "Child (13-17 Years)"
+                      : "Baby (0-12 Years)"}
+                    <span className="fw-500">{group.grandTotal} €</span>
+                  </div>
 
-      :
+                  <div className="d-flex items-center js-counter col-3">
+                    <button
+                      onClick={() => handleDecrement(group.price_type)}
+                      className="button size-30 border-1 rounded-full js-down col-2"
+                    >
+                      <i className="icon-minus text-10 col-3"></i>
+                    </button>
 
-      (LocalData.map((group, index) => {
-        let count, typeLabel;
+                    <div className="flex-center ml-10 mr-10 col-2">
+                      <div className="text-14 size-20 js-count">
+                        {group.count}
+                      </div>
+                    </div>
 
-       
-
-        return (
-          <div key={index} className="mt-15">
-            <div className="d-flex items-center justify-between">
-              <div className="text-14 col-8">
-              {group.label == "Adult"
-                  ? "Adult (18+ Years)"
-                  : group.label === "Child"
-                  ? "Child (13-17 Years)"
-                  : "Baby (0-12 Years)"}
-                <span className="fw-500">
-                  {(group.grandTotal )} €
-                </span>
-              </div>
-
-              <div className="d-flex items-center js-counter col-3">
-                <button
-                  onClick={() => handleDecrement(group.price_type)}
-                  className="button size-30 border-1 rounded-full js-down col-2"
-                >
-                  <i className="icon-minus text-10 col-3"></i>
-                </button>
-
-                <div className="flex-center ml-10 mr-10 col-2">
-                  <div className="text-14 size-20 js-count">{group.totalCount}</div>
+                    <button
+                      onClick={() => handleIncrement(group.price_type)}
+                      className="button size-30 border-1 rounded-full js-up"
+                    >
+                      <i className="icon-plus text-10"></i>
+                    </button>
+                  </div>
                 </div>
-
-                <button
-                  onClick={() => handleIncrement(group.price_type)}
-                  className="button size-30 border-1 rounded-full js-up"
-                >
-                  <i className="icon-plus text-10"></i>
-                </button>
               </div>
-            </div>
-          </div>
-        );
-      }))
-
-    }
+            );
+          })}
 
       <hr />
 

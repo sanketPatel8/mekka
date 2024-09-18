@@ -9,6 +9,7 @@ import { FaApple } from "react-icons/fa";
 import { post } from "@/app/utils/api";
 import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [RegisterData, setRegisterData] = useState({
@@ -19,6 +20,8 @@ export default function Register() {
     password: ""
   
   });
+
+  const router = useRouter()
   
   const [confirm_pass , setConfirm_pass] = useState('')
   const [isChecked, setIsChecked] = useState(false);
@@ -70,6 +73,7 @@ export default function Register() {
        
         setConfirm_pass("")
         setIsChecked(false)
+        router.push('/login')
       }else{
         showErrorToast("password dose not match")
       }

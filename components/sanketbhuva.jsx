@@ -1,192 +1,113 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import { useState } from "react";
 
-const HotelAndFlightSelection = ({ SidebarData }) => {
-  const [HotelSelect, setHotelSelect] = useState({
-    mekka: null,
-    madina: null,
-    mekkaPrice: 0,
-    madinaPrice: 0,
-    mekkaId: null,
-    madinaId: null,
-  });
-  const [selectedFlights, setSelectedFlights] = useState(null);
-
-  useEffect(() => {
-    // Set default selection for Mekka and Madina hotels if available
-    const defaultMekkaHotel = SidebarData?.tour_hotels?.mekka_hotels?.[0];
-    const defaultMadinaHotel = SidebarData?.tour_hotels?.medina_hotels?.[0];
-
-    if (defaultMekkaHotel) {
-      const mekkaValue = JSON.stringify({
-        hotel_name: defaultMekkaHotel.hotel_name,
-        hotel_id: defaultMekkaHotel.id,
-      });
-
-      setHotelSelect((prevSelect) => ({
-        ...prevSelect,
-        mekka: mekkaValue,
-        mekkaPrice: defaultMekkaHotel.hotel_price || 0,
-        mekkaId: defaultMekkaHotel.id,
-      }));
-    }
-
-    if (defaultMadinaHotel) {
-      const madinaValue = JSON.stringify({
-        hotel_name: defaultMadinaHotel.hotel_name,
-        hotel_id: defaultMadinaHotel.id,
-      });
-
-      setHotelSelect((prevSelect) => ({
-        ...prevSelect,
-        madina: madinaValue,
-        madinaPrice: defaultMadinaHotel.hotel_price || 0,
-        madinaId: defaultMadinaHotel.id,
-      }));
-    }
-
-    // Set default flight selection if available
-    const defaultFlight = SidebarData?.flights?.[0];
-    if (defaultFlight) {
-      setSelectedFlights({
-        id: defaultFlight.id,
-        name: defaultFlight.airline_name,
-      });
-    }
-  }, [SidebarData]);
+export default function Sanketbhuva() {
+  const [LocalData, setLocalData] = useState([
+    { label: "Adult", totalCount: 2, grandTotal: 300, price_type: "1", price: 150 },
+    { label: "Child", totalCount: 1, grandTotal: 100, price_type: "2", price: 100 },
+    { label: "Baby", totalCount: 0, grandTotal: 0, price_type: "3", price: 50 },
+  ]);
+  const [Render, setRender] = useState(false)
 
 
-  const handleHotelChange = (e, elm) => {
-    const selectedHotel = JSON.parse(e.target.value);
-
-    if (e.target.name === 'mekka') {
-      setHotelSelect((prevSelect) => ({
-        ...prevSelect,
-        mekka: e.target.value,
-        mekkaPrice: elm.hotel_price || 0,
-        mekkaId: elm.id,
-      }));
-    } else if (e.target.name === 'madina') {
-      setHotelSelect((prevSelect) => ({
-        ...prevSelect,
-        madina: e.target.value,
-        madinaPrice: elm.hotel_price || 0,
-        madinaId: elm.id,
-      }));
-    }
+  const handleIncrement = (price_type) => {
+    setLocalData((prevData) =>
+      prevData.map((group) => {
+        if (group.price_type === price_type) {
+          const newTotalCount = group.totalCount + 1;
+          return {
+            ...group,
+            totalCount: newTotalCount,
+            grandTotal: newTotalCount * group.price,
+          };
+        }
+        return group;
+      })
+    );
   };
 
-  const handleFlightChange = (e, flight) => {
-    setSelectedFlights(flight); // Replace with the selected flight object
+  const handleDecrement = (price_type) => {
+    setLocalData((prevData) =>
+      prevData.map((group) => {
+        if (group.price_type === price_type && group.totalCount > 0) {
+          const newTotalCount = group.totalCount - 1;
+          return {
+            ...group,
+            totalCount: newTotalCount,
+            grandTotal: newTotalCount * group.price,
+          };
+        }
+        return group;
+      })
+    );
   };
 
-  return (
-    <div>
-      {/* Mekka Hotels */}
-      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Mekka</h5>
-      {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
-        <div key={ind}>
-          <div className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio d-flex items-center">
-                  <input
-                    type="radio"
-                    name="mekka"
-                    value={JSON.stringify({
-                      hotel_name: elm.hotel_name,
-                      hotel_id: elm.id,
-                    })}
-                    checked={
-                      HotelSelect.mekka &&
-                      JSON.parse(HotelSelect.mekka).hotel_name === elm.hotel_name
-                    }
-                    onChange={(e) => handleHotelChange(e, elm)}
-                    disabled
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">
-                    {elm.hotel_name || 'not found'} ({elm.hotel_stars} star)
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div className="text-14">{elm.hotel_price} €</div>
-          </div>
+  // Helper function to render group details
+  const renderGroup = (group, count, label, grandTotal) => (
+    <div key={group.price_type} className="mt-15">
+      <div className="d-flex items-center justify-between">
+        <div className="text-14 col-8">
+          {label === "Adult"
+            ? "Adult (18+ Years)"
+            : label === "Child"
+            ? "Child (13-17 Years)"
+            : "Baby (0-12 Years)"}
+          <span className="fw-500"> {grandTotal.toFixed(2)} € </span>
         </div>
-      ))}
 
-      <hr />
+        <div className="d-flex items-center js-counter col-3">
+          <button
+            onClick={() => handleDecrement(group.price_type)}
+            className="button size-30 border-1 rounded-full js-down col-2"
+          >
+            <i className="icon-minus text-10 col-3"></i>
+          </button>
 
-      {/* Madina Hotels */}
-      <h5 className="text-18 fw-500 mb-20 mt-20">Hotel For Madina</h5>
-      {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
-        <div key={elm.id}>
-          <div className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio d-flex items-center">
-                  <input
-                    type="radio"
-                    name="madina"
-                    value={JSON.stringify({
-                      hotel_name: elm.hotel_name,
-                      hotel_id: elm.id,
-                    })}
-                    checked={
-                      HotelSelect.madina &&
-                      JSON.parse(HotelSelect.madina).hotel_name === elm.hotel_name
-                    }
-                    onChange={(e) => handleHotelChange(e, elm)}
-                    disabled
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">
-                    {elm.hotel_name || 'not found'} ({elm.hotel_stars} star)
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div className="text-14">{elm.hotel_price} €</div>
+          <div className="flex-center ml-10 mr-10 col-2">
+            <div className="text-14 size-20 js-count">{count}</div>
           </div>
+
+          <button
+            onClick={() => handleIncrement(group.price_type)}
+            className="button size-30 border-1 rounded-full js-up"
+          >
+            <i className="icon-plus text-10"></i>
+          </button>
         </div>
-      ))}
-
-      {/* Flight Selection */}
-      <div>
-        <h5 className="text-18 fw-500 mb-20 mt-20">Select Flight</h5>
-        {SidebarData?.flights?.map((flight) => (
-          <div key={flight.id} className="d-flex items-center justify-between my-1">
-            <div className="d-flex items-center">
-              <div className="form-radio d-flex items-center">
-                <label className="radio d-flex items-center">
-                  <input
-                    type="radio"
-                    name="flight"
-                    value={flight.id}
-                    checked={selectedFlights?.id === flight.id}
-                    onChange={(e) => handleFlightChange(e, flight)}
-                  />
-                  <span className="radio__mark">
-                    <span className="radio__icon"></span>
-                  </span>
-                  <span className="text-14 lh-1 ml-10">
-                    {flight.airline_name || 'not found'} ({flight.price} €)
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div className="text-14">{flight.price} €</div>
-          </div>
-        ))}
       </div>
     </div>
   );
-};
 
-export default HotelAndFlightSelection;
+  // Main rendering logic
+  return (
+    <>
+      {Render === true
+        ? SidebarData?.tour_price?.map((group, index) => {
+            let count, label;
+
+            if (group.price_type === "1") {
+              count = adultNumber;
+              label = "Adult";
+            } else if (group.price_type === "2") {
+              count = youthNumber;
+              label = "Child";
+            } else if (group.price_type === "3") {
+              count = childrenNumber;
+              label = "Baby";
+            } else {
+              return null;
+            }
+
+            const grandTotal = group.price * count;
+            return renderGroup(group, count, label, grandTotal);
+          })
+        : LocalData.map((group, index) => {
+            const { totalCount, grandTotal, label } = group;
+            return renderGroup(group, totalCount, label, grandTotal);
+          })}
+
+          <button onClick={() => setRender(true)}>Click</button>
+    </>
+  );
+}
