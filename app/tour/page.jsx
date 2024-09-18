@@ -1,5 +1,5 @@
 import React from 'react'
-import PageData from '@/app/tour/PageData'
+import PageData from './PageData'
 
 export const metadata = {
   title: 'TourList - mekkaBooking',
