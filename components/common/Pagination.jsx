@@ -1,38 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { ClipLoader } from "react-spinners";
 
 const Pagination = ({
-  range, // Total number of pages
-  activeIndex, // Current page index
-  setActiveIndex, // Function to update the current page index
-  startParam, // Parameter name for the start index (e.g., "start")
-  onPageChange, // Callback function to handle page changes
+  range, 
+  activeIndex, 
+  setActiveIndex, 
+  startParam, 
+  onPageChange, 
 }) => {
   const [data, setData] = useState([]); // Fetched data
   const [loading, setLoading] = useState(false); // Loading indicator
 
-  // useEffect(() => {
-  //   const fetchPageData = async () => {
-  //     setLoading(true);
-  //     const response = await fetch(`https://example.com/api/data?${startParam}=${activeIndex * 10}&limit=10`);
-  //     const jsonData = await response.json();
-  //     setData(jsonData.data);
-  //     setLoading(false);
-  //   };
-
-  //   fetchPageData();
-  // }, [activeIndex, startParam]);
-
   const handleClick = (type, index) => {
-    if (type === 'prev') {
+    if (type === "prev") {
       setActiveIndex((prev) => Math.max(0, prev - 1));
-    } else if (type === 'next') {
+    } else if (type === "next") {
       setActiveIndex((prev) => Math.min(prev + 1, range - 1));
-    } else if (type === 'page') {
+    } else if (type === "page") {
       setActiveIndex(index);
-      if(index === 0){
-      onPageChange(index );
-      }else{
-        onPageChange(index * 10 );
+      if (index === 0) {
+        onPageChange(index);
+      } else {
+        onPageChange(index * 10);
       }
     }
   };
@@ -43,9 +32,9 @@ const Pagination = ({
       buttons.push(
         <div
           key={i}
-          style={{ cursor: 'pointer' }}
-          onClick={() => handleClick('page', i)}
-          className={activeIndex === i ? 'is-active' : ''}
+          style={{ cursor: "pointer" }}
+          onClick={() => handleClick("page", i)}
+          className={activeIndex === i ? "is-active" : ""}
         >
           {i + 1} {/* Display page number starting from 1 */}
         </div>
@@ -57,13 +46,18 @@ const Pagination = ({
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "200px" }}
+        >
+          <ClipLoader color="#DAC04F" size={50} />
+        </div>
       ) : (
         <div>
           {/* <p>Current Active Index: {activeIndex}</p> */}
           <div className="pagination justify-center">
             <button
-              onClick={() => handleClick('prev')}
+              onClick={() => handleClick("prev")}
               className="pagination__button customStylePaginationPre button -accent-1 mr-15 -prev"
             >
               <i className="icon-arrow-left text-15"></i>
@@ -74,7 +68,7 @@ const Pagination = ({
             </div>
 
             <button
-              onClick={() => handleClick('next')}
+              onClick={() => handleClick("next")}
               className="pagination__button customStylePaginationNext button -accent-1 ml-15 -next"
             >
               <i className="icon-arrow-right text-15"></i>

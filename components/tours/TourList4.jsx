@@ -170,7 +170,9 @@ export default function TourList4({
                 <ClipLoader color="#DAC04F" size={50} />
               </div>
             ) : Array.isArray(TourData) && TourData.length === 0 ? (
-              <h2>No tours available</h2>
+              <div className="d-flex justify-content-center align-items-center" >
+                <p>No Tours Available</p>
+              </div>
             ) : (
               Array.isArray(TourData) &&
               TourData.map((elm, ind) => (
@@ -302,11 +304,7 @@ export default function TourList4({
                   onPageChange={onPageChange}
                 />
 
-                {/* <PaginationForTourList
-                 range={Page} 
-                  TourIndex={FilterIndex} 
-                  setTourIndex={setFilterIndex} 
-                />  */}
+               
 
                 <div className="text-14 text-center mt-20">
                   Showing results 1 - {TourData.length} of {count}
