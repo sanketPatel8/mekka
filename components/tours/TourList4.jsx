@@ -190,7 +190,7 @@ export default function TourList4({
                         />
                         <button
                           className={`tourCard__favorite ${
-                            elm?.direct_flight === 0 ? "d-none" : "d-block"
+                            elm?.direct_flight == '0' ? "d-none" : "d-block"
                           }`}
                         >
                           {translate("Direct Flight")}
