@@ -12,12 +12,6 @@ import { useSearchParams } from "next/navigation";
 import { POST } from "../utils/api/post";
 import Head from "next/head";
 
-
-export const metadata = {
-  title: 'TourList',
-  description: 'Thank YOu',
-}
-
 export default function PageData() {
   const searchParams = useSearchParams();
 

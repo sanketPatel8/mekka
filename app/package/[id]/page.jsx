@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
     title: ` MekkaBooking - ${id}  `,
     description: "MekkaBooking ",
   };
-}
+}x
 
 const page = () => {
   return (
