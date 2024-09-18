@@ -21,6 +21,7 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { ClipLoader } from "react-spinners";
 import draftToHtml from "draftjs-to-html";
 import VendorFooter from "@/components/dasboard/VendorFooter";
+import { useRouter } from "next/navigation";
 
 
 const Editor = dynamic(
@@ -39,6 +40,8 @@ const tabs = [
 
 export default function AddTour() {
   const {user} = useAuthContext();
+
+  const router = useRouter();
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [SelectedTour, setSelectedTour] = useState("");
   const [name, setName] = useState("");
@@ -723,6 +726,7 @@ const isCurrentTabValid = () => {
       setLoading(false);
       if(response){
         toast.success("Tour Added Successfully");
+        router.push("/vendor/listing");
         // setActiveTab("Content");
         // setActiveTabIndex(0);
         // setSelectedTour("");  
