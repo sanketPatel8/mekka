@@ -8,7 +8,9 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import CreatableSelect from "react-select/creatable";
 import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
-import { ContentState, convertToRaw, EditorState } from "draft-js";
+import { ContentState, convertFromRaw, convertToRaw, EditorState, Modifier } from "draft-js";
+import { stateToHTML } from 'draftjs-to-html';
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import $ from "jquery";
 import "select2/dist/css/select2.css";
@@ -103,7 +105,7 @@ export default function EditTour() {
     {hotel_id:"", hotel_name: null, hotel_price: "",hotel_info:"",id:"" },
   ]);
   const [flightRow, setFlightRow] = useState([
-    { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
+    { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"",id:"" },
   ]);
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
@@ -205,9 +207,36 @@ export default function EditTour() {
       const editorContent = ContentState.createFromText(tourInformation);
     const editorState = EditorState.createWithContent(editorContent);
     const rawContent = convertToRaw(editorState.getCurrentContent());
-    const plainText = rawContent.blocks[0].text;
-    setTourInfo(plainText);
-    setEditorState(editorState);
+    rawContent.blocks.forEach((block) => {
+      if (block.type === 'unstyled') {
+        block.entityRanges.push({
+          offset: 0,
+          length: block.text.length,
+          key: 0,
+          type: 'FONT_FAMILY',
+          mutability: 'MUTABLE',
+          data: {
+            fontFamily: 'Arial',
+          },
+        });
+      }
+    });
+    
+    // console.log(newContentState,"newContentState"); 
+
+    const newEditorState = EditorState.createWithContent(convertFromRaw(rawContent));
+
+    // // const plainText = rawContent.blocks[0].text;
+    // // const plainTextContent = plainText.replace(/<[^>]+>/g, '');
+    // // console.log(plainTextContent,"htmlContent");
+    // // const newEditorState = EditorState.push(editorState, ContentState.createFromText(plainTextContent));
+    // const plainTextContent = editorState.getCurrentContent().getPlainText('');
+    // const formattedPlainTextContent = plainTextContent.replace(/\n/g, ''); // remove newline characters
+
+    // Update the editorState with the formatted plain text content
+    // const newEditorState = EditorState.push(editorState, ContentState.createFromText(formattedPlainTextContent));
+    // console.log(newEditorState,"newEditorState");
+    setEditorState(newEditorState);
     }
 
 
@@ -547,7 +576,7 @@ useEffect(() => {
   const handleCheckboxChange = (event, id) => {
     console.log(services,"services");
     const updatedServices = services.map((service) =>
-      service.id === id ? { ...service, checked: event.target.checked, service_id:service.service_id } : service
+      service.id === id ? { ...service, checked: event.target.checked, service_id:0 } : service
     );
     setServices(updatedServices);
 
@@ -775,7 +804,7 @@ useEffect(() => {
   };
 
   const HandleAddFlightRow = () => {
-    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
+    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"",id:"" },
     ]);
   };
 
@@ -844,11 +873,13 @@ useEffect(() => {
       flight_id: flight.flight_id ? flight.flight_id : '',
       flight_amount: flight.flight_amount,
       no_of_stop: flight.no_of_stop,
-      luggage: flight.luggage
+      luggage: flight.luggage,
+      id: flight.id?flight.id:0
     }))
 
-    console.log(flightRow,"flightRow");
-    console.log(flight_data,"flight_data");
+    console.log(flightData,"flightData");
+
+   
 
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) &&
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) &&
@@ -916,86 +947,86 @@ useEffect(() => {
     }))
     console.log(JSON.stringify(departureData),"departureData");
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // formData.append("type", SelectedTour.value);
-    // formData.append("name", name);
-    // formData.append("capacity", capacity);
-    // formData.append("date_begin", start_date);
-    // formData.append("date_end", end_date);
-    // formData.append("tour_languages", languageString);
-    // formData.append("adult_price", adult_price);
-    // formData.append("child_price", child_price);
-    // formData.append("baby_price", baby_price);
-    // formData.append("addition_service", JSON.stringify(servicesData));
-    // formData.append("tour_included", includedData);
-    // formData.append("tour_info", editorValue || "");
-    // formData.append("flight_info", flightInformation);
-    // formData.append("route_data", JSON.stringify(newRouteData));
-    // formData.append("hotel_data", JSON.stringify(hotel_data));
-    // formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flight_data):"");
-    // formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    // formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
-    // formData.append("user_id", user?.user.id);
-    // formData.append("company_id", user?.user.company_id);
-    // formData.append("tour_id", id);
+    formData.append("type", SelectedTour.value);
+    formData.append("name", name);
+    formData.append("capacity", capacity);
+    formData.append("date_begin", start_date);
+    formData.append("date_end", end_date);
+    formData.append("tour_languages", languageString);
+    formData.append("adult_price", adult_price);
+    formData.append("child_price", child_price);
+    formData.append("baby_price", baby_price);
+    formData.append("addition_service", JSON.stringify(servicesData));
+    formData.append("tour_included", includedData);
+    formData.append("tour_info", editorValue || "");
+    formData.append("flight_info", flightInformation);
+    formData.append("route_data", JSON.stringify(newRouteData));
+    formData.append("hotel_data", JSON.stringify(hotel_data));
+    formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flight_data):"");
+    formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
+    formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
+    formData.append("user_id", user?.user.id);
+    formData.append("company_id", user?.user.company_id);
+    formData.append("tour_id", id);
     
-    // if(image2FileArray.length === 0){
-    //   formData.append("tour_image", "");
-    // }else{
-    //   image2FileArray.forEach((file, index) => {
-    //       formData.append(`tour_image[${index}]`, file);
-    //     });
-    //   }
-    // formData.append("departures ", JSON.stringify(departureData));
+    if(image2FileArray.length === 0){
+      formData.append("tour_image", "");
+    }else{
+      image2FileArray.forEach((file, index) => {
+          formData.append(`tour_image[${index}]`, file);
+        });
+      }
+    formData.append("departures ", JSON.stringify(departureData));
 
-    // const url = "updatetour";
+    const url = "updatetour";
 
-    // try{
-    //   const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
-    //   setLoading(false);
-    //   if(response){
-    //     toast.success("Tour Updated Successfully");
-    //     setActiveTab("Content");
-    //     setActiveTabIndex(0);
-    //     fetchTour(id);
-    //     // setSelectedTour({});  
-    //     // setName("");
-    //     // setCapacity("");
-    //     // setDateBegin("");
-    //     // setDateEnd("");
-    //     // setTourLanguages("");
-    //     // setAdultPrice("");
-    //     // setChildPrice("");
-    //     // setBabyPrice("");
-    //     // setGender("");
-    //     // setEditorState(EditorState.createEmpty());
-    //     // $(selectRef.current).val('').trigger('change');
-    //     // $(selectDepartureRef.current).val('').trigger('change');
-    //     // setImage2([]);
-    //     // services.forEach((service) => {
-    //     //   service.checked = false;
-    //     //   service.price = "";
-    //     // })
-    //     // setIncluded(included.map((item) => ({ ...item, checked: false })));
-    //     // setRouteData([]);
-    //     // setHotelData([]);
-    //     // setTourIncluded(0);
-    //     // setTourInfo("");
-    //     // setFreeCancellation(0);
-    //     // setPrice("123");
-    //     // setAmenities([]);
-    //     // setDaysCount(0);
-    //     // setDayData("");
-    //     // setDayDescription("");
-    //     // setMekkaRows([{ hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"" }]);
-    //     // setMadinaRows([{  hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"" }]);
-    //     // setFlightRow([{ flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" }]);
-    //     // setRadioValueFlight('No');
-    //   }
-    // }catch(error){
-    //   console.error(error);
-    // }
+    try{
+      const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
+      setLoading(false);
+      if(response){
+        toast.success("Tour Updated Successfully");
+        setActiveTab("Content");
+        setActiveTabIndex(0);
+        fetchTour(id);
+        // setSelectedTour({});  
+        // setName("");
+        // setCapacity("");
+        // setDateBegin("");
+        // setDateEnd("");
+        // setTourLanguages("");
+        // setAdultPrice("");
+        // setChildPrice("");
+        // setBabyPrice("");
+        // setGender("");
+        // setEditorState(EditorState.createEmpty());
+        // $(selectRef.current).val('').trigger('change');
+        // $(selectDepartureRef.current).val('').trigger('change');
+        // setImage2([]);
+        // services.forEach((service) => {
+        //   service.checked = false;
+        //   service.price = "";
+        // })
+        // setIncluded(included.map((item) => ({ ...item, checked: false })));
+        // setRouteData([]);
+        // setHotelData([]);
+        // setTourIncluded(0);
+        // setTourInfo("");
+        // setFreeCancellation(0);
+        // setPrice("123");
+        // setAmenities([]);
+        // setDaysCount(0);
+        // setDayData("");
+        // setDayDescription("");
+        // setMekkaRows([{ hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"" }]);
+        // setMadinaRows([{  hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"" }]);
+        // setFlightRow([{ flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" }]);
+        // setRadioValueFlight('No');
+      }
+    }catch(error){
+      console.error(error);
+    }
   }
   const formatDateToDDMMYYYY = (date) => {
     const [year, month, day] = date.split('-');
