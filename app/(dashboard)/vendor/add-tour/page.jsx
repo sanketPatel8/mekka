@@ -19,6 +19,7 @@ import ItineraryDayInput from "@/components/dasboard/addTour/ItineraryDayInput";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { ClipLoader } from "react-spinners";
+import draftToHtml from "draftjs-to-html";
 
 
 const Editor = dynamic(
@@ -665,8 +666,10 @@ const isCurrentTabValid = () => {
     console.log(checkedIncluded,"checkedIncluded")
     const includedData = checkedIncluded.map((item) => item.id).join(",");
     console.log(includedData,"includedData")
-    const editorValue = convertToRaw(editorState.getCurrentContent()).blocks[0].text;
-  
+    const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
+    console.log(blocks,"blocks")
+    const editorValue = convertToRaw(editorState.getCurrentContent()).blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
+    console.log(editorValue,"editorValue")
     const newRouteData = route_data.map((day, index) => (
       {
         day:day.dayData,
@@ -1330,13 +1333,16 @@ const isCurrentTabValid = () => {
                               }`}
                             >
                               <div className="y-gap-30 contactForm px-lg-20 px-0 ">
-                                <Editor
+                                {/* <Editor
                                   editorState={editorState}
                                   toolbarClassName="toolbarClassName"
                                   wrapperClassName="wrapperClassName"
                                   editorClassName="editorClassName"
                                   onEditorStateChange={onEditorStateChange}
-                                />
+                                /> */}
+
+{typeof window != "undefined" && <Editor editorState={editorState} toolbarClassName="border" wrapperClassName="" editorClassName="border px-2" onEditorStateChange={(e) => setEditorState(e)} />}
+<input type="hidden" name="Title" id="Title" value={editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
                       
                               </div>
                               <div className=" flex_start">

@@ -8,7 +8,9 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import CreatableSelect from "react-select/creatable";
 import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
-import { ContentState, convertToRaw, EditorState } from "draft-js";
+import { ContentState, convertFromRaw, convertToRaw, EditorState, Modifier } from "draft-js";
+import { stateToHTML } from 'draftjs-to-html';
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import $ from "jquery";
 import "select2/dist/css/select2.css";
@@ -103,7 +105,7 @@ export default function EditTour() {
     {hotel_id:"", hotel_name: null, hotel_price: "",hotel_info:"",id:"" },
   ]);
   const [flightRow, setFlightRow] = useState([
-    { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
+    { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"",id:"" },
   ]);
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
@@ -137,7 +139,7 @@ export default function EditTour() {
       setFlightData(response.Tour_Details.flight_data);
       setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
-      setTourInclude(response.Tour_Details.details.tour_included);
+      setTourInclude(response.Tour_Details.details.tour_included || "");
       const adultPrice = response.Tour_Details.adult_price.map((price) => (setAdultPrice(price.price)));
       const childPrice = response.Tour_Details.child_price.map((price) => (setChildPrice(price.price)));
       const babyPrice = response.Tour_Details.baby_price.map((price) => (setBabyPrice(price.price)));
@@ -205,15 +207,44 @@ export default function EditTour() {
       const editorContent = ContentState.createFromText(tourInformation);
     const editorState = EditorState.createWithContent(editorContent);
     const rawContent = convertToRaw(editorState.getCurrentContent());
-    const plainText = rawContent.blocks[0].text;
-    setTourInfo(plainText);
-    setEditorState(editorState);
+    rawContent.blocks.forEach((block) => {
+      if (block.type === 'unstyled') {
+        block.entityRanges.push({
+          offset: 0,
+          length: block.text.length,
+          key: 0,
+          type: 'FONT_FAMILY',
+          mutability: 'MUTABLE',
+          data: {
+            fontFamily: 'Arial',
+          },
+        });
+      }
+    });
+    
+    // console.log(newContentState,"newContentState"); 
+
+    const newEditorState = EditorState.createWithContent(convertFromRaw(rawContent));
+
+    // // const plainText = rawContent.blocks[0].text;
+    // // const plainTextContent = plainText.replace(/<[^>]+>/g, '');
+    // // console.log(plainTextContent,"htmlContent");
+    // // const newEditorState = EditorState.push(editorState, ContentState.createFromText(plainTextContent));
+    // const plainTextContent = editorState.getCurrentContent().getPlainText('');
+    // const formattedPlainTextContent = plainTextContent.replace(/\n/g, ''); // remove newline characters
+
+    // Update the editorState with the formatted plain text content
+    // const newEditorState = EditorState.push(editorState, ContentState.createFromText(formattedPlainTextContent));
+    // console.log(newEditorState,"newEditorState");
+    setEditorState(newEditorState);
     }
 
 
   },[tourInformation])
   useEffect(() => {
-  
+      console.log(tourInclude,"tourInclude");
+
+
       const updatedIncluded = includedData.map((item) => {
         const isChecked = tourInclude.includes(item.id);
         
@@ -547,7 +578,7 @@ useEffect(() => {
   const handleCheckboxChange = (event, id) => {
     console.log(services,"services");
     const updatedServices = services.map((service) =>
-      service.id === id ? { ...service, checked: event.target.checked, service_id:service.service_id } : service
+      service.id === id ? { ...service, checked: event.target.checked, service_id:0 } : service
     );
     setServices(updatedServices);
 
@@ -775,7 +806,7 @@ useEffect(() => {
   };
 
   const HandleAddFlightRow = () => {
-    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"" },
+    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"",id:"" },
     ]);
   };
 
@@ -844,11 +875,13 @@ useEffect(() => {
       flight_id: flight.flight_id ? flight.flight_id : '',
       flight_amount: flight.flight_amount,
       no_of_stop: flight.no_of_stop,
-      luggage: flight.luggage
+      luggage: flight.luggage,
+      id: flight.id?flight.id:0
     }))
 
-    console.log(flightRow,"flightRow");
-    console.log(flight_data,"flight_data");
+    console.log(flightData,"flightData");
+
+   
 
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) &&
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) &&
