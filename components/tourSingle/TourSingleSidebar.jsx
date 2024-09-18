@@ -94,11 +94,10 @@ export default function TourSingleSidebar({ PAckageData }) {
   }, []);
 
   useEffect(() => {
-    if(Render === true){
-      setRender(true)
+    if (Render === true) {
+      setRender(true);
     }
-  }, [Render])
-  
+  }, [Render]);
 
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
@@ -224,15 +223,11 @@ export default function TourSingleSidebar({ PAckageData }) {
 
   // local storage
 
-  
-  
-
   const [priceObject, setPriceObject] = useState([]);
   const [PrevAdultSelect, setPrevAdultSelect] = useState([]);
 
   const updatePriceObject = () => {
     const newPriceArray = [];
-   
 
     let adultCounter = 0;
     let youthCounter = 0;
@@ -277,7 +272,6 @@ export default function TourSingleSidebar({ PAckageData }) {
             index: i,
             default: group.price,
           });
-       
         }
       }
     });
@@ -300,20 +294,20 @@ export default function TourSingleSidebar({ PAckageData }) {
   const updateAdultsObject = () => {
     const newPriceArray = [];
     const newPriceAdultArray = [];
-  
+
     let adultCounter = 0;
     let youthCounter = 0;
     let childrenCounter = 0;
-  
+
     let adultTotal = 0;
     let youthTotal = 0;
     let childrenTotal = 0;
-  
+
     SidebarData?.tour_price?.forEach((group) => {
       let count;
       let label;
       let individualCount;
-  
+
       // Determine the count and label based on price_type
       if (group.price_type === "1") {
         count = adultNumber;
@@ -325,7 +319,7 @@ export default function TourSingleSidebar({ PAckageData }) {
         count = childrenNumber;
         label = "Baby";
       }
-  
+
       if (label === "Adult") {
         individualCount = ++adultCounter;
       } else if (label === "Child") {
@@ -333,7 +327,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       } else if (label === "Baby") {
         individualCount = ++childrenCounter;
       }
-  
+
       // If count is defined, process the group
       if (count !== undefined) {
         // For each person (adult/youth/children), add an entry to the array
@@ -347,7 +341,7 @@ export default function TourSingleSidebar({ PAckageData }) {
             index: i,
             default: JSON.parse(group.price),
           });
-  
+
           // Calculate total for each group (adult, child, baby)
           if (label === "Adult") {
             adultTotal += JSON.parse(group.price);
@@ -359,26 +353,26 @@ export default function TourSingleSidebar({ PAckageData }) {
         }
       }
     });
-  
+
     // Push grand total and count of adults, youth, and children into newPriceAdultArray
     newPriceAdultArray.push({
-      label: 'Adult',
+      label: "Adult",
       count: adultNumber,
       grandTotal: adultTotal,
     });
-  
+
     newPriceAdultArray.push({
-      label: 'Child',
+      label: "Child",
       count: youthNumber,
       grandTotal: youthTotal,
     });
-  
+
     newPriceAdultArray.push({
-      label: 'Baby',
+      label: "Baby",
       count: childrenNumber,
       grandTotal: childrenTotal,
     });
-  
+
     // Now we can calculate total prices per category (e.g., all adults)
     const totalPrices = {
       Adult: adultTotal,
@@ -386,22 +380,20 @@ export default function TourSingleSidebar({ PAckageData }) {
       Children: childrenTotal,
     };
 
-    console.log("newPriceAdultArray" , newPriceAdultArray);
-    
-  
+    console.log("newPriceAdultArray", newPriceAdultArray);
+
     setPriceObject(newPriceArray);
     setPrevAdultSelect(newPriceAdultArray); // assuming you are setting this somewhere
   };
-  
 
-  useEffect(() => {
-    // Update the checkbox state whenever SidebarData changes
-    if (SidebarData?.tour_details?.flight_included === "1") {
-      setselectedCheckbox(true);
-    } else {
-      setselectedCheckbox(false);
-    }
-  }, [SidebarData]);
+  // useEffect(() => {
+  //   // Update the checkbox state whenever SidebarData changes
+  //   if (SidebarData?.tour_details?.flight_included === "1") {
+  //     setselectedCheckbox(true);
+  //   } else {
+  //     setselectedCheckbox(false);
+  //   }
+  // }, [SidebarData]);
 
   useEffect(() => {
     updatePriceObject();
@@ -411,7 +403,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     if (typeof window !== "undefined") {
       localStorage.setItem("AdultPrice&count", JSON.stringify(priceObject));
       localStorage.setItem("previousAdults", JSON.stringify(PrevAdultSelect));
-      localStorage.get
+      localStorage.get;
     }
   }, [priceObject]);
 
@@ -424,7 +416,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included === "1"
+      SidebarData?.tour_details?.flight_included == "0"
         ? 0
         : SelectedAirlinePrice
     );
@@ -433,7 +425,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included === "1"
+      SidebarData?.tour_details?.flight_included == "0"
         ? 0
         : SelectedAirlinePrice
     );
@@ -475,7 +467,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       }
 
       setRender(true);
-      updateAdultsObject()
+      updateAdultsObject();
 
       router.push(
         `/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights.name}`
@@ -508,8 +500,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
- console.log("LocalData", LocalData); 
-
+  console.log("LocalData", LocalData);
 
   return (
     <div className="tourSingleSidebar">
@@ -569,9 +560,9 @@ export default function TourSingleSidebar({ PAckageData }) {
               </div>
             );
           })
-        : LocalData.map((group, index) => {
+        : LocalData?.map((group, index) => {
             let count, typeLabel;
-          
+
             return (
               <div key={index} className="mt-15">
                 <div className="d-flex items-center justify-between">
@@ -696,58 +687,65 @@ export default function TourSingleSidebar({ PAckageData }) {
 
       <div
         className={`${
-          SidebarData?.tour_details?.flight_included === "1"
+          SidebarData?.tour_details?.flight_included == "0"
             ? "d-none"
             : "d-block"
         }`}
       >
-        <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Flight Booking")}
-        </h5>
-
-        <div className="d-flex items-center justify-between pt-1">
-          <div className="d-flex items-center justify-between">
-            <div className="row ">
-              <div className="col-12">
-                <div className="d-flex items-center pointer-check">
-                  <div className="form-checkbox">
-                    <input
-                      type="checkbox"
-                      id="item4"
-                      name="item4"
-                      checked={selectedCheckbox}
-                      onChange={handleExcludeFlight}
-                    />
-                    <label htmlFor="item4" className="form-checkbox__mark ml-0">
-                      <div className="form-checkbox__icon">
-                        <svg
-                          width="10"
-                          height="8"
-                          viewBox="0 0 10 8"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                            fill="white"
-                          />
-                        </svg>
-                      </div>
+        <div
+          className={`${
+            SidebarData?.tour_details?.flight_exclude == "0"
+              ? "d-none"
+              : "d-block"
+          }`}
+        >
+          <h5 className="text-18 fw-500 mb-20 mt-20">
+            {translate("Flight Booking")}
+          </h5>
+          <div className="d-flex items-center justify-between pt-1">
+            <div className="d-flex items-center justify-between">
+              <div className="row ">
+                <div className="col-12">
+                  <div className="d-flex items-center pointer-check">
+                    <div className="form-checkbox">
+                      <input
+                        type="checkbox"
+                        id="item4"
+                        name="item4"
+                        checked={selectedCheckbox}
+                        onChange={handleExcludeFlight}
+                      />
+                      <label
+                        htmlFor="item4"
+                        className="form-checkbox__mark ml-0"
+                      >
+                        <div className="form-checkbox__icon">
+                          <svg
+                            width="10"
+                            height="8"
+                            viewBox="0 0 10 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
+                      </label>
+                    </div>
+                    <label htmlFor="item4" className="lh-16 ml-15">
+                      Exclude
+                      {translate(" Flight Booking")}
                     </label>
                   </div>
-                  <label htmlFor="item4" className="lh-16 ml-15">
-                    Exclude
-                    {translate(" Flight Booking")}
-                  </label>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* <div className="text-14">40 €</div> */}
+          <hr />
         </div>
-
-        <hr />
 
         <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
           <div>
@@ -797,7 +795,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                 >
                   <div className="searchFormItem__content">
                     <h5>Departure</h5>
-                    <div className="js-select-control-chosen">
+                    <div className={`js-select-control-chosen `}>
                       {selectDeparture?.name ? selectDeparture?.name : ""}
                     </div>
                   </div>
@@ -832,7 +830,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                         >
                           <button className="js-select-control-button">
                             <span className="js-select-control-choice">
-                              {elm.departure}
+                              {elm.departure == "" && elm.departure == undefined
+                                ? "No Departure"
+                                : elm.departure}
                             </span>
                           </button>
                         </div>

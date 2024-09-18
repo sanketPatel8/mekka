@@ -108,10 +108,10 @@ export default function TourSliderTwo() {
 
                           <button
                             className={`tourCard__favorite ${
-                              elm.direct_flight === "0" ||
+                              elm.direct_flight == "0" ||
                               elm.direct_flight == null
-                                ? "d-block"
-                                : "d-none"
+                                ? "d-none"
+                                : "d-block"
                             }`}
                           >
                             {translate("Direct Flight")}

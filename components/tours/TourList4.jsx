@@ -129,7 +129,7 @@ export default function TourList4({
 
           <div className="col-xl-9 col-lg-8">
             <div className="row y-gap-5 justify-between">
-              <div className="col-auto">
+              <div className="col-auto" id="redirect">
                 <div>
                   {TourData.length} results
                   {/* from {Route}{" "} */}
@@ -190,7 +190,7 @@ export default function TourList4({
                         />
                         <button
                           className={`tourCard__favorite ${
-                            elm?.direct_flight === 0 ? "d-none" : "d-block"
+                            elm?.direct_flight == '0' ? "d-none" : "d-block"
                           }`}
                         >
                           {translate("Direct Flight")}
