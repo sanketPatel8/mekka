@@ -24,6 +24,8 @@ export default function DbBooking({ params }) {
   const [filteredData, setFilteredData] = useState([]);
   const [bookings, setBookings] = useState({});
   const [radioValue, setRadioValue] = useState("");
+  const [reservationHeader, setReservationHeader] = useState([]);
+  const [reservationData, setReservationData] = useState([]);
   const [adultBookings, setAdultBookings] = useState([]);
   const [childBookings, setChildBookings] = useState([]);
   const [babyBookings, setBabyBookings] = useState([]);
@@ -95,6 +97,36 @@ export default function DbBooking({ params }) {
 
       setAdultHeaders(columnAdu_1);
 
+      const ColumnReservation_details = [
+        { name: "Reservation Number", selector: (row) => row.reservationNumber },
+        { name: "Airline", selector: (row) => row.Airline },
+        { name: "From", selector: (row) => row.From },
+        { name: "To", selector: (row) => row.To },
+        { name: "Departure", selector: (row) => row.date_begin },
+        { name: "Return", selector: (row) => row.date_end },
+        // { name: 'Offered languages', selector: (row) => row.Offered_languages },
+        // { name: 'Max Luggage', selector: (row) => row.max_luggage },
+        { name: "Mekka", selector: (row) => row.Mekka_hotel },
+        { name: "Madina", selector: (row) => row.Madina_hotel },
+        { name: "Adult", selector: (row) => row.adult },
+        { name: "Child", selector: (row) => row.child },
+        { name: "Baby", selector: (row) => row.baby },
+        { name: "Total", selector: (row) => row.total },
+      ];
+
+      setReservationHeader(ColumnReservation_details);
+
+      
+      // if(response.Bookings.reservation){
+      //   const reservation = response.Bookings.reservation.map((res) => ({
+      //     id: res.reservation_id,
+      //     name: res.personName,
+      //     surname: res.personSurName,
+      //     DOB: res.personBirthDay,
+      //     country: res.countryName,
+      //   }));
+      // }
+
       if(response.Bookings.adultData.length > 0){
       const adults = response.Bookings.adultData.map((adult) => ({
         id: adult.reservation_id,
@@ -122,6 +154,20 @@ export default function DbBooking({ params }) {
           price: child.child_price,
         }));
         setChildBookings(children);
+      }
+
+
+      if(response.Bookings.babyData.length > 0){
+        const babies = response.Bookings.babyData.map((baby) => ({
+          id: baby.reservation_id,
+          name: baby.personName,
+          surname: baby.personSurName,
+          DOB: baby.personBirthDay,
+          country: baby.countryName,
+          Nationality: baby.personNationality,
+          price: baby.baby_price,
+        }));
+        setBabyBookings(babies);
       }
     }
   }
@@ -236,7 +282,7 @@ export default function DbBooking({ params }) {
         <div className="dashboard__content_content">
          
 
-            <DocumentStatusManager Customerid = {params} bookings={bookings} adultHeaders={adultHeaders} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen}/>
+            <DocumentStatusManager Customerid = {params} bookings={bookings} adultHeaders={adultHeaders} babyBookings={babyBookings} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen}/>
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

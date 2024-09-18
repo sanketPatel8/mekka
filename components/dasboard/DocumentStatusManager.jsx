@@ -42,7 +42,7 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings, setuploadFileisOpen }) => {
+const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
   console.log(adultBookings, "adultBookings");
   console.log(childBookings, "childBookings");
   const [invoice, setinvoice] = useState(false);
@@ -303,7 +303,7 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
         <>
         
         <DataTable
-          title="Adult : Adult Name (Gender)"
+          title="Adult "
           columns={adultHeaders}
           data={adultBookings}
           highlightOnHover
@@ -316,7 +316,7 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
         childBookings &&
         <>
         <DataTable
-          title="Children : Children Name (Gender)"
+          title="Children "
           columns={adultHeaders}
           data={childBookings}
           highlightOnHover
@@ -324,9 +324,16 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
         <br />
         </>
       }
+
+      {
+        babyBookings &&
+        <>
+          <DataTable title="Baby " columns={adultHeaders} data={babyBookings} highlightOnHover />
+          <br />
+        </>
+
+      }
      
-      <DataTable title="Baby : Baby Name (Gender)" columns={Baby} data={BabyData} highlightOnHover />
-      <br />
       <DataTable
         title="Total"
         columns={Total}
