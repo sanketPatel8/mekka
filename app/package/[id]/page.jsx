@@ -1,5 +1,5 @@
 import React from "react";
-import PageData from "./pageData";
+import PageData from "@/app/package/[id]/pageData";
 
 // Dynamically generate metadata
 export async function generateMetadata({ params }) {

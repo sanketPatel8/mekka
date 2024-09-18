@@ -508,7 +508,7 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
-  console.log("LocalData", LocalData);
+ console.log("LocalData", LocalData); 
 
 
   return (
