@@ -11,6 +11,7 @@ import { MdError } from "react-icons/md";
 import DocumentStatusManager from "@/components/dasboard/DocumentStatusManager";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
@@ -22,6 +23,10 @@ export default function DbBooking({ params }) {
   const [filteredData, setFilteredData] = useState([]);
   const [bookings, setBookings] = useState({});
   const [radioValue, setRadioValue] = useState("");
+  const [adultBookings, setAdultBookings] = useState([]);
+  const [adultHeaders, setAdultHeaders] = useState([]);
+  const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
+  const { translate } = useTranslation();
   console.log(params.id[0], "params");
   const id = params.id[0];
   const handleRadioChange = (event) => {
@@ -41,7 +46,9 @@ export default function DbBooking({ params }) {
 
     
   // }, [currentTab]);
-
+  function openUploadFileModal() {
+    setuploadFileisOpen(true);
+  }
   const fetchDetails = async () => {
     const formData = new FormData();
     formData.append("user_id", user?.user?.id);
@@ -52,11 +59,60 @@ export default function DbBooking({ params }) {
       setBookings(response.Bookings)
     }
     console.log(response, "response");
+
+    if(response.Bookings){
+
+      console.log(bookings, "bookings");
+      const columnAdu_1 = [
+        { name: "id", selector: (row) => row.reservation_id, width: "10%" },
+        { name: "Name", selector: (row) => row.name, width: "20%" },
+        { name: "Surname", selector: (row) => row.surname,width: "20%" },
+        
+        { name: "Country", selector: (row) => row.country, width: "10%" },
+        { name: "DOB", selector: (row) => row.DOB,width: "10%" },
+        { name: "Nationality", selector: (row) => row.Nationality,width:"10%" },
+      
+        { name: "Total", selector: (row) => row.price,width: "10%" },
+        {
+          name: "Action",
+          selector: (row) => (
+            <div className="flex_center">
+           
+              <button
+                className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
+                onClick={openUploadFileModal}
+              >
+                 {translate("Document") }
+              </button> 
+            </div>
+          ),
+          width: "10%", // Set a custom width for the button column
+        },
+      ];
+
+      setAdultHeaders(columnAdu_1);
+
+      const adults = response.Bookings.adultData.map((adult) => ({
+        id: adult.reservation_id,
+        name: adult.personName,
+        surname: adult.personSurName,
+        DOB: adult.personBirthDay,
+        country: adult.countryName,
+        Nationality: adult.personNationality,
+        price: adult.adult_price,
+
+      }));
+
+      console.log(adults, "adults");
+      setAdultBookings(adults);
+    }
   }
 
   useEffect(()=>{
       fetchDetails();
   },[user])
+
+  
 
   const StatusCell = ({ row }) => {
     const statusStyles = {
@@ -110,6 +166,8 @@ export default function DbBooking({ params }) {
     },
   ];
 
+  
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
@@ -150,7 +208,7 @@ export default function DbBooking({ params }) {
         <div className="dashboard__content_content">
          
 
-            <DocumentStatusManager Customerid = {params} bookings={bookings}/>
+            <DocumentStatusManager Customerid = {params} bookings={bookings} adultHeaders={adultHeaders} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen}/>
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

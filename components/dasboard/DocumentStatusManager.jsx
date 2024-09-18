@@ -42,8 +42,8 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid, bookings }) => {
-
+const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings,uploadFileisOpen, setuploadFileisOpen }) => {
+  console.log(adultBookings, "adultBookings");
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
 
@@ -71,41 +71,7 @@ const DocumentStatusManager = ({ Customerid, bookings }) => {
     { name: "Adult", selector: (row) => row.Adult },
   ];
 
-  const columnAdu_1 = [
-    // { name: "Name", selector: (row) => row.name, width: "100px" },
-    // { name: "Surname", selector: (row) => row.surname },
-    { name: "Email", selector: (row) => row.email, width: "150px" },
-    { name: "Phone", selector: (row) => row.phone, width: "150px" },
-    { name: "City", selector: (row) => row.city, width: "150px" },
-    // { name: "Gender", selector: (row) => row.gender },
-    { name: "DOB", selector: (row) => row.DOB },
-    { name: "Nationality", selector: (row) => row.Nationality },
-    { name: "House No.", selector: (row) => row.House_No },
-    { name: "Zip Code", selector: (row) => row.Zip_code },
-    { name: "Street", selector: (row) => row.Strect },
-    // { name: "FRA", selector: (row) => row.FRA },
-    {
-      name: "Additional Services",
-      selector: (row) => row.additional_services,
-      width: "150px",
-    },
-    { name: "Total", selector: (row) => row.Amount },
-    {
-      name: "Action",
-      selector: (row) => (
-        <div className="flex_center">
-       
-          <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
-            onClick={openUploadFileModal}
-          >
-             {translate("Document") }
-          </button> 
-        </div>
-      ),
-      width: "200px", // Set a custom width for the button column
-    },
-  ];
+  
 
   const columnAduInfo_2 = [
     // { name: "Name", selector: (row) => row.name, width: "100px" },
@@ -129,12 +95,12 @@ const DocumentStatusManager = ({ Customerid, bookings }) => {
           >
             Edit
           </button> */}
-          <button
+          {/* <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
              {translate("Document") }
-          </button>
+          </button> */}
         </div>
       ),
       width: "200px", // Set a custom width for the button column
@@ -158,12 +124,12 @@ const DocumentStatusManager = ({ Customerid, bookings }) => {
           >
             Edit
           </button> */}
-          <button
+          {/* <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
             onClick={openUploadFileModal}
           >
              {translate("Document") }
-          </button>
+          </button> */}
         </div>
       ),
       width: "200px", // Set a custom width for the button column
@@ -207,9 +173,9 @@ const DocumentStatusManager = ({ Customerid, bookings }) => {
     // No need to change subtitle color as it's not being used in this context
   }
 
-  function openUploadFileModal() {
-    setuploadFileisOpen(true);
-  }
+  // function openUploadFileModal() {
+  //   setuploadFileisOpen(true);
+  // }
 
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
@@ -248,7 +214,7 @@ const DocumentStatusManager = ({ Customerid, bookings }) => {
 
   // for add document row and remove row 
 
-  const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
+  // const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
   const [rows, setRows] = useState([{ id: 1, image: "", document: null }]); // State to manage rows
 
   const addRow = () => {
@@ -331,30 +297,20 @@ const DocumentStatusManager = ({ Customerid, bookings }) => {
       />
       <br />
 
-      {/* {
-        bookings.reservation.adults > 0 &&
-      } */}
-      <DataTable
-        title="Adult : Adult Name (Gender)"
-        columns={columnAdu_1}
-        data={Adult1Data}
-        highlightOnHover
-      />
-      <br />
-      <DataTable
-        title="Adult : Adult Name (Gender)"
-        columns={columnAduInfo_2}
-        data={Adult2InfoData}
-        highlightOnHover
-      />
-      <br />
-      <DataTable
-        title="Adult : Adult Name (Gender)"
-        columns={columnAduInfo_2}
-        data={Adult2InfoData}
-        highlightOnHover
-      />
-      <br />
+      {
+        adultBookings &&
+        <>
+        
+        <DataTable
+          title="Adult : Adult Name (Gender)"
+          columns={adultHeaders}
+          data={adultBookings}
+          highlightOnHover
+        />
+        <br />
+        </>
+      }
+     
       <DataTable
         title="Children : Children Name (Gender)"
         columns={columnAduInfo_2}
