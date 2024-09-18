@@ -560,7 +560,7 @@ export default function TourSingleSidebar({ PAckageData }) {
               </div>
             );
           })
-        : LocalData.map((group, index) => {
+        : LocalData?.map((group, index) => {
             let count, typeLabel;
 
             return (
