@@ -42,8 +42,9 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings,uploadFileisOpen, setuploadFileisOpen }) => {
+const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings, setuploadFileisOpen }) => {
   console.log(adultBookings, "adultBookings");
+  console.log(childBookings, "childBookings");
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
 
@@ -310,14 +311,20 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
         <br />
         </>
       }
+
+      {
+        childBookings &&
+        <>
+        <DataTable
+          title="Children : Children Name (Gender)"
+          columns={adultHeaders}
+          data={childBookings}
+          highlightOnHover
+        />
+        <br />
+        </>
+      }
      
-      <DataTable
-        title="Children : Children Name (Gender)"
-        columns={adultHeaders}
-        data={Adult2InfoData}
-        highlightOnHover
-      />
-      <br />
       <DataTable title="Baby : Baby Name (Gender)" columns={Baby} data={BabyData} highlightOnHover />
       <br />
       <DataTable

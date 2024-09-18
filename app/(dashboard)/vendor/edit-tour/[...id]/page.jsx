@@ -341,7 +341,7 @@ useEffect(() => {
           const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
           console.log(foundFlight,"foundFlight");
           if (foundFlight) {
-            return { ...flight, flight_id: foundFlight.id, flight_amount: foundFlight.price,  luggage: foundFlight.luggage,flight_name:foundFlight.airline_name };
+            return { ...flight, flight_id: foundFlight.id,flight_name:foundFlight.airline_name };
           }
           return flight;
         });
@@ -955,7 +955,7 @@ useEffect(() => {
     //   const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
     //   setLoading(false);
     //   if(response){
-    //     toast.success("Tour Added Successfully");
+    //     toast.success("Tour Updated Successfully");
     //     setActiveTab("Content");
     //     setActiveTabIndex(0);
     //     fetchTour(id);
@@ -2176,7 +2176,7 @@ const formatDateToMMDDYYYY = (date) => {
                                 className="d-flex justify-content-center align-items-center"
                                 style={{ height: "30px", width: "100%" }}
                               >
-                                <ClipLoader color="#DAC04F" size={30} />
+                                <ClipLoader color="#ffffff" size={30} />
                               </div>
                               :
                               translate("Save Details") 

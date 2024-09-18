@@ -114,6 +114,8 @@ export default function AddTour() {
   const [endDate, setEndDate] = useState("");
   const [minEndDate, setMinEndDate] = useState("");
   // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
     setMinEndDate(e.target.value);
@@ -597,6 +599,7 @@ const isCurrentTabValid = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
  
+    setLoading(true);
 
   
     const end_date = formatDateToMMDDYYYY(date_end);
@@ -642,6 +645,7 @@ const isCurrentTabValid = () => {
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) ||
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
     (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false) || !flightInformation) {
+      setLoading(false);
       showErrorToast("Please fill in all required fields before proceeding.");
       return;
     }
@@ -709,7 +713,7 @@ const isCurrentTabValid = () => {
 
     try{
       const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
-      console.log(response)
+      setLoading(false);
       if(response){
         toast.success("Tour Added Successfully");
         // setActiveTab("Content");
@@ -1966,8 +1970,15 @@ const isCurrentTabValid = () => {
                               <div className=" flex_start">
 
                               <button type="submit" className="button -sm -info-2 bg-accent-1 text-white  mt-4  ">
-                                {" "}
-                                {translate("Save Details") }
+                              {loading ? <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ height: "30px", width: "100%" }}
+                              >
+                                <ClipLoader color="#ffffff" size={30} />
+                              </div>
+                              :
+                              translate("Save Details") 
+                              }
                               </button>
                                   {activeTabIndex > 0 && (
                                     <button

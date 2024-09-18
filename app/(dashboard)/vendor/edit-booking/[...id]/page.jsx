@@ -110,6 +110,19 @@ export default function DbBooking({ params }) {
       console.log(adults, "adults");
       setAdultBookings(adults);
       }
+
+      if(response.Bookings.childData.length > 0){
+        const children = response.Bookings.childData.map((child) => ({
+          id: child.reservation_id,
+          name: child.personName,
+          surname: child.personSurName,
+          DOB: child.personBirthDay,
+          country: child.countryName,
+          Nationality: child.personNationality,
+          price: child.child_price,
+        }));
+        setChildBookings(children);
+      }
     }
   }
 
@@ -223,7 +236,7 @@ export default function DbBooking({ params }) {
         <div className="dashboard__content_content">
          
 
-            <DocumentStatusManager Customerid = {params} bookings={bookings} adultHeaders={adultHeaders} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen}/>
+            <DocumentStatusManager Customerid = {params} bookings={bookings} adultHeaders={adultHeaders} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen}/>
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}
