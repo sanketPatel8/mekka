@@ -98,7 +98,7 @@ export default function Payment() {
       setReservationID(response.Reservations_id);
     } catch (error) {
       console.error("Error caught:", error);
-      showErrorToast(error?.data?.message);
+      showErrorToast("kai pn error che ");
     }
   };
 
@@ -112,9 +112,6 @@ export default function Payment() {
     }
   };
 
-  console.log("SideBarData", SideBarData);
-
-  console.log("selectedCheckbox", selectedCheckbox);
 
   const { translate } = useTranslation();
 

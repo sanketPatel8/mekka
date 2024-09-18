@@ -622,36 +622,6 @@ export default function BookingPages({ BookingData }) {
       return updatedValues;
     });
 
-    // setAdditional((prevAdditional) => {
-    //   // Create the new item
-    //   const newItem = {
-    //     type: type || "", // Default values if not provided
-    //     price: price || "",
-    //     title: title || "",
-    //     index: i !== undefined ? i : 0, // Handle numbers explicitly
-    //     order: order || "",
-    //     id: optid || "",
-    //   };
-
-    //   // Find the item with the same index and type
-    //   const existingItem = prevAdditional.find(
-    //     (item) => item.index === newItem.index && item.type === newItem.type
-    //   );
-
-    //   // Log or use the previous item before it's replaced
-    //   if (existingItem) {
-    //     console.log("Previous item:", existingItem);
-    // }
-
-    //   // Filter out the previous item with the same index and type
-    //   const updatedAdditional = prevAdditional.filter(
-    //     (item) => !(item.index === newItem.index && item.type === newItem.type)
-    //   );
-
-    //   // Return the updated array, with the old item removed and the new one added
-    //   return [...updatedAdditional, newItem];
-    // });
-
     setAdditional((prevAdditional) => {
       const newItem = {
         type: type || "",
@@ -704,7 +674,7 @@ export default function BookingPages({ BookingData }) {
       const addivalue = JSON.parse(newPrice);
       const multiPrice = prevPrice + addivalue;
 
-      // console.log("addivalue", addivalue);
+
 
       // Step 3: Update the price of the item
       const updatedItem = { ...itemsOfType[index], price: multiPrice };
@@ -810,9 +780,6 @@ export default function BookingPages({ BookingData }) {
     ?.reduce((acc, curr) => acc + curr, 0);
 
   // allPrice
-
-  console.log("PackagePrices", PackagePrices);
-  console.log("Additional", Additional);
 
   const adPrice = Additional.map((item) => Number(item.price)).reduce(
     (accumulator, currentValue) => accumulator + currentValue,
@@ -1319,6 +1286,9 @@ export default function BookingPages({ BookingData }) {
       }
     }
   };
+
+  console.log("bookingData" , bookingData);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();

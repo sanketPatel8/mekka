@@ -41,6 +41,7 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [selectedmekkaHotelPrice, setselectedmekkaHotelPrice] = useState(0);
   const [selectedMadinaHotelPrice, setselectedMadinaHotelPrice] = useState(0);
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
+  const [SElectedDeparturePrice, setSElectedDeparturePrice] = useState(0)
   const [Render, setRender] = useState(false);
 
   const [LocalData, setLocalData] = useState([]);
@@ -83,12 +84,12 @@ export default function TourSingleSidebar({ PAckageData }) {
       });
       setSelectedAirlinePrice(firstFlight.flight_amount);
     }
+    
   }, [SidebarData]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const PrevPrice = localStorage.getItem("previousAdults");
-      console.log("PrevPrice", PrevPrice);
       setLocalData(JSON.parse(PrevPrice));
     }
   }, []);
@@ -386,14 +387,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     setPrevAdultSelect(newPriceAdultArray); // assuming you are setting this somewhere
   };
 
-  // useEffect(() => {
-  //   // Update the checkbox state whenever SidebarData changes
-  //   if (SidebarData?.tour_details?.flight_included === "1") {
-  //     setselectedCheckbox(true);
-  //   } else {
-  //     setselectedCheckbox(false);
-  //   }
-  // }, [SidebarData]);
 
   useEffect(() => {
     updatePriceObject();
@@ -416,19 +409,21 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included == "0"
+      SidebarData?.tour_details?.flight_included == "0" || SidebarData?.tour_details?.flight_exclude == '0'
         ? 0
         : SelectedAirlinePrice
-    );
+    ) 
+    + JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price)
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    JSON.parse(
-      SidebarData?.tour_details?.flight_included == "0"
+    JSON.parse( 
+      SidebarData?.tour_details?.flight_included == "0" || SidebarData?.tour_details?.flight_exclude == '0'
         ? 0
         : SelectedAirlinePrice
-    );
+    )
+    + JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price)
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
@@ -492,7 +487,7 @@ export default function TourSingleSidebar({ PAckageData }) {
 
   const handleDecrement = (price_type) => {
     if (price_type === "1") {
-      setAdultNumber((prev) => Math.max(prev - 1, 0));
+      setAdultNumber((prev) => Math.max(prev - 1, 1));
     } else if (price_type === "2") {
       setYouthNumber((prev) => Math.max(prev - 1, 0));
     } else if (price_type === "3") {
@@ -822,7 +817,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                             setselectDeparture((pre) =>
                               pre?.name === elm.departure
                                 ? {}
-                                : { name: elm.departure, value: elm.id }
+                                : { name: elm.departure, value: elm.id , price : elm.price}
                             );
                             setActiveTimeDD(false); // Close dropdown after selection
                           }}
@@ -834,6 +829,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                                 ? "No Departure"
                                 : elm.departure}
                             </span>
+                            <span>{elm.price}</span>
                           </button>
                         </div>
                       ))}
