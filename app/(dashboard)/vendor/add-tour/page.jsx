@@ -233,6 +233,7 @@ export default function AddTour() {
     });
   };
 
+  console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())),"editorState")
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1000) {
@@ -241,7 +242,6 @@ export default function AddTour() {
         setSideBarOpen(false);
       }
     };
-
     // Set the initial state based on the screen size
     handleResize();
 
@@ -666,10 +666,7 @@ const isCurrentTabValid = () => {
     console.log(checkedIncluded,"checkedIncluded")
     const includedData = checkedIncluded.map((item) => item.id).join(",");
     console.log(includedData,"includedData")
-    const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-    console.log(blocks,"blocks")
-    const editorValue = convertToRaw(editorState.getCurrentContent()).blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
-    console.log(editorValue,"editorValue")
+    const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
     const newRouteData = route_data.map((day, index) => (
       {
         day:day.dayData,
@@ -701,7 +698,7 @@ const isCurrentTabValid = () => {
     formData.append("addition_service", JSON.stringify(servicesData));
     formData.append("tour_included", includedData);
     formData.append("flight_info", flightInformation);
-    formData.append("tour_info", editorValue);
+    formData.append("tour_info", tourInfo);
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData):"");
@@ -1341,8 +1338,8 @@ const isCurrentTabValid = () => {
                                   onEditorStateChange={onEditorStateChange}
                                 /> */}
 
-{typeof window != "undefined" && <Editor editorState={editorState} toolbarClassName="border" wrapperClassName="" editorClassName="border px-2" onEditorStateChange={(e) => setEditorState(e)} />}
-<input type="hidden" name="Title" id="Title" value={editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
+                                {typeof window != "undefined" && <Editor editorState={editorState} toolbarClassName="border" wrapperClassName="" editorClassName="border px-2" onEditorStateChange={(e) => setEditorState(e)} />}
+                                <input type="hidden" name="Title" id="Title" value={editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
                       
                               </div>
                               <div className=" flex_start">
