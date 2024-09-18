@@ -7,7 +7,7 @@ import TourList4 from "@/components/tours/TourList4";
 import React, { useEffect, useRef, useState } from "react";
 import { post } from "../utils/api";
 import { showErrorToast } from "../utils/tost";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { POST } from "../utils/api/post";
 
 export default function PageData() {
@@ -32,6 +32,8 @@ export default function PageData() {
   });
   
   const [value, setValue] = useState([0, 0]);
+
+  const route = useRouter()
 
   const handleSelectionChange = (key, value) => {
     setFilterSidebar((prevState) => {
@@ -97,31 +99,11 @@ export default function PageData() {
     fetchListing();
   }, []);
 
-  // useEffect(() => {
-  //   if (filterParams) {
-  //     console.log("filterParams : " , filterParams);
 
-  //       // Assuming filterParams has a property initialIndex
-  //     setFilterIndex(filterParams.initialIndex);
-  //   }
-  // }, [filterParams, setFilterIndex]);
-
-  // const { value } = useGlobalState();
   const isMounted = useRef(false);
 
   const FetchFilterData = async (pageIndex) => {
-    // const sendData = {
-    //   AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    //   type: FilterSidebar?.selectedTourTypes.join(", "),
-    //   language: LanArray.join(","),
-    //   departure: FilterSidebar?.selectedCities.join(", "),
-    //   min_price: value[0],
-    //   max_price: value[1],
-    //   hotel_star: FilterSidebar?.selectedDurations.join(", "),
-    //   agent_rating: FilterSidebar?.selectedRatings.join(", "),
-    //   amenities: FilterSidebar?.selectedFeatures.join(", "),
-    //   start: pageIndex,
-    // };
+   
     const formData = new FormData();
 
     formData.append("start", pageIndex || 0);
@@ -220,12 +202,13 @@ export default function PageData() {
         ? ""
         : searchParams.get("person");
     if (
-      tourType !== null ||
-      startDate !== null ||
-      endDate !== null ||
-      person !== null
+      tourType !== null && tourType !== undefined||
+      startDate !== null && startDate !== undefined ||
+      endDate !== null && endDate !== undefined ||
+      person !== null && person !== undefined
     ) {
       fetchSearch1Data({ tourType, startDate, endDate, person });
+      route.push('#redirect')
     } else {
       // fetchData();
       fetchListing();

@@ -830,7 +830,9 @@ export default function TourSingleSidebar({ PAckageData }) {
                         >
                           <button className="js-select-control-button">
                             <span className="js-select-control-choice">
-                              {elm.departure == "" && elm.departure == undefined ? "No Departure" : elm.departure }
+                              {elm.departure == "" && elm.departure == undefined
+                                ? "No Departure"
+                                : elm.departure}
                             </span>
                           </button>
                         </div>
