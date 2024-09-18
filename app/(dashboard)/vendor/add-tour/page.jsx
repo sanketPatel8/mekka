@@ -219,22 +219,13 @@ export default function AddTour() {
 
   } 
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
-    // setRouteData((prevData) => {
-    //   const newData = [...prevData];
-    //   newData[dayNumber - 1] = { day: dayNumber, dayData, description };
-    //   return newData;
-    // });
-
-    console.log('Before update:', route_data);
-
     setRouteData((prevData) => {
-      const updatedData = prevData.map((day, index) => {
-        if (index + 1 === dayNumber) {
-          return { ...day, dayData, description };
-        }
-        return day;
-      });
-      console.log('After update:', route_data);
+      const updatedData = [...prevData];
+      if (updatedData.length < dayNumber) {
+        updatedData.push({ day: dayNumber, dayData, description });
+      } else {
+        updatedData[dayNumber - 1] = { day: dayNumber, dayData, description };
+      }
       return updatedData;
     });
   };
