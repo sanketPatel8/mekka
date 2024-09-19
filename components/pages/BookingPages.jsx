@@ -188,7 +188,7 @@ export default function BookingPages({ BookingData }) {
     }
   }, []);
 
-  console.log("UserID" , UserID);
+  console.log("UserID" , UserID.id);
   
 
   // for nationality
@@ -1264,7 +1264,7 @@ export default function BookingPages({ BookingData }) {
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id:
-      loginPer === true ? JSON.parse(UserID.id !== null ? UserID.id : 0) : 0,
+      loginPer === true ? UserID.id !== null ? UserID.id : 0 : 0,
     tour_id: JSON.parse(TourId),
     person:
       loginPer == true
