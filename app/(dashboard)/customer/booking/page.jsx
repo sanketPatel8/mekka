@@ -17,12 +17,31 @@ const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+  const [UserID, setUserID] = useState(0)
+
+  const fetchListing = async (pageIndex) => {
+    const formData = new FormData();
+
+    formData.append("user_id", 123 );
+
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "my_bookings",
+      });
+      console.log(response);
+      setTourData(response.Tours);
+      setRange(response.Total_Page);
+      setCount(response.Count);
+      route.push("#redirect");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Indicate that the component has mounted
-      // setMounted(true);
-
+    
       const handleResize = () => {
         if (window.innerWidth >= 1000) {
           setSideBarOpen(true);
@@ -42,7 +61,24 @@ export default function DbBooking() {
         window.removeEventListener("resize", handleResize);
       };
     }
+
+    if (typeof window !== 'undefined'){
+      if (userData && userData !== "undefined") {
+        try {
+          const userid = JSON.parse(userData);
+  
+          // Extract the user object
+          if (userid && userid.user) {
+            setUserID(userid.user);
+          }
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+     } 
+    }
+    
   }, []);
+
 
   const { translate } = useTranslation();
 

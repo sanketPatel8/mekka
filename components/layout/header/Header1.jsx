@@ -10,6 +10,9 @@ import Language from "../components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import Currency from "../components/Currency";
+import { FaUserPlus } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
+
 
 export default function Header1({ isLoggedIn }) {
   const router = useRouter();
@@ -114,12 +117,13 @@ export default function Header1({ isLoggedIn }) {
               <Language parentClass="headerDropdown" onLocaleChange={setLocale} locale={locale} />
 
               <Link
-                href={`  ${loginPer == true ? "/Profile-customer" : "/register"} `}
-                className={`ml-5`}
+                // href={`  ${loginPer == true ? "/Profile-customer" : "/register"} `}
+                href={`  ${loginPer == true ? "/customer/profile" : "/register"} `}
+                className={`mx-2`}
               >
 
                 
-                {loginPer === true ? translate("Profile") : translate("Register")}
+                {loginPer === true ?  <FaUser size={20} /> :   <FaUserPlus size={20} /> }
               </Link>
 
               <button

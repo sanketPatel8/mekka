@@ -68,14 +68,10 @@ export default function BookingPages({ BookingData }) {
     email: "",
     password: "",
   });
-  const [UserID, setUserID] = useState({});
+  const [UserID, setUserID] = useState(0);
   const {
     loginPer,
-    selectedFlights,
-    HotelSelect,
-    total,
     selectDeparture,
-    SharePackageData,
     selectedCheckbox,
     ExcludeFlight,
   } = useGlobalState();
@@ -191,6 +187,9 @@ export default function BookingPages({ BookingData }) {
       }
     }
   }, []);
+
+  console.log("UserID" , UserID);
+  
 
   // for nationality
 
