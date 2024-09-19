@@ -30,11 +30,11 @@ export default function PageData() {
     selectedFeatures: [],
     selectedDurations: [],
   });
-  
+
   const [value, setValue] = useState([0, 0]);
   const [range, setRange] = useState(1);
 
-  const route = useRouter()
+  const route = useRouter();
 
   const handleSelectionChange = (key, value) => {
     setFilterSidebar((prevState) => {
@@ -62,19 +62,16 @@ export default function PageData() {
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);
-      route.push('#redirect')
+      route.push("#redirect");
     } catch (e) {
       console.log(e);
     }
   };
 
-  console.log("FilterSidebar" , FilterSidebar);
-  
+  console.log("FilterSidebar", FilterSidebar);
 
   const onPageChange = async (pageIndex) => {
-
-    console.log("pageIndex" , pageIndex);
-    
+    console.log("pageIndex", pageIndex);
 
     const tourType =
       searchParams.get("TourType") === undefined
@@ -96,15 +93,12 @@ export default function PageData() {
     if (tourType || startDate || endDate || person) {
       await fetchSearch1Data({ tourType, startDate, endDate, person });
       console.log("fetch search data");
-      
     } else if (FilterSidebar) {
-      await fetchListing(pageIndex); 
+      await fetchListing(pageIndex);
       console.log("fetch Filter Data");
-      
     } else {
       await FetchFilterData(pageIndex);
       console.log("fetch Listning Data");
-      
     }
   };
 
@@ -112,11 +106,9 @@ export default function PageData() {
     fetchListing();
   }, []);
 
-
   const isMounted = useRef(false);
 
   const FetchFilterData = async (pageIndex) => {
-   
     const formData = new FormData();
 
     formData.append("start", pageIndex || 0);
@@ -214,13 +206,13 @@ export default function PageData() {
         ? ""
         : searchParams.get("person");
     if (
-      tourType !== null && tourType !== undefined && tourType !== "" ||
-      startDate !== null && startDate !== undefined && startDate !== "" ||
-      endDate !== null && endDate !== undefined && endDate !== "" ||
-      person !== null && person !== undefined 
+      (tourType !== null && tourType !== undefined && tourType !== "") ||
+      (startDate !== null && startDate !== undefined && startDate !== "") ||
+      (endDate !== null && endDate !== undefined && endDate !== "") ||
+      (person !== null && person !== undefined)
     ) {
       fetchSearch1Data({ tourType, startDate, endDate, person });
-      route.push('#redirect')
+      route.push("#redirect");
     } else {
       // fetchData();
       fetchListing();
@@ -229,7 +221,6 @@ export default function PageData() {
 
   return (
     <>
-     
       <main>
         <Header1 />
         <Hero1 />
