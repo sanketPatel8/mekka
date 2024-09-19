@@ -41,7 +41,7 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [selectedmekkaHotelPrice, setselectedmekkaHotelPrice] = useState(0);
   const [selectedMadinaHotelPrice, setselectedMadinaHotelPrice] = useState(0);
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
-  const [SElectedDeparturePrice, setSElectedDeparturePrice] = useState(0)
+  const [SElectedDeparturePrice, setSElectedDeparturePrice] = useState(0);
   const [Render, setRender] = useState(false);
 
   const [LocalData, setLocalData] = useState([]);
@@ -84,7 +84,6 @@ export default function TourSingleSidebar({ PAckageData }) {
       });
       setSelectedAirlinePrice(firstFlight.flight_amount);
     }
-    
   }, [SidebarData]);
 
   useEffect(() => {
@@ -153,7 +152,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       id: elm.flight_id,
       name: elm.airline_name,
       price: elm.flight_amount,
-      luggage : elm.luggage
+      luggage: elm.luggage,
     };
     setSelectedFlights(selectedFlight); // Replace with the selected flight object
     setSelectedAirlinePrice(selectedFlight.price);
@@ -388,7 +387,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     setPrevAdultSelect(newPriceAdultArray); // assuming you are setting this somewhere
   };
 
-
   useEffect(() => {
     updatePriceObject();
   }, [SidebarData, adultNumber, youthNumber, childrenNumber]);
@@ -410,26 +408,26 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included == "0" || SidebarData?.tour_details?.flight_exclude == '0'
+      SidebarData?.tour_details?.flight_included == "0" ||
+        SidebarData?.tour_details?.flight_exclude == "0"
         ? SelectedAirlinePrice
         : 0
-    ) 
-    + JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price)
+    ) +
+    JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price);
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    JSON.parse( 
-      SidebarData?.tour_details?.flight_included == "0" || SidebarData?.tour_details?.flight_exclude == '0'
+    JSON.parse(
+      SidebarData?.tour_details?.flight_included == "0" ||
+        SidebarData?.tour_details?.flight_exclude == "0"
         ? SelectedAirlinePrice
         : 0
-    )
-    + JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price)
+    ) +
+    JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price);
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
-
-console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
 
 
   const PackageBookingData = {
@@ -445,38 +443,28 @@ console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
   };
 
   const handleBooking = () => {
-    if (
-      // HotelSelect.mekkaPrice > 0 &&
-      // HotelSelect.madinaPrice > 0 &&
-      selectedFlights !== null &&
-      selectedFlights.price > 0 // Check for valid flight
-    ) {
-      // Proceed to the next step, e.g., form submission or navigation
-
-      if (typeof window !== "undefined") {
-        localStorage.setItem(
-          "SelectedPackageHotelNDFlight",
-          JSON.stringify(FlightAndHotelPrice)
-        );
-
-        localStorage.setItem(
-          "PackageBookingData",
-          JSON.stringify(PackageBookingData)
-        );
-      }
-
-      setRender(true);
-      updateAdultsObject();
-
-      router.push(
-        `/booking/?id=${Tourid}&name=${PAckageData?.Tour_Details?.tour_details?.name}&type=${PAckageData?.Tour_Details?.tour_details?.type}&selectedflight=${selectedFlights.name}`
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "SelectedPackageHotelNDFlight",
+        JSON.stringify(FlightAndHotelPrice)
       );
-    } else {
-      // Show an alert or disable the proceed button
-      alert(
-        "Please select valid hotels for both Mekka and Madina with valid prices, and a flight."
+
+      localStorage.setItem(
+        "PackageBookingData",
+        JSON.stringify(PackageBookingData)
       );
     }
+
+    setRender(true);
+    updateAdultsObject();
+
+    console.log("SidebarData?.tour_details?.name" , SidebarData?.tour_details?.name);
+    console.log("selectedFlights?.name" , selectedFlights?.name);
+    
+
+    router.push(
+      `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${SidebarData?.tour_details?.type}&selectedflight=${selectedFlights?.name === undefined ? '' : selectedFlights?.name}`
+    );
   };
 
   const handleIncrement = (price_type) => {
@@ -499,65 +487,63 @@ console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
     }
   };
 
- 
-
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
-        {SidebarData?.tour_price?.map((group, index) => {
-          let count, typeLabel;
+      {SidebarData?.tour_price?.map((group, index) => {
+        let count, typeLabel;
 
-          if (group.price_type === "1") {
-            count = adultNumber;
-            typeLabel = "Adult";
-          } else if (group.price_type === "2") {
-            count = youthNumber;
-            typeLabel = "Child";
-          } else if (group.price_type === "3") {
-            count = childrenNumber;
-            typeLabel = "Baby";
-          } else {
-            return null;
-          }
+        if (group.price_type === "1") {
+          count = adultNumber;
+          typeLabel = "Adult";
+        } else if (group.price_type === "2") {
+          count = youthNumber;
+          typeLabel = "Child";
+        } else if (group.price_type === "3") {
+          count = childrenNumber;
+          typeLabel = "Baby";
+        } else {
+          return null;
+        }
 
-          return (
-            <div key={index} className="mt-15">
-              <div className="d-flex items-center justify-between">
-                <div className="text-14 col-8">
-                  {group.price_type === "1"
-                    ? "Adult (18+ Years)"
-                    : group.price_type === "2"
-                    ? "Child (13-17 Years)"
-                    : "Baby (0-12 Years)"}
-                  <span className="fw-500">
-                    {(group.price * count).toFixed(2)} €
-                  </span>
+        return (
+          <div key={index} className="mt-15">
+            <div className="d-flex items-center justify-between">
+              <div className="text-14 col-8">
+                {group.price_type === "1"
+                  ? "Adult (18+ Years)"
+                  : group.price_type === "2"
+                  ? "Child (13-17 Years)"
+                  : "Baby (0-12 Years)"}
+                <span className="fw-500">
+                  {(group.price * count).toFixed(2)} €
+                </span>
+              </div>
+
+              <div className="d-flex items-center js-counter col-3">
+                <button
+                  onClick={() => handleDecrement(group.price_type)}
+                  className="button size-30 border-1 rounded-full js-down col-2"
+                >
+                  <i className="icon-minus text-10 col-3"></i>
+                </button>
+
+                <div className="flex-center ml-10 mr-10 col-2">
+                  <div className="text-14 size-20 js-count">{count}</div>
                 </div>
 
-                <div className="d-flex items-center js-counter col-3">
-                  <button
-                    onClick={() => handleDecrement(group.price_type)}
-                    className="button size-30 border-1 rounded-full js-down col-2"
-                  >
-                    <i className="icon-minus text-10 col-3"></i>
-                  </button>
-
-                  <div className="flex-center ml-10 mr-10 col-2">
-                    <div className="text-14 size-20 js-count">{count}</div>
-                  </div>
-
-                  <button
-                    onClick={() => handleIncrement(group.price_type)}
-                    className="button size-30 border-1 rounded-full js-up"
-                  >
-                    <i className="icon-plus text-10"></i>
-                  </button>
-                </div>
+                <button
+                  onClick={() => handleIncrement(group.price_type)}
+                  className="button size-30 border-1 rounded-full js-up"
+                >
+                  <i className="icon-plus text-10"></i>
+                </button>
               </div>
             </div>
-          );
-        })}
+          </div>
+        );
+      })}
 
       <hr />
 
@@ -780,7 +766,11 @@ console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
                             setselectDeparture((pre) =>
                               pre?.name === elm.departure
                                 ? {}
-                                : { name: elm.departure, value: elm.id , price : elm.price}
+                                : {
+                                    name: elm.departure,
+                                    value: elm.id,
+                                    price: elm.price,
+                                  }
                             );
                             setActiveTimeDD(false); // Close dropdown after selection
                           }}
@@ -818,12 +808,6 @@ console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
         className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"
         type="submit"
         onClick={handleBooking}
-        disabled={
-          HotelSelect.mekkaPrice === 0 ||
-          HotelSelect.madinaPrice === 0 ||
-          !selectedFlights ||
-          selectedFlights.price === 0
-        }
       >
         {translate("Book Now")}
       </button>

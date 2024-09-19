@@ -1444,7 +1444,7 @@ export default function BookingPages({ BookingData }) {
 
                   <div className="px-1">
                     <div
-                      className={`${selectedCheckbox ? "d-none" : "d-block"}`}
+                      className={`${selectedCheckbox && BookingSideBar?.Airline === null ? "d-none" : "d-block"}`}
                     >
                       <div
                         className={`d-flex items-center justify-content-space-arround  `}
