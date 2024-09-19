@@ -30,10 +30,10 @@ export default function Payment() {
   const [Booking, setBooking] = useState();
   const [ReservationID, setReservationID] = useState("");
   const [todayDate, setTodayDate] = useState("");
+  const [LocalAdults, setLocalAdults] = useState([]);
+  const [GetAdditionals, setGetAdditionals] = useState([]);
 
   const handleCheckboxChange = (index) => {
-    console.log("index", index);
-
     setSelectedCheckbox(index);
     if (index === 2) {
       setInstallmentChecked(true);
@@ -46,9 +46,7 @@ export default function Payment() {
     setSelectedDate(event.target.value);
   };
 
-  useEffect(() => {
-    console.log("Selected room type:", roomType);
-  }, [roomType]);
+  useEffect(() => {}, [roomType]);
 
   useEffect(() => {
     const currentDate = new Date();
@@ -83,15 +81,38 @@ export default function Payment() {
           console.error("Error parsing userData:", error);
         }
       }
+
+      const GetAdultsData = localStorage.getItem("previousAdults");
+
+      if (GetAdultsData && GetAdultsData !== "undefined") {
+        try {
+          const GetPrevAdults = JSON.parse(GetAdultsData);
+          setLocalAdults(GetPrevAdults);
+        } catch (error) {
+          console.error("error");
+        }
+      }
+
+      const GetAdditionalServicePerPerson =
+        localStorage.getItem("AdditionalServices");
+
+      if (
+        GetAdditionalServicePerPerson &&
+        GetAdditionalServicePerPerson !== "undefined"
+      ) {
+        try {
+          const GetAdditionl = JSON.parse(GetAdditionalServicePerPerson);
+          setGetAdditionals(GetAdditionl);
+        } catch (error) {
+          console.error("error");
+        }
+      }
     }
   }, []);
-
-  console.log("Booking", Booking);
 
   const FatchallBooking = async (data) => {
     try {
       const response = await post("addbooking", data);
-      console.log("response", response);
 
       showSuccessToast(response.Message);
 
@@ -112,6 +133,7 @@ export default function Payment() {
     }
   };
 
+  console.log("GetAdditionals", GetAdditionals);
 
   const { translate } = useTranslation();
 
@@ -565,14 +587,19 @@ export default function Payment() {
 
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500">Duration:</div>
-                        <div className="">12 Days</div>
+                        <div className="">{SideBarData?.duration} Days</div>
                       </div>
 
-                      <div className=" items-center justify-between row">
-                        <div className="fw-500 col-lg-3 col-11 ">Tickets:</div>
-                        <div className="col-lg-9 text-right col-11 ">
-                          Adult x2 = 98 € - Youth x3 = 383 € - Children x6 = 394
-                          €
+                      <div className="items-center justify-between row">
+                        <div className="fw-500 col-lg-2 col-11">Tickets:</div>
+                        <div className="text-right col-10 row">
+                          {LocalAdults.map((e, ind) => (
+                            <div key={ind} className="col-4">
+                              <p>
+                                {e.label} X {e.count} = {e.grandTotal} €
+                              </p>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -596,10 +623,12 @@ export default function Payment() {
                   <Image
                     width={90}
                     height={84}
-                    src="/img/tourCards/1/13.jpeg"
+                    src={SideBarData?.TourThumbnail}
                     alt="image"
                   />
-                  <div className="ml-20">Umrah - SOMMER</div>
+                  <div className="ml-20">
+                    {SideBarData.type} - {SideBarData.name}
+                  </div>
                 </div>
 
                 <div className="line mt-20 mb-2"></div>
@@ -621,7 +650,7 @@ export default function Payment() {
                       <MdFlightTakeoff size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      {translate("Departure")} : {SideBarData?.Departure?.[1]}
+                      {translate("Departure")} : {SideBarData?.Departure?.name}
                     </div>
                   </div>
 
@@ -644,7 +673,8 @@ export default function Payment() {
                       <TbWorld size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      {translate("Offered Languages")} : {SideBarData.OfferedLanguages} 
+                      {translate("Offered Languages")} :{" "}
+                      {SideBarData.OfferedLanguages}
                     </div>
                   </div>
 
@@ -656,7 +686,10 @@ export default function Payment() {
                     </div>
                     <div className="text-start">
                       {translate("Max Luggage Per Person")} :{" "}
-                      {SideBarData.MaxLuggagePerPerson}
+                      {SideBarData?.Airline?.luggage === null
+                        ? " null aa raha hei ! "
+                        : SideBarData?.Airline?.luggage}{" "}
+                      kg
                     </div>
                   </div>
 
@@ -694,8 +727,17 @@ export default function Payment() {
 
                   <p>
                     <b>Selected Additional Services Per Person:</b>
+                    <div className="line my-2"> </div>
+                    {GetAdditionals.map((e, index) => (
+                      <div className="row" key={index}>
+                        <div className="col">
+                          <IoIosBed size={20} color="#DAC04F" />
+                        </div>
+                        <div className="col-6">{e.title}</div>
+                        <div className="col-4">{e.price} €</div>
+                      </div>
+                    ))}
                   </p>
-                  <div className="line my-2"></div>
                 </div>
 
                 <div className="line mt-10 mb-10"></div>
@@ -714,14 +756,17 @@ export default function Payment() {
                     <div className=""> {SideBarData.BookingFild?.Tax} € </div>
                   </div>
 
-                 <div className={`${SideBarData.BookingFild?.Discount == 0 ? 'd-none' : 'd-block'}`}>
-                 <div className={`d-flex items-center justify-between`}>
-                    <div className="fw-500"> {translate("Discount")}</div>
-                    <div className=''>-{SideBarData.BookingFild?.Discount.Discount == 0 ? 0 : SideBarData.BookingFild?.Discount.Discount} € </div>
-                  </div>
-                 </div>
-
-                  
+                  {SideBarData.BookingFild?.Discount?.Discount !== null &&
+                  SideBarData.BookingFild?.Discount?.Discount !== undefined ? (
+                    <div className="">
+                      <div className={`d-flex items-center justify-between`}>
+                        <div className="fw-500"> {translate("Discount")}</div>
+                        <div className="">
+                          -{SideBarData.BookingFild?.Discount?.Discount || 0} €{" "}
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Amount Due")}</div>

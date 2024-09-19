@@ -4,15 +4,28 @@ import React, { useEffect, useState } from "react";
 import ImageLightBox from "./ImageLightBox";
 import Image from "next/image";
 
-export default function Gallery1({ PAckageData }) {
+export default function Gallery1({ PAckageData  , }) {
   const [activeLightBox, setActiveLightBox] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(1);
   const [Images, setImages] = useState([]);
+
 
   useEffect(() => {
     setImages(PAckageData?.Tour_Details?.tour_details?.tour_image);
   }, [PAckageData]);
 
+ 
+  
+
+//  useEffect(() => {
+
+//     const imgArray = JSON.parse(Images)
+//     const img = imgArray?.map((e) =>  e )
+//     console.log("selected" , img );
+    
+//   }, [Images])
+
+  
 
 
   const imagesWithDimensions = [

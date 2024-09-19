@@ -54,7 +54,7 @@ export const GlobalStateProvider = ({ children }) => {
   
   const [selectedFlights, setSelectedFlights] = useState(null);
   const [selectDeparture, setselectDeparture] = useState({
-    name : "Berline(FRA)"
+    name : ""
   });
 
   // for package total maintain

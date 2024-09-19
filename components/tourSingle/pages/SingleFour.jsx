@@ -26,6 +26,10 @@ export default function SingleFour({ PAckageData }) {
     setFlightInc(foundTour);
   }, [PAckageData]);
 
+
+  
+  
+
   const { translate } = useTranslation();
 
   return (
@@ -279,7 +283,7 @@ export default function SingleFour({ PAckageData }) {
                 style={{ position: "sticky", top: "10px" }}
                 className="d-flex justify-start"
               >
-                <TourSingleSidebar PAckageData={PAckageData} />
+                <TourSingleSidebar PAckageData={PAckageData}  />
               </div>
             </div>
           </div>

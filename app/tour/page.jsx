@@ -14,12 +14,9 @@ export default function PageData() {
   const searchParams = useSearchParams();
 
   const [count, setCount] = useState(0);
-  const [TourListIndex, setTourListIndex] = useState(0);
   const [FliterData, setFliterData] = useState([]);
   const [Route, setRoute] = useState("");
   const [TourData, setTourData] = useState([]);
-  const [Page, setPage] = useState(0);
-  const [isTourDataFetched, setIsTourDataFetched] = useState(false);
   const [LanActives, setLanActives] = useState([]);
   const [LanArray, setLanArray] = useState([]);
   const [FilterSidebar, setFilterSidebar] = useState({

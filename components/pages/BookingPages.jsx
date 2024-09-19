@@ -188,7 +188,7 @@ export default function BookingPages({ BookingData }) {
     }
   }, []);
 
-  console.log("UserID" , UserID.id);
+ 
   
 
   // for nationality
@@ -651,6 +651,9 @@ export default function BookingPages({ BookingData }) {
     getPriceForadditional(type, i);
   };
 
+  console.log("Additional" , Additional);
+  
+
   const getPriceForadditional = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
     const AdditionalPrice = Additional.filter((item) => item.index === idx);
@@ -737,6 +740,7 @@ export default function BookingPages({ BookingData }) {
     return Number(personPrice[idx]?.price); // Ensure price is a number
   };
 
+
   const validateForm = () => {
     const validateGroup = (group, checkFirstOnly = false) => {
       if (group.length === 0) return false; // Ensure group has at least one item
@@ -782,7 +786,7 @@ export default function BookingPages({ BookingData }) {
     0
   );
 
-  console.log("HandlePromo", HandlePromo);
+
 
   const totalSum =
     HandlePromo === false
@@ -1075,10 +1079,6 @@ export default function BookingPages({ BookingData }) {
                       ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 
-                  console.log(
-                    "fieldValue",
-                    formValues[type]?.[i]?.[field.name]
-                  );
 
                   return (
                     <div
@@ -1223,44 +1223,6 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  // const bookingData = {
-  //   AccessKey: "Mekka@24",
-  //   user_id:
-  //     loginPer === true ? JSON.parse(UserID.id !== null ? UserID.id : 0) : 0,
-  //   tour_id: JSON.parse(TourId),
-  //   person:
-  //     loginPer == true
-  //       ? JSON.stringify(userData)
-  //       : JSON.stringify(formValues.Adult[0]),
-  //   adult:
-  //     formValues.Adult.slice(1).length === 0
-  //       ? null
-  //       : JSON.stringify(formValues.Adult.slice(1)),
-  //   child:
-  //     formValues.Child.length === 0
-  //       ? undefined
-  //       : JSON.stringify(formValues.Child),
-  //   baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
-  //   departure: JSON.parse(
-  //     selectDeparture?.value === undefined ? 0 : selectDeparture?.value
-  //   ),
-  //   adult_price: JSON.parse(adultData.length === 0 ? 0 : adultData[0]?.default),
-  //   child_price: JSON.parse(
-  //     Childrendata.length === 0 ? 0 : Childrendata[0]?.default
-  //   ),
-  //   baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
-  //   total: totalSum,
-  //   amount_paid: JSON.parse(TotalPaidAmount),
-  //   coupon_name: Discount?.coupon_name || "",
-  //   coupon_amount: Discount?.coupon_amount || 0,
-  //   coupon_percentage: Discount?.coupon_percentage || 0,
-  //   mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
-  //   madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
-  //   flight_id: BookingSideBar.Airline?.id,
-  //   exclude_flight: JSON.parse(ExcludeFlight),
-  //   tax: JSON.parse(formattedTaxAmount),
-  // };
-
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id:
@@ -1270,15 +1232,6 @@ export default function BookingPages({ BookingData }) {
       loginPer == true
         ? JSON.stringify(userData)
         : JSON.stringify(formValues.Adult[0]),
-    // adult:
-    //   formValues.Adult.slice(1).length === 0
-    //     ? " " // blank space
-    //     : JSON.stringify(formValues.Adult.slice(1)),
-    // child:
-    //   formValues.Child.length === 0
-    //     ? undefined
-    //     : JSON.stringify(formValues.Child),
-
         ...(formValues.Adult.slice(1).length !== 0 && {adult : JSON.stringify(formValues.Adult.slice(1))}),
         ...(formValues.Child.length !== 0 && {child : JSON.stringify(formValues.Child)}),
     // Exclude the baby field if its length is 0
@@ -1286,15 +1239,15 @@ export default function BookingPages({ BookingData }) {
       baby: JSON.stringify(formValues.Baby),
     }),
     departure: JSON.parse(
-      selectDeparture?.value === undefined ? 0 : selectDeparture?.value
+      BookingSideBar?.Departure?.value === undefined ? 0 : BookingSideBar?.Departure?.value
     ),
     adult_price: JSON.parse(adultData.length === 0 ? 0 : adultData[0]?.default),
     child_price: JSON.parse(
       Childrendata.length === 0 ? 0 : Childrendata[0]?.default
     ),
     baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
-    total: totalSum,
-    amount_paid: JSON.parse(TotalPaidAmount),
+    total: JSON.parse(TotalPaidAmount) ,  // old value :- totalSum
+    amount_paid:  0 ,  // OLD VALUE :- JSON.parse(TotalPaidAmount)
     coupon_name: Discount?.coupon_name || "",
     coupon_amount: Discount?.coupon_amount || 0,
     coupon_percentage: Discount?.coupon_percentage || 0,
@@ -1338,17 +1291,14 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  console.log("bookingData", bookingData);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (typeof window !== "undefined") {
       localStorage.setItem("BookingData", JSON.stringify(bookingData));
-      // localStorage.setItem(
-      //   "PackageBookingData",
-      //   JSON.stringify(PackageBookingData)
-      // );
+      localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
     }
 
     handleUpdateLocalStorage();
@@ -1431,7 +1381,7 @@ export default function BookingPages({ BookingData }) {
                     <Image
                       width={90}
                       height={84}
-                      src="/img/tourCards/1/13.jpeg"
+                      src={BookingSideBar.TourThumbnail}
                       alt="image"
                     />
                     <div className="ml-20">
@@ -1468,7 +1418,7 @@ export default function BookingPages({ BookingData }) {
                           ? "MED"
                           : BookingSideBar?.To === "Hajj"
                           ? "JED"
-                          : "other"}
+                          : "ALL"}
                       </div>
                     </div>
 
@@ -1483,8 +1433,8 @@ export default function BookingPages({ BookingData }) {
                         </div>
                         <div className="text-start">
                           {translate("Departure")} :{" "}
-                          {BookingSideBar?.Departure?.[1]} -{" "}
-                          {BookingSideBar?.Departure?.[0]}
+                          {BookingSideBar?.Departure?.name} 
+                          {/* {BookingSideBar?.Departure?.[0]} */}
                         </div>
                       </div>
                     </div>
@@ -1514,7 +1464,7 @@ export default function BookingPages({ BookingData }) {
                       </div>
                       <div className="text-start">
                         {translate("Max Luggage Per Person")} :{" "}
-                        {BookingSideBar?.Airline?.luggage} kg
+                        {BookingSideBar?.Airline?.luggage === null ? ' null aa raha hei ! ' : BookingSideBar?.Airline?.luggage} kg
                       </div>
                     </div>
 

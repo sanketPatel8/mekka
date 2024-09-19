@@ -10,7 +10,7 @@ import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
 
-export default function TourSingleSidebar({ PAckageData }) {
+export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
   const {
     prices,
     HotelSelect,
@@ -19,8 +19,6 @@ export default function TourSingleSidebar({ PAckageData }) {
     setSelectedFlights,
     total,
     setTotal,
-    selectDeparture,
-    setselectDeparture,
     selectedCheckbox,
     setselectedCheckbox,
     setExcludeFlight,
@@ -43,6 +41,10 @@ export default function TourSingleSidebar({ PAckageData }) {
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
   const [SElectedDeparturePrice, setSElectedDeparturePrice] = useState(0);
   const [Render, setRender] = useState(false);
+
+  const [selectDeparture, setselectDeparture] = useState({
+    name : ""
+  });
 
   const [LocalData, setLocalData] = useState([]);
 
@@ -81,6 +83,7 @@ export default function TourSingleSidebar({ PAckageData }) {
         id: firstFlight.flight_id,
         name: firstFlight.airline_name,
         price: firstFlight.flight_amount,
+        luggage : firstFlight.luggage
       });
       setSelectedAirlinePrice(firstFlight.flight_amount);
     }
@@ -98,6 +101,9 @@ export default function TourSingleSidebar({ PAckageData }) {
       setRender(true);
     }
   }, [Render]);
+
+  console.log("selectedFlights" , selectedFlights);
+  
 
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
@@ -381,11 +387,14 @@ export default function TourSingleSidebar({ PAckageData }) {
       Children: childrenTotal,
     };
 
-    console.log("newPriceAdultArray", newPriceAdultArray);
+   
 
     setPriceObject(newPriceArray);
     setPrevAdultSelect(newPriceAdultArray); // assuming you are setting this somewhere
   };
+
+  console.log(PrevAdultSelect);
+  
 
   useEffect(() => {
     updatePriceObject();
@@ -429,17 +438,23 @@ export default function TourSingleSidebar({ PAckageData }) {
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
 
+  console.log("selectedFlights" , selectedFlights);
+  
 
   const PackageBookingData = {
+    name : SidebarData?.tour_details?.name,
+    type : SidebarData?.tour_details?.type,
+    TourThumbnail :  SidebarData?.tour_details?.tour_image[0]  ,
     Airline: selectedFlights,
     To: SidebarData?.tour_details?.travel,
-    Departure: [SidebarData?.tour_details?.date_begin, selectDeparture?.name],
+    Departure: selectDeparture,
     Return: SidebarData?.tour_details?.date_end,
     OfferedLanguages: SidebarData?.en_language,
-    MaxLuggagePerPerson: SidebarData?.tour_details?.baggage,
+    MaxLuggagePerPerson: 0,
     MakkaHotel: mekkaHotel,
     MadinaHotel: madinaHotel,
     FlightAndHotel: FlightAndHotelPrice,
+    duration : SidebarData?.tour_details?.travel_duration
   };
 
   const handleBooking = () => {
@@ -457,10 +472,6 @@ export default function TourSingleSidebar({ PAckageData }) {
 
     setRender(true);
     updateAdultsObject();
-
-    console.log("SidebarData?.tour_details?.name" , SidebarData?.tour_details?.name);
-    console.log("selectedFlights?.name" , selectedFlights?.name);
-    
 
     router.push(
       `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${SidebarData?.tour_details?.type}&selectedflight=${selectedFlights?.name === undefined ? '' : selectedFlights?.name}`
@@ -486,6 +497,9 @@ export default function TourSingleSidebar({ PAckageData }) {
       setChildrenNumber((prev) => Math.max(prev - 1, 0));
     }
   };
+
+  console.log("selectDeparture" , selectDeparture);
+  
 
   return (
     <div className="tourSingleSidebar">
@@ -740,7 +754,7 @@ export default function TourSingleSidebar({ PAckageData }) {
                   <div className="searchFormItem__content">
                     <h5>Departure</h5>
                     <div className={`js-select-control-chosen `}>
-                      {selectDeparture?.name ? selectDeparture?.name : ""}
+                      {selectDeparture?.name ? selectDeparture?.name : "Departure"}
                     </div>
                   </div>
                   <div className="searchFormItem__icon_chevron">
