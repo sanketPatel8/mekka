@@ -62,12 +62,19 @@ export default function PageData() {
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);
+      route.push('#redirect')
     } catch (e) {
       console.log(e);
     }
   };
 
+  console.log("FilterSidebar" , FilterSidebar);
+  
+
   const onPageChange = async (pageIndex) => {
+
+    console.log("pageIndex" , pageIndex);
+    
 
     const tourType =
       searchParams.get("TourType") === undefined
@@ -91,11 +98,11 @@ export default function PageData() {
       console.log("fetch search data");
       
     } else if (FilterSidebar) {
-      await FetchFilterData(pageIndex); fetchListing
+      await fetchListing(pageIndex); 
       console.log("fetch Filter Data");
       
     } else {
-      await fetchListing(pageIndex);
+      await FetchFilterData(pageIndex);
       console.log("fetch Listning Data");
       
     }
@@ -127,7 +134,6 @@ export default function PageData() {
         form: formData,
         url: "tourfilter",
       });
-      console.log(response);
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);

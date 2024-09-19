@@ -192,7 +192,7 @@ export default function BookingPages({ BookingData }) {
     }
   }, []);
 
-  // for nationality 
+  // for nationality
 
   const nationalities = [
     "Afghan",
@@ -387,9 +387,8 @@ export default function BookingPages({ BookingData }) {
     "Vietnamese",
     "Yemeni",
     "Zambian",
-    "Zimbabwean"
+    "Zimbabwean",
   ];
-  
 
   // for adult prices array
 
@@ -674,8 +673,6 @@ export default function BookingPages({ BookingData }) {
       const addivalue = JSON.parse(newPrice);
       const multiPrice = prevPrice + addivalue;
 
-
-
       // Step 3: Update the price of the item
       const updatedItem = { ...itemsOfType[index], price: multiPrice };
 
@@ -786,6 +783,8 @@ export default function BookingPages({ BookingData }) {
     0
   );
 
+  console.log("HandlePromo", HandlePromo);
+
   const totalSum =
     HandlePromo === false
       ? PackagePrices + adultadiPrices + adPrice
@@ -799,7 +798,7 @@ export default function BookingPages({ BookingData }) {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       coupon_code: promo,
-      total_amount: PackagePrices + adultadiPrices,
+      total_amount: PackagePrices + adultadiPrices + adPrice,
     };
 
     try {
@@ -883,12 +882,11 @@ export default function BookingPages({ BookingData }) {
   const handlePromoremove = () => {
     if (HandlePromo == true) {
       setHandlePromo(false);
-      showSuccessToast("Remove Sucessfull")
+      showSuccessToast("Remove Sucessfull");
     } else if (HandlePromo == false) {
       setHandlePromo(true);
     }
     setShowbtnName(false);
-    
   };
 
   useEffect(() => {
@@ -985,7 +983,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Nationality"),
           type: "select",
           name: "nationality",
-          options: ["Indian", "German", "Canadian"],
+          options: nationalities,
         },
       ],
       Child: [
@@ -1002,7 +1000,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Nationality"),
           type: "select",
           name: "nationality",
-          options: ["Indian", "German", "Canadian"],
+          options: nationalities,
         },
       ],
       Baby: [
@@ -1019,7 +1017,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Nationality"),
           type: "select",
           name: "nationality",
-          options: ["Indian", "German", "Canadian"],
+          options: nationalities,
         },
       ],
     };
@@ -1071,11 +1069,17 @@ export default function BookingPages({ BookingData }) {
 
             <div className="y-gap-30 contactForm px-20 py-20">
               <div className="my-3 row">
+            
                 {currentFields?.map((field, index) => {
                   const fieldValue =
                     loginPer === true && type === "Adult" && i === 0
                       ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
+
+                  console.log(
+                    "fieldValue",
+                    formValues[type]?.[i]?.[field.name]
+                  );
 
                   return (
                     <div
@@ -1087,9 +1091,11 @@ export default function BookingPages({ BookingData }) {
                       <div className="form-input my-1">
                         {field.type === "select" ? (
                           <>
+                            
+
                             <select
                               name={field.name}
-                              value={fieldValue}
+                              value={fieldValue || ""} // Ensuring the value is set correctly
                               onChange={(e) => handleInputChange(type, i, e)}
                               required
                               className="form-control"
@@ -1106,13 +1112,15 @@ export default function BookingPages({ BookingData }) {
                                 </option>
                               ))}
                             </select>
+
                             <label className="lh-1 text-16 text-light-1">
                               {fieldValue
-                                ? `${field.label}: ${fieldValue}`
+                                ? `${field.label}: ${
+                                    fieldValue.charAt(0).toUpperCase() +
+                                    fieldValue.slice(1)
+                                  }`
                                 : field.label}
                             </label>
-
-                           
                           </>
                         ) : (
                           <>
@@ -1216,6 +1224,44 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  // const bookingData = {
+  //   AccessKey: "Mekka@24",
+  //   user_id:
+  //     loginPer === true ? JSON.parse(UserID.id !== null ? UserID.id : 0) : 0,
+  //   tour_id: JSON.parse(TourId),
+  //   person:
+  //     loginPer == true
+  //       ? JSON.stringify(userData)
+  //       : JSON.stringify(formValues.Adult[0]),
+  //   adult:
+  //     formValues.Adult.slice(1).length === 0
+  //       ? null
+  //       : JSON.stringify(formValues.Adult.slice(1)),
+  //   child:
+  //     formValues.Child.length === 0
+  //       ? undefined
+  //       : JSON.stringify(formValues.Child),
+  //   baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+  //   departure: JSON.parse(
+  //     selectDeparture?.value === undefined ? 0 : selectDeparture?.value
+  //   ),
+  //   adult_price: JSON.parse(adultData.length === 0 ? 0 : adultData[0]?.default),
+  //   child_price: JSON.parse(
+  //     Childrendata.length === 0 ? 0 : Childrendata[0]?.default
+  //   ),
+  //   baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
+  //   total: totalSum,
+  //   amount_paid: JSON.parse(TotalPaidAmount),
+  //   coupon_name: Discount?.coupon_name || "",
+  //   coupon_amount: Discount?.coupon_amount || 0,
+  //   coupon_percentage: Discount?.coupon_percentage || 0,
+  //   mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
+  //   madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
+  //   flight_id: BookingSideBar.Airline?.id,
+  //   exclude_flight: JSON.parse(ExcludeFlight),
+  //   tax: JSON.parse(formattedTaxAmount),
+  // };
+
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id:
@@ -1225,15 +1271,21 @@ export default function BookingPages({ BookingData }) {
       loginPer == true
         ? JSON.stringify(userData)
         : JSON.stringify(formValues.Adult[0]),
-    adult:
-      formValues.Adult.slice(1).length === 0
-        ? null
-        : JSON.stringify(formValues.Adult.slice(1)),
-    child:
-      formValues.Child.length === 0
-        ? undefined
-        : JSON.stringify(formValues.Child),
-    baby: formValues.Baby.length === 0 ? null : JSON.stringify(formValues.Baby),
+    // adult:
+    //   formValues.Adult.slice(1).length === 0
+    //     ? " " // blank space
+    //     : JSON.stringify(formValues.Adult.slice(1)),
+    // child:
+    //   formValues.Child.length === 0
+    //     ? undefined
+    //     : JSON.stringify(formValues.Child),
+
+        ...(formValues.Adult.slice(1).length !== 0 && {adult : JSON.stringify(formValues.Adult.slice(1))}),
+        ...(formValues.Child.length !== 0 && {child : JSON.stringify(formValues.Child)}),
+    // Exclude the baby field if its length is 0
+    ...(formValues.Baby.length !== 0 && {
+      baby: JSON.stringify(formValues.Baby),
+    }),
     departure: JSON.parse(
       selectDeparture?.value === undefined ? 0 : selectDeparture?.value
     ),
@@ -1287,8 +1339,7 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  console.log("bookingData" , bookingData);
-  
+  console.log("bookingData", bookingData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -1464,7 +1515,7 @@ export default function BookingPages({ BookingData }) {
                       </div>
                       <div className="text-start">
                         {translate("Max Luggage Per Person")} :{" "}
-                        {BookingSideBar?.MaxLuggagePerPerson} kg
+                        {BookingSideBar?.Airline?.luggage} kg
                       </div>
                     </div>
 
@@ -1549,7 +1600,6 @@ export default function BookingPages({ BookingData }) {
                             className="button -sm -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
                             onClick={handlePromoSubmit}
                             style={{ whiteSpace: "nowrap" }}
-                            
                           >
                             {translate("Apply")}
                           </button>

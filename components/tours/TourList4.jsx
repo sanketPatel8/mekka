@@ -30,7 +30,7 @@ export default function TourList4({
   setValue,
   handleSelectionChange,
 }) {
-  console.log(handleSelectionChange, "handleSelectionChange tourlist");
+
 
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
@@ -303,8 +303,6 @@ export default function TourList4({
                   startParam={startParam}
                   onPageChange={onPageChange}
                 />
-
-               
 
                 <div className="text-14 text-center mt-20">
                   Showing results 1 - {TourData.length} of {count}

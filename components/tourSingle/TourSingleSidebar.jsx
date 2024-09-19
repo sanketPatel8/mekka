@@ -153,6 +153,7 @@ export default function TourSingleSidebar({ PAckageData }) {
       id: elm.flight_id,
       name: elm.airline_name,
       price: elm.flight_amount,
+      luggage : elm.luggage
     };
     setSelectedFlights(selectedFlight); // Replace with the selected flight object
     setSelectedAirlinePrice(selectedFlight.price);
@@ -410,8 +411,8 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
       SidebarData?.tour_details?.flight_included == "0" || SidebarData?.tour_details?.flight_exclude == '0'
-        ? 0
-        : SelectedAirlinePrice
+        ? SelectedAirlinePrice
+        : 0
     ) 
     + JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price)
 
@@ -420,13 +421,16 @@ export default function TourSingleSidebar({ PAckageData }) {
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse( 
       SidebarData?.tour_details?.flight_included == "0" || SidebarData?.tour_details?.flight_exclude == '0'
-        ? 0
-        : SelectedAirlinePrice
+        ? SelectedAirlinePrice
+        : 0
     )
     + JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price)
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
+
+console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
+
 
   const PackageBookingData = {
     Airline: selectedFlights,
@@ -495,106 +499,65 @@ export default function TourSingleSidebar({ PAckageData }) {
     }
   };
 
-  console.log("LocalData", LocalData);
+ 
 
   return (
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
-      {LocalData.length === 0
-        ? SidebarData?.tour_price?.map((group, index) => {
-            let count, typeLabel;
+        {SidebarData?.tour_price?.map((group, index) => {
+          let count, typeLabel;
 
-            if (group.price_type === "1") {
-              count = adultNumber;
-              typeLabel = "Adult";
-            } else if (group.price_type === "2") {
-              count = youthNumber;
-              typeLabel = "Child";
-            } else if (group.price_type === "3") {
-              count = childrenNumber;
-              typeLabel = "Baby";
-            } else {
-              return null;
-            }
+          if (group.price_type === "1") {
+            count = adultNumber;
+            typeLabel = "Adult";
+          } else if (group.price_type === "2") {
+            count = youthNumber;
+            typeLabel = "Child";
+          } else if (group.price_type === "3") {
+            count = childrenNumber;
+            typeLabel = "Baby";
+          } else {
+            return null;
+          }
 
-            return (
-              <div key={index} className="mt-15">
-                <div className="d-flex items-center justify-between">
-                  <div className="text-14 col-8">
-                    {group.price_type === "1"
-                      ? "Adult (18+ Years)"
-                      : group.price_type === "2"
-                      ? "Child (13-17 Years)"
-                      : "Baby (0-12 Years)"}
-                    <span className="fw-500">
-                      {(group.price * count).toFixed(2)} €
-                    </span>
+          return (
+            <div key={index} className="mt-15">
+              <div className="d-flex items-center justify-between">
+                <div className="text-14 col-8">
+                  {group.price_type === "1"
+                    ? "Adult (18+ Years)"
+                    : group.price_type === "2"
+                    ? "Child (13-17 Years)"
+                    : "Baby (0-12 Years)"}
+                  <span className="fw-500">
+                    {(group.price * count).toFixed(2)} €
+                  </span>
+                </div>
+
+                <div className="d-flex items-center js-counter col-3">
+                  <button
+                    onClick={() => handleDecrement(group.price_type)}
+                    className="button size-30 border-1 rounded-full js-down col-2"
+                  >
+                    <i className="icon-minus text-10 col-3"></i>
+                  </button>
+
+                  <div className="flex-center ml-10 mr-10 col-2">
+                    <div className="text-14 size-20 js-count">{count}</div>
                   </div>
 
-                  <div className="d-flex items-center js-counter col-3">
-                    <button
-                      onClick={() => handleDecrement(group.price_type)}
-                      className="button size-30 border-1 rounded-full js-down col-2"
-                    >
-                      <i className="icon-minus text-10 col-3"></i>
-                    </button>
-
-                    <div className="flex-center ml-10 mr-10 col-2">
-                      <div className="text-14 size-20 js-count">{count}</div>
-                    </div>
-
-                    <button
-                      onClick={() => handleIncrement(group.price_type)}
-                      className="button size-30 border-1 rounded-full js-up"
-                    >
-                      <i className="icon-plus text-10"></i>
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleIncrement(group.price_type)}
+                    className="button size-30 border-1 rounded-full js-up"
+                  >
+                    <i className="icon-plus text-10"></i>
+                  </button>
                 </div>
               </div>
-            );
-          })
-        : LocalData?.map((group, index) => {
-            let count, typeLabel;
-
-            return (
-              <div key={index} className="mt-15">
-                <div className="d-flex items-center justify-between">
-                  <div className="text-14 col-8">
-                    {group.label == "Adult"
-                      ? "Adult (18+ Years)"
-                      : group.label === "Child"
-                      ? "Child (13-17 Years)"
-                      : "Baby (0-12 Years)"}
-                    <span className="fw-500">{group.grandTotal} €</span>
-                  </div>
-
-                  <div className="d-flex items-center js-counter col-3">
-                    <button
-                      onClick={() => handleDecrement(group.price_type)}
-                      className="button size-30 border-1 rounded-full js-down col-2"
-                    >
-                      <i className="icon-minus text-10 col-3"></i>
-                    </button>
-
-                    <div className="flex-center ml-10 mr-10 col-2">
-                      <div className="text-14 size-20 js-count">
-                        {group.count}
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => handleIncrement(group.price_type)}
-                      className="button size-30 border-1 rounded-full js-up"
-                    >
-                      <i className="icon-plus text-10"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+            </div>
+          );
+        })}
 
       <hr />
 
