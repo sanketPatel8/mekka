@@ -18,6 +18,7 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
   };
 
   const handleLogoutAndCloseSidebar = async () => {
+    localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
     console.log("hello logout ");
     
   }

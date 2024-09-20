@@ -12,13 +12,17 @@ import { faHotel, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import Stars from "@/components/common/Stars";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { POST } from "@/app/utils/api/post";
+import { ClipLoader } from "react-spinners";
+
 
 const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [UserID, setUserID] = useState(0);
+  const [UserID, setUserID] = useState(null);
   const [BookingsCustomer, setBookingsCustomer] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchListing = async (id) => {
     const formData = new FormData();
@@ -30,13 +34,31 @@ export default function DbBooking() {
         form: formData,
         url: "my_bookings",
       });
-      append(response);
+      setBookingsCustomer(response?.Bookings);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
+    console.log("First Time Data Load ");
+
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem("user");
+
+      if (userData && userData !== "undefined") {
+        try {
+          const userid = JSON.parse(userData);
+
+          if (userid && userid.user) {
+            setUserID(userid.user);
+          }
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+      }
+    }
+
     if (typeof window !== "undefined") {
       const handleResize = () => {
         if (window.innerWidth >= 1000) {
@@ -57,34 +79,23 @@ export default function DbBooking() {
         window.removeEventListener("resize", handleResize);
       };
     }
-
-    if (typeof window !== "undefined") {
-      if (userData && userData !== "undefined") {
-        try {
-          const userid = JSON.parse(userData);
-
-          // Extract the user object
-          if (userid && userid.user) {
-            setUserID(userid.user);
-          }
-        } catch (error) {
-          console.error("Error parsing userData:", error);
-        }
-      }
-    }
-    
   }, []);
-
-
 
   useEffect(() => {
-    if(UserID !== null ) {
-      fetchListing(UserID);
-    }
-  }, []);
+    if (UserID !== null) fetchListing(UserID?.id);
+  }, [UserID]);
 
-  console.log("BookingsCustomer" , BookingsCustomer);
-  
+  console.log("BookingsCustomer", BookingsCustomer);
+
+  useEffect(() => {
+    if (BookingsCustomer && BookingsCustomer.length === 0) {
+      setIsLoading(false);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+  }, [BookingsCustomer]);
 
   const { translate } = useTranslation();
 
@@ -103,203 +114,146 @@ export default function DbBooking() {
           <h1 className="text-30">{translate("My Booking")}</h1>
 
           <div className="row mt-20">
-            {/* {tourDataTwoOne.map((elm, i) => (
+            {isLoading ? (
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: "200px" }}
+              >
+                <ClipLoader color="#DAC04F" size={50} />
+              </div>
+            ) : BookingsCustomer && BookingsCustomer.length === 0 ? (
+              <div className="d-flex justify-content-center align-items-center">
+                <p>No Tours Available</p>
+              </div>
+            ) : (
+              BookingsCustomer?.map((elm, i) => (
                 <div className="col-12 mb-15 " key={i}>
                   <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
                       <Image
                         width={420}
                         height={390}
-                        src={elm.imageSrc}
+                        src={elm?.tour_details?.tour_image}
                         alt="image"
                       />
-                      <button className="tourCard__favorite"  >Direct Flight</button>
+                      <button
+                        className={`tourCard__favorite ${
+                          elm?.tour_details?.flight_included == "0"
+                            ? "d-none"
+                            : "d-block"
+                        }`}
+                      >
+                        Direct Flight
+                      </button>
                     </div>
-
-                    
 
                     <div className="tourCard__content">
                       <div className="tourCard__location border_yellow px-2">
-                          <FaPersonWalking  color="white" size={18} />
-                        {elm.location}
+                        <FaPersonWalking color="white" size={18} />
+                        Zu Kaaba {elm?.tour_details?.distance_to_hotel}
                       </div>
 
                       <h3 className="tourCard__title mt-5">
-                        <span>{elm.title}</span>
+                        <span>
+                          {elm?.tour_details?.type} - {elm?.tour_details?.name}
+                        </span>
                       </h3>
 
-                      <p className="tourCard__text mt-5 items-center d-flex"><FontAwesomeIcon icon={faHotel} className="px-1 text-accent-1"/>
-                       {elm.description} (3 <FaStar color="#dabf4f" className="mx-1" />)
+                      <p className="tourCard__text mt-5 items-center d-flex">
+                        <FontAwesomeIcon
+                          icon={faHotel}
+                          className="px-1 text-accent-1"
+                        />
+                        {elm?.mekkahotel?.hotel_name} (
+                        {elm?.mekkahotel?.hotel_stars}{" "}
+                        <FaStar color="#dabf4f" className="mx-1" />)
                       </p>
-                        <p className="tourCard__text mt-5 items-center d-flex "><FontAwesomeIcon icon={faHotel}  className="px-1 text-accent-1" />
-                         {elm.description2} (5 <FaStar color="#dabf4f" className="mx-1 text-accent-1" />)
-                         </p>
-                        <p className="tourCard__text mt-5"><FontAwesomeIcon icon={faQuoteRight}  className="px-1 text-accent-1" />
-                         {elm.description3}
-                         </p>
+                      <p className="tourCard__text mt-5 items-center d-flex ">
+                        <FontAwesomeIcon
+                          icon={faHotel}
+                          className="px-1 text-accent-1"
+                        />
+                        {elm?.madinahotel?.hotel_name} (5{" "}
+                        <FaStar
+                          color="#dabf4f"
+                          className="mx-1 text-accent-1"
+                        />
+                        )
+                      </p>
+                      <p className="tourCard__text mt-5">
+                        <FontAwesomeIcon
+                          icon={faQuoteRight}
+                          className="px-1 text-accent-1"
+                        />
+                        {elm?.tour_details?.type}
+                      </p>
 
-                      <div className="d-flex items-center mt-5">  
+                      <div className="d-flex items-center mt-5">
                         <div className="d-flex items-center x-gap-5">
-                          <Stars star={elm.rating} font={12} />
+                          <Stars
+                            star={elm?.tour_details?.rating_count}
+                            font={12}
+                          />
                         </div>
 
                         <div className="text-14 ml-10">
                           <span className="fw-500">{elm.rating}</span> (
-                          {elm.ratingCount}) - IDEALGATE
+                          {elm?.tour_details?.rating_count}) -{" "}
+                          {elm?.tour_details?.company_name}
                         </div>
                       </div>
 
                       <div className="Location">
-                          <span>
-                              Departure : London
-                            </span>
-                          </div>
-
-                      
+                        <span>Departure : {elm?.tour_details?.departures}</span>
+                      </div>
 
                       <div className="row x-gap-20 y-gap-5 pt-30">
-                        {elm.features?.map((elm2, i2) => (
-                          <div key={i2} className="col-auto">
-                            <div className="text-14 ">  
-                              {elm2.name}
-                            </div>
-                          </div>
-                        ))}
+                        <div className="text-14 ">
+                          {elm?.tour_details?.date_begin} -{" "}
+                          {elm?.tour_details?.date_end}
+                        </div>
                       </div>
                     </div>
 
                     <div className="tourCard__info tourCard__info_Dash ">
                       <div className="">
-                      <label className={elm.arriving === 'Upcoming'? 'text-orange' : elm.arriving === 'Completed'? 'text-green' : '' }><b>{elm.arriving}</b></label>
-                      <div className="d-flex items-center text-14 ">
+                        <label
+                          className={
+                            elm.arriving === "Upcoming"
+                              ? "text-orange"
+                              : elm.arriving === "Completed"
+                              ? "text-green"
+                              : ""
+                          }
+                        >
+                          <b>{elm.arriving}</b>
+                        </label>
+                        <div className="d-flex items-center text-14 ">
                           <i className="icon-clock mr-10"></i>
-                          {elm.duration}
+                          {elm?.tour_details?.days_of_stay}
+                        </div>
+
+                        <p className="text-center">
+                          Booking No : {elm.reservationNumber}
+                        </p>
+                        <p className="text-center">
+                          Total : {elm?.tour_details?.tour_price} €
+                        </p>
+                        <p className="text-center">Due : {elm.due_payment}</p>
                       </div>
-                     
-                       <p className="text-center">Booking No : #09889</p>
-                        <p className="text-center">Total : {elm.price} €</p>
-                        <p className="text-center">{elm.pending}</p>
-                        
-                      </div>
-                        
-                        <label className="badge bg-secondary"></label>
+
+                      <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
                         <Link href="/customer/booking-details">
-                         {translate("VIEW DETAILS") }
+                          {translate("VIEW DETAILS")}
                         </Link>
                       </button>
                     </div>
                   </div>
                 </div>
-              ))} */}
-            {tourDataTwoOne.map((elm, i) => (
-              <div className="col-12 mb-15 " key={i}>
-                <div className="tourCard -type-2 bg-white">
-                  <div className="tourCard__image">
-                    <Image
-                      width={420}
-                      height={390}
-                      src={elm.imageSrc}
-                      alt="image"
-                    />
-                    <button className="tourCard__favorite">
-                      Direct Flight
-                    </button>
-                  </div>
-
-                  <div className="tourCard__content">
-                    <div className="tourCard__location border_yellow px-2">
-                      <FaPersonWalking color="white" size={18} />
-                      {elm.location}
-                    </div>
-
-                    <h3 className="tourCard__title mt-5">
-                      <span>{elm.title}</span>
-                    </h3>
-
-                    <p className="tourCard__text mt-5 items-center d-flex">
-                      <FontAwesomeIcon
-                        icon={faHotel}
-                        className="px-1 text-accent-1"
-                      />
-                      {elm.description} (3{" "}
-                      <FaStar color="#dabf4f" className="mx-1" />)
-                    </p>
-                    <p className="tourCard__text mt-5 items-center d-flex ">
-                      <FontAwesomeIcon
-                        icon={faHotel}
-                        className="px-1 text-accent-1"
-                      />
-                      {elm.description2} (5{" "}
-                      <FaStar color="#dabf4f" className="mx-1 text-accent-1" />)
-                    </p>
-                    <p className="tourCard__text mt-5">
-                      <FontAwesomeIcon
-                        icon={faQuoteRight}
-                        className="px-1 text-accent-1"
-                      />
-                      {elm.description3}
-                    </p>
-
-                    <div className="d-flex items-center mt-5">
-                      <div className="d-flex items-center x-gap-5">
-                        <Stars star={elm.rating} font={12} />
-                      </div>
-
-                      <div className="text-14 ml-10">
-                        <span className="fw-500">{elm.rating}</span> (
-                        {elm.ratingCount}) - IDEALGATE
-                      </div>
-                    </div>
-
-                    <div className="Location">
-                      <span>Departure : London</span>
-                    </div>
-
-                    <div className="row x-gap-20 y-gap-5 pt-30">
-                      {elm.features?.map((elm2, i2) => (
-                        <div key={i2} className="col-auto">
-                          <div className="text-14 ">{elm2.name}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="tourCard__info tourCard__info_Dash ">
-                    <div className="">
-                      <label
-                        className={
-                          elm.arriving === "Upcoming"
-                            ? "text-orange"
-                            : elm.arriving === "Completed"
-                            ? "text-green"
-                            : ""
-                        }
-                      >
-                        <b>{elm.arriving}</b>
-                      </label>
-                      <div className="d-flex items-center text-14 ">
-                        <i className="icon-clock mr-10"></i>
-                        {elm.duration}
-                      </div>
-
-                      <p className="text-center">Booking No : #09889</p>
-                      <p className="text-center">Total : {elm.price} €</p>
-                      <p className="text-center">{elm.pending}</p>
-                    </div>
-
-                    <label className="badge bg-secondary"></label>
-
-                    <button className="button -sm -outline-accent-1 text-accent-1">
-                      <Link href="/customer/booking-details">
-                        {translate("VIEW DETAILS")}
-                      </Link>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
           <div className="text-center pt-30">

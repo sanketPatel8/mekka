@@ -71,7 +71,23 @@ const HeroSearch = ({ CustomClass }) => {
     closeDropdown();
   };
 
+  
+
   const person = Object.values(counts).reduce((total, count) => total + count, 0);
+
+
+  const handleSearch = () => {
+    // Constructing query parameters
+    const queryParams = [];
+    if (location) queryParams.push(`TourType=${location}`);
+    if (startDate) queryParams.push(`StartDate=${startDate}`);
+    if (endDate) queryParams.push(`EndDate=${endDate}`);
+    if (person) queryParams.push(`person=${person}`);
+
+    const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+
+    return queryString;
+  };
 
   return (
     <div ref={dropDownContainer}>
@@ -130,7 +146,7 @@ const HeroSearch = ({ CustomClass }) => {
         </div>
 
         <Link
-          href={`/tour/?TourType=${location}&StartDate=${startDate}&EndDate=${endDate}&person=${person}`}
+          href={`/tour/${handleSearch()}`}
           className="searchForm__button"
         >
           <button className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}>

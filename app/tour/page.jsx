@@ -65,8 +65,6 @@ export default function PageData() {
     }
   };
 
-  console.log("FilterSidebar", FilterSidebar);
-
   const onPageChange = async (pageIndex) => {
     console.log("pageIndex", pageIndex);
 
@@ -100,17 +98,21 @@ export default function PageData() {
   };
 
   useEffect(() => {
+    FetchTourDataAPi()
     fetchListing();
   }, []);
 
   const isMounted = useRef(false);
+  const Lan_ids = FilterSidebar?.selectedLanguages?.map(
+    (language) => language.id
+  );
 
   const FetchFilterData = async (pageIndex) => {
     const formData = new FormData();
 
     formData.append("start", pageIndex || 0);
     formData.append("type", FilterSidebar?.selectedTourTypes.join(", "));
-    formData.append("language", LanArray.join(","));
+    formData.append("language", Lan_ids.join(","));
     formData.append("departure", FilterSidebar?.selectedCities.join(", "));
     formData.append("min_price", value[0]);
     formData.append("max_price", value[1]);
@@ -130,13 +132,6 @@ export default function PageData() {
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    const newLanArray = FilterSidebar?.selectedLanguages.map(
-      (_, index) => index
-    );
-    setLanArray(newLanArray);
-  }, [FilterSidebar?.selectedLanguages]);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -180,10 +175,6 @@ export default function PageData() {
       showErrorToast("An error occurred during registration.");
     }
   };
-
-  useEffect(() => {
-    FetchTourDataAPi();
-  }, []);
 
   useEffect(() => {
     const tourType =

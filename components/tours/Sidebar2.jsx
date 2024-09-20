@@ -6,9 +6,6 @@ import RangeSlider from "@/components/common/RangeSlider";
 import Stars from "@/components/common/Stars";
 import PriceRangeBar from "@/components/common/PriceRangeBar";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { post } from "@/app/utils/api";
-import { showErrorToast } from "@/app/utils/tost";
-import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function Sidebar2({
   FliterData,
@@ -23,6 +20,7 @@ export default function Sidebar2({
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const handleChange = (key, value) => {
     handleSelectionChange(key, value);
+    
   };
 
   useEffect(() => {
