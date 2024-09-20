@@ -26,7 +26,6 @@ export default function Login({ onLoginSuccess }) {
   const router = useRouter();
 
   const LoginUpdate = () => {
-    alert("run log in function")
     if (typeof window !== "undefined") {
       // Retrieve the current value
       const loginStatus = JSON.parse(
