@@ -22,12 +22,12 @@ const HeroSearch = ({ CustomClass }) => {
   const { location, setLocation, calender, counts } = useGlobalState();
   
   // Handle undefined calendar values gracefully
-  const startDate = calender?.[0] ? calender[0].format("YYYY-MM-DD") : "";
-  const endDate = calender?.[1] ? calender[1].format("YYYY-MM-DD") : "";
+  const startDate = calender?.[0] ? calender[0].format("YYYY.MM.DD") : "";
+  const endDate = calender?.[1] ? calender[1].format("YYYY.MM.DD") : "";
 
   const handleDateChange = (newDates) => {
     setDates(newDates);
-    const formattedDates = newDates.map((date) => date.format("YYYY-MM-DD"));
+    const formattedDates = newDates.map((date) => date.format("YYYY.MM.DD"));
     console.log("formattedDates", formattedDates);
   };
 
@@ -74,6 +74,7 @@ const HeroSearch = ({ CustomClass }) => {
   
 
   const person = Object.values(counts).reduce((total, count) => total + count, 0);
+  
 
 
   const handleSearch = () => {

@@ -156,6 +156,8 @@ export default function PageData() {
   };
 
   const fetchSearch1Data = async ({ tourType, startDate, endDate, person }) => {
+  // console.log("endDate" , endDate);
+    
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       Keyword: "",
@@ -186,13 +188,16 @@ export default function PageData() {
         ? ""
         : searchParams.get("StartDate");
     const endDate =
-      searchParams.get("enddate") === undefined
+      searchParams.get("EndDate") === undefined
         ? ""
-        : searchParams.get("enddate");
+        : searchParams.get("EndDate");
     const person =
       searchParams.get("person") === undefined
         ? ""
         : searchParams.get("person");
+
+        console.log("endDate" , endDate);
+        
     if (
       (tourType !== null && tourType !== undefined && tourType !== "") ||
       (startDate !== null && startDate !== undefined && startDate !== "") ||
