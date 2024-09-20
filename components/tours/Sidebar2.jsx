@@ -104,7 +104,7 @@ export default function Sidebar2({
                                   </label>
                                 </div>
                                 <label htmlFor={elm} className="lh-16 ml-15">
-                                  {elm}
+                                  {translate(elm)}
                                 </label>
                               </div>
                             </div>
