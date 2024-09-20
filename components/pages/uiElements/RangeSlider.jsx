@@ -9,7 +9,7 @@ export default function Range() {
       <div className="col-lg-8">
         <div className="js-price-rangeSlider">
           <div className="px-5">
-            <RangeSlider />
+            {/* <RangeSlider /> */}
           </div>
         </div>
       </div>
