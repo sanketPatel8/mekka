@@ -18,11 +18,32 @@ export default function Login({ onLoginSuccess }) {
     email: "",
     password: "",
   });
-  const { LoginPer, setLoginPer } = useGlobalState()
+  const { LoginPer, setLoginPer } = useGlobalState();
   const [LoginISChacked, setLoginISChacked] = useState(false);
   const { dispatch } = useAuthContext();
+  const [LoginChecked, setLoginChecked] = useState(true)
 
   const router = useRouter();
+
+  const LoginUpdate = () => {
+    alert("run log in function")
+    if (typeof window !== "undefined") {
+      // Retrieve the current value
+      const loginStatus = JSON.parse(
+        localStorage.getItem("CustomerLoginCheck")
+      );
+
+      // Update the value (e.g., toggle between true and false)
+      const updatedStatus = loginStatus !== undefined ? true : false 
+
+      // Save the updated value back to localStorage
+      localStorage.setItem("CustomerLoginCheck", JSON.stringify(updatedStatus));
+
+      console.log("Updated login status:", updatedStatus); // Optional: to verify the change
+
+    }
+  }
+  
 
   const { translate } = useTranslation();
 
@@ -38,16 +59,15 @@ export default function Login({ onLoginSuccess }) {
   const handleLoginCheckboxChange = (e) => {
     const isChecked = e.target.checked;
     setLoginISChacked(isChecked);
-    typeof window != 'undefined' ? localStorage.setItem("LoginISChacked", isChecked) : '';
+    typeof window != "undefined"
+      ? localStorage.setItem("LoginISChacked", isChecked)
+      : "";
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-
-    
-    Auth.handleForm({ form: e, url: 'login', type: 'Add User', post: post });
-
+    Auth.handleForm({ form: e, url: "login", type: "Add User", post: post });
   };
 
   const post = (data) => {
@@ -60,57 +80,35 @@ export default function Login({ onLoginSuccess }) {
           showErrorToast(resp.message);
         }
 
-        
         if (resp.user.user_type == "vendor") {
-          typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
+          typeof window != "undefined"
+            ? localStorage.setItem("user", JSON.stringify(resp))
+            : "";
           dispatch({ type: "LOGIN", payload: resp });
           showSuccessToast("Login successful!");
           setTimeout(() => {
-            setLoginPer(true)
-            router.push('/vendor/dashboard');
+            setLoginPer(true);
+            router.push("/vendor/dashboard");
+          }, 1000);
+        } else if (resp.user.user_type == "customer") {
+          typeof window != "undefined"
+            ? localStorage.setItem("user", JSON.stringify(resp))
+            : "";
+          dispatch({ type: "LOGIN", payload: resp });
+          showSuccessToast("Login successful!");
+          LoginUpdate()
+          setTimeout(() => {
+            setLoginPer(true);
+            router.push("/");
           }, 1000);
         }
-        else if (resp.user.user_type == "customer") {
-          typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
-          dispatch({ type: "LOGIN", payload: resp });
-          showSuccessToast("Login successful!");
-          setTimeout(() => {
-            setLoginPer(true)
-            router.push('/');
-          }, 1000);
-        } 
+
         
-        // if (resp.data == "" || resp.data == null) {
-        //   toast.error(resp.error);
-        //   setLoading(false);
-        // }
-        // else if (resp.data.business_verified == 0) {
-        //   toast.success("Logged In successfully. Please setup your business now.");
-        //   localStorage.setItem("user", JSON.stringify(resp.data));
-        //   dispatch({ type: "LOGIN", payload: resp.data });
-        //   setLoading(false);
-        //   setTimeout(() => {
-        //     router.push('/vendor/business-information');
-        //   }, 1000);
-        // }
-        // else if (resp.data.business_verified == 1) {
-        //   toast.success("Logged In Successfully.");
-        //   localStorage.setItem("user", JSON.stringify(resp.data));
-        //   dispatch({ type: "LOGIN", payload: resp.data });
-        //   setLoading(false);
-        //   setTimeout(() => {
-        //     router.push('/vendor/booking');
-        //   }, 1000);
-        // } else {
-        //   toast.error(resp.error);
-        //   setLoading(false);
-        // }
       })
       .catch((err) => {
         // showErrorToast("Invalid Email or Password");
       });
   };
-
 
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
@@ -193,9 +191,7 @@ export default function Login({ onLoginSuccess }) {
                   </label>
                 </div>
                 <button>
-                  <Link href="/login/forgot-password">
-                    Lost your password?
-                  </Link>
+                  <Link href="/login/forgot-password">Lost your password?</Link>
                 </button>
               </div>
 
@@ -226,7 +222,10 @@ export default function Login({ onLoginSuccess }) {
                 </div>
 
                 <div className="col">
-                  <button type="button" className="button -md -outline-red-1 text-red-1 col-12">
+                  <button
+                    type="button"
+                    className="button -md -outline-red-1 text-red-1 col-12"
+                  >
                     <FaGoogle size={15} className="mx-1" />
                     {translate("Google")}
                   </button>
@@ -235,7 +234,10 @@ export default function Login({ onLoginSuccess }) {
               <br />
               <div className="row y-gap-15">
                 <div className="col">
-                  <button type="button" className="button -md -outline-dark-1 text-dark-1 col-12">
+                  <button
+                    type="button"
+                    className="button -md -outline-dark-1 text-dark-1 col-12"
+                  >
                     <FaApple size={15} className="mx-1" />
                     {translate("Sign in With Apple")}
                   </button>

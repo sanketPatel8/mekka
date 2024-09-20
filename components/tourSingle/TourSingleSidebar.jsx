@@ -818,7 +818,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
         </div>
       </div>
 
-      <p className="text-right">Including Taxes And Fees</p>
+      
 
       <button
         className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"

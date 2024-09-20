@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import HeaderSerch from "../components/HeaderSerch";
 import MobileMenu from "../components/MobileMenu";
 import Image from "next/image";
@@ -8,21 +8,22 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Language from "../components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { useGlobalState } from "@/app/context/GlobalStateContext";
 import Currency from "../components/Currency";
-import { FaUserPlus } from 'react-icons/fa';
-import { FaUser } from 'react-icons/fa';
+import { FaUserPlus, FaUser } from "react-icons/fa";
+import { ToastContainer } from "react-toastify";
 
-
-export default function Header1({ isLoggedIn }) {
+export default function Header1() {
   const router = useRouter();
-  const { loginPer, setLoginPer } = useGlobalState();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
+  const [LoginCheck, setLoginCheck] = useState(false);
 
   const handleLogoutClick = () => {
-    typeof window != "undefined" ? localStorage.removeItem("token") : null;
-    LogOutUpdate();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
+    }
+    setLoginCheck(false);
     router.push("/");
   };
 
@@ -30,20 +31,31 @@ export default function Header1({ isLoggedIn }) {
     router.push("/login");
   };
 
-  const LogOutUpdate = () => {
-    setLoginPer(false);
-  };
-
   const [locale, setLocale] = useState("DE"); // default locale
 
   useEffect(() => {
+    // Get cookies to set the locale
     const cookies = document.cookie.split(";").reduce((acc, cookie) => {
       const [key, value] = cookie.split("=");
       acc[key.trim()] = value;
       return acc;
     }, {});
+
     if (cookies.locale) {
       setLocale(cookies.locale);
+    }
+
+    // Get the login status from localStorage
+    if (typeof window !== "undefined") {
+      const loginStatus = localStorage.getItem("CustomerLoginCheck");
+
+      if (loginStatus !== null && loginStatus !== "undefined") {
+        try {
+          setLoginCheck(JSON.parse(loginStatus));
+        } catch (error) {
+          console.error("Error parsing login status:", error);
+        }
+      }
     }
   }, []);
 
@@ -99,7 +111,7 @@ export default function Header1({ isLoggedIn }) {
             </button>
 
             <button
-              onClick={loginPer ? handleLogoutClick : handleLoginClick}
+              onClick={LoginCheck ? handleLogoutClick : handleLoginClick}
               className="d-flex ml-10"
             >
               <i className="icon-person text-18"></i>
@@ -114,24 +126,47 @@ export default function Header1({ isLoggedIn }) {
             <div className="d-flex items-center">
               <Currency />
 
-              <Language parentClass="headerDropdown" onLocaleChange={setLocale} locale={locale} />
+              <Language
+                parentClass="headerDropdown"
+                onLocaleChange={setLocale}
+                locale={locale}
+              />
 
               <Link
-                // href={`  ${loginPer == true ? "/Profile-customer" : "/register"} `}
-                href={`  ${loginPer == true ? "/customer/profile" : "/register"} `}
+                href={LoginCheck ? "/customer/profile" : "/register"}
                 className={`mx-2`}
               >
-
-                
-                {loginPer === true ?  <FaUser size={20} /> :   <FaUserPlus size={20} /> }
+                {LoginCheck ? <FaUser size={20} /> : <FaUserPlus size={20} />}
               </Link>
 
-              <button
+              {/* <button
                 className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
-                onClick={loginPer ? handleLogoutClick : handleLoginClick}
+                onClick={LoginCheck ? handleLogoutClick : handleLoginClick}
               >
-                {loginPer === true ? "Log Out" : "Log In"}
-              </button>
+                {LoginCheck ? "Log Out" : "Log In"}
+              </button> */}
+
+              {LoginCheck !== null && (
+                <>
+                  {!LoginCheck && (
+                    <button
+                      className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                      onClick={handleLoginClick}
+                    >
+                      Log In
+                    </button>
+                  )}
+
+                  {LoginCheck && (
+                    <button
+                      className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                      onClick={handleLogoutClick}
+                    >
+                      Log Out
+                    </button>
+                  )}
+                </>
+              )}
             </div>
 
             <button
