@@ -6,11 +6,13 @@ import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { POST } from "@/app/utils/api/post";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("/img/dashboard/addtour/1.jpg");
+  const [UserProfile, setUserProfile] = useState([])
 
   const { user } = useAuthContext();
 
@@ -28,24 +30,27 @@ export default function Profile() {
     }
   };
 
+  const fetchProfile = async () => {
+    const url = "my_profile";
+    const response = await POST.request({
+      url: url,
+      token: `${user?.authorisation.token}`,
+    });
+
+    // Handle case where response.user is a single object
+    if (response.user && typeof response.user === "object") {
+      const userProfile = response.user;
+      setUserProfile(userProfile)
+    } else {
+      console.error("Unexpected response structure:", response);
+    }
+
+    return response.user ? [response.user] : [];
+  };
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      const url = "my_profile";
-      const response = await POST.request({
-        url: url,
-        token: `${user?.authorisation.token}`,
-      });
-  
-      // Handle case where response.user is a single object
-      if (response.user && typeof response.user === "object") {
-        const userProfile = response.user;
-    
-      } else {
-        console.error("Unexpected response structure:", response);
-      }
-  
-      return response.user ? [response.user] : [];
-    };
+
+    fetchProfile()
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
       // setMounted(true);
@@ -71,6 +76,9 @@ export default function Profile() {
     }
   }, []);
 
+  console.log("UserProfile" , UserProfile);
+  
+
   const { translate } = useTranslation();
   return (
     <>
@@ -85,7 +93,7 @@ export default function Profile() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30"> {translate("Profile") } - Customer Name</h1>
+            <h1 className="text-30"> {translate("Profile") } - {UserProfile.name} {UserProfile.surname}</h1>
             <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40 ">
               <h5 className="text-20 fw-500 mb-30">  {translate("Profile Details") }</h5>
 
