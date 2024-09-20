@@ -7,7 +7,7 @@ import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
-import { showSuccessToast } from "@/app/utils/tost";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 
 export default function Profile() {
@@ -19,28 +19,19 @@ export default function Profile() {
     email: "",
     image1: "",
   });
-const [USerData, setUSerData] = useState([])
+  const [passwordData, setPasswordData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
+  const [USerData, setUSerData] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
   console.log("formData", formData?.image1);
 
   const { user } = useAuthContext();
-
-  // const handleImageChange = (event, func) => {
-  //   const file = event.target.files[0];
-
-  //   if (file) {
-  //     const reader = new FileReader();
-
-  //     reader.onloadend = () => {
-  //       func(reader.result);
-  //     };
-
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -84,7 +75,6 @@ const [USerData, setUSerData] = useState([])
     }
 
     fetchProfile();
-
 
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
@@ -134,18 +124,16 @@ const [USerData, setUSerData] = useState([])
     }
   };
 
-
-
   const fetchUpdateProfile = async (type) => {
     const formDatas = new FormData();
-    
-   // console.log("Update data: ", formDatas)
+
+    // console.log("Update data: ", formDatas)
     formDatas.append("id", USerData?.id);
-    formDatas.append('type', "profile");
-    formDatas.append("name" , formData?.name )
-    formDatas.append("surname" , formData?.surname )
-    formDatas.append("email" , formData?.email )
-    formDatas.append("image" , formData.image1 )
+    formDatas.append("type", "profile");
+    formDatas.append("name", formData?.name);
+    formDatas.append("surname", formData?.surname);
+    formDatas.append("email", formData?.email);
+    formDatas.append("image", formData.image1);
 
     try {
       const response = await POST.request({
@@ -162,7 +150,45 @@ const [USerData, setUSerData] = useState([])
   const handleSubmit = async (e) => {
     e.preventDefault();
     //const formType = e.target.value
-    fetchUpdateProfile()
+    fetchUpdateProfile();
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const fetchUpdatePassword = async (type) => {
+    const formDatas = new FormData();
+
+    // console.log("Update data: ", formDatas)
+    formDatas.append("id", USerData?.id);
+    formDatas.append("type", "profile");
+    formDatas.append("old_password", passwordData?.oldPassword);
+    formDatas.append("password", passwordData?.newPassword);
+   
+    try {
+      const response = await POST.request({
+        form: formDatas,
+        url: "update_profile",
+      });
+      showSuccessToast(response?.message);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const submitPasswordForm = (e) => {
+    e.preventDefault();
+    if(passwordData?.confirmPassword === passwordData?.newPassword ){
+      fetchUpdatePassword();
+    }else{
+      showErrorToast("please fill proper details")
+    }
+    console.log(passwordData);
   };
 
   const { translate } = useTranslation();
@@ -327,11 +353,20 @@ const [USerData, setUSerData] = useState([])
                 {translate("Change Password")}
               </h5>
 
-              <div className="contactForm y-gap-30">
+              <form
+                className="contactForm y-gap-30"
+                onSubmit={submitPasswordForm}
+              >
                 <div className="row y-gap-30">
                   <div className="col-md-6">
                     <div className="form-input my-1">
-                      <input type="text" required />
+                      <input
+                        type="text"
+                        name="oldPassword"
+                        value={passwordData.oldPassword}
+                        onChange={handlePasswordChange}
+                        required
+                      />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("Old password")}
                       </label>
@@ -342,7 +377,13 @@ const [USerData, setUSerData] = useState([])
                 <div className="row y-gap-30">
                   <div className="col-md-6">
                     <div className="form-input my-1">
-                      <input type="text" required />
+                      <input
+                        type="text"
+                        name="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
+                        required
+                      />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("New password")}
                       </label>
@@ -353,7 +394,13 @@ const [USerData, setUSerData] = useState([])
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-input my-1">
-                      <input type="text" required />
+                      <input
+                        type="text"
+                        name="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={handlePasswordChange}
+                        required
+                      />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("Confirm new password")}
                       </label>
@@ -363,13 +410,16 @@ const [USerData, setUSerData] = useState([])
 
                 <div className="row">
                   <div className="col-12">
-                    <button className="button -md -info-2 bg-accent-1 text-white">
+                    <button
+                      className="button -md -info-2 bg-accent-1 text-white"
+                      type="submit"
+                    >
                       {translate("Save Changes")}
-                      <i className="icon-arrow-top-right text-16 ml-10"></i>
+                     
                     </button>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
 
             <div className="text-center pt-30">
