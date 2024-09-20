@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { POST } from "@/app/utils/api/post";
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("/img/dashboard/addtour/1.jpg");
+
+  const { user } = useAuthContext();
 
   const handleImageChange = (event, func) => {
     const file = event.target.files[0];
@@ -26,6 +29,23 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    const fetchProfile = async () => {
+      const url = "my_profile";
+      const response = await POST.request({
+        url: url,
+        token: `${user?.authorisation.token}`,
+      });
+  
+      // Handle case where response.user is a single object
+      if (response.user && typeof response.user === "object") {
+        const userProfile = response.user;
+    
+      } else {
+        console.error("Unexpected response structure:", response);
+      }
+  
+      return response.user ? [response.user] : [];
+    };
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
       // setMounted(true);

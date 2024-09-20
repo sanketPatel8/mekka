@@ -14,6 +14,8 @@ export default function ForgotPassword({ onLoginSuccess }) {
     email: "",
   });
 
+  const route = useRouter()
+
 
   const HandleLogInChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +34,9 @@ export default function ForgotPassword({ onLoginSuccess }) {
       setForgotpssData({
         email : ""
       })
+      setTimeout(() => {
+        route.push('/login')
+      }, 4000);
     } catch (error) {
       if (
         error.response &&

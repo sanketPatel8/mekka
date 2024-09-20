@@ -165,6 +165,7 @@ export default function PageData() {
       start_date: startDate,
       end_date: endDate,
       person: person,
+      start : 0
     };
     try {
       const response = await post("search_tour", sendData);
