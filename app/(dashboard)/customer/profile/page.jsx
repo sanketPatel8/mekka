@@ -65,7 +65,7 @@ export default function Profile() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30"> {translate("My Booking") } - Customer Name</h1>
+            <h1 className="text-30"> {translate("Profile") } - Customer Name</h1>
             <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40 ">
               <h5 className="text-20 fw-500 mb-30">  {translate("Profile Details") }</h5>
 

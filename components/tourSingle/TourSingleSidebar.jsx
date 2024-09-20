@@ -454,7 +454,9 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
     MakkaHotel: mekkaHotel,
     MadinaHotel: madinaHotel,
     FlightAndHotel: FlightAndHotelPrice,
-    duration : SidebarData?.tour_details?.travel_duration
+    duration : SidebarData?.tour_details?.travel_duration,
+    startDate : SidebarData?.tour_details?.date_begin,
+    endDate : SidebarData?.tour_details?.date_end
   };
 
   const handleBooking = () => {

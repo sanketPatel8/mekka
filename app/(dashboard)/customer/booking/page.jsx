@@ -17,23 +17,20 @@ const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [UserID, setUserID] = useState(0)
+  const [UserID, setUserID] = useState(0);
+  const [BookingsCustomer, setBookingsCustomer] = useState([]);
 
-  const fetchListing = async (pageIndex) => {
+  const fetchListing = async (id) => {
     const formData = new FormData();
 
-    formData.append("user_id", 123 );
+    formData.append("user_id", id);
 
     try {
       const response = await POST.request({
         form: formData,
         url: "my_bookings",
       });
-      console.log(response);
-      setTourData(response.Tours);
-      setRange(response.Total_Page);
-      setCount(response.Count);
-      route.push("#redirect");
+      append(response);
     } catch (e) {
       console.log(e);
     }
@@ -41,7 +38,6 @@ export default function DbBooking() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-    
       const handleResize = () => {
         if (window.innerWidth >= 1000) {
           setSideBarOpen(true);
@@ -62,11 +58,11 @@ export default function DbBooking() {
       };
     }
 
-    if (typeof window !== 'undefined'){
+    if (typeof window !== "undefined") {
       if (userData && userData !== "undefined") {
         try {
           const userid = JSON.parse(userData);
-  
+
           // Extract the user object
           if (userid && userid.user) {
             setUserID(userid.user);
@@ -74,20 +70,29 @@ export default function DbBooking() {
         } catch (error) {
           console.error("Error parsing userData:", error);
         }
-     } 
+      }
     }
     
   }, []);
 
 
+
+  useEffect(() => {
+    if(UserID !== null ) {
+      fetchListing(UserID);
+    }
+  }, []);
+
+  console.log("BookingsCustomer" , BookingsCustomer);
+  
+
   const { translate } = useTranslation();
 
   return (
     <div
-  className={`dashboard ${
-    sideBarOpen ? "-is-sidebar-visible" : ""
-    } js-dashboard`}
-      
+      className={`dashboard ${
+        sideBarOpen ? "-is-sidebar-visible" : ""
+      } js-dashboard`}
     >
       <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 
@@ -95,10 +100,10 @@ export default function DbBooking() {
         <Header setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
-          <h1 className="text-30">{translate("My Booking") }</h1>
+          <h1 className="text-30">{translate("My Booking")}</h1>
 
-            <div className="row mt-20">
-              {tourDataTwoOne.map((elm, i) => (
+          <div className="row mt-20">
+            {/* {tourDataTwoOne.map((elm, i) => (
                 <div className="col-12 mb-15 " key={i}>
                   <div className="tourCard -type-2 bg-white">
                     <div className="tourCard__image">
@@ -187,8 +192,115 @@ export default function DbBooking() {
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              ))} */}
+            {tourDataTwoOne.map((elm, i) => (
+              <div className="col-12 mb-15 " key={i}>
+                <div className="tourCard -type-2 bg-white">
+                  <div className="tourCard__image">
+                    <Image
+                      width={420}
+                      height={390}
+                      src={elm.imageSrc}
+                      alt="image"
+                    />
+                    <button className="tourCard__favorite">
+                      Direct Flight
+                    </button>
+                  </div>
+
+                  <div className="tourCard__content">
+                    <div className="tourCard__location border_yellow px-2">
+                      <FaPersonWalking color="white" size={18} />
+                      {elm.location}
+                    </div>
+
+                    <h3 className="tourCard__title mt-5">
+                      <span>{elm.title}</span>
+                    </h3>
+
+                    <p className="tourCard__text mt-5 items-center d-flex">
+                      <FontAwesomeIcon
+                        icon={faHotel}
+                        className="px-1 text-accent-1"
+                      />
+                      {elm.description} (3{" "}
+                      <FaStar color="#dabf4f" className="mx-1" />)
+                    </p>
+                    <p className="tourCard__text mt-5 items-center d-flex ">
+                      <FontAwesomeIcon
+                        icon={faHotel}
+                        className="px-1 text-accent-1"
+                      />
+                      {elm.description2} (5{" "}
+                      <FaStar color="#dabf4f" className="mx-1 text-accent-1" />)
+                    </p>
+                    <p className="tourCard__text mt-5">
+                      <FontAwesomeIcon
+                        icon={faQuoteRight}
+                        className="px-1 text-accent-1"
+                      />
+                      {elm.description3}
+                    </p>
+
+                    <div className="d-flex items-center mt-5">
+                      <div className="d-flex items-center x-gap-5">
+                        <Stars star={elm.rating} font={12} />
+                      </div>
+
+                      <div className="text-14 ml-10">
+                        <span className="fw-500">{elm.rating}</span> (
+                        {elm.ratingCount}) - IDEALGATE
+                      </div>
+                    </div>
+
+                    <div className="Location">
+                      <span>Departure : London</span>
+                    </div>
+
+                    <div className="row x-gap-20 y-gap-5 pt-30">
+                      {elm.features?.map((elm2, i2) => (
+                        <div key={i2} className="col-auto">
+                          <div className="text-14 ">{elm2.name}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="tourCard__info tourCard__info_Dash ">
+                    <div className="">
+                      <label
+                        className={
+                          elm.arriving === "Upcoming"
+                            ? "text-orange"
+                            : elm.arriving === "Completed"
+                            ? "text-green"
+                            : ""
+                        }
+                      >
+                        <b>{elm.arriving}</b>
+                      </label>
+                      <div className="d-flex items-center text-14 ">
+                        <i className="icon-clock mr-10"></i>
+                        {elm.duration}
+                      </div>
+
+                      <p className="text-center">Booking No : #09889</p>
+                      <p className="text-center">Total : {elm.price} €</p>
+                      <p className="text-center">{elm.pending}</p>
+                    </div>
+
+                    <label className="badge bg-secondary"></label>
+
+                    <button className="button -sm -outline-accent-1 text-accent-1">
+                      <Link href="/customer/booking-details">
+                        {translate("VIEW DETAILS")}
+                      </Link>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

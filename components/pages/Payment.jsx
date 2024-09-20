@@ -580,10 +580,10 @@ export default function Payment() {
                         <div className="">06.04.2023</div>
                       </div>
 
-                      <div className="d-flex items-center justify-between">
+                      {/* <div className="d-flex items-center justify-between">
                         <div className="fw-500">Time:</div>
                         <div className="">10:00 am</div>
-                      </div>
+                      </div> */}
 
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500">Duration:</div>
@@ -751,11 +751,6 @@ export default function Payment() {
                     </div>
                   </div>
 
-                  <div className="d-flex items-center justify-between">
-                    <p className="fw-500"> {translate("Tax")}</p>
-                    <div className=""> {SideBarData.BookingFild?.Tax} € </div>
-                  </div>
-
                   {SideBarData.BookingFild?.Discount?.Discount !== null &&
                   SideBarData.BookingFild?.Discount?.Discount !== undefined ? (
                     <div className="">
@@ -767,6 +762,13 @@ export default function Payment() {
                       </div>
                     </div>
                   ) : null}
+
+                  <div className="d-flex items-center justify-between">
+                    <p className="fw-500"> {translate("Tax")}</p>
+                    <div className=""> {SideBarData.BookingFild?.Tax} € </div>
+                  </div>
+
+                 
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Amount Due")}</div>

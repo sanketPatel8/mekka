@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import Header from "@/components/dasboard/Header";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import DataTable from "react-data-table-component";
-import { bookingData } from "@/data/dashboard";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
@@ -24,8 +23,6 @@ export default function DbBooking() {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [VendorBookings, setVendorBookings] = useState([]);
-  const [bookingRender, setBookingRender] = useState({});
-  const [AllBookings, setAllBookings] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const {user} = useAuthContext();
