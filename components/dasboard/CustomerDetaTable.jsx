@@ -167,7 +167,10 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     // { name: "Surname", selector: (row) => row.surname },
     // { name: "Gender", selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
-    { name: translate("Nationality"), selector: (row) => row.personNationality },
+    {
+      name: translate("Nationality"),
+      selector: (row) => row.personNationality,
+    },
     {
       name: translate("Additional Services"),
       selector: (row) => row.additional_services,
@@ -201,7 +204,10 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     // { name: "Surname", selector: (row) => row.surname },
     // { name: "Gender", selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
-    { name: translate("Nationality"), selector: (row) => row.personNationality },
+    {
+      name: translate("Nationality"),
+      selector: (row) => row.personNationality,
+    },
     { name: translate("Total"), selector: (row) => row.baby_price },
     {
       name: translate("Action"),
@@ -412,79 +418,100 @@ const CustomerDetaTable = ({ BookingDetails }) => {
         </div>
       </div>
 
-      <DataTable
-        title="Reservation Details"
-        columns={ColumnReservation_details}
-        data={[BookingDetails?.reservation]}
-        highlightOnHover
-      />
+{/* Reservation Details Table */}
+{BookingDetails?.reservation ? (
+  <DataTable
+    title="Reservation Details"
+    columns={ColumnReservation_details}
+    data={[BookingDetails.reservation]}
+    highlightOnHover
+  />
+) : (
+  <p>No Reservation Details Found</p>
+)}
 
-      <br />
-      <DataTable
-        title={`Adult : ${BookingDetails?.reservation?.bookingName} (${BookingDetails?.reservation?.gender})`}
-        columns={columnAdu_1}
-        data={[BookingDetails?.reservation]}
-        highlightOnHover
-      />
-      <br />
-      {BookingDetails?.adultData?.map((adult, index) => (
-        <DataTable
-          key={index}
-          title={`Adult: ${adult?.personName} (${adult?.gender})`}
-          columns={columnAduInfo_2}
-          data={[adult]} // Pass the individual adult's data
-          highlightOnHover
-        />
-      ))}
-          <br />
-      {BookingDetails?.childData?.map((adult, index) => (
-        <DataTable
-          key={index}
-          title={`Adult: ${adult?.personName} (${adult?.gender})`}
-          columns={columnAduInfo_2}
-          data={[adult]} // Pass the individual adult's data
-          highlightOnHover
-        />
-      ))}
-      <br />
-      {BookingDetails?.babyData?.map((adult, index) => (
-        <DataTable
-          key={index}
-          title={`Adult: ${adult?.personName} (${adult?.gender})`}
-          columns={Baby}
-          data={[adult]} // Pass the individual adult's data
-          highlightOnHover
-        />
-      ))}
-      <br />
-      {/* <DataTable
-        title="Adult : Adult Name (Gender)"
-        columns={columnAduInfo_2}
-        data={Adult2InfoData}
-        highlightOnHover
-      /> */}
-      {/* <br />
-      <DataTable
-        title="Child : Child Name (Gender)"
-        columns={columnAduInfo_2}
-        data={Adult2InfoData}
-        highlightOnHover
-      /> */}
-      {/* <br />
-      <DataTable
-        title="Baby : Baby Name (Gender)"
-        columns={Baby}
-        data={BabyData}
-        highlightOnHover
-      />
-      <br /> */}
-      <DataTable
-        title="Total"
-        columns={Total}
-        data={TotalData}
-        highlightOnHover
-      />
-      <br />
+<br />
+
+{/* Adult Data Table */}
+{BookingDetails?.reservation ? (
+  <DataTable
+    title={`Adult: ${BookingDetails.reservation.bookingName} (${BookingDetails.reservation.gender})`}
+    columns={columnAdu_1}
+    data={[BookingDetails.reservation]}
+    highlightOnHover
+  />
+) : (
+  <p>No Adult Details Found</p>
+)}
+
+<br />
+
+{/* Adult Data List */}
+{BookingDetails?.adultData?.length ? (
+  BookingDetails.adultData.map((adult, index) => (
+    <DataTable
+      key={index}
+      title={`Adult: ${adult?.personName} (${adult?.gender})`}
+      columns={columnAduInfo_2}
+      data={[adult]} // Pass the individual adult's data
+      highlightOnHover
+    />
+  ))
+) : (
+  <p>No Adult Data Found</p>
+)}
+
+<br />
+
+{/* Child Data List */}
+{BookingDetails?.childData?.length ? (
+  BookingDetails.childData.map((child, index) => (
+    <DataTable
+      key={index}
+      title={`Child: ${child?.personName} (${child?.gender})`}
+      columns={columnAduInfo_2}
+      data={[child]} // Pass the individual child's data
+      highlightOnHover
+    />
+  ))
+) : (
+  <p>No Child Data Found</p>
+)}
+
+<br />
+
+{/* Baby Data List */}
+{BookingDetails?.babyData?.length ? (
+  BookingDetails.babyData.map((baby, index) => (
+    <DataTable
+      key={index}
+      title={`Baby: ${baby?.personName} (${baby?.gender})`}
+      columns={Baby}
+      data={[baby]} // Pass the individual baby's data
+      highlightOnHover
+    />
+  ))
+) : (
+  <p>No Baby Data Found</p>
+)}
+
+<br />
+
+{/* Total Data Table */}
+{TotalData?.length ? (
+  <DataTable
+    title="Total"
+    columns={Total}
+    data={TotalData}
+    highlightOnHover
+  />
+) : (
+  <p>No Total Data Found</p>
+)}
+
+<br />
+
+      
 
       <button
         className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
