@@ -97,6 +97,9 @@ export default function DbBooking() {
     }
   }, [BookingsCustomer]);
 
+
+  
+
   const { translate } = useTranslation();
 
   return (
@@ -245,7 +248,7 @@ export default function DbBooking() {
                       <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
-                        <Link href="/customer/booking-details">
+                        <Link href={`/customer/booking-details/?id=${elm.id}&customerID=${UserID?.id}`}>
                           {translate("VIEW DETAILS")}
                         </Link>
                       </button>

@@ -169,7 +169,7 @@ export default function Profile() {
     formDatas.append("type", "profile");
     formDatas.append("old_password", passwordData?.oldPassword);
     formDatas.append("password", passwordData?.newPassword);
-   
+
     try {
       const response = await POST.request({
         form: formDatas,
@@ -183,10 +183,10 @@ export default function Profile() {
 
   const submitPasswordForm = (e) => {
     e.preventDefault();
-    if(passwordData?.confirmPassword === passwordData?.newPassword ){
+    if (passwordData?.confirmPassword === passwordData?.newPassword) {
       fetchUpdatePassword();
-    }else{
-      showErrorToast("please fill proper details")
+    } else {
+      showErrorToast("please fill proper details");
     }
     console.log(passwordData);
   };
@@ -415,7 +415,6 @@ export default function Profile() {
                       type="submit"
                     >
                       {translate("Save Changes")}
-                     
                     </button>
                   </div>
                 </div>
