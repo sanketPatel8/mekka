@@ -351,39 +351,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 
   // for add document row and remove row
 
-  const [rows, setRows] = useState([{ id: 1, image: "", document: null }]); // State to manage rows
 
-  const addRow = () => {
-    setRows([...rows, { id: rows.length + 1, image: "", document: null }]);
-  };
-
-  const removeRow = (index) => {
-    if (rows.length > 1) {
-      const newRows = rows.filter((_, i) => i !== index);
-      setRows(newRows);
-    }
-  };
-
-  const handleDocumentChange = (selectedOption, index) => {
-    const newRows = [...rows];
-    newRows[index].document = selectedOption;
-    setRows(newRows);
-  };
-
-  const handleImageChange = (e, index) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      const newRows = [...rows];
-      newRows[index].image = reader.result;
-      setRows(newRows);
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
 
   // FOR CANGE LANGAUGE
 
@@ -420,6 +388,67 @@ const CustomerDetaTable = ({ BookingDetails }) => {
       closeEditData(); // Close modal after submission
     }, 2000);
   };
+
+  // for upload documrnt 
+
+  const [rows, setRows] = useState([
+    {
+      id: 1,
+      document: null,
+      image: "",
+    },
+  ]);
+  
+  const [UploadedDocument, setUploadedDocument] = useState([]); // State for storing uploaded documents
+  
+  // Handle document change
+  const handleDocumentChange = (selectedOption, index) => {
+    const newRows = [...rows];
+    newRows[index].document = selectedOption;
+    setRows(newRows);
+  };
+  
+  // Handle image change
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    const newRows = [...rows];
+  
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        newRows[index].image = reader.result;
+        setRows(newRows);
+  
+        // Update UploadedDocument state
+        const updatedDocuments = [...UploadedDocument];
+        updatedDocuments[index] = {
+          document: newRows[index].document,
+          image: reader.result,
+        };
+        setUploadedDocument(updatedDocuments);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+  // Function to add a new row
+  const addRow = () => {
+    setRows([...rows, { id: rows.length + 1, document: null, image: "" }]);
+  };
+  
+  // Function to remove a row
+  const removeRow = (index) => {
+    const newRows = rows.filter((_, i) => i !== index);
+    setRows(newRows);
+  
+    // Also update the UploadedDocument state
+    const updatedDocuments = UploadedDocument.filter((_, i) => i !== index);
+    setUploadedDocument(updatedDocuments);
+  };
+
+  console.log("UploadedDocument" , UploadedDocument);
+  
+  
 
   return (
     <div>
