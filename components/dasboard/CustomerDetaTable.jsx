@@ -19,6 +19,9 @@ import Select from "react-select";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { showSuccessToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
+import { POST } from "@/app/utils/api/post";
 
 const customStyles = {
   overlay: {
@@ -76,9 +79,16 @@ const CustomerDetaTable = ({ BookingDetails }) => {
   const [Nationality, setNationality] = useState("");
   const [radioValue, setRadioValue] = useState("");
   const [From, setFrom] = useState("Frankfurt(FRA)");
+  const [editCustomerData, setEditCustomerData] = useState({
+    name: "",
+    surname: "",
+    gender: "male", // Default value
+    birthday: "",
+    nationality: "indian", // Default value
+  });
+  const [PersonalUserID, setPersonalUserID] = useState(0);
 
   const handleRadioChange = (event) => {
-    console.log(event.target.value);
     setRadioValue(event.target.value);
   };
 
@@ -146,7 +156,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={openAdult1Deta}
+            onClick={() => openEditData(row?.id)} // Pass the current row
           >
             {translate("Edit")}
           </button>
@@ -163,7 +173,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
   ];
 
   const columnAduInfo_2 = [
-    { name: "Name", selector: (row) => row.personName , width : "100px" },
+    { name: "Name", selector: (row) => row.personName, width: "100px" },
     { name: "Surname", selector: (row) => row.personSurName },
     { name: "Gender", selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
@@ -183,7 +193,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={openEditData}
+            onClick={() => openEditData(row?.id)} // Pass the current row
           >
             {translate("Edit")}
           </button>
@@ -200,7 +210,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
   ];
 
   const Baby = [
-    { name: "Name", selector: (row) => row.personName , width : "100px" },
+    { name: "Name", selector: (row) => row.personName, width: "100px" },
     { name: "Surname", selector: (row) => row.personSurName },
     { name: "Gender", selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
@@ -215,7 +225,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={openEditData}
+            onClick={() => openEditData(row?.id)} // Pass the current row
           >
             {translate("Edit")}
           </button>
@@ -300,7 +310,9 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     setuploadFileisOpen(false);
   }
 
-  function openEditData() {
+  function openEditData(id) {
+    console.log("id", id);
+    setPersonalUserID(id);
     setEditData(true);
   }
 
@@ -375,15 +387,56 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 
   // FOR CANGE LANGAUGE
 
-  console.log("BookingDetails?.reservation", BookingDetails?.reservation);
+  // for edit customer data
+
+  const FetchEditData = async () => {
+    const formData = new FormData();
+
+    formData.append("reservation_person_id", PersonalUserID);
+    formData.append("name", editCustomerData.name);
+    formData.append("surname", editCustomerData.surname);
+    formData.append("birthday", editCustomerData.birthday);
+    formData.append("gender", editCustomerData.gender);
+    formData.append("nationality", editCustomerData.nationality);
+
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "edit_person",
+      });
+      showSuccessToast(response?.Message);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const HandleEditData =  (e) => {
+    e.preventDefault(); // Prevent default form submission
+    console.log("Submitting data:", editCustomerData); // Debugging line
+    FetchEditData()
+    // Add your submission logic here
+    // e.g., API call to save data
+    setTimeout(() => {
+      closeEditData(); // Close modal after submission
+    }, 2000);
+  };
 
   return (
     <div>
-      <h3 className="t_center"> {translate("Booking Details")} : {BookingDetails?.reservation?.reservationNumber}</h3>
+      <ToastContainer />
+      <h3 className="t_center">
+        {" "}
+        {translate("Booking Details")} :{" "}
+        {BookingDetails?.reservation?.reservationNumber}
+      </h3>
       <div className="row px-0 pb-10 mt-20 ">
         <div className="col-lg-6">
           <p className="t_center"> {translate("Booked Date")} : 12.08.2024</p>
-          <p className="t_center"> {translate("Booking Status")} : {BookingDetails?.reservation?.reservation_status}</p>
+          <p className="t_center">
+            {" "}
+            {translate("Booking Status")} :{" "}
+            {BookingDetails?.reservation?.reservation_status}
+          </p>
           <p className="text-red t_center">Available 10 seats</p>
         </div>
 
@@ -418,92 +471,88 @@ const CustomerDetaTable = ({ BookingDetails }) => {
         </div>
       </div>
 
-{/* Reservation Details Table */}
-{BookingDetails?.reservation ? (
-  <DataTable
-    title="Reservation Details"
-    columns={ColumnReservation_details}
-    data={[BookingDetails.reservation]}
-    highlightOnHover
-  />
-) : (
-  <p>No Reservation Details Found</p>
-)}
+      {/* Reservation Details Table */}
+      {BookingDetails?.reservation ? (
+        <DataTable
+          title="Reservation Details"
+          columns={ColumnReservation_details}
+          data={[BookingDetails.reservation]}
+          highlightOnHover
+        />
+      ) : (
+        <p>No Reservation Details Found</p>
+      )}
 
-<br />
+      <br />
 
-{/* Adult Data Table */}
-{BookingDetails?.reservation ? (
-  <DataTable
-    title={`Adult: ${BookingDetails.reservation.bookingName} (${BookingDetails.reservation.gender})`}
-    columns={columnAdu_1}
-    data={[BookingDetails.reservation]}
-    highlightOnHover
-  />
-) : (
-  <p>No Adult Details Found</p>
-)}
+      {/* Adult Data Table */}
+      {BookingDetails?.reservation ? (
+        <DataTable
+          title={`Adult: ${BookingDetails.reservation.bookingName} (${BookingDetails.reservation.gender})`}
+          columns={columnAdu_1}
+          data={[BookingDetails.reservation]}
+          highlightOnHover
+        />
+      ) : (
+        <p>No Adult Details Found</p>
+      )}
 
-<br />
+      <br />
 
-{/* Adult Data List */}
-<DataTable
-  title="Adult Information"
-  columns={columnAduInfo_2}
-  data={BookingDetails?.adultData?.length ? BookingDetails.adultData : []} // Change data dynamically
-  highlightOnHover
-/>
+      {/* Adult Data List */}
+      <DataTable
+        title="Adult Information"
+        columns={columnAduInfo_2}
+        data={BookingDetails?.adultData?.length ? BookingDetails.adultData : []} // Change data dynamically
+        highlightOnHover
+      />
 
-{/* Show a fallback message when there's no data */}
-{!BookingDetails?.adultData?.length && <p>No Adult Data Found</p>}
+      {/* Show a fallback message when there's no data */}
+      {!BookingDetails?.adultData?.length && <p>No Adult Data Found</p>}
 
-<br />
+      <br />
 
+      {/* Child Data Table */}
+      <DataTable
+        title="Child Information"
+        columns={columnAduInfo_2}
+        data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
+        highlightOnHover
+      />
 
-{/* Child Data Table */}
-<DataTable
-  title="Child Information"
-  columns={columnAduInfo_2}
-  data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
-  highlightOnHover
-/>
+      {/* Show a fallback message when there's no child data */}
+      {!BookingDetails?.childData?.length && <p>No Child Data Found</p>}
 
-{/* Show a fallback message when there's no child data */}
-{!BookingDetails?.childData?.length && <p>No Child Data Found</p>}
+      <br />
 
+      {/* Baby Data List */}
+      {/* Baby Data Table */}
+      <DataTable
+        title="Baby Information"
+        columns={Baby}
+        data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
+        highlightOnHover
+      />
 
-<br />
+      {/* Show a fallback message when there's no baby data */}
+      {!BookingDetails?.babyData?.length && <p>No Baby Data Found</p>}
 
-{/* Baby Data List */}
-{/* Baby Data Table */}
-<DataTable
-  title="Baby Information"
-  columns={Baby}
-  data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
-  highlightOnHover
-/>
+      <br />
 
-{/* Show a fallback message when there's no baby data */}
-{!BookingDetails?.babyData?.length && <p>No Baby Data Found</p>}
+      {/* Total Data Table */}
+      {TotalData?.length ? (
+        <DataTable
+          title="Total"
+          columns={Total}
+          data={TotalData}
+          highlightOnHover
+        />
+      ) : (
+        <p>No Total Data Found</p>
+      )}
 
+      <br />
 
-<br />
-
-{/* Total Data Table */}
-{TotalData?.length ? (
-  <DataTable
-    title="Total"
-    columns={Total}
-    data={TotalData}
-    highlightOnHover
-  />
-) : (
-  <p>No Total Data Found</p>
-)}
-
-<br />
-
-      
       <button
         className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
         onClick={openCancelPopUp}
@@ -1101,86 +1150,122 @@ const CustomerDetaTable = ({ BookingDetails }) => {
           </div>
 
           <div className="form_2">
-            <div className=" y-gap-30 contactForm px-20 py-20 ">
-              <div className="row my-3">
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Name")}
-                    </label>
+            <div className="y-gap-30 contactForm px-20 py-20">
+              <form onSubmit={HandleEditData}>
+                <div className="row my-3">
+                  <div className="col-md-6">
+                    <div className="form-input spacing">
+                      <input
+                        type="text"
+                        required
+                        value={editCustomerData.name}
+                        onChange={(e) =>
+                          setEditCustomerData({
+                            ...editCustomerData,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                      <label className="lh-1 text-16 text-light-1">
+                        {translate("Name")}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-input spacing">
+                      <input
+                        type="text"
+                        required
+                        value={editCustomerData.surname}
+                        onChange={(e) =>
+                          setEditCustomerData({
+                            ...editCustomerData,
+                            surname: e.target.value,
+                          })
+                        }
+                      />
+                      <label className="lh-1 text-16 text-light-1">
+                        {translate("Surname")}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-input spacing">
+                      <select
+                        value={editCustomerData.gender}
+                        onChange={(e) =>
+                          setEditCustomerData({
+                            ...editCustomerData,
+                            gender: e.target.value,
+                          })
+                        }
+                        required
+                        className="form-control"
+                      >
+                        <option value="male">{translate("Male")}</option>
+                        <option value="female">{translate("Female")}</option>
+                        <option value="other">{translate("Other")}</option>
+                      </select>
+                      <label className="lh-1 text-16 text-light-1">
+                        {editCustomerData.gender}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-input spacing">
+                      <input
+                        type="date"
+                        required
+                        value={editCustomerData.birthday}
+                        onChange={(e) =>
+                          setEditCustomerData({
+                            ...editCustomerData,
+                            birthday: e.target.value,
+                          })
+                        }
+                      />
+                      <label className="lh-1 text-16 text-light-1">
+                        {translate("Birthday Date")}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-input spacing">
+                      <select
+                        value={editCustomerData.nationality}
+                        onChange={(e) =>
+                          setEditCustomerData({
+                            ...editCustomerData,
+                            nationality: e.target.value,
+                          })
+                        }
+                        required
+                        className="form-control"
+                      >
+                        <option value="indian">{translate("Indian")}</option>
+                        <option value="german">{translate("German")}</option>
+                        <option value="canadian">
+                          {translate("Canadian")}
+                        </option>
+                      </select>
+                      <label className="lh-1 text-16 text-light-1">
+                        {editCustomerData.nationality}
+                      </label>
+                    </div>
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Surname")}
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                      required
-                      className="form-control"
-                    >
-                      <option value="male"> {translate("Male")}</option>
-                      <option value="female"> {translate("Female")}</option>
-                      <option value="other"> {translate("Other")}</option>
-                    </select>
-                    <label className="lh-1 text-16 text-light-1">
-                      {gender}
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="date" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Birthday Date")}
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      value={Nationality}
-                      onChange={(e) => setNationality(e.target.value)}
-                      required
-                      className="form-control"
-                    >
-                      <option value="indian"> {translate("Indian")}</option>
-                      <option value="german"> {translate("German")}</option>
-                      <option value="canadian"> {translate("Canadian")}</option>
-                    </select>
-                    <label className="lh-1 text-16 text-light-1">
-                      {Nationality}
-                    </label>
-                  </div>
-                </div>
-              </div>
 
-              <div className="col-12">
-                <div className="row">
-                  <button
-                    className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                    onClick={() => {
-                      alert("Edit successfully !!");
-                      setTimeout(() => {
-                        closeEditData();
-                      }, 2000);
-                    }}
-                  >
-                    {translate("SAVE")}
-                  </button>
+                <div className="col-12">
+                  <div className="row">
+                    <button
+                      type="submit" // Ensure this is a submit button
+                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                    >
+                      {translate("UPDATE")}
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </Modal>
