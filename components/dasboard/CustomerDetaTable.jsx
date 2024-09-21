@@ -512,7 +512,6 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 <br />
 
       
-
       <button
         className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
         onClick={openCancelPopUp}
