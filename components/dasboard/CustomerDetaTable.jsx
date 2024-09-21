@@ -163,9 +163,9 @@ const CustomerDetaTable = ({ BookingDetails }) => {
   ];
 
   const columnAduInfo_2 = [
-    // { name: "Name", selector: (row) => row.name , width : "100px" },
-    // { name: "Surname", selector: (row) => row.surname },
-    // { name: "Gender", selector: (row) => row.gender },
+    { name: "Name", selector: (row) => row.personName , width : "100px" },
+    { name: "Surname", selector: (row) => row.personSurName },
+    { name: "Gender", selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
     {
       name: translate("Nationality"),
@@ -200,9 +200,9 @@ const CustomerDetaTable = ({ BookingDetails }) => {
   ];
 
   const Baby = [
-    // { name: "Name", selector: (row) => row.name , width : "100px" },
-    // { name: "Surname", selector: (row) => row.surname },
-    // { name: "Gender", selector: (row) => row.gender },
+    { name: "Name", selector: (row) => row.personName , width : "100px" },
+    { name: "Surname", selector: (row) => row.personSurName },
+    { name: "Gender", selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
     {
       name: translate("Nationality"),
@@ -447,53 +447,45 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 <br />
 
 {/* Adult Data List */}
-{BookingDetails?.adultData?.length ? (
-  BookingDetails.adultData.map((adult, index) => (
-    <DataTable
-      key={index}
-      title={`Adult: ${adult?.personName} (${adult?.gender})`}
-      columns={columnAduInfo_2}
-      data={[adult]} // Pass the individual adult's data
-      highlightOnHover
-    />
-  ))
-) : (
-  <p>No Adult Data Found</p>
-)}
+<DataTable
+  title="Adult Information"
+  columns={columnAduInfo_2}
+  data={BookingDetails?.adultData?.length ? BookingDetails.adultData : []} // Change data dynamically
+  highlightOnHover
+/>
+
+{/* Show a fallback message when there's no data */}
+{!BookingDetails?.adultData?.length && <p>No Adult Data Found</p>}
 
 <br />
 
-{/* Child Data List */}
-{BookingDetails?.childData?.length ? (
-  BookingDetails.childData.map((child, index) => (
-    <DataTable
-      key={index}
-      title={`Child: ${child?.personName} (${child?.gender})`}
-      columns={columnAduInfo_2}
-      data={[child]} // Pass the individual child's data
-      highlightOnHover
-    />
-  ))
-) : (
-  <p>No Child Data Found</p>
-)}
+
+{/* Child Data Table */}
+<DataTable
+  title="Child Information"
+  columns={columnAduInfo_2}
+  data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
+  highlightOnHover
+/>
+
+{/* Show a fallback message when there's no child data */}
+{!BookingDetails?.childData?.length && <p>No Child Data Found</p>}
+
 
 <br />
 
 {/* Baby Data List */}
-{BookingDetails?.babyData?.length ? (
-  BookingDetails.babyData.map((baby, index) => (
-    <DataTable
-      key={index}
-      title={`Baby: ${baby?.personName} (${baby?.gender})`}
-      columns={Baby}
-      data={[baby]} // Pass the individual baby's data
-      highlightOnHover
-    />
-  ))
-) : (
-  <p>No Baby Data Found</p>
-)}
+{/* Baby Data Table */}
+<DataTable
+  title="Baby Information"
+  columns={Baby}
+  data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
+  highlightOnHover
+/>
+
+{/* Show a fallback message when there's no baby data */}
+{!BookingDetails?.babyData?.length && <p>No Baby Data Found</p>}
+
 
 <br />
 
