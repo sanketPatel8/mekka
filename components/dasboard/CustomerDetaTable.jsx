@@ -379,11 +379,11 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 
   return (
     <div>
-      <h3 className="t_center"> {translate("Booking Details")} : #123216</h3>
+      <h3 className="t_center"> {translate("Booking Details")} : {BookingDetails?.reservation?.reservationNumber}</h3>
       <div className="row px-0 pb-10 mt-20 ">
         <div className="col-lg-6">
           <p className="t_center"> {translate("Booked Date")} : 12.08.2024</p>
-          <p className="t_center"> {translate("Booking Status")} : Pending</p>
+          <p className="t_center"> {translate("Booking Status")} : {BookingDetails?.reservation?.reservation_status}</p>
           <p className="text-red t_center">Available 10 seats</p>
         </div>
 
