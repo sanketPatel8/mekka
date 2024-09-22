@@ -240,7 +240,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 
   const Total = [
     { name: "Subtotal", selector: (row) => row.Subtotal },
-    { name: "Tax", selector: (row) => row.Total },
+    // { name: "Tax", selector: (row) => row.Total },
     { name: "Discount", selector: (row) => row.Discount },
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
     { name: "Total", selector: (row) => row.Total },
