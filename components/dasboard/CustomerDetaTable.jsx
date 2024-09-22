@@ -87,10 +87,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     nationality: "indian", // Default value
   });
   const [PersonalUserID, setPersonalUserID] = useState(0);
-
-  const handleRadioChange = (event) => {
-    setRadioValue(event.target.value);
-  };
+  const [UploadDocID, setUploadDocID] = useState({});
 
   useEffect(() => {
     Modal.setAppElement("#modelopen");
@@ -162,7 +159,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
-            onClick={openUploadFileModal}
+            onClick={() => openUploadFileModal(row)}
           >
             {translate("Document")}
           </button>
@@ -199,7 +196,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
-            onClick={openUploadFileModal}
+            onClick={() => openUploadFileModal(row)}
           >
             {translate("Document")}
           </button>
@@ -231,7 +228,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
-            onClick={openUploadFileModal}
+            onClick={() => openUploadFileModal(row)}
           >
             {translate("Document")}
           </button>
@@ -302,7 +299,18 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     setCanclePopUp(false);
   }
 
-  function openUploadFileModal() {
+  function openUploadFileModal(row) {
+    // Extract name and id from row
+    const { reservation_id, id } = row;
+
+    // Create a new object with name and id
+    const newObject = { reservation_id, id };
+
+    // Log the new object to see the result
+    console.log("Extracted Object:", newObject);
+    setUploadDocID(newObject);
+
+    // Proceed with other operations (e.g., opening modal)
     setuploadFileisOpen(true);
   }
 
@@ -351,8 +359,6 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 
   // for add document row and remove row
 
-
-
   // FOR CANGE LANGAUGE
 
   // for edit customer data
@@ -378,10 +384,10 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     }
   };
 
-  const HandleEditData =  (e) => {
+  const HandleEditData = (e) => {
     e.preventDefault(); // Prevent default form submission
     console.log("Submitting data:", editCustomerData); // Debugging line
-    FetchEditData()
+    FetchEditData();
     // Add your submission logic here
     // e.g., API call to save data
     setTimeout(() => {
@@ -389,7 +395,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     }, 2000);
   };
 
-  // for upload documrnt 
+  // for upload documrnt
 
   const [rows, setRows] = useState([
     {
@@ -398,27 +404,49 @@ const CustomerDetaTable = ({ BookingDetails }) => {
       image: "",
     },
   ]);
-  
-  const [UploadedDocument, setUploadedDocument] = useState([]); // State for storing uploaded documents
-  
-  // Handle document change
+
+  const [UploadedDocument, setUploadedDocument] = useState([]);
+  const [DocType, setDocType] = useState([]);
+  const [DocPhoto, setDocPhoto] = useState([]);
+
+  useEffect(() => {
+    // Mapping through UploadedDocument to extract 'document' and 'image'
+    const docTypes = UploadedDocument.map((item) => item.document?.value); // Extract 'document' from each object
+    const docPhotos = UploadedDocument.map((item) => item.image); // Extract 'image' from each object
+
+    // Storing the extracted values in their respective states
+    setDocType(docTypes); // Store documents in DocType
+    setDocPhoto(docPhotos); // Store images in DocPhoto
+  }, [UploadedDocument]);
+
   const handleDocumentChange = (selectedOption, index) => {
-    const newRows = [...rows];
-    newRows[index].document = selectedOption;
-    setRows(newRows);
+    const updatedRows = rows.map((row, rowIndex) => {
+      if (index === rowIndex) {
+        return { ...row, document: selectedOption };
+      }
+      return row;
+    });
+    setRows(updatedRows);
+
+    // Update the UploadedDocument state accordingly
+    const updatedDocuments = [...UploadedDocument];
+    updatedDocuments[index] = {
+      document: selectedOption,
+      image: rows[index].image,
+    };
+    setUploadedDocument(updatedDocuments);
   };
-  
-  // Handle image change
+
   const handleImageChange = (e, index) => {
     const file = e.target.files[0];
     const newRows = [...rows];
-  
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         newRows[index].image = reader.result;
         setRows(newRows);
-  
+
         // Update UploadedDocument state
         const updatedDocuments = [...UploadedDocument];
         updatedDocuments[index] = {
@@ -430,25 +458,78 @@ const CustomerDetaTable = ({ BookingDetails }) => {
       reader.readAsDataURL(file);
     }
   };
-  
-  // Function to add a new row
+
   const addRow = () => {
     setRows([...rows, { id: rows.length + 1, document: null, image: "" }]);
   };
-  
-  // Function to remove a row
+
   const removeRow = (index) => {
     const newRows = rows.filter((_, i) => i !== index);
     setRows(newRows);
-  
+
     // Also update the UploadedDocument state
     const updatedDocuments = UploadedDocument.filter((_, i) => i !== index);
     setUploadedDocument(updatedDocuments);
   };
 
-  console.log("UploadedDocument" , UploadedDocument);
-  
-  
+  const FetchUploadDocumentData = async () => {
+    const formData = new FormData();
+
+    formData.append("reservation_person_id", UploadDocID?.id);
+    formData.append("reservation_id", UploadDocID?.reservation_id);
+    formData.append("document_type", DocType);
+    formData.append("document", DocPhoto);
+
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "upload_bookingdocuments",
+      });
+      console.log(response);
+
+      showSuccessToast(response?.Message);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleSubmit = () => {
+    FetchUploadDocumentData();
+  };
+
+  // for add person
+
+  const [AddpersonData, setAddpersonData] = useState({
+    name: "",
+    surname: "",
+    gender: "",
+    birthDate: "",
+    nationality: "",
+    roomType: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setAddpersonData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleRadioChange = (e) => {
+    setAddpersonData((prevData) => ({
+      ...prevData,
+      roomType: e.target.value,
+    }));
+  };
+
+  const handleAddPersong = () => {
+    console.log(AddpersonData);
+    alert("Person added");
+    setTimeout(() => {
+      closeModal();
+    }, 2000);
+  };
 
   return (
     <div>
@@ -604,22 +685,32 @@ const CustomerDetaTable = ({ BookingDetails }) => {
             </button>
           </div>
           <div className="form_2">
-            <div className=" y-gap-30 contactForm px-20 py-20 ">
+            <div className="y-gap-30 contactForm px-20 py-20">
               <div className="row my-3">
                 <div className="col-md-6">
                   <div className="form-input spacing">
-                    <input type="text" required />
+                    <input
+                      type="text"
+                      name="name"
+                      value={AddpersonData.name}
+                      onChange={handleInputChange}
+                      required
+                    />
                     <label className="lh-1 text-16 text-light-1">
-                      {" "}
                       {translate("Name")}
                     </label>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-input spacing">
-                    <input type="text" required />
+                    <input
+                      type="text"
+                      name="surname"
+                      value={AddpersonData.surname}
+                      onChange={handleInputChange}
+                      required
+                    />
                     <label className="lh-1 text-16 text-light-1">
-                      {" "}
                       {translate("Surname")}
                     </label>
                   </div>
@@ -627,87 +718,83 @@ const CustomerDetaTable = ({ BookingDetails }) => {
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <select
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
+                      name="gender"
+                      value={AddpersonData.gender}
+                      onChange={handleInputChange}
                       required
                       className="form-control"
                     >
+                      <option value="">{translate("Select Gender")}</option>
                       <option value="male">{translate("Male")}</option>
                       <option value="female">{translate("Female")}</option>
                       <option value="other">{translate("Other")}</option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
-                      {gender}
+                      {AddpersonData.gender}
                     </label>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-input spacing">
-                    <input type="date" required />
-                    <label className="lh-1 text-16 text-light-1"></label>
+                    <input
+                      type="date"
+                      name="birthDate"
+                      value={AddpersonData.birthDate}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <label className="lh-1 text-16 text-light-1">
+                      {translate("Birth Date")}
+                    </label>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-input spacing">
                     <select
-                      value={Nationality}
-                      onChange={(e) => setNationality(e.target.value)}
+                      name="nationality"
+                      value={AddpersonData.nationality}
+                      onChange={handleInputChange}
                       required
                       className="form-control"
                     >
+                      <option value="">
+                        {translate("Select Nationality")}
+                      </option>
                       <option value="indian">{translate("Indian")}</option>
                       <option value="german">{translate("German")}</option>
                       <option value="canadian">{translate("Canadian")}</option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
-                      {Nationality}
+                      {AddpersonData.nationality}
                     </label>
-                  </div>
-                </div>
-              </div>
-              <div className="col-12">
-                <div className="row y-gap-20 items-center justify-between">
-                  <div className="col-12 tb-border">
-                    <div className="text-14">
-                      <p className="d-flex justify-content-between">
-                        <span>
-                          {" "}
-                          {translate("Tour price per person") ||
-                            "Find Latest Packages"}
-                        </span>{" "}
-                        <span>1.339,00 €</span>
-                      </p>
-                      {/* <p className="text-right text-15">including taxes and fee</p> */}
-                    </div>
                   </div>
                 </div>
               </div>
 
               <div className="my-3 border_b px-md-40">
                 <h5 className="text-18 fw-500 my-2">
-                  {translate("  Possible additional services per person:") ||
-                    "Find Latest Packages"}
+                  {translate("Possible additional services per person:")}
                 </h5>
 
                 <div>
                   <div className="d-flex items-center justify-between radio_hight">
                     <div className="d-flex items-center">
                       <div className="form-radio d-flex items-center">
-                        <label className="radio">
+                        <label className="radio d-flex items-center">
                           <input
                             type="radio"
-                            name="radioGroup"
+                            name="roomType"
                             value="f-1-bed-4"
-                            checked={radioValue === "f-1-bed-4"}
+                            checked={AddpersonData.roomType === "f-1-bed-4"}
                             onChange={handleRadioChange}
                           />
                           <span className="radio__mark">
                             <span className="radio__icon"></span>
                           </span>
-                          {/* <span className="text-14 lh-1 ml-10"></span> */}
+                          <span className="ml-10">4 Bettzimmer (Standard)</span>{" "}
+                          {/* Label inside */}
                         </label>
                       </div>
-                      <div className="ml-10">4 Bettzimmer (Standard)</div>
                     </div>
                     <div className="text-14">0,00 €</div>
                   </div>
@@ -715,68 +802,70 @@ const CustomerDetaTable = ({ BookingDetails }) => {
                   <div className="d-flex items-center justify-between radio_hight">
                     <div className="d-flex items-center">
                       <div className="form-radio d-flex items-center">
-                        <label className="radio">
+                        <label className="radio d-flex items-center">
                           <input
                             type="radio"
-                            name="radioGroup"
+                            name="roomType"
                             value="f-1-bed-3"
-                            checked={radioValue === "f-1-bed-3"}
+                            checked={AddpersonData.roomType === "f-1-bed-3"}
                             onChange={handleRadioChange}
                           />
                           <span className="radio__mark">
                             <span className="radio__icon"></span>
                           </span>
-                          {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                          <span className="ml-10">3 Bettzimmer</span>{" "}
+                          {/* Label inside */}
                         </label>
                       </div>
-                      <div className="ml-10">3 Bettzimmer</div>
                     </div>
-                    <div className="text-14">+100,00€</div>
+                    <div className="text-14">0,00 €</div>
                   </div>
 
                   <div className="d-flex items-center justify-between radio_hight">
                     <div className="d-flex items-center">
                       <div className="form-radio d-flex items-center">
-                        <label className="radio">
+                        <label className="radio d-flex items-center">
                           <input
                             type="radio"
-                            name="radioGroup"
+                            name="roomType"
                             value="f-1-bed-2"
-                            checked={radioValue === "f-1-bed-2"}
+                            checked={AddpersonData.roomType === "f-1-bed-2"}
                             onChange={handleRadioChange}
                           />
                           <span className="radio__mark">
                             <span className="radio__icon"></span>
                           </span>
-                          {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                          <span className="ml-10">2 Bettzimmer</span>{" "}
+                          {/* Label inside */}
                         </label>
                       </div>
-                      <div className="ml-10">2 Bettzimmer</div>
                     </div>
-                    <div className="text-14">+230,00€</div>
+                    <div className="text-14">0,00 €</div>
                   </div>
 
                   <div className="d-flex items-center justify-between radio_hight">
                     <div className="d-flex items-center">
                       <div className="form-radio d-flex items-center">
-                        <label className="radio">
+                        <label className="radio d-flex items-center">
                           <input
                             type="radio"
-                            name="radioGroup"
+                            name="roomType"
                             value="f-1-bed-1"
-                            checked={radioValue === "f-1-bed-1"}
+                            checked={AddpersonData.roomType === "f-1-bed-1"}
                             onChange={handleRadioChange}
                           />
                           <span className="radio__mark">
                             <span className="radio__icon"></span>
                           </span>
-                          {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                          <span className="ml-10">1 Bettzimmer</span>{" "}
+                          {/* Label inside */}
                         </label>
                       </div>
-                      <div className="ml-10">1 Bettzimmer</div>
                     </div>
-                    <div className="text-14">+450,00€</div>
+                    <div className="text-14">0,00 €</div>
                   </div>
+
+                  {/* Repeat for other room options */}
                 </div>
               </div>
 
@@ -784,12 +873,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
                 <div className="row">
                   <button
                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                    onClick={() => {
-                      alert("person added");
-                      setTimeout(() => {
-                        closeModal();
-                      }, 2000);
-                    }}
+                    onClick={handleAddPersong}
                   >
                     {translate("ADD PERSON")}
                   </button>
@@ -1128,9 +1212,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
                   <div className="d-flex justify-content-center gap-md-2">
                     <button
                       className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                      onClick={() => {
-                        alert("submited");
-                      }}
+                      onClick={handleSubmit}
                     >
                       {translate("SUBMIT")}
                     </button>
