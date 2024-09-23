@@ -20,16 +20,14 @@ export const AuthContextProvider = ({ children }) => {
     const existingUser = typeof window != 'undefined' && (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user'))) || null;
     const existingCustomer = typeof window != 'undefined' && (localStorage.getItem('customer') && JSON.parse(localStorage.getItem('customer'))) || null;
 
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user) {
-            dispatch({ type: 'LOGIN', payload: user });
-        }
-        const customer = JSON.parse(localStorage.getItem('customer'));
-        if (user) {
-            dispatch({ type: 'LOGIN_CUSTOMER', payload: user });
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (existingUser) {
+    //         dispatch({ type: 'LOGIN', payload: existingUser });
+    //     }
+    //     else if (existingCustomer) {
+    //         dispatch({ type: 'LOGIN_CUSTOMER', payload: existingCustomer });
+    //     }
+    // }, []);
 
     const [state, dispatch] = useReducer(authReducer, {
         user: existingUser,

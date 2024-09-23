@@ -14,7 +14,9 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 
 export default function Profile() {
-  const { user } = useAuthContext();
+  const  {user}  = useAuthContext();
+  console.log(user,"user")
+
   const { translate } = useTranslation();
   const [userData, setUserData] = useState({});
 
@@ -58,7 +60,6 @@ export default function Profile() {
   const fetchProfile = async () => {
     const url = 'my_profile'
     const response = await POST.request({ url: url, token: `${user?.authorisation.token}` });
-    console.log(response.user.country,"userdata")
     if (response.user) {
       setUserData(response.user)
       setName(response.user.name);
@@ -70,7 +71,11 @@ export default function Profile() {
       setStreet(response.user.street);
       setHouseNumber(response.user.houseNumber);
       setZipcode(response.user.plz);
-      setWebsite(response.user.company.Link);
+      if(response.user.company.Link !== null && response.user.company.Link !== ""){
+        setWebsite(response.user.company.Link);
+      }else{
+        setWebsite("");
+      }
       setTaxNumber(response.user.company.tax_number);
       setInfo(response.user.company.info);
       setCompanyData(response.user.company)
@@ -213,7 +218,7 @@ export default function Profile() {
         formData.append('surname',  surname);
         formData.append('email',  email);
         formData.append('mobile',  mobile);
-        formData.append('country',  SelectedCountry?.value);
+        formData.append('country',  SelectedCountry.value);
         formData.append('city',  city);
         formData.append('street',  street);
         formData.append('houseNumber',  houseNumber);
@@ -328,12 +333,34 @@ export default function Profile() {
   const handleDeleteImage1 = () => {
     setImage1("");
     setFileBlob({});
+    
   };
 
-  const handleDeleteImage2 = (index) => {
-    const newImages = [...image2];
+  const handleDeleteImage2 = (index,event) => {
+    // const newImages = [...image2];
+    // newImages.splice(index, 1);
+    // setImage2(newImages);
+    event.preventDefault();
+    if(image1){
+      const url = new URL(image1);
+      const fileName = url.pathname.split('/').pop();
+      console.log(fileName); 
+
+      const formData = new FormData();
+      formData.append('image', fileName);
+      formData.append('type', 'company_document');
+      formData.append('company_id', userData.company === "{}" || userData.company === null ? 0 : userData.company.id);
+
+      const response = POST.request({ form: formData, url: 'remove_imageordocument' });
+      if(response){
+        showSuccessToast("Image removed successfully");
+        fetchProfile();
+      }
+    }else if(uploadImage.length > 0){
+         const newImages = [...image2];
     newImages.splice(index, 1);
     setImage2(newImages);
+    }
   };
 
 
@@ -638,7 +665,7 @@ export default function Profile() {
                                   className="size-200 rounded-12 object-cover"
                                 />
                                 <button
-                                  onClick={() => handleDeleteImage2(index)}
+                                  onClick={(e) => handleDeleteImage2(index,e)}
                                   className="absoluteIcon1 button -dark-1"
                                 >
                                   <i className="icon-delete text-18"></i>
@@ -664,7 +691,7 @@ export default function Profile() {
                                 </div>
                                 <div className="file-name">{document.split('/').pop()}</div>
                                 <button
-                                  onClick={() => handleDeleteImage2(index)}
+                                  onClick={(e) => handleDeleteImage2(index,e)}
                                   className="absoluteIcon1 button -dark-1"
                                 >
                                   <i className="icon-delete text-18"></i>
@@ -698,7 +725,7 @@ export default function Profile() {
             className="size-200 rounded-12 object-cover"
           />
           <button
-            onClick={() => handleDeleteImage2(index)}
+            onClick={(e) => handleDeleteImage2(index,e)}
             className="absoluteIcon1 button -dark-1"
           >
             <i className="icon-delete text-18"></i>
@@ -720,7 +747,7 @@ export default function Profile() {
                         </div>
           <div className="file-name">{image.fileName}</div>
           <button
-            onClick={() => handleDeleteImage2(index)}
+            onClick={(e) => handleDeleteImage2(index,e)}
             className="absoluteIcon1 button -dark-1"
           >
             <i className="icon-delete text-18"></i>
@@ -754,7 +781,7 @@ export default function Profile() {
             className="size-200 rounded-12 object-cover"
           />
           <button
-            onClick={() => handleDeleteImage2(index)}
+            onClick={(e) => handleDeleteImage2(index,e)}
             className="absoluteIcon1 button -dark-1"
           >
             <i className="icon-delete text-18"></i>
@@ -776,7 +803,7 @@ export default function Profile() {
                         </div>
           <div className="file-name">{image.fileName}</div>
           <button
-            onClick={() => handleDeleteImage2(index)}
+            onClick={(e) => handleDeleteImage2(index,e)}
             className="absoluteIcon1 button -dark-1"
           >
             <i className="icon-delete text-18"></i>

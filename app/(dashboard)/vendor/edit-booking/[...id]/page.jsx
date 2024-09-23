@@ -74,7 +74,10 @@ export default function DbBooking({ params }) {
     { value: "Hotel Booking Voucher", label: "Hotel Booking Voucher" },
     { value: "Flight Ticket", label: "Flight Ticket" },
   ];
-
+  const [viewData,setViewData] = useState([]);
+  const [viewDetails,setViewDetails] = useState([]);
+  const [downloadData,setDownloadData] = useState([]);
+  const [downloadDetails,setDownloadDetails] = useState([]);
 
   const id = params.id[0];
   const handleRadioChange = (event) => {
@@ -101,7 +104,6 @@ export default function DbBooking({ params }) {
     const newRows = [...rows];
     newRows[index].type = selectedOption;
     setRows(newRows);
-    console.log(rows, "rows");
   };
 
   const handleImageChange = (e, index) => {
@@ -122,7 +124,6 @@ export default function DbBooking({ params }) {
       };
       reader.readAsDataURL(file);
     }
-    console.log(rows, "rows");
   };
   const handleImageChange2 = (event) => {
     const files = event.target.files;
@@ -161,6 +162,7 @@ export default function DbBooking({ params }) {
   function openUploadFileModal(personId,reservationId) {
     setuploadFileisOpen(true);
     setPersonId(personId);
+    console.log(personId,reservationId)
   }
 
   
@@ -233,7 +235,19 @@ const formatDateToMMDDYYYY = (date) => {
       ];
 
       setReservationHeader(ColumnReservation_details);
-
+      const FileDeta = [
+        { name: "Document Name", selector: (row) => row.Name },
+        {
+          name: "Action",
+          selector: (row) => (
+            <Link href={row.fileLink} target="_blank" className="button -sm -accent-1 bg-info-2 text-white my-2">
+              View {translate(" ") }
+            </Link>
+          ),
+        },
+      ];
+  
+      setViewData(FileDeta);
       
       // if(response.Bookings.reservation){
       //   const reservation = response.Bookings.reservation.map((res) => ({
@@ -244,8 +258,60 @@ const formatDateToMMDDYYYY = (date) => {
       //     country: res.countryName,
       //   }));
       // }
+      const DownloadData = [
+        { name: "Document Name", selector: (row) => row.Name },
+        {
+          name: "Action",
+          selector: (row) => (
+            <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2"
+            onClick={() => downloadFile(row.fileLink, row.Name)}
+          >
+            Download
+          </button>
+          ),
+        },
+      ];
+
+      setDownloadData(DownloadData);
+
+
+      const downloadFile = (fileLink, fileName) => {
+        const link = document.createElement("a");
+        link.href = fileLink;
+        link.download = fileName;
+        link.click();
+      };
 
       if(response.Bookings.adultData.length > 0){
+        const documents = response.Bookings.adultData.map((adult) =>  {
+          if(adult.documets && adult.documets.length > 0){
+
+            const docs = adult.documets.map((doc) => {
+
+              if(personId === doc.reservation_person_id ){
+                console.log("hi")
+                return {
+                  Name: doc.file_url_orginal_name,
+                  fileLink: doc.full_path,
+                }
+              }
+            }
+             )
+
+            setViewDetails(docs);
+
+            // const download = adult.documets.map((doc) => ({
+            //   Name: doc.file_url_orginal_name,
+            //   fileLink: doc.full_path,
+            // }))
+            // setDownloadDetails(download);
+          }
+
+
+        })
+  
+
       const adults = response.Bookings.adultData.map((adult) => ({
         id: adult.id,
         name: adult.personName,
@@ -258,6 +324,8 @@ const formatDateToMMDDYYYY = (date) => {
       }));
 
       setAdultBookings(adults);
+
+      
       }
 
       if(response.Bookings.reservation){
@@ -290,6 +358,17 @@ const formatDateToMMDDYYYY = (date) => {
           price: child.child_price,
         }));
         setChildBookings(children);
+
+        const documents = response.Bookings.childData.map((child) =>  {
+          if(child.documets && child.documets.length > 0){
+            const docs = child.documets.map((doc) => ({
+              Name: doc.file_url_orginal_name,
+              fileLink: doc.full_path,
+            }))
+
+            setViewDetails(docs);
+          }
+        })
       }
 
 
@@ -330,7 +409,12 @@ const formatDateToMMDDYYYY = (date) => {
         }
 
         setTotalData(total);
-      }  
+      } 
+      
+      
+  
+
+    
     }
   }
 
@@ -338,30 +422,9 @@ const formatDateToMMDDYYYY = (date) => {
       fetchDetails();
   },[user])
 
-  const FileDeta = [
-    { name: "Document Name", selector: (row) => row.Name },
-    {
-      name: "Action",
-      selector: (row) => (
-        <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          View {translate(" ") }
-        </button>
-      ),
-    },
-  ];
+  
 
-  const DownloadData = [
-    { name: "Document Name", selector: (row) => row.Name },
-    {
-      name: "Action",
-      selector: (row) => (
-        <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          Download {translate(" ") }
-        </button>
-      ),
-    },
-  ];
-
+ 
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
   }
@@ -426,7 +489,7 @@ const formatDateToMMDDYYYY = (date) => {
     },
   ];
 
-  
+ 
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -462,10 +525,13 @@ const formatDateToMMDDYYYY = (date) => {
     }
   }, []);
 
+
+
   const handleDocumentSubmit = async() => {
     const formData = new FormData();
     formData.append("reservation_person_id", personId );
     formData.append("reservation_id", id);
+    formData.append("vendor_id", user?.user?.id);
     const documentData = rows.map((row) => {
      return {
        document: row.document,
@@ -476,7 +542,6 @@ const formatDateToMMDDYYYY = (date) => {
 
 
     const response = await POST.request({form:formData, url: "upload_bookingdocuments"});
-    console.log(response, "response");
     // if(response){
     //   setuploadFileisOpen(false);
     // }
@@ -641,16 +706,16 @@ const formatDateToMMDDYYYY = (date) => {
               <TabPanel>
                 <DataTable
                   title="Your Documents"
-                  columns={FileDeta}
-                  data={ViewTicketsForVandor}
+                  columns={viewData}
+                  data={viewDetails}
                   highlightOnHover
                 />
               </TabPanel>
               <TabPanel>
                 <DataTable
                   title="Customer Documents"
-                  columns={DownloadData}
-                  data={ViewCustomerDocument}
+                  columns={downloadData}
+                  data={downloadDetails}
                   highlightOnHover
                 />
               </TabPanel>

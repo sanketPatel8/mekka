@@ -11,7 +11,6 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
   const user = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("user")) : '';
   const customer = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("customer")) : '';
 
-  console.log(user,"user")
   const handleLogout = () => {
     // Add your logout logic here, e.g. calling an API to log out the user
     // Redirect to the login page or a landing page

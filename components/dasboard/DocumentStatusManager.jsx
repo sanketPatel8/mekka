@@ -46,8 +46,7 @@ const customStyles = {
 };
 
 const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
-  console.log(reservationData, "reservationData");
-  console.log(reservationHeader, "reservationHeader");
+
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
   const reservationDataArray = [reservationData];
