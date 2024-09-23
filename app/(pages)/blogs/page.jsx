@@ -1,7 +1,6 @@
 "use client"
 
-import { articles } from "@/data/articles";
-import { blogs } from "@/data/blogs";
+
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
