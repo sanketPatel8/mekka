@@ -16,6 +16,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
+import Stripeform from "../stripe/stripeform";
 
 export default function Payment() {
   const router = useRouter();
@@ -32,6 +33,7 @@ export default function Payment() {
   const [todayDate, setTodayDate] = useState("");
   const [LocalAdults, setLocalAdults] = useState([]);
   const [GetAdditionals, setGetAdditionals] = useState([]);
+  const [showStripeModal, setShowStripeModal] = useState(false);
 
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
@@ -39,6 +41,9 @@ export default function Payment() {
       setInstallmentChecked(true);
     } else {
       setInstallmentChecked(false);
+    }
+    if(index=== 1){
+      setShowStripeModal(true);
     }
   };
 
@@ -122,9 +127,19 @@ export default function Payment() {
       showErrorToast("kai pn error che ");
     }
   };
-
+  const handleClose = () => {
+    setShowStripeModal(false);
+}
   const handlePayment = () => {
     if (selectedCheckbox === 0) {
+      FatchallBooking(Booking);
+      setTimeout(() => {
+        router.push("#ref");
+        setBookingStage((pre) => pre + 1);
+      }, 3000);
+    }
+
+    if (selectedCheckbox === 1) {
       FatchallBooking(Booking);
       setTimeout(() => {
         router.push("#ref");
@@ -557,7 +572,7 @@ export default function Payment() {
                         <div className="col-md-3 col-6">
                           <div>Payment Method</div>
                           <div className="text-accent-2">
-                            Direct Bank Transfer
+                            {selectedCheckbox === 0 ? "Direct Bank Transfer" : "Online"}
                           </div>
                         </div>
                       </div>
@@ -794,6 +809,9 @@ export default function Payment() {
           </div>
         </div>
       </div>
+      {showStripeModal
+          && <Stripeform  amount={SideBarData.BookingFild?.Amount_Paid} showStripeModal={showStripeModal} handleClose={handleClose}  />
+      }
     </section>
   );
 }
