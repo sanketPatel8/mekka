@@ -29,6 +29,8 @@ export default function TourList4({
   value,
   setValue,
   handleSelectionChange,
+  activeIndex ,
+  setActiveIndex
 }) {
 
 
@@ -37,7 +39,7 @@ export default function TourList4({
   const [sidebarActive, setSidebarActive] = useState(false);
 
 
-  const [activeIndex, setActiveIndex] = useState(0);
+
   const startParam = "start";
 
   // for loader 

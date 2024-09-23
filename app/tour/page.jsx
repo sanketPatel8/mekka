@@ -18,7 +18,6 @@ export default function PageData() {
   const [Route, setRoute] = useState("");
   const [TourData, setTourData] = useState([]);
   const [LanActives, setLanActives] = useState([]);
-  const [LanArray, setLanArray] = useState([]);
   const [FilterSidebar, setFilterSidebar] = useState({
     selectedTourTypes: [],
     selectedLanguages: [],
@@ -27,6 +26,8 @@ export default function PageData() {
     selectedFeatures: [],
     selectedDurations: [],
   });
+  const [TourList, setTourList] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const [value, setValue] = useState([0, 0]);
   const [range, setRange] = useState(1);
@@ -55,13 +56,14 @@ export default function PageData() {
         form: formData,
         url: "tourlist",
       });
-      console.log(response);
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);
+      setTourList(true);
+
       route.push("#redirect");
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -88,14 +90,28 @@ export default function PageData() {
     if (tourType || startDate || endDate || person) {
       await fetchSearch1Data({ tourType, startDate, endDate, person });
       console.log("fetch search data");
-    } else if (FilterSidebar) {
-      await fetchListing(pageIndex);
+    } else if (
+      FilterSidebar.selectedTourTypes.length !== 0 ||
+      FilterSidebar.selectedLanguages.length !== 0 ||
+      FilterSidebar.selectedCities.length !== 0 ||
+      FilterSidebar.selectedFeatures.length !== 0 ||
+      FilterSidebar.selectedDurations.length !== 0 ||
+      FilterSidebar.selectedRatings.length !== 0
+    ) {
+      await FetchFilterData(pageIndex);
       console.log("fetch Filter Data");
     } else {
-      await FetchFilterData(pageIndex);
+      await fetchListing(pageIndex);
       console.log("fetch Listning Data");
     }
   };
+
+  console.log("activeIndex" , activeIndex);
+  
+  useEffect(() => {
+    setActiveIndex(0)
+  }, [FilterSidebar])
+  
 
   useEffect(() => {
     FetchTourDataAPi();
@@ -139,13 +155,22 @@ export default function PageData() {
       setRange(response.Total_Page);
       setCount(response.Count);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
   useEffect(() => {
     if (isMounted.current) {
-      FetchFilterData();
+      if( FilterSidebar.selectedTourTypes.length !== 0 ||
+        FilterSidebar.selectedLanguages.length !== 0 ||
+        FilterSidebar.selectedCities.length !== 0 ||
+        FilterSidebar.selectedFeatures.length !== 0 ||
+        FilterSidebar.selectedDurations.length !== 0 ||
+        FilterSidebar.selectedRatings.length !== 0){
+          FetchFilterData();
+        }else{
+          fetchListing();
+        }
     } else {
       isMounted.current = true;
     }
@@ -166,7 +191,6 @@ export default function PageData() {
   };
 
   const fetchSearch1Data = async ({ tourType, startDate, endDate, person }) => {
-    // console.log("endDate" , endDate);
 
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -207,8 +231,6 @@ export default function PageData() {
         ? ""
         : searchParams.get("person");
 
-    console.log("endDate", endDate);
-
     if (
       (tourType !== null && tourType !== undefined && tourType !== "") ||
       (startDate !== null && startDate !== undefined && startDate !== "") ||
@@ -241,6 +263,8 @@ export default function PageData() {
             value={value}
             setValue={setValue}
             handleSelectionChange={handleSelectionChange}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
           />
         </div>
         <FooterTwo />
