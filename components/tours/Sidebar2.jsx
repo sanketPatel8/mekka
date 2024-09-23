@@ -20,7 +20,6 @@ export default function Sidebar2({
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const handleChange = (key, value) => {
     handleSelectionChange(key, value);
-    
   };
 
   useEffect(() => {
@@ -67,7 +66,7 @@ export default function Sidebar2({
                       <div key={i}>
                         <div className="d-flex items-center justify-between">
                           <div className="row">
-                            <div className="col-12">
+                            {/* <div className="col-12">
                               <div className="d-flex items-center pointer-check">
                                 <div className="form-checkbox">
                                   <input
@@ -105,6 +104,26 @@ export default function Sidebar2({
                                   {translate(elm)}
                                 </label>
                               </div>
+                            </div> */}
+                            <div className="col-12">
+                              <div className="form-radio d-flex items-center">
+                                <label className="radio d-flex items-center ">
+                                  <input
+                                     type="radio"
+                                     id={elm}
+                                     name="selectedTourTypes"  
+                                     value={elm}  
+                                     checked={FilterSidebar?.selectedTourTypes === elm}  
+                                     onChange={() => handleChange("selectedTourTypes", elm)}
+                                  />
+                                  <span className="radio__mark">
+                                    <span className="radio__icon"></span>
+                                  </span>
+                                  <span className="text-14 lh-1 ml-10">
+                                    {elm}
+                                  </span>
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -116,6 +135,92 @@ export default function Sidebar2({
             </div>
           </div>
         </div>
+
+        {/* <div className="sidebar__item">
+          <div className="accordion -simple-2 js-accordion">
+            <div
+              className={`accordion__item js-accordion-item-active ${
+                ddActives.includes("tourtype") ? "is-active" : ""
+              }`}
+            >
+              <div
+                className="accordion__button d-flex items-center justify-between"
+                onClick={() =>
+                  setDdActives((prev) =>
+                    prev.includes("tourtype")
+                      ? [...prev.filter((elm) => elm !== "tourtype")]
+                      : [...prev, "tourtype"]
+                  )
+                }
+              >
+                <h5 className="text-18 fw-500">{translate("Tour Type")}</h5>
+                <div className="accordion__icon flex-center">
+                  <i className="icon-chevron-down"></i>
+                  <i className="icon-chevron-down"></i>
+                </div>
+              </div>
+              <div
+                className="accordion__content"
+                style={
+                  ddActives.includes("tourtype") ? { maxHeight: "300px" } : {}
+                }
+              >
+                <div className="pt-15">
+                  <div className="d-flex flex-column y-gap-15">
+                    {toursTypes.map((elm, i) => (
+                      <div key={i}>
+                        <div className="d-flex items-center justify-between">
+                          <div className="row">
+                            <div className="col-12">
+                              <div className="d-flex items-center pointer-check">
+                                <div className="form-radio">
+                                  <input
+                                    type="radio"
+                                    id={elm}
+                                    name="selectedTourTypes"
+                                    value={elm}
+                                    checked={
+                                      FilterSidebar?.selectedTourTypes === elm
+                                    }
+                                    onChange={() =>
+                                      handleChange("selectedTourTypes", elm)
+                                    }
+                                  />
+                                  <label
+                                    htmlFor={elm}
+                                    className="form-radio__mark"
+                                  >
+                                    <div className="form-radio__icon">
+                                      <svg
+                                        width="10"
+                                        height="8"
+                                        viewBox="0 0 10 8"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                          fill="white"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </label>
+                                </div>
+                                <label htmlFor={elm} className="lh-16 ml-15">
+                                  {translate(elm)}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> */}
 
         <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">

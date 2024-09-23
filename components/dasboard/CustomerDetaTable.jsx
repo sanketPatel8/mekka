@@ -22,6 +22,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { POST } from "@/app/utils/api/post";
+import { nationalities } from "@/data/nationalities";
 
 const customStyles = {
   overlay: {
@@ -760,10 +761,13 @@ const CustomerDetaTable = ({ BookingDetails }) => {
                       <option value="">
                         {translate("Select Nationality")}
                       </option>
-                      <option value="indian">{translate("Indian")}</option>
-                      <option value="german">{translate("German")}</option>
-                      <option value="canadian">{translate("Canadian")}</option>
+                      {nationalities.map((e) => (
+                        <option key={e} value={e}>
+                          {translate(e)}
+                        </option>
+                      ))}
                     </select>
+
                     <label className="lh-1 text-16 text-light-1">
                       {AddpersonData.nationality}
                     </label>
@@ -1353,11 +1357,11 @@ const CustomerDetaTable = ({ BookingDetails }) => {
                         required
                         className="form-control"
                       >
-                        <option value="indian">{translate("Indian")}</option>
-                        <option value="german">{translate("German")}</option>
-                        <option value="canadian">
-                          {translate("Canadian")}
-                        </option>
+                        {nationalities.map((e) => (
+                          <option key={e} value={e}>
+                            {translate(e)}
+                          </option>
+                        ))}
                       </select>
                       <label className="lh-1 text-16 text-light-1">
                         {editCustomerData.nationality}
