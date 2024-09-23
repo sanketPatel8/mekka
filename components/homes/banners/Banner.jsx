@@ -19,13 +19,13 @@ export default function Banner() {
               <h2
                 data-aos="fade-up"
                 data-aos-delay=""
-                classname="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
+                className="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
               >
                 {translate("Grab up to")}{" "}
-                <span classname="text-info-2">{translate("35% off")} </span>
-                <br classname="lg:hidden sm:hidden xs:hidden" />
+                <span className="text-info-2">{translate("35% off")} </span>
+                <br className="lg:hidden sm:hidden xs:hidden" />
                 {translate("on your favorite")}
-                <br classname="lg:hidden" />
+                <br className="lg:hidden" />
                 {translate("Destination")}
               </h2>
 
