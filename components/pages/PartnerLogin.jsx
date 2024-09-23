@@ -70,41 +70,17 @@ export default function PartnerLogin({ onLoginSuccess }) {
             router.push('/vendor/dashboard');
           }, 1000);
         }
-        else if (resp.user.user_type == "customer") {
-          typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
-          dispatch({ type: "LOGIN", payload: resp });
-          showSuccessToast("Login successful!");
-          setTimeout(() => {
-            setLoginPer(true)
-            router.push('/');
-          }, 1000);
-        } 
+        else{
+          showErrorToast("Invalid Credentials");
+          setLogInData({
+            AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+            email: "",
+            password: "",
+          })
+
+        }
         
-        // if (resp.data == "" || resp.data == null) {
-        //   toast.error(resp.error);
-        //   setLoading(false);
-        // }
-        // else if (resp.data.business_verified == 0) {
-        //   toast.success("Logged In successfully. Please setup your business now.");
-        //   localStorage.setItem("user", JSON.stringify(resp.data));
-        //   dispatch({ type: "LOGIN", payload: resp.data });
-        //   setLoading(false);
-        //   setTimeout(() => {
-        //     router.push('/vendor/business-information');
-        //   }, 1000);
-        // }
-        // else if (resp.data.business_verified == 1) {
-        //   toast.success("Logged In Successfully.");
-        //   localStorage.setItem("user", JSON.stringify(resp.data));
-        //   dispatch({ type: "LOGIN", payload: resp.data });
-        //   setLoading(false);
-        //   setTimeout(() => {
-        //     router.push('/vendor/booking');
-        //   }, 1000);
-        // } else {
-        //   toast.error(resp.error);
-        //   setLoading(false);
-        // }
+      
       })
       .catch((err) => {
         // showErrorToast("Invalid Email or Password");

@@ -22,8 +22,9 @@ export const DELETE = {
         return data.data;
       }
     } catch (error) {
-      if (error.response && error.response.status === 401 && window.location.pathname !== "/login") {
+      if (error.response && error.response.status === 401 && window.location.pathname !== "/login" && window.location.pathname !== "/partner-login") {
         // window.location.href = "/vendor/login";
+        
         return { data: '', accessError: true };
     } else {
         return { data: '', error: error.response ? error.response.data : 'Network or server error' };

@@ -22,7 +22,7 @@ export const GET = {
         return data.data;
       }
     } catch (error) {
-      if (error.response && error.response.status === 401 &&  window.location.pathname !== "/login") {
+      if (error.response && error.response.status === 401 &&  window.location.pathname !== "/login" && window.location.pathname !== "/partner-login") {
         // window.location.href = "/vendor/login";
         return { data: '', accessError: true };
       } else if (error.response && error.response.status === 401) {

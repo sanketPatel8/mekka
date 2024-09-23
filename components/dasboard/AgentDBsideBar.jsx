@@ -8,11 +8,18 @@ import React from "react";
 
 const AgentDBsideBar = ({ setSideBarOpen }) => {
   const pathname = usePathname();
+  const user = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("user")) : '';
+  const customer = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("customer")) : '';
+
+  console.log(user,"user")
   const handleLogout = () => {
     // Add your logout logic here, e.g. calling an API to log out the user
     // Redirect to the login page or a landing page
-    typeof window != 'undefined' ? localStorage.removeItem("user") : '';
-    window.location.href = "/login";
+    if(typeof window != 'undefined' && user){
+
+      localStorage.removeItem("user");
+    window.location.href = "/partner-login";
+    }
   };
 
   return (

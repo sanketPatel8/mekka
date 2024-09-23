@@ -27,18 +27,15 @@ export default function Login({ onLoginSuccess }) {
 
   const LoginUpdate = () => {
     if (typeof window !== "undefined") {
-      // Retrieve the current value
       const loginStatus = JSON.parse(
         localStorage.getItem("CustomerLoginCheck")
       );
 
-      // Update the value (e.g., toggle between true and false)
       const updatedStatus = loginStatus !== undefined ? true : false 
 
-      // Save the updated value back to localStorage
       localStorage.setItem("CustomerLoginCheck", JSON.stringify(updatedStatus));
 
-      console.log("Updated login status:", updatedStatus); // Optional: to verify the change
+      console.log("Updated login status:", updatedStatus); 
 
     }
   }
@@ -78,28 +75,24 @@ export default function Login({ onLoginSuccess }) {
         if (resp.status == "error") {
           showErrorToast(resp.message);
         }
-
-        if (resp.user.user_type == "vendor") {
+         if (resp.user.user_type == "customer") {
           typeof window != "undefined"
-            ? localStorage.setItem("user", JSON.stringify(resp))
+            ? localStorage.setItem("customer", JSON.stringify(resp))
             : "";
-          dispatch({ type: "LOGIN", payload: resp });
-          showSuccessToast("Login successful!");
-          setTimeout(() => {
-            setLoginPer(true);
-            router.push("/vendor/dashboard");
-          }, 1000);
-        } else if (resp.user.user_type == "customer") {
-          typeof window != "undefined"
-            ? localStorage.setItem("user", JSON.stringify(resp))
-            : "";
-          dispatch({ type: "LOGIN", payload: resp });
+          dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
           showSuccessToast("Login successful!");
           LoginUpdate()
           setTimeout(() => {
             setLoginPer(true);
             router.push("/");
           }, 1000);
+        }else{
+          showErrorToast("Invalid Credentials");
+          setLogInData({
+            AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+            email: "",
+            password: "",
+          });
         }
 
         

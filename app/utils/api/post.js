@@ -67,7 +67,7 @@ export const POST = {
             }
         } catch (error) {
             // console.error('Error Response:', error.response || error.message || error);
-            if (error.response && error.response.status === 401 &&  window.location.pathname !== "/login") {
+            if (error.response && error.response.status === 401 &&  window.location.pathname !== "/login" && window.location.pathname !== "/partner-login") {
 
                 // window.location.href = "/vendor/login";
                 return { data: '', accessError: true };

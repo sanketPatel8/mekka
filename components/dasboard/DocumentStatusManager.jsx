@@ -19,6 +19,9 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Select from "react-select";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { POST } from "@/app/utils/api/post";
+import { showSuccessToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
 
 const customStyles = {
   overlay: {
@@ -42,11 +45,13 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
-  console.log(adultBookings, "adultBookings");
-  console.log(childBookings, "childBookings");
+const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
+  console.log(reservationData, "reservationData");
+  console.log(reservationHeader, "reservationHeader");
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
+  const reservationDataArray = [reservationData];
+  const totalDataArray = [totalData];
 
 
   // Function to set selected time
@@ -54,10 +59,7 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
     setSelectedTime(time);
   };
 
-  useEffect(() => {
-    Modal.setAppElement("#upload_file");
-    Modal.setAppElement("#invoice");
-  }, []);
+
 
   const ColumnReservation_details = [
     { name: "Airline", selector: (row) => row.Airline },
@@ -181,9 +183,13 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
   }
-
-  function openInvoice() {
-    setinvoice(true);
+  const openInvoice = async() => {
+    const formData = new FormData();
+    formData.append("reservation_id", Customerid?.id);
+    const response = await POST.request({form:formData, url: "sendInvoice"});
+    if(response){
+      showSuccessToast(response.Message)
+    }
   }
 
   function closeInvoice() {
@@ -207,8 +213,17 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
     { value: "Flight Ticket", label: "Flight Ticket" },
   ];
 
-  const handleChange = (selectedOption) => {
+  const handleChange = async(selectedOption) => {
     setStatus(selectedOption);
+    const formData = new FormData();
+    formData.append("reservation_id", Customerid.id);
+    formData.append("status", selectedOption.value);
+
+    const response = await POST.request({ form: formData, url: "changeBookingStatus" });
+    console.log(response)
+    if(response){
+      showSuccessToast("Status Updated Successfully");
+    }
   };
 
 
@@ -253,6 +268,7 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
   const { translate } = useTranslation();
   return (
     <div>
+      <ToastContainer/>
        <h1 className="text-30"> {translate("Booking Id") } : #{Customerid.id}</h1>
       <div className="row px-0 pb-10 mt-20">
         <div className="col-lg-6">
@@ -289,14 +305,18 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
         
         </>
       } */}
-      
-      <DataTable
-        title="Reservation Details"
-        columns={ColumnReservation_details}
-        data={ReservationData}
-        highlightOnHover
-      />
-      <br />
+      {
+        reservationData && 
+        <>
+        <DataTable
+          title="Reservation Details"
+          columns={reservationHeader}
+          data={reservationDataArray}
+          highlightOnHover
+        />
+        <br />
+        </>
+      }
 
       {
         adultBookings &&
@@ -333,162 +353,23 @@ const DocumentStatusManager = ({ Customerid, bookings,adultHeaders,adultBookings
         </>
 
       }
+
+      {
+        totalData && 
+        <>
+        
+        <DataTable
+          title="Total"
+          columns={Total}
+          data={totalDataArray}
+          highlightOnHover
+        />
+        <br />
+        </>
+      }
      
-      <DataTable
-        title="Total"
-        columns={Total}
-        data={TotalData}
-        highlightOnHover
-      />
-      <br />
 
-      <div id="upload_file">
-      <Modal
-          isOpen={uploadFileisOpen}
-          onRequestClose={closeUploadFileModal}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="ml-20 my-3"> {translate("Document") }</h2>
-            <button onClick={closeUploadFileModal}>
-              <IoClose size={25} />
-            </button>
-          </div>
-
-          <div className="ml-lg-20 ml-0 ">
-            <Tabs>
-              <TabList>
-                <Tab> {translate("Upload") }</Tab>
-                <Tab> {translate("View") }</Tab>
-                <Tab> {translate("Download") }</Tab>
-              </TabList>
-
-              <TabPanel>
-                <div className="overflow-hidden overflow-lg-auto">
-                  {rows.map((row, index) => (
-                    <div className="row item-center my-3" key={row.id}>
-                      <div className="col-md-4 px-0 mx-0 pl-lg-50">
-                        <Select
-                          options={VandorDoc}
-                          value={row.document}
-                          onChange={(selectedOption) =>
-                            handleDocumentChange(selectedOption, index)
-                          }
-                          className="dd-vendor"
-                          isClearable
-                        />
-                      </div>
-                      <div className="col-md-4 px-0 mx-2">
-                        <div className="row my-2 flex_center ">
-                          {row.image ? (
-                            <div className="col-auto my-3">
-                              <div className="relative">
-                                <Image
-                                  width={200}
-                                  height={200}
-                                  src={row.image}
-                                  alt="image"
-                                  className="size-200 rounded-12 object-cover my-3"
-                                />
-                                <button
-                                  onClick={() => {
-                                    const newRows = [...rows];
-                                    newRows[index].image = "";
-                                    setRows(newRows);
-                                  }}
-                                  className="absoluteIcon1 button -dark-1"
-                                >
-                                  <i className="icon-delete text-18"></i>
-                                </button>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="col-auto  pl-20-doc-img">
-                              <label
-                                htmlFor={`imageInp-${index}`}
-                                className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
-                              >
-                                <div className="text-16 fw-500 text-accent-1">
-                                   {translate("Upload Document") }
-                                </div>
-                              </label>
-                              <input
-                                onChange={(e) => handleImageChange(e, index)}
-                                accept="image/*"
-                                id={`imageInp-${index}`}
-                                type="file"
-                                style={{ display: "none" }}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-md-2 px-0 mx-0">
-                        <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
-                          <div className="mx-1">
-                            <button
-                              type="button"
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                              onClick={addRow}
-                            >
-                              +
-                            </button>
-                          </div>
-                          {index > 0 && (
-                            <div className="mx-1">
-                              <button
-                                type="button"
-                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                                onClick={() => removeRow(index)}
-                              >
-                                -
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="d-flex justify-content-center gap-md-2">
-                    <button
-                      className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                      onClick={() => {
-                        alert("submited");
-                      }}
-                    >
-                       {translate("SUBMIT") }
-                    </button>
-                    <button
-                      className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                      onClick={closeUploadFileModal}
-                    >
-                       {translate("CANCEL") }
-                    </button>
-                  </div>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  title="Your Documents"
-                  columns={FileDeta}
-                  data={ViewTicketsForVandor}
-                  highlightOnHover
-                />
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  title="Customer Documents"
-                  columns={DownloadData}
-                  data={ViewCustomerDocument}
-                  highlightOnHover
-                />
-              </TabPanel>
-            </Tabs>
-          </div>
-        </Modal>
-      </div>
+     
 
       <div id="invoice">
         <Modal

@@ -15,15 +15,26 @@ function Useauthredirect() {
             // else if (authContext.customer) {
             //     window.location.href = "/login";
             // }
-        } else if (status === 401 && window.location.pathname !== "/login") {
-            console.log(status , "401")
-            window.location.href = "/login";
-        } 
+        } else if (status === 401 && window.location.pathname !== "/login" && window.location.pathname !== "/partner-login") {
+       
         if (!authContext.user) {
             console.log(authContext.user , "user not found")
+            window.location.href = "/partner-login";
+          }
+          if(!authContext.customer) {
+            console.log(authContext.customer , "customer not found")
             window.location.href = "/login";
           }
+        }
 
+        // if (!authContext.user) {
+        //     console.log(authContext.user , "user not found")
+        //     window.location.href = "/partner-login";
+        //   }
+        //   if(!authContext.customer) {
+        //     console.log(authContext.customer , "customer not found")
+        //     window.location.href = "/login";
+        //   }
     };
 
     // const handlePaidRedirect = (isPaid) => {
