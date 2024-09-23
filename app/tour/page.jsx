@@ -19,7 +19,7 @@ export default function PageData() {
   const [TourData, setTourData] = useState([]);
   const [LanActives, setLanActives] = useState([]);
   const [FilterSidebar, setFilterSidebar] = useState({
-    selectedTourTypes: [],
+    selectedTourTypes: " ",
     selectedLanguages: [],
     selectedCities: [],
     selectedRatings: [],
@@ -31,11 +31,20 @@ export default function PageData() {
 
   const [value, setValue] = useState([0, 0]);
   const [range, setRange] = useState(1);
+  const [SearchData, setSearchData] = useState({})
 
   const route = useRouter();
 
   const handleSelectionChange = (key, value) => {
     setFilterSidebar((prevState) => {
+      if (key === "selectedTourTypes") {
+        return {
+          ...prevState,
+          [key]: value,  // Directly set the selected value
+        };
+      }
+  
+      // For other keys (like arrays), keep the original logic
       const isSelected = prevState[key].includes(value);
       return {
         ...prevState,
@@ -88,10 +97,10 @@ export default function PageData() {
         : searchParams.get("person");
 
     if (tourType || startDate || endDate || person) {
-      await fetchSearch1Data({ tourType, startDate, endDate, person });
+      await fetchSearch1Data({pageIndex , tourType, startDate, endDate, person });
       console.log("fetch search data");
     } else if (
-      FilterSidebar.selectedTourTypes.length !== 0 ||
+      FilterSidebar.selectedTourTypes !== "" ||
       FilterSidebar.selectedLanguages.length !== 0 ||
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
@@ -105,17 +114,18 @@ export default function PageData() {
       console.log("fetch Listning Data");
     }
   };
-
-  console.log("activeIndex" , activeIndex);
   
   useEffect(() => {
     setActiveIndex(0)
   }, [FilterSidebar])
-  
+
+console.log("SearchData" , SearchData);
 
   useEffect(() => {
     FetchTourDataAPi();
-    fetchListing();
+    if(SearchData.tourType === null && SearchData.startDate === null && SearchData.endDate === null && SearchData.person === null){
+      fetchListing();
+    }
   }, []);
 
   const isMounted = useRef(false);
@@ -125,15 +135,11 @@ export default function PageData() {
 
   const FetchFilterData = async (
     pageIndex,
-    tourType,
-    startDate,
-    endDate,
-    person
   ) => {
     const formData = new FormData();
 
     formData.append("start", pageIndex || 0);
-    formData.append("type", FilterSidebar?.selectedTourTypes.join(", "));
+    formData.append("type", FilterSidebar?.selectedTourTypes);
     formData.append("language", Lan_ids.join(","));
     formData.append("departure", FilterSidebar?.selectedCities.join(", "));
     formData.append("min_price", value[0]);
@@ -141,10 +147,10 @@ export default function PageData() {
     formData.append("hotel_star", FilterSidebar?.selectedDurations.join(", "));
     formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
     formData.append("amenities", FilterSidebar?.selectedFeatures.join(", "));
-    formData.append("filter_type", tourType);
-    formData.append("start_date", startDate);
-    formData.append("end_date", endDate);
-    formData.append("person", person);
+    formData.append("filter_type", SearchData.tourType);
+    formData.append("start_date", SearchData.startDate);
+    formData.append("end_date", SearchData.endDate);
+    formData.append("person", SearchData.person);
 
     try {
       const response = await POST.request({
@@ -161,13 +167,16 @@ export default function PageData() {
 
   useEffect(() => {
     if (isMounted.current) {
-      if( FilterSidebar.selectedTourTypes.length !== 0 ||
+      if( 
+        FilterSidebar.selectedTourTypes !== "" ||
         FilterSidebar.selectedLanguages.length !== 0 ||
         FilterSidebar.selectedCities.length !== 0 ||
         FilterSidebar.selectedFeatures.length !== 0 ||
         FilterSidebar.selectedDurations.length !== 0 ||
         FilterSidebar.selectedRatings.length !== 0){
           FetchFilterData();
+        }else if(SearchData.tourType !== null && SearchData.startDate !== null && SearchData.endDate !== null && SearchData.person !== null ) {
+          fetchSearch1Data(SearchData.tourType , SearchData.startDate , SearchData.endDate , SearchData.person  )
         }else{
           fetchListing();
         }
@@ -175,6 +184,9 @@ export default function PageData() {
       isMounted.current = true;
     }
   }, [FilterSidebar]);
+
+  console.log("FilterSidebar" , FilterSidebar);
+  
 
   const FetchTourDataAPi = async () => {
     const sendData = {
@@ -190,7 +202,7 @@ export default function PageData() {
     }
   };
 
-  const fetchSearch1Data = async ({ tourType, startDate, endDate, person }) => {
+  const fetchSearch1Data = async ({ pageIndex , tourType, startDate, endDate, person }) => {
 
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -199,12 +211,13 @@ export default function PageData() {
       start_date: startDate,
       end_date: endDate,
       person: person,
-      start: 0,
+      start: pageIndex || 0,
     };
     try {
       const response = await post("search_tour", sendData);
       setTourData(response.Tour_List);
       setRange(response.Total_Page);
+      setCount(response.Count);
       setRoute("search data");
     } catch (error) {
       console.error("Error caught:", error);
@@ -231,6 +244,15 @@ export default function PageData() {
         ? ""
         : searchParams.get("person");
 
+        setSearchData({
+          tourType,
+          startDate,
+          endDate,
+          person
+        })
+
+
+
     if (
       (tourType !== null && tourType !== undefined && tourType !== "") ||
       (startDate !== null && startDate !== undefined && startDate !== "") ||
@@ -240,7 +262,6 @@ export default function PageData() {
       fetchSearch1Data({ tourType, startDate, endDate, person });
       route.push("#redirect");
     } else {
-      // fetchData();
       fetchListing();
     }
   }, [searchParams]);
