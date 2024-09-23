@@ -98,7 +98,7 @@ export default function PageData() {
   };
 
   useEffect(() => {
-    FetchTourDataAPi()
+    FetchTourDataAPi();
     fetchListing();
   }, []);
 
@@ -107,7 +107,13 @@ export default function PageData() {
     (language) => language.id
   );
 
-  const FetchFilterData = async (pageIndex) => {
+  const FetchFilterData = async (
+    pageIndex,
+    tourType,
+    startDate,
+    endDate,
+    person
+  ) => {
     const formData = new FormData();
 
     formData.append("start", pageIndex || 0);
@@ -119,6 +125,10 @@ export default function PageData() {
     formData.append("hotel_star", FilterSidebar?.selectedDurations.join(", "));
     formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
     formData.append("amenities", FilterSidebar?.selectedFeatures.join(", "));
+    formData.append("filter_type", tourType);
+    formData.append("start_date", startDate);
+    formData.append("end_date", endDate);
+    formData.append("person", person);
 
     try {
       const response = await POST.request({
@@ -156,8 +166,8 @@ export default function PageData() {
   };
 
   const fetchSearch1Data = async ({ tourType, startDate, endDate, person }) => {
-  // console.log("endDate" , endDate);
-    
+    // console.log("endDate" , endDate);
+
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       Keyword: "",
@@ -165,7 +175,7 @@ export default function PageData() {
       start_date: startDate,
       end_date: endDate,
       person: person,
-      start : 0
+      start: 0,
     };
     try {
       const response = await post("search_tour", sendData);
@@ -197,8 +207,8 @@ export default function PageData() {
         ? ""
         : searchParams.get("person");
 
-        console.log("endDate" , endDate);
-        
+    console.log("endDate", endDate);
+
     if (
       (tourType !== null && tourType !== undefined && tourType !== "") ||
       (startDate !== null && startDate !== undefined && startDate !== "") ||
