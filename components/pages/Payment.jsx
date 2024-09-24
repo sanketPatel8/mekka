@@ -39,20 +39,26 @@ export default function Payment() {
   const [seconddate, setSecondDate] = useState("");
   const [minEndDate, setMinEndDate] = useState("");
   const [maxEndDate, setMaxEndDate] = useState("");
-
-  const [firstAmount, setFirstAmount] = useState(1);
-  const [secondAmount, setSecondAmount] = useState(1);
+  const [paymentType,setPaymentType] = useState("");
+  const [firstAmount, setFirstAmount] = useState("");
+  const [secondAmount, setSecondAmount] = useState("");
   const [thirdAmount, setThirdAmount] = useState(0);
+  const [disabled, setDisabled] = useState(true);
+  const [amount, setAmount] = useState("");
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
     if (index === 2) {
+      console.log(index,"index")
       setInstallmentChecked(true);
     } else {
       setInstallmentChecked(false);
     }
     if(index=== 1){
       setShowStripeModal(true);
+      const newBooking = {...Booking, paymentType : 2}
+      setBooking(newBooking);
     }
+    
   };
   const handleFirstAmountChange = (e) => {
     setFirstAmount(e.target.value);
@@ -164,7 +170,17 @@ export default function Payment() {
       }
     }
   }, []);
+  
+  const handleDisabled = () => {
+    const agbAcceptance = document.getElementById("agbAcceptance");
+    const item5 = document.getElementById("item5");
 
+    if (agbAcceptance.checked && item5.checked) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }
   const parseDate = (dateString) => {
     const parts = dateString.split('.');
     const day = parseInt(parts[0], 10);
@@ -177,6 +193,8 @@ export default function Payment() {
     const [year, month, day] = date.split('-');
     return `${day}-${month}-${year}`;
 };
+
+
 
 const formatDateToMMDDYYYY = (date) => {
     const [day, month, year] = date.split('-');
@@ -224,11 +242,20 @@ const formatDateToMMDDYYYY = (date) => {
 }
   const handlePayment = () => {
     if (selectedCheckbox === 0) {
-      FatchallBooking(Booking);
+      const newBooking = {...Booking, paymentType : 1}
+      FatchallBooking(newBooking);
       setTimeout(() => {
         router.push("#ref");
         setBookingStage((pre) => pre + 1);
       }, 3000);
+    }
+
+    if(selectedCheckbox === 2){
+      setShowStripeModal(true);
+      const newBooking = {...Booking, paymentType : 3,payment_plan_1: firstAmount,payment_plan_2: secondAmount,payment_plan_3: thirdAmount, payment_plan_date_1: dateBegin, payment_plan_date_2: seconddate, payment_plan_date_3: dateEnd}
+      setBooking(newBooking);
+      setAmount(firstAmount);
+      
     }
 
    
@@ -441,7 +468,7 @@ const formatDateToMMDDYYYY = (date) => {
                                   type="text"
                                   required
                                   value={firstAmount} onChange={handleFirstAmountChange}
-                                  placeholder="1st Amount"
+                                  placeholder=""
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   1st Amount
@@ -454,7 +481,7 @@ const formatDateToMMDDYYYY = (date) => {
                                 <input
                                   type="date"
                                   required
-                                  placeholder="1st Date"
+                                  placeholder=""
                                   value={dateBegin}
                                   disabled ={true}
                                   min={minEndDate}
@@ -472,7 +499,7 @@ const formatDateToMMDDYYYY = (date) => {
                                   type="text"
                                   required
                                   value={secondAmount} onChange={handleSecondAmountChange}
-                                  placeholder="2nd Amount"
+                                  placeholder=""
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   2nd Amount
@@ -485,7 +512,7 @@ const formatDateToMMDDYYYY = (date) => {
                                 <input
                                   type="date"
                                   required
-                                  placeholder="2nd Date"
+                                  placeholder=""
                                   value={seconddate}
                                   onChange={handleDateChange}
                                   min={minEndDate}
@@ -537,6 +564,7 @@ const formatDateToMMDDYYYY = (date) => {
                             type="checkbox"
                             id="item5"
                             name="data protection and accept"
+                            onChange={handleDisabled}
                           />
                           <label
                             htmlFor="item5"
@@ -571,6 +599,8 @@ const formatDateToMMDDYYYY = (date) => {
                             type="checkbox"
                             id="agbAcceptance"
                             name="agbAcceptance"
+                            onChange={handleDisabled}
+
                           />
                           <label
                             htmlFor="agbAcceptance"
@@ -906,6 +936,7 @@ const formatDateToMMDDYYYY = (date) => {
                 <div className="mt-10">
                   <button
                     onClick={handlePayment}
+                    disabled={disabled}
                     className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'}  ${
                       bookingStage == 2 ? `d-none` : `d-block`
                     }`}
@@ -919,7 +950,7 @@ const formatDateToMMDDYYYY = (date) => {
         </div>
       </div>
       {showStripeModal
-          && <Stripeform  amount={SideBarData.BookingFild?.Amount_Paid} Booking={Booking} showStripeModal={showStripeModal} handleClose={handleClose} setBookingStage={setBookingStage}  />
+          && <Stripeform  amount={amount ? amount :SideBarData.BookingFild?.Amount_Paid} Booking={Booking} showStripeModal={showStripeModal} handleClose={handleClose} setBookingStage={setBookingStage}  />
       }
     </section>
   );

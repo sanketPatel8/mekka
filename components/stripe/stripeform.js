@@ -5,6 +5,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
 
 function Stripeform({ showStripeModal,  handleClose, amount,  setPaymentStatus,stripePromise,Booking,setBookingStage }) {
+  console.log(amount, 'amount')
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const getClientSecret = async () => {

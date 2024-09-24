@@ -37,13 +37,12 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
     const [isProcessing, setIsProcessing] = useState(false);
     const [saveCard, setSaveCard] = useState(false);
     const [cardDetails, setCardDetails] = useState({});
-    console.log(Booking, 'booking')
 
-    const addBooking = async () => {
-        console.log("hi")
-       
+    const addBooking = async (transactionId) => {
+        const newBooking ={...Booking ,transaction_id : transactionId}
+
         try {
-            const response = await post("addbooking", Booking);
+            const response = await post("addbooking", newBooking);
             if(response){
                 toast.success("Booking successful");
                 handleClose()
@@ -82,8 +81,11 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
             if (error && (error.type === "card_error" || error.type === "validation_error")) {
                 toast.error("Payment already succeeded");
             } else if (paymentIntent && paymentIntent.status === "succeeded") {
+                console.log(paymentIntent, 'paymentIntent')
+                console.log(paymentIntent.id, 'paymentIntent.id')
+
                 toast.success("Payment successful");
-                addBooking();
+                addBooking(paymentIntent.id);
             }
         }
 

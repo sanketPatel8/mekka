@@ -24,7 +24,7 @@ export default function DbBooking() {
   const [isClient, setIsClient] = useState(false);
   const [VendorBookings, setVendorBookings] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  
   const {user} = useAuthContext();
 
   const fetchBookings = async (tab) => {
