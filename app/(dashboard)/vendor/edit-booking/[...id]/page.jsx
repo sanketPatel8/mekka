@@ -78,7 +78,8 @@ export default function DbBooking({ params }) {
   const [viewDetails,setViewDetails] = useState([]);
   const [downloadData,setDownloadData] = useState([]);
   const [downloadDetails,setDownloadDetails] = useState([]);
-
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingStatus, setBookingStatus] = useState("");
   const id = params.id[0];
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
@@ -388,6 +389,8 @@ const filterData = async(personId) => {
         }
 
         setReservationData(reservation);
+        setBookingDate(formatDateToMMDDYYYY(response.Bookings.reservation.created_at));
+        setBookingStatus(response.Bookings.reservation.reservation_status);
       }
 
       if(response.Bookings.childData.length > 0){
@@ -658,7 +661,7 @@ const filterData = async(personId) => {
           <div className="dashboard__content_content">
           
 
-              <DocumentStatusManager Customerid = {params} bookings={bookings}  adultHeaders={adultHeaders}  reservationData={reservationData} reservationHeader={reservationHeader} babyBookings={babyBookings} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen} totalData={totalData} totalHeaders={totalHeaders}  />
+              <DocumentStatusManager Customerid = {params} bookings={bookings} bookingDate={bookingDate} bookingStatus={bookingStatus}  adultHeaders={adultHeaders}  reservationData={reservationData} reservationHeader={reservationHeader} babyBookings={babyBookings} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen} totalData={totalData} totalHeaders={totalHeaders}  />
 
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}

@@ -45,7 +45,7 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
+const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, bookingDate,bookingStatus, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
 
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
@@ -271,7 +271,8 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, t
        <h1 className="text-30"> {translate("Booking Id") } : #{Customerid.id}</h1>
       <div className="row px-0 pb-10 mt-20">
         <div className="col-lg-6">
-          <p className="t_center"> {translate("Booking Date") } : 12.08.2024</p>
+          <p className="t_center"> {translate("Booking Date") } : {bookingDate}</p>
+          <p className="t_center"> {translate("Booking Status") } : {bookingStatus}</p>
          
         </div>
 

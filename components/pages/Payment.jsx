@@ -34,7 +34,15 @@ export default function Payment() {
   const [LocalAdults, setLocalAdults] = useState([]);
   const [GetAdditionals, setGetAdditionals] = useState([]);
   const [showStripeModal, setShowStripeModal] = useState(false);
+  const [dateBegin, setDateBegin] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
+  const [seconddate, setSecondDate] = useState("");
+  const [minEndDate, setMinEndDate] = useState("");
+  const [maxEndDate, setMaxEndDate] = useState("");
 
+  const [firstAmount, setFirstAmount] = useState(1);
+  const [secondAmount, setSecondAmount] = useState(1);
+  const [thirdAmount, setThirdAmount] = useState(0);
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
     if (index === 2) {
@@ -46,35 +54,76 @@ export default function Payment() {
       setShowStripeModal(true);
     }
   };
+  const handleFirstAmountChange = (e) => {
+    setFirstAmount(e.target.value);
+  };
+  const handleSecondAmountChange = (e) => {
+    const totalAmount = SideBarData.BookingFild?.Amount_Paid;
+    console.log(totalAmount)
+    const total = totalAmount- firstAmount;
+    const secondAmount = e.target.value;
+    if (secondAmount < total) {
+      setSecondAmount(secondAmount);
+    }else{
+      setSecondAmount(0);
+      setThirdAmount(0);
+    }
+
+  
+  };
+  useEffect(() => {
+    if (secondAmount) {
+      calculateThirdAmount();
+    }
+  }, [secondAmount]);
+  const calculateThirdAmount = () => {
+    const firstAmountValue = parseFloat(firstAmount);
+    console.log(firstAmountValue, "firstAmountValue")
+    const secondAmountValue = parseFloat(secondAmount);
+    console.log(secondAmountValue, "secondAmountValue")
+
+    const totalAmount = SideBarData.BookingFild?.Amount_Paid;
+    const total = firstAmountValue + secondAmountValue;
+    
+    if (total < totalAmount) {
+      const thirdAmountValue = parseFloat(totalAmount - total).toFixed(2);
+      setThirdAmount(thirdAmountValue);
+    } else {
+      setThirdAmount(0);
+    }
+  };
+
 
   const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
+    setSecondDate(event.target.value);
   };
+
+  
 
   useEffect(() => {}, [roomType]);
 
   useEffect(() => {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}.${(
-      currentDate.getMonth() + 1
-    )
-      .toString()
-      .padStart(2, "0")}.${currentDate.getDate().toString().padStart(2, "0")}`;
+    // const currentDate = new Date();
+    // const formattedDate = `${currentDate.getFullYear()}.${(
+    //   currentDate.getMonth() + 1
+    // )
+    //   .toString()
+    //   .padStart(2, "0")}.${currentDate.getDate().toString().padStart(2, "0")}`;
 
-    setTodayDate(formattedDate);
+    // setTodayDate(formattedDate);
 
     if (typeof window !== "undefined") {
-      const sidebardata = localStorage.getItem("PackageBookingData");
+      const sidebardata =  localStorage.getItem("PackageBookingData");
 
-      if (sidebardata && sidebardata !== "undefined") {
         try {
           const asSidebarrData = JSON.parse(sidebardata);
 
           setSideBarData(asSidebarrData);
+
+
         } catch (error) {
           console.error("Error parsing userData:", error);
         }
-      }
 
       const GetBookingData = localStorage.getItem("BookingData");
 
@@ -83,7 +132,6 @@ export default function Payment() {
           const PrevBooking = JSON.parse(GetBookingData);
           setBooking(PrevBooking);
 
-          console.log(Booking, "Booking");
         } catch (error) {
           console.error("Error parsing userData:", error);
         }
@@ -117,6 +165,48 @@ export default function Payment() {
     }
   }, []);
 
+  const parseDate = (dateString) => {
+    const parts = dateString.split('.');
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+    return new Date(year, month - 1, day);
+  };
+
+  const formatDateToDDMMYYYY = (date) => {
+    const [year, month, day] = date.split('-');
+    return `${day}-${month}-${year}`;
+};
+
+const formatDateToMMDDYYYY = (date) => {
+    const [day, month, year] = date.split('-');
+    return `${year}-${month}-${day}`;
+};
+  useEffect(() => {
+    const today = new Date();
+    const todayString = today.toISOString().split("T")[0];
+    if (SideBarData?.startDate) {
+      const startDateString = SideBarData.startDate;
+      if (startDateString) {
+        try {
+          const startDate = parseDate(startDateString);
+
+          console.log(startDate)
+          const sixDaysBefore = new Date(startDate.getTime() - 6 * 24 * 60 * 60 * 1000);
+          const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
+          console.log(sixDaysBeforeString)
+          setDateEnd(sixDaysBeforeString);
+          setMaxEndDate(sixDaysBeforeString);
+        } catch (error) {
+          console.error("Error parsing date string:", error);
+        }
+      }
+    }
+  
+  
+    setDateBegin(todayString);
+    setMinEndDate(todayString);
+  }, [SideBarData?.startDate]);
   const FatchallBooking = async (data) => {
     try {
       const response = await post("addbooking", data);
@@ -141,17 +231,10 @@ export default function Payment() {
       }, 3000);
     }
 
-    if (selectedCheckbox === 1) {
-      FatchallBooking(Booking);
-      setTimeout(() => {
-        router.push("#ref");
-        setBookingStage((pre) => pre + 1);
-      }, 3000);
-    }
+   
   };
 
-  console.log("GetAdditionals", GetAdditionals);
-  console.log("booking", Booking);
+
 
   const { translate } = useTranslation();
 
@@ -347,7 +430,7 @@ export default function Payment() {
                         <div className="y-gap-30 contactForm px-20 py-10">
                           <div className="col-md-12">
                             <h5 className="text-center">
-                              Total Amount : <b>2,55.50 €</b>
+                              Total Amount : <b>{SideBarData.BookingFild?.Amount_Paid}€</b>
                             </h5>
                           </div>
 
@@ -357,6 +440,7 @@ export default function Payment() {
                                 <input
                                   type="text"
                                   required
+                                  value={firstAmount} onChange={handleFirstAmountChange}
                                   placeholder="1st Amount"
                                 />
                                 <label className="lh-1 text-16 text-light-1">
@@ -371,6 +455,9 @@ export default function Payment() {
                                   type="date"
                                   required
                                   placeholder="1st Date"
+                                  value={dateBegin}
+                                  disabled ={true}
+                                  min={minEndDate}
                                   onChange={handleDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
@@ -384,6 +471,7 @@ export default function Payment() {
                                 <input
                                   type="text"
                                   required
+                                  value={secondAmount} onChange={handleSecondAmountChange}
                                   placeholder="2nd Amount"
                                 />
                                 <label className="lh-1 text-16 text-light-1">
@@ -398,7 +486,11 @@ export default function Payment() {
                                   type="date"
                                   required
                                   placeholder="2nd Date"
+                                  value={seconddate}
                                   onChange={handleDateChange}
+                                  min={minEndDate}
+                                  max={maxEndDate}
+
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   2nd Date
@@ -411,7 +503,8 @@ export default function Payment() {
                                 <input
                                   type="text"
                                   required
-                                  placeholder="3rd Amount"
+                                  value={thirdAmount > 0 ? thirdAmount : ""} disabled={true} 
+                                  placeholder=""
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   3rd Amount
@@ -425,6 +518,8 @@ export default function Payment() {
                                   type="date"
                                   required
                                   placeholder="3rd Date"
+                                  value={dateEnd}
+                                  disabled ={true}
                                   onChange={handleDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
@@ -676,6 +771,17 @@ export default function Payment() {
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5">
+                      <MdFlightTakeoff size={25} color="#DAC04F" />
+                    </div>
+                    <div className="text-start">
+                      {translate("Departure_date")} : {SideBarData?.startDate}
+                    </div>
+                  </div>
+
+                  <div className="line mt-5 mb-5"></div>
+
+                  <div className="d-flex items-center justify-content-space-arround">
+                    <div className="mr-5">
                       <MdFlightLand size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
@@ -781,10 +887,10 @@ export default function Payment() {
                     </div>
                   ) : null}
 
-                  <div className="d-flex items-center justify-between">
+                  {/* <div className="d-flex items-center justify-between">
                     <p className="fw-500"> {translate("Tax")}</p>
                     <div className=""> {SideBarData.BookingFild?.Tax} € </div>
-                  </div>
+                  </div> */}
 
                  
 
@@ -813,7 +919,7 @@ export default function Payment() {
         </div>
       </div>
       {showStripeModal
-          && <Stripeform  amount={SideBarData.BookingFild?.Amount_Paid} Booking={Booking} showStripeModal={showStripeModal} handleClose={handleClose}  />
+          && <Stripeform  amount={SideBarData.BookingFild?.Amount_Paid} Booking={Booking} showStripeModal={showStripeModal} handleClose={handleClose} setBookingStage={setBookingStage}  />
       }
     </section>
   );

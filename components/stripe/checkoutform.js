@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
-import { POST } from "@/app/utils/api/post";
+import { post } from "@/app/utils/api";
 const customStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -28,17 +28,34 @@ const customStyles = {
     },
   };
   
-export default function CheckoutForm({  showStripeModal, handleClose,   }) {
+export default function CheckoutForm({  showStripeModal, handleClose, Booking,setBookingStage }) {
     const { dispatch, customer } = useAuthContext();
     const stripe = useStripe();
 
     const elements = useElements();
-
+    const router = useRouter();
     const [isProcessing, setIsProcessing] = useState(false);
     const [saveCard, setSaveCard] = useState(false);
     const [cardDetails, setCardDetails] = useState({});
+    console.log(Booking, 'booking')
 
-
+    const addBooking = async () => {
+        console.log("hi")
+       
+        try {
+            const response = await post("addbooking", Booking);
+            if(response){
+                toast.success("Booking successful");
+                handleClose()
+                router.push("#ref");
+                setBookingStage(2)
+            }
+          } catch (error) {
+            console.error("Error caught:", error);
+            showErrorToast(error);
+          }
+       
+    }
 
 
 
@@ -52,7 +69,7 @@ export default function CheckoutForm({  showStripeModal, handleClose,   }) {
         setIsProcessing(true);
 
 
-
+        if(Booking){
 
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
@@ -66,8 +83,10 @@ export default function CheckoutForm({  showStripeModal, handleClose,   }) {
                 toast.error("Payment already succeeded");
             } else if (paymentIntent && paymentIntent.status === "succeeded") {
                 toast.success("Payment successful");
-                handleClose();
+                addBooking();
             }
+        }
+
    
 
         setIsProcessing(false);

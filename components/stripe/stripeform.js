@@ -4,8 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
 
-function Stripeform({ showStripeModal,  handleClose, amount,  setPaymentStatus,stripePromise,Booking }) {
-    console.log(Booking, 'booking')
+function Stripeform({ showStripeModal,  handleClose, amount,  setPaymentStatus,stripePromise,Booking,setBookingStage }) {
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const getClientSecret = async () => {
@@ -52,6 +51,8 @@ function Stripeform({ showStripeModal,  handleClose, amount,  setPaymentStatus,s
       <CheckoutForm
         handleClose={handleClose}
         showStripeModal={showStripeModal}
+        Booking={Booking}
+        setBookingStage={setBookingStage}
       />
     </Elements>
   )
