@@ -162,7 +162,8 @@ export default function DbBooking({ params }) {
   function openUploadFileModal(personId,reservationId) {
     setuploadFileisOpen(true);
     setPersonId(personId);
-    console.log(personId,reservationId)
+    console.log(personId,"personUploadId")
+    filterData(personId);
   }
 
   
@@ -174,6 +175,45 @@ export default function DbBooking({ params }) {
 const formatDateToMMDDYYYY = (date) => {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
+};
+const filterData = async(personId) => {
+  const formData = new FormData();
+  formData.append("user_id", user?.user?.id);
+  formData.append("id", id);
+  console.log(personId,"personId")
+  const response = await POST.request({form:formData, url: "booking_details"});
+
+  if (response.Bookings) {
+    const filteredData = response.Bookings.adultData.concat(response.Bookings.childData, response.Bookings.babyData);
+    console.log(filteredData,"filterData")
+    const matchedData = filteredData.filter((data) => data.id === personId);
+    console.log(matchedData,"matchedData")
+    if (matchedData.length > 0) {
+     
+
+      const docs = matchedData.map((doc)=>{
+        if(doc.documets && doc.documets.length > 0){
+          const docFiles = doc.documets.map((doc) => ({
+            Name: doc.file_url_orginal_name,
+            fileLink: doc.full_path,
+          }));
+
+          setViewDetails(docFiles);
+
+
+          const download = doc.documets.map((doc) => ({
+            Name: doc.file_url_orginal_name,
+            fileLink: doc.full_path,
+          }));
+
+          setDownloadDetails(download);
+
+        }
+      })
+
+     
+    }
+  }
 };
   const fetchDetails = async () => {
     const formData = new FormData();
@@ -276,41 +316,42 @@ const formatDateToMMDDYYYY = (date) => {
       setDownloadData(DownloadData);
 
 
-      const downloadFile = (fileLink, fileName) => {
-        const link = document.createElement("a");
-        link.href = fileLink;
-        link.download = fileName;
-        link.click();
-      };
-
+    
+     
+    
       if(response.Bookings.adultData.length > 0){
-        const documents = response.Bookings.adultData.map((adult) =>  {
-          if(adult.documets && adult.documets.length > 0){
+        // const documents = response.Bookings.adultData.map((adult) =>  {
+        //   if(adult.documets && adult.documets.length > 0){
 
-            const docs = adult.documets.map((doc) => {
+        //     const docId = adult.documets.filter((doc) => doc.reservation_person_id === personId);
+        //     console.log(docId,"docId")
+        //     const docs = docId.map((doc) => {
+         
+        //         return {
+        //           Name: doc.file_url_orginal_name,
+        //           fileLink: doc.full_path,
+        //         }
+              
+        //     }
+        //      )
 
-              if(personId === doc.reservation_person_id ){
-                console.log("hi")
-                return {
-                  Name: doc.file_url_orginal_name,
-                  fileLink: doc.full_path,
-                }
-              }
-            }
-             )
+        //      if (docs.length > 0) {
+        //       setViewDetails(docs);
+        //       setViewType('adult');
+        //     }
+        
 
-            setViewDetails(docs);
-
-            // const download = adult.documets.map((doc) => ({
-            //   Name: doc.file_url_orginal_name,
-            //   fileLink: doc.full_path,
-            // }))
-            // setDownloadDetails(download);
-          }
+        //     // const download = adult.documets.map((doc) => ({
+        //     //   Name: doc.file_url_orginal_name,
+        //     //   fileLink: doc.full_path,
+        //     // }))
+        //     // setDownloadDetails(download);
+        //   }
 
 
-        })
-  
+        // })
+
+       
 
       const adults = response.Bookings.adultData.map((adult) => ({
         id: adult.id,
@@ -327,6 +368,8 @@ const formatDateToMMDDYYYY = (date) => {
 
       
       }
+
+ 
 
       if(response.Bookings.reservation){
         const reservation = {
@@ -348,6 +391,38 @@ const formatDateToMMDDYYYY = (date) => {
       }
 
       if(response.Bookings.childData.length > 0){
+
+        // const childdocuments = response.Bookings.childData.map((child) =>  {
+        //   if(child.documets && child.documets.length > 0){
+
+        //     const docId = child.documets.filter((doc) => doc.reservation_person_id === personId);
+        //     const docs = docId.map((doc) => {
+         
+        //         return {
+        //           Name: doc.file_url_orginal_name,
+        //           fileLink: doc.full_path,
+        //         }
+              
+        //     }
+        //      )
+        //      if (docs.length > 0) {
+        //       setViewDetails(docs);
+        //       setViewType('child');
+
+        //       console.log(viewType,"viewType")
+        //     }
+
+        //     // const download = adult.documets.map((doc) => ({
+        //     //   Name: doc.file_url_orginal_name,
+        //     //   fileLink: doc.full_path,
+        //     // }))
+        //     // setDownloadDetails(download);
+        //   }
+
+
+        // })
+
+
         const children = response.Bookings.childData.map((child) => ({
           id: child.id,
           name: child.personName,
@@ -359,16 +434,16 @@ const formatDateToMMDDYYYY = (date) => {
         }));
         setChildBookings(children);
 
-        const documents = response.Bookings.childData.map((child) =>  {
-          if(child.documets && child.documets.length > 0){
-            const docs = child.documets.map((doc) => ({
-              Name: doc.file_url_orginal_name,
-              fileLink: doc.full_path,
-            }))
+        // const documents = response.Bookings.childData.map((child) =>  {
+        //   if(child.documets && child.documets.length > 0){
+        //     const docs = child.documets.map((doc) => ({
+        //       Name: doc.file_url_orginal_name,
+        //       fileLink: doc.full_path,
+        //     }))
 
-            setViewDetails(docs);
-          }
-        })
+        //     setViewDetails(docs);
+        //   }
+        // })
       }
 
 
@@ -423,7 +498,27 @@ const formatDateToMMDDYYYY = (date) => {
   },[user])
 
   
+  const downloadFile = (fileLink, fileName) => {
 
+    const xhr = new XMLHttpRequest();
+  xhr.open('GET', fileLink, true);
+  xhr.responseType = 'blob';
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const blob = xhr.response;
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } else {
+      console.error('Error downloading file:', xhr.statusText);
+    }
+  };
+  xhr.send();
+
+  };
  
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
@@ -705,11 +800,12 @@ const formatDateToMMDDYYYY = (date) => {
               </TabPanel>
               <TabPanel>
                 <DataTable
-                  title="Your Documents"
+                  title=" Documents"
                   columns={viewData}
                   data={viewDetails}
                   highlightOnHover
                 />
+             
               </TabPanel>
               <TabPanel>
                 <DataTable

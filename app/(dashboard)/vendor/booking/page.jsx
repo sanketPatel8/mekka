@@ -111,72 +111,74 @@ export default function DbBooking() {
       {
         name: "Booking Id",
         selector: (row) => row.BookingId,
-        width: "120px",
+        width: "4%",
         sortable: true,
       },
       {
         name: "Booking No.",
         selector: (row) => row.BookingNo,
-        width: "150px",
+        width: "10%",
 
         sortable: true,
       },
       {
         name: "Status",
         selector: (row) => row.Status,
-        width: "170px",
+        width: "8%",
         sortable: true,
       },
       {
         name: "Full Name",
         selector: (row) => row.Full_Name,
-        width: "150px",
+        width: "10%",
         sortable: true,
       },
       {
         name: "Tour Name",
         selector: (row) => row.Tour_name,
-        width: "120px",
+        width: "10%",
         sortable: true,
       },
       {
         name: "Total (€) ",
         selector: (row) => row.Total_Payment,
-        width: "100px",
+        width: "7%",
         sortable: true,
       },
       {
         name: "Pending (€) ",
         selector: (row) => row.Pending_Payment,
-        width: "120px",
+        width: "8%",
         sortable: true,
       },
       {
       name: "Terms ",
       selector: (row) => row.Payment_Terms,
       sortable: true,
+      width:"8%"
     }, 
     {
       name: "Method ",
       selector: (row) => row.Payment_Method,
       sortable: true,
+      width:"8%"
     }, 
     {
       name: "Visas",
       selector: (row) => row.Visas,
-      width: "80px",
+      width: "6%",
       sortable: true,
     },
       {
         name: "Flight",
         selector: (row) => row.Flight,
-        width: "80px",
+        width: "6%",
         sortable: true,
       },
         {
       name: "Initiated By",
       selector: (row) => row.Initiated_By_Admin,
-      width: "120px",
+      width: "8%",
       sortable: true,
     }, 
       {
@@ -190,7 +192,7 @@ export default function DbBooking() {
             </button>
           </Link>
         ),
-        width: "110px",
+        width: "7%",
       },
     ];
    
