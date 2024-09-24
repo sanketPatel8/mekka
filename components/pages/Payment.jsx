@@ -82,6 +82,8 @@ export default function Payment() {
         try {
           const PrevBooking = JSON.parse(GetBookingData);
           setBooking(PrevBooking);
+
+          console.log(Booking, "Booking");
         } catch (error) {
           console.error("Error parsing userData:", error);
         }
@@ -124,7 +126,7 @@ export default function Payment() {
       setReservationID(response.Reservations_id);
     } catch (error) {
       console.error("Error caught:", error);
-      showErrorToast("kai pn error che ");
+      showErrorToast(error);
     }
   };
   const handleClose = () => {
@@ -149,6 +151,7 @@ export default function Payment() {
   };
 
   console.log("GetAdditionals", GetAdditionals);
+  console.log("booking", Booking);
 
   const { translate } = useTranslation();
 
@@ -810,7 +813,7 @@ export default function Payment() {
         </div>
       </div>
       {showStripeModal
-          && <Stripeform  amount={SideBarData.BookingFild?.Amount_Paid} showStripeModal={showStripeModal} handleClose={handleClose}  />
+          && <Stripeform  amount={SideBarData.BookingFild?.Amount_Paid} Booking={Booking} showStripeModal={showStripeModal} handleClose={handleClose}  />
       }
     </section>
   );

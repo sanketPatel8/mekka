@@ -4,9 +4,8 @@ import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
 
-function Stripeform({ showStripeModal,  handleClose, amount,  setPaymentStatus,stripePromise, }) {
-
-    console.log(amount, 'amount')
+function Stripeform({ showStripeModal,  handleClose, amount,  setPaymentStatus,stripePromise,Booking }) {
+    console.log(Booking, 'booking')
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const getClientSecret = async () => {
@@ -25,7 +24,6 @@ function Stripeform({ showStripeModal,  handleClose, amount,  setPaymentStatus,s
         "payment_method_types[0]": 'card',
       }
 
-      console.log(data, 'data')
       const res = await api.post('payment_intents', data, {
         headers: {
           'Content-type': 'application/x-www-form-urlencoded',
