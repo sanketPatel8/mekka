@@ -637,9 +637,9 @@ const filterData = async(personId) => {
 
 
     const response = await POST.request({form:formData, url: "upload_bookingdocuments"});
-    // if(response){
-    //   setuploadFileisOpen(false);
-    // }
+    if(response){
+      setuploadFileisOpen(false);
+    }
   }
 
   return (
@@ -741,7 +741,7 @@ const filterData = async(personId) => {
                               </label>
                               <input
                                 onChange={(e) => handleImageChange(e, index)}
-                                accept="image/*, application/*"
+                                accept="image/*, application/pdf"
                                 id={`imageInp-${index}`}
                                 type="file"
                                 name="image2"
