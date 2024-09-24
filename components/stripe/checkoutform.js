@@ -28,7 +28,7 @@ const customStyles = {
     },
   };
   
-export default function CheckoutForm({  showStripeModal, handleClose, Booking,setBookingStage }) {
+export default function CheckoutForm({  showStripeModal, handleClose, Booking,setBookingStage,setReservationID,setPaidAmount}) {
     const { dispatch, customer } = useAuthContext();
     const stripe = useStripe();
 
@@ -38,8 +38,8 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
     const [saveCard, setSaveCard] = useState(false);
     const [cardDetails, setCardDetails] = useState({});
 
-    const addBooking = async (transactionId) => {
-        const newBooking ={...Booking ,transaction_id : transactionId}
+    const addBooking = async (transactionId,amount) => {
+        const newBooking ={...Booking ,transaction_id : transactionId, amount_paid : amount}
 
         try {
             const response = await post("addbooking", newBooking);
@@ -47,7 +47,10 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
                 toast.success("Booking successful");
                 handleClose()
                 router.push("#ref");
-                setBookingStage(2)
+                setBookingStage(2);
+                setReservationID(response.Reservations_id);
+                setPaidAmount(amount);
+                console.log(setPaidAmount , 'setPaidAmount')
             }
           } catch (error) {
             console.error("Error caught:", error);
@@ -83,9 +86,9 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
             } else if (paymentIntent && paymentIntent.status === "succeeded") {
                 console.log(paymentIntent, 'paymentIntent')
                 console.log(paymentIntent.id, 'paymentIntent.id')
-
+                const newAmount = paymentIntent.amount / 100;
                 toast.success("Payment successful");
-                addBooking(paymentIntent.id);
+                addBooking(paymentIntent.id, newAmount);
             }
         }
 

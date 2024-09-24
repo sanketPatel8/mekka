@@ -45,6 +45,7 @@ export default function Payment() {
   const [thirdAmount, setThirdAmount] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState("");
+  const [paidAmount, setPaidAmount] = useState("");
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
     if (index === 2) {
@@ -64,7 +65,7 @@ export default function Payment() {
     setFirstAmount(e.target.value);
   };
   const handleSecondAmountChange = (e) => {
-    const totalAmount = SideBarData.BookingFild?.Amount_Paid;
+    const totalAmount = SideBarData.BookingFild?.SubTotal;
     console.log(totalAmount)
     const total = totalAmount- firstAmount;
     const secondAmount = e.target.value;
@@ -88,7 +89,7 @@ export default function Payment() {
     const secondAmountValue = parseFloat(secondAmount);
     console.log(secondAmountValue, "secondAmountValue")
 
-    const totalAmount = SideBarData.BookingFild?.Amount_Paid;
+    const totalAmount = SideBarData.BookingFild?.SubTotal;
     const total = firstAmountValue + secondAmountValue;
     
     if (total < totalAmount) {
@@ -109,14 +110,14 @@ export default function Payment() {
   useEffect(() => {}, [roomType]);
 
   useEffect(() => {
-    // const currentDate = new Date();
-    // const formattedDate = `${currentDate.getFullYear()}.${(
-    //   currentDate.getMonth() + 1
-    // )
-    //   .toString()
-    //   .padStart(2, "0")}.${currentDate.getDate().toString().padStart(2, "0")}`;
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}.${(
+      currentDate.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}.${currentDate.getDate().toString().padStart(2, "0")}`;
 
-    // setTodayDate(formattedDate);
+    setTodayDate(formattedDate);
 
     if (typeof window !== "undefined") {
       const sidebardata =  localStorage.getItem("PackageBookingData");
@@ -170,6 +171,11 @@ export default function Payment() {
       }
     }
   }, []);
+
+  function isValidDate(date) {
+    const dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+    return dateRegex.test(date);
+  }
   
   const handleDisabled = () => {
     const agbAcceptance = document.getElementById("agbAcceptance");
@@ -211,10 +217,9 @@ const formatDateToMMDDYYYY = (date) => {
 
           console.log(startDate)
           const sixDaysBefore = new Date(startDate.getTime() - 6 * 24 * 60 * 60 * 1000);
-          const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
+          const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];  
           console.log(sixDaysBeforeString)
           setDateEnd(sixDaysBeforeString);
-          setMaxEndDate(sixDaysBeforeString);
         } catch (error) {
           console.error("Error parsing date string:", error);
         }
@@ -457,7 +462,7 @@ const formatDateToMMDDYYYY = (date) => {
                         <div className="y-gap-30 contactForm px-20 py-10">
                           <div className="col-md-12">
                             <h5 className="text-center">
-                              Total Amount : <b>{SideBarData.BookingFild?.Amount_Paid}€</b>
+                              Total Amount : <b>{SideBarData.BookingFild?.SubTotal}€</b>
                             </h5>
                           </div>
 
@@ -513,12 +518,14 @@ const formatDateToMMDDYYYY = (date) => {
                                   type="date"
                                   required
                                   placeholder=""
+                                  // value={formatDateToMMDDYYYY(seconddate)}
+                                  // value={seconddate == "" ? "dd-mm-yyyy" :seconddate }
                                   value={seconddate}
                                   onChange={handleDateChange}
                                   min={minEndDate}
-                                  max={maxEndDate}
-
-                                />
+                                  max={dateEnd}
+                                  
+                                  />
                                 <label className="lh-1 text-16 text-light-1">
                                   2nd Date
                                 </label>
@@ -693,7 +700,7 @@ const formatDateToMMDDYYYY = (date) => {
                         <div className="col-md-3 col-6">
                           <div>Total</div>
                           <div className="text-accent-2">
-                            {SideBarData.BookingFild?.Amount_Paid} €
+                            {SideBarData.BookingFild?.SubTotal} €
                           </div>
                         </div>
 
@@ -922,15 +929,27 @@ const formatDateToMMDDYYYY = (date) => {
                     <div className=""> {SideBarData.BookingFild?.Tax} € </div>
                   </div> */}
 
-                 
+                  {
+                    paidAmount &&
+                    <div className="d-flex items-center justify-between">
+                      <div className="fw-500"> {translate("Amount Paid")}</div>
+                      <div className=""> {paidAmount} € </div>
+                    </div>
+                  }
 
+
+                  {
+
+                    (paidAmount && SideBarData.BookingFild?.SubTotal - paidAmount > 0 ) &&
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Amount Due")}</div>
                     <div className="">
                       {" "}
-                      {SideBarData.BookingFild?.Amount_Paid}€{" "}
+                      {SideBarData.BookingFild?.SubTotal - paidAmount }€{" "}
                     </div>
                   </div>
+                  }
+
                 </div>
 
                 <div className="mt-10">
@@ -950,7 +969,7 @@ const formatDateToMMDDYYYY = (date) => {
         </div>
       </div>
       {showStripeModal
-          && <Stripeform  amount={amount ? amount :SideBarData.BookingFild?.Amount_Paid} Booking={Booking} showStripeModal={showStripeModal} handleClose={handleClose} setBookingStage={setBookingStage}  />
+          && <Stripeform  amount={amount ? amount :SideBarData.BookingFild?.SubTotal} setPaidAmount={setPaidAmount} Booking={Booking} setReservationID={setReservationID} showStripeModal={showStripeModal} handleClose={handleClose} setBookingStage={setBookingStage}  />
       }
     </section>
   );
