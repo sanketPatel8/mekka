@@ -21,8 +21,8 @@ const customStyles = {
       padding: "10px",
       // borderRadius: '10px',
       width: "100%", // Adjust width as needed
-      maxWidth: "700px", // Adjust max-width as needed
-      height: "50vh", // Set a specific height for the modal
+      maxWidth: "400px", // Adjust max-width as needed
+      height: "43vh", // Set a specific height for the modal
       overflowY: "auto",
       backgroundColor: "#fff",
     },
@@ -97,7 +97,7 @@ export default function CheckoutForm({  showStripeModal, handleClose,   }) {
                                 />
                                 <label htmlFor="save-card">Save card for future purchases</label>
                             </div> */}
-                    <button className="py-3 my-4 vendorBtn fw_700 b4 w-100" disabled={isProcessing || !stripe || !elements} id="submit">
+                    <button className="button -sm -info-2 bg-accent-1 text-dark my-4  w-100" disabled={isProcessing || !stripe || !elements} id="submit">
                         <span id="button-text">{isProcessing ? "Processing ... " : "Pay now"}</span>
                     </button>
 
