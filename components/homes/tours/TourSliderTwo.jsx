@@ -12,6 +12,7 @@ import Link from "next/link";
 import "@/public/css/index.css";
 import { post } from "@/app/utils/api";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { showErrorToast } from "@/app/utils/tost";
 
 export default function TourSliderTwo() {
   const [showSwiper, setShowSwiper] = useState(false);

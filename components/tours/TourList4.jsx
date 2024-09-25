@@ -29,20 +29,16 @@ export default function TourList4({
   value,
   setValue,
   handleSelectionChange,
-  activeIndex ,
-  setActiveIndex
+  activeIndex,
+  setActiveIndex,
 }) {
-
-
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
 
-
-
   const startParam = "start";
 
-  // for loader 
+  // for loader
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -79,7 +75,7 @@ export default function TourList4({
   return (
     <section className="layout-pb-xl">
       <div className="container">
-        <div className="row"  id="redirect">
+        <div className="row" id="redirect">
           <div className="col-xl-3 col-lg-4">
             {screenSize[0] && screenSize[0] <= 900 ? (
               <div className="accordion d-none mb-30 lg:d-flex js-accordion">
@@ -133,8 +129,7 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData?.length == 0 ? 0 : TourData?.length } results
-                  {/* from {Route}{" "} */}
+                  {TourData?.length == 0 ? 0 : TourData?.length} results
                 </div>
               </div>
 
@@ -172,7 +167,7 @@ export default function TourList4({
                 <ClipLoader color="#DAC04F" size={50} />
               </div>
             ) : Array.isArray(TourData) && TourData.length === 0 ? (
-              <div className="d-flex justify-content-center align-items-center" >
+              <div className="d-flex justify-content-center align-items-center">
                 <p>No Tours Available</p>
               </div>
             ) : (
@@ -194,7 +189,7 @@ export default function TourList4({
                         />
                         <button
                           className={`tourCard__favorite ${
-                            elm?.direct_flight == '0' ? "d-none" : "d-block"
+                            elm?.direct_flight == "0" ? "d-none" : "d-block"
                           }`}
                         >
                           {translate("Direct Flight")}
@@ -296,7 +291,7 @@ export default function TourList4({
               ))
             )}
 
-            <div className={`${TourData.length === 0 ? "d-none" : "d-block"}`}>
+            <div className={`${TourData?.length === 0 ? "d-none" : "d-block"}`}>
               <div className="d-flex justify-center flex-column mt-60">
                 <Pagination
                   range={range}
@@ -307,7 +302,7 @@ export default function TourList4({
                 />
 
                 <div className="text-14 text-center mt-20">
-                  Showing results 1 - {TourData.length} of {count}
+                  Showing results 1 - {TourData?.length} of {count}
                 </div>
               </div>
             </div>

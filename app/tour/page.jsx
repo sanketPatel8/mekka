@@ -100,7 +100,7 @@ export default function PageData() {
       await fetchSearch1Data({pageIndex , tourType, startDate, endDate, person });
       console.log("fetch search data");
     } else if (
-      FilterSidebar.selectedTourTypes !== "" ||
+      // FilterSidebar.selectedTourTypes !== " " ||
       FilterSidebar.selectedLanguages.length !== 0 ||
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
@@ -168,7 +168,7 @@ console.log("SearchData" , SearchData);
   useEffect(() => {
     if (isMounted.current) {
       if( 
-        FilterSidebar.selectedTourTypes !== "" ||
+        // FilterSidebar.selectedTourTypes !== "" ||
         FilterSidebar.selectedLanguages.length !== 0 ||
         FilterSidebar.selectedCities.length !== 0 ||
         FilterSidebar.selectedFeatures.length !== 0 ||

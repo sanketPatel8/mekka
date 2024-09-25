@@ -44,7 +44,7 @@ export default function DbBooking() {
     console.log("First Time Data Load ");
 
     if (typeof window !== "undefined") {
-      const userData = localStorage.getItem("user");
+      const userData = localStorage.getItem("customer");
 
       if (userData && userData !== "undefined") {
         try {
@@ -85,6 +85,8 @@ export default function DbBooking() {
     if (UserID !== null) fetchListing(UserID?.id);
   }, [UserID]);
 
+  console.log("UserID" , UserID);
+  
   console.log("BookingsCustomer", BookingsCustomer);
 
   useEffect(() => {

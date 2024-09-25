@@ -73,7 +73,9 @@ export default function Register() {
        
         setConfirm_pass("")
         setIsChecked(false)
-        router.push('/login')
+        setTimeout(() => {
+          router.push('/login')
+        }, 2000);
       }else{
         showErrorToast("password dose not match")
       }

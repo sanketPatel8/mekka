@@ -65,9 +65,8 @@ export default function BookingPages({ BookingData }) {
     password: "",
   });
   const [UserID, setUserID] = useState(0);
-  const {  selectedCheckbox, ExcludeFlight } =
-    useGlobalState();
-  const { user } = useAuthContext();
+  const { selectedCheckbox, ExcludeFlight } = useGlobalState();
+  const { customer } = useAuthContext();
 
   const [adultData, setAdultData] = useState([]);
   const [Childrendata, setChildrendata] = useState([]);
@@ -86,7 +85,7 @@ export default function BookingPages({ BookingData }) {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
   }, [BookingData]);
 
-  const [LoginCheck, setLoginCheck] = useState()
+  const [LoginCheck, setLoginCheck] = useState();
 
   useEffect(() => {
     // Set modal's app element
@@ -98,7 +97,7 @@ export default function BookingPages({ BookingData }) {
       const savedData = localStorage.getItem("AdultPrice&count");
 
       const Login = localStorage.getItem("LoginISChacked");
-      const userData = localStorage.getItem("user");
+      const userData = localStorage.getItem("customer");
 
       const PackagePrice = localStorage.getItem("SelectedPackageHotelNDFlight");
 
@@ -107,13 +106,12 @@ export default function BookingPages({ BookingData }) {
       const loginStatus = JSON.parse(
         localStorage.getItem("CustomerLoginCheck")
       );
-      if(loginStatus && loginStatus !== 'undefined'){
-        try{
-          const loginChk = JSON.parse(loginStatus)
-          setLoginCheck(loginChk)
-        } catch (error){
+      if (loginStatus && loginStatus !== "undefined") {
+        try {
+          const loginChk = JSON.parse(loginStatus);
+          setLoginCheck(loginChk);
+        } catch (error) {
           console.error(error);
-          
         }
       }
 
@@ -166,7 +164,6 @@ export default function BookingPages({ BookingData }) {
           // Extract the user object
           if (asLogin && asLogin.user) {
             setUserID(asLogin.user);
-       ;
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -634,7 +631,7 @@ export default function BookingPages({ BookingData }) {
     const url = "my_profile";
     const response = await POST.request({
       url: url,
-      token: `${user?.authorisation.token}`,
+      token: `${customer?.authorisation.token}`,
     });
 
     // Handle case where response.user is a single object
@@ -700,7 +697,7 @@ export default function BookingPages({ BookingData }) {
     } else {
       console.log("User not logged in");
     }
-  }, [LoginCheck, user]);
+  }, [LoginCheck, customer]);
 
   const renderForms = (type, count) => {
     const fields = {
@@ -876,7 +873,7 @@ export default function BookingPages({ BookingData }) {
               <div className="my-3 row">
                 {currentFields?.map((field, index) => {
                   const fieldValue =
-                  LoginCheck === true && type === "Adult" && i === 0
+                    LoginCheck === true && type === "Adult" && i === 0
                       ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 
@@ -1021,12 +1018,14 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  console.log("UserID", UserID);
+
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
     tour_id: JSON.parse(TourId),
     person:
-    LoginCheck == true
+      LoginCheck == true
         ? JSON.stringify(userData)
         : JSON.stringify(formValues.Adult[0]),
     ...(formValues.Adult.slice(1).length !== 0 && {
