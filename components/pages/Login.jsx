@@ -11,8 +11,14 @@ import { ToastContainer } from "react-toastify";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { Auth } from "@/app/utils/api/authenticate";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
+import dynamic from "next/dynamic";
+import { POST } from "@/app/utils/api/post";
+import { LoginSocialApple } from "reactjs-social-login";
 
 export default function Login({ onLoginSuccess }) {
+  const LoginSocialFacebook = dynamic(() => import('reactjs-social-login').then((mod) => mod.LoginSocialFacebook), { ssr: false });
+  const LoginSocialGoogle = dynamic(() => import('reactjs-social-login').then((mod) => mod.LoginSocialGoogle));
+
   const [LogInData, setLogInData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     email: "",
@@ -22,7 +28,7 @@ export default function Login({ onLoginSuccess }) {
   const [LoginISChacked, setLoginISChacked] = useState(false);
   const { dispatch } = useAuthContext();
   const [LoginChecked, setLoginChecked] = useState(true)
-
+  
   const router = useRouter();
 
   const LoginUpdate = () => {
@@ -40,6 +46,36 @@ export default function Login({ onLoginSuccess }) {
     }
   }
   
+
+  const signinSocial = async ({ type, data }) => {
+    console.log(data)
+    console.log("hi")
+    const formData = new FormData();
+    formData.append('auth_id', data?.sub);
+    formData.append('auth_provider', type);
+    formData.append("name", data?.name);
+    formData.append("email", data?.email);
+    const resp = await POST.request({  form: formData ,url: 'social_login' });
+    if (resp) {
+      if (resp ) {
+        showSuccessToast("Successfully logged in.");
+        localStorage.setItem("customer", JSON.stringify(resp));
+        dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        LoginUpdate()
+          setTimeout(() => {
+            setLoginPer(true);
+            router.push("/");
+          }, 1000);
+      } else{
+        showErrorToast("Invalid Credentials");
+        setLogInData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          email: "",
+          password: "",
+        });
+      }
+    }
+  };
 
   const { translate } = useTranslation();
 
@@ -208,19 +244,59 @@ export default function Login({ onLoginSuccess }) {
                     type="button"
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
-                    <FaFacebookF size={15} className="mx-1" />
-                    {translate("Facebook")}
+
+                      <LoginSocialFacebook
+                                appId={process.env.REACT_APP_FB_APP_ID || ''}
+                                fieldsProfile={
+                                  'id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender'
+                                }
+                                onLoginStart={() => console.log('start')}
+                                redirect_uri={window.location.origin + '/signup'}
+                                onResolve={({ provider, data }) => {
+                                  signinSocial({ type: 'facebook', data });
+                                }}
+                                onReject={(err) => {
+                                  console.log(err);
+                                }}
+                              >
+                                          <FaFacebookF size={15} className="mx-1" />
+                                          {translate("Facebook")}
+                              </LoginSocialFacebook>
                   </button>
                 </div>
 
                 <div className="col">
-                  <button
+                <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
                   >
-                    <FaGoogle size={15} className="mx-1" />
+                    <LoginSocialGoogle
+                        client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
+                        onLoginStart={() => console.log('start')}
+
+                        redirect_uri={window.location.origin + '/signup'}
+                        scope="openid profile email"
+                        discoveryDocs="claims_supported"
+                        access_type="online"
+                        onResolve={({ provider, data }) => {
+                          signinSocial({ type: 'google', data });
+                        }}
+                        onReject={(err) => {
+                          console.log(err);
+                        }}
+                       
+                      >
+                         <FaGoogle size={15} className="mx-1" />
+                         {translate("Google")}
+
+                    </LoginSocialGoogle>
+                      </button>
+                  {/* <button
+                    type="button"
+                    className="button -md -outline-red-1 text-red-1 col-12"
+                  >
                     {translate("Google")}
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <br />
@@ -230,8 +306,23 @@ export default function Login({ onLoginSuccess }) {
                     type="button"
                     className="button -md -outline-dark-1 text-dark-1 col-12"
                   >
-                    <FaApple size={15} className="mx-1" />
-                    {translate("Sign in With Apple")}
+
+                            <LoginSocialApple
+                              client_id={process.env.REACT_APP_APPLE_ID || ''}
+                              scope={'name email'}
+                                onLoginStart={() => console.log('start')}
+                                redirect_uri={window.location.origin + '/signup'}
+                                onResolve={({ provider, data }) => {
+                                  signinSocial({ type: 'facebook', data });
+                                }}
+                                onReject={(err) => {
+                                  console.log(err);
+                                }}
+                              >
+                                         <FaApple size={15} className="mx-1" />
+                                         {translate("Sign in With Apple")}
+                              </LoginSocialApple>
+                   
                   </button>
                 </div>
               </div>

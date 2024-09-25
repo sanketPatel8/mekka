@@ -60,14 +60,27 @@ export default function DBListing() {
   // for opent rejected pop-up box 
 
   const [invoice, setinvoice] = useState(false)
-
+  const [note, setNote] = useState("")
   useEffect (() => {
     Modal.setAppElement('#invoice')
   }, []);
 
+  const handleClick = (id) => {
+      const formData = new FormData();
+      formData.append("id", id);
+      formData.append("vendor_id",user?.user.id );
+      setLoading(true);
+      const response = POST.request({form: formData, url: "duplicatetour"});
+      if(response){
+        fetchListing();
+        setLoading(false);
+      }
+  }
+  const openInvoice= (note) => {
+    console.log(note)
 
-  function openInvoice() {
     setinvoice(true);
+    setNote(note)
   }
 
   function closeInvoice() {
@@ -263,8 +276,8 @@ export default function DBListing() {
                               ? "badge-red"
                               : ""
                           }
-
-                          onClick={openInvoice}
+                          disabled={elm.tour_status === "Rejected"  ? false : true}
+                          onClick={(note)=>openInvoice(`${elm?.reject_note}`)}
                         >
                           <b>{elm.tour_status}</b>
                         </button>
@@ -291,9 +304,9 @@ export default function DBListing() {
                         </Link>
                       </button>
 
-                      <a href="#" className="mt-5 text-center">
+                      <button onClick={(id)=>handleClick(`${elm?.id}`)} className="mt-5 text-center">
                         <span>Duplicate Tour</span>
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -328,7 +341,7 @@ export default function DBListing() {
                   </button>
                 </div>
 
-                <p className="mx-3">Your cover letter is your chance to show that you are a good match for the job and for the company</p>
+                <p className="mx-3">{note}</p>
               </Modal>
             </div>
 
