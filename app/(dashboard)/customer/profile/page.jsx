@@ -29,15 +29,18 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(false);
 
-  console.log("formData", formData?.image1);
+  // console.log("formData", formData?.image1);
 
-  const { user } = useAuthContext();
+  const { user , customer } = useAuthContext();
+
+  console.log("user" , customer?.authorisation.token); 
+  
 
   const fetchProfile = async () => {
     const url = "my_profile";
     const response = await POST.request({
       url: url,
-      token: `${user?.authorisation.token}`,
+      token: `${customer?.authorisation.token}`,
     });
 
     // Handle case where response.user is a single object
@@ -74,7 +77,11 @@ export default function Profile() {
       }
     }
 
-    fetchProfile();
+    if(customer){
+      fetchProfile();
+
+    }
+
 
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
@@ -166,7 +173,7 @@ export default function Profile() {
 
     // console.log("Update data: ", formDatas)
     formDatas.append("id", USerData?.id);
-    formDatas.append("type", "profile");
+    formDatas.append("type", "change_password");
     formDatas.append("old_password", passwordData?.oldPassword);
     formDatas.append("password", passwordData?.newPassword);
 
@@ -210,7 +217,7 @@ export default function Profile() {
               {translate("Profile").charAt(0).toUpperCase() +
                 translate("Profile").slice(1)}{" "}
               -
-              {UserProfile?.name?.charAt(0).toUpperCase() +
+              {" "}{UserProfile?.name?.charAt(0).toUpperCase() +
                 UserProfile?.name?.slice(1)}{" "}
               {UserProfile?.surname?.charAt(0).toUpperCase() +
                 UserProfile?.surname?.slice(1)}

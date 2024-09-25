@@ -67,7 +67,7 @@ export default function BookingPages({ BookingData }) {
   const [UserID, setUserID] = useState(0);
   const {  selectedCheckbox, ExcludeFlight } =
     useGlobalState();
-  const { user } = useAuthContext();
+  const { customer } = useAuthContext();
 
   const [adultData, setAdultData] = useState([]);
   const [Childrendata, setChildrendata] = useState([]);
@@ -634,7 +634,7 @@ export default function BookingPages({ BookingData }) {
     const url = "my_profile";
     const response = await POST.request({
       url: url,
-      token: `${user?.authorisation.token}`,
+      token: `${customer?.authorisation.token}`,
     });
 
     // Handle case where response.user is a single object
@@ -700,7 +700,7 @@ export default function BookingPages({ BookingData }) {
     } else {
       console.log("User not logged in");
     }
-  }, [LoginCheck, user]);
+  }, [LoginCheck, customer]);
 
   const renderForms = (type, count) => {
     const fields = {
