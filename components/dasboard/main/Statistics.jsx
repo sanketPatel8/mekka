@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/app/context/TranslationContext";
-import { tabContentStaticties } from "@/data/dashboard";
+// import { tabContentStaticties } from "@/data/dashboard";
 import { useState } from "react";
 import {
   LineChart,
@@ -13,8 +13,40 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function Statistics() {
-  const [activeTab, setActiveTab] = useState(tabContentStaticties[0]);
+export default function Statistics({data}) {
+
+
+  function concatTime(date) {
+    const getTime  = new Date(date)
+    const getHours = getTime.getHours()
+    const getMinutes = getTime.getMinutes().toString().length === 1 ? "0" + getTime.getMinutes() : getTime.getMinutes()
+    return getHours + ":" + getMinutes
+  }
+  const [tabs,setTabs] = useState([
+    {
+      id: 1,
+      label: "Hours",
+      data: data.Today_Reservation.map((item) => {
+        return { name: concatTime(item.created_at), value: item.total };
+      })
+    },
+    {
+      id: 2,
+      label: "Weekly",
+      data: data.Weekly_Reservation.map((item) => {
+        return { name: item.created_at, value: item.total };
+      })
+    },
+    {
+      id: 3,
+      label: "Monthly",
+      data: data.Monthly_Reservation.map((item) => {
+        return { name: item.created_at, value: item.total };
+      })
+    },
+  ]);
+  console.log(data, "data")
+  const [activeTab, setActiveTab] = useState(tabs[0]);
   const chart = (interval) => (
     <ResponsiveContainer height={500} width="100%">
       <LineChart data={activeTab.data}>
@@ -50,7 +82,7 @@ export default function Statistics() {
               <div className="text-18 fw-500"> {translate("Earning Statistics") }</div>
 
               <div className="tabs__controls row x-gap-20 y-gap-10 lg:x-gap-20 js-tabs-controls">
-                {tabContentStaticties.map((elm, i) => (
+                {tabs.map((elm, i) => (
                   <div
                     onClick={() => setActiveTab(elm)}
                     key={i}

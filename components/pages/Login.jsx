@@ -32,7 +32,6 @@ export default function Login({ onLoginSuccess }) {
   const router = useRouter();
 
   const LoginUpdate = () => {
-    if (typeof window !== "undefined") {
       const loginStatus = JSON.parse(
         localStorage.getItem("CustomerLoginCheck")
       );
@@ -43,7 +42,7 @@ export default function Login({ onLoginSuccess }) {
 
       console.log("Updated login status:", updatedStatus); 
 
-    }
+    
   }
   
 
@@ -91,9 +90,8 @@ export default function Login({ onLoginSuccess }) {
   const handleLoginCheckboxChange = (e) => {
     const isChecked = e.target.checked;
     setLoginISChacked(isChecked);
-    typeof window != "undefined"
-      ? localStorage.setItem("LoginISChacked", isChecked)
-      : "";
+     localStorage.setItem("LoginISChacked", isChecked)
+
   };
 
   const handleLoginSubmit = async (e) => {
@@ -112,9 +110,8 @@ export default function Login({ onLoginSuccess }) {
           showErrorToast(resp.message);
         }
          if (resp.user.user_type == "customer") {
-          typeof window != "undefined"
-            ? localStorage.setItem("customer", JSON.stringify(resp))
-            : "";
+           localStorage.setItem("customer", JSON.stringify(resp))
+            
           dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
           showSuccessToast("Login successful!");
           LoginUpdate()
@@ -251,7 +248,6 @@ export default function Login({ onLoginSuccess }) {
                                   'id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender'
                                 }
                                 onLoginStart={() => console.log('start')}
-                                redirect_uri={window.location.origin + '/signup'}
                                 onResolve={({ provider, data }) => {
                                   signinSocial({ type: 'facebook', data });
                                 }}
@@ -274,7 +270,6 @@ export default function Login({ onLoginSuccess }) {
                         client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
                         onLoginStart={() => console.log('start')}
 
-                        redirect_uri={window.location.origin + '/signup'}
                         scope="openid profile email"
                         discoveryDocs="claims_supported"
                         access_type="online"
@@ -311,7 +306,6 @@ export default function Login({ onLoginSuccess }) {
                               client_id={process.env.REACT_APP_APPLE_ID || ''}
                               scope={'name email'}
                                 onLoginStart={() => console.log('start')}
-                                redirect_uri={window.location.origin + '/signup'}
                                 onResolve={({ provider, data }) => {
                                   signinSocial({ type: 'facebook', data });
                                 }}

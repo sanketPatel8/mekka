@@ -90,7 +90,7 @@ export default function Sidebar() {
             <States data={data} loading={loading}/>
             
             <div className="row pt-30 mt-20 y-gap-30">
-              <Statistics />
+              <Statistics data={data} />
 
               {/* <div className="col-xl-4 col-lg-12 col-md-6">
                 <div className="px-30 py-25 rounded-12 bg-white shadow-2">

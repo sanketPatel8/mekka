@@ -4,7 +4,6 @@ import { ClipLoader } from "react-spinners";
 
 export default function States({data,loading}) {
 
-  console.log(data,"data")
   const [states, setStates] = useState([
     {
       id: 1,

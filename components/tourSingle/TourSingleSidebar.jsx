@@ -9,8 +9,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
+import { POST } from "@/app/utils/api/post";
 
-export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
+export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHotelData }) {
   const {
     prices,
     HotelSelect,
@@ -41,6 +42,8 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
   const [SElectedDeparturePrice, setSElectedDeparturePrice] = useState(0);
   const [Render, setRender] = useState(false);
+  const [mekkaId, setmekkaId] = useState( "");
+  const [madinaId, setmadinaId] = useState( "");
 
   const [selectDeparture, setselectDeparture] = useState({
     name : ""
@@ -51,6 +54,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
   useEffect(() => {
     if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
       const firstMekkaHotel = SidebarData.tour_hotels.mekka_hotels[0];
+      setmekkaId(firstMekkaHotel.id);
       setHotelSelect((prevSelect) => ({
         ...prevSelect,
         mekka: JSON.stringify({
@@ -65,6 +69,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
 
     if (SidebarData?.tour_hotels?.medina_hotels?.length > 0) {
       const firstMadinaHotel = SidebarData.tour_hotels.medina_hotels[0];
+      setmadinaId(firstMadinaHotel.id);
       setHotelSelect((prevSelect) => ({
         ...prevSelect,
         madina: JSON.stringify({
@@ -87,7 +92,27 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
       });
       setSelectedAirlinePrice(firstFlight.flight_amount);
     }
+
   }, [SidebarData]);
+
+  useEffect(() => {
+    fetchHotelData();
+  },[mekkaId,madinaId]);
+
+  const fetchHotelData = async() => {
+      const formData = new FormData();
+      formData.append("tour_id", Tourid);
+      formData.append("mekka_id", mekkaId);
+      formData.append("madina_id", madinaId);
+
+      const response = await POST.request({form:formData, url:"gettourhoteldata "})
+
+      console.log(response,"response")
+      if(response){
+        setHotelData(response.hotel_data)
+      }
+
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -102,7 +127,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
     }
   }, [Render]);
 
-  console.log("selectedFlights" , selectedFlights);
   
 
   const handleRadioChange = (e) => {
@@ -113,7 +137,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
     try {
       selectedHotel = JSON.parse(value); // Ensure it's valid JSON
     } catch (error) {
-      console.error("Invalid JSON format:", value);
       return; // Exit if value isn't valid JSON
     }
 
@@ -131,9 +154,12 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
         mekkaPrice,
         mekkaId: selectedHotel.hotel_id,
       }));
-
+      setmekkaId(selectedHotel.hotel_id);
+      console.log(mekkaId,"mekkaId");
       // Update Mekka hotel price in selectedmekkaHotelPrice state
       setselectedmekkaHotelPrice(mekkaPrice);
+
+      fetchHotelData();
     } else if (name === "madina") {
       // Find the price of the selected Madina hotel
       const madinaPrice =
@@ -148,8 +174,11 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
         madinaPrice,
         madinaId: selectedHotel.hotel_id,
       }));
+      setmadinaId(selectedHotel.hotel_id);
+      console.log(madinaId,"madinaId");
 
       setselectedMadinaHotelPrice(madinaPrice);
+      fetchHotelData();
     }
   };
 
@@ -393,7 +422,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
     setPrevAdultSelect(newPriceAdultArray); // assuming you are setting this somewhere
   };
 
-  console.log(PrevAdultSelect);
   
 
   useEffect(() => {
@@ -438,7 +466,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
 
-  console.log("selectedFlights" , selectedFlights);
   
 
   const PackageBookingData = {
@@ -500,7 +527,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage }) {
     }
   };
 
-  console.log("selectDeparture" , selectDeparture);
   
 
   return (

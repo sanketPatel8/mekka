@@ -6,100 +6,55 @@ import { MdVerified } from "react-icons/md";
 import HotelGallary from "./Galleries/HotelGallary";
 
 
-const RoadMap = ({ PAckageData }) => {
-  const [mainHotelData, setMainHotelData] = useState({});
+const RoadMap = ({ PAckageData,hotelData }) => {
+  // const [mainHotelData, setMainHotelData] = useState({});
 
-  useEffect(() => {
-    setMainHotelData(PAckageData?.Tour_Details?.tour_hotels)
-  }, [PAckageData])
+  // useEffect(() => {
+  //   setMainHotelData(PAckageData?.Tour_Details?.tour_hotels)
+  // }, [PAckageData])
 
 
   return (
     <>
-      {mainHotelData?.mekka_hotels?.map((elm, ind) => (
-        <div key={ind}>
+      {hotelData?.mekka_hotel &&  (
+        <div >
           <h4>Hotel for Makkah</h4>
-
-          <p>{elm.hotel_info}</p>
+          <h5>{hotelData?.mekka_hotel.hotel_name}</h5>
+          <p>{hotelData?.mekka_hotel.hotel_info}</p>
           <br />
           <p>Distance to the Kaaba</p>
-          <p>The distance to the Kaaba is {elm.km}</p>
+          <p>The distance to the Kaaba is {hotelData?.mekka_hotel.km}</p>
+          <br />
+            
+          <p>Food included:</p>
+          <p className="text-danger">{hotelData?.mekka_hotel.meals_included == 1 ? "Included" : "Not Included"}</p>
+            
+          
+
+          <HotelGallary  mekkaHotel={hotelData?.mekka_hotel?.mekka_hotels_imgs} />
+
+          
+        </div>
+      )}
+
+      {hotelData?.madina_hotel && (
+        <div  className="mt-50">
+          <h4>Hotel for Makkah</h4>
+          <h5>{hotelData?.madina_hotel.hotel_name}</h5>
+          <p>{hotelData?.madina_hotel.hotel_info}</p>
+          <br />
+          <p>Distance to the Kaaba</p>
+          <p>The distance to the Kaaba is {hotelData?.madina_hotel.km}</p>
           <br />
           <p>Food included:</p>
-          <p className="text-danger">Not included</p>
+          <p className="text-danger">{hotelData?.madina_hotel.meals_included == 1 ? "Included" : "Not Included"}</p>
+            
 
-          <HotelGallary name="makka" mainHotelData={mainHotelData} />
+          <HotelGallary  madinaHotel={hotelData?.madina_hotel?.medina_hotels_imgs}/>
 
-          <br />
-          <div>
-            <h4>Hotel Options</h4>
-            <div className="row">
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Restaurant
-              </span>
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Wäsche
-              </span>
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Friseur
-              </span>
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Wi-Fi
-              </span>
-            </div>
-            <span className="col">
-              <MdVerified className="mx-2" />
-              Fernseher
-            </span>
-          </div>
+         
         </div>
-      ))}
-
-      {mainHotelData?.medina_hotels?.map((elm, ind) => (
-        <div key={ind} className="mt-50">
-          <h4>Hotel for Madina</h4>
-          <p>{elm.hotel_info}</p>
-          <br />
-          <p>Distance to the Mescid</p>
-          <p>The distance to the Mescid is {elm.km}</p>
-          <br />
-          <p>Food included:</p>
-          <p className="text-danger">Breakfast</p>
-
-          <HotelGallary name="madina" mainHotelData={mainHotelData} />
-          <div>
-            <br />
-            <h4>Hotel Options</h4>
-            <div className="row">
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Restaurant
-              </span>
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Wäsche
-              </span>
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Friseur
-              </span>
-              <span className="col">
-                <MdVerified className="mx-2" />
-                Wi-Fi
-              </span>
-            </div>
-            <span className="col">
-              <MdVerified className="mx-2" />
-              Fernseher
-            </span>
-            <br />
-          </div>
-        </div>
-      ))}
+      )}
     </>
   );
 };

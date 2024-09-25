@@ -18,6 +18,7 @@ import FlightInformation from "../FlightInformation";
 export default function SingleFour({ PAckageData }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   const [FlightInc, setFlightInc] = useState(null);
+  const [hotelData, setHotelData] = useState(null);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
@@ -209,7 +210,7 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        <HotelInformation PAckageData={PAckageData} />
+                        <HotelInformation PAckageData={PAckageData} hotelData={hotelData} />
                       </div>
                     </div>
                   </div>
@@ -283,7 +284,7 @@ export default function SingleFour({ PAckageData }) {
                 style={{ position: "sticky", top: "10px" }}
                 className="d-flex justify-start"
               >
-                <TourSingleSidebar PAckageData={PAckageData}  />
+                <TourSingleSidebar PAckageData={PAckageData} setHotelData={setHotelData} />
               </div>
             </div>
           </div>
