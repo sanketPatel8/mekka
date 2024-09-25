@@ -230,12 +230,17 @@ export default function EditTour() {
   },[tourInformation])
   useEffect(() => {
 
-
+      console.log(includedData,"includedData");
       const updatedIncluded = includedData.map((item) => {
-        const isChecked = tourInclude.includes(item.id.toString());
+        console.log(item,"item");
+        console.log(tourInclude,"tourInclude");
+        // const isChecked = tourInclude.includes(item.id);
+        const isChecked = tourInclude.split(',').includes(item.id);
+        console.log(isChecked,"isChecked");
         
         return { ...item, checked: isChecked };
       });
+      console.log(updatedIncluded,"updatedIncluded");
       setIncluded(updatedIncluded);
     
   }, [ tourInclude,includedData]);
