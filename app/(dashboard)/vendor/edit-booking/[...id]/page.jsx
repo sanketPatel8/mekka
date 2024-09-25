@@ -636,6 +636,8 @@ const filterData = async(personId) => {
        type: row.type.value,
      }
     })
+    console.log("documentData" , documentData);
+    
     formData.append("documents_data", JSON.stringify(documentData));
 
 

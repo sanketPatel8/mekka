@@ -154,7 +154,7 @@ export default function BookingPages({ BookingData }) {
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
-        }
+        } 
       }
 
       if (Login && Login !== "undefined") {
@@ -192,7 +192,7 @@ export default function BookingPages({ BookingData }) {
     }
   }, []);
 
-  // for adult prices array
+  // for adult prices array 
 
   let foundPrices = AlladultsData?.map((item) => item.price);
 

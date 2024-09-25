@@ -75,7 +75,7 @@ export default function CustomerDb() {
         <Header setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
-          <CustomerDetaTable BookingDetails={BookingDetails} />
+          <CustomerDetaTable BookingDetails={BookingDetails} CustomerID={CustomerID} />
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

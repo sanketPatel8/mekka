@@ -66,7 +66,7 @@ const customStylesForPendingPayment = {
   },
 };
 
-const CustomerDetaTable = ({ BookingDetails }) => {
+const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
   const { translate } = useTranslation();
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -304,6 +304,10 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     // Extract name and id from row
     const { reservation_id, id } = row;
 
+    console.log("row", row);
+
+    console.log("reservation_id, id", reservation_id, id);
+
     // Create a new object with name and id
     const newObject = { reservation_id, id };
 
@@ -477,7 +481,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     const formData = new FormData();
 
     formData.append("reservation_person_id", UploadDocID?.id);
-    formData.append("reservation_id", UploadDocID?.reservation_id);
+    formData.append("reservation_id", UploadDocID?.tourId);
     formData.append("document_type", DocType);
     formData.append("document", DocPhoto);
 
@@ -530,6 +534,53 @@ const CustomerDetaTable = ({ BookingDetails }) => {
     setTimeout(() => {
       closeModal();
     }, 2000);
+  };
+
+  // for upload documnet
+  // '','Photo','Permanent Resident (PR)','Vaccination Card'
+
+  const VandorDoc = [
+    { value: "Passport", label: "Passport" },
+    { value: "Photo", label: "Photo" },
+    { value: "Permanent Resident (PR)", label: "Permanent Resident (PR)" },
+    { value: "Vaccination Card ", label: "Vaccination Card" },
+  ];
+
+  const [viewData, setViewData] = useState([]);
+  const [viewDetails, setViewDetails] = useState([]);
+  const [downloadData, setDownloadData] = useState([]);
+  const [downloadDetails, setDownloadDetails] = useState([]);
+
+  console.log("rows", rows);
+  console.log("rows[0].document", rows[0].document);
+  console.log("rows[0].type?.value", rows[0].image);
+
+
+
+  const handleDocumentSubmit = async () => {
+    const formData = new FormData();
+    formData.append("reservation_person_id", UploadDocID?.id);
+    formData.append("reservation_id", UploadDocID?.reservation_id);
+    formData.append("vendor_id", CustomerID);
+    const documentData = rows.map((row) => {
+      return {
+        document: row?.document,
+        type: row.type?.value,  
+      };
+    });
+
+    console.log("documentData" , documentData);
+    
+
+    formData.append("documents_data", JSON.stringify(documentData));
+
+    const response = await POST.request({
+      form: formData,
+      url: "upload_bookingdocuments",
+    });
+    if (response) {
+      setuploadFileisOpen(false);
+    }
   };
 
   return (
@@ -636,7 +687,6 @@ const CustomerDetaTable = ({ BookingDetails }) => {
 
       <br />
 
-      {/* Baby Data List */}
       {/* Baby Data Table */}
       <DataTable
         title="Baby Information"
@@ -1103,7 +1153,7 @@ const CustomerDetaTable = ({ BookingDetails }) => {
         </Modal>
       </div>
 
-      <div id="upload_file">
+      {/* <div id="upload_file">
         <Modal
           isOpen={uploadFileisOpen}
           onRequestClose={closeUploadFileModal}
@@ -1242,6 +1292,163 @@ const CustomerDetaTable = ({ BookingDetails }) => {
                   title="Download Your Tickets and Visa"
                   columns={DownloadData}
                   data={documentDataFile}
+                  highlightOnHover
+                />
+              </TabPanel>
+            </Tabs>
+          </div>
+        </Modal>
+      </div> */}
+
+      <div id="upload_file">
+        <Modal
+          isOpen={uploadFileisOpen}
+          onRequestClose={closeUploadFileModal}
+          style={customStyles}
+          contentLabel="Pending Payment Modal"
+        >
+          <div className="d-flex justify-content-between" id="modelopen">
+            <h2 className="ml-20 my-3"> {translate("Document")}</h2>
+            <button onClick={closeUploadFileModal}>
+              <IoClose size={25} />
+            </button>
+          </div>
+
+          <div className="ml-lg-20 ml-0 ">
+            <Tabs>
+              <TabList>
+                <Tab> {translate("Upload")}</Tab>
+                <Tab> {translate("View")}</Tab>
+                <Tab> {translate("Download")}</Tab>
+              </TabList>
+
+              <TabPanel>
+                <div
+                  className=""
+                  style={{
+                    height: "60vh",
+                    overflowX: "hidden",
+                    overflowY: "auto",
+                  }}
+                >
+                  {rows.map((row, index) => (
+                    <div className="row item-center my-3" key={row.id}>
+                      <div className="col-md-4 px-0 mx-0 pl-lg-50">
+                        <Select
+                          options={VandorDoc}
+                          value={row.type}
+                          onChange={(selectedOption) =>
+                            handleDocumentChange(selectedOption, index)
+                          }
+                          className="dd-vendor"
+                          isClearable
+                        />
+                      </div>
+                      <div className="col-md-4 px-0 mx-2">
+                        <div className="row my-2 flex_center ">
+                          {rows.document ? (
+                            <div className="col-auto my-3">
+                              <div className="relative">
+                                <Image
+                                  width={200}
+                                  height={200}
+                                  src={rows.document}
+                                  alt="image"
+                                  className="size-200 rounded-12 object-cover my-3"
+                                />
+                                <button
+                                  onClick={() => {
+                                    const newRows = [...rows];
+                                    newRows[index].document = "";
+                                    setRows(newRows);
+                                  }}
+                                  className="absoluteIcon1 button -dark-1"
+                                >
+                                  <i className="icon-delete text-18"></i>
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="col-auto  pl-20-doc-img">
+                              <label
+                                htmlFor={`imageInp-${index}`}
+                                className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
+                              >
+                                <div className="text-16 fw-500 text-accent-1">
+                                  {translate("Upload Document")}
+                                </div>
+                              </label>
+                              <input
+                                onChange={(e) => handleImageChange(e, index)}
+                                accept="image/*, application/pdf"
+                                id={`imageInp-${index}`}
+                                type="file"
+                                name="image2"
+                                style={{ display: "none" }}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="col-md-2 px-0 mx-0">
+                        <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
+                          <div className="mx-1">
+                            <button
+                              type="button"
+                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                              onClick={addRow}
+                            >
+                              +
+                            </button>
+                          </div>
+                          {index > 0 && (
+                            <div className="mx-1">
+                              <button
+                                type="button"
+                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                                onClick={() => removeRow(index)}
+                              >
+                                -
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="row ">
+                    <div className="col-12 d-flex justify-content-center gap-md-2">
+                      <button
+                        className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
+                        type="submit"
+                        onClick={handleDocumentSubmit}
+                      >
+                        {translate("SUBMIT")}
+                      </button>
+                      <button
+                        className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
+                        onClick={closeUploadFileModal}
+                      >
+                        {translate("CANCEL")}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <DataTable
+                  title=" Documents"
+                  columns={viewData}
+                  data={viewDetails}
+                  highlightOnHover
+                />
+              </TabPanel>
+              <TabPanel>
+                <DataTable
+                  title="Customer Documents"
+                  columns={downloadData}
+                  data={downloadDetails}
                   highlightOnHover
                 />
               </TabPanel>
