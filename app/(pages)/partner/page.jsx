@@ -168,7 +168,7 @@ const handleSubmit = async (e) => {
       console.log("success")
       
       showSuccessToast(response.message);
-      router.push("/login");
+      router.push("/partner-login");
     }else if(response.status === "error"){
       console.log("error")
       showErrorToast(response.message);

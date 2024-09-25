@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
@@ -46,6 +46,10 @@ export default function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
+
+  const dateInputRef = useRef(null);
+
+
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
     if (index === 2) {
@@ -101,9 +105,6 @@ export default function Payment() {
   };
 
 
-  const handleDateChange = (event) => {
-    setSecondDate(event.target.value);
-  };
 
   
 
@@ -206,6 +207,8 @@ const formatDateToMMDDYYYY = (date) => {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
 };
+
+
   useEffect(() => {
     const today = new Date();
     const todayString = today.toISOString().split("T")[0];
@@ -229,7 +232,36 @@ const formatDateToMMDDYYYY = (date) => {
   
     setDateBegin(todayString);
     setMinEndDate(todayString);
+
+   
   }, [SideBarData?.startDate]);
+
+
+const handleDateChange = useCallback((event) => {
+  console.log(event.target.value, "event.target.value")
+  const selectedDate = event.target.value;
+  console.log(selectedDate, "selectedDate")
+  const maxDateValue = dateEnd;
+  console.log(maxDateValue, "maxDateValue")
+
+  if (selectedDate > maxDateValue) {
+    setSecondDate(maxDateValue);
+  }else{
+    setSecondDate(selectedDate);
+  }
+}, [dateEnd]);
+
+useEffect(() => {
+  if (dateInputRef.current) {
+    dateInputRef.current.addEventListener('change', handleDateChange);
+  }
+
+  return () => {
+    if (dateInputRef.current) {
+      dateInputRef.current.removeEventListener('change', handleDateChange);
+    }
+  };
+}, [handleDateChange]);
   const FatchallBooking = async (data) => {
     try {
       const response = await post("addbooking", data);
@@ -523,7 +555,7 @@ const formatDateToMMDDYYYY = (date) => {
                                   value={seconddate}
                                   onChange={handleDateChange}
                                   min={minEndDate}
-                                  max={dateEnd}
+                                  ref={dateInputRef}
                                   
                                   />
                                 <label className="lh-1 text-16 text-light-1">
@@ -811,7 +843,7 @@ const formatDateToMMDDYYYY = (date) => {
                       <MdFlightTakeoff size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
-                      {translate("Departure_date")} : {SideBarData?.startDate}
+                      {translate("Departure Date")} : {SideBarData?.startDate}
                     </div>
                   </div>
 
