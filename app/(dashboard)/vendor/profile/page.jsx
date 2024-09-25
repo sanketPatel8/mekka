@@ -342,7 +342,7 @@ export default function Profile() {
     // setImage2(newImages);
     event.preventDefault();
     if(image1){
-      const url = new URL(image1);
+      const url = new URL(image2);
       const fileName = url.pathname.split('/').pop();
       console.log(fileName); 
 
@@ -355,6 +355,10 @@ export default function Profile() {
       if(response){
         showSuccessToast("Image removed successfully");
         fetchProfile();
+        // const newImages = [...companyData.company_document];
+        // newImages.splice(index, 1);
+        // setCompanyData({ ...companyData, company_document: newImages });
+  
       }
     }else if(uploadImage.length > 0){
          const newImages = [...image2];

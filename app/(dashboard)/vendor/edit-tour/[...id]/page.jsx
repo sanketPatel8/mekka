@@ -19,7 +19,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { languages } from "@/data/tourFilteringOptions";
-import { showErrorToast } from "@/app/utils/tost";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
@@ -463,11 +463,34 @@ useEffect(() => {
     setEditorState(newEditorState);
     };
 
-  const handleDeleteImage2 = (index) => {
-    const newImages = [...image2];
-    newImages.splice(index, 1);
-    setImage2(newImages);
-  };
+    const handleDeleteImage2 = (index,event) => {
+      
+      event.preventDefault();
+      if(image2){
+        const url = new URL(image2);
+        const fileName = url.pathname.split('/').pop();
+        console.log(fileName); 
+  
+        const formData = new FormData();
+        formData.append('image', fileName);
+        formData.append('type', 'tour_image');
+        formData.append('tour_id', id);
+  
+        const response = POST.request({ form: formData, url: 'remove_imageordocument' });
+        if(response){
+          showSuccessToast("Image removed successfully");
+          fetchTour(id);
+          // const newImages = [...companyData.company_document];
+          // newImages.splice(index, 1);
+          // setCompanyData({ ...companyData, company_document: newImages });
+    
+        }
+      }else if(uploadImage.length > 0){
+           const newImages = [...image2];
+      newImages.splice(index, 1);
+      setImage2(newImages);
+      }
+    };
   const handleTabClick = (tab, index) => {
     if (index < activeTabIndex) {
       setCanGoBack(true);
@@ -1249,7 +1272,7 @@ const formatDateToMMDDYYYY = (date) => {
                                             src={image} alt={`image-${index}`} className="size-200 rounded-12 object-cover"
                                           />
                                           <button
-                                            onClick={() => handleDeleteImage2(index)}
+                                            onClick={(e) => handleDeleteImage2(index,e)}
                                             className="absoluteIcon1 button -dark-1"
                                           >
                                             <i className="icon-delete text-18"></i>
