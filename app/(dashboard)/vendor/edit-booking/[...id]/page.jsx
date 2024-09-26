@@ -207,15 +207,21 @@ const filterData = async(personId) => {
           setViewDetails(docFiles);
 
 
-          const download = doc.documets.map((doc) => ({
+       
+
+        }
+      })
+
+      const downloads = matchedData.map((doc)=>{
+        if(doc.download_documets && doc.download_documets.length > 0){
+          const download = doc.download_documets.map((doc) => ({
             Name: doc.file_url_orginal_name,
             fileLink: doc.full_path,
           }));
 
           setDownloadDetails(download);
-
         }
-      })
+      });
 
      
     }

@@ -10,10 +10,11 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { useEffect, useState } from "react";
 import { FaPersonWalking } from "react-icons/fa6";
+import { useCurrency } from "@/app/context/currencyContext";
 
 export default function TourSlider({ PAckageData }) {
   const { translate } = useTranslation();
-
+  const {formatPrice} = useCurrency();
   const [slibleTourSlider, setslibleTourSlider] = useState([]);
 
   useEffect(() => {
@@ -147,7 +148,7 @@ export default function TourSlider({ PAckageData }) {
                           >
                             From{" "}
                             <span className="text-16 fw-500">
-                              {elm.tour_price} €
+                              {formatPrice(elm.tour_price)} 
                             </span>
                           </div>
                         </div>

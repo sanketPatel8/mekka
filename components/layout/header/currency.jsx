@@ -1,13 +1,18 @@
-"use client";
-
+// currency.js
 import { useState, useEffect, useRef } from "react";
+import { useCurrency } from "@/app/context/currency-context";
 
-const currencies = ["$", "€"];
+const currencies = ["€", "$"];
 
-export default function currency({ parentClass }) {
+export default function Currency({ parentClass }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState("€");
+  const [selectedCurrency, setSelectedCurrency] = useState("");
   const dropDownContainer = useRef(null);
+  const { currency, setCurrency } = useCurrency();
+
+  useEffect(() => {
+    setSelectedCurrency(currency);
+  }, [currency]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -24,7 +29,8 @@ export default function currency({ parentClass }) {
   }, []);
 
   const handleCurrencyChange = (currency) => {
-    setSelectedCurrency(currency);
+    console.log("hi")
+    setCurrency(currency);
     setIsOpen(false);
   };
 
@@ -35,9 +41,9 @@ export default function currency({ parentClass }) {
     >
       <div
         className="currencyDropdown__button"
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => {}}
       >
-        {selectedCurrency}
+        {selectedCurrency === "€" ? "Euro" : "USD"}
         <i className="icon-chevron-down text-18"></i>
       </div>
 

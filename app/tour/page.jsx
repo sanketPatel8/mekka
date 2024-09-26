@@ -77,7 +77,6 @@ export default function PageData() {
   };
 
   const onPageChange = async (pageIndex) => {
-    console.log("pageIndex", pageIndex);
 
     const tourTypeFromParam = searchParams.get("TourType") || "";
     const typeFromParam = searchParams.get("type") || "";
@@ -108,7 +107,6 @@ export default function PageData() {
         endDate,
         person,
       });
-      console.log("fetch search data");
     } else if (
       FilterSidebar.selectedTourTypes !== " " ||
       FilterSidebar.selectedLanguages.length !== 0 ||
@@ -118,10 +116,8 @@ export default function PageData() {
       FilterSidebar.selectedRatings.length !== 0
     ) {
       await FetchFilterData(pageIndex);
-      console.log("fetch Filter Data");
     } else {
       await fetchListing(pageIndex);
-      console.log("fetch Listning Data");
     }
   };
 
@@ -129,7 +125,6 @@ export default function PageData() {
     setActiveIndex(0);
   }, [FilterSidebar]);
 
-  console.log("SearchData", SearchData);
 
   useEffect(() => {
     FetchTourDataAPi();
@@ -206,7 +201,6 @@ export default function PageData() {
     }
   }, [FilterSidebar]);
 
-  console.log("FilterSidebar", FilterSidebar);
 
   const FetchTourDataAPi = async () => {
     const sendData = {
@@ -217,7 +211,6 @@ export default function PageData() {
       const response = await post("tour_data", sendData);
       setFliterData(response.Data);
     } catch (error) {
-      console.error("Error caught:", error);
       showErrorToast("An error occurred during registration.");
     }
   };
@@ -309,7 +302,6 @@ export default function PageData() {
       person,
     });
 
-    console.log("tourType", tourType);
 
     // Check if any of the search parameters are non-empty and call the appropriate functions
     if (tourType || startDate || endDate || person) {

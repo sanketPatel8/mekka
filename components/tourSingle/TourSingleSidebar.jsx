@@ -10,6 +10,7 @@ import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
 import { POST } from "@/app/utils/api/post";
+import { useCurrency } from "@/app/context/currencyContext";
 
 export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHotelData }) {
   const {
@@ -44,7 +45,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
   const [Render, setRender] = useState(false);
   const [mekkaId, setmekkaId] = useState( "");
   const [madinaId, setmadinaId] = useState( "");
-
+  const {formatPrice} = useCurrency();
   const [selectDeparture, setselectDeparture] = useState({
     name : ""
   });

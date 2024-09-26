@@ -8,10 +8,13 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
+import { useCurrency } from "@/app/context/currencyContext";
 
 export default function Tour1() {
   const [LatestPackage, setLatestPackage] = useState([]);
+  const {formatPrice} = useCurrency();
 
+  console.log(formatPrice(1000), "formatPrice");
   useEffect(() => {
     const fetchData = async (id) => {
       const sendData = {
@@ -145,7 +148,7 @@ export default function Tour1() {
                       }`}
                     >
                       From{" "}
-                      <span className="text-16 fw-500">{elm.tour_price} €</span>
+                      <span className="text-16 fw-500">{formatPrice(elm.tour_price)}</span>
                     </div>
                   </div>
                 </div>
