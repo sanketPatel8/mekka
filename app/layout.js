@@ -13,6 +13,7 @@ import { GlobalStateProvider } from "@/app/context/GlobalStateContext";
 import { AuthContextProvider } from "./context/authContext";
 import { PeopleProvider } from "./context/PeopleContext";
 import Head from "next/head";
+import { CurrencyProvider } from "./context/currencyContext";
 
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
       </Head>
       <body className={dmsans.className}>
         <AuthContextProvider>
+          <CurrencyProvider>
           <TranslationProvider>
             <GlobalStateProvider >
             <PeopleProvider>
@@ -51,6 +53,7 @@ export default function RootLayout({ children }) {
               </PeopleProvider>
             </GlobalStateProvider>
           </TranslationProvider>
+          </CurrencyProvider>
         </AuthContextProvider>
       </body>
     </html>

@@ -12,11 +12,12 @@ import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
+import { useCurrency } from "@/app/context/currencyContext";
 
 export default function TourSlderOne() {
   const [showSwiper, setShowSwiper] = useState(false);
   const [TopTranding, setTopTranding] = useState([]);
-
+  const {formatPrice} = useCurrency();
   useEffect(() => {
     setShowSwiper(true);
     fetchData();
@@ -194,7 +195,7 @@ export default function TourSlderOne() {
                             >
                               From{" "}
                               <span className="text-16 fw-500">
-                                {elm.tour_price} €
+                                {formatPrice(elm.tour_price)} 
                               </span>
                             </div>
                           </div>

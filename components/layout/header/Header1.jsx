@@ -32,7 +32,8 @@ export default function Header1() {
     router.push("/login");
   };
 
-  const [locale, setLocale] = useState("DE"); // default locale
+  const [locale, setLocale] = useState("DE");
+  const [currenyLocale,setCurrencyLocale] = useState("Euro");
 
   useEffect(() => {
     // Get cookies to set the locale
@@ -133,7 +134,7 @@ export default function Header1() {
             </div>
 
             <div className="d-flex items-center">
-              <Currency />
+              <Currency currenyLocale={currenyLocale}/>
 
               <Language
                 parentClass="headerDropdown"

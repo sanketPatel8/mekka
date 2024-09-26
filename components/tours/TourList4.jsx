@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { ClipLoader } from "react-spinners";
 import Link from "next/link";
+import { useCurrency } from "@/app/context/currencyContext";
 
 export default function TourList4({
   TourData,
@@ -35,7 +36,7 @@ export default function TourList4({
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
-
+  const {formatPrice} = useCurrency();
   const startParam = "start";
 
   // for loader
@@ -271,7 +272,7 @@ export default function TourList4({
                             <div></div>
                             <div className="d-flex items-center justify-content-center">
                               <p className="text-20 fw-500 ml-5 text-center">
-                                {elm?.tour_price} €
+                                {formatPrice(elm?.tour_price)} 
                               </p>
                             </div>
                             <p className="text-left text-md-center text-lg-center text-xl-center">
