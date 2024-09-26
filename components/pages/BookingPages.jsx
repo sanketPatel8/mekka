@@ -24,6 +24,7 @@ import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { nationalities } from "@/data/nationalities";
+import Login from "./Login";
 
 const customStyles = {
   overlay: {
@@ -221,7 +222,6 @@ export default function BookingPages({ BookingData }) {
   const HandleLoginSubmite = async (e) => {
     e.preventDefault();
 
-    if (LoginISChacked === true) {
       try {
         const response = await post("login", BookingLoginData);
         typeof window != "undefined"
@@ -230,7 +230,7 @@ export default function BookingPages({ BookingData }) {
         showSuccessToast("Login successful!");
 
         setTimeout(() => {
-          router.push("/customer/db-booking");
+          router.push("/");
         }, 2000);
       } catch (error) {
         console.error("Error:", error); // Log the full error for debugging
@@ -244,9 +244,8 @@ export default function BookingPages({ BookingData }) {
           showErrorToast("An error occurred during registration.");
         }
       }
-    } else {
-      showErrorToast("ChackBox Was Not Chacked");
-    }
+   
+     
   };
 
   // for promocode
@@ -1485,6 +1484,7 @@ export default function BookingPages({ BookingData }) {
                 </div>
               </div>
             </form>
+            {/* <Login /> */}
           </section>
         </Modal>
       </div>
