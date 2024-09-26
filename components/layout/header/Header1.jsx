@@ -93,12 +93,13 @@ export default function Header1() {
               <Link href="/tour" className="mx-3">
                 {translate("Tour")}
               </Link>
-              <Link href="/tour?=Hajj" className="mx-3">
+              <Link href="/tour?type=Hajj" className="mx-3">
                 {translate("Hajj")}
               </Link>
-              <Link href="/tour?=Umrah" className="mx-3">
+              <Link href="/tour?type=Umrah" className="mx-3">
                 {translate("Umrah")}
               </Link>
+
               <Link href="/contact" className="mx-3">
                 {translate("Contact")}
               </Link>

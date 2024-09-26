@@ -79,10 +79,12 @@ export default function PageData() {
   const onPageChange = async (pageIndex) => {
     console.log("pageIndex", pageIndex);
 
-    const tourType =
-      searchParams.get("TourType") === undefined
-        ? ""
-        : searchParams.get("TourType");
+    const tourTypeFromParam = searchParams.get("TourType") || "";
+    const typeFromParam = searchParams.get("type") || "";
+  
+
+    const tourType = tourTypeFromParam || typeFromParam || "";
+
     const startDate =
       searchParams.get("StartDate") === undefined
         ? ""
@@ -95,6 +97,10 @@ export default function PageData() {
       searchParams.get("person") === undefined
         ? ""
         : searchParams.get("person");
+
+        const HeaderType =  searchParams.get("type") === undefined
+        ? ""
+        : searchParams.get("type");
 
     if (tourType || startDate || endDate || person) {
       await fetchSearch1Data({pageIndex , tourType, startDate, endDate, person });
@@ -223,46 +229,79 @@ console.log("SearchData" , SearchData);
     }
   };
 
+  // useEffect(() => {
+  //   const tourType =
+  //     searchParams.get("TourType") === undefined
+  //       ? ""
+  //       : searchParams.get("TourType");
+  //   const startDate =
+  //     searchParams.get("StartDate") === undefined
+  //       ? ""
+  //       : searchParams.get("StartDate");
+  //   const endDate =
+  //     searchParams.get("EndDate") === undefined
+  //       ? ""
+  //       : searchParams.get("EndDate");
+  //   const person =
+  //     searchParams.get("person") === undefined
+  //       ? ""
+  //       : searchParams.get("person");
+
+  //       setSearchData({
+  //         tourType,
+  //         startDate,
+  //         endDate,
+  //         person
+  //       })
+
+
+
+  //   if (
+  //     (tourType !== null && tourType !== undefined && tourType !== "") ||
+  //     (startDate !== null && startDate !== undefined && startDate !== "") ||
+  //     (endDate !== null && endDate !== undefined && endDate !== "") ||
+  //     (person !== null && person !== undefined)
+  //   ) {
+  //     fetchSearch1Data({ tourType, startDate, endDate, person });
+  //     route.push("#redirect");
+  //   } else {
+  //     fetchListing();
+  //   }
+  // }, [searchParams]);
+
+
   useEffect(() => {
-    const tourType =
-      searchParams.get("TourType") === undefined
-        ? ""
-        : searchParams.get("TourType");
-    const startDate =
-      searchParams.get("StartDate") === undefined
-        ? ""
-        : searchParams.get("StartDate");
-    const endDate =
-      searchParams.get("EndDate") === undefined
-        ? ""
-        : searchParams.get("EndDate");
-    const person =
-      searchParams.get("person") === undefined
-        ? ""
-        : searchParams.get("person");
+    // Get both parameters (TourType and Type)
+    const tourTypeFromParam = searchParams.get("TourType") || "";
+    const typeFromParam = searchParams.get("type") || "";
+  
+    // Choose the appropriate value for tourType
+    const tourType = tourTypeFromParam || typeFromParam || "";
+  
+    const startDate = searchParams.get("StartDate") || "";
+    const endDate = searchParams.get("EndDate") || "";
+    const person = searchParams.get("person") || "";
+  
+    // Set the search data state
+    setSearchData({
+      tourType,
+      startDate,
+      endDate,
+      person,
+    });
 
-        setSearchData({
-          tourType,
-          startDate,
-          endDate,
-          person
-        })
-
-
-
-    if (
-      (tourType !== null && tourType !== undefined && tourType !== "") ||
-      (startDate !== null && startDate !== undefined && startDate !== "") ||
-      (endDate !== null && endDate !== undefined && endDate !== "") ||
-      (person !== null && person !== undefined)
-    ) {
+    console.log("tourType" , tourType);
+    
+  
+    // Check if any of the search parameters are non-empty and call the appropriate functions
+    if (tourType || startDate || endDate || person) {
       fetchSearch1Data({ tourType, startDate, endDate, person });
       route.push("#redirect");
     } else {
       fetchListing();
     }
   }, [searchParams]);
-
+  
   return (
     <>
       <main>
