@@ -61,7 +61,7 @@ export default function Header1() {
     }
   }, []);
 
-  // useEffect(() => {
+  // useEffect(() => {  
   //  if(LoginCheck === false){
   //   localStorage.removeItem("customer");
   //  }

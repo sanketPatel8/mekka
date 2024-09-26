@@ -242,10 +242,6 @@ const CustomerDetaTable = () => {
     setEditData(false);
   }
 
-  function openAdult1Deta() {
-    setAdult1Deta(true);
-  }
-
   function closeAdult1Deta() {
     setAdult1Deta(false);
   }
@@ -267,15 +263,31 @@ const CustomerDetaTable = () => {
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
   const CustomerID = searchParams.get("customerID");
-  
 
-  const filterData = async (personId) => {
+  function openUploadFileModal(personId, reservationId) {
+    setuploadFileisOpen(true);
+    setPersonId(personId);
+
+    console.log('personId' , personId);
+    
+    
+    const newObject = { personId, reservationId };
+    console.log("newObject" , newObject.reservationId);
+    setUploadDocID(newObject);
+
+
+    filterData(personId , reservationId );
+  }
+  //  Create a new object with name and id
+
+
+  const filterData = async (personId , reservationId) => {
     const formData = new FormData();
     formData.append("user_id", CustomerID);
-    formData.append("id", UploadDocID.reservationId);
-    
-    console.log("personId" , personId);
-    
+    formData.append("id", reservationId);
+
+    console.log("personId", personId);
+
     const response = await POST.request({
       form: formData,
       url: "booking_details",
@@ -286,9 +298,10 @@ const CustomerDetaTable = () => {
         response.Bookings.childData,
         response.Bookings.babyData
       );
-      console.log(filteredData , "filterData");
+      console.log(filteredData, "filterData");
       const matchedData = filteredData.filter((data) => data.id === personId);
-      console.log(matchedData , "matchedData");
+      console.log(matchedData, "matchedData");
+
       if (matchedData.length > 0) {
         const docs = matchedData.map((doc) => {
           if (doc.documets && doc.documets.length > 0) {
@@ -299,28 +312,38 @@ const CustomerDetaTable = () => {
 
             setViewDetails(docFiles);
 
-            const download = doc.documets.map((doc) => ({
-              Name: doc.file_url_orginal_name,
-              fileLink: doc.full_path,
-            }));
+            // const download = doc.documets.map((doc) => ({
+            //   Name: doc.file_url_orginal_name,
+            //   fileLink: doc.full_path,
+            // }));
 
-            setDownloadDetails(download);
+            // setDownloadDetails(download);
           }
         });
+      }
+
+      const Download = filteredData.find((data) => data.id === personId);
+
+      console.log("Download", Download.download_documets);
+      
+      if (Download?.download_documets?.length > 0) {
+        const docss = Download?.download_documets?.map((doc) => {
+          console.log("doc.file_url:", doc.file_url);
+
+          return {
+            Name: doc.file_url_orginal_name,
+            fileLink: doc.file_url,
+          };
+        });
+
+        setDownloadDetails(docss);
       }
     }
   };
 
-  function openUploadFileModal(personId, reservationId) {
-    setuploadFileisOpen(true);
-    setPersonId(personId);
-    filterData(personId);
+  console.log("downloadDetails", downloadDetails);
 
-    //  Create a new object with name and id
-    const newObject = { personId , reservationId };
 
-    setUploadDocID(newObject);
-  }
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
@@ -401,10 +424,10 @@ const CustomerDetaTable = () => {
   };
 
   const HandleEditData = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     FetchEditData();
     setTimeout(() => {
-      closeEditData(); 
+      closeEditData();
     }, 2000);
   };
 
@@ -435,7 +458,6 @@ const CustomerDetaTable = () => {
   };
 
   const handleAddPersong = () => {
-   
     alert("Person added");
     setTimeout(() => {
       closeModal();
@@ -499,7 +521,7 @@ const CustomerDetaTable = () => {
   };
 
   const downloadFile = (fileLink, fileName) => {
-    alert()
+    alert();
     const xhr = new XMLHttpRequest();
     xhr.open("GET", fileLink, true);
     xhr.responseType = "blob";
@@ -522,7 +544,7 @@ const CustomerDetaTable = () => {
   const handleDocumentSubmit = async () => {
     const formData = new FormData();
     formData.append("reservation_person_id", UploadDocID?.personId);
-    formData.append("reservation_id", UploadDocID?.reservationId);  
+    formData.append("reservation_id", UploadDocID?.reservationId);
     formData.append("vendor_id", CustomerID);
     const documentData = rows.map((row) => {
       return {
@@ -538,7 +560,7 @@ const CustomerDetaTable = () => {
       url: "upload_bookingdocuments",
     });
     if (response) {
-      showSuccessToast(response.Message)
+      showSuccessToast(response.Message);
       setTimeout(() => {
         setuploadFileisOpen(false);
       }, 3000);
