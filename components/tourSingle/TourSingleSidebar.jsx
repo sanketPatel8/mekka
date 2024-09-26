@@ -203,6 +203,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
       setselectedCheckbox(false);
     }
   };
+  
 
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
@@ -447,7 +448,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
       SidebarData?.tour_details?.flight_included == "0" ||
-        SidebarData?.tour_details?.flight_exclude == "0"
+      selectedCheckbox == false 
         ? SelectedAirlinePrice
         : 0
     ) +
@@ -458,7 +459,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
       SidebarData?.tour_details?.flight_included == "0" ||
-        SidebarData?.tour_details?.flight_exclude == "0"
+      selectedCheckbox == false
         ? SelectedAirlinePrice
         : 0
     ) +

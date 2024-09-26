@@ -260,9 +260,17 @@ export default function BookingPages({ BookingData }) {
 
   // for dynamic form data and form
 
+  // const initializeFormValues = (count, defaultValues) => {
+  //   return Array.from({ length }, () => ({ ...defaultValues }));
+  // };
+
   const initializeFormValues = (count, defaultValues) => {
-    return Array.from({ length }, () => ({ ...defaultValues }));
+    if (count === 0) {
+      return []; // If count is 0, return an empty array
+    }
+    return Array.from({ length: count }, () => ({ ...defaultValues }));
   };
+  
 
   const [formValues, setFormValues] = useState({
     Adult: initializeFormValues(adultData?.length || 0, {
@@ -382,8 +390,6 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const [updatedPrice, setUpdatedPrice] = useState(0);
-
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
 
@@ -464,53 +470,6 @@ export default function BookingPages({ BookingData }) {
       return 0; // Default value if no price is found
     }
     return Number(personPrice[idx]?.price); // Ensure price is a number
-  };
-
-  const updatePriceByTypeAndIndex = (type, index, newPrice) => {
-    const itemsOfType = AlladultsData?.filter((item) => item.label == type);
-
-    // Step 2: Find the item with the specified index
-    if (index <= itemsOfType[index]?.index) {
-      // Log the item before updating
-
-      const prevPrice = getPriceForType(type, index);
-      const addivalue = JSON.parse(newPrice);
-      const multiPrice = prevPrice + addivalue;
-
-      // Step 3: Update the price of the item
-      const updatedItem = { ...itemsOfType[index], price: multiPrice };
-
-      // Update the state with the new price
-      // setAlladultsData((prevData) => {
-      //   // Step 1: Filter out the item that needs to be updated
-      //   const updatedData = prevData.map((item) => {
-      //     // Check if the current item matches both type and index
-      //     if (item.label === type && item.index === index) {
-      //       // Return a new object with the updated price
-      //       return { ...item, price: multiPrice };
-      //     }
-      //     // Return the item unchanged if it doesn't match
-      //     return item;
-      //   });
-
-      //   // Return the updated data to update the state
-      //   return updatedData;
-      // });
-
-      setAlladultsData((prevData) => {
-        // Step 1: Map through the existing data
-        return prevData.map((item) => {
-          // Step 2: Check if the current item matches the specified type and index
-          if (item.label === type && item.index === index) {
-            // Step 3: Only update the price for the matching item
-            return { ...item, price: multiPrice };
-          }
-          // Step 4: Return the item unchanged if it doesn't match
-          return item;
-        });
-      });
-    } else {
-    }
   };
 
   const SubtotalPriceWithAdditional = (type, i) => {
@@ -657,6 +616,7 @@ export default function BookingPages({ BookingData }) {
         additional_price_id: userProfile.additional_price_id || "",
         address: userProfile.address || "",
       });
+
     } else {
       console.error("Unexpected response structure:", response);
     }
@@ -668,7 +628,7 @@ export default function BookingPages({ BookingData }) {
 
   const taxAmount = JSON.parse(totalSum) * taxRate;
 
-  const totalWithTax = JSON.parse(totalSum) + JSON.parse(taxAmount);
+  const totalWithTax = JSON.parse(totalSum);
 
   const formattedTaxAmount = taxAmount.toFixed(2);
 
@@ -889,7 +849,7 @@ export default function BookingPages({ BookingData }) {
                           <>
                             <select
                               name={field.name}
-                              value={fieldValue || ""} // Ensuring the value is set correctly
+                              value={fieldValue || ""} 
                               onChange={(e) => handleInputChange(type, i, e)}
                               required
                               className="form-control"
@@ -1112,6 +1072,12 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
+  console.log("formValues" , formValues);
+
+ console.log(" adultData babyData Childrendata" ,  adultData.length ,  babyData.length ,  Childrendata.length);
+ 
+  
+
   const { translate } = useTranslation();
 
   return (
@@ -1329,7 +1295,7 @@ export default function BookingPages({ BookingData }) {
                     </div>
                   </div>
 
-                  <p className="text-right">Including Tax</p>
+                  {/* <p className="text-right">Including Tax</p> */}
 
                   <hr />
 

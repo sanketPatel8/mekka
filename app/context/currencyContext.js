@@ -21,8 +21,8 @@ export const CurrencyProvider = ({ children }) => {
     const response = await POST.request({url:"currecyDetails"});
     console.log(response, "response");
     if(response){
-        setCurrencyUSD(response.Currency.USD);
-        setCurrencyEUR(response.Currency.EUR);
+        setCurrencyUSD(response.Currency?.USD);
+        setCurrencyEUR(response.Currency?.EUR);
     }
   }
 

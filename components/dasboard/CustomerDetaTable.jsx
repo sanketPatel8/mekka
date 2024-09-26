@@ -268,25 +268,18 @@ const CustomerDetaTable = () => {
     setuploadFileisOpen(true);
     setPersonId(personId);
 
-    console.log('personId' , personId);
-    
-    
     const newObject = { personId, reservationId };
-    console.log("newObject" , newObject.reservationId);
+
     setUploadDocID(newObject);
 
-
-    filterData(personId , reservationId );
+    filterData(personId, reservationId);
   }
   //  Create a new object with name and id
 
-
-  const filterData = async (personId , reservationId) => {
+  const filterData = async (personId, reservationId) => {
     const formData = new FormData();
     formData.append("user_id", CustomerID);
     formData.append("id", reservationId);
-
-    console.log("personId", personId);
 
     const response = await POST.request({
       form: formData,
@@ -298,9 +291,8 @@ const CustomerDetaTable = () => {
         response.Bookings.childData,
         response.Bookings.babyData
       );
-      console.log(filteredData, "filterData");
+
       const matchedData = filteredData.filter((data) => data.id === personId);
-      console.log(matchedData, "matchedData");
 
       if (matchedData.length > 0) {
         const docs = matchedData.map((doc) => {
@@ -312,38 +304,31 @@ const CustomerDetaTable = () => {
 
             setViewDetails(docFiles);
 
-            // const download = doc.documets.map((doc) => ({
-            //   Name: doc.file_url_orginal_name,
-            //   fileLink: doc.full_path,
-            // }));
-
-            // setDownloadDetails(download);
+           
           }
         });
-      }
 
-      const Download = filteredData.find((data) => data.id === personId);
+        const downloads = matchedData.map((doc)=>{
+          if(doc.download_documets && doc.download_documets.length > 0){
+            const download = doc.download_documets.map((doc) => ({
+              Name: doc.file_url_orginal_name,
+              fileLink: doc.full_path,
+            }));
 
-      console.log("Download", Download.download_documets);
-      
-      if (Download?.download_documets?.length > 0) {
-        const docss = Download?.download_documets?.map((doc) => {
-          console.log("doc.file_url:", doc.file_url);
-
-          return {
-            Name: doc.file_url_orginal_name,
-            fileLink: doc.file_url,
-          };
+            console.log("download" , download);
+            
+  
+            setDownloadDetails(download);
+          }
         });
+        
 
-        setDownloadDetails(docss);
       }
     }
   };
 
-  console.log("downloadDetails", downloadDetails);
-
-
+  console.log("downloadDetails" , downloadDetails);
+  
 
   useEffect(() => {
     const fetchBookingDetails = async () => {

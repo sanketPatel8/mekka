@@ -102,8 +102,8 @@ export default function MainInformation({ PAckageData }) {
                 <div className="d-flex items-center x-gap-5 mx-2">
                   <Stars star={ratingCountStr} font={12} />
                 </div>
-                {InformationData?.Tour_Details?.tour_details?.rating} (
-                {InformationData?.Tour_Details?.tour_details?.rating_count}) -{" "}
+                {/* {InformationData?.Tour_Details?.tour_details?.rating} (
+                {InformationData?.Tour_Details?.tour_details?.rating_count}) -{" "} */}
                 {InformationData?.Tour_Details?.tour_details?.company_name}
               </div>
             </div>

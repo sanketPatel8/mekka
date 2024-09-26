@@ -27,10 +27,7 @@ export default function SingleFour({ PAckageData }) {
     setFlightInc(foundTour);
   }, [PAckageData]);
 
-
   
-  
-
   const { translate } = useTranslation();
 
   return (
