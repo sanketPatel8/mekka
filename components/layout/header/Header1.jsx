@@ -21,6 +21,7 @@ export default function Header1() {
   const handleLogoutClick = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
+      localStorage.removeItem("customer");
       localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
     }
     setLoginCheck(false);
@@ -58,6 +59,13 @@ export default function Header1() {
       }
     }
   }, []);
+
+  // useEffect(() => {
+  //  if(LoginCheck === false){
+  //   localStorage.removeItem("customer");
+  //  }
+  // }, [LoginCheck])
+  
 
   const { translate } = useTranslation(locale);
 

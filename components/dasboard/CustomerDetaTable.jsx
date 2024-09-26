@@ -631,9 +631,6 @@ const CustomerDetaTable = () => {
         highlightOnHover
       />
 
-      {/* Show a fallback message when there's no data */}
-      {!BookingDetails?.adultData?.length && <p>No Adult Data Found</p>}
-
       <br />
 
       {/* Child Data Table */}
@@ -644,9 +641,6 @@ const CustomerDetaTable = () => {
         highlightOnHover
       />
 
-      {/* Show a fallback message when there's no child data */}
-      {!BookingDetails?.childData?.length && <p>No Child Data Found</p>}
-
       <br />
 
       {/* Baby Data Table */}
@@ -656,9 +650,6 @@ const CustomerDetaTable = () => {
         data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
         highlightOnHover
       />
-
-      {/* Show a fallback message when there's no baby data */}
-      {!BookingDetails?.babyData?.length && <p>No Baby Data Found</p>}
 
       <br />
 

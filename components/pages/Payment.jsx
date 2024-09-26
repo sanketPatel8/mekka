@@ -284,6 +284,13 @@ useEffect(() => {
       setTimeout(() => {
         router.push("#ref");
         setBookingStage((pre) => pre + 1);
+        setTimeout(() => {
+          localStorage.removeItem("AdultPrice&count");
+          localStorage.removeItem("SelectedPackageHotelNDFlight");
+          localStorage.removeItem("PackageBookingData");
+          localStorage.removeItem("BookingData");
+          localStorage.removeItem("AdditionalServices");
+        }, 10000);
       }, 3000);
     }
 
