@@ -12,6 +12,7 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 export default function Profile() {
   const  {user}  = useAuthContext();
@@ -49,6 +50,8 @@ export default function Profile() {
   const [error, setError] = useState("");
   const [fileBlob,setFileBlob] = useState({});
   const [uploadImage, setUploadImage] = useState([]);
+
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (user) {
 
@@ -59,7 +62,9 @@ export default function Profile() {
 
   const fetchProfile = async () => {
     const url = 'my_profile'
+    setLoading(true)
     const response = await POST.request({ url: url, token: `${user?.authorisation.token}` });
+    setLoading(false)
     if (response.user) {
       setUserData(response.user)
       setName(response.user.name);
@@ -419,7 +424,16 @@ export default function Profile() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-
+          { loading ?       
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "200px" }}
+            >
+              <ClipLoader color="#DAC04F" size={50} />
+            </div>
+            :
+            <>
+            
             <h1 className="text-30"> {translate("My Profile")}</h1>
             <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40">
               <h5 className="text-20 fw-500 mb-30"> {translate("Profile Details")}</h5>
@@ -719,46 +733,46 @@ export default function Profile() {
 
                          return (
                           <div className="col-auto my-2" key={index}>
-      {isImage ? (
-        <div className="relative">
-          <Image
-            width={200}
-            height={200}
-            src={image.image}
-            alt={`image-${index}`}
-            className="size-200 rounded-12 object-cover"
-          />
-          <button
-            onClick={(e) => handleDeleteImage2(index,e)}
-            className="absoluteIcon1 button -dark-1"
-          >
-            <i className="icon-delete text-18"></i>
-          </button>
-        </div>
-      ) : isDocument ? (
-        <div className="relative">
-          <div
-                          className="size-200 rounded-12 border-1 bg-white flex-center flex-column"
-                        >
-                          <Image
-                            width="40"
-                            height="40"
-                            alt="image"
-                            src={"/img/dashboard/upload.svg"}
-                          />
+                          {isImage ? (
+                            <div className="relative">
+                              <Image
+                                width={200}
+                                height={200}
+                                src={image.image}
+                                alt={`image-${index}`}
+                                className="size-200 rounded-12 object-cover"
+                              />
+                              <button
+                                onClick={(e) => handleDeleteImage2(index,e)}
+                                className="absoluteIcon1 button -dark-1"
+                              >
+                                <i className="icon-delete text-18"></i>
+                              </button>
+                            </div>
+                          ) : isDocument ? (
+                            <div className="relative">
+                              <div
+                                              className="size-200 rounded-12 border-1 bg-white flex-center flex-column"
+                                            >
+                                              <Image
+                                                width="40"
+                                                height="40"
+                                                alt="image"
+                                                src={"/img/dashboard/upload.svg"}
+                                              />
 
-                          
+                                              
+                                            </div>
+                              <div className="file-name">{image.fileName}</div>
+                              <button
+                                onClick={(e) => handleDeleteImage2(index,e)}
+                                className="absoluteIcon1 button -dark-1"
+                              >
+                                <i className="icon-delete text-18"></i>
+                              </button>
+                            </div>
+                          ) : null}
                         </div>
-          <div className="file-name">{image.fileName}</div>
-          <button
-            onClick={(e) => handleDeleteImage2(index,e)}
-            className="absoluteIcon1 button -dark-1"
-          >
-            <i className="icon-delete text-18"></i>
-          </button>
-        </div>
-      ) : null}
-    </div>
                          );
                       })
 
@@ -775,49 +789,49 @@ export default function Profile() {
 
                          return (
                           <div className="col-auto my-2" key={index}>
-      {isImage ? (
-        <div className="relative">
-          <Image
-            width={200}
-            height={200}
-            src={image.image}
-            alt={`image-${index}`}
-            className="size-200 rounded-12 object-cover"
-          />
-          <button
-            onClick={(e) => handleDeleteImage2(index,e)}
-            className="absoluteIcon1 button -dark-1"
-          >
-            <i className="icon-delete text-18"></i>
-          </button>
-        </div>
-      ) : isDocument ? (
-        <div className="relative">
-          <div
-                          className="size-200 rounded-12 border-1 bg-white flex-center flex-column"
-                        >
-                          <Image
-                            width="40"
-                            height="40"
-                            alt="image"
-                            src={"/img/dashboard/upload.svg"}
-                          />
+                            {isImage ? (
+                              <div className="relative">
+                                <Image
+                                  width={200}
+                                  height={200}
+                                  src={image.image}
+                                  alt={`image-${index}`}
+                                  className="size-200 rounded-12 object-cover"
+                                />
+                                <button
+                                  onClick={(e) => handleDeleteImage2(index,e)}
+                                  className="absoluteIcon1 button -dark-1"
+                                >
+                                  <i className="icon-delete text-18"></i>
+                                </button>
+                              </div>
+                            ) : isDocument ? (
+                              <div className="relative">
+                                <div
+                                            className="size-200 rounded-12 border-1 bg-white flex-center flex-column"
+                                          >
+                                            <Image
+                                              width="40"
+                                              height="40"
+                                              alt="image"
+                                              src={"/img/dashboard/upload.svg"}
+                                            />
 
-                          
-                        </div>
-          <div className="file-name">{image.fileName}</div>
-          <button
-            onClick={(e) => handleDeleteImage2(index,e)}
-            className="absoluteIcon1 button -dark-1"
-          >
-            <i className="icon-delete text-18"></i>
-          </button>
-        </div>
-      ) : null}
-    </div>
-                         )
-                      })
-                    }
+                                            
+                                          </div>
+                                  <div className="file-name">{image.fileName}</div>
+                                  <button
+                                    onClick={(e) => handleDeleteImage2(index,e)}
+                                    className="absoluteIcon1 button -dark-1"
+                                  >
+                                    <i className="icon-delete text-18"></i>
+                                  </button>
+                                </div>
+                              ) : null}
+                            </div>
+                                )
+                            })
+                          }
 
                       <div className="col-auto my-2">
                         <label
@@ -974,6 +988,8 @@ export default function Profile() {
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}
             </div>
+            </>
+                        }
           </div>
         </div>
       </div>

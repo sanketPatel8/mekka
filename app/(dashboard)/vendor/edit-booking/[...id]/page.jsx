@@ -25,6 +25,9 @@ import {
   ViewCustomerDocument,
 } from "@/data/CustomerBookingData";
 import Modal from "react-modal";
+import { showSuccessToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -80,6 +83,8 @@ export default function DbBooking({ params }) {
   const [downloadDetails,setDownloadDetails] = useState([]);
   const [bookingDate, setBookingDate] = useState("");
   const [bookingStatus, setBookingStatus] = useState("");
+  const [loading,setLoading] = useState(true);
+
   const id = params.id[0];
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
@@ -220,9 +225,10 @@ const filterData = async(personId) => {
     const formData = new FormData();
     formData.append("user_id", user?.user?.id);
     formData.append("id", id);
-
+    setLoading(true);
     const response = await POST.request({form:formData, url: "booking_details"});
     if(response){
+      setLoading(false);
       setBookings(response.Bookings)
     }
 
@@ -643,13 +649,15 @@ const filterData = async(personId) => {
 
     const response = await POST.request({form:formData, url: "upload_bookingdocuments"});
     if(response){
+      showSuccessToast("Document Uploaded Successfully");
       setuploadFileisOpen(false);
+      setRows([{ document: "", type: null }]);
     }
   }
 
   return (
     <>
-   
+    <ToastContainer/>
     <div
       className={`dashboard ${
         sideBarOpen ? "-is-sidebar-visible" : ""
@@ -662,12 +670,23 @@ const filterData = async(personId) => {
 
           <div className="dashboard__content_content">
           
-
+          { loading ?       
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "200px" }}
+            >
+              <ClipLoader color="#DAC04F" size={50} />
+            </div>
+            :
+            <>
+            
               <DocumentStatusManager Customerid = {params} bookings={bookings} bookingDate={bookingDate} bookingStatus={bookingStatus}  adultHeaders={adultHeaders}  reservationData={reservationData} reservationHeader={reservationHeader} babyBookings={babyBookings} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen} totalData={totalData} totalHeaders={totalHeaders}  />
 
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}
             </div>
+            </>
+            }
           </div>
       </div>
       {
