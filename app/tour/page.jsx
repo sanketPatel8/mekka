@@ -133,6 +133,8 @@ console.log("SearchData" , SearchData);
     (language) => language.id
   );
 
+  const departure_ids = FilterSidebar?.selectedCities?.map((departure) => departure.id)
+
   const FetchFilterData = async (
     pageIndex,
   ) => {
@@ -141,7 +143,7 @@ console.log("SearchData" , SearchData);
     formData.append("start", pageIndex || 0);
     formData.append("type", FilterSidebar?.selectedTourTypes);
     formData.append("language", Lan_ids.join(","));
-    formData.append("departure", FilterSidebar?.selectedCities.join(", "));
+    formData.append("departure", departure_ids?.join(", "));
     formData.append("min_price", value[0]);
     formData.append("max_price", value[1]);
     formData.append("hotel_star", FilterSidebar?.selectedDurations.join(", "));

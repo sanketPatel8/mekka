@@ -15,13 +15,6 @@ const CustomerDetaTable = dynamic(
 
 export default function CustomerDb() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [BookingDetails, setBookingDetails] = useState([]);
-
-  const searchParams = useSearchParams();
-  const Tourid = searchParams.get("id");
-  const CustomerID = searchParams.get("customerID");
-
-  console.log(Tourid, CustomerID);
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,29 +33,6 @@ export default function CustomerDb() {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchBookingDetails = async () => {
-      const formData = new FormData();
-
-      formData.append("user_id", CustomerID);
-      formData.append("id", Tourid);
-
-      try {
-        const response = await POST.request({
-          form: formData,
-          url: "booking_details",
-        });
-        setBookingDetails(response?.Bookings);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchBookingDetails();
-  }, [Tourid, CustomerID]);
-
-  console.log("BookingDetails", BookingDetails);
-
   return (
     <div
       className={`dashboard ${
@@ -75,7 +45,9 @@ export default function CustomerDb() {
         <Header setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
-          <CustomerDetaTable BookingDetails={BookingDetails} CustomerID={CustomerID} />
+          <CustomerDetaTable
+            
+          />
 
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

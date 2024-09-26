@@ -23,6 +23,8 @@ import { showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { POST } from "@/app/utils/api/post";
 import { nationalities } from "@/data/nationalities";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const customStyles = {
   overlay: {
@@ -45,28 +47,7 @@ const customStyles = {
   },
 };
 
-const customStylesForPendingPayment = {
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-    zIndex: 1000,
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginLeft: "10%",
-    transform: "translate(-50%, -50%)",
-    padding: "20px",
-    width: "70%",
-    maxWidth: "70%",
-    height: "80vh",
-    overflowY: "auto",
-    backgroundColor: "#fff",
-  },
-};
-
-const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
+const CustomerDetaTable = () => {
   const { translate } = useTranslation();
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -78,7 +59,6 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
   const [CanclePopUp, setCanclePopUp] = useState(false);
   const [gender, setGender] = useState("");
   const [Nationality, setNationality] = useState("");
-  const [radioValue, setRadioValue] = useState("");
   const [From, setFrom] = useState("Frankfurt(FRA)");
   const [editCustomerData, setEditCustomerData] = useState({
     name: "",
@@ -89,6 +69,11 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
   });
   const [PersonalUserID, setPersonalUserID] = useState(0);
   const [UploadDocID, setUploadDocID] = useState({});
+  const [BookingDetails, setBookingDetails] = useState([]);
+  const [viewData, setViewData] = useState([]);
+  const [downloadData, setDownloadData] = useState([]);
+  const [viewDetails, setViewDetails] = useState([]);
+  const [downloadDetails, setDownloadDetails] = useState([]);
 
   useEffect(() => {
     Modal.setAppElement("#modelopen");
@@ -160,7 +145,7 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
-            onClick={() => openUploadFileModal(row)}
+            onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}
           </button>
@@ -197,39 +182,7 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
           </button>
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
-            onClick={() => openUploadFileModal(row)}
-          >
-            {translate("Document")}
-          </button>
-        </div>
-      ),
-      width: "200px", // Set a custom width for the button column
-    },
-  ];
-
-  const Baby = [
-    { name: "Name", selector: (row) => row.personName, width: "100px" },
-    { name: "Surname", selector: (row) => row.personSurName },
-    { name: "Gender", selector: (row) => row.gender },
-    { name: translate("DOB"), selector: (row) => row.personBirthDay },
-    {
-      name: translate("Nationality"),
-      selector: (row) => row.personNationality,
-    },
-    { name: translate("Total"), selector: (row) => row.baby_price },
-    {
-      name: translate("Action"),
-      selector: (row) => (
-        <div className="flex_center">
-          <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={() => openEditData(row?.id)} // Pass the current row
-          >
-            {translate("Edit")}
-          </button>
-          <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
-            onClick={() => openUploadFileModal(row)}
+            onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}
           </button>
@@ -246,30 +199,6 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
     { name: "Total", selector: (row) => row.Total },
     { name: "Amount Due", selector: (row) => row.Amount_Due },
-  ];
-
-  const FileDeta = [
-    { name: "Document Name", selector: (row) => row.Name },
-    {
-      name: "Action",
-      selector: (row) => (
-        <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          View
-        </button>
-      ),
-    },
-  ];
-
-  const DownloadData = [
-    { name: "Document Name", selector: (row) => row.Name },
-    {
-      name: "Action",
-      selector: (row) => (
-        <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          Download
-        </button>
-      ),
-    },
   ];
 
   function afterOpenModal() {
@@ -300,31 +229,11 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
     setCanclePopUp(false);
   }
 
-  function openUploadFileModal(row) {
-    // Extract name and id from row
-    const { reservation_id, id } = row;
-
-    console.log("row", row);
-
-    console.log("reservation_id, id", reservation_id, id);
-
-    // Create a new object with name and id
-    const newObject = { reservation_id, id };
-
-    // Log the new object to see the result
-    console.log("Extracted Object:", newObject);
-    setUploadDocID(newObject);
-
-    // Proceed with other operations (e.g., opening modal)
-    setuploadFileisOpen(true);
-  }
-
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
   }
 
   function openEditData(id) {
-    console.log("id", id);
     setPersonalUserID(id);
     setEditData(true);
   }
@@ -349,22 +258,124 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
     setinvoice(false);
   }
 
-  const [CustomerDoc, setCustomerDoc] = useState(null); // Initialize status as null or an object from your options array
-
-  const CustomeDocoptions = [
-    { value: "Passport", label: "Passport" },
-    { value: "Photo", label: "Photo" },
-    { value: "Permanent Resident (PR)", label: "Permanent Resident (PR)" },
-    { value: "Vaccination Card", label: "Vaccination Card" },
-  ];
-
-  const handleCustomerDocumentChange = (selectedOption) => {
-    setCustomerDoc(selectedOption);
-  };
-
   // for add document row and remove row
 
-  // FOR CANGE LANGAUGE
+  // for booking details
+
+  const [personId, setPersonId] = useState(0);
+
+  const searchParams = useSearchParams();
+  const Tourid = searchParams.get("id");
+  const CustomerID = searchParams.get("customerID");
+  
+
+  const filterData = async (personId) => {
+    const formData = new FormData();
+    formData.append("user_id", CustomerID);
+    formData.append("id", UploadDocID.reservationId);
+    
+    console.log("personId" , personId);
+    
+    const response = await POST.request({
+      form: formData,
+      url: "booking_details",
+    });
+
+    if (response.Bookings) {
+      const filteredData = response.Bookings.adultData.concat(
+        response.Bookings.childData,
+        response.Bookings.babyData
+      );
+      console.log(filteredData , "filterData");
+      const matchedData = filteredData.filter((data) => data.id === personId);
+      console.log(matchedData , "matchedData");
+      if (matchedData.length > 0) {
+        const docs = matchedData.map((doc) => {
+          if (doc.documets && doc.documets.length > 0) {
+            const docFiles = doc.documets.map((doc) => ({
+              Name: doc.file_url_orginal_name,
+              fileLink: doc.full_path,
+            }));
+
+            setViewDetails(docFiles);
+
+            const download = doc.documets.map((doc) => ({
+              Name: doc.file_url_orginal_name,
+              fileLink: doc.full_path,
+            }));
+
+            setDownloadDetails(download);
+          }
+        });
+      }
+    }
+  };
+
+  function openUploadFileModal(personId, reservationId) {
+    setuploadFileisOpen(true);
+    setPersonId(personId);
+    filterData(personId);
+
+    //  Create a new object with name and id
+    const newObject = { personId , reservationId };
+
+    setUploadDocID(newObject);
+  }
+
+  useEffect(() => {
+    const fetchBookingDetails = async () => {
+      const formData = new FormData();
+
+      formData.append("user_id", CustomerID);
+      formData.append("id", Tourid);
+
+      try {
+        const response = await POST.request({
+          form: formData,
+          url: "booking_details",
+        });
+        setBookingDetails(response?.Bookings);
+        const FileDeta = [
+          { name: "Document Name", selector: (row) => row.Name },
+          {
+            name: "Action",
+            selector: (row) => (
+              <Link
+                href={row.fileLink}
+                target="_blank"
+                className="button -sm -accent-1 bg-info-2 text-white my-2"
+              >
+                View {translate(" ")}
+              </Link>
+            ),
+          },
+        ];
+
+        setViewData(FileDeta);
+
+        const DownloadData = [
+          { name: "Document Name", selector: (row) => row.Name },
+          {
+            name: "Action",
+            selector: (row) => (
+              <button
+                className="button -sm -accent-1 bg-info-2 text-white my-2"
+                onClick={() => downloadFile(row.fileLink, row.Name)}
+              >
+                Download
+              </button>
+            ),
+          },
+        ];
+
+        setDownloadData(DownloadData);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchBookingDetails();
+  }, [Tourid, CustomerID]);
 
   // for edit customer data
 
@@ -385,124 +396,19 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
       });
       showSuccessToast(response?.Message);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
   const HandleEditData = (e) => {
-    e.preventDefault(); // Prevent default form submission
-    console.log("Submitting data:", editCustomerData); // Debugging line
+    e.preventDefault(); 
     FetchEditData();
-    // Add your submission logic here
-    // e.g., API call to save data
     setTimeout(() => {
-      closeEditData(); // Close modal after submission
+      closeEditData(); 
     }, 2000);
   };
 
-  // for upload documrnt
-
-  const [rows, setRows] = useState([
-    {
-      id: 1,
-      document: null,
-      image: "",
-    },
-  ]);
-
-  const [UploadedDocument, setUploadedDocument] = useState([]);
-  const [DocType, setDocType] = useState([]);
-  const [DocPhoto, setDocPhoto] = useState([]);
-
-  useEffect(() => {
-    // Mapping through UploadedDocument to extract 'document' and 'image'
-    const docTypes = UploadedDocument.map((item) => item.document?.value); // Extract 'document' from each object
-    const docPhotos = UploadedDocument.map((item) => item.image); // Extract 'image' from each object
-
-    // Storing the extracted values in their respective states
-    setDocType(docTypes); // Store documents in DocType
-    setDocPhoto(docPhotos); // Store images in DocPhoto
-  }, [UploadedDocument]);
-
-  const handleDocumentChange = (selectedOption, index) => {
-    const updatedRows = rows.map((row, rowIndex) => {
-      if (index === rowIndex) {
-        return { ...row, document: selectedOption };
-      }
-      return row;
-    });
-    setRows(updatedRows);
-
-    // Update the UploadedDocument state accordingly
-    const updatedDocuments = [...UploadedDocument];
-    updatedDocuments[index] = {
-      document: selectedOption,
-      image: rows[index].image,
-    };
-    setUploadedDocument(updatedDocuments);
-  };
-
-  const handleImageChange = (e, index) => {
-    const file = e.target.files[0];
-    const newRows = [...rows];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        newRows[index].image = reader.result;
-        setRows(newRows);
-
-        // Update UploadedDocument state
-        const updatedDocuments = [...UploadedDocument];
-        updatedDocuments[index] = {
-          document: newRows[index].document,
-          image: reader.result,
-        };
-        setUploadedDocument(updatedDocuments);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const addRow = () => {
-    setRows([...rows, { id: rows.length + 1, document: null, image: "" }]);
-  };
-
-  const removeRow = (index) => {
-    const newRows = rows.filter((_, i) => i !== index);
-    setRows(newRows);
-
-    // Also update the UploadedDocument state
-    const updatedDocuments = UploadedDocument.filter((_, i) => i !== index);
-    setUploadedDocument(updatedDocuments);
-  };
-
-  const FetchUploadDocumentData = async () => {
-    const formData = new FormData();
-
-    formData.append("reservation_person_id", UploadDocID?.id);
-    formData.append("reservation_id", UploadDocID?.tourId);
-    formData.append("document_type", DocType);
-    formData.append("document", DocPhoto);
-
-    try {
-      const response = await POST.request({
-        form: formData,
-        url: "upload_bookingdocuments",
-      });
-      console.log(response);
-
-      showSuccessToast(response?.Message);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleSubmit = () => {
-    FetchUploadDocumentData();
-  };
-
-  // for add person
+  // for Add New Person
 
   const [AddpersonData, setAddpersonData] = useState({
     name: "",
@@ -529,7 +435,7 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
   };
 
   const handleAddPersong = () => {
-    console.log(AddpersonData);
+   
     alert("Person added");
     setTimeout(() => {
       closeModal();
@@ -537,7 +443,27 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
   };
 
   // for upload documnet
-  // '','Photo','Permanent Resident (PR)','Vaccination Card'
+
+  const [rows, setRows] = useState([
+    {
+      id: 1,
+      document: null,
+      image: "",
+    },
+  ]);
+
+  const addRow = () => {
+    setRows([...rows, { id: rows.length + 1, document: null, image: "" }]);
+  };
+
+  const removeRow = (index) => {
+    const newRows = rows.filter((_, i) => i !== index);
+    setRows(newRows);
+
+    // Also update the UploadedDocument state
+    const updatedDocuments = UploadedDocument.filter((_, i) => i !== index);
+    setUploadedDocument(updatedDocuments);
+  };
 
   const VandorDoc = [
     { value: "Passport", label: "Passport" },
@@ -546,31 +472,64 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
     { value: "Vaccination Card ", label: "Vaccination Card" },
   ];
 
-  const [viewData, setViewData] = useState([]);
-  const [viewDetails, setViewDetails] = useState([]);
-  const [downloadData, setDownloadData] = useState([]);
-  const [downloadDetails, setDownloadDetails] = useState([]);
+  const handleImageChange = (e, index) => {
+    const files = e.target.files;
 
-  console.log("rows", rows);
-  console.log("rows[0].document", rows[0].document);
-  console.log("rows[0].type?.value", rows[0].image);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const fileInfo = {
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          base64: reader.result,
+        };
+        const newRows = [...rows];
+        newRows[index].document = fileInfo;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
+  const handleDocumentChange = (selectedOption, index) => {
+    const newRows = [...rows];
+    newRows[index].type = selectedOption;
+    setRows(newRows);
+  };
 
+  const downloadFile = (fileLink, fileName) => {
+    alert()
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", fileLink, true);
+    xhr.responseType = "blob";
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const blob = xhr.response;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        console.error("Error downloading file:", xhr.statusText);
+      }
+    };
+    xhr.send();
+  };
 
   const handleDocumentSubmit = async () => {
     const formData = new FormData();
-    formData.append("reservation_person_id", UploadDocID?.id);
-    formData.append("reservation_id", UploadDocID?.reservation_id);
+    formData.append("reservation_person_id", UploadDocID?.personId);
+    formData.append("reservation_id", UploadDocID?.reservationId);  
     formData.append("vendor_id", CustomerID);
     const documentData = rows.map((row) => {
       return {
         document: row?.document,
-        type: row.type?.value,  
+        type: row.type?.value,
       };
     });
-
-    console.log("documentData" , documentData);
-    
 
     formData.append("documents_data", JSON.stringify(documentData));
 
@@ -579,7 +538,10 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
       url: "upload_bookingdocuments",
     });
     if (response) {
-      setuploadFileisOpen(false);
+      showSuccessToast(response.Message)
+      setTimeout(() => {
+        setuploadFileisOpen(false);
+      }, 3000);
     }
   };
 
@@ -690,7 +652,7 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
       {/* Baby Data Table */}
       <DataTable
         title="Baby Information"
-        columns={Baby}
+        columns={columnAduInfo_2}
         data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
         highlightOnHover
       />
@@ -1446,7 +1408,7 @@ const CustomerDetaTable = ({ BookingDetails, CustomerID }) => {
               </TabPanel>
               <TabPanel>
                 <DataTable
-                  title="Customer Documents"
+                  title="Download Your Tickets and Visa"
                   columns={downloadData}
                   data={downloadDetails}
                   highlightOnHover
