@@ -9,7 +9,7 @@ import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { POST } from "@/app/utils/api/post";
 
-export default function ForgotPassword({ onLoginSuccess }) {
+export default function ForgotPasswordPartner({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
 
   const route = useRouter()
@@ -30,7 +30,7 @@ export default function ForgotPassword({ onLoginSuccess }) {
       showSuccessToast(response.msg);
       setEmail("")
       setTimeout(() => {
-        route.push('/login')
+        route.push('/partner-login')
       }, 4000);
     } catch (error) {
       if (
