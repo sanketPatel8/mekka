@@ -933,7 +933,7 @@ const isCurrentTabValid = () => {
                                           </option> */}
                                         </select>
                                         <label className="multi-lan-select">
-                                          {translate("Langauge") ||
+                                          {translate("Language") ||
                                             "Find Latest Packages"} <span className="text-red">*</span>
                                         </label>
                                       </div>
