@@ -264,10 +264,27 @@ const CustomerDetaTable = () => {
   const Tourid = searchParams.get("id");
   const CustomerID = searchParams.get("customerID");
 
-  const filterData = async (personId) => {
+  function openUploadFileModal(personId, reservationId) {
+    setuploadFileisOpen(true);
+    setPersonId(personId);
+
+    console.log('personId' , personId);
+    
+    
+    const newObject = { personId, reservationId };
+    console.log("newObject" , newObject.reservationId);
+    setUploadDocID(newObject);
+
+
+    filterData(personId , reservationId );
+  }
+  //  Create a new object with name and id
+
+
+  const filterData = async (personId , reservationId) => {
     const formData = new FormData();
     formData.append("user_id", CustomerID);
-    formData.append("id", UploadDocID.reservationId);
+    formData.append("id", reservationId);
 
     console.log("personId", personId);
 
@@ -308,7 +325,7 @@ const CustomerDetaTable = () => {
       const Download = filteredData.find((data) => data.id === personId);
 
       console.log("Download", Download.download_documets);
-
+      
       if (Download?.download_documets?.length > 0) {
         const docss = Download?.download_documets?.map((doc) => {
           console.log("doc.file_url:", doc.file_url);
@@ -326,16 +343,7 @@ const CustomerDetaTable = () => {
 
   console.log("downloadDetails", downloadDetails);
 
-  function openUploadFileModal(personId, reservationId) {
-    setuploadFileisOpen(true);
-    setPersonId(personId);
-    filterData(personId);
 
-    //  Create a new object with name and id
-    const newObject = { personId, reservationId };
-
-    setUploadDocID(newObject);
-  }
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
