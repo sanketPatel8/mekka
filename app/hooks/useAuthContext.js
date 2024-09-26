@@ -5,7 +5,6 @@ import { AuthContext } from "../context/authContext";
 export const useAuthContext = () => {
   const context = useContext(AuthContext)
 
-  console.log("context" , context);
   
 
   if (!context) {

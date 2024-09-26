@@ -219,7 +219,9 @@ const filterData = async(personId) => {
             fileLink: doc.full_path,
           }));
 
+          
           setDownloadDetails(download);
+          console.log(downloadDetails,"download")
         }
       });
 
@@ -648,7 +650,6 @@ const filterData = async(personId) => {
        type: row.type.value,
      }
     })
-    console.log("documentData" , documentData);
     
     formData.append("documents_data", JSON.stringify(documentData));
 
