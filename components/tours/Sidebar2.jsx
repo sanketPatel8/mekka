@@ -109,12 +109,16 @@ export default function Sidebar2({
                               <div className="form-radio d-flex items-center">
                                 <label className="radio d-flex items-center ">
                                   <input
-                                     type="radio"
-                                     id={elm}
-                                     name="selectedTourTypes"  
-                                     value={elm}  
-                                     checked={FilterSidebar?.selectedTourTypes === elm}  
-                                     onChange={() => handleChange("selectedTourTypes", elm)}
+                                    type="radio"
+                                    id={elm}
+                                    name="selectedTourTypes"
+                                    value={elm}
+                                    checked={
+                                      FilterSidebar?.selectedTourTypes === elm
+                                    }
+                                    onChange={() =>
+                                      handleChange("selectedTourTypes", elm)
+                                    }
                                   />
                                   <span className="radio__mark">
                                     <span className="radio__icon"></span>
@@ -265,10 +269,10 @@ export default function Sidebar2({
                                     id={elm.languages_en}
                                     name={elm.languages_en}
                                     checked={FilterSidebar?.selectedLanguages.includes(
-                                      elm
+                                      elm.id
                                     )}
                                     onChange={() =>
-                                      handleChange("selectedLanguages", elm)
+                                      handleChange("selectedLanguages", elm.id)
                                     }
                                   />
                                   <label
@@ -353,10 +357,10 @@ export default function Sidebar2({
                                     id={elm.departure}
                                     name={elm.departure}
                                     checked={FilterSidebar?.selectedCities.includes(
-                                      elm
+                                      elm.id
                                     )}
                                     onChange={() =>
-                                      handleChange("selectedCities", elm)
+                                      handleChange("selectedCities", elm.id)
                                     }
                                   />
                                   <label
@@ -644,7 +648,7 @@ export default function Sidebar2({
           </div>
         </div>
 
-        <div className="sidebar__item">
+        {/* <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
@@ -686,15 +690,108 @@ export default function Sidebar2({
                                     type="checkbox"
                                     id={elm?.options_en}
                                     name={elm?.options_en}
-                                    checked={FilterSidebar?.selectedFeatures.includes(
-                                      elm
-                                    )}
-                                    onChange={() =>
-                                      handleChange("selectedFeatures", elm)
-                                    }
+                                    checked={FilterSidebar?.selectedFeatures.includes(elm?.options_en)}
+
+                                    onChange={() => handleChange("selectedFeatures", elm?.options_en)}
+
                                   />
                                   <label
                                     htmlFor={elm?.options_en}
+                                    className="form-checkbox__mark"
+                                  >
+                                    <div className="form-checkbox__icon">
+                                      <svg
+                                        width="10"
+                                        height="8"
+                                        viewBox="0 0 10 8"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                          fill="white"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </label>
+                                </div>
+                                <label
+                                  htmlFor={elm?.option}
+                                  className="lh-16 ml-15"
+                                >
+                                  {elm?.option}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> */}
+
+        <div className="sidebar__item">
+          <div className="accordion -simple-2 js-accordion">
+            <div
+              className={`accordion__item ${
+                ddActives.includes("features") ? "is-active" : ""
+              }`}
+            >
+              <div
+                className="accordion__button d-flex items-center justify-between"
+                onClick={() =>
+                  setDdActives((prev) =>
+                    prev.includes("features")
+                      ? prev.filter((elm) => elm !== "features")
+                      : [...prev, "features"]
+                  )
+                }
+              >
+                <h5 className="text-18 fw-500">{translate("Amenities")}</h5>
+                <div className="accordion__icon flex-center">
+                  <i className="icon-chevron-down"></i>
+                  <i className="icon-chevron-down"></i>
+                </div>
+              </div>
+              <div
+                className="accordion__content"
+                style={
+                  ddActives.includes("features") ? { maxHeight: "300px" } : {}
+                }
+              >
+                <div className="pt-15">
+                  <div className="d-flex flex-column y-gap-15">
+                    {FliterData?.amenities?.map((elm, i) => (
+                      <div key={i}>
+                        <div className="d-flex items-center justify-between">
+                          <div className="row">
+                            <div className="col-12">
+                              <div className="d-flex items-center pointer-check">
+                                <div className="form-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    id={elm?.option}
+                                    name={elm?.option}
+                                    // Check if this option is selected
+                                    checked={FilterSidebar?.selectedFeatures.includes(
+                                      elm?.id
+                                    )}
+                                    // Update the selected features
+                                    onChange={() =>
+                                      handleSelectionChange(
+                                        "selectedFeatures",
+                                        elm?.id
+                                      )
+                                    }
+                                  />
+                                  <label
+                                    htmlFor={elm?.option}
                                     className="form-checkbox__mark"
                                   >
                                     <div className="form-checkbox__icon">
