@@ -70,8 +70,10 @@ function ResetPassword({params}) {
             setPassword("");
             setConfirmPassword("");
             if(response.user_type === "vendor"){
+                console.log("hi")
                 router.push("/partner-login");
             }else if(response.user_type === "customer"){
+                console.log("hello")
                 router.push("/login");
             }
         }
