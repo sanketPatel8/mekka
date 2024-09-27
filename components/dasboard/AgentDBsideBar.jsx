@@ -9,7 +9,6 @@ import React, { useEffect, useState } from "react";
 const AgentDBsideBar = ({ setSideBarOpen }) => {
   const pathname = usePathname();
   const { translate } = useTranslation();
-  console.log(translate("Dashboard"), "translate");
   const user = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("user")) : '';
   const customer = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("customer")) : '';
   const [sidebarItemsAgentDB, setSidebarItemsAgentDB] = useState([]);

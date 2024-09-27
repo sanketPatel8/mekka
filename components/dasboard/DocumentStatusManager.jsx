@@ -45,7 +45,7 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, bookingDate,bookingStatus, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
+const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,options, bookingDate,bookingStatus, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
 
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
@@ -60,124 +60,9 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, b
 
 
 
-  const ColumnReservation_details = [
-    { name: "Airline", selector: (row) => row.Airline },
-    { name: "From", selector: (row) => row.From },
-    { name: "To", selector: (row) => row.To },
-    { name: "Departure", selector: (row) => row.Date_of_departure },
-    { name: "Return", selector: (row) => row.Date_of_return_flight },
-    // { name: 'Offered languages', selector: (row) => row.Offered_languages },
-    // { name: 'Max Luggage', selector: (row) => row.max_luggage },
-    { name: "Mekka", selector: (row) => row.Mekka_hotel },
-    { name: "Madina", selector: (row) => row.Madina_hotel },
-    { name: "Adult", selector: (row) => row.Adult },
-  ];
+ 
 
   
-
-  const columnAduInfo_2 = [
-    // { name: "Name", selector: (row) => row.name, width: "100px" },
-    // { name: "Surname", selector: (row) => row.surname },
-    // { name: "Gender", selector: (row) => row.gender },
-    { name: "DOB", selector: (row) => row.DOB },
-    { name: "Nationality", selector: (row) => row.Nationality },
-    {
-      name: "Additional Services",
-      selector: (row) => row.additional_services,
-      width: "150px",
-    },
-    { name: "Total", selector: (row) => row.Amount },
-    {
-      name: "Action",
-      selector: (row) => (
-        <div className="flex_center">
-          {/* <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={openEditData}
-          >
-            Edit
-          </button> */}
-          {/* <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
-            onClick={openUploadFileModal}
-          >
-             {translate("Document") }
-          </button> */}
-        </div>
-      ),
-      width: "200px", // Set a custom width for the button column
-    },
-  ];
-
-  const Baby = [
-    // { name: "Name", selector: (row) => row.name, width: "100px" },
-    // { name: "Surname", selector: (row) => row.surname },
-    // { name: "Gender", selector: (row) => row.gender },
-    { name: "DOB", selector: (row) => row.DOB },
-    { name: "Nationality", selector: (row) => row.Nationality },
-    { name: "Total", selector: (row) => row.Amount },
-    {
-      name: "Action",
-      selector: (row) => (
-        <div className="flex_center">
-          {/* <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={openEditData}
-          >
-            Edit
-          </button> */}
-          {/* <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
-            onClick={openUploadFileModal}
-          >
-             {translate("Document") }
-          </button> */}
-        </div>
-      ),
-      width: "200px", // Set a custom width for the button column
-    },
-  ];
-
-  const Total = [
-    { name: "Subtotal", selector: (row) => row.Subtotal },
-    { name: "Tax", selector: (row) => row.Total },
-    { name: "Discount", selector: (row) => row.Discount },
-    // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
-    { name: "Total", selector: (row) => row.Total },
-    { name: "Amount Due", selector: (row) => row.Amount_Due },
-  ];
-
-  const FileDeta = [
-    { name: "Document Name", selector: (row) => row.Name },
-    {
-      name: "Action",
-      selector: (row) => (
-        <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          View {translate(" ") }
-        </button>
-      ),
-    },
-  ];
-
-  const DownloadData = [
-    { name: "Document Name", selector: (row) => row.Name },
-    {
-      name: "Action",
-      selector: (row) => (
-        <button className="button -sm -accent-1 bg-info-2 text-white my-2">
-          Download {translate(" ") }
-        </button>
-      ),
-    },
-  ];
-
-  function afterOpenModal() {
-    // No need to change subtitle color as it's not being used in this context
-  }
-
-  // function openUploadFileModal() {
-  //   setuploadFileisOpen(true);
-  // }
 
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
@@ -200,17 +85,9 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, b
   const [status, setStatus] = useState(null); // Initialize status as null or an object from your options array
   const [Document, setDocument] = useState(null); // Initialize status as null or an object from your options array
 
-  const options = [
-    { value: "Cancelled", label: "Cancelled" },
-    { value: "Completed", label: "Completed" },
-    { value: "In Progress", label: "In Progress" },
-  ];
 
-  const VandorDoc = [
-    { value: "Visa", label: "Visa" },
-    { value: "Hotel Booking Voucher", label: "Hotel Booking Voucher" },
-    { value: "Flight Ticket", label: "Flight Ticket" },
-  ];
+
+
 
   const handleChange = async(selectedOption) => {
     setStatus(selectedOption);
@@ -360,7 +237,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader, b
         
         <DataTable
           title="Total"
-          columns={Total}
+          columns={totalHeaders}
           data={totalDataArray}
           highlightOnHover
         />

@@ -1211,7 +1211,7 @@ const isCurrentTabValid = () => {
                                               required
                                             />
                                             <label className="lh-1 text-16 text-light-1">
-                                              Price
+                                              {translate("Price")}
                                             </label>
                                           </div>
                                         </div>
@@ -1396,7 +1396,7 @@ const isCurrentTabValid = () => {
                                             onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, route_data.find((day) => day.day === dayNumber)?.description || "")}
                                             className=""
                                           />
-                                          <label className="lh-1 text-16 text-light-1">Day {dayNumber} <span className="text-red">*</span></label>
+                                          <label className="lh-1 text-16 text-light-1">{translate("Day")} {dayNumber} <span className="text-red">*</span></label>
                                         </div>
                                       </div>
                                       <div className="col-md-6">
@@ -1409,7 +1409,7 @@ const isCurrentTabValid = () => {
                                               value={route_data.find((day) => day.day === dayNumber)?.description || ""}
                                               onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
                                               />
-                                          <label className="lh-1 text-16 text-light-1">Description <span className="text-red">*</span></label>
+                                          <label className="lh-1 text-16 text-light-1">{translate("Description")} <span className="text-red">*</span></label>
                                         </div>
                                       </div>
                                     </div>
@@ -1756,7 +1756,7 @@ const isCurrentTabValid = () => {
                                             
                                               onChange={(e) => setFlightInformation(e.target.value)}
                                             />
-                                          <label className="lh-1 text-16 text-light-1">Flight Information <span className="text-red">*</span></label>
+                                          <label className="lh-1 text-16 text-light-1">{translate("Flight Information")} <span className="text-red">*</span></label>
                                         </div>
                                     </div>
 

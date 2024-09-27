@@ -40,7 +40,7 @@ const tabs = [
 export default function EditTour() {
   const router = useRouter();
   const {user} = useAuthContext();
-
+  const { translate } = useTranslation();
   const params = useParams();
   const id = params.id[0];
   const [tourDetails,setTourDetails] = useState({});
@@ -851,7 +851,6 @@ useEffect(() => {
 
   };
 
-  const { translate } = useTranslation();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -1318,7 +1317,7 @@ const formatDateToMMDDYYYY = (date) => {
                                   </div>
 
                                   <div className="text-14 mt-20">
-                                    PNG or JPG no Bigger Than 800px Wide And Tall.
+                                    {translate("PNG or JPG no Bigger Than 800px Wide And Tall.")}
                                   </div>
                                 </div>
 
@@ -1448,7 +1447,7 @@ const formatDateToMMDDYYYY = (date) => {
                                             required
                                           />
                                           <label className="lh-1 text-16 text-light-1">
-                                            Price
+                                            {translate("Price")}
                                           </label>
                                         </div>
                                       </div>
@@ -1467,7 +1466,7 @@ const formatDateToMMDDYYYY = (date) => {
                                 onClick={handleNextTab}
                                 type="button"
                               >
-                                Next
+                                {translate("Next")}
                               </button>
                             )}
                             {activeTabIndex > 0 && (
@@ -1625,7 +1624,7 @@ const formatDateToMMDDYYYY = (date) => {
                                           onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, "")}
                                           className=""
                                         />
-                                        <label className="lh-1 text-16 text-light-1">Day {dayNumber} <span className="text-red">*</span></label>
+                                        <label className="lh-1 text-16 text-light-1">{translate("Day")} {dayNumber} <span className="text-red">*</span></label>
                                       </div>
                                     </div>
                                     <div className="col-md-6">
@@ -1638,7 +1637,7 @@ const formatDateToMMDDYYYY = (date) => {
                                             value={route_data.find((day) => day.day === dayNumber)?.description || ""}
                                             onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
                                           />
-                                        <label className="lh-1 text-16 text-light-1">Description <span className="text-red">*</span></label>
+                                        <label className="lh-1 text-16 text-light-1">{translate("Description")} <span className="text-red">*</span></label>
                                       </div>
                                     </div>
                                   </div>
@@ -1985,7 +1984,7 @@ const formatDateToMMDDYYYY = (date) => {
                                             value={flightInformation}
                                             onChange={(e) => setFlightInformation(e.target.value)}
                                           />
-                                        <label className="lh-1 text-16 text-light-1">Flight Information <span className="text-red">*</span></label>
+                                          <label className="lh-1 text-16 text-light-1">{translate("Flight Information")} <span className="text-red">*</span></label>
                                       </div>
                                   </div>
 

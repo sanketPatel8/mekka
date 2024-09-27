@@ -174,7 +174,7 @@ export default function DBListing() {
               {
                 tourList.length === 0 &&
                 <div className="text-center">
-                  <h3>No Tours Found</h3>
+                  <h3>{translate("No Tours Found")}</h3>
                 </div>
               }
               {tourList.map((elm, i) => (
@@ -207,7 +207,7 @@ export default function DBListing() {
                       </h3>
                     
                       <div className="tourCard__title">
-                        Tour Name: {elm.name}
+                        {translate("Tour Name:")} {elm.name}
                       </div>
 
                       {/* <p className="tourCard__text mt-5 items-center d-flex">
@@ -251,7 +251,7 @@ export default function DBListing() {
                       {
                         elm.departures && 
                       <div className="Location">
-                        <span>Departure : {elm.departures}</span>
+                        <span>{translate("Departure")} : {elm.departures}</span>
                       </div>
                       }
 
@@ -288,9 +288,9 @@ export default function DBListing() {
                         </div>
 
                         <p className="text-cente text-Danger">
-                          Available Seats : {elm.capacity_empty === null ? 0 : elm.capacity_empty} / {elm.capacity}
+                        {translate("Available Seats :")} {elm.capacity_empty === null ? 0 : elm.capacity_empty} / {elm.capacity}
                         </p>
-                        <p className="text-center">Total : €{elm.tour_price} </p>
+                        <p className="text-center">{translate("Total")} : €{elm.tour_price} </p>
                       </div>
 
                       <label className="badge bg-secondary"></label>
@@ -300,12 +300,12 @@ export default function DBListing() {
                         <Link
                           href={`/vendor/edit-tour/${elm.id}`}
                         >
-                          <div>EDIT TOUR</div>
+                          <div>{translate("EDIT TOUR")}</div>
                         </Link>
                       </button>
 
                       <button onClick={(id)=>handleClick(`${elm?.id}`)} className="mt-5 text-center">
-                        <span>Duplicate Tour</span>
+                        <span>{translate("Duplicate Tour")}</span>
                       </button>
                     </div>
                   </div>

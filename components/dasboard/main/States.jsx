@@ -1,32 +1,39 @@
 // import { states } from "@/data/dashboard";
-import React, { useState } from "react";
+import { useTranslation } from "@/app/context/TranslationContext";
+import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 
 export default function States({data,loading}) {
+  const { translate } = useTranslation();
 
-  const [states, setStates] = useState([
-    {
-      id: 1,
-      title: "Total Earnings",
-      amount: `${data?.Total_Earnings}`,
-      today: "50 €",
-      iconClass: "icon-wallet text-accent-1",
-    },
-    {
-      id: 2,
-      title: "Total Pending",
-      amount: `${data?.Total_Pending}`,
-      today: "40+",
-      iconClass: "icon-payment text-accent-1",
-    },
-    {
-      id: 3,
-      title: "Total Booking",
-      amount: `${data?.Total_Bookings}`,
-      today: "90+",
-      iconClass: "icon-booking text-accent-1",
-    },
-  ]);
+  const [states, setStates] = useState([]);
+
+  useEffect(() => {
+    const newStateItems = [
+      {
+        id: 1,
+        title: translate("Total Earnings"),
+        amount: `${data?.Total_Earnings}`,
+        today: "50 €",
+        iconClass: "icon-wallet text-accent-1",
+      },
+      {
+        id: 2,
+        title: translate("Total Pending"),
+        amount: `${data?.Total_Pending}`,
+        today: "40+",
+        iconClass: "icon-payment text-accent-1",
+      },
+      {
+        id: 3,
+        title: translate("Total Booking"),
+        amount: `${data?.Total_Bookings}`,
+        today: "90+",
+        iconClass: "icon-booking text-accent-1",
+      },
+    ];
+    setStates(newStateItems);
+  }, [translate]);
 
   console.log(states,"states")
 

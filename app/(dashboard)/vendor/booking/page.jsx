@@ -14,7 +14,7 @@ const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
 export default function DbBooking() {
   const { translate } = useTranslation();
-
+  const [tabs,setTabs] = useState([]);
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("All");
   const [bookings, setBookings] = useState([]);
@@ -27,6 +27,109 @@ export default function DbBooking() {
   
   const {user} = useAuthContext();
 
+  useEffect(() => {
+    const tabContent = [
+      translate("All"),
+      translate("Completed"),
+      translate("In Progress"),
+      translate("Cancelled"),
+    ]
+    setTabs(tabContent);
+
+    const BookingsData = [
+      {
+        name: translate("Booking Id"),
+        selector: (row) => row.BookingId,
+        width: "4%",
+        sortable: true,
+      },
+      {
+        name: translate("Booking No."),
+        selector: (row) => row.BookingNo,
+        width: "10%",
+
+        sortable: true,
+      },
+      {
+        name: translate("Status"),
+        selector: (row) => row.Status,
+        width: "8%",
+        sortable: true,
+      },
+      {
+        name: translate("Full Name"),
+        selector: (row) => row.Full_Name,
+        width: "10%",
+        sortable: true,
+      },
+      {
+        name: translate("Tour Name"),
+        selector: (row) => row.Tour_name,
+        width: "10%",
+        sortable: true,
+      },
+      {
+        name: translate("Total (€) "),
+        selector: (row) => row.Total_Payment,
+        width: "7%",
+        sortable: true,
+      },
+      {
+        name: translate("Pending (€) "),
+        selector: (row) => row.Pending_Payment,
+        width: "8%",
+        sortable: true,
+      },
+      {
+      name: translate("Terms "),
+      selector: (row) => row.Payment_Terms,
+      sortable: true,
+      width:"6%"
+    }, 
+    {
+      name: translate("Method "),
+      selector: (row) => row.Payment_Method,
+      sortable: true,
+      width:"7%"
+    }, 
+    {
+      name: translate("Visas"),
+      selector: (row) => row.Visas,
+      width: "6%",
+      sortable: true,
+    },
+      {
+        name: translate("Flight"),
+        selector: (row) => row.Flight,
+        width: "6%",
+        sortable: true,
+      },
+        {
+      name: translate("Initiated By"),
+      selector: (row) => row.Initiated_By_Admin,
+      width: "8%",
+      sortable: true,
+    }, 
+      {
+        name: translate("Action"),
+        selector: (row) => (
+          <Link href={`/vendor/edit-booking/${row.BookingId}`}>
+            <button
+              className="button -md  -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+              style={{ width: "fit-content", padding: "5px 16px" }}
+            >
+               {translate("Edit") }
+            </button>
+          </Link>
+        ),
+        width: "10%",
+      },
+    ];
+   
+
+  
+    setVendorBookings(BookingsData);
+  },[translate]);
   const fetchBookings = async (tab) => {
     
     const formData = new FormData();
@@ -107,98 +210,7 @@ export default function DbBooking() {
       setBookings(bookingsData );
     }
 
-    const BookingsData = [
-      {
-        name: "Booking Id",
-        selector: (row) => row.BookingId,
-        width: "4%",
-        sortable: true,
-      },
-      {
-        name: "Booking No.",
-        selector: (row) => row.BookingNo,
-        width: "10%",
 
-        sortable: true,
-      },
-      {
-        name: "Status",
-        selector: (row) => row.Status,
-        width: "8%",
-        sortable: true,
-      },
-      {
-        name: "Full Name",
-        selector: (row) => row.Full_Name,
-        width: "10%",
-        sortable: true,
-      },
-      {
-        name: "Tour Name",
-        selector: (row) => row.Tour_name,
-        width: "10%",
-        sortable: true,
-      },
-      {
-        name: "Total (€) ",
-        selector: (row) => row.Total_Payment,
-        width: "7%",
-        sortable: true,
-      },
-      {
-        name: "Pending (€) ",
-        selector: (row) => row.Pending_Payment,
-        width: "8%",
-        sortable: true,
-      },
-      {
-      name: "Terms ",
-      selector: (row) => row.Payment_Terms,
-      sortable: true,
-      width:"8%"
-    }, 
-    {
-      name: "Method ",
-      selector: (row) => row.Payment_Method,
-      sortable: true,
-      width:"8%"
-    }, 
-    {
-      name: "Visas",
-      selector: (row) => row.Visas,
-      width: "6%",
-      sortable: true,
-    },
-      {
-        name: "Flight",
-        selector: (row) => row.Flight,
-        width: "6%",
-        sortable: true,
-      },
-        {
-      name: "Initiated By",
-      selector: (row) => row.Initiated_By_Admin,
-      width: "8%",
-      sortable: true,
-    }, 
-      {
-        name: "Action",
-        selector: (row) => (
-          <Link href={`/vendor/edit-booking/${row.BookingId}`}>
-            <button
-              className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            >
-               {translate("Edit") }
-            </button>
-          </Link>
-        ),
-        width: "7%",
-      },
-    ];
-   
-
-  
-    setVendorBookings(BookingsData);
   }
   useEffect(() => {
     if (typeof window !== "undefined") {

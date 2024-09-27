@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Header from "@/components/dasboard/Header";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import DataTable from "react-data-table-component";
@@ -72,11 +72,7 @@ export default function DbBooking({ params }) {
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
   const { translate } = useTranslation();
   const [personId, setPersonId] = useState(0);
-  const VandorDoc = [
-    { value: "Visa", label: "Visa" },
-    { value: "Hotel Booking Voucher", label: "Hotel Booking Voucher" },
-    { value: "Flight Ticket", label: "Flight Ticket" },
-  ];
+  const [VandorDoc,setVandorDoc] = useState([]);
   const [viewData,setViewData] = useState([]);
   const [viewDetails,setViewDetails] = useState([]);
   const [downloadData,setDownloadData] = useState([]);
@@ -84,11 +80,125 @@ export default function DbBooking({ params }) {
   const [bookingDate, setBookingDate] = useState("");
   const [bookingStatus, setBookingStatus] = useState("");
   const [loading,setLoading] = useState(true);
-
+  const [options,setOptions] = useState([]);
   const id = params.id[0];
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
+
+  useEffect(() => {
+
+    const formatTotal = (value) => `${value} €`;
+    const formatDiscount = (value) => {value > 0 ? `-${value}` : 0};
+    const vendorDocuments = [
+      { value: "Visa", label: translate("Visa") },
+      { value: "Hotel Booking Voucher", label: translate("Hotel Booking Voucher") },
+      { value: "Flight Ticket", label: translate("Flight Ticket") },
+    ]
+
+    setVandorDoc(vendorDocuments);
+
+    const optionsLabel = [
+      { value: "Cancelled", label: translate("Cancelled") },
+      { value: "Completed", label: translate("Completed") },
+      { value: "In Progress", label: translate("In Progress") },
+    ];
+
+    setOptions(optionsLabel);
+
+
+    const columnAdu_1 = [
+      { name: translate("id"), selector: (row) => row.id, width: "10%" },
+      { name: translate("Name"), selector: (row) => row.name, width: "20%" },
+      { name: translate("Surname"), selector: (row) => row.surname,width: "20%" },
+      
+      { name: translate("Country"), selector: (row) => row.country, width: "10%" },
+      { name: translate("DOB"), selector: (row) => row.DOB,width: "10%" },
+      { name: translate("Nationality"), selector: (row) => row.Nationality,width:"10%" },
+    
+      { name: translate("Total"), selector: (row) => formatTotal(row.price),width: "10%" },
+      {
+        name: translate("Action"),
+        selector: (row) => (
+          <div className="flex_center">
+         
+            <button
+              className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
+              onClick={() => openUploadFileModal(row.id, id)}
+            >
+               {translate("Document") }
+            </button> 
+          </div>
+        ),
+        width: "10%", // Set a custom width for the button column
+      },
+    ];
+
+    setAdultHeaders(columnAdu_1);
+
+
+    const ColumnReservation_details = [
+      { name: translate("Airline"), selector: (row) => row.Airline },
+      { name: translate("From"), selector: (row) => row.From },
+      { name: translate("To"), selector: (row) => row.To },
+      { name: translate("Departure"), selector: (row) => row.date_begin },
+      { name: translate("Return"), selector: (row) => row.date_end },
+      // { name: 'Offered languages', selector: (row) => row.Offered_languages },
+      // { name: 'Max Luggage', selector: (row) => row.max_luggage },
+      { name: translate("Mekka"), selector: (row) => row.Mekka_hotel },
+      { name: translate("Madina"), selector: (row) => row.Madina_hotel },
+      { name: translate("Adult"), selector: (row) => row.adult },
+      { name: translate("Child"), selector: (row) => row.child },
+      { name: translate("Baby"), selector: (row) => row.baby },
+      { name: translate("Total"), selector: (row) => formatTotal(row.total) },
+    ];
+
+    setReservationHeader(ColumnReservation_details);
+
+  
+    const FileDeta = [
+      { name: translate("Document Name"), selector: (row) => row.Name },
+      {
+        name: translate("Action"),
+        selector: (row) => (
+          <Link href={row.fileLink} target="_blank" className="button -sm -accent-1 bg-info-2 text-white my-2">
+             {translate("View") }
+          </Link>
+        ),
+      },
+    ];
+
+    setViewData(FileDeta);
+
+    const DownloadData = [
+      { name: translate("Document Name"), selector: (row) => row.Name },
+      {
+        name: translate("Action"),
+        selector: (row) => (
+          <button
+          className="button -sm -accent-1 bg-info-2 text-white my-2"
+          onClick={() => downloadFile(row.fileLink, row.Name)}
+        >
+          {translate("Download")}
+        </button>
+        ),
+      },
+    ];
+
+    setDownloadData(DownloadData);
+
+    const Total = [
+      { name: translate("Subtotal"), selector: (row) => formatTotal(row.Subtotal) },
+      { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
+      { name: translate("Discount"), selector: (row) => formatDiscount(row.Discount) },
+      { name: translate('Amount Paid'), selector: (row) => formatTotal(row.Amount_Paid) },
+      { name: translate("Total"), selector: (row) => formatTotal(row.Total) },
+      { name: translate("Amount Due"), selector: (row) => formatTotal(row.Amount_Due) },
+    ];
+
+    setTotalHeaders(Total);
+
+  },[translate]);
 
   const [rows, setRows] = useState([{ document: "", type: null }]); // State to manage rows
 
@@ -241,68 +351,12 @@ const filterData = async(personId) => {
     }
 
     if(response.Bookings){
+     
+
       const formatTotal = (value) => `${value} €`;
-      const formatDiscount = (value) => {value > 0 ? `-${value}` : 0};
+    const formatDiscount = (value) => {value > 0 ? `-${value}` : 0};
 
-      const columnAdu_1 = [
-        { name: "id", selector: (row) => row.id, width: "10%" },
-        { name: "Name", selector: (row) => row.name, width: "20%" },
-        { name: "Surname", selector: (row) => row.surname,width: "20%" },
-        
-        { name: "Country", selector: (row) => row.country, width: "10%" },
-        { name: "DOB", selector: (row) => row.DOB,width: "10%" },
-        { name: "Nationality", selector: (row) => row.Nationality,width:"10%" },
-      
-        { name: "Total", selector: (row) => formatTotal(row.price),width: "10%" },
-        {
-          name: "Action",
-          selector: (row) => (
-            <div className="flex_center">
-           
-              <button
-                className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
-                onClick={() => openUploadFileModal(row.id, id)}
-              >
-                 {translate("Document") }
-              </button> 
-            </div>
-          ),
-          width: "10%", // Set a custom width for the button column
-        },
-      ];
-
-      setAdultHeaders(columnAdu_1);
-
-      const ColumnReservation_details = [
-        { name: "Airline", selector: (row) => row.Airline },
-        { name: "From", selector: (row) => row.From },
-        { name: "To", selector: (row) => row.To },
-        { name: "Departure", selector: (row) => row.date_begin },
-        { name: "Return", selector: (row) => row.date_end },
-        // { name: 'Offered languages', selector: (row) => row.Offered_languages },
-        // { name: 'Max Luggage', selector: (row) => row.max_luggage },
-        { name: "Mekka", selector: (row) => row.Mekka_hotel },
-        { name: "Madina", selector: (row) => row.Madina_hotel },
-        { name: "Adult", selector: (row) => row.adult },
-        { name: "Child", selector: (row) => row.child },
-        { name: "Baby", selector: (row) => row.baby },
-        { name: "Total", selector: (row) => formatTotal(row.total) },
-      ];
-
-      setReservationHeader(ColumnReservation_details);
-      const FileDeta = [
-        { name: "Document Name", selector: (row) => row.Name },
-        {
-          name: "Action",
-          selector: (row) => (
-            <Link href={row.fileLink} target="_blank" className="button -sm -accent-1 bg-info-2 text-white my-2">
-              View {translate(" ") }
-            </Link>
-          ),
-        },
-      ];
-  
-      setViewData(FileDeta);
+    
       
       // if(response.Bookings.reservation){
       //   const reservation = response.Bookings.reservation.map((res) => ({
@@ -313,22 +367,7 @@ const filterData = async(personId) => {
       //     country: res.countryName,
       //   }));
       // }
-      const DownloadData = [
-        { name: "Document Name", selector: (row) => row.Name },
-        {
-          name: "Action",
-          selector: (row) => (
-            <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2"
-            onClick={() => downloadFile(row.fileLink, row.Name)}
-          >
-            Download
-          </button>
-          ),
-        },
-      ];
-
-      setDownloadData(DownloadData);
+     
 
 
     
@@ -479,16 +518,7 @@ const filterData = async(personId) => {
 
      
 
-      const Total = [
-        { name: "Subtotal", selector: (row) => formatTotal(row.Subtotal) },
-        { name: "Tax", selector: (row) => formatTotal(row.Total) },
-        { name: "Discount", selector: (row) => formatDiscount(row.Discount) },
-        { name: 'Amount Paid', selector: (row) => formatTotal(row.Amount_Paid) },
-        { name: "Total", selector: (row) => formatTotal(row.Total) },
-        { name: "Amount Due", selector: (row) => formatTotal(row.Amount_Due) },
-      ];
-
-      setTotalHeaders(Total);
+     
 
       if(response.Bookings.reservation){
         const total = {
@@ -687,7 +717,7 @@ const filterData = async(personId) => {
             :
             <>
             
-              <DocumentStatusManager Customerid = {params} bookings={bookings} bookingDate={bookingDate} bookingStatus={bookingStatus}  adultHeaders={adultHeaders}  reservationData={reservationData} reservationHeader={reservationHeader} babyBookings={babyBookings} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen} totalData={totalData} totalHeaders={totalHeaders}  />
+              <DocumentStatusManager Customerid = {params} bookings={bookings} options={options} bookingDate={bookingDate} bookingStatus={bookingStatus}  adultHeaders={adultHeaders}  reservationData={reservationData} reservationHeader={reservationHeader} babyBookings={babyBookings} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen} totalData={totalData} totalHeaders={totalHeaders}  />
 
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}
@@ -831,7 +861,7 @@ const filterData = async(personId) => {
               </TabPanel>
               <TabPanel>
                 <DataTable
-                  title=" Documents"
+                  // title={translate(" Documents")}
                   columns={viewData}
                   data={viewDetails}
                   highlightOnHover
@@ -840,7 +870,7 @@ const filterData = async(personId) => {
               </TabPanel>
               <TabPanel>
                 <DataTable
-                  title="Customer Documents"
+                  // title={translate("Customer Documents")}
                   columns={downloadData}
                   data={downloadDetails}
                   highlightOnHover
