@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Head from "next/head";
 import { useSearchParams } from "next/navigation";
@@ -65,12 +65,8 @@ export default function PageData() {
     <>
       <Head>
         <title>Default Title</title>
-        <meta
-          name="description"
-          content={ "Default description"}
-        />
+        <meta name="description" content={"Default description"} />
         <meta name="keywords" content="nextjs, client-side, example" />
-
       </Head>
       <main>
         <Header1 />

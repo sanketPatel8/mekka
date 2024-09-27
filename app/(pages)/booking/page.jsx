@@ -10,7 +10,6 @@ import Head from "next/head";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-
 export default function page() {
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
@@ -40,7 +39,6 @@ export default function page() {
 
   return (
     <>
-   
       <main>
         <Header1 />
         <BookingPages BookingData={BookingData} />

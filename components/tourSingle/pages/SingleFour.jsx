@@ -27,7 +27,6 @@ export default function SingleFour({ PAckageData }) {
     setFlightInc(foundTour);
   }, [PAckageData]);
 
-  
   const { translate } = useTranslation();
 
   return (
@@ -47,7 +46,6 @@ export default function SingleFour({ PAckageData }) {
               <div className="row y-gap-2 justify-between items-center layout-pb-sm">
                 <OthersInformation PAckageData={PAckageData} id={id} />
               </div>
-              
 
               <Overview PAckageData={PAckageData} />
 
@@ -87,7 +85,7 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        <Included  PAckageData={PAckageData} />
+                        <Included PAckageData={PAckageData} />
                       </div>
                     </div>
                   </div>
@@ -129,7 +127,6 @@ export default function SingleFour({ PAckageData }) {
                     >
                       <div className="pt-20">
                         <FlightInformation PAckageData={PAckageData} />
-                        
                       </div>
                     </div>
                   </div>
@@ -189,7 +186,7 @@ export default function SingleFour({ PAckageData }) {
                       className="accordion__button d-flex items-center justify-between"
                     >
                       <div className="text-30 md:text-20 lh-13 fw-700">
-                        {translate("Hotel Information") }
+                        {translate("Hotel Information")}
                       </div>
 
                       <div className="accordion__icon size-30 text-24 flex-center">
@@ -207,7 +204,10 @@ export default function SingleFour({ PAckageData }) {
                       }
                     >
                       <div className="pt-20">
-                        <HotelInformation PAckageData={PAckageData} hotelData={hotelData} />
+                        <HotelInformation
+                          PAckageData={PAckageData}
+                          hotelData={hotelData}
+                        />
                       </div>
                     </div>
                   </div>
@@ -281,7 +281,10 @@ export default function SingleFour({ PAckageData }) {
                 style={{ position: "sticky", top: "10px" }}
                 className="d-flex justify-start"
               >
-                <TourSingleSidebar PAckageData={PAckageData} setHotelData={setHotelData} />
+                <TourSingleSidebar
+                  PAckageData={PAckageData}
+                  setHotelData={setHotelData}
+                />
               </div>
             </div>
           </div>
