@@ -128,7 +128,7 @@ export default function Login({
             router.push("/");
           }, 1000);
         } else {
-          showErrorToast("Invalid Credentials");
+          showErrorToast("Invalid Credentials. If you are tour agent, please login from the partner login page.");
           setLogInData({
             AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
             email: "",

@@ -71,7 +71,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
           }, 1000);
         }
         else{
-          showErrorToast("Invalid Credentials");
+          showErrorToast("Invalid Credentials. If you are a customer please login from the customer login page.");
           setLogInData({
             AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
             email: "",
