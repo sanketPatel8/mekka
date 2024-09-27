@@ -1015,7 +1015,7 @@ export default function BookingPages({ BookingData }) {
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
     flight_id: selectedCheckbox !== false ? 0 : BookingSideBar.Airline?.id,
     exclude_flight: JSON.parse(ExcludeFlight),
-    tax: JSON.parse(formattedTaxAmount),
+    // tax: JSON.parse(formattedTaxAmount),
   };
 
   console.log("ExcludeFlight", ExcludeFlight);

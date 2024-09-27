@@ -22,7 +22,7 @@ import { type } from "jquery";
 
 export default function Payment() {
   const router = useRouter();
-  const {formatPrice} = useCurrency();
+  const { formatPrice } = useCurrency();
 
   const [roomType, setRoomType] = useState("");
   const [bookingStage, setBookingStage] = useState(1);
@@ -49,8 +49,11 @@ export default function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
-  const companyCode  = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("company_code")) : '';
-  console.log(companyCode, 'companyCode')
+  const companyCode =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("company_code"))
+      : "";
+  console.log(companyCode, "companyCode");
   const dateInputRef = useRef(null);
 
   const handleCheckboxChange = (index) => {
@@ -71,7 +74,7 @@ export default function Payment() {
     setFirstAmount(e.target.value);
   };
   const handleSecondAmountChange = (e) => {
-    const totalAmount = SideBarData.BookingFild?.SubTotal;
+    const totalAmount = SideBarData?.BookingFild?.SubTotal;
     console.log(totalAmount);
     const total = totalAmount - firstAmount;
     const secondAmount = e.target.value;
@@ -93,7 +96,7 @@ export default function Payment() {
     const secondAmountValue = parseFloat(secondAmount);
     console.log(secondAmountValue, "secondAmountValue");
 
-    const totalAmount = SideBarData.BookingFild?.SubTotal;
+    const totalAmount = SideBarData?.BookingFild?.SubTotal;
     const total = firstAmountValue + secondAmountValue;
 
     if (total < totalAmount) {
@@ -203,7 +206,7 @@ export default function Payment() {
     const today = new Date();
     const todayString = today.toISOString().split("T")[0];
     if (SideBarData?.startDate) {
-      const startDateString = SideBarData.startDate;
+      const startDateString = SideBarData?.startDate;
       if (startDateString) {
         try {
           const startDate = parseDate(startDateString);
@@ -269,13 +272,11 @@ export default function Payment() {
     setShowStripeModal(false);
   };
   const handlePayment = () => {
-
     const agbAcceptance = document.getElementById("agbAcceptance");
     const item5 = document.getElementById("item5");
 
     if (selectedCheckbox === 0) {
-
-      if(!agbAcceptance.checked || !item5.checked){
+      if (!agbAcceptance.checked || !item5.checked) {
         showErrorToast("Please fill all the fields");
         return;
       }
@@ -295,13 +296,20 @@ export default function Payment() {
     }
 
     if (selectedCheckbox === 2) {
-      if(!firstAmount || !secondAmount || !seconddate || !thirdAmount || !agbAcceptance.checked || !item5.checked){ 
+      if (
+        !firstAmount ||
+        !secondAmount ||
+        !seconddate ||
+        !thirdAmount ||
+        !agbAcceptance.checked ||
+        !item5.checked
+      ) {
         showErrorToast("Please fill all the fields");
         return;
       }
 
       setShowStripeModal(true);
-      
+
       const newBooking = {
         ...Booking,
         paymentType: 3,
@@ -314,11 +322,10 @@ export default function Payment() {
       };
       setBooking(newBooking);
       setAmount(firstAmount);
-    
     }
 
     if (selectedCheckbox === 1) {
-      if(!agbAcceptance.checked || !item5.checked){ 
+      if (!agbAcceptance.checked || !item5.checked) {
         showErrorToast("Please fill all the fields");
         return;
       }
@@ -522,8 +529,8 @@ export default function Payment() {
                         <div className="y-gap-30 contactForm px-20 py-10">
                           <div className="col-md-12">
                             <h5 className="text-center">
-                            {translate("Total Amount")} :{" "}
-                              <b>{SideBarData.BookingFild?.SubTotal}€</b>
+                              {translate("Total Amount")} :{" "}
+                              <b>{SideBarData?.BookingFild?.SubTotal}€</b>
                             </h5>
                           </div>
 
@@ -604,7 +611,8 @@ export default function Payment() {
                                   placeholder=""
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                {translate("3rd Amount")}<span className="text-red"> *</span>
+                                  {translate("3rd Amount")}
+                                  <span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -620,7 +628,8 @@ export default function Payment() {
                                   onChange={handleDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                  {translate("3rd Date")}<span className="text-red"> *</span>
+                                  {translate("3rd Date")}
+                                  <span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -693,9 +702,11 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="agbAcceptance" className="lh-16 ml-15">
-                        <span className="text-red">* </span>
+                          <span className="text-red">* </span>
                           {translate(
-                            `I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the ${companyCode !== null ? companyCode : ""}.`
+                            `I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the ${
+                              companyCode !== null ? companyCode : ""
+                            }.`
                           )}
                         </label>
                       </div>
@@ -764,7 +775,7 @@ export default function Payment() {
                         <div className="col-md-3 col-6">
                           <div>Total</div>
                           <div className="text-accent-2">
-                            {formatPrice(SideBarData.BookingFild?.SubTotal)} 
+                            {formatPrice(SideBarData?.BookingFild?.SubTotal)}
                           </div>
                         </div>
 
@@ -960,7 +971,7 @@ export default function Payment() {
                     <div className="text-start">
                       {" "}
                       {translate("Madina")} -{" "}
-                      {SideBarData.MadinaHotel?.hotel_name}
+                      {SideBarData?.MadinaHotel?.hotel_name}
                     </div>
                   </div>
 
@@ -992,17 +1003,17 @@ export default function Payment() {
                     <div className="fw-500"> {translate("Subtotal")}</div>
                     <div className="">
                       {" "}
-                      {formatPrice(SideBarData.BookingFild?.SubTotal)} {" "}
+                      {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}
                     </div>
                   </div>
 
-                  {SideBarData.BookingFild?.Discount?.Discount !== null &&
-                  SideBarData.BookingFild?.Discount?.Discount !== undefined ? (
+                  {SideBarData?.BookingFild?.Discount?.Discount !== null &&
+                  SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
                     <div className="">
                       <div className={`d-flex items-center justify-between`}>
                         <div className="fw-500"> {translate("Discount")}</div>
                         <div className="">
-                          -{SideBarData.BookingFild?.Discount?.Discount || 0} €{" "}
+                          -{SideBarData?.BookingFild?.Discount?.Discount || 0} €{" "}
                         </div>
                       </div>
                     </div>
@@ -1010,23 +1021,25 @@ export default function Payment() {
 
                   {/* <div className="d-flex items-center justify-between">
                     <p className="fw-500"> {translate("Tax")}</p>
-                    <div className=""> {SideBarData.BookingFild?.Tax} € </div>
+                    <div className=""> {SideBarData?.BookingFild?.Tax} € </div>
                   </div> */}
 
                   {paidAmount && (
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500"> {translate("Amount Paid")}</div>
-                      <div className=""> {formatPrice(paidAmount)}  </div>
+                      <div className=""> {formatPrice(paidAmount)} </div>
                     </div>
                   )}
 
                   {paidAmount &&
-                    SideBarData.BookingFild?.SubTotal - paidAmount > 0 && (
+                    SideBarData?.BookingFild?.SubTotal - paidAmount > 0 && (
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Amount Due")}</div>
                         <div className="">
                           {" "}
-                          {formatPrice(SideBarData.BookingFild?.SubTotal - paidAmount)}{" "}
+                          {formatPrice(
+                            SideBarData?.BookingFild?.SubTotal - paidAmount
+                          )}{" "}
                         </div>
                       </div>
                     )}
@@ -1050,7 +1063,7 @@ export default function Payment() {
       </div>
       {showStripeModal && (
         <Stripeform
-          amount={amount ? amount : SideBarData.BookingFild?.SubTotal}
+          amount={amount ? amount : SideBarData?.BookingFild?.SubTotal}
           setPaidAmount={setPaidAmount}
           Booking={Booking}
           setReservationID={setReservationID}
