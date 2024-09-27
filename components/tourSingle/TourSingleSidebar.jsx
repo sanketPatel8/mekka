@@ -11,6 +11,7 @@ import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
 import { POST } from "@/app/utils/api/post";
 import { useCurrency } from "@/app/context/currencyContext";
+import { ToastContainer } from "react-toastify";
 
 export default function TourSingleSidebar({
   PAckageData,
@@ -477,6 +478,8 @@ export default function TourSingleSidebar({
         : 0
     );
 
+  console.log("selectDeparture.price", selectDeparture);
+
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
 
@@ -499,6 +502,8 @@ export default function TourSingleSidebar({
     selectedCheckbox: selectedCheckbox,
   };
 
+  console.log("selectedCheckbox", selectedCheckbox);
+
   const handleBooking = () => {
     if (typeof window !== "undefined") {
       localStorage.setItem(
@@ -515,13 +520,17 @@ export default function TourSingleSidebar({
     setRender(true);
     updateAdultsObject();
 
-    router.push(
-      `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
-        SidebarData?.tour_details?.type
-      }&selectedflight=${
-        selectedFlights?.name === undefined ? "" : selectedFlights?.name
-      }`
-    );
+    if (selectDeparture.name === "" && selectedCheckbox === false) {
+      alert("Please Fill Departure");
+    } else {
+      router.push(
+        `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
+          SidebarData?.tour_details?.type
+        }&selectedflight=${
+          selectedFlights?.name === undefined ? "" : selectedFlights?.name
+        }`
+      );
+    }
   };
 
   const handleIncrement = (price_type) => {
@@ -546,6 +555,7 @@ export default function TourSingleSidebar({
 
   return (
     <div className="tourSingleSidebar">
+      <ToastContainer />
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
       {SidebarData?.tour_price?.map((group, index) => {
