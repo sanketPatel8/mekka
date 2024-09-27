@@ -18,7 +18,7 @@ export default function Page() {
             <div className="row justify-center">
               <div className="col-xl-6 col-lg-7 col-md-9">
                 <div className="d-flex justify-content-center align-items-center flex-column mb-60 md:mb-30">
-                  <h1>{translate("Thank you for registration!")}</h1>
+                  <h1>{translate("User Registered !")}</h1>
                   <div className="text-18 fw-500 mt-20 md:mt-15 text-center">
                     {translate(
                       "Please verified your Email for Login your account."
@@ -29,7 +29,7 @@ export default function Page() {
                     href="/login"
                     style={{ width: "fit-content" }}
                   >
-                    {translate("Resend E-Mail")}{" "}
+                    {translate("Resend Email")}{" "}
                   </Link>
                   {/* <Link
                     className="button -md -info-2 bg-accent-1 text-white  mt-30"
