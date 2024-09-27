@@ -573,7 +573,7 @@ export default function TourSingleSidebar({
                   ? "Child (13-17 Years)"
                   : "Baby (0-12 Years)"}
                 <span className="fw-500">
-                  {(group.price * count).toFixed(2)} €
+                  { "" } {formatPrice((group.price * count).toFixed(2))} 
                 </span>
               </div>
 
@@ -856,7 +856,7 @@ export default function TourSingleSidebar({
       <div className="d-flex items-center justify-between pt-1">
         <div className="text-18 fw-500">Total:</div>
         <div>
-          <div className="text-18 fw-500">{SelectedAllPrice} €</div>
+          <div className="text-18 fw-500">{formatPrice(SelectedAllPrice)}</div>
         </div>
       </div>
 

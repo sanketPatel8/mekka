@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 // import "select2/dist/js/select2.min.js";
 import CreatableSelect from "react-select/creatable";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { countries } from "@/data/nationalities";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -39,7 +40,7 @@ const page = () => {
   const [SelectedCountry, setSelectedCountry] = useState("");
   const [website, setWebsite] = useState("");
   const { translate } = useTranslation();
-
+  
   const router = useRouter();
   const options = [
     { value: "1", label: "Zip Code" },
@@ -70,11 +71,7 @@ const page = () => {
   //   }
   // }, []);
   
-  const CountryOptions = [
-    { value: "India", label: "India" },
-    { value: "Algeria", label: "Algeria" },
-    { value: "Afghanistan", label: "Afghanistan" },
-  ];
+
 
   const HandleCountryChange = (newValue, actionMeta) => {
     setSelectedCountry(newValue);
@@ -323,7 +320,7 @@ const handleMobileNumberChange = (e) => {
                           <CreatableSelect
                             value={SelectedCountry}
                             onChange={HandleCountryChange}
-                            options={CountryOptions}
+                            options={countries.map((country)=>({value: country.name, label: country.name}))}
                             className="custom-select"
                             placeholder="Select Country(required) "
                             classNamePrefix="react-select"
@@ -370,7 +367,7 @@ const handleMobileNumberChange = (e) => {
                       <div className="col-md-6">
                         <div className="form-input spacing">
                           <input type="text" min={0} max={10}   pattern="[0-9]{10}"
- maxLength={10} required  value={company_mobile} onChange={handleCompanyMobileNumberChange}/>
+                        maxLength={10} required  value={company_mobile} onChange={handleCompanyMobileNumberChange}/>
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Phone Number")} <span className="text-red">*</span>
                           </label>

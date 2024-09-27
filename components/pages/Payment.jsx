@@ -57,11 +57,11 @@ export default function Payment() {
     } else {
       setInstallmentChecked(false);
     }
-    if (index === 1) {
-      setShowStripeModal(true);
-      const newBooking = { ...Booking, paymentType: 2 };
-      setBooking(newBooking);
-    }
+    // if (index === 1) {
+    //   setShowStripeModal(true);
+    //   const newBooking = { ...Booking, paymentType: 2 };
+    //   setBooking(newBooking);
+    // }
   };
   const handleFirstAmountChange = (e) => {
     setFirstAmount(e.target.value);
@@ -167,16 +167,16 @@ export default function Payment() {
     return dateRegex.test(date);
   }
 
-  const handleDisabled = () => {
-    const agbAcceptance = document.getElementById("agbAcceptance");
-    const item5 = document.getElementById("item5");
+  // const handleDisabled = () => {
+  //   const agbAcceptance = document.getElementById("agbAcceptance");
+  //   const item5 = document.getElementById("item5");
 
-    if (agbAcceptance.checked && item5.checked) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  };
+  //   if (agbAcceptance.checked && item5.checked) {
+  //     setDisabled(false);
+  //   } else {
+  //     setDisabled(true);
+  //   }
+  // };
   const parseDate = (dateString) => {
     const parts = dateString.split(".");
     const day = parseInt(parts[0], 10);
@@ -265,7 +265,16 @@ export default function Payment() {
     setShowStripeModal(false);
   };
   const handlePayment = () => {
+
+    const agbAcceptance = document.getElementById("agbAcceptance");
+    const item5 = document.getElementById("item5");
+
     if (selectedCheckbox === 0) {
+
+      if(!agbAcceptance.checked || !item5.checked){
+        showErrorToast("Please fill all the fields");
+        return;
+      }
       const newBooking = { ...Booking, paymentType: 1 };
       FatchallBooking(newBooking);
       setTimeout(() => {
@@ -282,7 +291,13 @@ export default function Payment() {
     }
 
     if (selectedCheckbox === 2) {
+      if(!firstAmount || !secondAmount || !seconddate || !thirdAmount || !agbAcceptance.checked || !item5.checked){ 
+        showErrorToast("Please fill all the fields");
+        return;
+      }
+
       setShowStripeModal(true);
+      
       const newBooking = {
         ...Booking,
         paymentType: 3,
@@ -295,6 +310,17 @@ export default function Payment() {
       };
       setBooking(newBooking);
       setAmount(firstAmount);
+    
+    }
+
+    if (selectedCheckbox === 1) {
+      if(!agbAcceptance.checked || !item5.checked){ 
+        showErrorToast("Please fill all the fields");
+        return;
+      }
+      setShowStripeModal(true);
+      const newBooking = { ...Booking, paymentType: 2 };
+      setBooking(newBooking);
     }
   };
 
@@ -492,7 +518,7 @@ export default function Payment() {
                         <div className="y-gap-30 contactForm px-20 py-10">
                           <div className="col-md-12">
                             <h5 className="text-center">
-                              Total Amount :{" "}
+                            {translate("Total Amount")} :{" "}
                               <b>{SideBarData.BookingFild?.SubTotal}€</b>
                             </h5>
                           </div>
@@ -508,7 +534,7 @@ export default function Payment() {
                                   placeholder=""
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                  1st Amount
+                                  1st Amount<span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -525,7 +551,7 @@ export default function Payment() {
                                   onChange={handleDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                  1st Date
+                                  1st Date<span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -540,7 +566,7 @@ export default function Payment() {
                                   placeholder=""
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                  2nd Amount
+                                  2nd Amount<span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -559,7 +585,7 @@ export default function Payment() {
                                   ref={dateInputRef}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                  2nd Date
+                                  2nd Date<span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -574,7 +600,7 @@ export default function Payment() {
                                   placeholder=""
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                  3rd Amount
+                                {translate("3rd Amount")}<span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -590,7 +616,7 @@ export default function Payment() {
                                   onChange={handleDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
-                                  3rd Date
+                                  {translate("3rd Date")}<span className="text-red"> *</span>
                                 </label>
                               </div>
                             </div>
@@ -604,7 +630,7 @@ export default function Payment() {
                             type="checkbox"
                             id="item5"
                             name="data protection and accept"
-                            onChange={handleDisabled}
+                            // onChange={handleDisabled}
                           />
                           <label
                             htmlFor="item5"
@@ -627,6 +653,7 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="item5" className="lh-16 ml-15">
+                          <span className="text-red">* </span>
                           {translate(
                             "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH"
                           )}
@@ -639,7 +666,7 @@ export default function Payment() {
                             type="checkbox"
                             id="agbAcceptance"
                             name="agbAcceptance"
-                            onChange={handleDisabled}
+                            // onChange={handleDisabled}
                           />
                           <label
                             htmlFor="agbAcceptance"
@@ -662,6 +689,7 @@ export default function Payment() {
                           </label>
                         </div>
                         <label htmlFor="agbAcceptance" className="lh-16 ml-15">
+                        <span className="text-red">* </span>
                           {translate(
                             "I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE."
                           )}
@@ -980,7 +1008,7 @@ export default function Payment() {
                 <div className="mt-10">
                   <button
                     onClick={handlePayment}
-                    disabled={disabled}
+                    // disabled={disabled}
                     className={`button -md -info-2 bg-accent-1 text-white col-12  € {bookingStage == 1 ? 'hiddenButtonBooking ButtonBooking' : 'ButtonBooking'}  ${
                       bookingStage == 2 ? `d-none` : `d-block`
                     }`}

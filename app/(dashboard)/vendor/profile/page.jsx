@@ -13,6 +13,7 @@ import { POST } from "@/app/utils/api/post";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { countries } from "@/data/nationalities";
 
 export default function Profile() {
   const  {user}  = useAuthContext();
@@ -317,11 +318,6 @@ export default function Profile() {
 
   }
 
-  const CountryOptions = [
-    { value: "India", label: "India" },
-    { value: "Algeria", label: "Algeria" },
-    { value: "Afghanistan", label: "Afghanistan" },
-  ];
 
   const HandleCountryChange = (newValue, actionMeta) => {
     setSelectedCountry(newValue);
@@ -503,7 +499,7 @@ export default function Profile() {
                       <CreatableSelect
                         value={SelectedCountry}
                         onChange={HandleCountryChange}
-                        options={CountryOptions}
+                        options={countries.map((country)=>({value: country.name, label: country.name}))}
                         className="custom-select"
                         placeholder="Select Country(required) "
                         classNamePrefix="react-select"

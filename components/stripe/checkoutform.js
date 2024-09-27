@@ -21,8 +21,8 @@ const customStyles = {
       padding: "10px",
       // borderRadius: '10px',
       width: "100%", // Adjust width as needed
-      maxWidth: "400px", // Adjust max-width as needed
-      height: "43vh", // Set a specific height for the modal
+      maxWidth: "500px", // Adjust max-width as needed
+      height: "50vh", // Set a specific height for the modal
       overflowY: "auto",
       backgroundColor: "#fff",
     },

@@ -25,6 +25,7 @@ import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { nationalities } from "@/data/nationalities";
 import Login from "./Login";
+import { useCurrency } from "@/app/context/currencyContext";
 
 const customStyles = {
   overlay: {
@@ -55,6 +56,7 @@ export default function BookingPages({ BookingData }) {
   const TourType = searchParams.get("type");
   const TourName = searchParams.get("name");
   const TourId = searchParams.get("id");
+  const {formatPrice} = useCurrency();
 
   const [bookingStage, setBookingStage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -335,7 +337,6 @@ export default function BookingPages({ BookingData }) {
   });
 
   const [Additional, setAdditional] = useState([]);
-
   // for form validation
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -355,7 +356,7 @@ export default function BookingPages({ BookingData }) {
     if (!personPrice) {
       return 0; // Default value if no price is found
     }
-    return Number(personPrice[idx]?.default); // Ensure price is a number
+    return formatPrice(Number(personPrice[idx]?.default)); // Ensure price is a number
   };
 
   const handleInputChange = (type, index, e) => {
@@ -487,7 +488,7 @@ export default function BookingPages({ BookingData }) {
     const conformSubTotal =
       (isNaN(Number(Original)) ? 0 : Number(Original)) + additionalPrice;
 
-    return conformSubTotal;
+    return formatPrice(conformSubTotal);
   };
 
   const getPriceForType = (type, idx) => {
@@ -900,7 +901,7 @@ export default function BookingPages({ BookingData }) {
                       <div className="text-14">
                         <p className="d-flex justify-content-between">
                           <span>{translate("Tour Price Per Person")}</span>
-                          <span>{`${getdefaultPriceforType(type, i)} €`}</span>
+                          <span>{`${getdefaultPriceforType(type, i)} `}</span>
                         </p>
                       </div>
                     </div>
@@ -927,7 +928,7 @@ export default function BookingPages({ BookingData }) {
                               <input
                                 type="radio"
                                 name={`radioGroup-${type}-${i}`}
-                                value={`${type}-${i}-${idx}-ad-${option.id}-${option.title}`}
+                                value={(`${type}-${i}-${idx}-ad-${option.id}-${option.title}`)}
                                 checked={
                                   formValues[type]?.[i]?.selectedService ==
                                   `${type}-${i}-${idx}-ad-${option.id}-${option.title}`
@@ -956,7 +957,7 @@ export default function BookingPages({ BookingData }) {
                             </label>
                           </div>
                         </div>
-                        <div className="text-14">+ {option.price} €</div>
+                        <div className="text-14">+ {formatPrice(option.price)} </div>
                       </div>
                     ))}
                   </div>
@@ -965,7 +966,7 @@ export default function BookingPages({ BookingData }) {
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
                     Subtotal{" "}
-                    <span>{`${SubtotalPriceWithAdditional(type, i)} €`}</span>
+                    <span>{`${SubtotalPriceWithAdditional(type, i)} `}</span>
                   </h5>
                   <p className="text-right">Including Taxes And Fee</p>
                 </div>
@@ -1269,7 +1270,7 @@ export default function BookingPages({ BookingData }) {
                   <div className="">
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Subtotal")}</div>
-                      <div className=""> {totalSum} € </div>
+                      <div className=""> {formatPrice(totalSum)} </div>
                     </div>
 
                     <div
@@ -1290,7 +1291,7 @@ export default function BookingPages({ BookingData }) {
 
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Amount Due")} </div>
-                      <div className=""> {TotalPaidAmount} € </div>
+                      <div className=""> {formatPrice(TotalPaidAmount)}  </div>
                     </div>
                   </div>
 

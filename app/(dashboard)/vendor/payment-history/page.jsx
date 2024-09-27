@@ -20,49 +20,49 @@ export default function DBListing() {
   const [StatusPaymentHistry, setPaymentHistory] = useState([]);
   const [VendorBookings, setVendorBookings] = useState([]);
   const {user} = useAuthContext();
+  const { translate } = useTranslation();
 
-  const company_id =  user?.user.company_id;
-  const fetchPayments = async () => {
+  useEffect(() => {
     const BookingsData = [
       {
-        name: "Booking Id",
+        name: translate("Booking Id"),
         selector: (row) => row.BookingId,
         width: "8%",
         sortable: true,
       },
       {
-        name: "Booking No.",
+        name: translate("Booking No."),
         selector: (row) => row.BookingNo,
         width: "10%",
         sortable: true,
       },
       {
-        name: "Customer Name",
+        name: translate("Customer Name"),
         selector: (row) => row.Full_Name,
         width: "20%",
         sortable: true,
       },
       {
-        name: "Tour Name",
+        name: translate("Tour Name"),
         selector: (row) => row.tour_name,
         width: "20%",
         sortable: true,
       },
       {
-        name: "Total (€) ",
+        name: translate("Total (€) "),
         width: "10%",
         selector: (row) => row.Total_Payment,
         sortable: true,
       },
-      { name: "Paid (€) ", selector: (row) => row.Payment_Tax, sortable: true,width: "10%" },
+      { name: translate("Paid (€) "), selector: (row) => row.Payment_Tax, sortable: true,width: "10%" },
       {
-        name: "Date ",
+        name: translate("Date "),
         selector: (row) => row.Booking_date,
         sortable: true,
         width: "10%",
       },
       {
-        name: "Transaction ID ",
+        name: translate("Transaction ID "),
         selector: (row) => row.Transation_id,
         sortable: true,
         width: "12%",
@@ -70,6 +70,29 @@ export default function DBListing() {
     ];
 
     setVendorBookings(BookingsData);
+
+    setPaymentHistory([
+      {
+        id: 1,
+        title: "Total Earnings",
+        amount: `${Total_Earnings}`,
+        today: "50 €",
+        iconClass: "icon-wallet text-accent-1",
+      },
+      {
+        id: 2,
+        title: "Total Pending",
+        amount: `${Total_Pending}`,
+        today: "40+",
+        iconClass: "icon-payment text-accent-1",
+      },
+    ]);
+  },[translate, Total_Earnings, Total_Pending]);
+
+  
+  const company_id =  user?.user.company_id;
+  const fetchPayments = async () => {
+   
     const formData = new FormData();
     formData.append("company_id", company_id);
     
@@ -89,22 +112,7 @@ export default function DBListing() {
       }));
       setPayment(bookingData);
       
-      setPaymentHistory([
-        {
-          id: 1,
-          title: "Total Earnings",
-          amount: `${Total_Earnings}`,
-          today: "50 €",
-          iconClass: "icon-wallet text-accent-1",
-        },
-        {
-          id: 2,
-          title: "Total Pending",
-          amount: `${Total_Pending}`,
-          today: "40+",
-          iconClass: "icon-payment text-accent-1",
-        },
-      ]);
+ 
 
         setLoading(false);
       
@@ -117,7 +125,7 @@ export default function DBListing() {
 
   useEffect(() => {
     fetchPayments();
-  }, [company_id, StatusPaymentHistry]);
+  }, [company_id]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -145,7 +153,6 @@ export default function DBListing() {
     return null; // Avoid rendering client-specific elements until the component has mounted
   }
 
-  const { translate } = useTranslation();
 
   return (
     <div
