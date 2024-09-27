@@ -1,17 +1,20 @@
 "use client";
 import { useTranslation } from '@/app/context/TranslationContext';
 import { POST } from '@/app/utils/api/post';
-import { showErrorToast } from '@/app/utils/tost';
+import { showErrorToast, showSuccessToast } from '@/app/utils/tost';
 import FooterTwo from '@/components/layout/footers/FooterTwo';
 import Header1 from '@/components/layout/header/Header1';
 import { responsiveFontSizes } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 
 function ResetPassword({params}) {
 
-    console.log(params.id[0], 'param')
+    const router = useRouter();
+
     const id = params.id[0];
+
     const encryptedId = id.split('_')[1];;
     console.log(encryptedId, 'encryptedString');
     const {translate} = useTranslation();
@@ -62,6 +65,10 @@ function ResetPassword({params}) {
 
         const response = await POST.request({form:formData, url:"reset_password"})
         console.log(response, 'response')
+        if(response){
+            showSuccessToast(response.message);
+            router.push('/login');
+        }
       }
   return (
     <>
