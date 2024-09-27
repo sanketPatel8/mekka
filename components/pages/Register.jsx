@@ -17,13 +17,12 @@ export default function Register() {
     name: "",
     surname: "",
     email: "",
-    password: ""
-  
+    password: "",
   });
 
-  const router = useRouter()
-  
-  const [confirm_pass , setConfirm_pass] = useState('')
+  const router = useRouter();
+
+  const [confirm_pass, setConfirm_pass] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
   console.log(showSuccessToast);
@@ -41,46 +40,42 @@ export default function Register() {
   };
 
   const MatchPass = (e) => {
-    setConfirm_pass(e.target.value)
-  }
+    setConfirm_pass(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      if(RegisterData.password === confirm_pass){
-        try {
-          const response = await post("register", RegisterData);
-          showSuccessToast(response.message);
-  
-        } catch (error) {
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            showErrorToast(error.response.data.message);
-          } else {
-            showErrorToast("An error occurred during registration.");
-          }
+    if (RegisterData.password === confirm_pass) {
+      try {
+        const response = await post("register", RegisterData);
+        showSuccessToast(response.message);
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          showErrorToast(error.response.data.message);
+        } else {
+          showErrorToast("An error occurred during registration.");
         }
-        setRegisterData({
-          name: "",
-          surname: "",
-          email: "",
-          password: "",
-          
-        });
-       
-        setConfirm_pass("")
-        setIsChecked(false)
-        setTimeout(() => {
-          router.push('/login')
-        }, 2000);
-      }else{
-        showErrorToast("password dose not match")
       }
-     
-   
+      setRegisterData({
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+      });
+
+      setConfirm_pass("");
+      setIsChecked(false);
+      setTimeout(() => {
+        router.push("/verify-email");
+      }, 3000);
+    } else {
+      showErrorToast("password dose not match");
+    }
   };
 
   const { translate } = useTranslation();
@@ -91,10 +86,7 @@ export default function Register() {
         <div className="row justify-center">
           <div className="col-xl-6 col-lg-7 col-md-9">
             <div className="text-center mb-60 md:mb-30">
-              <h1 className="text-30">
-                {" "}
-                {translate("Register") }
-              </h1>
+              <h1 className="text-30"> {translate("Register")}</h1>
               <div className="text-18 fw-500 mt-20 md:mt-15">
                 {translate("Let's Create Your Account!") ||
                   "Find Latest Packages"}
@@ -103,7 +95,7 @@ export default function Register() {
                 {translate("Already Have An Account?") ||
                   "Find Latest Packages"}{" "}
                 <Link href="/login" className="text-accent-1">
-                  {translate("Log In") }!
+                  {translate("Log In")}!
                 </Link>
               </div>
             </div>
@@ -122,7 +114,7 @@ export default function Register() {
                 />
                 <label className="lh-1 text-16 text-light-1">
                   {" "}
-                  {translate("Name") }
+                  {translate("Name")}
                 </label>
               </div>
 
@@ -136,7 +128,7 @@ export default function Register() {
                 />
                 <label className="lh-1 text-16 text-light-1">
                   {" "}
-                  {translate("Surname") }
+                  {translate("Surname")}
                 </label>
               </div>
 
@@ -150,7 +142,7 @@ export default function Register() {
                 />
                 <label className="lh-1 text-16 text-light-1">
                   {" "}
-                  {translate("Email Address") }
+                  {translate("Email Address")}
                 </label>
               </div>
 
@@ -163,14 +155,19 @@ export default function Register() {
                   required
                 />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Password") }
+                  {translate("Password")}
                 </label>
               </div>
 
               <div className="form-input my-1">
-                <input type="password" value={confirm_pass} onChange={MatchPass} required />
+                <input
+                  type="password"
+                  value={confirm_pass}
+                  onChange={MatchPass}
+                  required
+                />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Confirm Password") }
+                  {translate("Confirm Password")}
                 </label>
               </div>
 
@@ -202,7 +199,7 @@ export default function Register() {
                   <span className="text-14 lh-12 ml-10">
                     {translate(
                       "I have read the data protection and I accept the conditions."
-                    ) }
+                    )}
                   </span>
                 </label>
               </div>
@@ -211,7 +208,7 @@ export default function Register() {
                 className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                 type="submit"
               >
-                {translate("Register") }
+                {translate("Register")}
               </button>
 
               <div className="relative line mt-50 mb-30">
@@ -225,14 +222,14 @@ export default function Register() {
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                     <FaFacebookF size={15} className="mx-1" />
-                    {translate("Facebook") }
+                    {translate("Facebook")}
                   </button>
                 </div>
 
                 <div className="col">
                   <button className="button -md -outline-red-1 text-red-1 col-12">
                     <FaGoogle size={15} className="mx-1" />
-                    {translate("Google") }
+                    {translate("Google")}
                   </button>
                 </div>
               </div>
@@ -241,7 +238,7 @@ export default function Register() {
                 <div className="col">
                   <button className="button -md -outline-dark-1 text-dark-1 col-12">
                     <FaApple size={15} className="mx-1" />
-                    {translate("Sign in With Apple") }
+                    {translate("Sign in With Apple")}
                   </button>
                 </div>
               </div>

@@ -21,16 +21,23 @@ export default function Page() {
                   <h1>{translate("Thank you for registration!")}</h1>
                   <div className="text-18 fw-500 mt-20 md:mt-15 text-center">
                     {translate(
-                      "We have sent your profile for verification and will notify you once it is approved."
+                      "Please verified your Email for Login your account."
                     )}
                   </div>
                   <Link
                     className="button -md -info-2 bg-accent-1 text-white  mt-30"
-                    href="/partner-login"
+                    href="/login"
                     style={{ width: "fit-content" }}
                   >
-                    {translate("Login to continue")}{" "}
+                    {translate("Resend E-Mail")}{" "}
                   </Link>
+                  {/* <Link
+                    className="button -md -info-2 bg-accent-1 text-white  mt-30"
+                    href="/login"
+                    style={{ width: "fit-content" }}
+                  >
+                    {translate("Login")}{" "}
+                  </Link> */}
                 </div>
               </div>
             </div>
