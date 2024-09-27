@@ -12,7 +12,11 @@ import { post } from "@/app/utils/api";
 import { POST } from "@/app/utils/api/post";
 import { useCurrency } from "@/app/context/currencyContext";
 
-export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHotelData }) {
+export default function TourSingleSidebar({
+  PAckageData,
+  ThumbnailImage,
+  setHotelData,
+}) {
   const {
     prices,
     HotelSelect,
@@ -43,11 +47,11 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
   const [SelectedAirlinePrice, setSelectedAirlinePrice] = useState(0);
   const [SElectedDeparturePrice, setSElectedDeparturePrice] = useState(0);
   const [Render, setRender] = useState(false);
-  const [mekkaId, setmekkaId] = useState( "");
-  const [madinaId, setmadinaId] = useState( "");
-  const {formatPrice} = useCurrency();
+  const [mekkaId, setmekkaId] = useState("");
+  const [madinaId, setmadinaId] = useState("");
+  const { formatPrice } = useCurrency();
   const [selectDeparture, setselectDeparture] = useState({
-    name : ""
+    name: "",
   });
 
   const [LocalData, setLocalData] = useState([]);
@@ -89,31 +93,32 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
         id: firstFlight.flight_id,
         name: firstFlight.airline_name,
         price: firstFlight.flight_amount,
-        luggage : firstFlight.luggage
+        luggage: firstFlight.luggage,
       });
       setSelectedAirlinePrice(firstFlight.flight_amount);
     }
-
   }, [SidebarData]);
 
   useEffect(() => {
     fetchHotelData();
-  },[mekkaId,madinaId]);
+  }, [mekkaId, madinaId]);
 
-  const fetchHotelData = async() => {
-      const formData = new FormData();
-      formData.append("tour_id", Tourid);
-      formData.append("mekka_id", mekkaId);
-      formData.append("madina_id", madinaId);
+  const fetchHotelData = async () => {
+    const formData = new FormData();
+    formData.append("tour_id", Tourid);
+    formData.append("mekka_id", mekkaId);
+    formData.append("madina_id", madinaId);
 
-      const response = await POST.request({form:formData, url:"gettourhoteldata "})
+    const response = await POST.request({
+      form: formData,
+      url: "gettourhoteldata ",
+    });
 
-      console.log(response,"response")
-      if(response){
-        setHotelData(response.hotel_data)
-      }
-
-  }
+    console.log(response, "response");
+    if (response) {
+      setHotelData(response.hotel_data);
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -127,8 +132,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
       setRender(true);
     }
   }, [Render]);
-
-  
 
   const handleRadioChange = (e) => {
     const { value, name } = e.target;
@@ -156,7 +159,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
         mekkaId: selectedHotel.hotel_id,
       }));
       setmekkaId(selectedHotel.hotel_id);
-      console.log(mekkaId,"mekkaId");
+      console.log(mekkaId, "mekkaId");
       // Update Mekka hotel price in selectedmekkaHotelPrice state
       setselectedmekkaHotelPrice(mekkaPrice);
 
@@ -176,7 +179,7 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
         madinaId: selectedHotel.hotel_id,
       }));
       setmadinaId(selectedHotel.hotel_id);
-      console.log(madinaId,"madinaId");
+      console.log(madinaId, "madinaId");
 
       setselectedMadinaHotelPrice(madinaPrice);
       fetchHotelData();
@@ -203,7 +206,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
       setselectedCheckbox(false);
     }
   };
-  
 
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
@@ -418,13 +420,9 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
       Children: childrenTotal,
     };
 
-   
-
     setPriceObject(newPriceArray);
     setPrevAdultSelect(newPriceAdultArray); // assuming you are setting this somewhere
   };
-
-  
 
   useEffect(() => {
     updatePriceObject();
@@ -448,32 +446,44 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
       SidebarData?.tour_details?.flight_included == "0" ||
-      selectedCheckbox == false 
+        selectedCheckbox == false
         ? SelectedAirlinePrice
         : 0
     ) +
-    JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price);
+    JSON.parse(
+      SidebarData?.tour_details?.flight_included == "0" ||
+        selectedCheckbox == false
+        ? selectDeparture.price === undefined
+          ? 0
+          : selectDeparture.price
+        : 0
+    );
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
       SidebarData?.tour_details?.flight_included == "0" ||
-      selectedCheckbox == false
+        selectedCheckbox == false
         ? SelectedAirlinePrice
         : 0
     ) +
-    JSON.parse(selectDeparture.price === undefined ? 0 : selectDeparture.price);
+    JSON.parse(
+      SidebarData?.tour_details?.flight_included == "0" ||
+        selectedCheckbox == false
+        ? selectDeparture.price === undefined
+          ? 0
+          : selectDeparture.price
+        : 0
+    );
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
 
-  
-
   const PackageBookingData = {
-    name : SidebarData?.tour_details?.name,
-    type : SidebarData?.tour_details?.type,
-    TourThumbnail :  SidebarData?.tour_details?.tour_image[0]  ,
+    name: SidebarData?.tour_details?.name,
+    type: SidebarData?.tour_details?.type,
+    TourThumbnail: SidebarData?.tour_details?.tour_image[0],
     Airline: selectedFlights,
     To: SidebarData?.tour_details?.travel,
     Departure: selectDeparture,
@@ -483,9 +493,9 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
     MakkaHotel: mekkaHotel,
     MadinaHotel: madinaHotel,
     FlightAndHotel: FlightAndHotelPrice,
-    duration : SidebarData?.tour_details?.travel_duration,
-    startDate : SidebarData?.tour_details?.date_begin,
-    endDate : SidebarData?.tour_details?.date_end
+    duration: SidebarData?.tour_details?.travel_duration,
+    startDate: SidebarData?.tour_details?.date_begin,
+    endDate: SidebarData?.tour_details?.date_end,
   };
 
   const handleBooking = () => {
@@ -505,7 +515,11 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
     updateAdultsObject();
 
     router.push(
-      `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${SidebarData?.tour_details?.type}&selectedflight=${selectedFlights?.name === undefined ? '' : selectedFlights?.name}`
+      `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
+        SidebarData?.tour_details?.type
+      }&selectedflight=${
+        selectedFlights?.name === undefined ? "" : selectedFlights?.name
+      }`
     );
   };
 
@@ -528,8 +542,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
       setChildrenNumber((prev) => Math.max(prev - 1, 0));
     }
   };
-
-  
 
   return (
     <div className="tourSingleSidebar">
@@ -784,7 +796,9 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
                   <div className="searchFormItem__content">
                     <h5>Departure</h5>
                     <div className={`js-select-control-chosen `}>
-                      {selectDeparture?.name ? selectDeparture?.name : "Departure"}
+                      {selectDeparture?.name
+                        ? selectDeparture?.name
+                        : "Departure"}
                     </div>
                   </div>
                   <div className="searchFormItem__icon_chevron">
@@ -845,8 +859,6 @@ export default function TourSingleSidebar({ PAckageData , ThumbnailImage, setHot
           <div className="text-18 fw-500">{SelectedAllPrice} €</div>
         </div>
       </div>
-
-      
 
       <button
         className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"
