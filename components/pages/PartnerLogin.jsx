@@ -101,7 +101,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
               </div>
               <div className="mt-5">
                 {translate("Don't Have An Account?")}
-                <Link href="/register" className="text-accent-1">
+                <Link href="/partner" className="text-accent-1">
                   {translate("Sign Up!")}
                 </Link>
               </div>
@@ -137,8 +137,8 @@ export default function PartnerLogin({ onLoginSuccess }) {
                 </label>
               </div>
 
-              <div className="d-flex justify-content-between">
-                <div className="d-flex items-center">
+              <div className="d-flex justify-content-end">
+                {/* <div className="d-flex items-center">
                   <label className="form-checkbox d-flex align-items-center">
                     <input
                       type="checkbox"
@@ -167,7 +167,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
                       {translate("Remember me")}
                     </span>
                   </label>
-                </div>
+                </div> */}
                 <button>
                   <Link href="/forgot-password">
                     Lost your password?

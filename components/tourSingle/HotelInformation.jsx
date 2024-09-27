@@ -22,12 +22,11 @@ const RoadMap = ({ PAckageData,hotelData }) => {
           <h5>{hotelData?.mekka_hotel.hotel_name}</h5>
           <p>{hotelData?.mekka_hotel.hotel_info}</p>
           <br />
-          <p>Distance to the Kaaba</p>
           <p>The distance to the Kaaba is {hotelData?.mekka_hotel.km}</p>
           <br />
             
-          <p>Food included:</p>
-          <p className="text-danger">{hotelData?.mekka_hotel.meals_included == 1 ? "Included" : "Not Included"}</p>
+          {/* <p>Food included:</p>
+          <p className="text-danger">{hotelData?.mekka_hotel.meals_included == 1 ? "Included" : "Not Included"}</p> */}
             
           
 
@@ -39,15 +38,14 @@ const RoadMap = ({ PAckageData,hotelData }) => {
 
       {hotelData?.madina_hotel && (
         <div  className="mt-50">
-          <h4>Hotel for Makkah</h4>
+          <h4>Hotel for Madina</h4>
           <h5>{hotelData?.madina_hotel.hotel_name}</h5>
           <p>{hotelData?.madina_hotel.hotel_info}</p>
           <br />
-          <p>Distance to the Kaaba</p>
           <p>The distance to the Kaaba is {hotelData?.madina_hotel.km}</p>
           <br />
-          <p>Food included:</p>
-          <p className="text-danger">{hotelData?.madina_hotel.meals_included == 1 ? "Included" : "Not Included"}</p>
+          {/* <p>Food included:</p>
+          <p className="text-danger">{hotelData?.madina_hotel.meals_included == 1 ? "Included" : "Not Included"}</p> */}
             
 
           <HotelGallary  madinaHotel={hotelData?.madina_hotel?.medina_hotels_imgs}/>

@@ -52,7 +52,7 @@ export default function Header({ setSideBarOpen }) {
 
         
 
-        <div className="rounded-circle">
+        {/* <div className="rounded-circle">
           <Image
             width={40}
             height={40}
@@ -60,7 +60,7 @@ export default function Header({ setSideBarOpen }) {
             alt="image"
             className="rounded-circle"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -205,9 +205,10 @@ export default function Profile() {
 
     e.preventDefault();
    
-    // if(!confirm_password || !password || !old_password || !IBAN || !owner_name || !bank_name || !info || !tax_number || !website || !zipcode || !houseNumber || !street || !city || !SelectedCountry || !mobile || !email || !surname || !name || !companyName || image1 == "" || image2.length == 0){
-    //   showErrorToast("Please fill all fields")
-    // }
+    if(!confirm_password || !password || !old_password || !IBAN || !owner_name || !bank_name || !info || !tax_number || !website || !zipcode || !houseNumber || !street || !city || !SelectedCountry || !mobile || !email || !surname || !name || !companyName || image1 == "" || image2.length == 0){
+      showErrorToast("Please fill all fields")
+      return;
+    }
 
     const formData = new FormData();
     const formType = e.target.name;
@@ -360,6 +361,7 @@ export default function Profile() {
       if(response){
         showSuccessToast("Image removed successfully");
         fetchProfile();
+      
         // const newImages = [...companyData.company_document];
         // newImages.splice(index, 1);
         // setCompanyData({ ...companyData, company_document: newImages });
@@ -478,7 +480,7 @@ export default function Profile() {
 
                   <div className="col-md-6">
                     <div className="form-input m-0">
-                      <input type="email" required defaultValue={ email} onChange={handleInputChange(setEmail)} />
+                      <input type="email" disabled={true} required defaultValue={ email} onChange={handleInputChange(setEmail)} />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("Email Id")} <span className="text-red">*</span>
                       </label>
@@ -499,8 +501,9 @@ export default function Profile() {
                   <div className="col-md-6">
                     <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
                       <CreatableSelect
-      value={SelectedCountry}
-      onChange={HandleCountryChange}                        options={CountryOptions}
+                        value={SelectedCountry}
+                        onChange={HandleCountryChange}
+                        options={CountryOptions}
                         className="custom-select"
                         placeholder="Select Country(required) "
                         classNamePrefix="react-select"
@@ -546,14 +549,14 @@ export default function Profile() {
 
                   <div className="col-md-6">
                     <div className="form-input m-0">
-                      <input type="text" required defaultValue={ website} onChange={handleInputChange(setWebsite)} />
+                      <input type="text" required defaultValue={ website !== "null" && website !== "" ? website : ""} onChange={handleInputChange(setWebsite)} />
                       <label className="lh-1 text-16 text-light-1"> {translate("Website")} <span className="text-red">*</span></label>
                     </div>
                   </div>
 
                   <div className="col-md-6">
                     <div className="form-input m-0 ">
-                      <input type="text" required defaultValue={tax_number} onChange={handleInputChange(setTaxNumber)} />
+                      <input type="text" required defaultValue={tax_number !== "null" && tax_number !== "" ? tax_number : ""} onChange={handleInputChange(setTaxNumber)} />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("Tax Number")} <span className="text-red">*</span>
                       </label>
@@ -562,7 +565,7 @@ export default function Profile() {
 
                   <div className="col-md-12">
                     <div className="form-input m-0">
-                      <textarea required rows="2" defaultValue={ info} onChange={handleInputChange(setInfo)}></textarea>
+                      <textarea required rows="2" defaultValue={ info !== "null" && info !== "" ? info : "" } onChange={handleInputChange(setInfo)}></textarea>
                       <label className="lh-1 text-16 text-light-1"> {translate("Info")} <span className="text-red">*</span></label>
                     </div>
                   </div>
@@ -721,60 +724,58 @@ export default function Profile() {
                           return null;
                         }
                       }) :
-
-                      image2.map((image, index) => {
-  // const fileExtension = image.split(';')[0].split('/')[1].toLowerCase();
-                        const isImage = image.image.startsWith('data:image/');
-                        //  const isDocument = ['docx', 'pdf'].includes(fileExtension);
-                        const isDocument = image.image.startsWith('data:application/');
-                        
-                        //  const fileName = isDocument ? getFileNameFromBase64(image) : null;
-                         console.log(isDocument,"isImage")
-
-                         return (
-                          <div className="col-auto my-2" key={index}>
-                          {isImage ? (
-                            <div className="relative">
-                              <Image
-                                width={200}
-                                height={200}
-                                src={image.image}
-                                alt={`image-${index}`}
-                                className="size-200 rounded-12 object-cover"
-                              />
-                              <button
-                                onClick={(e) => handleDeleteImage2(index,e)}
-                                className="absoluteIcon1 button -dark-1"
-                              >
-                                <i className="icon-delete text-18"></i>
-                              </button>
-                            </div>
-                          ) : isDocument ? (
-                            <div className="relative">
-                              <div
-                                              className="size-200 rounded-12 border-1 bg-white flex-center flex-column"
-                                            >
-                                              <Image
-                                                width="40"
-                                                height="40"
-                                                alt="image"
-                                                src={"/img/dashboard/upload.svg"}
-                                              />
-
-                                              
-                                            </div>
-                              <div className="file-name">{image.fileName}</div>
-                              <button
-                                onClick={(e) => handleDeleteImage2(index,e)}
-                                className="absoluteIcon1 button -dark-1"
-                              >
-                                <i className="icon-delete text-18"></i>
-                              </button>
-                            </div>
-                          ) : null}
-                        </div>
-                         );
-                      })
+                      
+                        (image2.length > 0) &&
+                        image2.map((image, index) => {
+                          const isImage = image.startsWith('data:image/');
+                          const isDocument = image.startsWith('data:application/');
+                          
+  
+                           return (
+                            <div className="col-auto my-2" key={index}>
+                            {isImage ? (
+                              <div className="relative">
+                                <Image
+                                  width={200}
+                                  height={200}
+                                  src={image.image}
+                                  alt={`image-${index}`}
+                                  className="size-200 rounded-12 object-cover"
+                                />
+                                <button
+                                  onClick={(e) => handleDeleteImage2(index,e)}
+                                  className="absoluteIcon1 button -dark-1"
+                                >
+                                  <i className="icon-delete text-18"></i>
+                                </button>
+                              </div>
+                            ) : isDocument ? (
+                              <div className="relative">
+                                <div
+                                                className="size-200 rounded-12 border-1 bg-white flex-center flex-column"
+                                              >
+                                                <Image
+                                                  width="40"
+                                                  height="40"
+                                                  alt="image"
+                                                  src={"/img/dashboard/upload.svg"}
+                                                />
+  
+                                                
+                                              </div>
+                                <div className="file-name">{image.fileName}</div>
+                                <button
+                                  onClick={(e) => handleDeleteImage2(index,e)}
+                                  className="absoluteIcon1 button -dark-1"
+                                >
+                                  <i className="icon-delete text-18"></i>
+                                </button>
+                              </div>
+                            ) : null}
+                          </div>
+                           );
+                        })
+                      
 
                     }
 

@@ -184,8 +184,8 @@ export default function Login({ onLoginSuccess }) {
                 </label>
               </div>
 
-              <div className="d-flex justify-content-between">
-                <div className="d-flex items-center">
+              <div className="d-flex justify-content-end">
+                {/* <div className="d-flex items-center">
                   <label className="form-checkbox d-flex align-items-center">
                     <input
                       type="checkbox"
@@ -214,7 +214,7 @@ export default function Login({ onLoginSuccess }) {
                       {translate("Remember me")}
                     </span>
                   </label>
-                </div>
+                </div> */}
                 <button>
                   <Link href="/login/forgot-password">Lost your password?</Link>
                 </button>

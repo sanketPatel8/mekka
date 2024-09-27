@@ -10,6 +10,8 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { useRouter } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 // import "select2/dist/js/select2.min.js";
+import CreatableSelect from "react-select/creatable";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -34,6 +36,9 @@ const page = () => {
   const [errors, setErrors] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [SelectedCountry, setSelectedCountry] = useState("");
+  const [website, setWebsite] = useState("");
+  const { translate } = useTranslation();
 
   const router = useRouter();
   const options = [
@@ -65,8 +70,15 @@ const page = () => {
   //   }
   // }, []);
   
-  
+  const CountryOptions = [
+    { value: "India", label: "India" },
+    { value: "Algeria", label: "Algeria" },
+    { value: "Afghanistan", label: "Afghanistan" },
+  ];
 
+  const HandleCountryChange = (newValue, actionMeta) => {
+    setSelectedCountry(newValue);
+  };
 
   const handleRadioChange = (event) => {
     console.log(event.target.value);
@@ -128,7 +140,7 @@ const validate = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !company_email || !company_mobile || !agreeToTerms){ 
+  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !SelectedCountry || !website || !company_email || !company_mobile || !agreeToTerms){ 
     showErrorToast("Please fill all the fields");
     return;
   }
@@ -160,15 +172,17 @@ const handleSubmit = async (e) => {
   formData.append("company_email", company_email);
   formData.append("company_mobile", company_mobile);
   formData.append("is_mosque", radioValue === "mosque" ? 1 : 0);
+  formData.append('country',  SelectedCountry.value);
+  formData.append('website',  website);
 
   const url= `vendor_register`;
   try{
     const response = await POST.request({form:formData, url:url, header: { "Content-Type": "multipart/form-data" }});
-    if(response.status == "success"){
+    if(response.status === "success"){
       console.log("success")
       
       showSuccessToast(response.message);
-      router.push("/partner-login");
+      router.push("/thank-you");
     }else if(response.status === "error"){
       console.log("error")
       showErrorToast(response.message);
@@ -216,7 +230,7 @@ const handleMobileNumberChange = (e) => {
       <ToastContainer/>
       <Header1 />
       <div className="mt-80 mb-80">
-        <h1 className="text-center my-5">Partner Registration </h1>
+        <h1 className="text-center my-5">{translate("Partner Registration")} </h1>
         <div className="container">
         <form
                                 className=" d-flex flex-column w-100"
@@ -225,7 +239,7 @@ const handleMobileNumberChange = (e) => {
                             >
             <div className="row shadow-2">
               <div className="col-md-6 col-12 text-center p-5 border-1 ">
-                <h1>Organization</h1>
+                <h1>{translate("Organization")}</h1>
                 
                 <div className="form_2">
                   <div className=" y-gap-30 contactForm px-20 py-20 ">
@@ -246,7 +260,7 @@ const handleMobileNumberChange = (e) => {
                             {/* <span className="text-14 lh-1 ml-10"></span> */}
                           </label>
                         </div>
-                        <div className="ml-10">Mosque</div>
+                        <div className="ml-10">{translate("Mosque")}</div>
                       </div>
                       <div className="d-flex items-center mx-2">
                         <div className="form-radio d-flex items-center">
@@ -264,7 +278,7 @@ const handleMobileNumberChange = (e) => {
                             {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
                           </label>
                         </div>
-                        <div className="ml-10">Travel Agency</div>
+                        <div className="ml-10">{translate("Travel Agency")}</div>
                       </div>
                     </div>
                     <div className="row my-3">
@@ -272,7 +286,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required value={companyName} onChange={handleInputChange(setCompanyName)} />
                           <label className="lh-1 text-16 text-light-1">
-                            Organization Name
+                            {translate("Organization Name")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -280,7 +294,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required  value={state} onChange={handleInputChange(setState)}/>
                           <label className="lh-1 text-16 text-light-1">
-                            State
+                            {translate("State")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -299,16 +313,32 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required value={zipcode} onChange={handleInputChange(setZipcode)} />
                           <label className="lh-1 text-16 text-light-1">
-                          Zip Code
+                          {translate("Zip Code")} <span className="text-red">*</span>
                           </label>
                         </div>
 
                       </div>
                       <div className="col-md-6">
+                        <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
+                          <CreatableSelect
+                            value={SelectedCountry}
+                            onChange={HandleCountryChange}
+                            options={CountryOptions}
+                            className="custom-select"
+                            placeholder="Select Country(required) "
+                            classNamePrefix="react-select"
+                            isClearable
+                            formatCreateLabel={(inputValue) =>
+                              `Create custom gender: "${inputValue}"`
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6">
                         <div className="form-input spacing">
                           <input type="text" required value={city} onChange={handleInputChange(setCity)} />
                           <label className="lh-1 text-16 text-light-1">
-                            City
+                            {translate("City")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -316,7 +346,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required  value={street} onChange={handleInputChange(setStreet)}/>
                           <label className="lh-1 text-16 text-light-1">
-                            Street
+                            {translate("Street")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -324,7 +354,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required  value={houseNumber} onChange={handleInputChange(setHouseNumber)}/>
                           <label className="lh-1 text-16 text-light-1">
-                            House No
+                            {translate("House No")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -332,7 +362,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="email" required  value={company_email} className="mb-1" onChange={handleInputChange(setCompanyEmail)}/>
                           <label className="lh-1 text-16 text-light-1">
-                            E-Mail Address
+                            {translate("E-Mail Address")} <span className="text-red">*</span>
                           </label>
                           {errors.company_email && <span className='text-red'> {errors.company_email}</span>}
                         </div>
@@ -342,10 +372,16 @@ const handleMobileNumberChange = (e) => {
                           <input type="text" min={0} max={10}   pattern="[0-9]{10}"
  maxLength={10} required  value={company_mobile} onChange={handleCompanyMobileNumberChange}/>
                           <label className="lh-1 text-16 text-light-1">
-                            Phone Number
+                            {translate("Phone Number")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
+                      <div className="col-md-6">
+                    <div className="form-input m-0">
+                      <input type="text" required defaultValue={ website !== "null" && website !== "" ? website : ""} onChange={handleInputChange(setWebsite)} />
+                      <label className="lh-1 text-16 text-light-1"> {translate("Website")} <span className="text-red">*</span></label>
+                    </div>
+                  </div>
                     </div>
 
                     {/* <div className="col-12">
@@ -357,7 +393,7 @@ const handleMobileNumberChange = (e) => {
                 </div>
               </div>
               <div className="col-md-6 col-12 text-center border-1 p-5">
-                <h1>Authorised Person</h1>
+                <h1>{translate("Authorised Person")}</h1>
                 <div className="form_2">
                   <div className=" y-gap-30 contactForm px-20 py-20 ">
                     <div className="row my-3">
@@ -365,7 +401,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required value={name} onChange={handleInputChange(setName)} />
                           <label className="lh-1 text-16 text-light-1">
-                            Name
+                          {translate("Name")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -373,7 +409,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required  value={surname} onChange={handleInputChange(setSurname)}/>
                           <label className="lh-1 text-16 text-light-1">
-                            Surname
+                          {translate("Surname")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -381,7 +417,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required  value={email} className="mb-1" onChange={handleInputChange(setEmail)}/>
                           <label className="lh-1 text-16 text-light-1">
-                            E-mail Address
+                          {translate("E-mail Address")} <span className="text-red">*</span>
                           </label>
                           {errors.email && <span className='text-red'> {errors.email}</span>}
                         </div>
@@ -390,7 +426,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="text" required maxLength={10}  value={mobile} onChange={handleMobileNumberChange}/>
                           <label className="lh-1 text-16 text-light-1">
-                            Phone Number
+                          {translate("Phone Number")} <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -398,11 +434,10 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="password" required  value={password} onChange={handlePassword}/>
                           <label className="lh-1 text-16 text-light-1">
-                            Password
+                          {translate("Password")} <span className="text-red">*</span>
                           </label>
                           <span>
-                            At least 8 characters include uppercase and lowercase
-                            letters, numbers and special characters
+                          {translate("At least 8 characters include uppercase and lowercase letters, numbers and special characters")}
                           </span>
                           {/* {errors.password && <div className='text-red'> {errors.password}</div>} */}
 
@@ -413,7 +448,7 @@ const handleMobileNumberChange = (e) => {
                         <div className="form-input spacing">
                           <input type="password" required className="mb-2"  onChange={handlePasswordChange}/>
                           <label className="lh-1 text-16 text-light-1">
-                            Confirm Password*
+                          {translate("Confirm Password")} <span className="text-red">*</span> 
                           </label>
                           {error && <div className="text-red">{error}</div>}
                         </div>
@@ -444,8 +479,7 @@ const handleMobileNumberChange = (e) => {
                             </div>
                           </div>
                           <span className="text-14 lh-12 ml-10">
-                            I have read the data protection and I accept the
-                            conditions.
+                          <span className="text-red">*</span> {translate("I have read the data protection and I accept the conditions.")}
                           </span>
                         </label>
                       </div>
