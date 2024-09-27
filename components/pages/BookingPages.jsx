@@ -56,7 +56,7 @@ export default function BookingPages({ BookingData }) {
   const TourType = searchParams.get("type");
   const TourName = searchParams.get("name");
   const TourId = searchParams.get("id");
-  const {formatPrice} = useCurrency();
+  const { formatPrice } = useCurrency();
 
   const [bookingStage, setBookingStage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -924,7 +924,7 @@ export default function BookingPages({ BookingData }) {
                               <input
                                 type="radio"
                                 name={`radioGroup-${type}-${i}`}
-                                value={(`${type}-${i}-${idx}-ad-${option.id}-${option.title}`)}
+                                value={`${type}-${i}-${idx}-ad-${option.id}-${option.title}`}
                                 checked={
                                   formValues[type]?.[i]?.selectedService ==
                                   `${type}-${i}-${idx}-ad-${option.id}-${option.title}`
@@ -953,7 +953,9 @@ export default function BookingPages({ BookingData }) {
                             </label>
                           </div>
                         </div>
-                        <div className="text-14">+ {formatPrice(option.price)} </div>
+                        <div className="text-14">
+                          + {formatPrice(option.price)}{" "}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -1011,10 +1013,12 @@ export default function BookingPages({ BookingData }) {
     coupon_percentage: Discount?.coupon_percentage || 0,
     mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
-    flight_id: BookingSideBar.Airline?.id,
+    flight_id: selectedCheckbox !== false ? 0 : BookingSideBar.Airline?.id,
     exclude_flight: JSON.parse(ExcludeFlight),
     tax: JSON.parse(formattedTaxAmount),
   };
+
+  console.log("ExcludeFlight", ExcludeFlight);
 
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
@@ -1296,7 +1300,7 @@ export default function BookingPages({ BookingData }) {
 
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Amount Due")} </div>
-                      <div className=""> {formatPrice(TotalPaidAmount)}  </div>
+                      <div className=""> {formatPrice(TotalPaidAmount)} </div>
                     </div>
                   </div>
 
