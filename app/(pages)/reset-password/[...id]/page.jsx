@@ -67,7 +67,8 @@ function ResetPassword({params}) {
         console.log(response, 'response')
         if(response){
             showSuccessToast(response.message);
-            router.push('/login');
+            setPassword("");
+            setConfirmPassword("");
         }
       }
   return (
