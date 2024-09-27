@@ -157,7 +157,7 @@ export default function BookingPages({ BookingData }) {
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
-        } 
+        }
       }
 
       if (Login && Login !== "undefined") {
@@ -195,7 +195,7 @@ export default function BookingPages({ BookingData }) {
     }
   }, []);
 
-  // for adult prices array 
+  // for adult prices array
 
   let foundPrices = AlladultsData?.map((item) => item.price);
 
@@ -224,30 +224,28 @@ export default function BookingPages({ BookingData }) {
   const HandleLoginSubmite = async (e) => {
     e.preventDefault();
 
-      try {
-        const response = await post("login", BookingLoginData);
-        typeof window != "undefined"
-          ? localStorage.setItem("token", response.authorisation.token)
-          : "";
-        showSuccessToast("Login successful!");
+    try {
+      const response = await post("login", BookingLoginData);
+      typeof window != "undefined"
+        ? localStorage.setItem("token", response.authorisation.token)
+        : "";
+      showSuccessToast("Login successful!");
 
-        setTimeout(() => {
-          router.push("/");
-        }, 2000);
-      } catch (error) {
-        console.error("Error:", error); // Log the full error for debugging
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast("Please verify your email");
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Error:", error); // Log the full error for debugging
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        showErrorToast("Please verify your email");
+      } else {
+        showErrorToast("An error occurred during registration.");
       }
-   
-     
+    }
   };
 
   // for promocode
@@ -271,7 +269,6 @@ export default function BookingPages({ BookingData }) {
     }
     return Array.from({ length: count }, () => ({ ...defaultValues }));
   };
-  
 
   const [formValues, setFormValues] = useState({
     Adult: initializeFormValues(adultData?.length || 0, {
@@ -616,7 +613,6 @@ export default function BookingPages({ BookingData }) {
         additional_price_id: userProfile.additional_price_id || "",
         address: userProfile.address || "",
       });
-
     } else {
       console.error("Unexpected response structure:", response);
     }
@@ -849,7 +845,7 @@ export default function BookingPages({ BookingData }) {
                           <>
                             <select
                               name={field.name}
-                              value={fieldValue || ""} 
+                              value={fieldValue || ""}
                               onChange={(e) => handleInputChange(type, i, e)}
                               required
                               className="form-control"
@@ -1072,11 +1068,14 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  console.log("formValues" , formValues);
+  console.log("formValues", formValues);
 
- console.log(" adultData babyData Childrendata" ,  adultData.length ,  babyData.length ,  Childrendata.length);
- 
-  
+  console.log(
+    " adultData babyData Childrendata",
+    adultData.length,
+    babyData.length,
+    Childrendata.length
+  );
 
   const { translate } = useTranslation();
 
@@ -1160,7 +1159,9 @@ export default function BookingPages({ BookingData }) {
                   <div className="px-1">
                     <div
                       className={`${
-                        selectedCheckbox && BookingSideBar?.Airline === null
+                        (selectedCheckbox &&
+                          BookingSideBar?.Airline === null) ||
+                        BookingSideBar.selectedCheckbox !== false
                           ? "d-none"
                           : "d-block"
                       }`}
@@ -1194,7 +1195,11 @@ export default function BookingPages({ BookingData }) {
                     </div>
 
                     <div
-                      className={`${selectedCheckbox ? "d-none" : "d-block"}`}
+                      className={`${
+                        BookingSideBar.selectedCheckbox !== false
+                          ? "d-none"
+                          : "d-block"
+                      }`}
                     >
                       <div
                         className={`d-flex items-center justify-content-space-arround `}
@@ -1369,7 +1374,7 @@ export default function BookingPages({ BookingData }) {
               <h2 className=""></h2>
             </div>
 
-            <form
+            {/* <form
               onSubmit={HandleLoginSubmite}
               className="contactForm border-1  rounded-12 px-40 py-1 "
             >
@@ -1484,8 +1489,13 @@ export default function BookingPages({ BookingData }) {
                   </button>
                 </div>
               </div>
-            </form>
-            {/* <Login /> */}
+            </form> */}
+
+            <button onClick={closeModal}>
+              <IoClose size={25} />
+            </button>
+
+            <Login classfor={`col-12`} sectionClass={` `} hide={false} />
           </section>
         </Modal>
       </div>

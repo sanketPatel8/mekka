@@ -12,7 +12,7 @@ import { useCurrency } from "@/app/context/currencyContext";
 
 export default function Tour1() {
   const [LatestPackage, setLatestPackage] = useState([]);
-  const {formatPrice} = useCurrency();
+  const { formatPrice } = useCurrency();
 
   console.log(formatPrice(1000), "formatPrice");
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Tour1() {
         }
       } catch (error) {
         console.error("Error caught:", error);
-        showErrorToast(error?.message  + " " + "in Latest Package");
+        showErrorToast(error?.message + " " + "in Latest Package");
       }
     };
     fetchData();
@@ -120,14 +120,14 @@ export default function Tour1() {
                   <div className="tourCard__rating d-flex items-center text-13 mt-5">
                     <div className="d-flex items-center mt-5">
                       <div className="d-flex items-center x-gap-5">
-                        <Stars star={elm?.rating_count} font={12} />
+                        {/* <Stars star={elm?.rating_count} font={12} /> */}
                       </div>
                       <div className="text-14 ml-5">
-                        <span className="fw-500">{elm?.rating}</span> (
-                        {elm?.rating_count}) -{" "}
+                        <span className="fw-500">{elm?.rating}</span>
+                        {/* {elm?.rating_count}) -{" "} */}
                         {elm?.company_name == null
                           ? "No Compny  "
-                          : elm?.company_name}
+                          : elm?.company_name}{" "}
                       </div>
                     </div>
                   </div>
@@ -148,7 +148,9 @@ export default function Tour1() {
                       }`}
                     >
                       From{" "}
-                      <span className="text-16 fw-500">{formatPrice(elm.tour_price)}</span>
+                      <span className="text-16 fw-500">
+                        {formatPrice(elm.tour_price)}
+                      </span>
                     </div>
                   </div>
                 </div>

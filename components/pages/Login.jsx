@@ -14,10 +14,24 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import dynamic from "next/dynamic";
 import { POST } from "@/app/utils/api/post";
 
-export default function Login({ onLoginSuccess }) {
-  const LoginSocialFacebook = dynamic(() => import('reactjs-social-login').then((mod) => mod.LoginSocialFacebook), { ssr: false });
-  const LoginSocialGoogle = dynamic(() => import('reactjs-social-login').then((mod) => mod.LoginSocialGoogle), { ssr: false });
-  const LoginSocialApple = dynamic(() => import('reactjs-social-login').then((mod) => mod.LoginSocialApple), { ssr: false });
+export default function Login({
+  onLoginSuccess,
+  classfor,
+  sectionClass,
+  hide,
+}) {
+  const LoginSocialFacebook = dynamic(
+    () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
+    { ssr: false }
+  );
+  const LoginSocialGoogle = dynamic(
+    () => import("reactjs-social-login").then((mod) => mod.LoginSocialGoogle),
+    { ssr: false }
+  );
+  const LoginSocialApple = dynamic(
+    () => import("reactjs-social-login").then((mod) => mod.LoginSocialApple),
+    { ssr: false }
+  );
 
   const [LogInData, setLogInData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -27,40 +41,35 @@ export default function Login({ onLoginSuccess }) {
   const { LoginPer, setLoginPer } = useGlobalState();
   const [LoginISChacked, setLoginISChacked] = useState(false);
   const { dispatch } = useAuthContext();
-  const [LoginChecked, setLoginChecked] = useState(true)
+  const [LoginChecked, setLoginChecked] = useState(true);
 
   const router = useRouter();
 
   const LoginUpdate = () => {
-    const loginStatus = JSON.parse(
-      localStorage.getItem("CustomerLoginCheck")
-    );
+    const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
 
-    const updatedStatus = loginStatus !== undefined ? true : false
+    const updatedStatus = loginStatus !== undefined ? true : false;
 
     localStorage.setItem("CustomerLoginCheck", JSON.stringify(updatedStatus));
 
     console.log("Updated login status:", updatedStatus);
-
-
-  }
-
+  };
 
   const signinSocial = async ({ type, data }) => {
-    console.log(data)
-    console.log("hi")
+    console.log(data);
+    console.log("hi");
     const formData = new FormData();
-    formData.append('auth_id', data?.sub);
-    formData.append('auth_provider', type);
+    formData.append("auth_id", data?.sub);
+    formData.append("auth_provider", type);
     formData.append("name", data?.name);
     formData.append("email", data?.email);
-    const resp = await POST.request({ form: formData, url: 'social_login' });
+    const resp = await POST.request({ form: formData, url: "social_login" });
     if (resp) {
       if (resp) {
         showSuccessToast("Successfully logged in.");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-        LoginUpdate()
+        LoginUpdate();
         setTimeout(() => {
           setLoginPer(true);
           router.push("/");
@@ -90,8 +99,7 @@ export default function Login({ onLoginSuccess }) {
   const handleLoginCheckboxChange = (e) => {
     const isChecked = e.target.checked;
     setLoginISChacked(isChecked);
-    localStorage.setItem("LoginISChacked", isChecked)
-
+    localStorage.setItem("LoginISChacked", isChecked);
   };
 
   const handleLoginSubmit = async (e) => {
@@ -110,11 +118,11 @@ export default function Login({ onLoginSuccess }) {
           showErrorToast(resp.message);
         }
         if (resp.user.user_type == "customer") {
-          localStorage.setItem("customer", JSON.stringify(resp))
+          localStorage.setItem("customer", JSON.stringify(resp));
 
           dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
           showSuccessToast("Login successful!");
-          LoginUpdate()
+          LoginUpdate();
           setTimeout(() => {
             setLoginPer(true);
             router.push("/");
@@ -127,8 +135,6 @@ export default function Login({ onLoginSuccess }) {
             password: "",
           });
         }
-
-
       })
       .catch((err) => {
         // showErrorToast("Invalid Email or Password");
@@ -136,21 +142,23 @@ export default function Login({ onLoginSuccess }) {
   };
 
   return (
-    <section className="mt-header layout-pt-lg layout-pb-lg">
+    <section className={`${sectionClass}  layout-pb-lg`}>
       <ToastContainer />
       <div className="container">
         <div className="row justify-center">
-          <div className="col-xl-6 col-lg-7 col-md-9">
+          <div className={classfor}>
             <div className="text-center mb-60 md:mb-30">
               <h1 className="text-30"> {translate("Log In")}</h1>
-              <div className="text-18 fw-500 mt-20 md:mt-15">
-                {translate("We're Glad To See You Again!")}
-              </div>
-              <div className="mt-5">
-                {translate("Don't Have An Account?")}
-                <Link href="/register" className="text-accent-1">
-                  {translate("Sign Up!")}
-                </Link>
+              <div className={hide === false ? "d-none" : "d-block"}>
+                <div className="text-18 fw-500 mt-20 md:mt-15">
+                  {translate("We're Glad To See You Again!")}
+                </div>
+                <div className="mt-5">
+                  {translate("Don't Have An Account?")}
+                  <Link href="/register" className="text-accent-1">
+                    {translate("Sign Up!")}
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -241,15 +249,14 @@ export default function Login({ onLoginSuccess }) {
                     type="button"
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
-
                     <LoginSocialFacebook
-                      appId={process.env.REACT_APP_FB_APP_ID || ''}
+                      appId={process.env.REACT_APP_FB_APP_ID || ""}
                       fieldsProfile={
-                        'id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender'
+                        "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                       }
-                      onLoginStart={() => console.log('start')}
+                      onLoginStart={() => console.log("start")}
                       onResolve={({ provider, data }) => {
-                        signinSocial({ type: 'facebook', data });
+                        signinSocial({ type: "facebook", data });
                       }}
                       onReject={(err) => {
                         console.log(err);
@@ -267,23 +274,20 @@ export default function Login({ onLoginSuccess }) {
                     className="button -md -outline-red-1 text-red-1 col-12"
                   >
                     <LoginSocialGoogle
-                      client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}
-                      onLoginStart={() => console.log('start')}
-
+                      client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
+                      onLoginStart={() => console.log("start")}
                       scope="openid profile email"
                       discoveryDocs="claims_supported"
                       access_type="online"
                       onResolve={({ provider, data }) => {
-                        signinSocial({ type: 'google', data });
+                        signinSocial({ type: "google", data });
                       }}
                       onReject={(err) => {
                         console.log(err);
                       }}
-
                     >
                       <FaGoogle size={15} className="mx-1" />
                       {translate("Google")}
-
                     </LoginSocialGoogle>
                   </button>
                   {/* <button
@@ -301,13 +305,12 @@ export default function Login({ onLoginSuccess }) {
                     type="button"
                     className="button -md -outline-dark-1 text-dark-1 col-12"
                   >
-
                     <LoginSocialApple
-                      client_id={process.env.REACT_APP_APPLE_ID || ''}
-                      scope={'name email'}
-                      onLoginStart={() => console.log('start')}
+                      client_id={process.env.REACT_APP_APPLE_ID || ""}
+                      scope={"name email"}
+                      onLoginStart={() => console.log("start")}
                       onResolve={({ provider, data }) => {
-                        signinSocial({ type: 'facebook', data });
+                        signinSocial({ type: "facebook", data });
                       }}
                       onReject={(err) => {
                         console.log(err);
@@ -316,7 +319,6 @@ export default function Login({ onLoginSuccess }) {
                       <FaApple size={15} className="mx-1" />
                       {translate("Sign in With Apple")}
                     </LoginSocialApple>
-
                   </button>
                 </div>
               </div>

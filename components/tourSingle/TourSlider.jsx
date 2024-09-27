@@ -14,12 +14,18 @@ import { useCurrency } from "@/app/context/currencyContext";
 
 export default function TourSlider({ PAckageData }) {
   const { translate } = useTranslation();
-  const {formatPrice} = useCurrency();
+  const { formatPrice } = useCurrency();
   const [slibleTourSlider, setslibleTourSlider] = useState([]);
 
   useEffect(() => {
     setslibleTourSlider(PAckageData?.Tour_List);
   }, [PAckageData]);
+
+  console.log("slibleTourSlider", slibleTourSlider);
+
+  // const tournames = slibleTourSlider.map((elm) => elm.tour_image);
+
+  // console.log("tournames", tournames);
 
   return (
     <section className="">
@@ -77,7 +83,11 @@ export default function TourSlider({ PAckageData }) {
                           <Image
                             width={421}
                             height={301}
-                            src="/_next/image?url=%2Fimg%2FtourCards%2F1%2F13.jpeg&w=1080&q=75"
+                            src={
+                              elm.tour_image
+                                ? elm.tour_image
+                                : "/img/404/imgnotFound.png"
+                            }
                             alt="image"
                             className="img-ratio rounded-12"
                           />
@@ -148,7 +158,7 @@ export default function TourSlider({ PAckageData }) {
                           >
                             From{" "}
                             <span className="text-16 fw-500">
-                              {formatPrice(elm.tour_price)} 
+                              {formatPrice(elm.tour_price)}
                             </span>
                           </div>
                         </div>

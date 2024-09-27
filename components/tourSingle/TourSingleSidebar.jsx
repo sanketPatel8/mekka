@@ -496,6 +496,7 @@ export default function TourSingleSidebar({
     duration: SidebarData?.tour_details?.travel_duration,
     startDate: SidebarData?.tour_details?.date_begin,
     endDate: SidebarData?.tour_details?.date_end,
+    selectedCheckbox: selectedCheckbox,
   };
 
   const handleBooking = () => {

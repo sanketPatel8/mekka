@@ -27,7 +27,6 @@ export default function TourSliderTwo() {
     try {
       const response = await post("best_seller_tour", BookingLoginData);
       setBestSellerData(response?.Tours);
-    
     } catch (error) {
       console.error("Error:", error); // Log the full error for debugging
       if (
@@ -126,7 +125,7 @@ export default function TourSliderTwo() {
                             }`}
                           >
                             <FaPersonWalking color="white" size={18} />
-                            Zu Kaaba {elm.distance_to_hotel} 
+                            Zu Kaaba {elm.distance_to_hotel}
                           </div>
 
                           <h3
@@ -142,11 +141,11 @@ export default function TourSliderTwo() {
                           <div className="tourCard__rating d-flex items-center text-13 mt-5">
                             <div className="d-flex items-center mt-5">
                               <div className="d-flex items-center x-gap-5">
-                                <Stars star={elm?.rating_count} font={12} />
+                                {/* <Stars star={elm?.rating_count} font={12} /> */}
                               </div>
                               <div className="text-14 ml-5">
-                                <span className="fw-500">{elm?.rating}</span> (
-                                {elm?.rating_count}) -{" "}
+                                {/* <span className="fw-500">{elm?.rating}</span> (
+                                {elm?.rating_count}) -{" "} */}
                                 {elm?.company_name == null
                                   ? "No Compny  "
                                   : elm?.company_name}

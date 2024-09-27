@@ -36,7 +36,7 @@ export default function TourList4({
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
   const [sidebarActive, setSidebarActive] = useState(false);
-  const {formatPrice} = useCurrency();
+  const { formatPrice } = useCurrency();
   const startParam = "start";
 
   // for loader
@@ -228,11 +228,12 @@ export default function TourList4({
                         </div>
                         <div className="d-flex items-center mt-5">
                           <div className="d-flex items-center x-gap-5">
-                            <Stars star={elm?.rating_count} font={12} />
+                            {/* <Stars star={elm?.rating_count} font={12} /> */}
                           </div>
                           <div className="text-14 ml-10">
-                            <span className="fw-500">{elm?.rating}</span> (
-                            {elm?.rating_count}) - {elm?.company_name}
+                            {/* <span className="fw-500">{elm?.rating}</span> ( */}
+                            {/* {elm?.rating_count}) - */}
+                            {elm?.company_name}
                           </div>
                         </div>
 
@@ -272,7 +273,7 @@ export default function TourList4({
                             <div></div>
                             <div className="d-flex items-center justify-content-center">
                               <p className="text-20 fw-500 ml-5 text-center">
-                                {formatPrice(elm?.tour_price)} 
+                                {formatPrice(elm?.tour_price)}
                               </p>
                             </div>
                             <p className="text-left text-md-center text-lg-center text-xl-center">
