@@ -32,7 +32,6 @@ export default function TourSingleSidebar({
 
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
-
   const [extraService, setExtraService] = useState("");
   const [isServicePerPerson, setIsServicePerPerson] = useState(false);
   const [extraCharge, setExtraCharge] = useState(0);
@@ -55,7 +54,7 @@ export default function TourSingleSidebar({
   });
 
   const [LocalData, setLocalData] = useState([]);
-
+  
   useEffect(() => {
     if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
       const firstMekkaHotel = SidebarData.tour_hotels.mekka_hotels[0];
@@ -71,7 +70,7 @@ export default function TourSingleSidebar({
       }));
       setselectedmekkaHotelPrice(firstMekkaHotel.hotel_price);
     }
-
+    console.log(SidebarData, "SidebarData");
     if (SidebarData?.tour_hotels?.medina_hotels?.length > 0) {
       const firstMadinaHotel = SidebarData.tour_hotels.medina_hotels[0];
       setmadinaId(firstMadinaHotel.id);
@@ -510,6 +509,8 @@ export default function TourSingleSidebar({
         "PackageBookingData",
         JSON.stringify(PackageBookingData)
       );
+    
+      localStorage.setItem("company_code", SidebarData?.tour_details?.company_code);
     }
 
     setRender(true);
@@ -639,7 +640,7 @@ export default function TourSingleSidebar({
                   </label>
                 </div>
               </div>
-              <div className="text-14">{elm.hotel_price} €</div>
+              <div className="text-14">{formatPrice(elm.hotel_price)}</div>
             </div>
           </div>
         ))}
@@ -680,7 +681,7 @@ export default function TourSingleSidebar({
                   </label>
                 </div>
               </div>
-              <div className="text-14">{elm.hotel_price} €</div>
+              <div className="text-14">{formatPrice(elm.hotel_price)}</div>
             </div>
           </div>
         ))}
@@ -778,7 +779,7 @@ export default function TourSingleSidebar({
                   </div>
                 </div>
 
-                <div className="text-14">{elm?.flight_amount} €</div>
+                <div className="text-14">{formatPrice(elm?.flight_amount)}</div>
               </div>
             ))}
           </div>
@@ -841,7 +842,7 @@ export default function TourSingleSidebar({
                                 ? "No Departure"
                                 : elm.departure}
                             </span>
-                            <span>{elm.price}</span>
+                            <span>{formatPrice(elm.price)}</span>
                           </button>
                         </div>
                       ))}

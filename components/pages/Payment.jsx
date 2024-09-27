@@ -17,9 +17,12 @@ import { post } from "@/app/utils/api";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import Stripeform from "../stripe/stripeform";
+import { useCurrency } from "@/app/context/currencyContext";
+import { type } from "jquery";
 
 export default function Payment() {
   const router = useRouter();
+  const {formatPrice} = useCurrency();
 
   const [roomType, setRoomType] = useState("");
   const [bookingStage, setBookingStage] = useState(1);
@@ -46,7 +49,8 @@ export default function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
-
+  const companyCode  = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("company_code")) : '';
+  console.log(companyCode, 'companyCode')
   const dateInputRef = useRef(null);
 
   const handleCheckboxChange = (index) => {
@@ -691,7 +695,7 @@ export default function Payment() {
                         <label htmlFor="agbAcceptance" className="lh-16 ml-15">
                         <span className="text-red">* </span>
                           {translate(
-                            "I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE."
+                            `I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the ${companyCode !== null ? companyCode : ""}.`
                           )}
                         </label>
                       </div>
@@ -760,7 +764,7 @@ export default function Payment() {
                         <div className="col-md-3 col-6">
                           <div>Total</div>
                           <div className="text-accent-2">
-                            {SideBarData.BookingFild?.SubTotal} €
+                            {formatPrice(SideBarData.BookingFild?.SubTotal)} 
                           </div>
                         </div>
 
@@ -988,7 +992,7 @@ export default function Payment() {
                     <div className="fw-500"> {translate("Subtotal")}</div>
                     <div className="">
                       {" "}
-                      {SideBarData.BookingFild?.SubTotal} €{" "}
+                      {formatPrice(SideBarData.BookingFild?.SubTotal)} {" "}
                     </div>
                   </div>
 
@@ -1012,7 +1016,7 @@ export default function Payment() {
                   {paidAmount && (
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500"> {translate("Amount Paid")}</div>
-                      <div className=""> {paidAmount} € </div>
+                      <div className=""> {formatPrice(paidAmount)}  </div>
                     </div>
                   )}
 
@@ -1022,7 +1026,7 @@ export default function Payment() {
                         <div className="fw-500"> {translate("Amount Due")}</div>
                         <div className="">
                           {" "}
-                          {SideBarData.BookingFild?.SubTotal - paidAmount}€{" "}
+                          {formatPrice(SideBarData.BookingFild?.SubTotal - paidAmount)}{" "}
                         </div>
                       </div>
                     )}

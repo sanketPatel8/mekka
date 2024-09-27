@@ -3,11 +3,14 @@ import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
+import { useCurrency } from '@/app/context/currencyContext';
 
 function Stripeform({ showStripeModal,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID }) {
   console.log(amount, 'amount')
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
+  const {currency} = useCurrency();
+  console.log(currency, 'currency')
   const getClientSecret = async () => {
     const api = axios.create({
       baseURL: 'https://api.stripe.com/v1/',

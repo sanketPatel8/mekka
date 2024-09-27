@@ -137,7 +137,7 @@ const validate = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !SelectedCountry || !website || !company_email || !company_mobile || !agreeToTerms){ 
+  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !SelectedCountry  || !company_email || !company_mobile || !agreeToTerms){ 
     showErrorToast("Please fill all the fields");
     return;
   }
@@ -376,7 +376,7 @@ const handleMobileNumberChange = (e) => {
                       <div className="col-md-6">
                     <div className="form-input m-0">
                       <input type="text" required defaultValue={ website !== "null" && website !== "" ? website : ""} onChange={handleInputChange(setWebsite)} />
-                      <label className="lh-1 text-16 text-light-1"> {translate("Website")} <span className="text-red">*</span></label>
+                      <label className="lh-1 text-16 text-light-1"> {translate("Website")}</label>
                     </div>
                   </div>
                     </div>

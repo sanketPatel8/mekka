@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import { createTheme } from "@mui/material/styles";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
+import { useCurrency } from "@/app/context/currencyContext";
 
 const theme = createTheme({
   palette: {
@@ -19,7 +20,7 @@ const theme = createTheme({
 
 export default function RangeSlider({ value, setValue }) {
   // const {value , setValue} = useGlobalState()
-
+  const {formatPrice} = useCurrency();
   const handleChange = (event, newValue) => { 
     setValue(newValue);
   };
@@ -43,9 +44,9 @@ export default function RangeSlider({ value, setValue }) {
         <div className="d-flex justify-between mt-20">
           <div className="">
             <span className="">Price: </span>
-            <span className="fw-500 js-lower">{value[0]} €</span>
+            <span className="fw-500 js-lower">{formatPrice(value[0])}</span>
             <span> - </span>
-            <span className="fw-500 js-upper">{value[1]} €</span>
+            <span className="fw-500 js-upper">{formatPrice(value[1])}</span>
           </div>
         </div>
       </div>
