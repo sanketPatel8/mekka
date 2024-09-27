@@ -86,7 +86,13 @@ export default function OthersInformation({ PAckageData, id }) {
             <div className="ml-10">
               <div className="lh-16">{translate("Languages")}</div>
               <div className="text-14 text-light-2 lh-16">
-                {TourList?.en_language}
+                <div className="row">
+                  {TourList?.en_language?.map((elm, index) => (
+                    <div className="col-6" key={index}>
+                      {elm}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
