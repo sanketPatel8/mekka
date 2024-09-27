@@ -69,6 +69,11 @@ function ResetPassword({params}) {
             showSuccessToast(response.message);
             setPassword("");
             setConfirmPassword("");
+            if(response.user_type === "vendor"){
+                router.push("/partner-login");
+            }else if(response.user_type === "customer"){
+                router.push("/login");
+            }
         }
       }
   return (
