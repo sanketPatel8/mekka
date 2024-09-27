@@ -19,7 +19,7 @@ const RoadMap = ({ PAckageData,hotelData }) => {
       {hotelData?.mekka_hotel &&  (
         <div >
           <h4>Hotel for Makkah</h4>
-          <h5>{hotelData?.mekka_hotel.hotel_name}</h5>
+          <h5>{hotelData?.mekka_hotel.hotel_name} ({hotelData?.mekka_hotel?.hotel_stars} star)</h5>
           <p>{hotelData?.mekka_hotel.hotel_info}</p>
           <br />
           <p>The distance to the Kaaba is {hotelData?.mekka_hotel.km}</p>
@@ -39,7 +39,7 @@ const RoadMap = ({ PAckageData,hotelData }) => {
       {hotelData?.madina_hotel && (
         <div  className="mt-50">
           <h4>Hotel for Madina</h4>
-          <h5>{hotelData?.madina_hotel.hotel_name}</h5>
+          <h5>{hotelData?.madina_hotel.hotel_name} ({hotelData?.madina_hotel?.hotel_stars} star)</h5>
           <p>{hotelData?.madina_hotel.hotel_info}</p>
           <br />
           <p>The distance to the Kaaba is {hotelData?.madina_hotel.km}</p>
