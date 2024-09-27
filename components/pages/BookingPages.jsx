@@ -1158,7 +1158,9 @@ export default function BookingPages({ BookingData }) {
                   <div className="px-1">
                     <div
                       className={`${
-                        selectedCheckbox && BookingSideBar?.Airline === null
+                        (selectedCheckbox &&
+                          BookingSideBar?.Airline === null) ||
+                        BookingSideBar.selectedCheckbox !== false
                           ? "d-none"
                           : "d-block"
                       }`}
@@ -1192,7 +1194,11 @@ export default function BookingPages({ BookingData }) {
                     </div>
 
                     <div
-                      className={`${selectedCheckbox ? "d-none" : "d-block"}`}
+                      className={`${
+                        BookingSideBar.selectedCheckbox !== false
+                          ? "d-none"
+                          : "d-block"
+                      }`}
                     >
                       <div
                         className={`d-flex items-center justify-content-space-arround `}

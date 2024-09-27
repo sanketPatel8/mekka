@@ -813,27 +813,42 @@ export default function Payment() {
                 <div className="line mt-20 mb-2"></div>
 
                 <div className="px-1">
-                  <div className="d-flex items-center justify-content-space-arround ">
-                    <div className="mr-5">
-                      <FaTelegramPlane size={25} color="#DAC04F" />
+                  <div
+                    className={
+                      SideBarData?.selectedCheckbox !== false
+                        ? "d-none"
+                        : "d-block"
+                    }
+                  >
+                    <div className="d-flex items-center justify-content-space-arround ">
+                      <div className="mr-5">
+                        <FaTelegramPlane size={25} color="#DAC04F" />
+                      </div>
+                      <div className="text-start">
+                        {translate("Airline")} : {SideBarData?.Airline?.name}
+                      </div>
                     </div>
-                    <div className="text-start">
-                      {translate("Airline")} : {SideBarData?.Airline?.name}
-                    </div>
+                    <div className="line mt-5 mb-5"></div>
                   </div>
 
-                  <div className="line mt-5 mb-5"></div>
-
-                  <div className="d-flex items-center justify-content-space-arround">
-                    <div className="mr-5">
-                      <MdFlightTakeoff size={25} color="#DAC04F" />
+                  <div
+                    className={
+                      SideBarData?.selectedCheckbox !== false
+                        ? "d-none"
+                        : "d-block"
+                    }
+                  >
+                    <div className="d-flex items-center justify-content-space-arround">
+                      <div className="mr-5">
+                        <MdFlightTakeoff size={25} color="#DAC04F" />
+                      </div>
+                      <div className="text-start">
+                        {translate("Departure")} :{" "}
+                        {SideBarData?.Departure?.name}
+                      </div>
                     </div>
-                    <div className="text-start">
-                      {translate("Departure")} : {SideBarData?.Departure?.name}
-                    </div>
+                    <div className="line mt-5 mb-5"></div>
                   </div>
-
-                  <div className="line mt-5 mb-5"></div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5">
@@ -870,20 +885,28 @@ export default function Payment() {
 
                   <div className="line mt-5 mb-5"></div>
 
-                  <div className="d-flex items-center justify-content-space-arround">
-                    <div className="mr-5">
-                      <FaLuggageCart size={25} color="#DAC04F" />
+                  <div
+                    className={
+                      SideBarData?.selectedCheckbox !== false
+                        ? "d-none"
+                        : "d-block"
+                    }
+                  >
+                    <div className="d-flex items-center justify-content-space-arround">
+                      <div className="mr-5">
+                        <FaLuggageCart size={25} color="#DAC04F" />
+                      </div>
+                      <div className="text-start">
+                        {translate("Max Luggage Per Person")} :{" "}
+                        {SideBarData?.Airline?.luggage === null
+                          ? " null aa raha hei ! "
+                          : SideBarData?.Airline?.luggage}{" "}
+                        kg
+                      </div>
                     </div>
-                    <div className="text-start">
-                      {translate("Max Luggage Per Person")} :{" "}
-                      {SideBarData?.Airline?.luggage === null
-                        ? " null aa raha hei ! "
-                        : SideBarData?.Airline?.luggage}{" "}
-                      kg
-                    </div>
-                  </div>
 
-                  <div className="line mt-5 mb-5"></div>
+                    <div className="line mt-5 mb-5"></div>
+                  </div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5">

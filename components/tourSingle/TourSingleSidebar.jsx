@@ -496,6 +496,7 @@ export default function TourSingleSidebar({
     duration: SidebarData?.tour_details?.travel_duration,
     startDate: SidebarData?.tour_details?.date_begin,
     endDate: SidebarData?.tour_details?.date_end,
+    selectedCheckbox: selectedCheckbox,
   };
 
   const handleBooking = () => {
@@ -573,6 +574,7 @@ export default function TourSingleSidebar({
                   ? "Child (13-17 Years)"
                   : "Baby (0-12 Years)"}
                 <span className="fw-500">
+                  {" "}
                   {(group.price * count).toFixed(2)} €
                 </span>
               </div>

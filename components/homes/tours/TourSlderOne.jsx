@@ -17,7 +17,7 @@ import { useCurrency } from "@/app/context/currencyContext";
 export default function TourSlderOne() {
   const [showSwiper, setShowSwiper] = useState(false);
   const [TopTranding, setTopTranding] = useState([]);
-  const {formatPrice} = useCurrency();
+  const { formatPrice } = useCurrency();
   useEffect(() => {
     setShowSwiper(true);
     fetchData();
@@ -48,7 +48,6 @@ export default function TourSlderOne() {
       }
     }
   };
-
 
   const { translate } = useTranslation();
 
@@ -127,7 +126,11 @@ export default function TourSlderOne() {
                             <Image
                               width={421}
                               height={301}
-                              src={elm.tour_image ? elm.tour_image : "/img/404/imgnotFound.png"}
+                              src={
+                                elm.tour_image
+                                  ? elm.tour_image
+                                  : "/img/404/imgnotFound.png"
+                              }
                               alt="image"
                               className="img-ratio rounded-12"
                             />
@@ -135,7 +138,10 @@ export default function TourSlderOne() {
 
                           <button
                             className={`tourCard__favorite ${
-                              elm.direct_flight == "0" || elm.direct_flight == null ? "d-none" : "d-block"
+                              elm.direct_flight == "0" ||
+                              elm.direct_flight == null
+                                ? "d-none"
+                                : "d-block"
                             }`}
                           >
                             {translate("Direct Flight")}
@@ -149,7 +155,7 @@ export default function TourSlderOne() {
                             }`}
                           >
                             <FaPersonWalking color="white" size={18} />
-                            Zu Kaaba {elm.distance_to_hotel} 
+                            Zu Kaaba {elm.distance_to_hotel}
                           </div>
 
                           <h3
@@ -166,11 +172,11 @@ export default function TourSlderOne() {
                           <div className="tourCard__rating d-flex items-center text-13 mt-5">
                             <div className="d-flex items-center mt-5">
                               <div className="d-flex items-center x-gap-5">
-                                <Stars star={elm?.rating_count} font={12} />
+                                {/* <Stars star={elm?.rating_count} font={12} /> */}
                               </div>
                               <div className="text-14 ml-5">
-                                <span className="fw-500">{elm?.rating}</span> (
-                                {elm?.rating_count}) -{" "}
+                                {/* <span className="fw-500">{elm?.rating}</span> (
+                                {elm?.rating_count}) -{" "} */}
                                 {elm?.company_name == null
                                   ? "No Compny  "
                                   : elm?.company_name}
@@ -195,7 +201,7 @@ export default function TourSlderOne() {
                             >
                               From{" "}
                               <span className="text-16 fw-500">
-                                {formatPrice(elm.tour_price)} 
+                                {formatPrice(elm.tour_price)}
                               </span>
                             </div>
                           </div>
