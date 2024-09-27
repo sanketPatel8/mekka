@@ -574,7 +574,7 @@ export default function TourSingleSidebar({
                   ? "Child (13-17 Years)"
                   : "Baby (0-12 Years)"}
                 <span className="fw-500">
-                  { "" } {formatPrice((group.price * count).toFixed(2))} 
+                  {""} {formatPrice((group.price * count).toFixed(2))}
                 </span>
               </div>
 

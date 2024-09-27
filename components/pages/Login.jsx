@@ -143,7 +143,9 @@ export default function Login({
 
   return (
     <section className={`${sectionClass}  layout-pb-lg`}>
-      <ToastContainer />
+      <div className={hide === false ? "d-none" : "d-block"}>
+        <ToastContainer />
+      </div>
       <div className="container">
         <div className="row justify-center">
           <div className={classfor}>
