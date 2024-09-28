@@ -11,6 +11,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import Currency from "../components/Currency";
 import { FaUserPlus, FaUser } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
+import DashboardCustomer from "../components/DashboardCustomer";
 
 export default function Header1() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function Header1() {
   };
 
   const [locale, setLocale] = useState("DE");
-  const [currenyLocale,setCurrencyLocale] = useState("Euro");
+  const [currenyLocale, setCurrencyLocale] = useState("Euro");
 
   useEffect(() => {
     // Get cookies to set the locale
@@ -61,12 +62,11 @@ export default function Header1() {
     }
   }, []);
 
-  // useEffect(() => {  
+  // useEffect(() => {
   //  if(LoginCheck === false){
   //   localStorage.removeItem("customer");
   //  }
   // }, [LoginCheck])
-  
 
   const { translate } = useTranslation(locale);
 
@@ -134,7 +134,7 @@ export default function Header1() {
             </div>
 
             <div className="d-flex items-center">
-              <Currency currenyLocale={currenyLocale}/>
+              <Currency currenyLocale={currenyLocale} />
 
               <Language
                 parentClass="headerDropdown"
@@ -142,11 +142,15 @@ export default function Header1() {
                 locale={locale}
               />
 
-              <Link
-                href={LoginCheck ? "/customer/profile" : "/register"}
-                className={`mx-2`}
-              >
-                {LoginCheck ? <FaUser size={20} /> : <FaUserPlus size={20} />}
+              <Link href={LoginCheck ? "" : "/register"} className={`mx-2`}>
+                {LoginCheck ? (
+                  <DashboardCustomer
+                    onLocaleChange={setLocale}
+                    handleLogoutClick={handleLogoutClick}
+                  />
+                ) : (
+                  "Register"
+                )}
               </Link>
 
               {/* <button

@@ -1,7 +1,6 @@
 import { useTranslation } from "@/app/context/TranslationContext";
 import { useState, useEffect, useRef } from "react";
 
-
 const currencies = ["DE", "EN"];
 
 export default function Language({ parentClass, onLocaleChange, locale }) {
@@ -33,7 +32,6 @@ export default function Language({ parentClass, onLocaleChange, locale }) {
     }
     setCurrentdd("");
     document.cookie = `locale=${locale}; max-age=31536000; path=/`;
-
   };
 
   const { setLocale } = useTranslation();
@@ -54,8 +52,9 @@ export default function Language({ parentClass, onLocaleChange, locale }) {
       </div>
 
       <div
-        className={`headerDropdown__content ${currentdd === "currency" ? "is-active" : ""
-          }`}
+        className={`headerDropdown__content ${
+          currentdd === "currency" ? "is-active" : ""
+        }`}
       >
         <div className="headerDropdown">
           <div className="headerDropdown__container">

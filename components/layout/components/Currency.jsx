@@ -3,13 +3,10 @@
 import { useCurrency } from "@/app/context/currencyContext";
 import { useState, useEffect, useRef } from "react";
 
-const currencies = [
-  "Euro",
-  "USD",
-];
+const currencies = ["Euro", "USD"];
 
-export default function Currency({ parentClass, currencyLocale } ) {
-  console.log(currencyLocale, "currencyLocale")
+export default function Currency({ parentClass, currencyLocale }) {
+  console.log(currencyLocale, "currencyLocale");
   const [currentdd, setCurrentdd] = useState("");
   // const [selectedCurrency, setSelectedCurrency] = useState("");
   const dropDownContainer = useRef();
@@ -45,16 +42,15 @@ export default function Currency({ parentClass, currencyLocale } ) {
     >
       <div
         className="headerDropdown__button"
-        onClick={() =>{
-          setCurrentdd((pre) => (pre == "currency" ? "" : "currency"))
-          console.log(currentdd, "currentdd")
-        }
-        }
+        onClick={() => {
+          setCurrentdd((pre) => (pre == "currency" ? "" : "currency"));
+          console.log(currentdd, "currentdd");
+        }}
       >
         {currency == "Euro" ? "Euro" : "USD"}
         <i className="icon-chevron-down text-18"></i>
       </div>
-    
+
       <div
         className={`headerDropdown__content ${
           currentdd == "currency" ? "is-active" : ""
@@ -65,7 +61,7 @@ export default function Currency({ parentClass, currencyLocale } ) {
             {currencies.map((elm, i) => (
               <div
                 onClick={() => {
-                 handleCurrencyChange(elm);
+                  handleCurrencyChange(elm);
                 }}
                 key={i}
                 className="headerDropdown__item"
