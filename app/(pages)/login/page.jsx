@@ -23,6 +23,7 @@ export default function Page() {
           classfor={`col-xl-6 col-lg-7 col-md-9`}
           sectionClass={`mt-header layout-pt-lg`}
           hide={true}
+          path={`/customer/booking`}
         />
         <FooterTwo />
       </main>

@@ -1499,7 +1499,12 @@ export default function BookingPages({ BookingData }) {
               <IoClose size={25} />
             </button>
 
-            <Login classfor={`col-12`} sectionClass={` `} hide={false} />
+            <Login
+              classfor={`col-12`}
+              sectionClass={` `}
+              hide={false}
+              path={`/tour`}
+            />
           </section>
         </Modal>
       </div>

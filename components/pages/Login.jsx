@@ -19,6 +19,7 @@ export default function Login({
   classfor,
   sectionClass,
   hide,
+  path,
 }) {
   const LoginSocialFacebook = dynamic(
     () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
@@ -125,10 +126,12 @@ export default function Login({
           LoginUpdate();
           setTimeout(() => {
             setLoginPer(true);
-            router.push("/");
+            router.push(path);
           }, 1000);
         } else {
-          showErrorToast("Invalid Credentials. If you are tour agent, please login from the partner login page.");
+          showErrorToast(
+            "Invalid Credentials. If you are tour agent, please login from the partner login page."
+          );
           setLogInData({
             AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
             email: "",
