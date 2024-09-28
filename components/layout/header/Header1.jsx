@@ -62,12 +62,6 @@ export default function Header1() {
     }
   }, []);
 
-  // useEffect(() => {
-  //  if(LoginCheck === false){
-  //   localStorage.removeItem("customer");
-  //  }
-  // }, [LoginCheck])
-
   const { translate } = useTranslation(locale);
 
   return (
@@ -133,54 +127,63 @@ export default function Header1() {
               <HeaderSerch />
             </div>
 
-            <div className="d-flex items-center">
-              <Currency currenyLocale={currenyLocale} />
+            <div className="row items-center">
+              <div className="col-2 ">
+                <div className="d-flex justify-content-center">
+                  <Currency currenyLocale={currenyLocale} />
+                </div>
+              </div>
 
-              <Language
-                parentClass="headerDropdown"
-                onLocaleChange={setLocale}
-                locale={locale}
-              />
-
-              <Link href={LoginCheck ? "" : "/register"} className={`mx-2`}>
-                {LoginCheck ? (
-                  <DashboardCustomer
+              <div className="col-2 ml-10">
+                <div className="d-flex justify-content-center">
+                  <Language
+                    parentClass="headerDropdown"
                     onLocaleChange={setLocale}
-                    handleLogoutClick={handleLogoutClick}
+                    locale={locale}
                   />
-                ) : (
-                  "Register"
-                )}
-              </Link>
+                </div>
+              </div>
 
-              {/* <button
-                className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
-                onClick={LoginCheck ? handleLogoutClick : handleLoginClick}
-              >
-                {LoginCheck ? "Log Out" : "Log In"}
-              </button> */}
+              <div className="col-3">
+                <div className="d-flex justify-content-center">
+                  <Link href={LoginCheck ? "" : "/register"} className={`mx-2`}>
+                    {LoginCheck ? (
+                      <DashboardCustomer
+                        onLocaleChange={setLocale}
+                        handleLogoutClick={handleLogoutClick}
+                      />
+                    ) : (
+                      "Register"
+                    )}
+                  </Link>
+                </div>
+              </div>
 
-              {LoginCheck !== null && (
-                <>
-                  {!LoginCheck && (
-                    <button
-                      className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
-                      onClick={handleLoginClick}
-                    >
-                      Log In
-                    </button>
+              <div className="col-4">
+                <div className="d-flex justify-content-center">
+                  {LoginCheck !== null && (
+                    <>
+                      {!LoginCheck && (
+                        <button
+                          className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                          onClick={handleLoginClick}
+                        >
+                          Log In
+                        </button>
+                      )}
+
+                      {LoginCheck && (
+                        <button
+                          className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                          onClick={handleLogoutClick}
+                        >
+                          Log Out
+                        </button>
+                      )}
+                    </>
                   )}
-
-                  {LoginCheck && (
-                    <button
-                      className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
-                      onClick={handleLogoutClick}
-                    >
-                      Log Out
-                    </button>
-                  )}
-                </>
-              )}
+                </div>
+              </div>
             </div>
 
             <button

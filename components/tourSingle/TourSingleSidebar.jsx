@@ -55,7 +55,7 @@ export default function TourSingleSidebar({
   });
 
   const [LocalData, setLocalData] = useState([]);
-  
+
   useEffect(() => {
     if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
       const firstMekkaHotel = SidebarData.tour_hotels.mekka_hotels[0];
@@ -514,8 +514,11 @@ export default function TourSingleSidebar({
         "PackageBookingData",
         JSON.stringify(PackageBookingData)
       );
-    
-      localStorage.setItem("company_code", SidebarData?.tour_details?.company_code);
+
+      localStorage.setItem(
+        "company_code",
+        SidebarData?.tour_details?.company_code
+      );
     }
 
     setRender(true);

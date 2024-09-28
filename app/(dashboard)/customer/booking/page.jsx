@@ -15,7 +15,6 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
 
-
 const tabs = ["Approved", "Pending", "Cancelled"];
 
 export default function DbBooking() {
@@ -85,8 +84,8 @@ export default function DbBooking() {
     if (UserID !== null) fetchListing(UserID?.id);
   }, [UserID]);
 
-  console.log("UserID" , UserID);
-  
+  console.log("UserID", UserID);
+
   console.log("BookingsCustomer", BookingsCustomer);
 
   useEffect(() => {
@@ -98,9 +97,6 @@ export default function DbBooking() {
       }, 2000);
     }
   }, [BookingsCustomer]);
-
-
-  
 
   const { translate } = useTranslation();
 
@@ -128,7 +124,15 @@ export default function DbBooking() {
               </div>
             ) : BookingsCustomer && BookingsCustomer.length === 0 ? (
               <div className="d-flex justify-content-center align-items-center">
-                <p>No Tours Available</p>
+                <p>
+                  No bookings available{" "}
+                  <Link href="/tour" className="text-blue">
+                    <b>
+                      <i>Click here</i>
+                    </b>
+                  </Link>{" "}
+                  to book your first tour. Link to tour page on front.
+                </p>
               </div>
             ) : (
               BookingsCustomer?.map((elm, i) => (
@@ -250,7 +254,9 @@ export default function DbBooking() {
                       <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
-                        <Link href={`/customer/booking-details/?id=${elm.id}&customerID=${UserID?.id}`}>
+                        <Link
+                          href={`/customer/booking-details/?id=${elm.id}&customerID=${UserID?.id}`}
+                        >
                           {translate("VIEW DETAILS")}
                         </Link>
                       </button>

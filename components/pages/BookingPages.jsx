@@ -259,10 +259,6 @@ export default function BookingPages({ BookingData }) {
 
   // for dynamic form data and form
 
-  // const initializeFormValues = (count, defaultValues) => {
-  //   return Array.from({ length }, () => ({ ...defaultValues }));
-  // };
-
   const initializeFormValues = (count, defaultValues) => {
     if (count === 0) {
       return []; // If count is 0, return an empty array
@@ -457,8 +453,6 @@ export default function BookingPages({ BookingData }) {
     getPriceForadditional(type, i);
   };
 
-  console.log("Additional", Additional);
-
   const getPriceForadditional = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
     const AdditionalPrice = Additional.filter((item) => item.index === idx);
@@ -578,8 +572,6 @@ export default function BookingPages({ BookingData }) {
       return null;
     }
   };
-
-  // fathch new booking api
 
   // fatch profileapi
 
@@ -976,8 +968,6 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  console.log("UserID", UserID);
-
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
@@ -1018,7 +1008,7 @@ export default function BookingPages({ BookingData }) {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
-  console.log("ExcludeFlight", ExcludeFlight);
+  console.log("bookingData", bookingData);
 
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
@@ -1071,15 +1061,6 @@ export default function BookingPages({ BookingData }) {
       formRef.current.requestSubmit(); // This triggers form submission
     }
   };
-
-  console.log("formValues", formValues);
-
-  console.log(
-    " adultData babyData Childrendata",
-    adultData.length,
-    babyData.length,
-    Childrendata.length
-  );
 
   const { translate } = useTranslation();
 

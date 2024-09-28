@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 
 const options = [
-  { name: "booking", path: "/customer/booking" },
-  { name: "profile", path: "/customer/profile" },
-  { name: "Log Out", path: "" },
+  { name: "Booking", path: "/customer/booking" },
+  { name: "Profile", path: "/customer/profile" },
+  { name: "LogOut", path: "" },
 ];
 
 export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
