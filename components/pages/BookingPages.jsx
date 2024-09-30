@@ -925,13 +925,13 @@ export default function BookingPages({ BookingData }) {
                         ) : (
                           <>
                             <input
-                              type={field.type === "number" ? "tel" : field.type} 
+                              type={field.type == "number" ? "tel" : field.type} 
                               name={field.name}
                               value={fieldValue || ""} 
                               onChange={(e) =>
                                 handleInputChange(type, i, e, field.type)
                               } 
-                              maxLength={10} 
+                              maxLength={ field.type == "number" ? 10 : undefined } 
                               required
                             />
 
