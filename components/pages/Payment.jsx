@@ -68,9 +68,40 @@ export default function Payment() {
     //   setBooking(newBooking);
     // }
   };
-  const handleFirstAmountChange = (e) => {
-    setFirstAmount(e.target.value);
+
+  const formatPriceChange = (price) => {
+    if (isNaN(price) || price.length === 0) {
+      return '';
+    }
   };
+  const handleFirstAmountChange = (e) => {
+   setFirstAmount(e.target.value);
+
+  };
+  // const handleFirstAmountChange = (e) => {
+  //   const rawAmount = e.target.value;
+
+  //   const numericValue = parseFloat(rawAmount.replace(/[^0-9.]/g, ''));
+  //   console.log(numericValue, 'numericValue')
+  //   if (!isNaN(numericValue)) {
+  //   const formattedAmount = formatPrice(numericValue);
+  //   setFirstAmount(formattedAmount);
+  //   } else {
+  //   setFirstAmount(rawAmount);
+  //   }
+
+  // };
+  // const handleSecondAmountChange = (e) => {
+  //   const totalAmount = SideBarData?.BookingFild?.SubTotal;
+  //   const total = totalAmount - firstAmount;
+  //   const secondAmount = e.target.value;
+  //   if (secondAmount < total) {
+  //     setSecondAmount(secondAmount);
+  //   } else {
+  //     setSecondAmount(0);
+  //     setThirdAmount(0);
+  //   }
+  // };
   const handleSecondAmountChange = (e) => {
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
     const total = totalAmount - firstAmount;
@@ -513,7 +544,7 @@ export default function Payment() {
                           <div className="col-md-12">
                             <h5 className="text-center">
                               {translate("Total Amount")} :{" "}
-                              <b>{SideBarData?.BookingFild?.SubTotal}€</b>
+                              <b>{SideBarData?.BookingFild?.SubTotal} €</b>
                             </h5>
                           </div>
 
