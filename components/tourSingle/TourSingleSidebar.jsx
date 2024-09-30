@@ -440,16 +440,7 @@ export default function TourSingleSidebar({
 
   // handle booking
 
-  const router = useRouter();
-
-  console.log("SidebarData?.tour_details?.flight_included" , SidebarData?.tour_details?.flight_included);
-  
-  console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
-
-  console.log("selectedCheckbox" , selectedCheckbox);
-  
-  console.log("selectDeparture.price" , selectDeparture.price);
-  
+  const router = useRouter();  
 
   const SelectedAllPrice =
     JSON.parse(total) +
@@ -576,8 +567,9 @@ export default function TourSingleSidebar({
   };
 
   return (
-    <div className="tourSingleSidebar">
+    <>
       <ToastContainer />
+    <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
       {SidebarData?.tour_price?.map((group, index) => {
@@ -901,5 +893,7 @@ export default function TourSingleSidebar({
         {translate("Book Now")}
       </button>
     </div>
+    </>
+    
   );
 }

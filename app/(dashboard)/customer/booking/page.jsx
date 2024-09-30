@@ -207,7 +207,7 @@ export default function DbBooking() {
 
                         <div className="text-14 ml-10">
                           <span className="fw-500">{elm.rating}</span> (
-                          {elm?.tour_details?.rating_count}) -{" "}
+                          {elm?.tour_details?.rating_count}) - {" "}
                           {elm?.tour_details?.company_code}
                         </div>
                       </div>
