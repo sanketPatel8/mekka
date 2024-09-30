@@ -21,7 +21,7 @@ export default function TourSlider({ PAckageData }) {
     setslibleTourSlider(PAckageData?.Tour_List);
   }, [PAckageData]);
 
-  console.log("slibleTourSlider", slibleTourSlider);
+  
 
   // const tournames = slibleTourSlider.map((elm) => elm.tour_image);
 

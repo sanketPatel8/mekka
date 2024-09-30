@@ -71,7 +71,6 @@ export default function TourSingleSidebar({
       }));
       setselectedmekkaHotelPrice(firstMekkaHotel.hotel_price);
     }
-    console.log(SidebarData, "SidebarData");
     if (SidebarData?.tour_hotels?.medina_hotels?.length > 0) {
       const firstMadinaHotel = SidebarData.tour_hotels.medina_hotels[0];
       setmadinaId(firstMadinaHotel.id);
@@ -114,7 +113,7 @@ export default function TourSingleSidebar({
       url: "gettourhoteldata ",
     });
 
-    console.log(response, "response");
+  
     if (response) {
       setHotelData(response.hotel_data);
     }
@@ -159,7 +158,7 @@ export default function TourSingleSidebar({
         mekkaId: selectedHotel.hotel_id,
       }));
       setmekkaId(selectedHotel.hotel_id);
-      console.log(mekkaId, "mekkaId");
+
       // Update Mekka hotel price in selectedmekkaHotelPrice state
       setselectedmekkaHotelPrice(mekkaPrice);
 
@@ -179,7 +178,7 @@ export default function TourSingleSidebar({
         madinaId: selectedHotel.hotel_id,
       }));
       setmadinaId(selectedHotel.hotel_id);
-      console.log(madinaId, "madinaId");
+  
 
       setselectedMadinaHotelPrice(madinaPrice);
       fetchHotelData();
@@ -187,16 +186,15 @@ export default function TourSingleSidebar({
   };
 
   const handleHotelChange = (e, elm) => {
-    console.log("elm" , elm);
-    
+   
     const selectedFlight = {
       id: elm.id,
       name: elm.airline_name,
       price: elm.flight_amount,
       luggage: elm.luggage,
     };
-    console.log("selectedFlight" , selectedFlight);
     
+
     setSelectedFlights(selectedFlight); // Replace with the selected flight object
     setSelectedAirlinePrice(selectedFlight.price);
   };
@@ -444,36 +442,48 @@ export default function TourSingleSidebar({
 
   const router = useRouter();
 
+  console.log("SidebarData?.tour_details?.flight_included" , SidebarData?.tour_details?.flight_included);
+  
+  console.log("SelectedAirlinePrice" , SelectedAirlinePrice);
+
+  console.log("selectedCheckbox" , selectedCheckbox);
+  
+  console.log("selectDeparture.price" , selectDeparture.price);
+  
+
   const SelectedAllPrice =
     JSON.parse(total) +
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included !== "0" ||
+      SidebarData?.tour_details?.flight_included !== "0" &&
         selectedCheckbox == false
         ? SelectedAirlinePrice
         : 0
     ) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included !== "0" ||
+      SidebarData?.tour_details?.flight_included !== "0" &&
         selectedCheckbox == false
         ? selectDeparture.price === undefined
           ? 0
           : selectDeparture.price
         : 0
     );
+
+    console.log("SelectedAllPrice" , SelectedAllPrice); 
+    
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included == "0" ||
+      SidebarData?.tour_details?.flight_included !== "0" &&
         selectedCheckbox == false
         ? SelectedAirlinePrice
         : 0
     ) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included == "0" ||
+      SidebarData?.tour_details?.flight_included !== "0" &&
         selectedCheckbox == false
         ? selectDeparture.price === undefined
           ? 0
@@ -481,7 +491,7 @@ export default function TourSingleSidebar({
         : 0
     );
 
-  console.log("selectDeparture.price", selectDeparture);
+
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
@@ -505,7 +515,7 @@ export default function TourSingleSidebar({
     selectedCheckbox: selectedCheckbox,
   };
 
-  console.log("selectedCheckbox", selectedCheckbox);
+ 
 
   const handleBooking = () => {
     if (typeof window !== "undefined") {
@@ -528,7 +538,11 @@ export default function TourSingleSidebar({
     setRender(true);
     updateAdultsObject();
 
-    if (selectDeparture.name === "" && selectedCheckbox === false && SidebarData?.tour_details?.flight_included !== '0') {
+    if (
+      selectDeparture.name === "" &&
+      selectedCheckbox === false &&
+      SidebarData?.tour_details?.flight_included !== "0"
+    ) {
       alert("Please Fill Departure");
     } else {
       router.push(
