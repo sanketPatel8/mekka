@@ -131,7 +131,7 @@ export default function DbBooking() {
                       <i>Click here</i>
                     </b>
                   </Link>{" "}
-                  to book your first tour. Link to tour page on front.
+                  to book your first tour.
                 </p>
               </div>
             ) : (
