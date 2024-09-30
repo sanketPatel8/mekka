@@ -24,6 +24,7 @@ export default function Profile() {
     newPassword: "",
     confirmPassword: "",
   });
+  const [fileBlob, setFileBlob] = useState({});
 
   const [USerData, setUSerData] = useState([]);
 
@@ -51,8 +52,9 @@ export default function Profile() {
         name: userProfile.name || "",
         surname: userProfile.surname || "",
         email: userProfile.email || "",
-        image1: userProfile.image || "", // Assuming API returns image URL
+        image1: userProfile.profile_image || "", // Assuming API returns image URL
       });
+      setFileBlob(userProfile.profile_image);
     } else {
       console.error("Unexpected response structure:", response);
     }
@@ -78,6 +80,7 @@ export default function Profile() {
     }
 
     if(customer){
+      console.log(customer?.user?.id, "customer?.id");
       fetchProfile();
 
     }
@@ -119,23 +122,34 @@ export default function Profile() {
 
   const handleImageChange = (e, setImage) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          image1: reader.result, // Set the uploaded image URL
-        }));
-      };
-      reader.readAsDataURL(file);
+    console.log(file, "file");
+    const allowedType = ["image/jpeg", "image/x-png", "image/png"];
+    if (file && allowedType.includes(file?.type)) {
+      setFormData((prevData) => ({
+        ...prevData,
+        image1: file,
+      }));
+      console.log(formData, "formData");
+      const blobUrl = URL.createObjectURL(file);
+      setFileBlob(blobUrl);
     }
+
+    //   const reader = new FileReader();
+    //   reader.onload = () => {
+    //     setFormData((prevData) => ({
+    //       ...prevData,
+    //       image1: reader.result, // Set the uploaded image URL
+    //     }));
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   const fetchUpdateProfile = async (type) => {
     const formDatas = new FormData();
 
     // console.log("Update data: ", formDatas)
-    formDatas.append("id", USerData?.id);
+    formDatas.append("id", customer?.user?.id);
     formDatas.append("type", "profile");
     formDatas.append("name", formData?.name);
     formDatas.append("surname", formData?.surname);
@@ -292,7 +306,7 @@ export default function Profile() {
                               <Image
                                 width={200}
                                 height={200}
-                                src={formData.image1}
+                                src={fileBlob}
                                 alt="image"
                                 className="size-200 rounded-12 object-cover my-3"
                               />
@@ -302,6 +316,7 @@ export default function Profile() {
                                     ...prevData,
                                     image1: "",
                                   }));
+                                  setFileBlob({});
                                 }}
                                 className="absoluteIcon1 button -dark-1"
                               >
