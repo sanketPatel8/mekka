@@ -738,7 +738,7 @@ export default function Payment() {
                       </h2>
                       <div className="mt-10">
                         {translate(
-                          " Booking details have been sent to: mekkabooking.com"
+                          " Booking details have been sent to your registered email address."
                         )}
                       </div>
                     </div>
