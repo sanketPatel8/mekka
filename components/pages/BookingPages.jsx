@@ -381,6 +381,14 @@ export default function BookingPages({ BookingData }) {
 
       return updatedValues;
     });
+
+    if (type == "number" && name == "Phone") {
+      if (value < 10) {
+        setErrorMessage("Phone number must be at least 10.");
+      } else {
+        setErrorMessage(""); // Clear the error message
+      }
+    }
   };
 
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
@@ -547,41 +555,37 @@ export default function BookingPages({ BookingData }) {
   // calling api
 
   // Function to fetch and apply promo code
-const FetchPromoApi = async () => {
-  const sendData = {
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    coupon_code: promo,
-    total_amount: PackagePrices + adultadiPrices + adPrice, // Calculate total
+  const FetchPromoApi = async () => {
+    const sendData = {
+      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+      coupon_code: promo,
+      total_amount: PackagePrices + adultadiPrices + adPrice, // Calculate total
+    };
+
+    try {
+      const PromoResponse = await post("check_coupon", sendData);
+
+      if (PromoResponse.Status == 1) {
+        showSuccessToast(PromoResponse.Message);
+        setDiscount(PromoResponse); // Apply the discount
+        setHandlePromo(true); // Promo applied
+        setShowbtnName(true); // Show the button for removing the promo
+      } else {
+        showErrorToast("Invalid promo code.");
+        setHandlePromo(false); // Promo failed
+        setDiscount(0); // Reset discount
+        setShowbtnName(false); // Hide the remove button
+      }
+
+      setPromoData(PromoResponse); // Store promo data for later use
+      return PromoResponse;
+    } catch (error) {
+      console.error("Error caught:", error);
+      return null;
+    }
   };
 
-  try {
-    const PromoResponse = await post("check_coupon", sendData);
-    
-    if (PromoResponse.Status == 1) {
-      showSuccessToast(PromoResponse.Message);
-      setDiscount(PromoResponse); // Apply the discount
-      setHandlePromo(true);       // Promo applied
-      setShowbtnName(true);       // Show the button for removing the promo
-    } else {
-      showErrorToast("Invalid promo code.");
-      setHandlePromo(false);      // Promo failed
-      setDiscount(0);             // Reset discount
-      setShowbtnName(false);      // Hide the remove button
-    }
-
-    setPromoData(PromoResponse); // Store promo data for later use
-    return PromoResponse;
-  } catch (error) {
-    console.error("Error caught:", error);
-    return null;
-  }
-};
-
-
-
-
   // fatch profileapi
-  
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -638,15 +642,16 @@ const FetchPromoApi = async () => {
   };
 
   const handlePromoremove = () => {
-    if (HandlePromo) { // If a promo is applied
-      setHandlePromo(false);   // Remove the promo
+    if (HandlePromo) {
+      // If a promo is applied
+      setHandlePromo(false); // Remove the promo
       showSuccessToast("Promo removed successfully.");
-      setDiscount(0);          // Reset the discount
+      setDiscount(0); // Reset the discount
     } else {
       showErrorToast("No promo to remove.");
     }
-  
-    setShowbtnName(false);      // Hide the remove button after promo is removed
+
+    setShowbtnName(false); // Hide the remove button after promo is removed
   };
 
   useEffect(() => {
@@ -1018,8 +1023,6 @@ const FetchPromoApi = async () => {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
-
-
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
     if (SidebarData && SidebarData !== "undefined") {
@@ -1074,10 +1077,10 @@ const FetchPromoApi = async () => {
 
   const { translate } = useTranslation();
 
-  console.log("Discount" , Discount);
+  console.log("Discount", Discount);
 
-  const discountClass = Object.keys(Discount).length === 0 || Discount == 0 ? 'd-none' : 'd-block';
-  
+  const discountClass =
+    Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
   return (
     <>
@@ -1161,7 +1164,9 @@ const FetchPromoApi = async () => {
                       className={`${
                         (selectedCheckbox &&
                           BookingSideBar?.Airline === null) ||
-                        BookingSideBar.selectedCheckbox !== false || BookingData?.Tour_Details?.tour_details?.flight_included == '0'
+                        BookingSideBar.selectedCheckbox !== false ||
+                        BookingData?.Tour_Details?.tour_details
+                          ?.flight_included == "0"
                           ? "d-none"
                           : "d-block"
                       }`}
@@ -1196,7 +1201,9 @@ const FetchPromoApi = async () => {
 
                     <div
                       className={`${
-                        BookingSideBar.selectedCheckbox !== false  || BookingData?.Tour_Details?.tour_details?.flight_included == '0'
+                        BookingSideBar.selectedCheckbox !== false ||
+                        BookingData?.Tour_Details?.tour_details
+                          ?.flight_included == "0"
                           ? "d-none"
                           : "d-block"
                       }`}
@@ -1278,9 +1285,7 @@ const FetchPromoApi = async () => {
                       <div className=""> {formatPrice(totalSum)} </div>
                     </div>
 
-                    <div
-                      className={discountClass}
-                    >
+                    <div className={discountClass}>
                       <div className={`d-flex items-center justify-between `}>
                         <div className="fw-500">{translate("Discount")}</div>
                         <div className=""> - {Discount.Discount} € </div>
