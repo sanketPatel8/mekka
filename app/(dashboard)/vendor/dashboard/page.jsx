@@ -11,7 +11,6 @@ export default function page() {
   return (
     <>
       <main>
-        {/* <DBMain /> */}
         <AgentDb />
       </main>
     </>

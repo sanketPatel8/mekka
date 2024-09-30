@@ -79,15 +79,7 @@ export default function AddTour() {
   const [daysCount, setDaysCount] = useState(0);
   const [dayDescription, setDayDescription] = useState("");
   const [flightInformation, setFlightInformation] = useState("");
-  const [included,setIncluded] = useState([
-    // { title: "Beverages, drinking water, morning tea an buffet lunch", value: "1", checked: false },
-    // { title: "Wifi", value: "2", checked: false },
-    // { title: "InsuranceTransfer to a private pier", value: "3", checked: false },
-    // { title: "Local taxes", value: "4", checked: false },
-    // { title: "Hotel pickup and drop-off by air-conditioned minivan", value: "5", checked: false },
-    // { title: "Soft drinks", value: "6", checked: false },
-    // { title: "Tour Guide", value: "7", checked: false },
-  ]);
+  const [included,setIncluded] = useState([]);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [canGoBack, setCanGoBack] = useState(false);
   const [mekkaRows, setMekkaRows] = useState([
@@ -111,14 +103,12 @@ export default function AddTour() {
   const [amenities, setAmenities] = useState([]);
   const [languagesData, setlanguagesData] = useState([]);
   const [radioValueVisa, setRadioValueVisa] = useState('No');
-  // const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
   const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState('No');
   const [radioValueFlight, setRadioValueFlight] = useState('No');
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [minEndDate, setMinEndDate] = useState("");
-  // const [loading, setLoading] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const handleStartDateChange = (e) => {
@@ -136,18 +126,10 @@ export default function AddTour() {
   useEffect(() => {
     if (date_begin && date_end) {
       const startDate = new Date(formatDateToMMDDYYYY(date_begin));
-      console.log(startDate,"startDate");
       const endDate = new Date(formatDateToMMDDYYYY(date_end));
-      console.log(endDate.getTime(),"endDate"); 
       const daysDifference = Math.round((endDate - startDate) / (1000 * 3600 * 24));
-      console.log(daysDifference,"daysDifference");
       setDaysCount(daysDifference + 1)
-      // const timeDifference = endDate.getTime() - startDate.getTime();
-      // console.log(timeDifference,"timeDifference");
-      // const daysDifference = timeDifference / (1000 * 3600 * 24);
-      // console.log(daysDifference,"daysDifference");
-      // setDaysCount(Math.ceil(daysDifference));
-      // console.log(daysDifference,"daysCount");
+ 
     }
   }, [date_begin, date_end]);
 
@@ -160,12 +142,7 @@ export default function AddTour() {
     setMinEndDate(todayString);
   }, []);
   
-  // useEffect(() => {
-  //   if (date_begin) {
-  //     console.log(date_begin,"date_begin")
-  //     setMinEndDate(date_begin);
-  //   }
-  // }, [date_begin]);
+  
 
   useEffect(()=>{
     accessdata()
@@ -220,16 +197,9 @@ export default function AddTour() {
       setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
     }
   } else {
-    console.log("hi")
     showErrorToast("Please fill in all required fields before proceeding.");
   }
-  // const nextTabIndex = activeTabIndex + 1;
-  //   if (nextTabIndex < tabs.length) {
-  //     setActiveTabIndex(nextTabIndex);
-  //     setActiveTab(tabs[nextTabIndex]);
-  //     setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
-  //   }
-
+  
   } 
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
@@ -243,7 +213,6 @@ export default function AddTour() {
     });
   };
 
-  console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())),"editorState")
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1000) {
@@ -252,12 +221,9 @@ export default function AddTour() {
         setSideBarOpen(false);
       }
     };
-    // Set the initial state based on the screen size
     handleResize();
 
-    // Add event listener to update state on resize
     window.addEventListener("resize", handleResize);
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -280,47 +246,6 @@ export default function AddTour() {
   };
 
 
-
-  // useEffect(() => {
-  //   const tabButtons = document.querySelectorAll('.tabs__button');
-  //   tabButtons.forEach((button) => {
-  //     if (button.classList.contains('is-tab-el-active')) {
-  //       button.addEventListener('click', handlePrevTab);
-  //     } else {
-  //       button.removeEventListener('click', handlePrevTab);
-  //     }
-  //   });
-  
-  //   return () => {
-  //     tabButtons.forEach((button) => {
-  //       button.removeEventListener('click', handlePrevTab);
-  //     });
-  //   };
-  // }, [activeTabIndex]);
-  // const handlePrevTab = () => {
-  //   if (prevTab) {
-  //     const prevIndex = tabs.findIndex((tab) => tab === prevTab);
-  //     setActiveTab(prevTab);
-  //     setActiveTabIndex(prevIndex);
-  //   }
-  // };
-  
-
-  // const handleCheckboxChange = (event) => {
-  //   const { id, checked } = event.target;
-  //   setServices((prev) => ({
-  //     ...prev,
-  //     [id]: { ...prev[id], checked },
-  //   }));
-  // };
-
-  // const handlePriceChange = (event) => {
-  //   const { id, value } = event.target;
-  //   setServices((prev) => ({
-  //     ...prev,
-  //     [id]: { ...prev[id], price: value },
-  //   }));
-  // };
   
   const handleDeleteImage2 = (index) => {
     const newImages = [...image2];
@@ -331,21 +256,7 @@ export default function AddTour() {
     setEditorState(newEditorState);
   };
 
-  // const handleImageChange2 = (event) => {
-  //   const files = event.target.files;
-  //   const uploadedImages = [...image2];
-  //   for (let i = 0; i < files.length; i++) {
-  //     const file = files[i];
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       uploadedImages.push(reader.result);
-  //       if (i === files.length - 1) {
-  //         setImage2(uploadedImages);
-  //       }
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
+ 
   
   const handleImageChange2 = (event) => {
     const files = event.target.files;
@@ -429,7 +340,7 @@ export default function AddTour() {
 
   const handleRemoveMekkaRow = (index) => {
     if (mekkaRows.length === 1) {
-      return; // Do not remove the last row
+      return; 
     }
     const newRows = [...mekkaRows];
     newRows.splice(index, 1);
@@ -445,7 +356,7 @@ export default function AddTour() {
 
   const handleRemoveMadinaRow = (index) => {
     if (madinaRows.length === 1) {
-      return; // Do not remove the last row
+      return; 
     }
     const newRows = [...madinaRows];
     newRows.splice(index, 1);
@@ -468,7 +379,7 @@ export default function AddTour() {
     setDepartureRows(newRows);
   };
   const handleMekkaChange = (value, index) => {
-    if (!value) return; // add this line to check if value is null or undefined
+    if (!value) return; 
     const selectedOption = mekkaHotel.find((option) => option.id === value.value);
   
     const mekkaData = {
@@ -482,10 +393,9 @@ export default function AddTour() {
   };
 
   const handleMadinaChange = (value, index) => {
-    if (!value) return; // add this line to check if value is null or undefined
+    if (!value) return; 
     const selectedOption = madinaHotel.find((option) => option.id === value.value);
-    console.log(selectedOption?.id,"selectedOptionId")
-    console.log(selectedOption?.hotel_name,"selectedOption")
+   
     const madinaData = {
       ...madinaRows[index],
       hotel_id: selectedOption?.id || "",
@@ -498,10 +408,9 @@ export default function AddTour() {
   };
 
   const handleDepartureChange = (value, index) => {
-    if (!value) return; // add this line to check if value is null or undefined
+    if (!value) return; 
     const selectedOption = departures.find((option) => option.id === value.value);
-    console.log(selectedOption?.id,"selectedOptionId")
-    console.log(selectedOption?.hotel_name,"selectedOption")
+ 
     const departureData = {
       ...departureRows[index],
       departure_id: selectedOption?.id || "",
@@ -530,11 +439,6 @@ export default function AddTour() {
 
   }, []);
  
-
-  // for add flight name and amount booking
-
-
-
   const handleFlightChange = (e, index, field) => {
     const { value } = e.target;
     const newRows = [...flightRow];
@@ -549,7 +453,7 @@ export default function AddTour() {
 
   const HandleRemoveFlightRow = (index) => {
     if (flightRow.length === 1) {
-      return; // Do not remove the last row
+      return; 
     }
     const newRows = [...flightRow];
     newRows.splice(index, 1);
@@ -567,7 +471,6 @@ export default function AddTour() {
 
   const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
-    // Check if the value is a date and format it as dd-mm-yyyy
     if (e.target.type === 'date') {
         const formattedDate = formatDateToDDMMYYYY(value);
         setter(formattedDate);
@@ -618,11 +521,8 @@ const isCurrentTabValid = () => {
 
     const languageValues = $(selectRef.current).val();
 
-    // Convert language values to a comma-separated string
     const languageString = languageValues.join(',');
 
-    // const departuresValues = $(selectDepartureRef.current).val();
-    // const departuresString = departuresValues.join(',');
     const mekkaData =mekkaRows.map((mekka)=>({
       hotel_type:1,
       hotel_name: mekka.hotel_name ? mekka.hotel_name : '', 
@@ -644,7 +544,6 @@ const isCurrentTabValid = () => {
       price: departure.price ? departure.price : '',
     }))
 
-    console.log(departureData)
     
     const flightData =flightRow.map((flight)=>({ 
       flight_id: flight.flight_id ? flight.flight_id.value : '',
@@ -673,9 +572,7 @@ const isCurrentTabValid = () => {
     }, []);
 
     const checkedIncluded = included.filter((item) => item.checked);
-    console.log(checkedIncluded,"checkedIncluded")
     const includedData = checkedIncluded.map((item) => item.id).join(",");
-    console.log(includedData,"includedData")
     const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
     const newRouteData = route_data.map((day, index) => (
       {
@@ -684,12 +581,7 @@ const isCurrentTabValid = () => {
       }
     ));
 
-    // const itineraryData = {
-    //   itinerary: route_data.map((day, index) => ({
-    //     day: index + 1,
-    //     description: day.description,
-    //   })),
-    // };
+
     const image2File = document.querySelector('input[name="image2"]').files;
     const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
 

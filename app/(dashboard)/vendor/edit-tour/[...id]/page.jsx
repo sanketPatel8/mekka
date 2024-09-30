@@ -85,15 +85,7 @@ export default function EditTour() {
   const [dayData,setDayData] = useState("");
   const [daysCount, setDaysCount] = useState(0);
   const [dayDescription, setDayDescription] = useState("");
-  const [included,setIncluded] = useState([
-    // { title: "Beverages, drinking water, morning tea an buffet lunch", value: "1", checked: false },
-    // { title: "Wifi", value: "2", checked: false },
-    // { title: "InsuranceTransfer to a private pier", value: "3", checked: false },
-    // { title: "Local taxes", value: "4", checked: false },
-    // { title: "Hotel pickup and drop-off by air-conditioned minivan", value: "5", checked: false },
-    // { title: "Soft drinks", value: "6", checked: false },
-    // { title: "Tour Guide", value: "7", checked: false },
-  ]);
+  const [included,setIncluded] = useState([]);
   const [includedData, setIncludedData] = useState([]);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [canGoBack, setCanGoBack] = useState(false);
@@ -120,7 +112,6 @@ export default function EditTour() {
   const [languagesData, setlanguagesData] = useState([]);
   const [flightData, setFlightData] = useState([]);
   const [additionalServices, setAdditionalServices] = useState([]);
-  // const [radioValueFreeCancel, setRadioValueFreeCancel] = useState('No');
   const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState('No');
   const [loading, setLoading] = useState(false);
   const [radioValueFlight, setRadioValueFlight] = useState('No');
@@ -175,17 +166,10 @@ export default function EditTour() {
         setSideBarOpen(false);
       }
     };
-
     fetchTour(id);
     accessdata();
-    
- 
-    // Set the initial state based on the screen size
     handleResize();
-
-    // Add event listener to update state on resize
     window.addEventListener("resize", handleResize);
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -202,22 +186,13 @@ export default function EditTour() {
   };
 
   useEffect(()=>{
-    // setEditorState((textContent) => {
-    //   const htmlToDraft = require("html-to-draftjs").default;
-    //   const blocksFromHtml = htmlToDraft(tourinfo); // Add tour info from api
-    //   const { contentBlocks, entityMap } = blocksFromHtml;
-    //   const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-    //   const editorState = EditorState.createWithContent(contentState);
-    //   return editorState;
-    // });
+ 
     if(tourInformation){
       const htmlToDraft = require("html-to-draftjs").default;
 
-      const blocksFromHtml = htmlToDraft(tourInformation); // Add tour info from api
+      const blocksFromHtml = htmlToDraft(tourInformation);
       const { contentBlocks, entityMap } = blocksFromHtml;
-    //   const editorContent = ContentState.createFromText(tourInformation);
-    // const editorState = EditorState.createWithContent(editorContent);
-    // const rawContent = convertToRaw(editorState.getCurrentContent());
+
 
     const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
       const editorState = EditorState.createWithContent(contentState);
@@ -230,41 +205,28 @@ export default function EditTour() {
   },[tourInformation])
   useEffect(() => {
 
-      console.log(includedData,"includedData");
       const updatedIncluded = includedData.map((item) => {
-        console.log(item,"item");
-        console.log(tourInclude,"tourInclude");
-        // const isChecked = tourInclude.includes(item.id);
         const isChecked = tourInclude.split(',').includes(item.id);
-        console.log(isChecked,"isChecked");
         
         return { ...item, checked: isChecked };
       });
-      console.log(updatedIncluded,"updatedIncluded");
       setIncluded(updatedIncluded);
     
   }, [ tourInclude,includedData]);
 
   
   useEffect(() => {
-    console.log(additionalServices,"additionalServices");
    
 
         const updatedServices = services.map((service) => {
-          console.log(service,"service");
           const foundService = additionalServices.find((additionalService) => additionalService.title === service.title);
-          console.log(foundService,"foundService");
           if (foundService) {
             return { ...service, checked: true, price: foundService.price, service_id: foundService.id,title:foundService.title };
           }
           return service;
         });
         setServices(updatedServices);
-        console.log(updatedServices,"services");
-      
-    
 
-    
 
   },[additionalServices]);
 useEffect(() => {
@@ -286,22 +248,10 @@ useEffect(() => {
       setDateBegin(formatedDate(tourDetails.date_begin));
       setDateEnd(formatedDate(tourDetails.date_end));
 
-      // setDepartures(SelectRef(tourDetails.departures) || []);
       if(tourDetails.tour_image){
         setImage2(tourDetails.tour_image || []);
 
-//         const base64Images = [];
 
-// image2.forEach((file) => {
-//   const reader = new FileReader();
-//   reader.onload = () => {
-//     const base64String = reader.result;
-//     base64Images.push(`data:${file.type};base64,${base64String}`);
-//   };
-//   reader.readAsDataURL(file);
-// });
-
-// console.log(base64Images);
         
             }
       setName(tourDetails.name);
@@ -326,35 +276,10 @@ useEffect(() => {
       {tourDetails.flight_info !== ""  ? setFlightInformation(tourDetails.flight_info) : setFlightInformation("")}
       {tourDetails.flight_exclude == 1 ? setRadioValueExcludeFlight("Yes") : setRadioValueExcludeFlight("No")}
      
-      console.log(tourDetails.visa_processing,"tourDetails.visa_processing");
       {tourDetails.visa_processing == 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
-      // {tourDetails.free_cancellation == 1 ? setRadio("Yes") : setRadioValueVisa("No")}
-      // if(tourDetails){
-      //   console.log(tourDetails.tour_info,"tourDetails.tour_info");
-      //   const editorContent = ContentState.createFromText(tourDetails.tour_info);
-      //     const editorState = EditorState.createWithContent(editorContent);
-      //     setEditorState(editorState);
-      //     console.log(editorState,"editorState");
-      // }
 
-      // const editorContent = ContentState.createFromText(tourDetails.tour_info);
-      // const editorState = EditorState.createWithContent(editorContent);
-      // setEditorState(editorState);
-  
-
-
-      // setEditorState(tourDetails.tour_info);
-
-
-  
     }
-    
-    // console.log(image2,"image2");
-    
-    // const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/uploads/${tourDetails.tour_image}`;
-    // const imageUrl = `${process.env.NEXT_PUBLIC_URL}/uploads/${image2.map((image) => image).join('')}`;
-    // const imageUrls = Array.isArray(image2);
-    // console.log(imageUrls,"imageUrls");
+
   }, [tourDetails]);
 
 
@@ -383,15 +308,7 @@ useEffect(() => {
   useEffect(() => {
     const mekkaHotels = hotel_data.filter((hotel) => hotel.hotel_type == '1');
     const madinaHotels = hotel_data.filter((hotel) => hotel.hotel_type == '2');
-    // mekkaHotels.map((hotel) => {
-    //   // const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.hotel_id);
-    //   const updatedMekka = mekkaRows.map((mekka) => {
-    //     return { ...mekka, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
-    //   });
-    //   console.log(updatedMekka,"updatedMekka");
-    //   setMekkaRows(updatedMekka);
-    //   console.log(mekkaRows,"mekkaRows");
-    // })
+    
     if(mekkaHotels){
 
       const updatedMekka = mekkaHotels.map((hotel) => {
@@ -421,33 +338,7 @@ useEffect(() => {
   
     }
 
-    // if(hotel_data){
-    //   hotel_data.map((hotel) => {
-    //     if (hotel.hotel_type == 1) {
-     
-    //       const foundHotel = mekkaHotel.find((hotelData) => hotelData.id === hotel.hotel_id);
-     
-    //       const updatedMekka = mekkaHotels.map((mekka) => {
-          
-    //           return { ...mekka, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
-            
-    //       });
-    //       console.log(updatedMekka,"updatedMekka");
-    //       setMekkaRows(updatedMekka);
-          
-    //     } else {
-    //       const updatedMadina = madinaRows.map((madina) => {
-          
-    //         return { ...madina, hotel_id:hotel.id, hotel_name: hotel.hotel_name, hotel_price: hotel.hotel_price, hotel_info: hotel.hotel_info };
-          
-    //     });
-         
-    //       setMadinaRows(updatedMadina);
-    //     }
 
-    //   });
-
-    // }
   },[hotel_data]);
 
   useEffect(() => {
@@ -474,7 +365,6 @@ useEffect(() => {
       if(image2){
         const url = new URL(image2);
         const fileName = url.pathname.split('/').pop();
-        console.log(fileName); 
   
         const formData = new FormData();
         formData.append('image', fileName);
@@ -485,10 +375,7 @@ useEffect(() => {
         if(response){
           showSuccessToast("Image removed successfully");
           fetchTour(id);
-          // const newImages = [...companyData.company_document];
-          // newImages.splice(index, 1);
-          // setCompanyData({ ...companyData, company_document: newImages });
-    
+         
         }
       }else if(uploadImage.length > 0){
            const newImages = [...image2];
@@ -549,12 +436,7 @@ useEffect(() => {
   } else {
     showErrorToast("Please fill in all required fields before proceeding.");
   }
-  // const nextTabIndex = activeTabIndex + 1;
-  //   if (nextTabIndex < tabs.length) {
-  //     setActiveTabIndex(nextTabIndex);
-  //     setActiveTab(tabs[nextTabIndex]);
-  //     setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
-  //   }
+
 
   } 
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
@@ -581,12 +463,9 @@ useEffect(() => {
       }
     };
 
-    // Set the initial state based on the screen size
     handleResize();
 
-    // Add event listener to update state on resize
     window.addEventListener("resize", handleResize);
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -609,13 +488,6 @@ useEffect(() => {
     setServices(updatedServices);
   };
 
-  // for add hotel and remove hotels
-
-  // hotels for makka and madina
-
-  
-
- 
   const handleImageChange2 = (event) => {
     const files = event.target.files;
     const promises = [];
@@ -695,7 +567,7 @@ useEffect(() => {
 
   const handleRemoveMekkaRow = (index) => {
     if (mekkaRows.length === 1) {
-      return; // Do not remove the last row
+      return; 
     }
     const newRows = [...mekkaRows];
     newRows.splice(index, 1);
@@ -711,14 +583,14 @@ useEffect(() => {
 
   const handleRemoveMadinaRow = (index) => {
     if (madinaRows.length === 1) {
-      return; // Do not remove the last row
+      return; 
     }
     const newRows = [...madinaRows];
     newRows.splice(index, 1);
     setMadinaRows(newRows);
   };
   const handleMekkaChange = (value, index) => {
-    if (!value) return; // add this line to check if value is null or undefined
+    if (!value) return;
     const selectedOption = mekkaHotel.find((option) => option.id === value.value);
       const mekkaData = {
         ...mekkaRows[index],
@@ -733,7 +605,7 @@ useEffect(() => {
   };
 
   const handleDepartureChange = (value, index) => {
-    if (!value) return; // add this line to check if value is null or undefined
+    if (!value) return; 
     const selectedOption = departures.find((option) => option.id === value.value);
     if (departureRows[index].departure_id !== selectedOption?.id) {
       const departureData = {
@@ -746,19 +618,7 @@ useEffect(() => {
       setDepartureRows(newRows);
     }
   };
-  // const handleMekkaChange = (value, index) => {
-  //   if (!value) return; // add this line to check if value is null or undefined
-  //   const selectedOption = mekkaHotel.find((option) => option.id === value.value);
-  
-  //   const mekkaData = {
-  //     ...mekkaRows[index],
-  //     hotel_id: selectedOption?.id || "",
-  //     hotel_name: selectedOption?.hotel_name || "",
-  //   };
-  //   const newRows = [...mekkaRows];
-  //   newRows[index] = mekkaData;
-  //   setMekkaRows(newRows);
-  // };
+
 
   const handleMadinaChange = (value, index) => {
     if (!value) return; 
@@ -810,10 +670,6 @@ useEffect(() => {
   }, []);
 
 
-  // for add flight name and amount booking
-
-
-
   const handleFlightChange = (e, index, field) => {
     const { value } = e.target;
     const newRows = [...flightRow];
@@ -828,20 +684,15 @@ useEffect(() => {
 
   const HandleRemoveFlightRow = (index) => {
     if (flightRow.length === 1) {
-      return; // Do not remove the last row
+      return; 
     }
     const newRows = [...flightRow];
     newRows.splice(index, 1);
     setFlightRow(newRows);
   };
 
-  
-
-
-
   const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
-    // Check if the value is a date and format it as dd-mm-yyyy
     if (e.target.type === 'date') {
         const formattedDate = formatDateToDDMMYYYY(value);
         setter(formattedDate);
@@ -862,7 +713,6 @@ useEffect(() => {
 
     const languageValues = $(selectRef.current).val();
 
-    // Convert language values to a comma-separated string
     const languageString = languageValues.join(',');
 
     const mekkaData =mekkaRows.map((mekka)=>({
@@ -891,9 +741,6 @@ useEffect(() => {
       luggage: flight.luggage,
       id: flight.id?flight.id:0
     }))
-
-
-   
 
     if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) &&
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) &&
@@ -924,13 +771,6 @@ useEffect(() => {
         description:day.description
       }
     ));
-
-    // const itineraryData = {
-    //   itinerary: route_data.map((day, index) => ({
-    //     day: index + 1,
-    //     description: day.description,
-    //   })),
-    // };
 
     const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
@@ -1019,14 +859,7 @@ const formatDateToMMDDYYYY = (date) => {
             <h1 className="text-30">
                {translate("Edit Tour") }
             </h1>
-            {/* { loading ?       
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ height: "200px" }}
-                >
-                  <ClipLoader color="#DAC04F" size={50} />
-                </div>
-                : */}
+          
               <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
                 <div className="tabs -underline-2 js-tabs">
                   <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
@@ -1148,26 +981,7 @@ const formatDateToMMDDYYYY = (date) => {
                                             "Find Latest Packages"}
                                           </option>
                                         ))}
-                                        {/* <option value="ENG">
-                                          {" "}
-                                          {translate("English") ||
-                                            "Find Latest Packages"}
-                                        </option>
-                                        <option value="GER">
-                                          {" "}
-                                          {translate("German") ||
-                                            "Find Latest Packages"}
-                                        </option>
-                                        <option value="TUR">
-                                          {" "}
-                                          {translate("Turkis") ||
-                                            "Find Latest Packages"}
-                                        </option>
-                                        <option value="ARB">
-                                          {" "}
-                                          {translate("Arbic") ||
-                                            "Find Latest Packages"}
-                                        </option> */}
+                                      
                                       </select>
                                       <label className="multi-lan-select">
                                         {translate("Langauge") ||
@@ -2193,7 +2007,6 @@ const formatDateToMMDDYYYY = (date) => {
                   </form>
                 </div>
               </div>
-            {/* } */}
 
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}

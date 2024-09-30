@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, use } from "react";
 import Header from "@/components/dasboard/Header";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
@@ -15,15 +15,6 @@ import { IoClose } from "react-icons/io5";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Select from "react-select";
-import {
-  // Adult1Data,
-  // ReservationData,
-  // Adult2InfoData,
-  // TotalData,
-  // BabyData,
-  ViewTicketsForVandor,
-  ViewCustomerDocument,
-} from "@/data/CustomerBookingData";
 import Modal from "react-modal";
 import { showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
@@ -41,10 +32,9 @@ const customStyles = {
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
     padding: "10px",
-    // borderRadius: '10px',
-    width: "100%", // Adjust width as needed
-    maxWidth: "700px", // Adjust max-width as needed
-    height: "80vh", // Set a specific height for the modal
+    width: "100%",
+    maxWidth: "700px",
+    height: "80vh",
     overflowY: "auto",
     backgroundColor: "#fff",
   },
@@ -53,8 +43,7 @@ const customStyles = {
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
 export default function DbBooking({ params }) {
-
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("All");
   const [filteredData, setFilteredData] = useState([]);
@@ -72,29 +61,33 @@ export default function DbBooking({ params }) {
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
   const { translate } = useTranslation();
   const [personId, setPersonId] = useState(0);
-  const [VandorDoc,setVandorDoc] = useState([]);
-  const [viewData,setViewData] = useState([]);
-  const [viewDetails,setViewDetails] = useState([]);
-  const [downloadData,setDownloadData] = useState([]);
-  const [downloadDetails,setDownloadDetails] = useState([]);
+  const [VandorDoc, setVandorDoc] = useState([]);
+  const [viewData, setViewData] = useState([]);
+  const [viewDetails, setViewDetails] = useState([]);
+  const [downloadData, setDownloadData] = useState([]);
+  const [downloadDetails, setDownloadDetails] = useState([]);
   const [bookingDate, setBookingDate] = useState("");
   const [bookingStatus, setBookingStatus] = useState("");
-  const [loading,setLoading] = useState(true);
-  const [options,setOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [options, setOptions] = useState([]);
   const id = params.id[0];
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
 
   useEffect(() => {
-
     const formatTotal = (value) => `${value} €`;
-    const formatDiscount = (value) => {value > 0 ? `-${value}` : 0};
+    const formatDiscount = (value) => {
+      value > 0 ? `-${value}` : 0;
+    };
     const vendorDocuments = [
       { value: "Visa", label: translate("Visa") },
-      { value: "Hotel Booking Voucher", label: translate("Hotel Booking Voucher") },
+      {
+        value: "Hotel Booking Voucher",
+        label: translate("Hotel Booking Voucher"),
+      },
       { value: "Flight Ticket", label: translate("Flight Ticket") },
-    ]
+    ];
 
     setVandorDoc(vendorDocuments);
 
@@ -106,36 +99,49 @@ export default function DbBooking({ params }) {
 
     setOptions(optionsLabel);
 
-
     const columnAdu_1 = [
       { name: translate("id"), selector: (row) => row.id, width: "10%" },
       { name: translate("Name"), selector: (row) => row.name, width: "20%" },
-      { name: translate("Surname"), selector: (row) => row.surname,width: "20%" },
-      
-      { name: translate("Country"), selector: (row) => row.country, width: "10%" },
-      { name: translate("DOB"), selector: (row) => row.DOB,width: "10%" },
-      { name: translate("Nationality"), selector: (row) => row.Nationality,width:"10%" },
-    
-      { name: translate("Total"), selector: (row) => formatTotal(row.price),width: "10%" },
+      {
+        name: translate("Surname"),
+        selector: (row) => row.surname,
+        width: "20%",
+      },
+
+      {
+        name: translate("Country"),
+        selector: (row) => row.country,
+        width: "10%",
+      },
+      { name: translate("DOB"), selector: (row) => row.DOB, width: "10%" },
+      {
+        name: translate("Nationality"),
+        selector: (row) => row.Nationality,
+        width: "10%",
+      },
+
+      {
+        name: translate("Total"),
+        selector: (row) => formatTotal(row.price),
+        width: "10%",
+      },
       {
         name: translate("Action"),
         selector: (row) => (
           <div className="flex_center">
-         
             <button
               className="button -sm -accent-1 bg-info-2 text-white my-2 col-12 mx-1 text-13 doc-px-5"
               onClick={() => openUploadFileModal(row.id, id)}
             >
-               {translate("Document") }
-            </button> 
+              {translate("Document")}
+            </button>
           </div>
         ),
-        width: "10%", // Set a custom width for the button column
+        width: "10%",
       },
     ];
 
     setAdultHeaders(columnAdu_1);
-
 
     const ColumnReservation_details = [
       { name: translate("Airline"), selector: (row) => row.Airline },
@@ -143,8 +149,6 @@ export default function DbBooking({ params }) {
       { name: translate("To"), selector: (row) => row.To },
       { name: translate("Departure"), selector: (row) => row.date_begin },
       { name: translate("Return"), selector: (row) => row.date_end },
-      // { name: 'Offered languages', selector: (row) => row.Offered_languages },
-      // { name: 'Max Luggage', selector: (row) => row.max_luggage },
       { name: translate("Mekka"), selector: (row) => row.Mekka_hotel },
       { name: translate("Madina"), selector: (row) => row.Madina_hotel },
       { name: translate("Adult"), selector: (row) => row.adult },
@@ -155,14 +159,17 @@ export default function DbBooking({ params }) {
 
     setReservationHeader(ColumnReservation_details);
 
-  
     const FileDeta = [
       { name: translate("Document Name"), selector: (row) => row.Name },
       {
         name: translate("Action"),
         selector: (row) => (
-          <Link href={row.fileLink} target="_blank" className="button -sm -accent-1 bg-info-2 text-white my-2">
-             {translate("View") }
+          <Link
+            href={row.fileLink}
+            target="_blank"
+            className="button -sm -accent-1 bg-info-2 text-white my-2"
+          >
+            {translate("View")}
           </Link>
         ),
       },
@@ -176,11 +183,11 @@ export default function DbBooking({ params }) {
         name: translate("Action"),
         selector: (row) => (
           <button
-          className="button -sm -accent-1 bg-info-2 text-white my-2"
-          onClick={() => downloadFile(row.fileLink, row.Name)}
-        >
-          {translate("Download")}
-        </button>
+            className="button -sm -accent-1 bg-info-2 text-white my-2"
+            onClick={() => downloadFile(row.fileLink, row.Name)}
+          >
+            {translate("Download")}
+          </button>
         ),
       },
     ];
@@ -188,19 +195,30 @@ export default function DbBooking({ params }) {
     setDownloadData(DownloadData);
 
     const Total = [
-      { name: translate("Subtotal"), selector: (row) => formatTotal(row.Subtotal) },
+      {
+        name: translate("Subtotal"),
+        selector: (row) => formatTotal(row.Subtotal),
+      },
       { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
-      { name: translate("Discount"), selector: (row) => formatDiscount(row.Discount) },
-      { name: translate('Amount Paid'), selector: (row) => formatTotal(row.Amount_Paid) },
+      {
+        name: translate("Discount"),
+        selector: (row) => formatDiscount(row.Discount),
+      },
+      {
+        name: translate("Amount Paid"),
+        selector: (row) => formatTotal(row.Amount_Paid),
+      },
       { name: translate("Total"), selector: (row) => formatTotal(row.Total) },
-      { name: translate("Amount Due"), selector: (row) => formatTotal(row.Amount_Due) },
+      {
+        name: translate("Amount Due"),
+        selector: (row) => formatTotal(row.Amount_Due),
+      },
     ];
 
     setTotalHeaders(Total);
+  }, [translate]);
 
-  },[translate]);
-
-  const [rows, setRows] = useState([{ document: "", type: null }]); // State to manage rows
+  const [rows, setRows] = useState([{ document: "", type: null }]); 
 
   const addRow = () => {
     setRows([...rows, { document: "", type: null }]);
@@ -213,9 +231,6 @@ export default function DbBooking({ params }) {
     }
   };
 
-  
-
-  
   const handleDocumentChange = (selectedOption, index) => {
     const newRows = [...rows];
     newRows[index].type = selectedOption;
@@ -233,7 +248,7 @@ export default function DbBooking({ params }) {
           name: file.name,
           type: file.type,
           size: file.size,
-          base64: reader.result
+          base64: reader.result,
         };
         const newRows = [...rows];
         newRows[index].document = fileInfo;
@@ -245,7 +260,7 @@ export default function DbBooking({ params }) {
     const files = event.target.files;
     const promises = [];
     const uploadedImages = [...image2];
-  
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const promise = new Promise((resolve) => {
@@ -258,231 +273,130 @@ export default function DbBooking({ params }) {
       });
       promises.push(promise);
     }
-  
+
     Promise.all(promises).then(() => {
       setImage2(uploadedImages);
     });
   };
-  // useEffect(() => {
-  //   // Filter data based on currentTab
-  //   let filtered = [];
-  //   if (currentTab === "All") {
-  //     filtered = bookingData;
-  //   } else {
-  //     filtered = bookingData.filter((item) => item.Status === currentTab);
-  //   }
-  //   setFilteredData(filtered);
 
-    
-  // }, [currentTab]);
-  function openUploadFileModal(personId,reservationId) {
+  function openUploadFileModal(personId, reservationId) {
     setuploadFileisOpen(true);
     setPersonId(personId);
-    console.log(personId,"personUploadId")
     filterData(personId);
   }
 
-  
   const formatDateToDDMMYYYY = (date) => {
-    const [year, month, day] = date.split('-');
+    const [year, month, day] = date.split("-");
     return `${day}-${month}-${year}`;
-};
+  };
 
-const formatDateToMMDDYYYY = (date) => {
-    const [day, month, year] = date.split('-');
+  const formatDateToMMDDYYYY = (date) => {
+    const [day, month, year] = date.split("-");
     return `${year}-${month}-${day}`;
-};
-const filterData = async(personId) => {
-  const formData = new FormData();
-  formData.append("user_id", user?.user?.id);
-  formData.append("id", id);
-  const response = await POST.request({form:formData, url: "booking_details"});
+  };
+  const filterData = async (personId) => {
+    const formData = new FormData();
+    formData.append("user_id", user?.user?.id);
+    formData.append("id", id);
+    const response = await POST.request({
+      form: formData,
+      url: "booking_details",
+    });
 
-  if (response.Bookings) {
-    const filteredData = response.Bookings.adultData.concat(response.Bookings.childData, response.Bookings.babyData);
-    console.log(filteredData,"filterData")
-    const matchedData = filteredData.filter((data) => data.id === personId);
-    console.log(personId,"personId")
-    console.log(matchedData,"matchedData")
-    if (matchedData.length > 0) {
-     
+    if (response.Bookings) {
+      const filteredData = response.Bookings.adultData.concat(
+        response.Bookings.childData,
+        response.Bookings.babyData
+      );
+      const matchedData = filteredData.filter((data) => data.id === personId);
+      if (matchedData.length > 0) {
+        const docs = matchedData.map((doc) => {
+          if (doc.documets.length > 0) {
+            const docFiles = doc.documets.map((doc) => ({
+              Name: doc.file_url_orginal_name,
+              fileLink: doc.full_path,
+            }));
 
-      const docs = matchedData.map((doc)=>{
+            setViewDetails(docFiles);
+          } else {
+            setViewDetails([]);
+          }
+        });
 
-        console.log(doc.documets,"documets")
-        if(doc.documets.length > 0){
-          const docFiles = doc.documets.map((doc) => ({
-            Name: doc.file_url_orginal_name,
-            fileLink: doc.full_path,
-          }));
+        const downloads = matchedData.map((doc) => {
+          if (doc.download_documets && doc.download_documets.length > 0) {
+            const download = doc.download_documets.map((doc) => ({
+              Name: doc.file_url_orginal_name,
+              fileLink: doc.full_path,
+            }));
 
-          setViewDetails(docFiles);
-
-
-       
-
-        }else{
-          setViewDetails([]);
-        }
-      })
-
-      const downloads = matchedData.map((doc)=>{
-        if(doc.download_documets && doc.download_documets.length > 0){
-          const download = doc.download_documets.map((doc) => ({
-            Name: doc.file_url_orginal_name,
-            fileLink: doc.full_path,
-          }));
-
-          
-          setDownloadDetails(download);
-          console.log(downloadDetails,"download")
-        }
-      });
-
-     
+            setDownloadDetails(download);
+          }
+        });
+      }
     }
-  }
-};
+  };
   const fetchDetails = async () => {
     const formData = new FormData();
     formData.append("user_id", user?.user?.id);
     formData.append("id", id);
     setLoading(true);
-    const response = await POST.request({form:formData, url: "booking_details"});
-    if(response){
+    const response = await POST.request({
+      form: formData,
+      url: "booking_details",
+    });
+    if (response) {
       setLoading(false);
-      setBookings(response.Bookings)
+      setBookings(response.Bookings);
     }
 
-    if(response.Bookings){
-     
-
+    if (response.Bookings) {
       const formatTotal = (value) => `${value} €`;
-    const formatDiscount = (value) => {value > 0 ? `-${value}` : 0};
+      const formatDiscount = (value) => {
+        value > 0 ? `-${value}` : 0;
+      };
 
-    
-      
-      // if(response.Bookings.reservation){
-      //   const reservation = response.Bookings.reservation.map((res) => ({
-      //     id: res.reservation_id,
-      //     name: res.personName,
-      //     surname: res.personSurName,
-      //     DOB: res.personBirthDay,
-      //     country: res.countryName,
-      //   }));
-      // }
-     
+      if (response.Bookings.adultData.length > 0) {
+        const adults = response.Bookings.adultData.map((adult) => ({
+          id: adult.id,
+          name: adult.personName,
+          surname: adult.personSurName,
+          DOB: formatDateToDDMMYYYY(adult.personBirthDay),
+          country: adult.countryName,
+          Nationality: adult.personNationality,
+          price: adult.adult_price,
+        }));
 
-
-    
-     
-    
-      if(response.Bookings.adultData.length > 0){
-        // const documents = response.Bookings.adultData.map((adult) =>  {
-        //   if(adult.documets && adult.documets.length > 0){
-
-        //     const docId = adult.documets.filter((doc) => doc.reservation_person_id === personId);
-        //     console.log(docId,"docId")
-        //     const docs = docId.map((doc) => {
-         
-        //         return {
-        //           Name: doc.file_url_orginal_name,
-        //           fileLink: doc.full_path,
-        //         }
-              
-        //     }
-        //      )
-
-        //      if (docs.length > 0) {
-        //       setViewDetails(docs);
-        //       setViewType('adult');
-        //     }
-        
-
-        //     // const download = adult.documets.map((doc) => ({
-        //     //   Name: doc.file_url_orginal_name,
-        //     //   fileLink: doc.full_path,
-        //     // }))
-        //     // setDownloadDetails(download);
-        //   }
-
-
-        // })
-
-       
-
-      const adults = response.Bookings.adultData.map((adult) => ({
-        id: adult.id,
-        name: adult.personName,
-        surname: adult.personSurName,
-        DOB: formatDateToDDMMYYYY(adult.personBirthDay),
-        country: adult.countryName,
-        Nationality: adult.personNationality,
-        price: adult.adult_price,
-
-      }));
-
-      setAdultBookings(adults);
-
-      
+        setAdultBookings(adults);
       }
 
- 
-
-      if(response.Bookings.reservation){
+      if (response.Bookings.reservation) {
         const reservation = {
           Airline: response.Bookings.reservation.airlines,
           From: response.Bookings.reservation.from,
           To: response.Bookings.reservation.to,
-          date_begin: formatDateToDDMMYYYY(response.Bookings.reservation.date_begin),
-          date_end: formatDateToDDMMYYYY(response.Bookings.reservation.date_end),
-          Mekka_hotel : response.Bookings.reservation.mekka_hotel,
-          Madina_hotel : response.Bookings.reservation.madina_hotel,
-          adult : response.Bookings.reservation.adults,
-          child : response.Bookings.reservation.child,
-          baby : response.Bookings.reservation.baby,
-          total : response.Bookings.reservation.total,
-
-        }
+          date_begin: formatDateToDDMMYYYY(
+            response.Bookings.reservation.date_begin
+          ),
+          date_end: formatDateToDDMMYYYY(
+            response.Bookings.reservation.date_end
+          ),
+          Mekka_hotel: response.Bookings.reservation.mekka_hotel,
+          Madina_hotel: response.Bookings.reservation.madina_hotel,
+          adult: response.Bookings.reservation.adults,
+          child: response.Bookings.reservation.child,
+          baby: response.Bookings.reservation.baby,
+          total: response.Bookings.reservation.total,
+        };
 
         setReservationData(reservation);
-        setBookingDate(formatDateToMMDDYYYY(response.Bookings.reservation.created_at));
+        setBookingDate(
+          formatDateToMMDDYYYY(response.Bookings.reservation.created_at)
+        );
         setBookingStatus(response.Bookings.reservation.reservation_status);
       }
 
-      if(response.Bookings.childData.length > 0){
-
-        // const childdocuments = response.Bookings.childData.map((child) =>  {
-        //   if(child.documets && child.documets.length > 0){
-
-        //     const docId = child.documets.filter((doc) => doc.reservation_person_id === personId);
-        //     const docs = docId.map((doc) => {
-         
-        //         return {
-        //           Name: doc.file_url_orginal_name,
-        //           fileLink: doc.full_path,
-        //         }
-              
-        //     }
-        //      )
-        //      if (docs.length > 0) {
-        //       setViewDetails(docs);
-        //       setViewType('child');
-
-        //       console.log(viewType,"viewType")
-        //     }
-
-        //     // const download = adult.documets.map((doc) => ({
-        //     //   Name: doc.file_url_orginal_name,
-        //     //   fileLink: doc.full_path,
-        //     // }))
-        //     // setDownloadDetails(download);
-        //   }
-
-
-        // })
-
-
+      if (response.Bookings.childData.length > 0) {
         const children = response.Bookings.childData.map((child) => ({
           id: child.id,
           name: child.personName,
@@ -493,21 +407,9 @@ const filterData = async(personId) => {
           price: child.child_price,
         }));
         setChildBookings(children);
-
-        // const documents = response.Bookings.childData.map((child) =>  {
-        //   if(child.documets && child.documets.length > 0){
-        //     const docs = child.documets.map((doc) => ({
-        //       Name: doc.file_url_orginal_name,
-        //       fileLink: doc.full_path,
-        //     }))
-
-        //     setViewDetails(docs);
-        //   }
-        // })
       }
 
-
-      if(response.Bookings.babyData.length > 0){
+      if (response.Bookings.babyData.length > 0) {
         const babies = response.Bookings.babyData.map((baby) => ({
           id: baby.id,
           name: baby.personName,
@@ -520,11 +422,7 @@ const filterData = async(personId) => {
         setBabyBookings(babies);
       }
 
-     
-
-     
-
-      if(response.Bookings.reservation){
+      if (response.Bookings.reservation) {
         const total = {
           Subtotal: response.Bookings.reservation.subtotal,
           Total: response.Bookings.reservation.tax,
@@ -532,52 +430,38 @@ const filterData = async(personId) => {
           Amount_Paid: response.Bookings.reservation.amount_paid,
           Total: response.Bookings.reservation.total,
           Amount_Due: response.Bookings.reservation.amount_due,
-        }
+        };
 
         setTotalData(total);
-      } 
-      
-      
-  
-
-    
+      }
     }
-  }
+  };
 
-  useEffect(()=>{
-      fetchDetails();
-  },[user])
+  useEffect(() => {
+    fetchDetails();
+  }, [user]);
 
-  
   const downloadFile = (fileLink, fileName) => {
-
     const xhr = new XMLHttpRequest();
-  xhr.open('GET', fileLink, true);
-  xhr.responseType = 'blob';
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      const blob = xhr.response;
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } else {
-      console.error('Error downloading file:', xhr.statusText);
-    }
+    xhr.open("GET", fileLink, true);
+    xhr.responseType = "blob";
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const blob = xhr.response;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        console.error("Error downloading file:", xhr.statusText);
+      }
+    };
+    xhr.send();
   };
-  xhr.send();
 
-  };
- 
-  function afterOpenModal() {
-    // No need to change subtitle color as it's not being used in this context
-  }
-
-  // function openUploadFileModal() {
-  //   setuploadFileisOpen(true);
-  // }
+  
 
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
@@ -627,15 +511,13 @@ const filterData = async(personId) => {
             className="button -md py-1 -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
             // onClick={openAdult1Deta}
           >
-             {translate("Edit") }
+            {translate("Edit")}
           </button>
         </Link>
       ),
       width: "110px",
     },
   ];
-
- 
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -661,232 +543,246 @@ const filterData = async(personId) => {
         window.removeEventListener("resize", handleResize);
       };
     }
-
- 
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.title = 'Booking Deatils - MekkaBooking';
+    if (typeof window !== "undefined") {
+      document.title = "Booking Deatils - MekkaBooking";
     }
   }, []);
 
-
-
-  const handleDocumentSubmit = async() => {
+  const handleDocumentSubmit = async () => {
     const formData = new FormData();
-    formData.append("reservation_person_id", personId );
+    formData.append("reservation_person_id", personId);
     formData.append("reservation_id", id);
     formData.append("vendor_id", user?.user?.id);
     const documentData = rows.map((row) => {
-     return {
-       document: row.document,
-       type: row.type.value,
-     }
-    })
-    
+      return {
+        document: row.document,
+        type: row.type.value,
+      };
+    });
+
     formData.append("documents_data", JSON.stringify(documentData));
 
-
-    const response = await POST.request({form:formData, url: "upload_bookingdocuments"});
-    if(response){
+    const response = await POST.request({
+      form: formData,
+      url: "upload_bookingdocuments",
+    });
+    if (response) {
       showSuccessToast("Document Uploaded Successfully");
       setuploadFileisOpen(false);
       setRows([{ document: "", type: null }]);
     }
-  }
+  };
 
   return (
     <>
-    <ToastContainer/>
-    <div
-      className={`dashboard ${
-        sideBarOpen ? "-is-sidebar-visible" : ""
-      } js-dashboard`}
-    >
-      <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
+      <ToastContainer />
+      <div
+        className={`dashboard ${
+          sideBarOpen ? "-is-sidebar-visible" : ""
+        } js-dashboard`}
+      >
+        <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
 
-      <div className="dashboard__content">
-        <Header setSideBarOpen={setSideBarOpen} />
+        <div className="dashboard__content">
+          <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-          
-          { loading ?       
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ height: "200px" }}
+            {loading ? (
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: "200px" }}
+              >
+                <ClipLoader color="#DAC04F" size={50} />
+              </div>
+            ) : (
+              <>
+                <DocumentStatusManager
+                  Customerid={params}
+                  bookings={bookings}
+                  options={options}
+                  bookingDate={bookingDate}
+                  bookingStatus={bookingStatus}
+                  adultHeaders={adultHeaders}
+                  reservationData={reservationData}
+                  reservationHeader={reservationHeader}
+                  babyBookings={babyBookings}
+                  childBookings={childBookings}
+                  adultBookings={adultBookings}
+                  setuploadFileisOpen={setuploadFileisOpen}
+                  uploadFileisOpen={uploadFileisOpen}
+                  totalData={totalData}
+                  totalHeaders={totalHeaders}
+                />
+
+                <div className="text-center pt-30">
+                  © Copyright MekkaBooking.com {new Date().getFullYear()}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+        {uploadFileisOpen && (
+          <div id="upload_file">
+            <Modal
+              isOpen={uploadFileisOpen}
+              onRequestClose={closeUploadFileModal}
+              style={customStyles}
+              contentLabel="Pending Payment Modal"
             >
-              <ClipLoader color="#DAC04F" size={50} />
-            </div>
-            :
-            <>
-            
-              <DocumentStatusManager Customerid = {params} bookings={bookings} options={options} bookingDate={bookingDate} bookingStatus={bookingStatus}  adultHeaders={adultHeaders}  reservationData={reservationData} reservationHeader={reservationHeader} babyBookings={babyBookings} childBookings={childBookings} adultBookings={adultBookings} setuploadFileisOpen={setuploadFileisOpen} uploadFileisOpen={uploadFileisOpen} totalData={totalData} totalHeaders={totalHeaders}  />
+              <div className="d-flex justify-content-between" id="modelopen">
+                <h2 className="ml-20 my-3"> {translate("Document")}</h2>
+                <button onClick={closeUploadFileModal}>
+                  <IoClose size={25} />
+                </button>
+              </div>
 
-            <div className="text-center pt-30">
-              © Copyright MekkaBooking.com {new Date().getFullYear()}
-            </div>
-            </>
-            }
-          </div>
-      </div>
-      {
-        uploadFileisOpen && (
+              <div className="ml-lg-20 ml-0 ">
+                <Tabs>
+                  <TabList>
+                    <Tab> {translate("Upload")}</Tab>
+                    <Tab> {translate("View")}</Tab>
+                    <Tab> {translate("Download")}</Tab>
+                  </TabList>
 
-      <div id="upload_file">
-      <Modal
-          isOpen={uploadFileisOpen}
-          onRequestClose={closeUploadFileModal}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="ml-20 my-3"> {translate("Document") }</h2>
-            <button onClick={closeUploadFileModal}>
-              <IoClose size={25} />
-            </button>
-          </div>
-
-          <div className="ml-lg-20 ml-0 ">
-            <Tabs>
-              <TabList>
-                <Tab> {translate("Upload") }</Tab>
-                <Tab> {translate("View") }</Tab>
-                <Tab> {translate("Download") }</Tab>
-              </TabList>
-
-              <TabPanel>
-                <div className="" style={{height:"60vh",overflowX:"hidden",overflowY:"auto"}}>
-                  {rows.map((row, index) => (
-                    <div className="row item-center my-3" key={row.id}>
-                      <div className="col-md-4 px-0 mx-0 pl-lg-50">
-                        <Select
-                          options={VandorDoc}
-                          value={row.type}
-                          onChange={(selectedOption) =>
-                            handleDocumentChange(selectedOption, index)
-                          }
-                          className="dd-vendor"
-                          isClearable
-                        />
-                      </div>
-                      <div className="col-md-4 px-0 mx-2">
-                        <div className="row my-2 flex_center ">
-                          {rows.document ? (
-                            <div className="col-auto my-3">
-                              <div className="relative">
-                                <Image
-                                  width={200}
-                                  height={200}
-                                  src={rows.document}
-                                  alt="image"
-                                  className="size-200 rounded-12 object-cover my-3"
-                                />
+                  <TabPanel>
+                    <div
+                      className=""
+                      style={{
+                        height: "60vh",
+                        overflowX: "hidden",
+                        overflowY: "auto",
+                      }}
+                    >
+                      {rows.map((row, index) => (
+                        <div className="row item-center my-3" key={row.id}>
+                          <div className="col-md-4 px-0 mx-0 pl-lg-50">
+                            <Select
+                              options={VandorDoc}
+                              value={row.type}
+                              onChange={(selectedOption) =>
+                                handleDocumentChange(selectedOption, index)
+                              }
+                              className="dd-vendor"
+                              isClearable
+                            />
+                          </div>
+                          <div className="col-md-4 px-0 mx-2">
+                            <div className="row my-2 flex_center ">
+                              {rows.document ? (
+                                <div className="col-auto my-3">
+                                  <div className="relative">
+                                    <Image
+                                      width={200}
+                                      height={200}
+                                      src={rows.document}
+                                      alt="image"
+                                      className="size-200 rounded-12 object-cover my-3"
+                                    />
+                                    <button
+                                      onClick={() => {
+                                        const newRows = [...rows];
+                                        newRows[index].document = "";
+                                        setRows(newRows);
+                                      }}
+                                      className="absoluteIcon1 button -dark-1"
+                                    >
+                                      <i className="icon-delete text-18"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="col-auto  pl-20-doc-img">
+                                  <label
+                                    htmlFor={`imageInp-${index}`}
+                                    className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
+                                  >
+                                    <div className="text-16 fw-500 text-accent-1">
+                                      {translate("Upload Document")}
+                                    </div>
+                                  </label>
+                                  <input
+                                    onChange={(e) =>
+                                      handleImageChange(e, index)
+                                    }
+                                    accept="image/*, application/pdf"
+                                    id={`imageInp-${index}`}
+                                    type="file"
+                                    name="image2"
+                                    style={{ display: "none" }}
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-md-2 px-0 mx-0">
+                            <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
+                              <div className="mx-1">
                                 <button
-                                  onClick={() => {
-                                    const newRows = [...rows];
-                                    newRows[index].document = "";
-                                    setRows(newRows);
-                                  }}
-                                  className="absoluteIcon1 button -dark-1"
+                                  type="button"
+                                  className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                                  onClick={addRow}
                                 >
-                                  <i className="icon-delete text-18"></i>
+                                  +
                                 </button>
                               </div>
-                            </div>
-                          ) : (
-                            <div className="col-auto  pl-20-doc-img">
-                              <label
-                                htmlFor={`imageInp-${index}`}
-                                className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
-                              >
-                                <div className="text-16 fw-500 text-accent-1">
-                                   {translate("Upload Document") }
+                              {index > 0 && (
+                                <div className="mx-1">
+                                  <button
+                                    type="button"
+                                    className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                                    onClick={() => removeRow(index)}
+                                  >
+                                    -
+                                  </button>
                                 </div>
-                              </label>
-                              <input
-                                onChange={(e) => handleImageChange(e, index)}
-                                accept="image/*, application/pdf"
-                                id={`imageInp-${index}`}
-                                type="file"
-                                name="image2"
-                                style={{ display: "none" }}
-                              />
+                              )}
                             </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-md-2 px-0 mx-0">
-                        <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
-                          <div className="mx-1">
-                            <button
-                              type="button"
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                              onClick={addRow}
-                            >
-                              +
-                            </button>
                           </div>
-                          {index > 0 && (
-                            <div className="mx-1">
-                              <button
-                                type="button"
-                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                                onClick={() => removeRow(index)}
-                              >
-                                -
-                              </button>
-                            </div>
-                          )}
+                        </div>
+                      ))}
+
+                      <div className="row ">
+                        <div className="col-12 d-flex justify-content-center gap-md-2">
+                          <button
+                            className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
+                            type="submit"
+                            onClick={handleDocumentSubmit}
+                          >
+                            {translate("SUBMIT")}
+                          </button>
+                          <button
+                            className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
+                            onClick={closeUploadFileModal}
+                          >
+                            {translate("CANCEL")}
+                          </button>
                         </div>
                       </div>
                     </div>
-                  ))}
-
-                  <div className="row ">
-                    <div className="col-12 d-flex justify-content-center gap-md-2">
-
-                      <button
-                        className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                        type="submit"
-                        onClick={handleDocumentSubmit}
-                      >
-                        {translate("SUBMIT") }
-                      </button>
-                      <button
-                        className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                        onClick={closeUploadFileModal}
-                      >
-                        {translate("CANCEL") }
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  // title={translate(" Documents")}
-                  columns={viewData}
-                  data={viewDetails}
-                  highlightOnHover
-                />
-             
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  // title={translate("Customer Documents")}
-                  columns={downloadData}
-                  data={downloadDetails}
-                  highlightOnHover
-                />
-              </TabPanel>
-            </Tabs>
+                  </TabPanel>
+                  <TabPanel>
+                    <DataTable
+                      columns={viewData}
+                      data={viewDetails}
+                      highlightOnHover
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    <DataTable
+                      columns={downloadData}
+                      data={downloadDetails}
+                      highlightOnHover
+                    />
+                  </TabPanel>
+                </Tabs>
+              </div>
+            </Modal>
           </div>
-        </Modal>
+        )}
       </div>
-        )
-      }
-    </div>
     </>
   );
 }

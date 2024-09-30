@@ -9,8 +9,14 @@ import React, { useEffect, useState } from "react";
 const AgentDBsideBar = ({ setSideBarOpen }) => {
   const pathname = usePathname();
   const { translate } = useTranslation();
-  const user = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("user")) : '';
-  const customer = typeof window != 'undefined' ? JSON.parse(localStorage.getItem("customer")) : '';
+  const user =
+    typeof window != "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : "";
+  const customer =
+    typeof window != "undefined"
+      ? JSON.parse(localStorage.getItem("customer"))
+      : "";
   const [sidebarItemsAgentDB, setSidebarItemsAgentDB] = useState([]);
 
   useEffect(() => {
@@ -56,12 +62,9 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
     setSidebarItemsAgentDB(translatedSidebarItems);
   }, [translate]);
   const handleLogout = () => {
-    // Add your logout logic here, e.g. calling an API to log out the user
-    // Redirect to the login page or a landing page
-    if(typeof window != 'undefined' && user){
-
+    if (typeof window != "undefined" && user) {
       localStorage.removeItem("user");
-    window.location.href = "/partner-login";
+      window.location.href = "/partner-login";
     }
   };
 
@@ -69,10 +72,7 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
     <div>
       <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
         <div className="dashboard__sidebar_header">
-          <span
-            onClick={() => setSideBarOpen(false)}
-            className="closeSidebar"
-          >
+          <span onClick={() => setSideBarOpen(false)} className="closeSidebar">
             &times;
           </span>
           <Link href={"/"}>
@@ -90,8 +90,9 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
           {sidebarItemsAgentDB.map((elm, i) => (
             <div
               key={i}
-              className={`sidebar__item ${pathname == elm.href ? "-is-active" : ""
-                } `}
+              className={`sidebar__item ${
+                pathname == elm.href ? "-is-active" : ""
+              } `}
             >
               {elm.label === "Logout" ? (
                 <a onClick={handleLogout}>
@@ -109,7 +110,7 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AgentDBsideBar
+export default AgentDBsideBar;

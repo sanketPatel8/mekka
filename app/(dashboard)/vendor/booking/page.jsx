@@ -14,18 +14,18 @@ const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
 export default function DbBooking() {
   const { translate } = useTranslation();
-  const [tabs,setTabs] = useState([]);
+  const [tabs, setTabs] = useState([]);
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [currentTab, setcurrentTab] = useState("All");
   const [bookings, setBookings] = useState([]);
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
   const [filteredData, setFilteredData] = useState(bookings);
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [VendorBookings, setVendorBookings] = useState([]);
   const [loading, setLoading] = useState(false);
-  
-  const {user} = useAuthContext();
+
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const tabContent = [
@@ -33,7 +33,7 @@ export default function DbBooking() {
       translate("Completed"),
       translate("In Progress"),
       translate("Cancelled"),
-    ]
+    ];
     setTabs(tabContent);
 
     const BookingsData = [
@@ -81,35 +81,35 @@ export default function DbBooking() {
         sortable: true,
       },
       {
-      name: translate("Terms "),
-      selector: (row) => row.Payment_Terms,
-      sortable: true,
-      width:"6%"
-    }, 
-    {
-      name: translate("Method "),
-      selector: (row) => row.Payment_Method,
-      sortable: true,
-      width:"7%"
-    }, 
-    {
-      name: translate("Visas"),
-      selector: (row) => row.Visas,
-      width: "6%",
-      sortable: true,
-    },
+        name: translate("Terms "),
+        selector: (row) => row.Payment_Terms,
+        sortable: true,
+        width: "6%",
+      },
+      {
+        name: translate("Method "),
+        selector: (row) => row.Payment_Method,
+        sortable: true,
+        width: "7%",
+      },
+      {
+        name: translate("Visas"),
+        selector: (row) => row.Visas,
+        width: "6%",
+        sortable: true,
+      },
       {
         name: translate("Flight"),
         selector: (row) => row.Flight,
         width: "6%",
         sortable: true,
       },
-        {
-      name: translate("Initiated By"),
-      selector: (row) => row.Initiated_By_Admin,
-      width: "8%",
-      sortable: true,
-    }, 
+      {
+        name: translate("Initiated By"),
+        selector: (row) => row.Initiated_By_Admin,
+        width: "8%",
+        sortable: true,
+      },
       {
         name: translate("Action"),
         selector: (row) => (
@@ -118,105 +118,97 @@ export default function DbBooking() {
               className="button -md  -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
               style={{ width: "fit-content", padding: "5px 16px" }}
             >
-               {translate("Edit") }
+              {translate("Edit")}
             </button>
           </Link>
         ),
         width: "10%",
       },
     ];
-   
 
-  
     setVendorBookings(BookingsData);
-  },[translate]);
+  }, [translate]);
   const fetchBookings = async (tab) => {
-    
     const formData = new FormData();
     formData.append("company_id", user?.user.company_id);
     setLoading(true);
-    const response = await POST.request({form:formData , url: "tour_bookings"});
-    
-    if(tab === "All"){
-     setLoading(false);
-      const bookingsData  = response.Bookings.map((booking) => ({
-        BookingId: booking.reservation_id,
-        BookingNo: booking.reservationNumber,
-        Status: booking.reservation_status,
-        Full_Name: booking.name ,
-        Tour_name: booking.tour_name,
-        Total_Payment: booking.total,
-        Pending_Payment: booking.pending_payment,
-        Payment_Terms: booking.payment_terms,
-        Payment_Method: booking.payment_method,
-        Visas: booking.visa_confirm,
-        Flight: booking.plane_confirm,
-        Initiated_By_Admin: booking.initiated_by_admin,
-      }));
-      setBookings(bookingsData );
-    }
-    else if(tab === "Completed"){
-      setLoading(false);
-      const bookingsData  = response.Completed_Bookings.map((booking) => ({
-        BookingId: booking.reservation_id,
-        BookingNo: booking.reservationNumber,
-        Status: booking.reservation_status,
-        Full_Name: booking.name ,
-        Tour_name: booking.tour_name,
-        Total_Payment: booking.total,
-        Pending_Payment: booking.pending_payment,
-        Payment_Terms: booking.payment_terms,
-        Payment_Method: booking.payment_method,
-        Visas: booking.visa_confirm,
-        Flight: booking.plane_confirm,
-        Initiated_By_Admin: booking.initiated_by_admin,
-      }));
-      setBookings(bookingsData );
-    }
-    else if(tab === "In Progress"){
-      setLoading(false);
-      const bookingsData  = response.In_Progress_Bookings.map((booking) => ({
-        BookingId: booking.reservation_id,
-        BookingNo: booking.reservationNumber,
-        Status: booking.reservation_status,
-        Full_Name: booking.name ,
-        Tour_name: booking.tour_name,
-        Total_Payment: booking.total,
-        Pending_Payment: booking.pending_payment,
-        Payment_Terms: booking.payment_terms,
-        Payment_Method: booking.payment_method,
-        Visas: booking.visa_confirm,
-        Flight: booking.plane_confirm,
-        Initiated_By_Admin: booking.initiated_by_admin,
-      }));
-      setBookings(bookingsData );
-    }
-    else if(tab === "Cancelled"){
-      setLoading(false);
-      const bookingsData  = response.Cancelled_Bookings.map((booking) => ({
-        BookingId: booking.reservation_id,
-        BookingNo: booking.reservationNumber,
-        Status: booking.reservation_status,
-        Full_Name: booking.name ,
-        Tour_name: booking.tour_name,
-        Total_Payment: booking.total,
-        Pending_Payment: booking.pending_payment,
-        Payment_Terms: booking.payment_terms,
-        Payment_Method: booking.payment_method,
-        Visas: booking.visa_confirm,
-        Flight: booking.plane_confirm,
-        Initiated_By_Admin: booking.initiated_by_admin,
-      }));
-      setBookings(bookingsData );
-    }
+    const response = await POST.request({
+      form: formData,
+      url: "tour_bookings",
+    });
 
-
-  }
+    if (tab === "All") {
+      setLoading(false);
+      const bookingsData = response.Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData);
+    } else if (tab === "Completed") {
+      setLoading(false);
+      const bookingsData = response.Completed_Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData);
+    } else if (tab === "In Progress") {
+      setLoading(false);
+      const bookingsData = response.In_Progress_Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData);
+    } else if (tab === "Cancelled") {
+      setLoading(false);
+      const bookingsData = response.Cancelled_Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData);
+    }
+  };
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Indicate that the component has mounted
-      // setMounted(true);
-
       const handleResize = () => {
         if (window.innerWidth >= 1000) {
           setSideBarOpen(true);
@@ -225,56 +217,38 @@ export default function DbBooking() {
         }
       };
 
-      // Set the initial state based on the screen size
       handleResize();
 
-      // Add event listener to update state on resize
       window.addEventListener("resize", handleResize);
 
-      // Cleanup event listener on component unmount
       return () => {
         window.removeEventListener("resize", handleResize);
       };
     }
-
   }, []);
-
-
 
   useEffect(() => {
     setIsClient(true);
     fetchBookings(currentTab);
-
   }, [currentTab]);
 
-  // Memoized filtered items based on filterText
-  // const filteredItems = useMemo(() => {
-  //   return bookings.filter(item => {
-  //     return Object.keys(item).some(key =>
-  //       item[key].toString().toLowerCase().includes(filterText.toLowerCase())
-  //     );
-  //   });
-  // }, [filterText, bookings]);
-
   useEffect(() => {
-    const filteredItems = bookings.filter(item => {
-      return Object.keys(item).some(key =>
+    const filteredItems = bookings.filter((item) => {
+      return Object.keys(item).some((key) =>
         item[key].toString().toLowerCase().includes(filterText.toLowerCase())
       );
     });
     setFilteredData(filteredItems);
   }, [filterText, bookings]);
 
-  // Function to handle clearing filter and resetting pagination
   const handleClear = () => {
     if (filterText) {
       setResetPaginationToggle(!resetPaginationToggle);
-      setFilterText('');
+      setFilterText("");
     }
   };
 
   useEffect(() => {
-    // Filter data based on currentTab
     let filtered = [];
     if (currentTab === "All") {
       filtered = bookings;
@@ -298,74 +272,77 @@ export default function DbBooking() {
     return <span style={statusStyles}>{row.Status}</span>;
   };
 
-
   if (!isClient) {
     return null;
   }
 
-  
-const setCurrentTab = (tab) => {
-  setcurrentTab(tab);
-  fetchBookings(tab);
-};
-
+  const setCurrentTab = (tab) => {
+    setcurrentTab(tab);
+    fetchBookings(tab);
+  };
 
   return (
-    <div className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""} js-dashboard`}>
+    <div
+      className={`dashboard ${
+        sideBarOpen ? "-is-sidebar-visible" : ""
+      } js-dashboard`}
+    >
       <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
       <div className="dashboard__content">
         <Header setSideBarOpen={setSideBarOpen} />
         <div className="dashboard__content_content">
-          <h1 className="text-30"> {translate("My Booking") }</h1>
+          <h1 className="text-30"> {translate("My Booking")}</h1>
           <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20 ">
-          { loading ?       
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ height: "200px" }}
-            >
-              <ClipLoader color="#DAC04F" size={50} />
-            </div>
-            :
-            <div className="tabs -underline-2 js-tabs">
-              <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
-                {tabs.map((tab, index) => (
-                  <div
-                    key={index}
-                    className="col-auto"
-                    onClick={() => setCurrentTab(tab)}
-                    >
-                    <button
-                      className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${tab === currentTab ? "is-tab-el-active" : ""}`}
-                    >
-                      {tab}
-                    </button>
-                  </div>
-                ))}
+            {loading ? (
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: "200px" }}
+              >
+                <ClipLoader color="#DAC04F" size={50} />
               </div>
-              <DataTable
-                columns={VendorBookings}
-                data={filteredData}
-                highlightOnHover
-                pagination
-                subHeader
-                subHeaderComponent={
-                  <div className="d-flex items-center border-1 px-3 py-2 rounded">
-                    <input
-                      type="text"
-                      placeholder="Search all columns"
-                      value={filterText}
-                      className="ml-10 "
-                      onChange={(e) => setFilterText(e.target.value)}
-                    />
-                     <span className="form-input m-0 ">
-                      <input type="text" required />
-                    </span>
-                    <button onClick={handleClear}>Clear</button>
-                  </div>
-                }
-              />
-            </div>
-}
+            ) : (
+              <div className="tabs -underline-2 js-tabs">
+                <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
+                  {tabs.map((tab, index) => (
+                    <div
+                      key={index}
+                      className="col-auto"
+                      onClick={() => setCurrentTab(tab)}
+                    >
+                      <button
+                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
+                          tab === currentTab ? "is-tab-el-active" : ""
+                        }`}
+                      >
+                        {tab}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <DataTable
+                  columns={VendorBookings}
+                  data={filteredData}
+                  highlightOnHover
+                  pagination
+                  subHeader
+                  subHeaderComponent={
+                    <div className="d-flex items-center border-1 px-3 py-2 rounded">
+                      <input
+                        type="text"
+                        placeholder="Search all columns"
+                        value={filterText}
+                        className="ml-10 "
+                        onChange={(e) => setFilterText(e.target.value)}
+                      />
+                      <span className="form-input m-0 ">
+                        <input type="text" required />
+                      </span>
+                      <button onClick={handleClear}>Clear</button>
+                    </div>
+                  }
+                />
+              </div>
+            )}
           </div>
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}

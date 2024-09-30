@@ -19,7 +19,7 @@ export default function DBListing() {
   const [Total_Pending, setTotalPending] = useState("0");
   const [StatusPaymentHistry, setPaymentHistory] = useState([]);
   const [VendorBookings, setVendorBookings] = useState([]);
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const { translate } = useTranslation();
 
   useEffect(() => {
@@ -54,7 +54,12 @@ export default function DBListing() {
         selector: (row) => row.Total_Payment,
         sortable: true,
       },
-      { name: translate("Paid (€) "), selector: (row) => row.Payment_Tax, sortable: true,width: "10%" },
+      {
+        name: translate("Paid (€) "),
+        selector: (row) => row.Payment_Tax,
+        sortable: true,
+        width: "10%",
+      },
       {
         name: translate("Date "),
         selector: (row) => row.Booking_date,
@@ -87,18 +92,18 @@ export default function DBListing() {
         iconClass: "icon-payment text-accent-1",
       },
     ]);
-  },[translate, Total_Earnings, Total_Pending]);
+  }, [translate, Total_Earnings, Total_Pending]);
 
-  
-  const company_id =  user?.user.company_id;
+  const company_id = user?.user.company_id;
   const fetchPayments = async () => {
-   
     const formData = new FormData();
     formData.append("company_id", company_id);
-    
-    const response = await POST.request({form:formData, url:"payment_history"})
-    if(response && response.Total_Earnings && response.Total_Pending){
-      
+
+    const response = await POST.request({
+      form: formData,
+      url: "payment_history",
+    });
+    if (response && response.Total_Earnings && response.Total_Pending) {
       setTotalEarnings(response.Total_Earnings);
       setTotalPending(response.Total_Pending);
       const bookingData = response.Payment_Data.map((payment) => ({
@@ -111,17 +116,13 @@ export default function DBListing() {
         Transation_id: payment.transaction_id,
       }));
       setPayment(bookingData);
-      
- 
 
-        setLoading(false);
-      
-    }else{
+      setLoading(false);
+    } else {
       setLoading(false);
       showErrorToast("Something went wrong");
     }
-    
-  }
+  };
 
   useEffect(() => {
     fetchPayments();
@@ -146,13 +147,11 @@ export default function DBListing() {
         window.removeEventListener("resize", handleResize);
       };
     }
-
   }, []);
 
   if (!mounted) {
-    return null; // Avoid rendering client-specific elements until the component has mounted
+    return null; 
   }
-
 
   return (
     <div
@@ -165,53 +164,51 @@ export default function DBListing() {
       <div className="dashboard__content">
         <Header setSideBarOpen={setSideBarOpen} />
 
-
         <div className="dashboard__content_content">
-          <h1 className="text-30">  {translate("Payment History") }</h1>
-          { loading ?  
+          <h1 className="text-30"> {translate("Payment History")}</h1>
+          {loading ? (
             <div
               className="d-flex justify-content-center align-items-center"
               style={{ height: "200px" }}
             >
               <ClipLoader color="#DAC04F" size={50} />
             </div>
-            :
-          <>
-          <div className="row y-gap-30 mt-20 md:pt-30">
-           { StatusPaymentHistry.map((elm, i) => (
-              <div key={i} className="col-xl-3 col-sm-6 py-3 py-lg-1">
-                <div className="rounded-12 bg-white shadow-2 px-30 py-30 h-full">
-                  <div className="row y-gap-20 items-center justify-between">
-                    <div className="col-auto">
-                      <div>{elm.title}</div>
-                      <div className="text-30 fw-700">{elm.amount}</div>
-                      <div>
-                        {/* <span className="text-accent-1">{elm.today}</span> Today */}
-                      </div>
-                    </div>
-                    <div className="col-auto">
-                      <div className="size-80 flex-center bg-accent-1-05 rounded-full">
-                        <i className={`text-30 ${elm.iconClass}`}></i>
+          ) : (
+            <>
+              <div className="row y-gap-30 mt-20 md:pt-30">
+                {StatusPaymentHistry.map((elm, i) => (
+                  <div key={i} className="col-xl-3 col-sm-6 py-3 py-lg-1">
+                    <div className="rounded-12 bg-white shadow-2 px-30 py-30 h-full">
+                      <div className="row y-gap-20 items-center justify-between">
+                        <div className="col-auto">
+                          <div>{elm.title}</div>
+                          <div className="text-30 fw-700">{elm.amount}</div>
+                          <div>
+                            {/* <span className="text-accent-1">{elm.today}</span> Today */}
+                          </div>
+                        </div>
+                        <div className="col-auto">
+                          <div className="size-80 flex-center bg-accent-1-05 rounded-full">
+                            <i className={`text-30 ${elm.iconClass}`}></i>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          
-          </div>
 
-          <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
-            <DataTable
-              title="Payment Data"
-              columns={VendorBookings}
-              data={payment}
-              highlightOnHover
-              pagination
-            />
-          </div>
-          </>
-          }
+              <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
+                <DataTable
+                  title="Payment Data"
+                  columns={VendorBookings}
+                  data={payment}
+                  highlightOnHover
+                  pagination
+                />
+              </div>
+            </>
+          )}
           <div className="text-center pt-30">
             © Copyright MekkaBooking.com {new Date().getFullYear()}
           </div>

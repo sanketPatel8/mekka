@@ -34,83 +34,74 @@ const customStyles = {
     marginLeft: "10%",
     transform: "translate(-50%, -50%)",
     padding: "10px",
-    width: "100%", 
-    maxWidth: "700px", 
-    height: "30vh", 
+    width: "100%",
+    maxWidth: "700px",
+    height: "30vh",
     overflowY: "auto",
     backgroundColor: "#fff",
   },
 };
 
 export default function DBListing() {
-
   const router = useRouter();
-  const {user} = useAuthContext();
-  console.log(user)
-
-
+  const { user } = useAuthContext();
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const startParam = 'start';
+  const startParam = "start";
   const [range, setRange] = useState(1);
   const [pageStart, setPageStart] = useState(1);
-  const [tourList,setTourList] = useState([]);
+  const [tourList, setTourList] = useState([]);
   const [loading, setLoading] = useState(false);
-  // for opent rejected pop-up box 
 
-  const [invoice, setinvoice] = useState(false)
-  const [note, setNote] = useState("")
-  useEffect (() => {
-    Modal.setAppElement('#invoice')
+  const [invoice, setinvoice] = useState(false);
+  const [note, setNote] = useState("");
+  useEffect(() => {
+    Modal.setAppElement("#invoice");
   }, []);
 
   const handleClick = (id) => {
-      const formData = new FormData();
-      formData.append("id", id);
-      formData.append("vendor_id",user?.user.id );
-      setLoading(true);
-      const response = POST.request({form: formData, url: "duplicatetour"});
-      if(response){
-        fetchListing();
-        setLoading(false);
-      }
-  }
-  const openInvoice= (note) => {
-    console.log(note)
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("vendor_id", user?.user.id);
+    setLoading(true);
+    const response = POST.request({ form: formData, url: "duplicatetour" });
+    if (response) {
+      fetchListing();
+      setLoading(false);
+    }
+  };
+  const openInvoice = (note) => {
 
     setinvoice(true);
-    setNote(note)
-  }
+    setNote(note);
+  };
 
   function closeInvoice() {
     setinvoice(false);
   }
 
-  const fetchListing = async(pageIndex)=>{
-    
+  const fetchListing = async (pageIndex) => {
     const formData = new FormData();
-    formData.append("company_id",user?.user.company_id );
+    formData.append("company_id", user?.user.company_id);
     formData.append("start", pageIndex || 0);
 
-
-    try{
+    try {
       setLoading(true);
-      const response = await POST.request({form: formData, url: "my_tourlist"});
-      setLoading(false)
-      console.log(response,"tourlist");
+      const response = await POST.request({
+        form: formData,
+        url: "my_tourlist",
+      });
+      setLoading(false);
       setTourList(response.Tours);
       setRange(response.Total_Page);
-    }catch(e){
-      console.log(e);
+    } catch (e) {
     }
-
-  }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Indicate that the component has mounted
-      // setMounted(true);
+
 
       const handleResize = () => {
         if (window.innerWidth >= 1000) {
@@ -120,25 +111,20 @@ export default function DBListing() {
         }
       };
 
-      // Set the initial state based on the screen size
       handleResize();
 
       fetchListing();
 
-      // Add event listener to update state on resize
       window.addEventListener("resize", handleResize);
 
-      // Cleanup event listener on component unmount
       return () => {
         window.removeEventListener("resize", handleResize);
       };
     }
   }, []);
-  
+
   const onPageChange = (pageIndex) => {
-    console.log(`Page changed to ${pageIndex+1}`);
     fetchListing(pageIndex);
-    
   };
 
   const { translate } = useTranslation();
@@ -152,180 +138,134 @@ export default function DBListing() {
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
 
-        
-         
         <div className="dashboard__content">
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30">  {translate("My Listings") }</h1>
+            <h1 className="text-30"> {translate("My Listings")}</h1>
 
             <div className="row y-gap-30 mt-20">
-           { loading ?       
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ height: "200px" }}
-            >
-              <ClipLoader color="#DAC04F" size={50} />
-            </div>
-            :
-              <>
-              
-              {
-                tourList.length === 0 &&
-                <div className="text-center">
-                  <h3>{translate("No Tours Found")}</h3>
+              {loading ? (
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ height: "200px" }}
+                >
+                  <ClipLoader color="#DAC04F" size={50} />
                 </div>
-              }
-              {tourList.map((elm, i) => (
-                <div className="col-lg-12 mb-15" key={i}>
-                  <div className="tourCard -type-2 bg-white">
-                    <div className="tourCard__image">
-                      <Image
-                        width={420}
-                        height={390}
-                        src={elm.tour_image}
-                        alt="image"
-                        style={{ aspectRatio : "1"}}
-                      />
-                      {elm.direct_flight && 
-                      
-                      <button className="tourCard__favorite">
-                        {elm.direct_flight}
-                      </button>
-                      }
+              ) : (
+                <>
+                  {tourList.length === 0 && (
+                    <div className="text-center">
+                      <h3>{translate("No Tours Found")}</h3>
                     </div>
-
-                    <div className="tourCard__content">
-                      {/* <div className="tourCard__location border_yellow px-2">
-                        <FaPersonWalking color="white" size={18} />
-                        {elm.location}
-                      </div> */}
-
-                      <h3 className="tourCard__title mt-5">
-                        <span>{elm.type}</span>
-                      </h3>
-                    
-                      <div className="tourCard__title">
-                        {translate("Tour Name:")} {elm.name}
-                      </div>
-
-                      {/* <p className="tourCard__text mt-5 items-center d-flex">
-                        <FontAwesomeIcon
-                          icon={faHotel}
-                          className="px-1 text-accent-1"
-                        />
-                        {elm.description} (3{" "}
-                        <FaStar color="#dabf4f" className="mx-1" />)
-                      </p>
-                      <p className="tourCard__text mt-5 items-center d-flex ">
-                        <FontAwesomeIcon
-                          icon={faHotel}
-                          className="px-1 text-accent-1"
-                        />
-                        {elm.hotel_name} (5{" "}
-                        <FaStar
-                          color="#dabf4f"
-                          className="mx-1 text-accent-1"
-                        />
-                        )
-                      </p>
-                      <p className="tourCard__text mt-5">
-                        <FontAwesomeIcon
-                          icon={faQuoteRight}
-                          className="px-1 text-accent-1"
-                        />
-                        {elm.description3}
-                      </p> */}
-
-                      {/* <div className="d-flex items-center mt-5">
-                        <div className="d-flex items-center x-gap-5">
-                          <Stars star={elm.rating} font={12} />
+                  )}
+                  {tourList.map((elm, i) => (
+                    <div className="col-lg-12 mb-15" key={i}>
+                      <div className="tourCard -type-2 bg-white">
+                        <div className="tourCard__image">
+                          <Image
+                            width={420}
+                            height={390}
+                            src={elm.tour_image}
+                            alt="image"
+                            style={{ aspectRatio: "1" }}
+                          />
+                          {elm.direct_flight && (
+                            <button className="tourCard__favorite">
+                              {elm.direct_flight}
+                            </button>
+                          )}
                         </div>
 
-                        <div className="text-14 ml-10">
-                          <span className="fw-500">{elm.rating}</span> (
-                          {elm.ratingCount}) - IDEALGATE
-                        </div>
-                      </div> */}
-                      {
-                        elm.departures && 
-                      <div className="Location">
-                        <span>{translate("Departure")} : {elm.departures}</span>
-                      </div>
-                      }
+                        <div className="tourCard__content">
+                       
 
-                      <div className="row x-gap-20 y-gap-5 pt-30">
-                        {elm.features?.map((elm2, i2) => (
-                          <div key={i2} className="col-auto">
-                            <div className="text-14 ">{elm2.name}</div>
+                          <h3 className="tourCard__title mt-5">
+                            <span>{elm.type}</span>
+                          </h3>
+
+                          <div className="tourCard__title">
+                            {translate("Tour Name:")} {elm.name}
                           </div>
-                        ))}
-                      </div>
-                    </div>
 
-                    <div className="tourCard__info tourCard__info_Dash ">
-                      <div className="">
-                        <button
-                          className={
-                            elm.tour_status === "Pending"
-                              ? "badge-orange"
-                              : elm.tour_status === "Approved"
-                              ? "badge-green"
-                              : elm.tour_status === "Rejected"
-                              ? "badge-red"
-                              : ""
-                          }
-                          disabled={elm.tour_status === "Rejected"  ? false : true}
-                          onClick={(note)=>openInvoice(`${elm?.reject_note}`)}
-                        >
-                          <b>{elm.tour_status}</b>
-                        </button>
+                        
+                          {elm.departures && (
+                            <div className="Location">
+                              <span>
+                                {translate("Departure")} : {elm.departures}
+                              </span>
+                            </div>
+                          )}
 
-                        <div className="d-flex items-center text-14 ">
-                          <i className="icon-clock mr-10"></i>
-                          {elm.days_of_stay}
+                          <div className="row x-gap-20 y-gap-5 pt-30">
+                            {elm.features?.map((elm2, i2) => (
+                              <div key={i2} className="col-auto">
+                                <div className="text-14 ">{elm2.name}</div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
 
-                        <p className="text-cente text-Danger">
-                        {translate("Available Seats :")} {elm.capacity_empty === null ? 0 : elm.capacity_empty} / {elm.capacity}
-                        </p>
-                        <p className="text-center">{translate("Total")} : €{elm.tour_price} </p>
+                        <div className="tourCard__info tourCard__info_Dash ">
+                          <div className="">
+                            <button
+                              className={
+                                elm.tour_status === "Pending"
+                                  ? "badge-orange"
+                                  : elm.tour_status === "Approved"
+                                  ? "badge-green"
+                                  : elm.tour_status === "Rejected"
+                                  ? "badge-red"
+                                  : ""
+                              }
+                              disabled={
+                                elm.tour_status === "Rejected" ? false : true
+                              }
+                              onClick={(note) =>
+                                openInvoice(`${elm?.reject_note}`)
+                              }
+                            >
+                              <b>{elm.tour_status}</b>
+                            </button>
+
+                            <div className="d-flex items-center text-14 ">
+                              <i className="icon-clock mr-10"></i>
+                              {elm.days_of_stay}
+                            </div>
+
+                            <p className="text-cente text-Danger">
+                              {translate("Available Seats :")}{" "}
+                              {elm.capacity_empty === null
+                                ? 0
+                                : elm.capacity_empty}{" "}
+                              / {elm.capacity}
+                            </p>
+                            <p className="text-center">
+                              {translate("Total")} : €{elm.tour_price}{" "}
+                            </p>
+                          </div>
+
+                          <label className="badge bg-secondary"></label>
+                          <button className="button -sm -outline-accent-1 text-accent-1">
+                            <Link href={`/vendor/edit-tour/${elm.id}`}>
+                              <div>{translate("EDIT TOUR")}</div>
+                            </Link>
+                          </button>
+
+                          <button
+                            onClick={(id) => handleClick(`${elm?.id}`)}
+                            className="mt-5 text-center"
+                          >
+                            <span>{translate("Duplicate Tour")}</span>
+                          </button>
+                        </div>
                       </div>
-
-                      <label className="badge bg-secondary"></label>
-                      <button
-                        className="button -sm -outline-accent-1 text-accent-1"
-                      >
-                        <Link
-                          href={`/vendor/edit-tour/${elm.id}`}
-                        >
-                          <div>{translate("EDIT TOUR")}</div>
-                        </Link>
-                      </button>
-
-                      <button onClick={(id)=>handleClick(`${elm?.id}`)} className="mt-5 text-center">
-                        <span>{translate("Duplicate Tour")}</span>
-                      </button>
                     </div>
-                  </div>
-                </div>
-                
-              ))}
-              
-              </>
-            }
+                  ))}
+                </>
+              )}
             </div>
 
-            {/* <div className="mt-4">
-            <Pagination
-                  range={range}
-                  activeIndex={activeIndex}
-                  setActiveIndex={setActiveIndex}
-                  startParam={startParam}
-                  onPageChange={onPageChange}
-            />
-                </div> */}
 
             <div id="invoice">
               <Modal
@@ -344,13 +284,9 @@ export default function DBListing() {
                 <p className="mx-3">{note}</p>
               </Modal>
             </div>
-
-           
           </div>
-      <VendorFooter/>
+          <VendorFooter />
         </div>
-        
-
       </div>
     </>
   );
