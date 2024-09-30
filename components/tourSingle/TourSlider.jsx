@@ -138,7 +138,7 @@ export default function TourSlider({ PAckageData }) {
                           >
                             {elm.rating} ({elm.rating}) -
                           </p>{" "}
-                          {elm.company_name}
+                          {elm.company_code}
                         </div>
 
                         <div

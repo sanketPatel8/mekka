@@ -9,6 +9,8 @@ import React, { useState, useEffect, useContext } from "react";
 export default function Page() {
   const { translate } = useTranslation();
 
+
+
   return (
     <>
       <main>

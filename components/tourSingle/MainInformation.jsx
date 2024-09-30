@@ -23,7 +23,6 @@ export default function MainInformation({ PAckageData }) {
   const { translate } = useTranslation();
 
   const [InformationData, setInformationData] = useState({});
-  const [showShareButtons, setShowShareButtons] = useState(false);
   const [copySuccess, setCopySuccess] = useState("");
   const [invoice, setinvoice] = useState(false);
 
