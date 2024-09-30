@@ -187,12 +187,16 @@ export default function TourSingleSidebar({
   };
 
   const handleHotelChange = (e, elm) => {
+    console.log("elm" , elm);
+    
     const selectedFlight = {
-      id: elm.flight_id,
+      id: elm.id,
       name: elm.airline_name,
       price: elm.flight_amount,
       luggage: elm.luggage,
     };
+    console.log("selectedFlight" , selectedFlight);
+    
     setSelectedFlights(selectedFlight); // Replace with the selected flight object
     setSelectedAirlinePrice(selectedFlight.price);
   };
@@ -774,9 +778,9 @@ export default function TourSingleSidebar({
                     <label className="radio d-flex items-center">
                       <input
                         type="radio"
-                        name={`${elm.flight_id} ( No Stop )`}
-                        value={elm.flight_id}
-                        checked={selectedFlights?.id === elm.flight_id} // Check if the flight is selected
+                        name={`${elm.id} ( No Stop )`}
+                        value={elm.id}
+                        checked={selectedFlights?.id === elm.id} // Check if the flight is selected
                         onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
                       />
                       <span className="radio__mark">
