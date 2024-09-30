@@ -11,7 +11,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { countries } from "@/data/nationalities";
 
@@ -115,34 +115,7 @@ export default function Profile() {
 
   };
 
-  // const handleImageChange1 = (e) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     const promise = new Promise((resolve) => {
-  //       reader.onloadend = () => {
-  //         const imageData = reader.result;
-  //         if (!imageData.startsWith('data:image/')) {
-  //           console.error('Invalid image format');
-  //           return;
-  //         }
-  //         const imageFile = new File([imageData], file.name, { type: 'image/jpeg' });
-  //         const blob = dataURItoFile(imageData, file.name);
-  //         setFileBlob(blob);
-  //         console.log(blob,"fileBlob")
-  //         setImage1(blob)
-  //         resolve(imageFile);
-  //       };
-  //       reader.readAsDataURL(file);
-  //     });
-  //     promise.then((imageSrc) => {
-  //       setImage1(imageSrc);
-  //       setFileBlob(file);
-  //       console.log(fileBlob,"image1")
-  //     });
-  //   }
 
-  // };
 
   const handleImageChange2 = (event) => {
     const files = event.target.files;
@@ -215,7 +188,7 @@ export default function Profile() {
       !name ||
       !companyName ||
       image1 == "" ||
-      image2.length == 0
+      !image2 ? uploadImage.length == 0 : image2.length == 0
     ) {
       showErrorToast("Please fill all fields");
       return;
@@ -291,35 +264,7 @@ export default function Profile() {
 
     if (formType === "profile") {
       // || ( !userData.mobile && !mobile) ||  ( !userData.city && !city ) || (!userData.street && !street ) || (!userData.houseNumber && !houseNumber) || ( !userData.plz && !zipcode ) || ( !userData.company.Link && !website) || ( !userData.tax_number && !tax_number ) || ( !userData.company.info && !info )  || ( !userData.company.companyName && !companyName )
-      console.log(
-        name,
-        userData.name,
-        userData.surname,
-        surname,
-        userData.email,
-        email,
-        userData.mobile,
-        mobile,
-        SelectedCountry,
-        userData.country,
-        userData.street,
-        userData.city,
-        userData.houseNumber,
-        userData.plz,
-        city,
-        street,
-        houseNumber,
-        zipcode,
-        userData.company.Link,
-        website,
-        userData.company.tax_number,
-        tax_number,
-        info,
-        userData.company.companyName,
-        companyName,
-        image1,
-        image2File
-      );
+     
       // if(( !userData.name && !name ) || !surname || ( !userData.email && !email ) || ( !userData.mobile && !mobile) ||  ( !userData.city && !city )|| (!userData.street && !street ) || (!userData.houseNumber && !houseNumber) || ( !userData.plz && !zipcode ) || ( !companyData.Link && !website) || ( !companyData.tax_number && !tax_number ) || ( !companyData.info && !info )  || ( !companyData.companyName && !companyName ) || !image1 || image2File.length == 0){
       //   showErrorToast("Please fill all fields")
       //   return;
@@ -400,10 +345,10 @@ export default function Profile() {
     // newImages.splice(index, 1);
     // setImage2(newImages);
     event.preventDefault();
-    if (image1) {
+    if ( image1 !== null) {
+
       const url = new URL(image2);
       const fileName = url.pathname.split("/").pop();
-      console.log(fileName);
 
       const formData = new FormData();
       formData.append("image", fileName);
@@ -421,17 +366,19 @@ export default function Profile() {
       });
       if (response) {
         showSuccessToast("Image removed successfully");
-        fetchProfile();
+        setTimeout(()=>{
 
-        // const newImages = [...companyData.company_document];
-        // newImages.splice(index, 1);
-        // setCompanyData({ ...companyData, company_document: newImages });
+          fetchProfile();
+        },1000)
+
+    
       }
-    } else if (uploadImage.length > 0) {
-      const newImages = [...image2];
+    } else {
+      const newImages = [...uploadImage];
       newImages.splice(index, 1);
-      setImage2(newImages);
+      setUploadImage(newImages);
     }
+  
   };
 
   useEffect(() => {
@@ -878,6 +825,7 @@ export default function Profile() {
                                               height="40"
                                               alt="image"
                                               src={"/img/dashboard/upload.svg"}
+
                                             />
                                           </div>
                                           <div className="file-name">
@@ -961,7 +909,6 @@ export default function Profile() {
                                 image.image.startsWith("data:application/");
 
                               //  const fileName = isDocument ? getFileNameFromBase64(image) : null;
-                              console.log(isDocument, "isImage");
 
                               return (
                                 <div className="col-auto my-2" key={index}>

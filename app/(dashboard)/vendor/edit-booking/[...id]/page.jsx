@@ -16,8 +16,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Select from "react-select";
 import Modal from "react-modal";
-// import { showSuccessToast } from "@/app/utils/tost";
-import { toast } from "react-toastify";
+import { showSuccessToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 const customStyles = {
   overlay: {
@@ -570,7 +570,7 @@ export default function DbBooking({ params }) {
       url: "upload_bookingdocuments",
     });
     if (response) {
-      toast.success("Document Uploaded Successfully");
+      showSuccessToast("Document Uploaded Successfully");
       setuploadFileisOpen(false);
       setRows([{ document: "", type: null }]);
     }
