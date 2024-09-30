@@ -449,13 +449,13 @@ export default function TourSingleSidebar({
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included == "0" ||
+      SidebarData?.tour_details?.flight_included !== "0" ||
         selectedCheckbox == false
         ? SelectedAirlinePrice
         : 0
     ) +
     JSON.parse(
-      SidebarData?.tour_details?.flight_included == "0" ||
+      SidebarData?.tour_details?.flight_included !== "0" ||
         selectedCheckbox == false
         ? selectDeparture.price === undefined
           ? 0
@@ -528,7 +528,7 @@ export default function TourSingleSidebar({
     setRender(true);
     updateAdultsObject();
 
-    if (selectDeparture.name === "" && selectedCheckbox === false) {
+    if (selectDeparture.name === "" && selectedCheckbox === false && SidebarData?.tour_details?.flight_included !== '0') {
       alert("Please Fill Departure");
     } else {
       router.push(

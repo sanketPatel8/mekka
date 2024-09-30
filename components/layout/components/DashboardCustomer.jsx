@@ -17,8 +17,7 @@ export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionChange = (option) => {
-    setCurrency(option); // Set currency for Euro or USD
-
+    // setCurrency(option); // Set currency for Euro or USD
     setCurrentOption(option); // Set selected option
     setIsOpen(false); // Close the dropdown
   };
@@ -63,9 +62,9 @@ export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
                   key={index}
                   className="headerDropdown__item"
                 >
-                  <Link href={option.path} className="currencyhov">
+                  <p  className="currencyhov">
                     {option.name}
-                  </Link>
+                  </p>
                 </div>
               ))}
             </div>
