@@ -233,7 +233,7 @@ export default function TourList4({
                           <div className="text-14 ml-10">
                             {/* <span className="fw-500">{elm?.rating}</span> ( */}
                             {/* {elm?.rating_count}) - */}
-                            {elm?.company_name}
+                            {elm?.company_code}
                           </div>
                         </div>
 
@@ -282,7 +282,7 @@ export default function TourList4({
                           </div>
                         </div>
                         <button className="button -outline-accent-1 text-accent-1">
-                          <Link href={`/package/${elm?.slug}?id=${elm?.id}`}>
+                          <Link href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}>
                             SHOW AVAILABILITY
                           </Link>
                         </button>
