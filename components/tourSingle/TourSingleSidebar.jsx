@@ -90,7 +90,7 @@ export default function TourSingleSidebar({
     if (SidebarData?.tour_details?.airlines?.length > 0) {
       const firstFlight = SidebarData.tour_details.airlines[0];
       setSelectedFlights({
-        id: firstFlight.flight_id,
+        id: firstFlight.id,
         name: firstFlight.airline_name,
         price: firstFlight.flight_amount,
         luggage: firstFlight.luggage,

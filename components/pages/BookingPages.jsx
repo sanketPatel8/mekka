@@ -546,36 +546,41 @@ export default function BookingPages({ BookingData }) {
 
   // calling api
 
-  const FetchPromoApi = async () => {
-    const sendData = {
-      AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-      coupon_code: promo,
-      total_amount: PackagePrices + adultadiPrices + adPrice,
-    };
-
-    try {
-      const PromoResponse = await post("check_coupon", sendData);
-      if (PromoResponse.Status == 1) {
-        showSuccessToast(PromoResponse.Message);
-        setDiscount(PromoResponse);
-        setHandlePromo(true);
-      } else {
-        showErrorToast("Invalid promo code.");
-        setHandlePromo(false);
-      }
-
-      setPromoData(PromoResponse);
-
-      return PromoResponse;
-    } catch (error) {
-      console.error("Error caught:", error);
-      return null;
-    }
+  // Function to fetch and apply promo code
+const FetchPromoApi = async () => {
+  const sendData = {
+    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    coupon_code: promo,
+    total_amount: PackagePrices + adultadiPrices + adPrice, // Calculate total
   };
 
-  // fatch profileapi
+  try {
+    const PromoResponse = await post("check_coupon", sendData);
+    
+    if (PromoResponse.Status == 1) {
+      showSuccessToast(PromoResponse.Message);
+      setDiscount(PromoResponse); // Apply the discount
+      setHandlePromo(true);       // Promo applied
+      setShowbtnName(true);       // Show the button for removing the promo
+    } else {
+      showErrorToast("Invalid promo code.");
+      setHandlePromo(false);      // Promo failed
+      setDiscount(0);             // Reset discount
+      setShowbtnName(false);      // Hide the remove button
+    }
 
-  console.log("customer" , customer);
+    setPromoData(PromoResponse); // Store promo data for later use
+    return PromoResponse;
+  } catch (error) {
+    console.error("Error caught:", error);
+    return null;
+  }
+};
+
+
+
+
+  // fatch profileapi
   
 
   const fetchProfile = async () => {
@@ -633,13 +638,15 @@ export default function BookingPages({ BookingData }) {
   };
 
   const handlePromoremove = () => {
-    if (HandlePromo == true) {
-      setHandlePromo(false);
-      showSuccessToast("Remove Sucessfull");
-    } else if (HandlePromo == false) {
-      setHandlePromo(true);
+    if (HandlePromo) { // If a promo is applied
+      setHandlePromo(false);   // Remove the promo
+      showSuccessToast("Promo removed successfully.");
+      setDiscount(0);          // Reset the discount
+    } else {
+      showErrorToast("No promo to remove.");
     }
-    setShowbtnName(false);
+  
+    setShowbtnName(false);      // Hide the remove button after promo is removed
   };
 
   useEffect(() => {
@@ -1067,7 +1074,9 @@ export default function BookingPages({ BookingData }) {
 
   const { translate } = useTranslation();
 
-  console.log("BookingData" , BookingData);
+  console.log("Discount" , Discount);
+
+  const discountClass = Object.keys(Discount).length === 0 || Discount == 0 ? 'd-none' : 'd-block';
   
 
   return (
@@ -1270,9 +1279,7 @@ export default function BookingPages({ BookingData }) {
                     </div>
 
                     <div
-                      className={`${
-                        ShowbtnName === false ? "d-none" : "d-block"
-                      }`}
+                      className={discountClass}
                     >
                       <div className={`d-flex items-center justify-between `}>
                         <div className="fw-500">{translate("Discount")}</div>
