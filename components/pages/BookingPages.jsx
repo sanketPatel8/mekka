@@ -352,25 +352,79 @@ export default function BookingPages({ BookingData }) {
     return formatPrice(Number(personPrice[idx]?.default)); // Ensure price is a number
   };
 
-  const handleInputChange = (type, index, e) => {
-    const { name, value } = e.target;
+  // const handleInputChange = (type, index, e , ftype) => {
+  //   const { name, value } = e.target;
 
+  //   console.log("type" , ftype);
+
+  //   setFormValues((prevValues) => {
+  //     const updatedValues = { ...prevValues };
+
+  //     if (!updatedValues[type]) {
+  //       updatedValues[type] = [];
+  //     }
+  //     if (!updatedValues[type][index]) {
+  //       updatedValues[type][index] = {};
+  //     }
+
+  //     // Update the form values
+  //     updatedValues[type][index] = {
+  //       ...updatedValues[type][index],
+  //       [name]: value,
+  //     };
+
+  //     // Optional: Update userData if type is 'Adult' and index is 0
+  //     if (type === "Adult" && index === 0) {
+  //       setUserData((prevUserData) => ({
+  //         ...prevUserData,
+  //         [name]: value, // Update userData if necessary
+  //       }));
+  //     }
+
+  //     return updatedValues;
+  //   });
+
+  //   if (ftype == "number" && name == "mobile") {
+  //     if (value < 10) {
+  //       showErrorToast("Phone number must be at least 10.");
+  //     }
+  //   }
+  // };
+
+  const handleInputChange = (type, index, e, ftype) => {
+    let { name, value } = e.target;
+  
+    // Validate phone number: Allow only numeric values and limit to 10 characters
+    if (ftype === "tel" && name === "mobile") {
+      value = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+      if (value.length > 10) {
+        value = value.slice(0, 10); // Limit to 10 characters
+      }
+  
+      // Check if the mobile number is less than 10 digits and show an error
+      if (value.length < 10) {
+        showErrorToast("Phone number must be exactly 10 digits.");
+      } else {
+        showErrorToast(""); // Clear the error message
+      }
+    }
+  
+    // Update form values
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
-
+  
       if (!updatedValues[type]) {
         updatedValues[type] = [];
       }
       if (!updatedValues[type][index]) {
         updatedValues[type][index] = {};
       }
-
-      // Update the form values
+  
       updatedValues[type][index] = {
         ...updatedValues[type][index],
         [name]: value,
       };
-
+  
       // Optional: Update userData if type is 'Adult' and index is 0
       if (type === "Adult" && index === 0) {
         setUserData((prevUserData) => ({
@@ -378,19 +432,11 @@ export default function BookingPages({ BookingData }) {
           [name]: value, // Update userData if necessary
         }));
       }
-
+  
       return updatedValues;
     });
-
-    if (type == "number" && name == "Phone") {
-      if (value < 10) {
-        setErrorMessage("Phone number must be at least 10.");
-      } else {
-        setErrorMessage(""); // Clear the error message
-      }
-    }
   };
-
+  
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
 
@@ -841,19 +887,16 @@ export default function BookingPages({ BookingData }) {
                       : formValues[type]?.[i]?.[field.name];
 
                   return (
-                    <div
-                      key={index}
-                      className={`col-md-${
-                        field.type === "select" ? "6" : "6"
-                      }`}
-                    >
+                    <div key={index} className="col-md-6">
                       <div className="form-input my-1">
                         {field.type === "select" ? (
                           <>
                             <select
                               name={field.name}
                               value={fieldValue || ""}
-                              onChange={(e) => handleInputChange(type, i, e)}
+                              onChange={(e) =>
+                                handleInputChange(type, i, e, field.type)
+                              }
                               required
                               className="form-control"
                             >
@@ -882,12 +925,16 @@ export default function BookingPages({ BookingData }) {
                         ) : (
                           <>
                             <input
-                              type={field.type}
+                              type={field.type === "number" ? "tel" : field.type} 
                               name={field.name}
-                              value={fieldValue}
-                              onChange={(e) => handleInputChange(type, i, e)}
+                              value={fieldValue || ""} 
+                              onChange={(e) =>
+                                handleInputChange(type, i, e, field.type)
+                              } 
+                              maxLength={10} 
                               required
                             />
+
                             <label className="lh-1 text-16 text-light-1">
                               {field.label}
                             </label>
@@ -1048,8 +1095,6 @@ export default function BookingPages({ BookingData }) {
 
         // Update state to reflect new data
         setBookingSideBar(BookingSideData);
-
-        console.log("Object updated successfully in localStorage");
       } catch (error) {
         console.error("Error updating SidebarData:", error);
       }
@@ -1076,8 +1121,6 @@ export default function BookingPages({ BookingData }) {
   };
 
   const { translate } = useTranslation();
-
-  console.log("Discount", Discount);
 
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
