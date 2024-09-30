@@ -364,7 +364,7 @@ const handleMobileNumberChange = (e) => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" min={0} max={10}   pattern="[0-9]{10}"
+                          <input type="text" min={0} max={10} pattern="[0-9]{10}"
                         maxLength={10} required  value={company_mobile} onChange={handleCompanyMobileNumberChange}/>
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Phone Number")} <span className="text-red">*</span>

@@ -22,11 +22,39 @@ export default function Register() {
 
   const router = useRouter();
 
-  const [confirm_pass, setConfirm_pass] = useState("");
+  const [confirm_pass, setConfirmpass] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
 
-  console.log(showSuccessToast);
-
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    console.log(value,"value")
+    setConfirmpass(value);
+    console.log(RegisterData.password);
+    if (value !== RegisterData.password) {
+      setError("Passwords do not match");
+      }else{
+        setError("");
+      }
+  }
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
+  const handlePassword = (e) => {
+    const passwordValue = e.target.value;
+    setRegisterData((prevState) => ({
+      ...prevState,
+      password: passwordValue,
+    }));
+    if (!passwordRegex.test(passwordValue)) {
+      setPasswordError("At least 8 characters include uppercase and lowercase letters, numbers and special characters");
+    }  else {
+      setPasswordError("");
+    }
+    if(!passwordValue){
+      setPasswordError("");
+    }
+  };
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
@@ -45,7 +73,10 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if(!RegisterData.name || !RegisterData.surname || !RegisterData.email || !RegisterData.password || !confirm_pass || isChecked === false){
+      showErrorToast("Please fill all fields");
+      return;
+    }
     if (RegisterData.password === confirm_pass) {
       try {
         const response = await post("register", RegisterData);
@@ -68,11 +99,12 @@ export default function Register() {
         password: "",
       });
 
-      setConfirm_pass("");
+      setConfirmpass("");
       setIsChecked(false);
+      localStorage.setItem("emailForSignIn", RegisterData.email);
       setTimeout(() => {
         router.push("/verify-email");
-      }, 3000);
+      }, 2000);
     } else {
       showErrorToast("password dose not match");
     }
@@ -149,7 +181,7 @@ export default function Register() {
               <div className="form-input my-1">
                 <input
                   type="password"
-                  onChange={handleChange}
+                  onChange={handlePassword}
                   name="password"
                   value={RegisterData.password}
                   required
@@ -157,18 +189,23 @@ export default function Register() {
                 <label className="lh-1 text-16 text-light-1">
                   {translate("Password")}
                 </label>
+                {passwordError && <div className="text-red">{passwordError}</div>}
+
               </div>
 
               <div className="form-input my-1">
                 <input
                   type="password"
                   value={confirm_pass}
-                  onChange={MatchPass}
+                  onChange={handlePasswordChange}
                   required
                 />
                 <label className="lh-1 text-16 text-light-1">
                   {translate("Confirm Password")}
                 </label>
+                {error && <div className="text-red">{error}</div>}
+
+
               </div>
 
               <div className="d-flex items-center">

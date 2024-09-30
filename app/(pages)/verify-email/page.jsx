@@ -1,16 +1,31 @@
 "use client";
 
 import { useTranslation } from "@/app/context/TranslationContext";
+import { POST } from "@/app/utils/api/post";
+import { showSuccessToast } from "@/app/utils/tost";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Link from "next/link";
 import React, { useState, useEffect, useContext } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Page() {
   const { translate } = useTranslation();
+  const resendEmail = async() => {
+    const email = typeof window != "undefined" ? localStorage.getItem("emailForSignIn") : "";
 
+    const formData = new FormData();
+    formData.append("email", email);
+
+    const response = await POST.request({form:formData, url:"resend_email"});
+    if(response){
+      showSuccessToast("Email sent successfully");
+
+    }
+  }
   return (
     <>
+      <ToastContainer/>
       <main>
         <Header1 />
         <section className="mt-header layout-pt-lg layout-pb-lg">
@@ -28,13 +43,13 @@ export default function Page() {
                       "We have sent an email to your registered email id. Please verify your email address before login your account. Please check your spam/junk folder incase you did not see the email."
                     )}
                   </div>
-                  <Link
+                  <button
                     className="button -md -info-2 bg-accent-1 text-white  mt-30"
-                    href="/login"
                     style={{ width: "fit-content" }}
+                    onClick={resendEmail}
                   >
                     {translate("Resend Email")}{" "}
-                  </Link>
+                  </button>
                   {/* <Link
                     className="button -md -info-2 bg-accent-1 text-white  mt-30"
                     href="/login"
