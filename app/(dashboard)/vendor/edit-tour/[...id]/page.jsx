@@ -824,9 +824,12 @@ useEffect(() => {
       setLoading(false);
       if(response){
         toast.success("Tour Updated Successfully");
-        setActiveTab("Content");
-        setActiveTabIndex(0);
-        fetchTour(id);
+        // setActiveTab("Content");
+        // setActiveTabIndex(0);
+        // fetchTour(id);
+        setTimeout(() => {
+          router.push("/vendor/listing");
+        }, 1000);
         
       }
     }catch(error){
