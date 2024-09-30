@@ -271,9 +271,14 @@ export default function Payment() {
     try {
       const response = await post("addbooking", data);
 
-      showSuccessToast(response.Message);
+      if(response.Status == '1'){
+        showSuccessToast(response.Message);
+        setBookingStage((pre) => pre + 1);
+        setReservationID(response.reservationNumber);
+      }else{
+        showErrorToast(response.Message)
+      }
 
-      setReservationID(response.reservationNumber);
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast(error);
@@ -295,7 +300,7 @@ export default function Payment() {
       FatchallBooking(newBooking);
       setTimeout(() => {
         router.push("#ref");
-        setBookingStage((pre) => pre + 1);
+        
         setTimeout(() => {
           localStorage.removeItem("AdultPrice&count");
           localStorage.removeItem("SelectedPackageHotelNDFlight");
