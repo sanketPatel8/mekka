@@ -39,7 +39,7 @@ function ResetPassword({params}) {
         const passwordValue = e.target.value;
         setPassword(passwordValue);
         if (!passwordRegex.test(passwordValue)) {
-          setPasswordError("Invalid password. ");
+          setPasswordError(`${translate("At least 8 characters include uppercase and lowercase letters, numbers and special characters")}`);
         }  else {
           setPasswordError("");
         }
@@ -109,9 +109,7 @@ function ResetPassword({params}) {
                 <label className="lh-1 text-16 text-light-1">
                   {translate("New Password")}
                 </label>
-                <span>
-                     {translate("At least 8 characters include uppercase and lowercase letters, numbers and special characters")}
-                          </span>
+            
 
                           {passwordError && <div className="text-red">{passwordError}</div>}
 

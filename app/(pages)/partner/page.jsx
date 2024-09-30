@@ -185,9 +185,7 @@ const handleSubmit = async (e) => {
       showErrorToast(response.message);
     }
 
-    if(response.data == null || response.data == ""){
-      showErrorToast("Email already exists");
-    }
+    
     // if(response.error){
     //   console.log("error1")
     //   showErrorToast(response.message);
