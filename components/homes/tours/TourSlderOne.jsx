@@ -118,7 +118,7 @@ export default function TourSlderOne() {
                   {TopTranding?.map((elm, i) => (
                     <SwiperSlide key={i}>
                       <Link
-                        href={`/package/${elm?.slug}?id=${elm?.id}`}
+                        href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
                         className="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow"
                       >
                         <div className="tourCard__header">

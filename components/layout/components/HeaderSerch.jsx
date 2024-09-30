@@ -112,7 +112,7 @@ export default function HeaderSerch({ white }) {
 
             <div className={`headerSearchRecent__list js-results `}>
               {SearchData.slice(0, 10).map((elm, i) => (
-                <Link href={`/package/${elm?.slug}?id=${elm?.id}`} key={i}>
+                <Link href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`} key={i}>
                   <button
                     className="headerSearchRecent__item js-search-option"
                     data-x-click="headerSearch"

@@ -29,6 +29,7 @@ export default function MainInformation({ PAckageData }) {
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const name = searchParams.get("name")
 
   const customStyles = {
     overlay: {
@@ -52,16 +53,11 @@ export default function MainInformation({ PAckageData }) {
   };
 
   // Define the URL you want to share
-  const shareUrl = `https://mekkabooking.vercel.app/package/herbst--a?id=${id}`; // Change this to your actual URL
+  const shareUrl = `https://mekkabooking.vercel.app/package/${name}?id=${id}&name=${name}`; // Change this to your actual URL
 
   useEffect(() => {
     setInformationData(PAckageData);
   }, [PAckageData]);
-
-  const handleShareClick = (event) => {
-    event.preventDefault(); // Prevent default anchor behavior
-    setShowShareButtons((prev) => !prev);
-  };
 
   const handleCopyClick = () => {
     navigator.clipboard
@@ -104,7 +100,7 @@ export default function MainInformation({ PAckageData }) {
                 </div>
                 {/* {InformationData?.Tour_Details?.tour_details?.rating} (
                 {InformationData?.Tour_Details?.tour_details?.rating_count}) -{" "} */}
-                {InformationData?.Tour_Details?.tour_details?.company_name}
+                {InformationData?.Tour_Details?.tour_details?.company_code}
               </div>
             </div>
 

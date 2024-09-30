@@ -85,7 +85,7 @@ export default function Tour1() {
                   }`}
                 >
                   <Link
-                    href={`/package/${elm?.slug}?id=${elm?.id}`}
+                    href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
                     className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow"
                   >
                     <div className="tourCard__header">
@@ -138,9 +138,9 @@ export default function Tour1() {
                           <div className="text-14 ml-5">
                             <span className="fw-500">{elm?.rating}</span>
                             {/* {elm?.rating_count}) -{" "} */}
-                            {elm?.company_name == null
+                            {elm?.company_code == null
                               ? "No Compny  "
-                              : elm?.company_name}{" "}
+                              : elm?.company_code}{" "}
                           </div>
                         </div>
                       </div>
