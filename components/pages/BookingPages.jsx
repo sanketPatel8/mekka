@@ -575,6 +575,9 @@ export default function BookingPages({ BookingData }) {
 
   // fatch profileapi
 
+  console.log("customer" , customer);
+  
+
   const fetchProfile = async () => {
     const url = "my_profile";
     const response = await POST.request({
@@ -1008,7 +1011,7 @@ export default function BookingPages({ BookingData }) {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
-  console.log("bookingData", bookingData);
+
 
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
@@ -1063,6 +1066,9 @@ export default function BookingPages({ BookingData }) {
   };
 
   const { translate } = useTranslation();
+
+  console.log("BookingData" , BookingData);
+  
 
   return (
     <>
@@ -1146,7 +1152,7 @@ export default function BookingPages({ BookingData }) {
                       className={`${
                         (selectedCheckbox &&
                           BookingSideBar?.Airline === null) ||
-                        BookingSideBar.selectedCheckbox !== false
+                        BookingSideBar.selectedCheckbox !== false || BookingData?.Tour_Details?.tour_details?.flight_included == '0'
                           ? "d-none"
                           : "d-block"
                       }`}
@@ -1181,7 +1187,7 @@ export default function BookingPages({ BookingData }) {
 
                     <div
                       className={`${
-                        BookingSideBar.selectedCheckbox !== false
+                        BookingSideBar.selectedCheckbox !== false  || BookingData?.Tour_Details?.tour_details?.flight_included == '0'
                           ? "d-none"
                           : "d-block"
                       }`}
