@@ -14,7 +14,6 @@ import { AuthContextProvider } from "./context/authContext";
 import { PeopleProvider } from "./context/PeopleContext";
 import Head from "next/head";
 import { CurrencyProvider } from "./context/currencyContext";
-
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
   style: ["normal", "italic"],
@@ -47,7 +46,11 @@ export default function RootLayout({ children }) {
           <TranslationProvider>
             <GlobalStateProvider >
             <PeopleProvider>
-                <Wrapper>{children}</Wrapper>
+                <Wrapper>
+                  
+                  {children}
+                  
+                  </Wrapper>
                 <ScrollToTop />
                 <ScrollTopBehaviour />
               </PeopleProvider>

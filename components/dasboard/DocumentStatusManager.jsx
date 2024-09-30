@@ -21,7 +21,7 @@ import Select from "react-select";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { POST } from "@/app/utils/api/post";
 import { showSuccessToast } from "@/app/utils/tost";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const customStyles = {
   overlay: {
@@ -72,7 +72,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
     formData.append("reservation_id", Customerid?.id);
     const response = await POST.request({form:formData, url: "sendInvoice"});
     if(response){
-      showSuccessToast(response.Message)
+      toast.success(response.Message)
     }
   }
 
@@ -98,7 +98,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
     const response = await POST.request({ form: formData, url: "changeBookingStatus" });
     console.log(response)
     if(response){
-      showSuccessToast("Status Updated Successfully");
+      toast.success("Status Updated Successfully");
     }
   };
 
