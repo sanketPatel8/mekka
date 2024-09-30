@@ -242,7 +242,7 @@ export default function Payment() {
 
       showSuccessToast(response.Message);
 
-      setReservationID(response.Reservations_id);
+      setReservationID(response.reservationNumber);
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast(error);
@@ -316,6 +316,9 @@ export default function Payment() {
   };
 
   const { translate } = useTranslation();
+
+  console.log("SideBarData?.Airline?.name" , SideBarData?.Departure);
+  
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
@@ -743,7 +746,7 @@ export default function Payment() {
                     <div className="border-dashed-1 py-30 px-50 rounded-12 mt-30">
                       <div className="row y-gap-15">
                         <div className="col-md-3 col-6">
-                          <div>Order Number</div>
+                          <div>Reservation Number</div>
                           <div className="text-accent-2">{ReservationID}</div>
                         </div>
 
@@ -838,7 +841,7 @@ export default function Payment() {
                 <div className="px-1">
                   <div
                     className={
-                      SideBarData?.selectedCheckbox !== false
+                      SideBarData?.selectedCheckbox !== false || SideBarData?.Airline == null
                         ? "d-none"
                         : "d-block"
                     }
@@ -856,7 +859,7 @@ export default function Payment() {
 
                   <div
                     className={
-                      SideBarData?.selectedCheckbox !== false
+                      SideBarData?.selectedCheckbox !== false || SideBarData?.Departure?.name == ""
                         ? "d-none"
                         : "d-block"
                     }
