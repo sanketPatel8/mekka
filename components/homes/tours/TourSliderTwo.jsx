@@ -146,9 +146,9 @@ export default function TourSliderTwo() {
                               <div className="text-14 ml-5">
                                 {/* <span className="fw-500">{elm?.rating}</span> (
                                 {elm?.rating_count}) -{" "} */}
-                                {elm?.company_name == null
+                                {elm?.company_code == null
                                   ? "No Compny  "
-                                  : elm?.company_name}
+                                  : elm?.company_code}
                               </div>
                             </div>
                           </div>

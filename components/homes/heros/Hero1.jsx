@@ -29,7 +29,7 @@ export default function Hero1({}) {
         />
       </div>
 
-      <div className="container py-3">
+      <div className="container py-3"  >
         <div className="row justify-center">
           <div className="col-xl-12 col-lg-12">
             <div className="hero__content">
@@ -57,7 +57,7 @@ export default function Hero1({}) {
                 data-aos-delay="300"
                 className="mt-60 md:mt-35"
               >
-                <div className="searchForm -type-1">
+                <div className="searchForm -type-1 " id="redirect">
                   <HeroSearch />
                 </div>
               </div>

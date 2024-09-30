@@ -567,7 +567,7 @@ export default function Sidebar2({
           </div>
         </div>
 
-        <div className="sidebar__item">
+        {/* <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">
             <div
               className={`accordion__item ${
@@ -646,7 +646,7 @@ export default function Sidebar2({
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* <div className="sidebar__item">
           <div className="accordion -simple-2 js-accordion">

@@ -71,12 +71,21 @@ export default function TourList4({
     };
   }, []);
 
+  const truncateHotelName = (name) => {
+    if (!name) return ""; // Return empty if name is null or undefined
+    const words = name.split(" ");
+    if (words.length > 4) {
+      return words.slice(0, 4).join(" ") + "..."; // Truncate and add ellipsis
+    }
+    return name; // Return the full name if it's within the limit
+  };
+
   const { translate } = useTranslation();
 
   return (
     <section className="layout-pb-xl">
       <div className="container">
-        <div className="row" id="redirect">
+        <div className="row">
           <div className="col-xl-3 col-lg-4">
             {screenSize[0] && screenSize[0] <= 900 ? (
               <div className="accordion d-none mb-30 lg:d-flex js-accordion">
@@ -208,22 +217,47 @@ export default function TourList4({
                         </h3>
                         <div>
                           <div>
-                            <p className="tourCard__text mt-5 items-center d-flex">
-                              <FaHotel
-                                className="px-1"
-                                color="#dabf4f"
-                                size={25}
-                              />
-                              Hotel: {elm?.hotel_name} ({elm?.hotel_stars}{" "}
-                              <FaStar color="#dabf4f" className="mx-1" />)
-                            </p>
+                           
+                            {elm?.tour_hotels?.mekka_hotels?.[0] && (
+                              <p className="tourCard__text mt-5 items-center d-flex">
+                                <FaHotel
+                                  className="px-1"
+                                  color="#dabf4f"
+                                  size={25}
+                                />
+                                Mekka{" "}:{" "}
+                                {truncateHotelName(elm?.tour_hotels?.mekka_hotels[0]?.hotel_name)}-({elm.tour_hotels?.mekka_hotels[0]?.hotel_stars} <FaStar color="#dabf4f" className="" /> )
+                                
+                              </p>
+                            )}
+
+                          
+                            {elm?.tour_hotels?.medina_hotels?.[0] && (
+                              <p className="tourCard__text mt-5 items-center d-flex">
+                                <FaHotel
+                                  className="px-1"
+                                  color="#dabf4f"
+                                  size={25}
+                                />
+                                Madina{" "} : {" "}
+                                {truncateHotelName(
+                                  elm?.tour_hotels?.medina_hotels[0]?.hotel_name
+                                )}-({elm.tour_hotels?.medina_hotels[0]?.hotel_stars} <FaStar color="#dabf4f" className="" /> )
+                               
+                              </p>
+                            )}
                           </div>
+
                           <p className="tourCard__text mt-5">
                             <FontAwesomeIcon
                               icon={faQuoteRight}
                               className="px-1 text-accent-1"
                             />
-                            {elm.destination}
+                            {elm.type == "Hajj"
+                              ? "JED"
+                              : elm.type == "madina"
+                              ? "MAD"
+                              : "ALL"}
                           </p>
                         </div>
                         <div className="d-flex items-center mt-5">
@@ -282,7 +316,9 @@ export default function TourList4({
                           </div>
                         </div>
                         <button className="button -outline-accent-1 text-accent-1">
-                          <Link href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}>
+                          <Link
+                            href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
+                          >
                             SHOW AVAILABILITY
                           </Link>
                         </button>
