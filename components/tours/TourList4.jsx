@@ -72,12 +72,12 @@ export default function TourList4({
   }, []);
 
   const truncateHotelName = (name) => {
-    if (!name) return ""; // Return empty if name is null or undefined
+    if (!name) return ""; 
     const words = name.split(" ");
     if (words.length > 4) {
-      return words.slice(0, 4).join(" ") + "..."; // Truncate and add ellipsis
+      return words.slice(0, 4).join(" ") + "..."; 
     }
-    return name; // Return the full name if it's within the limit
+    return name; 
   };
 
   const { translate } = useTranslation();
