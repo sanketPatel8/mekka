@@ -183,15 +183,17 @@ export default function TourSliderTwo() {
             </div>
           </div>
 
-          <div className="navAbsolute">
-            <button className="navAbsolute__button bg-white js-slider1-prev prev">
-              <i className="icon-arrow-left text-14"></i>
-            </button>
+          {BestSellerData.length !== 0 && (
+              <div className="navAbsolute">
+                <button className="navAbsolute__button bg-white js-slider1-prev prev">
+                  <i className="icon-arrow-left text-14"></i>
+                </button>
 
-            <button className="navAbsolute__button bg-white js-slider1-next next">
-              <i className="icon-arrow-right text-14"></i>
-            </button>
-          </div>
+                <button className="navAbsolute__button bg-white js-slider1-next next">
+                  <i className="icon-arrow-right text-14"></i>
+                </button>
+              </div>
+            )}
         </div>
       </div>
     </section>
