@@ -6,7 +6,7 @@ import FooterTwo from '@/components/layout/footers/FooterTwo';
 import Header1 from '@/components/layout/header/Header1';
 import { responsiveFontSizes } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 
 function ResetPassword({params}) {
@@ -15,12 +15,13 @@ function ResetPassword({params}) {
 
     const id = params.id[0];
 
-    const encryptedId = id.split('_')[1];;
-    console.log(encryptedId, 'encryptedString');
+    console.log(id,"id")
+
     const {translate} = useTranslation();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordError, setPasswordError] = useState("");
+    const [encryptedId, setEncryptedId] = useState("");
 
     const [error, setError] = useState("");
 
@@ -47,6 +48,18 @@ function ResetPassword({params}) {
           setPasswordError("");
         }
       };
+
+      const fetchId = async() => {
+        const formData = new FormData();
+        formData.append("text", id);
+
+        const response = await POST.request({form:formData, url:"decrypt_string"});
+        console.log(response.text, 'response')
+      }
+
+      useEffect(() => {
+        fetchId();
+      },[id])
  
       const handleSubmit = async(e) => {
         e.preventDefault();
@@ -61,7 +74,7 @@ function ResetPassword({params}) {
         
         const formData = new FormData();
         formData.append("password", password);
-        formData.append("id", encryptedId);
+        formData.append("id", );
 
         const response = await POST.request({form:formData, url:"reset_password"})
         console.log(response, 'response')

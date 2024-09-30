@@ -51,15 +51,13 @@ export default function Payment() {
   const [paidAmount, setPaidAmount] = useState("");
   const companyCode =
     typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("company_code"))
+      ? localStorage.getItem("company_code")
       : "";
-  console.log(companyCode, "companyCode");
   const dateInputRef = useRef(null);
 
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
     if (index === 2) {
-      console.log(index, "index");
       setInstallmentChecked(true);
     } else {
       setInstallmentChecked(false);
@@ -75,7 +73,6 @@ export default function Payment() {
   };
   const handleSecondAmountChange = (e) => {
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
-    console.log(totalAmount);
     const total = totalAmount - firstAmount;
     const secondAmount = e.target.value;
     if (secondAmount < total) {
@@ -92,9 +89,7 @@ export default function Payment() {
   }, [secondAmount]);
   const calculateThirdAmount = () => {
     const firstAmountValue = parseFloat(firstAmount);
-    console.log(firstAmountValue, "firstAmountValue");
     const secondAmountValue = parseFloat(secondAmount);
-    console.log(secondAmountValue, "secondAmountValue");
 
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
     const total = firstAmountValue + secondAmountValue;
@@ -174,16 +169,6 @@ export default function Payment() {
     return dateRegex.test(date);
   }
 
-  // const handleDisabled = () => {
-  //   const agbAcceptance = document.getElementById("agbAcceptance");
-  //   const item5 = document.getElementById("item5");
-
-  //   if (agbAcceptance.checked && item5.checked) {
-  //     setDisabled(false);
-  //   } else {
-  //     setDisabled(true);
-  //   }
-  // };
   const parseDate = (dateString) => {
     const parts = dateString.split(".");
     const day = parseInt(parts[0], 10);
@@ -211,12 +196,10 @@ export default function Payment() {
         try {
           const startDate = parseDate(startDateString);
 
-          console.log(startDate);
           const sixDaysBefore = new Date(
             startDate.getTime() - 6 * 24 * 60 * 60 * 1000
           );
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
-          console.log(sixDaysBeforeString);
           setDateEnd(sixDaysBeforeString);
         } catch (error) {
           console.error("Error parsing date string:", error);
@@ -230,11 +213,8 @@ export default function Payment() {
 
   const handleDateChange = useCallback(
     (event) => {
-      console.log(event.target.value, "event.target.value");
       const selectedDate = event.target.value;
-      console.log(selectedDate, "selectedDate");
       const maxDateValue = dateEnd;
-      console.log(maxDateValue, "maxDateValue");
 
       if (selectedDate > maxDateValue) {
         setSecondDate(maxDateValue);
