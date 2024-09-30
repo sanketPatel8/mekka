@@ -74,9 +74,9 @@ export default function TourList4({
   const { translate } = useTranslation();
 
   return (
-    <section className="layout-pb-xl">
+    <section className="layout-pb-xl"  >
       <div className="container">
-        <div className="row" id="redirect">
+        <div className="row">
           <div className="col-xl-3 col-lg-4">
             {screenSize[0] && screenSize[0] <= 900 ? (
               <div className="accordion d-none mb-30 lg:d-flex js-accordion">
