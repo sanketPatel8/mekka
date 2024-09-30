@@ -71,10 +71,19 @@ export default function TourList4({
     };
   }, []);
 
+  const truncateHotelName = (name) => {
+    if (!name) return ""; // Return empty if name is null or undefined
+    const words = name.split(" ");
+    if (words.length > 4) {
+      return words.slice(0, 4).join(" ") + "..."; // Truncate and add ellipsis
+    }
+    return name; // Return the full name if it's within the limit
+  };
+
   const { translate } = useTranslation();
 
   return (
-    <section className="layout-pb-xl"  >
+    <section className="layout-pb-xl">
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">
@@ -208,7 +217,7 @@ export default function TourList4({
                         </h3>
                         <div>
                           <div>
-                            {/* Get Makkah Hotel */}
+                           
                             {elm?.tour_hotels?.mekka_hotels?.[0] && (
                               <p className="tourCard__text mt-5 items-center d-flex">
                                 <FaHotel
@@ -216,14 +225,13 @@ export default function TourList4({
                                   color="#dabf4f"
                                   size={25}
                                 />
-                                Mekka:{" "}
-                                {elm?.tour_hotels?.mekka_hotels[0]?.hotel_name}(
-                                {elm?.tour_hotels?.mekka_hotels[0]?.hotel_stars}{" "}
-                                <FaStar color="#dabf4f" className="mx-1" />)
+                                Mekka{" "}:{" "}
+                                {truncateHotelName(elm?.tour_hotels?.mekka_hotels[0]?.hotel_name)}-({elm.tour_hotels?.mekka_hotels[0]?.hotel_stars} <FaStar color="#dabf4f" className="" /> )
+                                
                               </p>
                             )}
 
-                            {/* Get Madina Hotel */}
+                          
                             {elm?.tour_hotels?.medina_hotels?.[0] && (
                               <p className="tourCard__text mt-5 items-center d-flex">
                                 <FaHotel
@@ -231,14 +239,11 @@ export default function TourList4({
                                   color="#dabf4f"
                                   size={25}
                                 />
-                                Madina:{" "}
-                                {elm?.tour_hotels?.medina_hotels[0]?.hotel_name}
-                                (
-                                {
-                                  elm?.tour_hotels?.medina_hotels[0]
-                                    ?.hotel_stars
-                                }{" "}
-                                <FaStar color="#dabf4f" className="mx-1" />)
+                                Madina{" "} : {" "}
+                                {truncateHotelName(
+                                  elm?.tour_hotels?.medina_hotels[0]?.hotel_name
+                                )}-({elm.tour_hotels?.medina_hotels[0]?.hotel_stars} <FaStar color="#dabf4f" className="" /> )
+                               
                               </p>
                             )}
                           </div>
@@ -248,7 +253,11 @@ export default function TourList4({
                               icon={faQuoteRight}
                               className="px-1 text-accent-1"
                             />
-                            {elm.type == "Hajj" ? "JED" : (elm.type == "madina" ? "MAD" : "ALL")}
+                            {elm.type == "Hajj"
+                              ? "JED"
+                              : elm.type == "madina"
+                              ? "MAD"
+                              : "ALL"}
                           </p>
                         </div>
                         <div className="d-flex items-center mt-5">

@@ -22,7 +22,7 @@ export default function PageData() {
     selectedTourTypes: " ",
     selectedLanguages: [],
     selectedCities: [],
-    selectedRatings: [],
+    // selectedRatings: [],
     selectedFeatures: [],
     selectedDurations: [],
   });
@@ -111,8 +111,8 @@ export default function PageData() {
       FilterSidebar.selectedLanguages.length !== 0 ||
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
-      FilterSidebar.selectedDurations.length !== 0 ||
-      FilterSidebar.selectedRatings.length !== 0
+      FilterSidebar.selectedDurations.length !== 0 
+      // FilterSidebar.selectedRatings.length !== 0
     ) {
       await FetchFilterData(pageIndex);
     } else {
@@ -148,7 +148,7 @@ export default function PageData() {
     formData.append("min_price", value[0]);
     formData.append("max_price", value[1]);
     formData.append("hotel_star", FilterSidebar?.selectedDurations.join(", "));
-    formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
+    // formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
     formData.append("amenities", FilterSidebar?.selectedFeatures.join(", "));
     formData.append("filter_type", SearchData.tourType);
     formData.append("start_date", SearchData.startDate);
@@ -175,8 +175,8 @@ export default function PageData() {
         FilterSidebar.selectedLanguages.length !== 0 ||
         FilterSidebar.selectedCities.length !== 0 ||
         FilterSidebar.selectedFeatures.length !== 0 ||
-        FilterSidebar.selectedDurations.length !== 0 ||
-        FilterSidebar.selectedRatings.length !== 0
+        FilterSidebar.selectedDurations.length !== 0 
+        // FilterSidebar.selectedRatings.length !== 0
       ) {
         FetchFilterData();
       } else if (
