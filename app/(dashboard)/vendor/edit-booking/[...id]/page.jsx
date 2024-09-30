@@ -296,19 +296,21 @@ const filterData = async(personId) => {
   const formData = new FormData();
   formData.append("user_id", user?.user?.id);
   formData.append("id", id);
-  console.log(personId,"personId")
   const response = await POST.request({form:formData, url: "booking_details"});
 
   if (response.Bookings) {
     const filteredData = response.Bookings.adultData.concat(response.Bookings.childData, response.Bookings.babyData);
     console.log(filteredData,"filterData")
     const matchedData = filteredData.filter((data) => data.id === personId);
+    console.log(personId,"personId")
     console.log(matchedData,"matchedData")
     if (matchedData.length > 0) {
      
 
       const docs = matchedData.map((doc)=>{
-        if(doc.documets && doc.documets.length > 0){
+
+        console.log(doc.documets,"documets")
+        if(doc.documets.length > 0){
           const docFiles = doc.documets.map((doc) => ({
             Name: doc.file_url_orginal_name,
             fileLink: doc.full_path,
@@ -319,6 +321,8 @@ const filterData = async(personId) => {
 
        
 
+        }else{
+          setViewDetails([]);
         }
       })
 

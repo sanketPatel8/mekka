@@ -14,7 +14,7 @@ import $ from "jquery";
 import "select2/dist/css/select2.css";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
-import { showErrorToast } from "@/app/utils/tost";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import ItineraryDayInput from "@/components/dasboard/addTour/ItineraryDayInput";
 import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
@@ -725,8 +725,11 @@ const isCurrentTabValid = () => {
       const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
       setLoading(false);
       if(response){
-        toast.success("Tour Added Successfully");
-        router.push("/vendor/listing");
+        showSuccessToast("Tour Added Successfully");
+        setTimeout(()=>{
+
+          router.push("/vendor/listing");
+        },1000)
         // setActiveTab("Content");
         // setActiveTabIndex(0);
         // setSelectedTour("");  
