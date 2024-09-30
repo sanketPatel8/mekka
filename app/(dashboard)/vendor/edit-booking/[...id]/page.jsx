@@ -145,8 +145,8 @@ export default function DbBooking({ params }) {
 
     const ColumnReservation_details = [
       { name: translate("Airline"), selector: (row) => row.Airline },
-      { name: translate("From"), selector: (row) => row.From },
-      { name: translate("To"), selector: (row) => row.To },
+      // { name: translate("From"), selector: (row) => row.From },
+      // { name: translate("To"), selector: (row) => row.To },
       { name: translate("Departure"), selector: (row) => row.date_begin },
       { name: translate("Return"), selector: (row) => row.date_end },
       { name: translate("Mekka"), selector: (row) => row.Mekka_hotel },
@@ -373,8 +373,8 @@ export default function DbBooking({ params }) {
       if (response.Bookings.reservation) {
         const reservation = {
           Airline: response.Bookings.reservation.airlines,
-          From: response.Bookings.reservation.from,
-          To: response.Bookings.reservation.to,
+          // From: response.Bookings.reservation.from,
+          // To: response.Bookings.reservation.to,
           date_begin: formatDateToDDMMYYYY(
             response.Bookings.reservation.date_begin
           ),
