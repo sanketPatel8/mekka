@@ -24,11 +24,12 @@ export default function BannerOne() {
 
     try {
       const response = await post("welcome_discount", sendData);
-      if (response?.Status == 1 && response?.Message) {
+      if (response?.Status == 1 ) {
         showSuccessToast(response.Message);
-        console.log(response.Message);
-      } else if (response?.Message) {
+        setDiscountMail("");
+      } else if (response?.Status == 0) {
         showErrorToast(response.Message);
+        setDiscountMail("");
       }
     } catch (error) {
       console.error("Error caught:", error);

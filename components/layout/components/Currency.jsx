@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from "react";
 const currencies = ["Euro", "USD"];
 
 export default function Currency({ parentClass, currencyLocale }) {
-  console.log(currencyLocale, "currencyLocale");
   const [currentdd, setCurrentdd] = useState("");
   // const [selectedCurrency, setSelectedCurrency] = useState("");
   const dropDownContainer = useRef();
