@@ -10,6 +10,7 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourSlider from "@/components/tourSingle/TourSlider";
 import SingleFour from "@/components/tourSingle/pages/SingleFour";
+import { ToastContainer } from "react-toastify";
 
 export default function PageData() {
   const searchParams = useSearchParams();
@@ -63,6 +64,8 @@ export default function PageData() {
 
   return (
     <>
+            <ToastContainer/>
+
       <Head>
         <title>Default Title</title>
         <meta name="description" content={"Default description"} />

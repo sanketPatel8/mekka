@@ -12,18 +12,20 @@ export const showSuccessToast = (message) => {
     draggable: true,
     progress: undefined,
     theme: "light",
+    zIndex: 9999,
   });
 };
 
 export const showErrorToast = (message) => {
   toast.error(message, {
     position: "top-right",
-    autoClose: 2000,
+    // autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
     theme: "light",
+    zIndex: 10000,
   });
 };

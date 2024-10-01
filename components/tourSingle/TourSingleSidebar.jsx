@@ -534,7 +534,9 @@ export default function TourSingleSidebar({
       selectedCheckbox === false &&
       SidebarData?.tour_details?.flight_included !== "0"
     ) {
-      alert("Please Fill Departure");
+      showErrorToast("Please Fill Departure");
+      return;
+
     } else {
       router.push(
         `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
@@ -568,7 +570,6 @@ export default function TourSingleSidebar({
 
   return (
     <>
-      <ToastContainer />
     <div className="tourSingleSidebar">
       <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
