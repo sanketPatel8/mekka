@@ -51,6 +51,7 @@ export default function Profile() {
   const [uploadImage, setUploadImage] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (user) {
       fetchProfile();
@@ -167,35 +168,47 @@ export default function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !confirm_password ||
-      !password ||
-      !old_password ||
-      !IBAN ||
-      !owner_name ||
-      !bank_name ||
-      !info ||
-      !tax_number ||
-      !website ||
-      !zipcode ||
-      !houseNumber ||
-      !street ||
-      !city ||
-      !SelectedCountry ||
-      !mobile ||
-      !email ||
-      !surname ||
-      !name ||
-      !companyName ||
-      image1 == "" ||
-      !image2 ? uploadImage.length == 0 : image2.length == 0
-    ) {
-      showErrorToast("Please fill all fields");
-      return;
-    }
+   
 
     const formData = new FormData();
     const formType = e.target.name;
+
+    if(formType === "profile"){
+      console.log(image2, "image2")
+      console.log(uploadImage, "uploadImage")
+      if (
+    
+        !info ||
+        !tax_number ||
+        !website ||
+        !zipcode ||
+        !houseNumber ||
+        !street ||
+        !city ||
+        !SelectedCountry ||
+        !mobile ||
+        !email ||
+        !surname ||
+        !name ||
+        !companyName ||
+        image1 == "" ||
+        (image2.length == 0 && uploadImage.length == 0)
+      ) {
+        showErrorToast("Please fill all fields");
+        return;
+      }
+    }
+    else if(formType === "bank_details"){
+      if (!bank_name || !owner_name || !IBAN) {
+        showErrorToast("Please fill all fields");
+        return;
+      }
+    }else if(formType === "change_password"){
+      if (!old_password || !password || !confirm_password) {
+        showErrorToast("Please fill all fields");
+        return;
+      }
+    }
 
     const image2File = document.querySelector('input[name="image2"]').files;
     console.log(image2File, "image2File");
@@ -270,8 +283,11 @@ export default function Profile() {
       //   return;
       // }
       // else {
+
+      
       const url = `update_profile`;
       console.log(name);
+      setIsLoading(true);
       const response = await POST.request({
         form: formData,
         url: url,
@@ -279,6 +295,7 @@ export default function Profile() {
       });
 
       if (response) {
+        setIsLoading(false);
         showSuccessToast(response.message);
         setUploadImage([]);
         fetchProfile();
@@ -291,6 +308,7 @@ export default function Profile() {
         showErrorToast("Please fill all fields");
       } else {
         const url = `update_profile`;
+        setIsLoading(true);
         const response = await POST.request({
           form: formData,
           url: url,
@@ -298,6 +316,7 @@ export default function Profile() {
         });
 
         if (response) {
+          setIsLoading(false);
           showSuccessToast(response.message);
           fetchProfile();
         } else {
@@ -309,17 +328,26 @@ export default function Profile() {
         showErrorToast("Please fill all fields");
       } else {
         const url = `update_profile`;
+        setIsLoading(true);
         const response = await POST.request({
           form: formData,
           url: url,
           header: { "Content-Type": "multipart/form-data" },
         });
 
-        if (response) {
+        if (response.status === "success") {
+          setIsLoading(false);
           showSuccessToast(response.message);
           fetchProfile();
-        } else {
+          setOldPassword("");
+          setPassword("");
+          setConfirmPassword("");
+        } else if(response.status === "error") {
           showErrorToast(response.message);
+          setIsLoading(false);
+          setOldPassword("");
+          setPassword("");
+          setConfirmPassword("");
         }
       }
     }
@@ -345,8 +373,10 @@ export default function Profile() {
     // newImages.splice(index, 1);
     // setImage2(newImages);
     event.preventDefault();
-    if ( image1 !== null) {
 
+    console.log(image2 , "image2")
+    if ( image2.length > 0) {
+      console.log("image2")
       const url = new URL(image2);
       const fileName = url.pathname.split("/").pop();
 
@@ -373,13 +403,26 @@ export default function Profile() {
 
     
       }
-    } else {
+    } 
+  
+  
+  };
+  const handleDeleteImage3 = (index, event) => {
+    // const newImages = [...image2];
+    // newImages.splice(index, 1);
+    // setImage2(newImages);
+    event.preventDefault();
+
+    console.log(uploadImage , "uploadImage")
+    if(uploadImage.length > 0){
+      console.log("uploadimage")
       const newImages = [...uploadImage];
       newImages.splice(index, 1);
       setUploadImage(newImages);
     }
   
   };
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -678,7 +721,7 @@ export default function Profile() {
                         <div className="row x-gap-20 y-gap my-1">
                           {image1 ? (
                             <div className="col-auto">
-                              <div className="relative">
+                              <div className="relative" >
                                 <Image
                                   width={200}
                                   height={200}
@@ -686,12 +729,12 @@ export default function Profile() {
                                   alt="image"
                                   className="size-200 rounded-12 object-cover"
                                 />
-                                <button
+                                <buttxon
                                   onClick={handleDeleteImage1}
                                   className="absoluteIcon1 button -dark-1"
                                 >
                                   <i className="icon-delete text-18"></i>
-                                </button>
+                                </buttxon>
                               </div>
                             </div>
                           ) : (
@@ -793,7 +836,7 @@ export default function Profile() {
                                         className="col-auto my-2"
                                         key={index}
                                       >
-                                        <div className="relative">
+                                        <div className="relative" >
                                           <Image
                                             width={200}
                                             height={200}
@@ -923,7 +966,7 @@ export default function Profile() {
                                       />
                                       <button
                                         onClick={(e) =>
-                                          handleDeleteImage2(index, e)
+                                          handleDeleteImage3(index, e)
                                         }
                                         className="absoluteIcon1 button -dark-1"
                                       >
@@ -931,7 +974,7 @@ export default function Profile() {
                                       </button>
                                     </div>
                                   ) : isDocument ? (
-                                    <div className="relative">
+                                    <div className="relative" style={{width:"200px"}}>
                                       <div className="size-200 rounded-12 border-1 bg-white flex-center flex-column">
                                         <Image
                                           width="40"
@@ -945,7 +988,7 @@ export default function Profile() {
                                       </div>
                                       <button
                                         onClick={(e) =>
-                                          handleDeleteImage2(index, e)
+                                          handleDeleteImage3(index, e)
                                         }
                                         className="absoluteIcon1 button -dark-1"
                                       >
@@ -994,7 +1037,15 @@ export default function Profile() {
                           className="button -md -info-2 bg-accent-1 text-white mt-30"
                           type="submit"
                         >
-                          {translate("Save Changes")}
+                           {isLoading ? <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ height: "30px", width: "100%" }}
+                              >
+                                <ClipLoader color="#ffffff" size={30} />
+                              </div>
+                              :
+                              translate("Save Changes") 
+                              }
                           {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                         </button>
                       </div>
@@ -1068,8 +1119,16 @@ export default function Profile() {
 
                       <div className="row">
                         <div className="col-12">
-                          <button className="button -md -info-2 bg-accent-1 text-white mt-15">
-                            {translate("Save Changes")}
+                          <button className="button -md -info-2 bg-accent-1 text-white mt-15" type="submit">
+                          {loading ? <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ height: "30px", width: "100%" }}
+                              >
+                                <ClipLoader color="#ffffff" size={30} />
+                              </div>
+                              :
+                              translate("Save Changes") 
+                              }
                             {/* <i className="icon-arrow-top-right text-16 ml-10"></i> */}
                           </button>
                         </div>
@@ -1144,8 +1203,16 @@ export default function Profile() {
 
                       <div className="row">
                         <div className="col-12">
-                          <button className="button -md -info-2 bg-accent-1 text-white">
-                            {translate("Save Changes")}
+                          <button className="button -md -info-2 bg-accent-1 text-white" type="submit">
+                          {loading ? <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ height: "30px", width: "100%" }}
+                              >
+                                <ClipLoader color="#ffffff" size={30} />
+                              </div>
+                              :
+                              translate("Save Changes") 
+                              }
                           </button>
                         </div>
                       </div>

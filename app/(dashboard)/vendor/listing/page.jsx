@@ -20,6 +20,8 @@ import { POST } from "@/app/utils/api/post";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 import VendorFooter from "@/components/dasboard/VendorFooter";
+import { showSuccessToast } from "@/app/utils/tost";
+import { ToastContainer } from "react-toastify";
 
 const customStyles = {
   overlay: {
@@ -61,15 +63,33 @@ export default function DBListing() {
   }, []);
 
   const handleClick = (id) => {
-    const formData = new FormData();
-    formData.append("id", id);
-    formData.append("vendor_id", user?.user.id);
-    setLoading(true);
-    const response = POST.request({ form: formData, url: "duplicatetour" });
-    if (response) {
-      fetchListing();
-      setLoading(false);
-    }
+    
+
+    if(id){
+      const confirmResult = window.confirm("Are you sure you want to duplicate this tour?");
+      if(confirmResult){
+          const formData = new FormData();
+          formData.append("id", id);
+          formData.append("vendor_id", user?.user.id);
+          setLoading(true);
+          const response = POST.request({ form: formData, url: "duplicatetour" });
+          if (response) {
+            showSuccessToast("Tour Duplicated Successfully");
+            setTimeout(()=>{
+
+              fetchListing();
+              setLoading(false);
+            },1000)
+
+          }else{
+            setLoading(false);
+          }
+      }else{
+        return;
+      }
+     }
+
+   
   };
   const openInvoice = (note) => {
 
@@ -131,6 +151,7 @@ export default function DBListing() {
 
   return (
     <>
+      <ToastContainer/>
       <div
         className={`dashboard ${
           sideBarOpen ? "-is-sidebar-visible" : ""
