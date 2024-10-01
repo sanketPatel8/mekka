@@ -19,20 +19,20 @@ export default function TourSlider({ PAckageData }) {
 
   useEffect(() => {
     setslibleTourSlider(PAckageData?.Tour_List);
-    console.log(slibleTourSlider, "slibleTourSlider");
   }, [PAckageData]);
-
   
-  // const tournames = slibleTourSlider.map((elm) => elm.tour_image);
+  console.log(slibleTourSlider, "slibleTourSlider");
+  
 
-  // console.log("tournames", tournames);
 
   return (
     <section className="">
       <div className="container">
         <div className="row">
           <div className="col-auto">
-            <h2 className="text-30"> {translate("You might also like...")}</h2>
+            {slibleTourSlider.length !== 0 && slibleTourSlider && (
+              <h2 className="text-30"> {translate("You might also like...")}</h2>
+            )}
           </div>
         </div>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Stars from "../common/Stars";
+import { PiBuildingApartmentFill } from "react-icons/pi";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -95,7 +95,7 @@ export default function MainInformation({ PAckageData }) {
             <div className="col-auto">
               <div className="d-flex items-center">
                 <div className="d-flex items-center x-gap-5 mx-2">
-                  <Stars star={ratingCountStr} font={12} />
+                  <PiBuildingApartmentFill  star={ratingCountStr} font={12} />
                 </div>
                 {/* {InformationData?.Tour_Details?.tour_details?.rating} (
                 {InformationData?.Tour_Details?.tour_details?.rating_count}) -{" "} */}

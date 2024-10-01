@@ -8,6 +8,7 @@ import { FaCalendar } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
 import { MdBed } from "react-icons/md";
 import Stars from "@/components/common/Stars";
+import { PiBuildingApartmentFill } from "react-icons/pi";
 import Pagination from "@/components/common/Pagination";
 import Sidebar2 from "@/components/tours/Sidebar2";
 import Image from "next/image";
@@ -273,6 +274,7 @@ export default function TourList4({
                         <div className="d-flex items-center mt-5">
                           <div className="d-flex items-center x-gap-5">
                             {/* <Stars star={elm?.rating_count} font={12} /> */}
+                            <PiBuildingApartmentFill   color="#dabf4f" className="" size={20} />
                           </div>
                           <div className="text-14 ml-10">
                             {/* <span className="fw-500">{elm?.rating}</span> ( */}
