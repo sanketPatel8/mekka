@@ -372,3 +372,6 @@ opacity: 1;
 .DraftEditor-root{
   padding-bottom: 100px;
 }
+.footer.-type-1 .footer__newsletter input{
+  border:0px!important;
+}

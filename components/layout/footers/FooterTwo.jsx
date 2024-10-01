@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import Paymentcards from "../components/Paymentcards";
 import FooterLinks from "../components/FooterLinks";
 import { FaPhoneFlip } from "react-icons/fa6";
@@ -6,8 +7,59 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import Socials from "../components/Socials";
 import Image from "next/image";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
+import { POST } from "@/app/utils/api/post";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function FooterTwo() {
+  const {translate} = useTranslation();
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState({});
+  const handleEmailchange = (e) => {
+    setEmail(e.target.value);
+    setErrors((prevErrors) => ({ ...prevErrors, [e.target.name]: "" }));
+  }
+  const validate = () => {
+    let tempErrors = {};
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      tempErrors.email = 'Invalid email address';
+
+    }
+
+    return tempErrors;
+};
+  const handleClick = async(e) => {
+    e.preventDefault();
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors)
+      return;
+    }
+
+    if(!email){
+      showErrorToast("Email is required");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("email", email);
+
+    console.log(formData,"formData");
+
+    const response = await POST.request({form: formData, url: "newsemail"});
+    console.log(response,"response");
+
+    if(response){
+      showSuccessToast(response.message);
+      setEmail("");
+    }else{
+      showErrorToast("Email has not been added");
+      setEmail("");
+    }
+    
+    
+  }
   return (
     <footer className="footer -type-1 -dark bg-info-2 text-white">
       <div className="footer__main">
@@ -31,7 +83,7 @@ export default function FooterTwo() {
 
                   <div className="col-auto">
                     <div className="text-20 fw-500">
-                      Speak to our expert at
+                      {translate("Speak to our expert at")}
                       <span className="text-accent-1"> +49 (0)6196 204 72 40</span>
                    
                     </div>
@@ -88,13 +140,14 @@ export default function FooterTwo() {
               <div className="col-lg-3 col-md-6">
                 <h4 className="text-20 fw-500">Newsletter</h4>
                 <p className="mt-20">
-                  Subscribe to the free newsletter and stay up to date
+                  {translate("Subscribe to the free newsletter and stay up to date")}
                 </p>
 
-                <div className="footer__newsletter">
-                  <input type="Email" placeholder="Your email address" />
-                  <button>Send</button>
+                <div className="footer__newsletter" style={{background:"white",borderRadius:"16px"}}>
+                  <input type="email" placeholder="Your email address" value={email} onChange={handleEmailchange}  name="email" style={{width:"75%"}}/>
+                  <button type="button" onClick={handleClick}>{translate("Send")}</button>
                 </div>
+                {errors.email && <div className="text-red">{errors.email}</div>}
 
 
               </div>
