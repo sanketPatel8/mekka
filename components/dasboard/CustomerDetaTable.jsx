@@ -97,11 +97,10 @@ const CustomerDetaTable = () => {
         row?.departures
           ?.map((departureItem) => departureItem?.departure)
           .join(", ") || "N/A",
-      width: "200px",
+      width: "100px",
     },
-
     { name: translate("Return"), selector: (row) => row.date_end },
-    { name: translate("Mekka"), selector: (row) => row.mekka_hotel },
+    { name: translate("Mekka"), selector: (row) =>   row.mekka_hotel },
     { name: translate("Madina"), selector: (row) => row.madina_hotel },
     { name: translate("Adult"), selector: (row) => row.adults },
     { name: translate("Child"), selector: (row) => row.child },
@@ -189,12 +188,12 @@ const CustomerDetaTable = () => {
   ];
 
   const Total = [
-    { name: "Subtotal", selector: (row) => row.Subtotal },
+    { name: "Subtotal", selector: (row) => row.subtotal },
     // { name: "Tax", selector: (row) => row.Total },
-    { name: "Discount", selector: (row) => row.Discount },
+    { name: "Discount", selector: (row) => row.discount },
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
-    { name: "Total", selector: (row) => row.Total },
-    { name: "Amount Due", selector: (row) => row.Amount_Due },
+    { name: "Total", selector: (row) => row.total },
+    { name: "Amount Due", selector: (row) => row.amount_due },
   ];
 
   function afterOpenModal() {
@@ -597,6 +596,7 @@ const CustomerDetaTable = () => {
       showErrorToast("Document Upload Failed");
     }
   };
+  
 
   return (
     <div>
@@ -627,7 +627,7 @@ const CustomerDetaTable = () => {
             </button>
           </div>
 
-          <div className="">
+          <div className={`${BookingDetails?.reservation?.paymentType == '3' ? 'd-block' : 'd-none'}`}>
             <button
               className="button -sm -accent-1 bg-info-2 text-white "
               onClick={openPaymentModal}
@@ -706,12 +706,12 @@ const CustomerDetaTable = () => {
 
       <br />
 
-      {/* Total Data Table */}
-      {TotalData?.length ? (
+ 
+      {BookingDetails.reservation ? (
         <DataTable
           title="Total"
           columns={Total}
-          data={TotalData}
+          data={[BookingDetails.reservation]}
           highlightOnHover
         />
       ) : (
