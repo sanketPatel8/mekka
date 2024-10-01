@@ -27,7 +27,6 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
 
   return (
     <div className="dashboard__sidebar js-dashboard-sidebar bg-light-3 text-dark">
-      <ToastContainer />
       <div className="dashboard__sidebar_header">
         <span
           onClick={handleCloseSidebar}
@@ -54,7 +53,7 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
               pathname === elm.href ? "-is-active" : ""
             } `}
           >
-            <Link href={elm.href}  onClick={elm.label === "Logout" ? handleLogoutAndCloseSidebar : handleCloseSidebar}>
+            <Link href={elm.href}  onClick={elm.label === "Logout" ? handleLogoutAndCloseSidebar : ""}>
               <i className={elm.iconClass}></i>
               <span className="ml-10">{elm.label}</span>
             </Link>

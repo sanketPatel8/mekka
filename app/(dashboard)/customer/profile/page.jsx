@@ -14,24 +14,34 @@ import { ClipLoader } from "react-spinners";
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [UserProfile, setUserProfile] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    image1: "",
-  });
-  const [passwordData, setPasswordData] = useState({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   surname: "",
+  //   email: "",
+  //   image1: "",
+  // });
+  // const [passwordData, setPasswordData] = useState({
+  //   oldPassword: "",
+  //   newPassword: "",
+  //   confirmPassword: "",
+  // });
+
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [fileBlob, setFileBlob] = useState({});
 
   const [USerData, setUSerData] = useState([]);
-
-  const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState("");
+  const [errors, setErrors] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [image1, setImage1] = useState("");
+  const [old_password, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirmPassword] = useState("");
   // console.log("formData", formData?.image1);
 
   const { user , customer } = useAuthContext();
@@ -45,17 +55,16 @@ export default function Profile() {
       url: url,
       token: `${customer?.authorisation.token}`,
     });
+    setLoading(false);
 
     // Handle case where response.user is a single object
     if (response.user && typeof response.user === "object") {
       const userProfile = response.user;
       setUserProfile(userProfile);
-      setFormData({
-        name: userProfile.name || "",
-        surname: userProfile.surname || "",
-        email: userProfile.email || "",
-        image1: userProfile.profile_image || "", // Assuming API returns image URL
-      });
+      setName(userProfile.name);
+      setSurname(userProfile.surname);
+      setEmail(userProfile.email);
+      setImage1(userProfile.profile_image);
       setFileBlob(userProfile.profile_image);
     } else {
       console.error("Unexpected response structure:", response);
@@ -122,16 +131,12 @@ export default function Profile() {
     }));
   };
 
-  const handleImageChange = (e, setImage) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     console.log(file, "file");
     const allowedType = ["image/jpeg", "image/x-png", "image/png"];
     if (file && allowedType.includes(file?.type)) {
-      setFormData((prevData) => ({
-        ...prevData,
-        image1: file,
-      }));
-      console.log(formData, "formData");
+      setImage1(file);
       const blobUrl = URL.createObjectURL(file);
       setFileBlob(blobUrl);
     }
@@ -147,36 +152,35 @@ export default function Profile() {
     // }
   };
 
-  const fetchUpdateProfile = async (type) => {
-    const formDatas = new FormData();
+//   const fetchUpdateProfile = async (type) => {
+//     const formDatas = new FormData();
   
-    // Append form data fields
-    formDatas.append("id", customer?.user?.id);
-    formDatas.append("type", "profile");
-    formDatas.append("name", formData?.name);
-    formDatas.append("surname", formData?.surname);
-    formDatas.append("email", formData?.email);
-    formDatas.append("image", formData?.image1);
+//     // Append form data fields
+//     formDatas.append("id", customer?.user?.id);
+//     formDatas.append("type", "profile");
+//     formDatas.append("name", name);
+//     formDatas.append("surname", surname);
+//     formDatas.append("email", email);
+//     formDatas.append("image", image1);
   
-    // Set loading to true when the request starts
-    setIsLoading(true);
+//     setIsLoading(true);
   
-    try {
-      const response = await POST.request({
-        form: formDatas,
-        url: "update_profile",
-      });
+//     try {
+//       const response = await POST.request({
+//         form: formDatas,
+//         url: "update_profile",
+//       });
   
-      // Handle the response
-      if (response) {
-        setIsLoading(false); // Set loading to false once the request is successful
-        showSuccessToast(response?.message);
-      }
-    } catch (e) {
-      console.log(e);
-      setIsLoading(false); // Set loading to false in case of error
-    }
-  };
+//       if (response) {
+//         setIsLoading(false);
+//         showSuccessToast(response?.message);
+        
+//       }
+//     } catch (e) {
+//       console.log(e);
+//       setIsLoading(false); 
+//   };
+// }
   
   const [someObject, setSomeObject] = useState({ toggle: false });
 
@@ -193,47 +197,189 @@ const toggleHandler = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //const formType = e.target.value
-    fetchUpdateProfile();
-  };
-
-  const handlePasswordChange = (e) => {
-    const { name, value } = e.target;
-    setPasswordData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const fetchUpdatePassword = async (type) => {
     const formDatas = new FormData();
 
-    // console.log("Update data: ", formDatas)
-    formDatas.append("id", USerData?.id);
-    formDatas.append("type", "change_password");
-    formDatas.append("old_password", passwordData?.oldPassword);
-    formDatas.append("password", passwordData?.newPassword);
+    const formType = e.target.name;
+    console.log("formType", formType);
 
-    try {
+    if (formType === "profile") {
+      if(!name || !surname || !email || !image1){
+        showErrorToast("Please fill all fields");
+        return;
+      }
+    }else if(formType === "change_password"){
+      if(!old_password || !password || !confirm_password){
+        showErrorToast("Please fill all fields");
+        return;
+      }
+    }
+
+    switch (formType) {
+      case "profile":
+
+        formDatas.append("id", customer?.user?.id);
+        formDatas.append("type", "profile");
+        formDatas.append("name", name);
+        formDatas.append("surname", surname);
+        formDatas.append("email", email);
+        formDatas.append("image", image1);
+        break;
+
+      case "change_password":
+        formDatas.append("id", USerData?.id);
+        formDatas.append("type", "change_password");
+        formDatas.append("old_password", old_password);
+        formDatas.append("password", password);
+        break;
+
+      default:
+        break;
+    }
+
+    if(formType === "profile"){
+      setIsLoading(true);
       const response = await POST.request({
         form: formDatas,
         url: "update_profile",
       });
-      showSuccessToast(response?.message);
-    } catch (e) {
-      console.log(e);
+  
+      setIsLoading(false);
+      if (response.status === "success") {
+        showSuccessToast(response?.message);
+        fetchProfile();
+        
+      }else if(response.status === "error"){
+        showErrorToast(response?.message);
+      }
+
     }
+    else if(formType === "change_password"){
+      setIsPasswordLoading(true);
+      if (confirm_password === password) {
+        const response = await POST.request({
+          form: formDatas,
+          url: "update_profile",
+        });
+        setIsPasswordLoading(false);
+        if(response.status === "success"){
+  
+        showSuccessToast(response?.message);
+        fetchProfile();
+          
+        }else{
+  
+          showErrorToast(response?.message);
+          
+        }
+      } else {
+        setIsPasswordLoading(false);
+        showErrorToast("please fill proper details");
+      }
+    }
+    // fetchUpdateProfile();
   };
+
+  // const handleChange = (e) => {
+  //   const {  value } = e.target;
+  //   setPasswordData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
+  // const fetchUpdatePassword = async (type) => {
+  //   const formDatas = new FormData();
+
+  //   // console.log("Update data: ", formDatas)
+  //   formDatas.append("id", USerData?.id);
+  //   formDatas.append("type", "change_password");
+  //   formDatas.append("old_password", passwordData?.oldPassword);
+  //   formDatas.append("password", passwordData?.newPassword);
+
+  //   try {
+  //     const response = await POST.request({
+  //       form: formDatas,
+  //       url: "update_profile",
+  //     });
+
+  //     if(response.status === "success"){
+
+  //     showSuccessToast(response?.message);
+        
+  //     }else{
+
+  //       showErrorToast(response?.message);
+        
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   const submitPasswordForm = (e) => {
     e.preventDefault();
     if (passwordData?.confirmPassword === passwordData?.newPassword) {
       fetchUpdatePassword();
     } else {
+      if (typeof window !== "undefined") {
+
       showErrorToast("please fill proper details");
+      }
     }
     console.log(passwordData);
   };
-
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    setConfirmPassword(value);
+    if (value !== password) {
+      setError("Passwords do not match");
+      }else{
+        setError("");
+      }
+  }
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
+  const handlePassword = (e) => {
+    const passwordValue = e.target.value;
+    setPassword(passwordValue);
+    if (!passwordRegex.test(passwordValue)) {
+      setPasswordError("Invalid password. ");
+    }  else {
+      setPasswordError("");
+    }
+    if(!passwordValue){
+      setPasswordError("");
+    }
+  };
+  // const handlePasswordChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setPasswordData((prevData) => ({
+  //     ...prevData,
+  //     [e.target.name]: value,
+  //   }));
+  //   if (value !== passwordData.newPassword) {
+  //     setError("Passwords do not match");
+  //     }else{
+  //       setError("");
+  //     }
+  // }
+  // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
+  // const handlePassword = (e) => {
+  //   const {name,value} = e.target;
+  //   setPasswordData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  //   if (!passwordRegex.test(value)) {
+  //     setPasswordError("Password must contain at least 8 characters, including uppercase, lowercase letters, numbers and special characters");
+  //   }  else {
+  //     setPasswordError("");
+  //   }
+  //   if(!value){
+  //     setPasswordError("");
+  //   }
+  // };
   const { translate } = useTranslation();
   return (
     <>
@@ -249,6 +395,16 @@ const toggleHandler = () => {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
+          {loading ? (
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: "200px" }}
+              >
+                <ClipLoader color="#DAC04F" size={50} />
+              </div>
+            ) : (
+              <>
+              
             <h1 className="text-30">
               {translate("Profile").charAt(0).toUpperCase() +
                 translate("Profile").slice(1)}{" "}
@@ -265,7 +421,7 @@ const toggleHandler = () => {
                 {translate("Profile Details")}
               </h5>
 
-              <form className="contactForm y-gap-30" onSubmit={handleSubmit}>
+              <form className="contactForm y-gap-30" onSubmit={handleSubmit} name="profile">
                 {loading ? (
                   <p>Loading...</p>
                 ) : (
@@ -275,9 +431,8 @@ const toggleHandler = () => {
                         <div className="form-input my-1">
                           <input
                             type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             required
                           />
                           <label className="lh-1 text-16 text-light-1">
@@ -290,9 +445,8 @@ const toggleHandler = () => {
                         <div className="form-input my-1">
                           <input
                             type="text"
-                            name="surname"
-                            value={formData.surname}
-                            onChange={handleInputChange}
+                            value={surname}
+                            onChange={(e) => setSurname(e.target.value)}
                             required
                           />
                           <label className="lh-1 text-16 text-light-1">
@@ -305,9 +459,8 @@ const toggleHandler = () => {
                         <div className="form-input my-1">
                           <input
                             type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                           />
                           <label className="lh-1 text-16 text-light-1">
@@ -322,7 +475,7 @@ const toggleHandler = () => {
                         {translate("Your photo")}
                       </h4>
                       <div className="row x-gap-20 y-gap">
-                        {formData.image1 ? (
+                        {image1 ? (
                           <div className="col-auto my-3">
                             <div className="relative">
                               <Image
@@ -334,10 +487,7 @@ const toggleHandler = () => {
                               />
                               <button
                                 onClick={() => {
-                                  setFormData((prevData) => ({
-                                    ...prevData,
-                                    image1: "",
-                                  }));
+                                  setImage1("");
                                   setFileBlob({});
                                 }}
                                 className="absoluteIcon1 button -dark-1"
@@ -364,8 +514,8 @@ const toggleHandler = () => {
                               </div>
                             </label>
                             <input
-                              onChange={(e) =>
-                                handleImageChange(e, setFormData)
+                              onChange={
+                                handleImageChange
                               }
                               accept="image/*"
                               id="imageInp1"
@@ -382,7 +532,7 @@ const toggleHandler = () => {
                         )}
                       </div>
 
-                      <button className="button -md -info-2 bg-accent-1 text-white mt-30">
+                      <button className="button -md -info-2 bg-accent-1 text-white mt-30" type="submit">
                        {isLoading ? (
                           <div
                             className="d-flex justify-content-center align-items-center"
@@ -408,16 +558,18 @@ const toggleHandler = () => {
 
               <form
                 className="contactForm y-gap-30"
-                onSubmit={submitPasswordForm}
+                onSubmit={handleSubmit}
+                name="change_password"
+
               >
                 <div className="row y-gap-30">
                   <div className="col-md-6">
                     <div className="form-input my-1">
                       <input
-                        type="text"
+                        type="password"
                         name="oldPassword"
-                        value={passwordData.oldPassword}
-                        onChange={handlePasswordChange}
+                        value={old_password}
+                        onChange={(e) => setOldPassword(e.target.value)}
                         required
                       />
                       <label className="lh-1 text-16 text-light-1">
@@ -431,15 +583,17 @@ const toggleHandler = () => {
                   <div className="col-md-6">
                     <div className="form-input my-1">
                       <input
-                        type="text"
+                        type="password"
                         name="newPassword"
-                        value={passwordData.newPassword}
-                        onChange={handlePasswordChange}
+                        value={password}
+                        onChange={handlePassword}
                         required
                       />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("New password")}
                       </label>
+                      {passwordError && <div className="text-red mb-1">{passwordError}</div>}
+
                     </div>
                   </div>
                 </div>
@@ -448,15 +602,17 @@ const toggleHandler = () => {
                   <div className="col-md-6">
                     <div className="form-input my-1">
                       <input
-                        type="text"
+                        type="password"
                         name="confirmPassword"
-                        value={passwordData.confirmPassword}
+                        value={confirm_password}
                         onChange={handlePasswordChange}
                         required
                       />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("Confirm new password")}
                       </label>
+                      {error && <div className="text-red">{error}</div>}
+
                     </div>
                   </div>
                 </div>
@@ -467,7 +623,17 @@ const toggleHandler = () => {
                       className="button -md -info-2 bg-accent-1 text-white"
                       type="submit"
                     >
-                      {translate("Save Changes")}
+
+                        {isPasswordLoading ? (
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: "30px", width: "100%" }}
+                            >
+                              <ClipLoader color="#ffffff" size={30} />
+                            </div>
+                          ) : (
+                            translate("Save Changes")
+                        )}
                     </button>
                   </div>
                 </div>
@@ -477,6 +643,8 @@ const toggleHandler = () => {
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}
             </div>
+              </>
+  )}
           </div>
         </div>
       </div>

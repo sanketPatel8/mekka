@@ -29,10 +29,12 @@ export default function DbBooking() {
     formData.append("user_id", id);
 
     try {
+      setIsLoading(true);
       const response = await POST.request({
         form: formData,
         url: "my_bookings",
       });
+      setIsLoading(false);
       setBookingsCustomer(response?.Bookings);
     } catch (e) {
       console.log(e);

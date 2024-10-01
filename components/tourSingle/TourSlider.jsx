@@ -19,10 +19,10 @@ export default function TourSlider({ PAckageData }) {
 
   useEffect(() => {
     setslibleTourSlider(PAckageData?.Tour_List);
+    console.log(slibleTourSlider, "slibleTourSlider");
   }, [PAckageData]);
 
   
-
   // const tournames = slibleTourSlider.map((elm) => elm.tour_image);
 
   // console.log("tournames", tournames);

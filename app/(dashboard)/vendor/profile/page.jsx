@@ -52,6 +52,8 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isBankLoading, setIsBankLoading] = useState(false);
+  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   useEffect(() => {
     if (user) {
       fetchProfile();
@@ -300,6 +302,7 @@ export default function Profile() {
         setUploadImage([]);
         fetchProfile();
       } else {
+        setIsLoading(false);
         showErrorToast(response.message);
       }
       // }
@@ -308,7 +311,7 @@ export default function Profile() {
         showErrorToast("Please fill all fields");
       } else {
         const url = `update_profile`;
-        setIsLoading(true);
+        setIsBankLoading(true);
         const response = await POST.request({
           form: formData,
           url: url,
@@ -316,10 +319,11 @@ export default function Profile() {
         });
 
         if (response) {
-          setIsLoading(false);
+          setIsBankLoading(false);
           showSuccessToast(response.message);
           fetchProfile();
         } else {
+          setIsBankLoading(false);
           showErrorToast(response.message);
         }
       }
@@ -328,7 +332,7 @@ export default function Profile() {
         showErrorToast("Please fill all fields");
       } else {
         const url = `update_profile`;
-        setIsLoading(true);
+        setIsPasswordLoading(true);
         const response = await POST.request({
           form: formData,
           url: url,
@@ -336,7 +340,7 @@ export default function Profile() {
         });
 
         if (response.status === "success") {
-          setIsLoading(false);
+          setIsPasswordLoading(false);
           showSuccessToast(response.message);
           fetchProfile();
           setOldPassword("");
@@ -344,7 +348,7 @@ export default function Profile() {
           setConfirmPassword("");
         } else if(response.status === "error") {
           showErrorToast(response.message);
-          setIsLoading(false);
+          setIsPasswordLoading(false);
           setOldPassword("");
           setPassword("");
           setConfirmPassword("");
@@ -1120,7 +1124,7 @@ export default function Profile() {
                       <div className="row">
                         <div className="col-12">
                           <button className="button -md -info-2 bg-accent-1 text-white mt-15" type="submit">
-                          {loading ? <div
+                          {isBankLoading ? <div
                                 className="d-flex justify-content-center align-items-center"
                                 style={{ height: "30px", width: "100%" }}
                               >
@@ -1204,7 +1208,7 @@ export default function Profile() {
                       <div className="row">
                         <div className="col-12">
                           <button className="button -md -info-2 bg-accent-1 text-white" type="submit">
-                          {loading ? <div
+                          {isPasswordLoading ? <div
                                 className="d-flex justify-content-center align-items-center"
                                 style={{ height: "30px", width: "100%" }}
                               >
