@@ -86,6 +86,7 @@ export default function BookingPages({ BookingData }) {
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
+    localStorage.setItem("additionalfordashboard", JSON.stringify(BookingData?.Tour_Details?.addtional_price));
   }, [BookingData]);
 
   const [LoginCheck, setLoginCheck] = useState();
@@ -1049,6 +1050,7 @@ export default function BookingPages({ BookingData }) {
     if (typeof window !== "undefined") {
       localStorage.setItem("BookingData", JSON.stringify(bookingData));
       localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
+      
     }
 
     handleUpdateLocalStorage();
