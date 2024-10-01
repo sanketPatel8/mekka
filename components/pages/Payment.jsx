@@ -941,7 +941,7 @@ export default function Payment() {
                     </div>
                     <div className="text-start">
                       {translate("Offered Languages")} :{" "}
-                      {SideBarData?.OfferedLanguages}
+                      {SideBarData?.OfferedLanguages.join(",")}
                     </div>
                   </div>
 
