@@ -225,10 +225,18 @@ export default function Payment() {
           const startDate = parseDate(startDateString);
 
           const sixDaysBefore = new Date(
-            startDate.getTime() - 6 * 24 * 60 * 60 * 1000
+            startDate.getTime() - 5 * 24 * 60 * 60 * 1000
           );
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
-          setDateEnd(sixDaysBeforeString);
+      
+          if(sixDaysBeforeString > todayString){
+            setDateEnd(sixDaysBeforeString);
+          }
+          else{
+            const nextDay = today.setDate(today.getDate() + 1);
+            const nextDayString = new Date(nextDay).toISOString().split("T")[0];
+            setDateEnd(nextDayString);
+          }
         } catch (error) {
           console.error("Error parsing date string:", error);
         }
@@ -349,7 +357,6 @@ export default function Payment() {
 
   const { translate } = useTranslation();
 
-  console.log("SideBarData?.Airline?.name", SideBarData?.Departure);
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
