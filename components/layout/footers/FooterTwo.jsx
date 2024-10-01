@@ -106,7 +106,7 @@ export default function FooterTwo() {
           <div className="footer__content">
             <div className="row y-gap-40 justify-between">
               <div className="col-lg-4 col-md-6">
-                <h4 className="text-20 fw-500">Contact</h4>
+                <h4 className="text-20 fw-500">{translate("Contact")}</h4>
 
                 <div className="y-gap-10 mt-20">
                   

@@ -343,7 +343,7 @@ const toggleHandler = () => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
     if (!passwordRegex.test(passwordValue)) {
-      setPasswordError("Invalid password. ");
+      setPasswordError("Password must contain at least 8 characters, including uppercase, lowercase letters, numbers and special characters ");
     }  else {
       setPasswordError("");
     }

@@ -65,7 +65,7 @@ export default function FooterOne() {
               <div className="col-lg-3 col-md-6">
                 <h4 className="text-20 fw-500">Newsletter</h4>
                 <p className="mt-20">
-                  Subscribe to the free newsletter and stay up to date
+                {translate("Subscribe to the free newsletter and stay up to date")}
                 </p>
 
                 <div className="footer__newsletter">
