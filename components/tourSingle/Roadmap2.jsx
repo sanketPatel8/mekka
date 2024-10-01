@@ -4,12 +4,15 @@ import { roadmapData2 } from "@/data/tourSingleContent";
 import React, { useEffect, useState } from "react";
 
 export default function RoadMap2({ PAckageData }) {
-  const [activeRoadmap, setActiveRoadmap] = useState(2);
+  const [activeRoadmap, setActiveRoadmap] = useState(0);
   const [RoadMap, setRoadMap] = useState([]);
 
   useEffect(() => {
     setRoadMap(PAckageData?.Tour_Details?.itinerary || []);
   }, [PAckageData]);
+
+  console.log("RoadMap" , RoadMap);
+  
 
   // Combine RoadMap and roadmapData2
   const combinedRoadMap = RoadMap.map((item, index) => ({
