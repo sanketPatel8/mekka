@@ -9,6 +9,7 @@ import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -24,6 +25,7 @@ export default function Profile() {
     newPassword: "",
     confirmPassword: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const [fileBlob, setFileBlob] = useState({});
 
   const [USerData, setUSerData] = useState([]);
@@ -161,7 +163,14 @@ export default function Profile() {
         form: formDatas,
         url: "update_profile",
       });
-      showSuccessToast(response?.message);
+    
+      if(response){
+        setIsLoading(false)
+        showSuccessToast(response?.message);
+      }else{
+        setIsLoading(true)
+      }
+
     } catch (e) {
       console.log(e);
     }
@@ -361,7 +370,16 @@ export default function Profile() {
                       </div>
 
                       <button className="button -md -info-2 bg-accent-1 text-white mt-30">
-                        {translate("Save Changes")}
+                       {isLoading ? (
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: "30px", width: "100%" }}
+                          >
+                            <ClipLoader color="#ffffff" size={30} />
+                          </div>
+                        ) : (
+                          translate("Save Changes")
+                        )}
                       </button>
                     </div>
                   </>
