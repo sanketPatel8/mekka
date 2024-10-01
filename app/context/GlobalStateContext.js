@@ -21,7 +21,7 @@ export const GlobalStateProvider = ({ children }) => {
     new DateObject().setDay(14).add(1, "month"),
   ]);
   const [counts, setCounts] = useState({
-    Adult: 1,
+    Adult: 0,
     child: 0,
     baby: 0,
   });

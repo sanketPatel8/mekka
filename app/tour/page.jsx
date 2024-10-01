@@ -30,6 +30,8 @@ export default function PageData() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [value, setValue] = useState([0, 0]);
+  const [Distance, setDistance] = useState([0, 500]);
+
   const [range, setRange] = useState(1);
   const [SearchData, setSearchData] = useState({});
 
@@ -76,6 +78,10 @@ export default function PageData() {
     }
   };
 
+  console.log("value" , value[0]);
+  console.log("Distance" , Distance[0]);
+  
+
   const onPageChange = async (pageIndex) => {
     const tourTypeFromParam = searchParams.get("TourType") || "";
     const typeFromParam = searchParams.get("type") || "";
@@ -111,9 +117,13 @@ export default function PageData() {
       FilterSidebar.selectedLanguages.length !== 0 ||
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
-      FilterSidebar.selectedDurations.length !== 0 
+      FilterSidebar.selectedDurations.length !== 0 ||
+      value[0] === 0 ||
+      Distance[0] === 0
       // FilterSidebar.selectedRatings.length !== 0
     ) {
+      console.log("Fetch Filter Data");
+      
       await FetchFilterData(pageIndex);
     } else {
       await fetchListing(pageIndex);
@@ -147,6 +157,9 @@ export default function PageData() {
     formData.append("departure", FilterSidebar.selectedCities?.join(", "));
     formData.append("min_price", value[0]);
     formData.append("max_price", value[1]);
+    formData.append("min_distance", Distance[0]);
+    formData.append("max_distance", Distance[1]);
+
     formData.append("hotel_star", FilterSidebar?.selectedDurations.join(", "));
     // formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
     formData.append("amenities", FilterSidebar?.selectedFeatures.join(", "));
@@ -175,9 +188,14 @@ export default function PageData() {
         FilterSidebar.selectedLanguages.length !== 0 ||
         FilterSidebar.selectedCities.length !== 0 ||
         FilterSidebar.selectedFeatures.length !== 0 ||
-        FilterSidebar.selectedDurations.length !== 0 
+        FilterSidebar.selectedDurations.length !== 0 ||
+        value[0] == 0 ||
+        Distance[0] == 0
         // FilterSidebar.selectedRatings.length !== 0
+        
       ) {
+        console.log("FEthch Filter ");
+        
         FetchFilterData();
       } else if (
         SearchData.tourType !== null ||
@@ -206,7 +224,7 @@ export default function PageData() {
     } else {
       isMounted.current = true;
     }
-  }, [FilterSidebar]);
+  }, [FilterSidebar , Distance , value]);
 
   const FetchTourDataAPi = async () => {
     const sendData = {
@@ -290,6 +308,8 @@ export default function PageData() {
             FliterData={FliterData}
             count={count}
             range={range}
+            Distance={Distance}
+            setDistance={setDistance}
             onPageChange={onPageChange}
             setLanActives={setLanActives}
             FilterSidebar={FilterSidebar}

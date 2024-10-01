@@ -15,6 +15,8 @@ export default function Sidebar2({
   value,
   setValue,
   handleSelectionChange,
+  Distance,
+  setDistance,
 }) {
   // console.log(handleSelectionChange,"handleSelectionChange")
   const [ddActives, setDdActives] = useState(["tourtype"]);
@@ -433,7 +435,7 @@ export default function Sidebar2({
                   ddActives.includes("Distance") ? { maxHeight: "300px" } : {}
                 }
               >
-                <PriceRangeBar />
+                <PriceRangeBar Distance={Distance} setDistance={setDistance} />
               </div>
             </div>
           </div>
