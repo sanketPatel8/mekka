@@ -16,7 +16,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Select from "react-select";
 import Modal from "react-modal";
-import { showSuccessToast } from "@/app/utils/tost";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 const customStyles = {
@@ -69,6 +69,7 @@ export default function DbBooking({ params }) {
   const [bookingDate, setBookingDate] = useState("");
   const [bookingStatus, setBookingStatus] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const id = params.id[0];
   const handleRadioChange = (event) => {
@@ -564,15 +565,19 @@ export default function DbBooking({ params }) {
     });
 
     formData.append("documents_data", JSON.stringify(documentData));
-
+    setIsLoading(true);
     const response = await POST.request({
       form: formData,
       url: "upload_bookingdocuments",
     });
     if (response) {
+      setIsLoading(false);
       showSuccessToast("Document Uploaded Successfully");
       setuploadFileisOpen(false);
       setRows([{ document: "", type: null }]);
+    }else{
+      setIsLoading(false);
+      showErrorToast("Document Upload Failed");
     }
   };
 
@@ -751,7 +756,15 @@ export default function DbBooking({ params }) {
                             type="submit"
                             onClick={handleDocumentSubmit}
                           >
-                            {translate("SUBMIT")}
+                             {isLoading ? <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ height: "30px", width: "100%" }}
+                              >
+                                <ClipLoader color="#ffffff" size={30} />
+                              </div>
+                              :
+                              translate("SUBMIT") 
+                              }
                           </button>
                           <button
                             className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
