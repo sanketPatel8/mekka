@@ -538,16 +538,16 @@ export default function BookingPages({ BookingData }) {
     try {
       const PromoResponse = await post("check_coupon", sendData);
 
-      if (PromoResponse.Status == 1) {
+      if (PromoResponse.Status !== '0') {
+        setShowbtnName(true); // Show the button for removing the promo
         showSuccessToast(PromoResponse.Message);
         setDiscount(PromoResponse); // Apply the discount
         setHandlePromo(true); // Promo applied
-        setShowbtnName(true); // Show the button for removing the promo
       } else {
+        setShowbtnName(false); // Hide the remove button
         showErrorToast("Invalid promo code.");
         setHandlePromo(false); // Promo failed
         setDiscount(0); // Reset discount
-        setShowbtnName(false); // Hide the remove button
       }
 
       setPromoData(PromoResponse); // Store promo data for later use
@@ -611,7 +611,7 @@ export default function BookingPages({ BookingData }) {
 
   const handlePromoSubmit = async () => {
     FetchPromoApi();
-    setShowbtnName(true);
+    // setShowbtnName(true);
   };
 
   const handlePromoremove = () => {
