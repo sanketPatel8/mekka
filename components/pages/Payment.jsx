@@ -50,9 +50,7 @@ export default function Payment() {
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
   const companyCode =
-    typeof window !== "undefined"
-      ? localStorage.getItem("company_code")
-      : "";
+    typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
 
   const handleCheckboxChange = (index) => {
@@ -71,12 +69,11 @@ export default function Payment() {
 
   const formatPriceChange = (price) => {
     if (isNaN(price) || price.length === 0) {
-      return '';
+      return "";
     }
   };
   const handleFirstAmountChange = (e) => {
-   setFirstAmount(e.target.value);
-
+    setFirstAmount(e.target.value);
   };
   // const handleFirstAmountChange = (e) => {
   //   const rawAmount = e.target.value;
@@ -271,14 +268,13 @@ export default function Payment() {
     try {
       const response = await post("addbooking", data);
 
-      if(response.Status == '1'){
+      if (response.Status == "1") {
         showSuccessToast(response.Message);
         setBookingStage((pre) => pre + 1);
         setReservationID(response.reservationNumber);
-      }else{
-        showErrorToast(response.Message)
+      } else {
+        showErrorToast(response.Message);
       }
-
     } catch (error) {
       console.error("Error caught:", error);
       showErrorToast(error);
@@ -300,7 +296,7 @@ export default function Payment() {
       FatchallBooking(newBooking);
       setTimeout(() => {
         router.push("#ref");
-        
+
         setTimeout(() => {
           localStorage.removeItem("AdultPrice&count");
           localStorage.removeItem("SelectedPackageHotelNDFlight");
@@ -353,8 +349,7 @@ export default function Payment() {
 
   const { translate } = useTranslation();
 
-  console.log("SideBarData?.Airline?.name" , SideBarData?.Departure);
-  
+  console.log("SideBarData?.Airline?.name", SideBarData?.Departure);
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
@@ -877,7 +872,8 @@ export default function Payment() {
                 <div className="px-1">
                   <div
                     className={
-                      SideBarData?.selectedCheckbox !== false || SideBarData?.Airline == null
+                      SideBarData?.selectedCheckbox !== false ||
+                      SideBarData?.Airline == null
                         ? "d-none"
                         : "d-block"
                     }
@@ -895,7 +891,8 @@ export default function Payment() {
 
                   <div
                     className={
-                      SideBarData?.selectedCheckbox !== false || SideBarData?.Departure?.name == ""
+                      SideBarData?.selectedCheckbox !== false ||
+                      SideBarData?.Departure?.name == ""
                         ? "d-none"
                         : "d-block"
                     }
@@ -941,7 +938,9 @@ export default function Payment() {
                     </div>
                     <div className="text-start">
                       {translate("Offered Languages")} :{" "}
-                      {SideBarData?.OfferedLanguages.join(",")}
+                      {SideBarData?.OfferedLanguages?.length > 0
+                        ? SideBarData.OfferedLanguages.join(", ")
+                        : translate("No Languages Available")}
                     </div>
                   </div>
 
