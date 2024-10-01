@@ -32,6 +32,8 @@ export default function TourList4({
   handleSelectionChange,
   activeIndex,
   setActiveIndex,
+  Distance,
+  setDistance,
 }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
@@ -72,12 +74,12 @@ export default function TourList4({
   }, []);
 
   const truncateHotelName = (name) => {
-    if (!name) return ""; 
+    if (!name) return "";
     const words = name.split(" ");
     if (words.length > 4) {
-      return words.slice(0, 4).join(" ") + "..."; 
+      return words.slice(0, 4).join(" ") + "...";
     }
-    return name; 
+    return name;
   };
 
   const { translate } = useTranslation();
@@ -115,6 +117,8 @@ export default function TourList4({
                         value={value}
                         setValue={setValue}
                         handleSelectionChange={handleSelectionChange}
+                        Distance={Distance}
+                        setDistance={setDistance}
                       />
                     </div>
                   </div>
@@ -130,6 +134,8 @@ export default function TourList4({
                   value={value}
                   setValue={setValue}
                   handleSelectionChange={handleSelectionChange}
+                  Distance={Distance}
+                  setDistance={setDistance}
                 />
               </div>
             )}
@@ -217,7 +223,6 @@ export default function TourList4({
                         </h3>
                         <div>
                           <div>
-                           
                             {elm?.tour_hotels?.mekka_hotels?.[0] && (
                               <p className="tourCard__text mt-5 items-center d-flex">
                                 <FaHotel
@@ -225,13 +230,16 @@ export default function TourList4({
                                   color="#dabf4f"
                                   size={25}
                                 />
-                                Mekka{" "}:{" "}
-                                {truncateHotelName(elm?.tour_hotels?.mekka_hotels[0]?.hotel_name)}-({elm.tour_hotels?.mekka_hotels[0]?.hotel_stars} <FaStar color="#dabf4f" className="" /> )
-                                
+                                Mekka :{" "}
+                                {truncateHotelName(
+                                  elm?.tour_hotels?.mekka_hotels[0]?.hotel_name
+                                )}
+                                -(
+                                {elm.tour_hotels?.mekka_hotels[0]?.hotel_stars}{" "}
+                                <FaStar color="#dabf4f" className="" /> )
                               </p>
                             )}
 
-                          
                             {elm?.tour_hotels?.medina_hotels?.[0] && (
                               <p className="tourCard__text mt-5 items-center d-flex">
                                 <FaHotel
@@ -239,11 +247,13 @@ export default function TourList4({
                                   color="#dabf4f"
                                   size={25}
                                 />
-                                Madina{" "} : {" "}
+                                Madina :{" "}
                                 {truncateHotelName(
                                   elm?.tour_hotels?.medina_hotels[0]?.hotel_name
-                                )}-({elm.tour_hotels?.medina_hotels[0]?.hotel_stars} <FaStar color="#dabf4f" className="" /> )
-                               
+                                )}
+                                -(
+                                {elm.tour_hotels?.medina_hotels[0]?.hotel_stars}{" "}
+                                <FaStar color="#dabf4f" className="" /> )
                               </p>
                             )}
                           </div>

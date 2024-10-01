@@ -17,9 +17,12 @@ const theme = createTheme({
   },
 });
 
-export default function PriceRangeBar() {
-  const {Distance, setDistance} = useGlobalState()
+export default function PriceRangeBar({ Distance, setDistance }) {
+  // const {Distance, setDistance} = useGlobalState()
+
   const handleChange = (event, newValue) => {
+    console.log("newValue" , newValue); 
+    
     setDistance(newValue);
   };
   return (
