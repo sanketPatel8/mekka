@@ -149,32 +149,45 @@ export default function Profile() {
 
   const fetchUpdateProfile = async (type) => {
     const formDatas = new FormData();
-
-    // console.log("Update data: ", formDatas)
+  
+    // Append form data fields
     formDatas.append("id", customer?.user?.id);
     formDatas.append("type", "profile");
     formDatas.append("name", formData?.name);
     formDatas.append("surname", formData?.surname);
     formDatas.append("email", formData?.email);
-    formDatas.append("image", formData.image1);
-
+    formDatas.append("image", formData?.image1);
+  
+    // Set loading to true when the request starts
+    setIsLoading(true);
+  
     try {
       const response = await POST.request({
         form: formDatas,
         url: "update_profile",
       });
-    
-      if(response){
-        setIsLoading(false)
+  
+      // Handle the response
+      if (response) {
+        setIsLoading(false); // Set loading to false once the request is successful
         showSuccessToast(response?.message);
-      }else{
-        setIsLoading(true)
       }
-
     } catch (e) {
       console.log(e);
+      setIsLoading(false); // Set loading to false in case of error
     }
   };
+  
+  const [someObject, setSomeObject] = useState({ toggle: false });
+
+// Function to update the toggle
+const toggleHandler = () => {
+  setSomeObject((prevObject) => ({
+    ...prevObject,      // Keep other properties
+    toggle: !prevObject.toggle // Update the 'toggle' property
+  }));
+};
+
 
   // Handle form submission
   const handleSubmit = async (e) => {
