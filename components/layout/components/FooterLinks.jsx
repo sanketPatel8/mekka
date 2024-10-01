@@ -9,7 +9,7 @@ const sections = [
       { id: 3, text: "Sign Up", href: "/register" },
       { id: 4, text: "Partners", href: "/partner" },
       { id: 4, text: "Partners Login", href: "/partner-login" },
-      { id: 5, text: "My Account", href: "#" },
+      { id: 5, text: "My Account", href: "/vendor/dashboard" },
     ],
   },
   {
@@ -24,6 +24,35 @@ const sections = [
 ];
 
 export default function FooterLinks() {
+  // const {user} = useAuthContext();
+  // const[link,setLink]=useState("")
+  // if(user){
+  //   setLink("/vendor/dashboard")
+  // }else{
+  //   setLink("/partner-login")
+  // }
+  // const [sections, setSections] = useState([
+  //   {
+  //     title: "Company",
+  //     links: [
+  //       { id: 1, text: "Contact", href: "/contact" },
+  //       { id: 2, text: "Login", href: "/login" },
+  //       { id: 3, text: "Sign Up", href: "/register" },
+  //       { id: 4, text: "Partners", href: "/partner" },
+  //       { id: 4, text: "Partners Login", href: link },
+  //       { id: 5, text: "My Account", href: "/vendor/dashboard" },
+  //     ],
+  //   },
+  //   {
+  //     title: "Support",
+  //     links: [
+  //       { id: 9, text: "Terms of Use", href: "/Terms-of-Use" },
+  //       { id: 10, text: "Imprint", href: "/Impressum" },
+  //       { id: 11, text: "Data Protection", href: "/Datenschutz" },
+  //       { id: 12, text: "Cookie Policy", href: "/cookie-richtline" },
+  //     ],
+  //   },
+  // ]);
   return (
     <>
       {sections.map((elm, i) => (
