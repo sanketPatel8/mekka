@@ -256,5 +256,7 @@
   "Tax" : "Steuer",
   "Amount Due" : "Fälliger Betrag",
   "Do you have a promo code?" : "Haben Sie einen Promo-Code?",
-  "Promo Code" : "Aktionscode"
+  "Promo Code" : "Aktionscode",
+  "(The Standard Offer May Include a Multi-Bed Room.)" : "(Das Standardangebot kann ein Mehrbettzimmer beinhalten.)",
+  "Selected Additional Services Per Person:" : "Ausgewählte Zusatzleistungen pro Person:"
 }

@@ -199,18 +199,6 @@ export default function BookingPages({ BookingData }) {
 
   let foundPrices = AlladultsData?.map((item) => item.price);
 
-  const HandleLogInDataChange = (e) => {
-    const { name, value } = e.target;
-    setBookingLoginData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleLoginCheckboxChange = (e) => {
-    setLoginISChacked(e.target.checked);
-  };
-
   function openModal() {
     setIsOpen(true);
   }
@@ -221,37 +209,12 @@ export default function BookingPages({ BookingData }) {
     setIsOpen(false);
   }
 
-  const HandleLoginSubmite = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await post("login", BookingLoginData);
-      typeof window != "undefined"
-        ? localStorage.setItem("token", response.authorisation.token)
-        : "";
-      showSuccessToast("Login successful!");
-
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
-    } catch (error) {
-      console.error("Error:", error); // Log the full error for debugging
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        showErrorToast("Please verify your email");
-      } else {
-        showErrorToast("An error occurred during registration.");
-      }
-    }
-  };
 
   // for promocode
 
   const [promo, setpromo] = useState("");
   const [PromoData, setPromoData] = useState({});
+  const [ShowPhoneError, setShowPhoneError] = useState("");
 
   const handlepromochange = (e) => {
     setpromo(e.target.value);
@@ -333,6 +296,7 @@ export default function BookingPages({ BookingData }) {
   // for form validation
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [PhoneValid, setPhoneValid] = useState(false)
 
   useEffect(() => {
     // Extract form values and validate
@@ -352,79 +316,42 @@ export default function BookingPages({ BookingData }) {
     return formatPrice(Number(personPrice[idx]?.default)); // Ensure price is a number
   };
 
-  // const handleInputChange = (type, index, e , ftype) => {
-  //   const { name, value } = e.target;
-
-  //   console.log("type" , ftype);
-
-  //   setFormValues((prevValues) => {
-  //     const updatedValues = { ...prevValues };
-
-  //     if (!updatedValues[type]) {
-  //       updatedValues[type] = [];
-  //     }
-  //     if (!updatedValues[type][index]) {
-  //       updatedValues[type][index] = {};
-  //     }
-
-  //     // Update the form values
-  //     updatedValues[type][index] = {
-  //       ...updatedValues[type][index],
-  //       [name]: value,
-  //     };
-
-  //     // Optional: Update userData if type is 'Adult' and index is 0
-  //     if (type === "Adult" && index === 0) {
-  //       setUserData((prevUserData) => ({
-  //         ...prevUserData,
-  //         [name]: value, // Update userData if necessary
-  //       }));
-  //     }
-
-  //     return updatedValues;
-  //   });
-
-  //   if (ftype == "number" && name == "mobile") {
-  //     if (value < 10) {
-  //       showErrorToast("Phone number must be at least 10.");
-  //     }
-  //   }
-  // };
-
   const handleInputChange = (type, index, e, ftype) => {
     let { name, value } = e.target;
-  
+
     // Validate phone number: Allow only numeric values and limit to 10 characters
-    if (ftype === "tel" && name === "mobile") {
+    if (ftype === "number" && name === "mobile") {
       value = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
       if (value.length > 10) {
         value = value.slice(0, 10); // Limit to 10 characters
       }
-  
+
       // Check if the mobile number is less than 10 digits and show an error
-      if (value.length < 10) {
-        showErrorToast("Phone number must be exactly 10 digits.");
-      } else {
-        showErrorToast(""); // Clear the error message
+      if (value.length !== 10) {
+        setShowPhoneError("*");
+        setPhoneValid(false)
+      }else{
+        setShowPhoneError("")
+        setPhoneValid(true)
       }
     }
-  
+
     // Update form values
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
-  
+
       if (!updatedValues[type]) {
         updatedValues[type] = [];
       }
       if (!updatedValues[type][index]) {
         updatedValues[type][index] = {};
       }
-  
+
       updatedValues[type][index] = {
         ...updatedValues[type][index],
         [name]: value,
       };
-  
+
       // Optional: Update userData if type is 'Adult' and index is 0
       if (type === "Adult" && index === 0) {
         setUserData((prevUserData) => ({
@@ -432,11 +359,11 @@ export default function BookingPages({ BookingData }) {
           [name]: value, // Update userData if necessary
         }));
       }
-  
+
       return updatedValues;
     });
   };
-  
+
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
 
@@ -925,18 +852,32 @@ export default function BookingPages({ BookingData }) {
                         ) : (
                           <>
                             <input
-                              type={field.type == "number" ? "tel" : field.type} 
+                              type={field.type}
                               name={field.name}
-                              value={fieldValue || ""} 
+                              value={fieldValue || ""}
                               onChange={(e) =>
                                 handleInputChange(type, i, e, field.type)
-                              } 
-                              maxLength={ field.type == "number" ? 10 : undefined } 
+                              }
+                              maxLength={
+                                field.type == "number" ? 10 : undefined
+                              }
                               required
                             />
 
                             <label className="lh-1 text-16 text-light-1">
-                              {field.label}
+                              {field.label === "Phone" ? (
+                                <>
+                                  {field.label}
+                                  {ShowPhoneError && (
+                                    <span style={{ color: "red" }}>
+                                      
+                                      {ShowPhoneError}
+                                    </span>
+                                  )}
+                                </>
+                              ) : (
+                                field.label
+                              )}
                             </label>
                           </>
                         )}
@@ -1067,7 +1008,7 @@ export default function BookingPages({ BookingData }) {
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
     flight_id: selectedCheckbox !== false ? 0 : BookingSideBar.Airline?.id,
     exclude_flight: JSON.parse(ExcludeFlight),
-    total_person : adultData.length + Childrendata.length + babyData.length ,
+    total_person: adultData.length + Childrendata.length + babyData.length,
     // tax: JSON.parse(formattedTaxAmount),
   };
 
@@ -1112,7 +1053,11 @@ export default function BookingPages({ BookingData }) {
 
     handleUpdateLocalStorage();
 
-    router.push("/payment");
+    if(PhoneValid === true){
+      router.push("/payment");
+    }else{
+      showErrorToast("Invalid Phone Number")
+    }
   };
 
   const handleExternalButtonClick = () => {

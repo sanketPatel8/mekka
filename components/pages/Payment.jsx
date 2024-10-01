@@ -993,25 +993,29 @@ export default function Payment() {
                     </div>
                   </div>
 
-                  <div className="line mt-5 mb-5"></div>
+                  {GetAdditionals.length !== 0 && (
+                    <>
+                      <div className="line mt-5 mb-5"></div>
 
-                  <p className="my-1 fs-6 my-2">
-                    (The Standard Offer May Include a Multi-Bed Room.)
-                  </p>
+                      <p className="my-1 fs-6 my-2">
+                      {translate("(The Standard Offer May Include a Multi-Bed Room.)")}
+                      </p>
 
-                  <p>
-                    <b>Selected Additional Services Per Person:</b>
-                    <div className="line my-2"> </div>
-                    {GetAdditionals.map((e, index) => (
-                      <div className="row" key={index}>
-                        <div className="col">
-                          <IoIosBed size={20} color="#DAC04F" />
-                        </div>
-                        <div className="col-6">{e.title}</div>
-                        <div className="col-4">{e.price} €</div>
+                      <div>
+                        <b>{translate("Selected Additional Services Per Person:")}</b>
+                        <div className="line my-2"></div>
+                        {GetAdditionals.map((e, index) => (
+                          <div className="row" key={index}>
+                            <div className="col">
+                              <IoIosBed size={20} color="#DAC04F" />
+                            </div>
+                            <div className="col-6">{e.title}</div>
+                            <div className="col-4">{e.price} €</div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </p>
+                    </>
+                  )}
                 </div>
 
                 <div className="line mt-10 mb-10"></div>
