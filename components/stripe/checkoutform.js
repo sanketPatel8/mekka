@@ -48,7 +48,7 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
                 handleClose()
                 router.push("#ref");
                 setBookingStage(2);
-                setReservationID(response.Reservations_id);
+                setReservationID(response.reservationNumber);
                 setPaidAmount(amount);
                 console.log(setPaidAmount , 'setPaidAmount')
             }
