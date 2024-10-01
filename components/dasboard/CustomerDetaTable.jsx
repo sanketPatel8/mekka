@@ -5,16 +5,7 @@ import DataTable from "react-data-table-component";
 import Modal from "react-modal";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
-import {
-  Adult1Data,
-  ReservationData,
-  Adult2InfoData,
-  TotalData,
-  BabyData,
-  documentData,
-  documentDataFile,
-  ViewCustomerDocument,
-} from "@/data/CustomerBookingData";
+import { TotalData } from "@/data/CustomerBookingData";
 import Select from "react-select";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -25,6 +16,7 @@ import { POST } from "@/app/utils/api/post";
 import { nationalities } from "@/data/nationalities";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { ClipLoader } from "react-spinners";
 
 const customStyles = {
   overlay: {
@@ -74,6 +66,7 @@ const CustomerDetaTable = () => {
   const [downloadData, setDownloadData] = useState([]);
   const [viewDetails, setViewDetails] = useState([]);
   const [downloadDetails, setDownloadDetails] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     Modal.setAppElement("#modelopen");
@@ -303,32 +296,26 @@ const CustomerDetaTable = () => {
             }));
 
             setViewDetails(docFiles);
-
-           
           }
         });
 
-        const downloads = matchedData.map((doc)=>{
-          if(doc.download_documets && doc.download_documets.length > 0){
+        const downloads = matchedData.map((doc) => {
+          if (doc.download_documets && doc.download_documets.length > 0) {
             const download = doc.download_documets.map((doc) => ({
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));
 
-            console.log("download" , download);
-            
-  
+            console.log("download", download);
+
             setDownloadDetails(download);
           }
         });
-        
-
       }
     }
   };
 
-  console.log("downloadDetails" , downloadDetails);
-  
+  console.log("downloadDetails", downloadDetails);
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
@@ -539,16 +526,22 @@ const CustomerDetaTable = () => {
     });
 
     formData.append("documents_data", JSON.stringify(documentData));
-
+    setIsLoading(true);
     const response = await POST.request({
       form: formData,
       url: "upload_bookingdocuments",
     });
+
     if (response) {
-      showSuccessToast(response.Message);
+      setIsLoading(false);
+      showSuccessToast("Document Uploaded Successfully");
       setTimeout(() => {
         setuploadFileisOpen(false);
       }, 3000);
+      setRows([{ document: "", type: null }]);
+    } else {
+      setIsLoading(false);
+      showErrorToast("Document Upload Failed");
     }
   };
 
@@ -1384,7 +1377,16 @@ const CustomerDetaTable = () => {
                         type="submit"
                         onClick={handleDocumentSubmit}
                       >
-                        {translate("SUBMIT")}
+                        {isLoading ? (
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: "30px", width: "100%" }}
+                          >
+                            <ClipLoader color="#ffffff" size={30} />
+                          </div>
+                        ) : (
+                          translate("SUBMIT")
+                        )}
                       </button>
                       <button
                         className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
