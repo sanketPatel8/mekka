@@ -159,7 +159,10 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => row.additional_services,
+      selector: (row) => 
+        row.extra_data.length !== 0 
+          ? row.extra_data.map((item) => item.title).join(", ")
+          : null, // Return null if the length is 0
       width: "150px",
     },
     { name: translate("Total"), selector: (row) => row.adult_price },
@@ -252,6 +255,7 @@ const CustomerDetaTable = () => {
   // for booking details
 
   const [personId, setPersonId] = useState(0);
+  const [AdditionalService, setAdditionalService] = useState([]);
 
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
@@ -315,8 +319,6 @@ const CustomerDetaTable = () => {
     }
   };
 
-  console.log("downloadDetails", downloadDetails);
-
   useEffect(() => {
     const fetchBookingDetails = async () => {
       const formData = new FormData();
@@ -372,6 +374,21 @@ const CustomerDetaTable = () => {
     fetchBookingDetails();
   }, [Tourid, CustomerID]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const additional = localStorage.getItem("additionalfordashboard");
+
+      if (additional && additional !== "undefined") {
+        try {
+          const copyadditional = JSON.parse(additional);
+          setAdditionalService(copyadditional);
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+      }
+    }
+  }, []);
+
   // for edit customer data
 
   const FetchEditData = async () => {
@@ -413,6 +430,7 @@ const CustomerDetaTable = () => {
     nationality: "",
     roomType: "",
   });
+  const [RadioValue, setRadioValue] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -422,15 +440,50 @@ const CustomerDetaTable = () => {
     }));
   };
 
-  const handleRadioChange = (e) => {
-    setAddpersonData((prevData) => ({
-      ...prevData,
-      roomType: e.target.value,
-    }));
+  const handleRadioChange = (e, idx, price, order, title, optid) => {
+    const selectedValue = e.target.value;
+
+    // Update only the last selected radio button's value and associated properties
+    setRadioValue({
+      selectedValue: selectedValue,
+      price: price,
+      order: order,
+      title: title,
+      optid: optid,
+    });
+  };
+
+  console.log("AddpersonData" , AddpersonData);
+  
+
+  const FetchAddperson = async () => {
+    const formData = new FormData();
+
+    formData.append("reservation_id", BookingDetails.reservation?.id);
+    formData.append("name", AddpersonData.name);
+    formData.append("surname", AddpersonData.surname);
+    formData.append("birthday", AddpersonData.birthDate);
+    formData.append("gender", AddpersonData.gender);
+    formData.append("nationality", AddpersonData.nationality);
+    formData.append('type' , AddpersonData.roomType);
+    formData.append('title' , RadioValue.title);
+    formData.append('price' , RadioValue.price);
+    formData.append('additional_order' , RadioValue.order);
+    formData.append('total' , 100);
+
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "addperson",
+      });
+      showSuccessToast(response?.Message);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleAddPersong = () => {
-    alert("Person added");
+    FetchAddperson()
     setTimeout(() => {
       closeModal();
     }, 2000);
@@ -776,6 +829,25 @@ const CustomerDetaTable = () => {
                     </label>
                   </div>
                 </div>
+                <div className="col-md-6">
+                  <div className="form-input spacing">
+                    <select
+                      name="roomType"
+                      value={AddpersonData.roomType}
+                      onChange={handleInputChange}
+                      required
+                      className="form-control"
+                    >
+                      <option value="">{translate("Select Type")}</option>
+                      <option value="Adult">{translate("Adult")}</option>
+                      <option value="Child">{translate("Child")}</option>
+                      <option value="Baby">{translate("Baby")}</option>
+                    </select>
+                    <label className="lh-1 text-16 text-light-1">
+                      {AddpersonData.roomType}
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div className="my-3 border_b px-md-40">
@@ -784,95 +856,46 @@ const CustomerDetaTable = () => {
                 </h5>
 
                 <div>
-                  <div className="d-flex items-center justify-between radio_hight">
-                    <div className="d-flex items-center">
-                      <div className="form-radio d-flex items-center">
-                        <label className="radio d-flex items-center">
-                          <input
-                            type="radio"
-                            name="roomType"
-                            value="f-1-bed-4"
-                            checked={AddpersonData.roomType === "f-1-bed-4"}
-                            onChange={handleRadioChange}
-                          />
-                          <span className="radio__mark">
-                            <span className="radio__icon"></span>
-                          </span>
-                          <span className="ml-10">4 Bettzimmer (Standard)</span>{" "}
-                          {/* Label inside */}
-                        </label>
+                  {AdditionalService?.map((option, idx) => (
+                    <div
+                      key={option.id}
+                      className="d-flex items-center justify-between radio_hight"
+                    >
+                      <div className="d-flex items-center">
+                        <div className="form-radio d-flex items-center">
+                          <label className="radio d-flex items-center">
+                            <input
+                              type="radio"
+                              name={`radioGroup-${idx}`} // Group radio by idx for unique selection within the same service
+                              value={`${idx}-ad-${option.id}-${option.title}`} // Unique value for the radio
+                              // Check if the current option matches the stored value in RadioValue
+                              checked={
+                                RadioValue.selectedValue ===
+                                `${idx}-ad-${option.id}-${option.title}`
+                              }
+                              onChange={(e) =>
+                                handleRadioChange(
+                                  e,
+                                  idx,
+                                  option.price,
+                                  option.additinoal_order,
+                                  option.title,
+                                  option.id
+                                )
+                              }
+                            />
+                            <span className="radio__mark">
+                              <span className="radio__icon"></span>
+                            </span>
+                            <span className="text-14 lh-1 ml-10">
+                              {option.title}
+                            </span>
+                          </label>
+                        </div>
                       </div>
+                      <div className="text-14">+ {option.price}</div>
                     </div>
-                    <div className="text-14">0,00 €</div>
-                  </div>
-
-                  <div className="d-flex items-center justify-between radio_hight">
-                    <div className="d-flex items-center">
-                      <div className="form-radio d-flex items-center">
-                        <label className="radio d-flex items-center">
-                          <input
-                            type="radio"
-                            name="roomType"
-                            value="f-1-bed-3"
-                            checked={AddpersonData.roomType === "f-1-bed-3"}
-                            onChange={handleRadioChange}
-                          />
-                          <span className="radio__mark">
-                            <span className="radio__icon"></span>
-                          </span>
-                          <span className="ml-10">3 Bettzimmer</span>{" "}
-                          {/* Label inside */}
-                        </label>
-                      </div>
-                    </div>
-                    <div className="text-14">0,00 €</div>
-                  </div>
-
-                  <div className="d-flex items-center justify-between radio_hight">
-                    <div className="d-flex items-center">
-                      <div className="form-radio d-flex items-center">
-                        <label className="radio d-flex items-center">
-                          <input
-                            type="radio"
-                            name="roomType"
-                            value="f-1-bed-2"
-                            checked={AddpersonData.roomType === "f-1-bed-2"}
-                            onChange={handleRadioChange}
-                          />
-                          <span className="radio__mark">
-                            <span className="radio__icon"></span>
-                          </span>
-                          <span className="ml-10">2 Bettzimmer</span>{" "}
-                          {/* Label inside */}
-                        </label>
-                      </div>
-                    </div>
-                    <div className="text-14">0,00 €</div>
-                  </div>
-
-                  <div className="d-flex items-center justify-between radio_hight">
-                    <div className="d-flex items-center">
-                      <div className="form-radio d-flex items-center">
-                        <label className="radio d-flex items-center">
-                          <input
-                            type="radio"
-                            name="roomType"
-                            value="f-1-bed-1"
-                            checked={AddpersonData.roomType === "f-1-bed-1"}
-                            onChange={handleRadioChange}
-                          />
-                          <span className="radio__mark">
-                            <span className="radio__icon"></span>
-                          </span>
-                          <span className="ml-10">1 Bettzimmer</span>{" "}
-                          {/* Label inside */}
-                        </label>
-                      </div>
-                    </div>
-                    <div className="text-14">0,00 €</div>
-                  </div>
-
-                  {/* Repeat for other room options */}
+                  ))}
                 </div>
               </div>
 
