@@ -20,8 +20,6 @@ export default function RoadMap2({ PAckageData }) {
     ...roadmapData2[index] // Merge the objects from both arrays
   }));
 
-  
-
 
   return (
     <div className="roadmap roadMap2">
