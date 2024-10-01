@@ -1,3 +1,4 @@
+import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
 
 const sections = [
@@ -24,6 +25,7 @@ const sections = [
 ];
 
 export default function FooterLinks() {
+  const { translate } = useTranslation();
   return (
     <>
       {sections.map((elm, i) => (

@@ -5,9 +5,11 @@ import { FaPhoneFlip } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import Socials from "../components/Socials";
-import Image from "next/image";
+import Image from "next/image"; 
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function FooterTwo() {
+  const { translate } = useTranslation();
   return (
     <footer className="footer -type-1 -dark bg-info-2 text-white">
       <div className="footer__main">
@@ -54,7 +56,7 @@ export default function FooterTwo() {
           <div className="footer__content">
             <div className="row y-gap-40 justify-between">
               <div className="col-lg-4 col-md-6">
-                <h4 className="text-20 fw-500">Contact</h4>
+                <h4 className="text-20 fw-500">{translate("Contact")}</h4>
 
                 <div className="y-gap-10 mt-20">
                   
