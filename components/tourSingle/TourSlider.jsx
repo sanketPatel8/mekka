@@ -30,7 +30,7 @@ export default function TourSlider({ PAckageData }) {
       <div className="container">
         <div className="row">
           <div className="col-auto">
-            {slibleTourSlider.length !== 0 && slibleTourSlider && (
+            {slibleTourSlider?.length !== 0 && slibleTourSlider && (
               <h2 className="text-30"> {translate("You might also like...")}</h2>
             )}
           </div>

@@ -41,12 +41,12 @@ export const sidebarItemsAgentDB = [
 ];
 
 export const sidebarItemsCustomerDB = [
-  // {
-  //   id: 1,
-  //   href: "/db-main/customer",
-  //   iconClass: "icon-dashboard text-26",
-  //   label: "Dashboard",
-  // },
+  {
+    id: 1,
+    href: "/",
+    iconClass: "icon-home text-26",
+    label: "Go To Home",
+  },
   {
     id: 2,
     href: "/customer/booking",

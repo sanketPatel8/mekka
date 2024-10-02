@@ -113,7 +113,6 @@ export default function TourSingleSidebar({
       url: "gettourhoteldata ",
     });
 
-  
     if (response) {
       setHotelData(response.hotel_data);
     }
@@ -178,7 +177,6 @@ export default function TourSingleSidebar({
         madinaId: selectedHotel.hotel_id,
       }));
       setmadinaId(selectedHotel.hotel_id);
-  
 
       setselectedMadinaHotelPrice(madinaPrice);
       fetchHotelData();
@@ -186,14 +184,12 @@ export default function TourSingleSidebar({
   };
 
   const handleHotelChange = (e, elm) => {
-   
     const selectedFlight = {
       id: elm.id,
       name: elm.airline_name,
       price: elm.flight_amount,
       luggage: elm.luggage,
     };
-    
 
     setSelectedFlights(selectedFlight); // Replace with the selected flight object
     setSelectedAirlinePrice(selectedFlight.price);
@@ -440,7 +436,7 @@ export default function TourSingleSidebar({
 
   // handle booking
 
-  const router = useRouter();  
+  const router = useRouter();
 
   const SelectedAllPrice =
     JSON.parse(total) +
@@ -461,8 +457,7 @@ export default function TourSingleSidebar({
         : 0
     );
 
-    console.log("SelectedAllPrice" , SelectedAllPrice); 
-    
+  console.log("SelectedAllPrice", SelectedAllPrice);
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
@@ -481,8 +476,6 @@ export default function TourSingleSidebar({
           : selectDeparture.price
         : 0
     );
-
-
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
@@ -505,8 +498,6 @@ export default function TourSingleSidebar({
     endDate: SidebarData?.tour_details?.date_end,
     selectedCheckbox: selectedCheckbox,
   };
-
- 
 
   const handleBooking = () => {
     if (typeof window !== "undefined") {
@@ -534,9 +525,8 @@ export default function TourSingleSidebar({
       selectedCheckbox === false &&
       SidebarData?.tour_details?.flight_included !== "0"
     ) {
-      showErrorToast("Please Fill Departure");
+      showErrorToast("Please Select Departure");
       return;
-
     } else {
       router.push(
         `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
@@ -568,308 +558,383 @@ export default function TourSingleSidebar({
     }
   };
 
+  const totalSelected = adultNumber + youthNumber + childrenNumber;
+
+
   return (
     <>
-    <div className="tourSingleSidebar">
-      <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
+      <div className="tourSingleSidebar">
+        <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
 
-      {SidebarData?.tour_price?.map((group, index) => {
-        let count, typeLabel;
+        {totalSelected > SidebarData?.tour_details?.capacity_empty && (
+          <div className="error-message text-red-500">
+            {translate("Selected passengers exceed available seats")}
+          </div>
+        )}
 
-        if (group.price_type === "1") {
-          count = adultNumber;
-          typeLabel = "Adult";
-        } else if (group.price_type === "2") {
-          count = youthNumber;
-          typeLabel = "Child";
-        } else if (group.price_type === "3") {
-          count = childrenNumber;
-          typeLabel = "Baby";
-        } else {
-          return null;
-        }
+        {SidebarData?.tour_price?.map((group, index) => {
+          let count, typeLabel;
 
-        return (
-          <div key={index} className="mt-15">
-            <div className="d-flex items-center justify-between">
-              <div className="text-14 col-8">
-                {group.price_type === "1"
-                  ? "Adult (18+ Years)"
-                  : group.price_type === "2"
-                  ? "Child (13-17 Years)"
-                  : "Baby (0-12 Years)"}
-                <span className="fw-500">
-                  {""} {formatPrice((group.price * count).toFixed(2))}
-                </span>
-              </div>
+          if (group.price_type === "1") {
+            count = adultNumber;
+            typeLabel = "Adult";
+          } else if (group.price_type === "2") {
+            count = youthNumber;
+            typeLabel = "Child";
+          } else if (group.price_type === "3") {
+            count = childrenNumber;
+            typeLabel = "Baby";
+          } else {
+            return null;
+          }
 
-              <div className="d-flex items-center js-counter col-3">
-                <button
-                  onClick={() => handleDecrement(group.price_type)}
-                  className="button size-30 border-1 rounded-full js-down col-2"
-                >
-                  <i className="icon-minus text-10 col-3"></i>
-                </button>
-
-                <div className="flex-center ml-10 mr-10 col-2">
-                  <div className="text-14 size-20 js-count">{count}</div>
+          return (
+            <div key={index} className="mt-15">
+              <div className="d-flex items-center justify-between">
+                <div className="text-14 col-8">
+                  {group.price_type === "1"
+                    ? "Adult (18+ Years)"
+                    : group.price_type === "2"
+                    ? "Child (13-17 Years)"
+                    : "Baby (0-12 Years)"}
+                  <span className="fw-500">
+                    {""} {formatPrice((group.price * count).toFixed(2))}
+                  </span>
                 </div>
 
-                <button
-                  onClick={() => handleIncrement(group.price_type)}
-                  className="button size-30 border-1 rounded-full js-up"
-                >
-                  <i className="icon-plus text-10"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+                <div className="d-flex items-center js-counter col-3">
+                  <button
+                    onClick={() => handleDecrement(group.price_type)}
+                    className="button size-30 border-1 rounded-full js-down col-2"
+                  >
+                    <i className="icon-minus text-10 col-3"></i>
+                  </button>
 
-      <hr />
+                  <div className="flex-center ml-10 mr-10 col-2">
+                    <div className="text-14 size-20 js-count">{count}</div>
+                  </div>
 
-      <div>
-        <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Mekka")}
-        </h5>
-        {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
-          <div key={ind}>
-            <div className="d-flex items-center justify-between my-1">
-              <div className="d-flex items-center">
-                <div className="form-radio d-flex items-center">
-                  <label className="radio d-flex items-center">
-                    <input
-                      type="radio"
-                      name="mekka"
-                      value={JSON.stringify({
-                        hotel_name: elm.hotel_name,
-                        hotel_id: elm.id,
-                      })}
-                      checked={
-                        HotelSelect.mekka &&
-                        JSON.parse(HotelSelect.mekka).hotel_name ===
-                          elm.hotel_name
-                      }
-                      onChange={handleRadioChange}
-                      required
-                    />
-                    <span className="radio__mark">
-                      <span className="radio__icon"></span>
-                    </span>
-                    <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name != null ? elm.hotel_name : "not found"} (
-                      {elm.hotel_stars} star)
-                    </span>
-                  </label>
+                  <button
+                    onClick={() => handleIncrement(group.price_type)}
+                    className="button size-30 border-1 rounded-full js-up"
+                    disabled={
+                      totalSelected >= SidebarData?.tour_details?.capacity_empty
+                    } // Disable if limit exceeded
+                  >
+                    <i className="icon-plus text-10"></i>
+                  </button>
                 </div>
               </div>
-              <div className="text-14">{formatPrice(elm.hotel_price)}</div>
             </div>
-          </div>
-        ))}
+          );
+        })}
+
+        {/* {SidebarData?.tour_price?.map((group, index) => {
+          let count, typeLabel;
+
+          if (group.price_type === "1") {
+            count = adultNumber;
+            typeLabel = "Adult";
+          } else if (group.price_type === "2") {
+            count = youthNumber;
+            typeLabel = "Child";
+          } else if (group.price_type === "3") {
+            count = childrenNumber;
+            typeLabel = "Baby";
+          } else {
+            return null;
+          }
+
+          return (
+            <div key={index} className="mt-15">
+              <div className="d-flex items-center justify-between">
+                <div className="text-14 col-8">
+                  {group.price_type === "1"
+                    ? "Adult (18+ Years)"
+                    : group.price_type === "2"
+                    ? "Child (13-17 Years)"
+                    : "Baby (0-12 Years)"}
+                  <span className="fw-500">
+                    {""} {formatPrice((group.price * count).toFixed(2))}
+                  </span>
+                </div>
+
+                <div className="d-flex items-center js-counter col-3">
+                  <button
+                    onClick={() => handleDecrement(group.price_type)}
+                    className="button size-30 border-1 rounded-full js-down col-2"
+                  >
+                    <i className="icon-minus text-10 col-3"></i>
+                  </button>
+
+                  <div className="flex-center ml-10 mr-10 col-2">
+                    <div className="text-14 size-20 js-count">{count}</div>
+                  </div>
+
+                  <button
+                    onClick={() => handleIncrement(group.price_type)}
+                    className="button size-30 border-1 rounded-full js-up"
+                  >
+                    <i className="icon-plus text-10"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })} */}
 
         <hr />
 
-        <h5 className="text-18 fw-500 mb-20 mt-20">
-          {translate("Hotel For Madina")}
-        </h5>
-
-        {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
-          <div key={elm.id}>
-            <div className="d-flex items-center justify-between my-1">
-              <div className="d-flex items-center">
-                <div className="form-radio d-flex items-center">
-                  <label className="radio d-flex items-center">
-                    <input
-                      type="radio"
-                      name="madina"
-                      value={JSON.stringify({
-                        hotel_name: elm.hotel_name,
-                        hotel_id: elm.id,
-                      })}
-                      checked={
-                        HotelSelect.madina &&
-                        JSON.parse(HotelSelect.madina).hotel_name ===
-                          elm.hotel_name
-                      }
-                      onChange={handleRadioChange}
-                    />
-                    <span className="radio__mark">
-                      <span className="radio__icon"></span>
-                    </span>
-                    <span className="text-14 lh-1 ml-10">
-                      {elm.hotel_name != null ? elm.hotel_name : "not found"} (
-                      {elm.hotel_stars} star)
-                    </span>
-                  </label>
-                </div>
-              </div>
-              <div className="text-14">{formatPrice(elm.hotel_price)}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div
-        className={`${
-          SidebarData?.tour_details?.flight_included == "0"
-            ? "d-none"
-            : "d-block"
-        }`}
-      >
-        <div
-          className={`${
-            SidebarData?.tour_details?.flight_exclude == "0"
-              ? "d-none"
-              : "d-block"
-          }`}
-        >
+        <div>
           <h5 className="text-18 fw-500 mb-20 mt-20">
-            {translate("Flight Booking")}
+            {translate("Hotel For Mekka")}
           </h5>
-          <div className="d-flex items-center justify-between pt-1">
-            <div className="d-flex items-center justify-between">
-              <div className="row ">
-                <div className="col-12">
-                  <div className="d-flex items-center pointer-check">
-                    <div className="form-checkbox">
-                      <input
-                        type="checkbox"
-                        id="item4"
-                        name="item4"
-                        checked={selectedCheckbox}
-                        onChange={handleExcludeFlight}
-                      />
-                      <label
-                        htmlFor="item4"
-                        className="form-checkbox__mark ml-0"
-                      >
-                        <div className="form-checkbox__icon">
-                          <svg
-                            width="10"
-                            height="8"
-                            viewBox="0 0 10 8"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                              fill="white"
-                            />
-                          </svg>
-                        </div>
-                      </label>
-                    </div>
-                    <label htmlFor="item4" className="lh-16 ml-15">
-                      Exclude
-                      {translate(" Flight Booking")}
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr />
-        </div>
-
-        <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
-          <div>
-            <h5 className="text-18 fw-500 mb-20 mt-20">
-              {translate("Select Flight")}
-            </h5>
-            {SidebarData?.tour_details?.airlines?.map((elm, i) => (
-              <div className="d-flex items-center justify-between my-1" key={i}>
+          {SidebarData?.tour_hotels?.mekka_hotels?.map((elm, ind) => (
+            <div key={ind}>
+              <div className="d-flex items-center justify-between my-1">
                 <div className="d-flex items-center">
                   <div className="form-radio d-flex items-center">
                     <label className="radio d-flex items-center">
                       <input
                         type="radio"
-                        name={`${elm.id} ( No Stop )`}
-                        value={elm.id}
-                        checked={selectedFlights?.id === elm.id} // Check if the flight is selected
-                        onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
+                        name="mekka"
+                        value={JSON.stringify({
+                          hotel_name: elm.hotel_name,
+                          hotel_id: elm.id,
+                        })}
+                        checked={
+                          HotelSelect.mekka &&
+                          JSON.parse(HotelSelect.mekka).hotel_name ===
+                            elm.hotel_name
+                        }
+                        onChange={handleRadioChange}
+                        required
                       />
                       <span className="radio__mark">
                         <span className="radio__icon"></span>
                       </span>
                       <span className="text-14 lh-1 ml-10">
-                        {elm.airline_name != null
-                          ? elm.airline_name
-                          : "not found"}{" "}
-                        ( {elm.no_of_stop} Stop )
+                        {elm.hotel_name != null ? elm.hotel_name : "not found"}{" "}
+                        ({elm.hotel_stars} star)
                       </span>
                     </label>
                   </div>
                 </div>
-
-                <div className="text-14">{formatPrice(elm?.flight_amount)}</div>
+                <div className="text-14">{formatPrice(elm.hotel_price)}</div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
 
           <hr />
 
-          <div className="searchForm -type-1 -sidebar mt-20">
-            <div className="searchForm__form">
-              <div className="searchFormItem js-select-control js-form-dd">
-                {/* Dropdown Button */}
-                <div
-                  className="searchFormItem__button"
-                  onClick={() => setActiveTimeDD((pre) => !pre)}
-                  data-x-click="time"
-                >
-                  <div className="searchFormItem__content">
-                    <h5>Departure</h5>
-                    <div className={`js-select-control-chosen `}>
-                      {selectDeparture?.name
-                        ? selectDeparture?.name
-                        : "Departure"}
-                    </div>
-                  </div>
-                  <div className="searchFormItem__icon_chevron">
-                    <i className="icon-chevron-down d-flex text-18"></i>
+          <h5 className="text-18 fw-500 mb-20 mt-20">
+            {translate("Hotel For Madina")}
+          </h5>
+
+          {SidebarData?.tour_hotels?.medina_hotels?.map((elm) => (
+            <div key={elm.id}>
+              <div className="d-flex items-center justify-between my-1">
+                <div className="d-flex items-center">
+                  <div className="form-radio d-flex items-center">
+                    <label className="radio d-flex items-center">
+                      <input
+                        type="radio"
+                        name="madina"
+                        value={JSON.stringify({
+                          hotel_name: elm.hotel_name,
+                          hotel_id: elm.id,
+                        })}
+                        checked={
+                          HotelSelect.madina &&
+                          JSON.parse(HotelSelect.madina).hotel_name ===
+                            elm.hotel_name
+                        }
+                        onChange={handleRadioChange}
+                      />
+                      <span className="radio__mark">
+                        <span className="radio__icon"></span>
+                      </span>
+                      <span className="text-14 lh-1 ml-10">
+                        {elm.hotel_name != null ? elm.hotel_name : "not found"}{" "}
+                        ({elm.hotel_stars} star)
+                      </span>
+                    </label>
                   </div>
                 </div>
+                <div className="text-14">{formatPrice(elm.hotel_price)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-                {/* Dropdown List */}
-                <div
-                  className={`searchFormItemDropdown -tour-type ${
-                    activeTimeDD ? "is-active" : ""
-                  }`}
-                  data-x="time"
-                  data-x-toggle="is-active"
-                >
-                  <div className="searchFormItemDropdown__container">
-                    <div className="searchFormItemDropdown__list sroll-bar-1">
-                      {SidebarData?.tour_details?.departures?.map((elm, i) => (
-                        <div
-                          key={i}
-                          onClick={() => {
-                            // Handle selection of departure
-                            setselectDeparture((pre) =>
-                              pre?.name === elm.departure
-                                ? {}
-                                : {
-                                    name: elm.departure,
-                                    value: elm.id,
-                                    price: elm.price,
-                                  }
-                            );
-                            setActiveTimeDD(false); // Close dropdown after selection
-                          }}
-                          className="searchFormItemDropdown__item"
+        <div
+          className={`${
+            SidebarData?.tour_details?.flight_included == "0"
+              ? "d-none"
+              : "d-block"
+          }`}
+        >
+          <div
+            className={`${
+              SidebarData?.tour_details?.flight_exclude == "0"
+                ? "d-none"
+                : "d-block"
+            }`}
+          >
+            <h5 className="text-18 fw-500 mb-20 mt-20">
+              {translate("Flight Booking")}
+            </h5>
+            <div className="d-flex items-center justify-between pt-1">
+              <div className="d-flex items-center justify-between">
+                <div className="row ">
+                  <div className="col-12">
+                    <div className="d-flex items-center pointer-check">
+                      <div className="form-checkbox">
+                        <input
+                          type="checkbox"
+                          id="item4"
+                          name="item4"
+                          checked={selectedCheckbox}
+                          onChange={handleExcludeFlight}
+                        />
+                        <label
+                          htmlFor="item4"
+                          className="form-checkbox__mark ml-0"
                         >
-                          <button className="js-select-control-button">
-                            <span className="js-select-control-choice">
-                              {elm.departure == "" && elm.departure == undefined
-                                ? "No Departure"
-                                : elm.departure}
-                            </span>
-                            <span>{formatPrice(elm.price)}</span>
-                          </button>
-                        </div>
-                      ))}
+                          <div className="form-checkbox__icon">
+                            <svg
+                              width="10"
+                              height="8"
+                              viewBox="0 0 10 8"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                fill="white"
+                              />
+                            </svg>
+                          </div>
+                        </label>
+                      </div>
+                      <label htmlFor="item4" className="lh-16 ml-15">
+                        Exclude
+                        {translate(" Flight Booking")}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </div>
+
+          <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
+            <div>
+              <h5 className="text-18 fw-500 mb-20 mt-20">
+                {translate("Select Flight")}
+              </h5>
+              {SidebarData?.tour_details?.airlines?.map((elm, i) => (
+                <div
+                  className="d-flex items-center justify-between my-1"
+                  key={i}
+                >
+                  <div className="d-flex items-center">
+                    <div className="form-radio d-flex items-center">
+                      <label className="radio d-flex items-center">
+                        <input
+                          type="radio"
+                          name={`${elm.id} ( No Stop )`}
+                          value={elm.id}
+                          checked={selectedFlights?.id === elm.id} // Check if the flight is selected
+                          onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
+                        />
+                        <span className="radio__mark">
+                          <span className="radio__icon"></span>
+                        </span>
+                        <span className="text-14 lh-1 ml-10">
+                          {elm.airline_name != null
+                            ? elm.airline_name
+                            : "not found"}{" "}
+                          ( {elm.no_of_stop} Stop )
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="text-14">
+                    {formatPrice(elm?.flight_amount)}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <hr />
+
+            <div className="searchForm -type-1 -sidebar mt-20">
+              <div className="searchForm__form">
+                <div className="searchFormItem js-select-control js-form-dd">
+                  {/* Dropdown Button */}
+                  <div
+                    className="searchFormItem__button"
+                    onClick={() => setActiveTimeDD((pre) => !pre)}
+                    data-x-click="time"
+                  >
+                    <div className="searchFormItem__content">
+                      <h5>Departure</h5>
+                      <div className={`js-select-control-chosen `}>
+                        {selectDeparture?.name
+                          ? selectDeparture?.name
+                          : "Departure"}
+                      </div>
+                    </div>
+                    <div className="searchFormItem__icon_chevron">
+                      <i className="icon-chevron-down d-flex text-18"></i>
+                    </div>
+                  </div>
+
+                  {/* Dropdown List */}
+                  <div
+                    className={`searchFormItemDropdown -tour-type ${
+                      activeTimeDD ? "is-active" : ""
+                    }`}
+                    data-x="time"
+                    data-x-toggle="is-active"
+                  >
+                    <div className="searchFormItemDropdown__container">
+                      <div className="searchFormItemDropdown__list sroll-bar-1">
+                        {SidebarData?.tour_details?.departures?.map(
+                          (elm, i) => (
+                            <div
+                              key={i}
+                              onClick={() => {
+                                // Handle selection of departure
+                                setselectDeparture((pre) =>
+                                  pre?.name === elm.departure
+                                    ? {}
+                                    : {
+                                        name: elm.departure,
+                                        value: elm.id,
+                                        price: elm.price,
+                                      }
+                                );
+                                setActiveTimeDD(false); // Close dropdown after selection
+                              }}
+                              className="searchFormItemDropdown__item"
+                            >
+                              <button className="js-select-control-button">
+                                <span className="js-select-control-choice">
+                                  {elm.departure == "" &&
+                                  elm.departure == undefined
+                                    ? "No Departure"
+                                    : elm.departure}
+                                </span>
+                                <span>{formatPrice(elm.price)}</span>
+                              </button>
+                            </div>
+                          )
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -877,24 +942,34 @@ export default function TourSingleSidebar({
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="d-flex items-center justify-between pt-1">
-        <div className="text-18 fw-500">Total:</div>
-        <div>
-          <div className="text-18 fw-500">{formatPrice(SelectedAllPrice)}</div>
+        <div className="d-flex items-center justify-between pt-1">
+          <div className="text-18 fw-500">Total:</div>
+          <div>
+            <div className="text-18 fw-500">
+              {formatPrice(SelectedAllPrice)}
+            </div>
+          </div>
         </div>
-      </div>
 
-      <button
-        className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"
-        type="submit"
-        onClick={handleBooking}
-      >
-        {translate("Book Now")}
-      </button>
-    </div>
+        {SidebarData?.tour_details?.capacity_empty > 0 ? (
+          <button
+            className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"
+            type="submit"
+            onClick={handleBooking}
+          >
+            {translate("Book Now")}
+          </button>
+        ) : (
+          <button
+            className="button -md -info-2 col-12 bg-accent-1 text-white mt-20"
+            type="button"
+            disabled
+          >
+            {translate("No Seat Available")}
+          </button>
+        )}
+      </div>
     </>
-    
   );
 }

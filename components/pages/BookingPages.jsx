@@ -78,6 +78,8 @@ export default function BookingPages({ BookingData }) {
   const [AdditionalServices, setAdditionalServices] = useState([]);
   const [existingItemsState, setExistingItemsState] = useState([]);
   const [Discount, setDiscount] = useState({});
+  const [HandlePromo, setHandlePromo] = useState(false);
+  const [ShowbtnName, setShowbtnName] = useState(false);
 
   const [PackagePrices, setPackagePrices] = useState(0);
   const [BookingApiData, setBookingApiData] = useState({});
@@ -432,6 +434,10 @@ export default function BookingPages({ BookingData }) {
       return [...updatedAdditional, newItem];
     });
 
+   if(HandlePromo == true){
+    handlePromoremove()
+   }
+
     getPriceForadditional(type, i);
   };
 
@@ -505,8 +511,7 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-  const [HandlePromo, setHandlePromo] = useState(false);
-  const [ShowbtnName, setShowbtnName] = useState(false);
+
 
   const adultadiPrices = foundPrices
     ?.map((price) => Number(price))
@@ -1279,7 +1284,7 @@ export default function BookingPages({ BookingData }) {
                     <div className={discountClass}>
                       <div className={`d-flex items-center justify-between `}>
                         <div className="fw-500">{translate("Discount")}</div>
-                        <div className=""> - {Discount.Discount} € </div>
+                        <div className=""> - {formatPrice(Discount.Discount)}  </div>
                       </div>
                     </div>
 
@@ -1293,8 +1298,6 @@ export default function BookingPages({ BookingData }) {
                       <div className=""> {formatPrice(TotalPaidAmount)} </div>
                     </div>
                   </div>
-
-                  {/* <p className="text-right">Including Tax</p> */}
 
                   <hr />
 

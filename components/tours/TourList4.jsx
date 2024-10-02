@@ -274,7 +274,7 @@ export default function TourList4({
                         <div className="d-flex items-center mt-5">
                           <div className="d-flex items-center x-gap-5">
                             {/* <Stars star={elm?.rating_count} font={12} /> */}
-                            <PiBuildingApartmentFill   color="#dabf4f" className="" size={20} />
+                            <PiBuildingApartmentFill   color="#dabf4f" className="" size={25} />
                           </div>
                           <div className="text-14 ml-10">
                             {/* <span className="fw-500">{elm?.rating}</span> ( */}

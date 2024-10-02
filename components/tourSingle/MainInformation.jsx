@@ -28,7 +28,7 @@ export default function MainInformation({ PAckageData }) {
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const name = searchParams.get("name")
+  const name = searchParams.get("name");
 
   const customStyles = {
     overlay: {
@@ -48,7 +48,8 @@ export default function MainInformation({ PAckageData }) {
       height: "40vh",
       overflowY: "auto",
       backgroundColor: "#fff",
-      overflowX : "hidden"    },
+      overflowX: "hidden",
+    },
   };
 
   // Define the URL you want to share
@@ -84,18 +85,16 @@ export default function MainInformation({ PAckageData }) {
     <>
       <div className="row y-gap-20 justify-between items-end">
         <div className="col-auto">
-        
-
           <h2 className="text-40 sm:text-30 lh-14 mt-20">
             {InformationData?.Tour_Details?.tour_details?.type} -{" "}
             {InformationData?.Tour_Details?.tour_details?.name}
           </h2>
 
           <div className="row x-gap-20 y-gap-20 items-center pt-20">
-            <div className="col-auto">
+            <div className="col-auto mr-10 px-0">
               <div className="d-flex items-center">
                 <div className="d-flex items-center x-gap-5 mx-2">
-                  <PiBuildingApartmentFill  star={ratingCountStr} font={12} />
+                <PiBuildingApartmentFill   color="#dabf4f" className="" size={25} />
                 </div>
                 {/* {InformationData?.Tour_Details?.tour_details?.rating} (
                 {InformationData?.Tour_Details?.tour_details?.rating_count}) -{" "} */}
@@ -126,7 +125,16 @@ export default function MainInformation({ PAckageData }) {
                 {
                   InformationData?.Tour_Details?.tour_details?.capacity_empty
                 }{" "}
-                Places Still Available
+                {InformationData?.Tour_Details?.tour_details?.capacity_empty ==
+                0
+                  ? "No seat available"
+                  : InformationData?.Tour_Details?.tour_details
+                      ?.capacity_empty == 1
+                  ? "Seat available"
+                  : InformationData?.Tour_Details?.tour_details
+                      ?.capacity_empty > 1
+                  ? "Seats available"
+                  : null}
               </div>
             </div>
           </div>
@@ -158,7 +166,7 @@ export default function MainInformation({ PAckageData }) {
             </div>
 
             <div className="share-buttons  gap-4 mt-4 row">
-              <div className="row col-8" style={{justifyContent : "center"}} >
+              <div className="row col-8" style={{ justifyContent: "center" }}>
                 <FacebookShareButton
                   url={shareUrl}
                   className="flex items-center justify-center rounded-full bg-blue-600 p-2 col-2"
