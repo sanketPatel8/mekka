@@ -426,11 +426,17 @@ export default function TourSingleSidebar({
     updatePriceObject();
   }, [SidebarData, adultNumber, youthNumber, childrenNumber]);
 
+  // Extract prices and labels into an object
+  const priceObjectwithlab = SidebarData?.tour_price?.reduce((acc, item) => {
+    acc[item.price_type ] = item.price;
+    return acc;
+  }, {});
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("AdultPrice&count", JSON.stringify(priceObject));
       localStorage.setItem("previousAdults", JSON.stringify(PrevAdultSelect));
-      localStorage.get;
+      localStorage.setItem("priceObjectwithlab", JSON.stringify(priceObjectwithlab));
     }
   }, [priceObject]);
 

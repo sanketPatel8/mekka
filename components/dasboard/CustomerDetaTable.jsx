@@ -264,6 +264,7 @@ const CustomerDetaTable = () => {
 
   const [personId, setPersonId] = useState(0);
   const [AdditionalService, setAdditionalService] = useState([]);
+  const [AdultPrice, setAdultPrice] = useState({})
 
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
@@ -399,11 +400,20 @@ const CustomerDetaTable = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const additional = localStorage.getItem("additionalfordashboard");
+      const AdultsPrice = localStorage.getItem("priceObjectwithlab");
 
       if (additional && additional !== "undefined") {
         try {
           const copyadditional = JSON.parse(additional);
           setAdditionalService(copyadditional);
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+      }
+      if(AdultsPrice && AdultsPrice !== 'undefined'){
+        try {
+          const addiPrice = JSON.parse(AdultsPrice);
+          setAdultPrice(addiPrice)
         } catch (error) {
           console.error("Error parsing userData:", error);
         }
@@ -620,6 +630,7 @@ const CustomerDetaTable = () => {
   // for pending payment
 
   // Function to handle input changes
+
   const handlePaymentPending = (e) => {
     const { name, value } = e.target;
     setPendingPaymentValue((prevValues) => ({
@@ -627,8 +638,6 @@ const CustomerDetaTable = () => {
       [name]: value,
     }));
   };
-
-  console.log("pendingPaymentValue" , pendingPaymentValue);
   
 
   return (

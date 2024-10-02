@@ -93,6 +93,10 @@ export default function BookingPages({ BookingData }) {
 
   const [LoginCheck, setLoginCheck] = useState();
 
+  console.log("adultData" , adultData);
+  console.log("Childrendata" , Childrendata);
+  console.log("babyData" , babyData);
+
   useEffect(() => {
     // Set modal's app element
     Modal.setAppElement("#openSignIn");
@@ -994,7 +998,7 @@ export default function BookingPages({ BookingData }) {
       baby: JSON.stringify(formValues.Baby),
     }),
     departure: JSON.parse(
-      BookingSideBar?.Departure?.value === undefined  
+      BookingSideBar?.Departure?.value === undefined
         ? 0
         : BookingSideBar?.Departure?.value
     ),
@@ -1015,7 +1019,12 @@ export default function BookingPages({ BookingData }) {
     total_person: adultData.length + Childrendata.length + babyData.length,
     // tax: JSON.parse(formattedTaxAmount),
   };
+
+  console.log("Discount" , Discount);
+  console.log("bookingData" , bookingData);
   
+  
+
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
     if (SidebarData && SidebarData !== "undefined") {
