@@ -1015,9 +1015,6 @@ export default function BookingPages({ BookingData }) {
     total_person: adultData.length + Childrendata.length + babyData.length,
     // tax: JSON.parse(formattedTaxAmount),
   };
-
-  console.log("Discount" , Discount);
-  console.log("bookingData" , bookingData);
   
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
