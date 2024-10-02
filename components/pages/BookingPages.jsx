@@ -994,7 +994,7 @@ export default function BookingPages({ BookingData }) {
       baby: JSON.stringify(formValues.Baby),
     }),
     departure: JSON.parse(
-      BookingSideBar?.Departure?.value === undefined
+      BookingSideBar?.Departure?.value === undefined  
         ? 0
         : BookingSideBar?.Departure?.value
     ),

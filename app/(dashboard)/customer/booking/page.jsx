@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
+import { PiBuildingApartmentFill } from "react-icons/pi";
 
 const tabs = ["Approved", "Pending", "Cancelled"];
 
@@ -199,20 +200,25 @@ export default function DbBooking() {
                         {elm?.tour_details?.type}
                       </p>
 
-                      <div className="d-flex items-center mt-5">
-                        <div className="d-flex items-center x-gap-5">
-                          <Stars
+                      {elm?.tour_details?.company_code !== null || elm?.tour_details?.company_code !== " " && (
+                        <div className="d-flex items-center mt-5">
+                          <div className="d-flex items-center x-gap-5">
+                            {/* <Stars
                             star={elm?.tour_details?.rating_count}
                             font={12}
-                          />
-                        </div>
+                          /> */}
+                            <PiBuildingApartmentFill
+                              color="#dabf4f"
+                              className=""
+                              size={25}
+                            />
+                          </div>
 
-                        <div className="text-14 ml-10">
-                          <span className="fw-500">{elm.rating}</span> (
-                          {elm?.tour_details?.rating_count}) - {" "}
-                          {elm?.tour_details?.company_code}
+                          <div className="text-14 ml-10">
+                            {elm?.tour_details?.company_code}
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       <div className="Location">
                         <span>Departure : {elm?.tour_details?.departures}</span>

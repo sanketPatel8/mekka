@@ -647,7 +647,7 @@ const CustomerDetaTable = () => {
             {translate("Booking Status")} :{" "}
             {BookingDetails?.reservation?.reservation_status}
           </p>
-          <p className="text-red t_center">Available 10 seats</p>
+          <p className="text-red t_center">Available {BookingDetails?.reservation?.capacity_empty} seats</p>
         </div>
 
         <div className="col-lg-6 flex small-flex-center">

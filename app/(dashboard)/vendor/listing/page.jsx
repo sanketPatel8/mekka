@@ -235,12 +235,12 @@ export default function DBListing() {
                                   ? "badge-orange"
                                   : elm.tour_status === "Approved"
                                   ? "badge-green"
-                                  : elm.tour_status === "Rejected"
+                                  : elm.tour_status === "Rejected" || elm.tour_status === "Cancelled"
                                   ? "badge-red"
                                   : ""
                               }
                               disabled={
-                                elm.tour_status === "Rejected" ? false : true
+                                elm.tour_status === "Rejected" || elm.tour_status === "Cancelled" ? false : true
                               }
                               onClick={(note) =>
                                 openInvoice(`${elm?.reject_note}`)
