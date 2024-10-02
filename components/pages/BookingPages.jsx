@@ -1010,7 +1010,7 @@ export default function BookingPages({ BookingData }) {
     total: JSON.parse(TotalPaidAmount), // old value :- totalSum
     amount_paid: 0, // OLD VALUE :- JSON.parse(TotalPaidAmount)
     coupon_name: Discount?.coupon_name || "",
-    coupon_amount: Discount?.total_amount || 0,
+    coupon_amount: Discount?.Discount || 0,
     coupon_percentage: Discount?.percentage || 0,
     mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
