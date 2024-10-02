@@ -511,8 +511,6 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
-
-
   const adultadiPrices = foundPrices
     ?.map((price) => Number(price))
     ?.reduce((acc, curr) => acc + curr, 0);
@@ -1008,8 +1006,8 @@ export default function BookingPages({ BookingData }) {
     total: JSON.parse(TotalPaidAmount), // old value :- totalSum
     amount_paid: 0, // OLD VALUE :- JSON.parse(TotalPaidAmount)
     coupon_name: Discount?.coupon_name || "",
-    coupon_amount: Discount?.coupon_amount || 0,
-    coupon_percentage: Discount?.coupon_percentage || 0,
+    coupon_amount: Discount?.total_amount || 0,
+    coupon_percentage: Discount?.percentage || 0,
     mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
     flight_id: selectedCheckbox !== false ? 0 : BookingSideBar.Airline?.id,
@@ -1018,6 +1016,9 @@ export default function BookingPages({ BookingData }) {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
+  console.log("Discount" , Discount);
+  console.log("bookingData" , bookingData);
+  
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
     if (SidebarData && SidebarData !== "undefined") {
