@@ -518,7 +518,7 @@ const CustomerDetaTable = () => {
     formData.append("gender", AddpersonData.gender);
     formData.append("nationality", AddpersonData.nationality);
     formData.append(
-      "type",
+      "person_type",
       AddpersonData.roomType == "1"
         ? "adult"
         : AddpersonData.roomType == "2"
