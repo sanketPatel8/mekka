@@ -264,7 +264,8 @@ const CustomerDetaTable = () => {
 
   const [personId, setPersonId] = useState(0);
   const [AdditionalService, setAdditionalService] = useState([]);
-  const [AdultPrice, setAdultPrice] = useState({})
+  const [AdultPrice, setAdultPrice] = useState({});
+  const [subtotal, setSubtotal] = useState(0);
 
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
@@ -354,7 +355,6 @@ const CustomerDetaTable = () => {
           console.warn("paymentData not found in response");
         }
 
-
         const FileDeta = [
           { name: "Document Name", selector: (row) => row.Name },
           {
@@ -410,10 +410,10 @@ const CustomerDetaTable = () => {
           console.error("Error parsing userData:", error);
         }
       }
-      if(AdultsPrice && AdultsPrice !== 'undefined'){
+      if (AdultsPrice && AdultsPrice !== "undefined") {
         try {
           const addiPrice = JSON.parse(AdultsPrice);
-          setAdultPrice(addiPrice)
+          setAdultPrice(addiPrice);
         } catch (error) {
           console.error("Error parsing userData:", error);
         }
@@ -460,9 +460,32 @@ const CustomerDetaTable = () => {
     gender: "",
     birthDate: "",
     nationality: "",
-    roomType: "",
+    roomType: "1",
   });
   const [RadioValue, setRadioValue] = useState({});
+
+  useEffect(() => {
+    // Ensure AddpersonData, AdultPrice, and RadioValue are defined before using them
+    if (AddpersonData && AddpersonData.roomType && Array.isArray(AdultPrice)) {
+      const total = AdultPrice.reduce((total, e) => {
+        // Check if the type matches the room type
+        return e.type === AddpersonData.roomType
+          ? total + parseFloat(e.price)
+          : total;
+      }, 0);
+
+      // Safely parse RadioValue.price and conditionally add to subtotal
+      const radioPrice =
+        RadioValue && RadioValue.price && !isNaN(parseFloat(RadioValue.price)) && AddpersonData.roomType !== '3'
+          ? parseFloat(RadioValue.price)
+          : 0;
+
+      setSubtotal(total + radioPrice);
+    } else {
+      setSubtotal(0); // Reset subtotal if conditions aren't met
+    }
+  }, [AdultPrice, AddpersonData, RadioValue]); // Dependency array
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -494,11 +517,18 @@ const CustomerDetaTable = () => {
     formData.append("birthday", AddpersonData.birthDate);
     formData.append("gender", AddpersonData.gender);
     formData.append("nationality", AddpersonData.nationality);
-    formData.append("type", AddpersonData.roomType);
+    formData.append(
+      "type",
+      AddpersonData.roomType == "1"
+        ? "adult"
+        : AddpersonData.roomType == "2"
+        ? "child"
+        : "baby"
+    );
     formData.append("title", RadioValue.title);
     formData.append("price", RadioValue.price);
     formData.append("additional_order", RadioValue.order);
-    formData.append("total", 100);
+    formData.append("total", subtotal);
 
     try {
       const response = await POST.request({
@@ -638,7 +668,6 @@ const CustomerDetaTable = () => {
       [name]: value,
     }));
   };
-  
 
   return (
     <div>
@@ -656,7 +685,9 @@ const CustomerDetaTable = () => {
             {translate("Booking Status")} :{" "}
             {BookingDetails?.reservation?.reservation_status}
           </p>
-          <p className="text-red t_center">Available {BookingDetails?.reservation?.capacity_empty} seats</p>
+          <p className="text-red t_center">
+            Available {BookingDetails?.reservation?.capacity_empty} seats
+          </p>
         </div>
 
         <div className="col-lg-6 flex small-flex-center">
@@ -885,69 +916,75 @@ const CustomerDetaTable = () => {
                       required
                       className="form-control"
                     >
-                      <option value="">{translate("Select Type")}</option>
-                      <option value="Adult">{translate("Adult")}</option>
-                      <option value="Child">{translate("Child")}</option>
-                      <option value="Baby">{translate("Baby")}</option>
+                      {/* <option value="">{translate("Select Type")}</option> */}
+                      <option value="1">{translate("Adult")}</option>
+                      <option value="2">{translate("Child")}</option>
+                      <option value="3">{translate("Baby")}</option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
-                      {AddpersonData.roomType}
+                      {AddpersonData.roomType == "1"
+                        ? "Adult"
+                        : AddpersonData.roomType == "2"
+                        ? "Child"
+                        : "Baby"}
                     </label>
                   </div>
                 </div>
               </div>
 
-              <div className="my-3 border_b px-md-40">
-                <h5 className="text-18 fw-500 my-2">
-                  {translate("Possible additional services per person:")}
-                </h5>
+              {AddpersonData.roomType !== "3" && (
+                <div className="my-3 border_b px-md-40">
+                  <h5 className="text-18 fw-500 my-2">
+                    {translate("Possible additional services per person:")}
+                  </h5>
 
-                <div>
-                  {AdditionalService?.map((option, idx) => (
-                    <div
-                      key={option.id}
-                      className="d-flex items-center justify-between radio_hight"
-                    >
-                      <div className="d-flex items-center">
-                        <div className="form-radio d-flex items-center">
-                          <label className="radio d-flex items-center">
-                            <input
-                              type="radio"
-                              name={`radioGroup-${idx}`} // Group radio by idx for unique selection within the same service
-                              value={`${idx}-ad-${option.id}-${option.title}`} // Unique value for the radio
-                              // Check if the current option matches the stored value in RadioValue
-                              checked={
-                                RadioValue.selectedValue ===
-                                `${idx}-ad-${option.id}-${option.title}`
-                              }
-                              onChange={(e) =>
-                                handleRadioChange(
-                                  e,
-                                  idx,
-                                  option.price,
-                                  option.additinoal_order,
-                                  option.title,
-                                  option.id
-                                )
-                              }
-                            />
-                            <span className="radio__mark">
-                              <span className="radio__icon"></span>
-                            </span>
-                            <span className="text-14 lh-1 ml-10">
-                              {option.title}
-                            </span>
-                          </label>
+                  <div>
+                    {AdditionalService?.map((option, idx) => (
+                      <div
+                        key={option.id}
+                        className="d-flex items-center justify-between radio_hight"
+                      >
+                        <div className="d-flex items-center">
+                          <div className="form-radio d-flex items-center">
+                            <label className="radio d-flex items-center">
+                              <input
+                                type="radio"
+                                name={`radioGroup-${idx}`} // Group radio by idx for unique selection within the same service
+                                value={`${idx}-ad-${option.id}-${option.title}`} // Unique value for the radio
+                                // Check if the current option matches the stored value in RadioValue
+                                checked={
+                                  RadioValue.selectedValue ===
+                                  `${idx}-ad-${option.id}-${option.title}`
+                                }
+                                onChange={(e) =>
+                                  handleRadioChange(
+                                    e,
+                                    idx,
+                                    option.price,
+                                    option.additinoal_order,
+                                    option.title,
+                                    option.id
+                                  )
+                                }
+                              />
+                              <span className="radio__mark">
+                                <span className="radio__icon"></span>
+                              </span>
+                              <span className="text-14 lh-1 ml-10">
+                                {option.title}
+                              </span>
+                            </label>
+                          </div>
                         </div>
+                        <div className="text-14">+ {option.price}</div>
                       </div>
-                      <div className="text-14">+ {option.price}</div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="col-12">
-                <div className="row">
+                <div className="row items-center">
                   <button
                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                     onClick={handleAddPersong}
@@ -960,6 +997,10 @@ const CustomerDetaTable = () => {
                   >
                     {translate("CANCEL")}
                   </button>
+
+                  <h5 className="booking-form-price col-4">
+                    Subtotal : <span>{subtotal}</span>
+                  </h5>
                 </div>
               </div>
             </div>
@@ -983,7 +1024,7 @@ const CustomerDetaTable = () => {
           <div className=" y-gap-30 contactForm px-20 py-10">
             <div className="col-md-12">
               <h5 className="mb-3 t_center mt-3">
-                Total Amount : <b>{BookingDetails?.reservation?.subtotal}{" "}€</b>
+                Total Amount : <b>{BookingDetails?.reservation?.subtotal} €</b>
               </h5>
             </div>
 
@@ -1180,153 +1221,6 @@ const CustomerDetaTable = () => {
           </div>
         </Modal>
       </div>
-
-      {/* <div id="upload_file">
-        <Modal
-          isOpen={uploadFileisOpen}
-          onRequestClose={closeUploadFileModal}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="ml-20 my-3">Document</h2>
-            <button onClick={closeUploadFileModal}>
-              <IoClose size={25} />
-            </button>
-          </div>
-
-          <div className="ml-lg-20 ml-0">
-            <Tabs>
-              <TabList>
-                <Tab> {translate("Upload")}</Tab>
-                <Tab> {translate("View")}</Tab>
-                <Tab> {translate("Download")}</Tab>
-              </TabList>
-
-              <TabPanel>
-                <div className="overflow-hidden overflow-lg-auto">
-                  {rows.map((row, index) => (
-                    <div className="row item-center my-3" key={row.id}>
-                      <div className="col-md-4 px-0 mx-0 pl-lg-50">
-                        <Select
-                          options={CustomeDocoptions}
-                          value={row.document}
-                          onChange={(selectedOption) =>
-                            handleDocumentChange(selectedOption, index)
-                          }
-                          className="dd-vendor"
-                          isClearable
-                        />
-                      </div>
-                      <div className="col-md-4 px-0 mx-2">
-                        <div className="row my-2 flex_center ">
-                          {row.image ? (
-                            <div className="col-auto my-3">
-                              <div className="relative">
-                                <Image
-                                  width={200}
-                                  height={200}
-                                  src={row.image}
-                                  alt="image"
-                                  className="size-200 rounded-12 object-cover my-3"
-                                />
-                                <button
-                                  onClick={() => {
-                                    const newRows = [...rows];
-                                    newRows[index].image = "";
-                                    setRows(newRows);
-                                  }}
-                                  className="absoluteIcon1 button -dark-1"
-                                >
-                                  <i className="icon-delete text-18"></i>
-                                </button>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="col-auto  pl-20-doc-img">
-                              <label
-                                htmlFor={`imageInp-${index}`}
-                                className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
-                              >
-                                <div className="text-16 fw-500 text-accent-1">
-                                  {translate("Upload Document") ||
-                                    "Find Latest Packages"}
-                                </div>
-                              </label>
-                              <input
-                                onChange={(e) => handleImageChange(e, index)}
-                                accept="image/*"
-                                id={`imageInp-${index}`}
-                                type="file"
-                                style={{ display: "none" }}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-md-2 px-0 mx-0">
-                        <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
-                          <div className="mx-1">
-                            <button
-                              type="button"
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                              onClick={addRow}
-                            >
-                              +
-                            </button>
-                          </div>
-                          {index > 0 && (
-                            <div className="mx-1">
-                              <button
-                                type="button"
-                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                                onClick={() => removeRow(index)}
-                              >
-                                -
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="d-flex justify-content-center gap-md-2">
-                    <button
-                      className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                      onClick={handleSubmit}
-                    >
-                      {translate("SUBMIT")}
-                    </button>
-                    <button
-                      className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                      onClick={closeUploadFileModal}
-                    >
-                      {translate("CANCEL")}
-                    </button>
-                  </div>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  title="View Your Documents"
-                  columns={FileDeta}
-                  data={ViewCustomerDocument}
-                  highlightOnHover
-                />
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  title="Download Your Tickets and Visa"
-                  columns={DownloadData}
-                  data={documentDataFile}
-                  highlightOnHover
-                />
-              </TabPanel>
-            </Tabs>
-          </div>
-        </Modal>
-      </div> */}
 
       <div id="upload_file">
         <Modal

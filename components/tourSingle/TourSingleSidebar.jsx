@@ -427,10 +427,14 @@ export default function TourSingleSidebar({
   }, [SidebarData, adultNumber, youthNumber, childrenNumber]);
 
   // Extract prices and labels into an object
-  const priceObjectwithlab = SidebarData?.tour_price?.reduce((acc, item) => {
-    acc[item.price_type ] = item.price;
-    return acc;
-  }, {});
+
+  const priceObjectwithlab = SidebarData?.tour_price?.map(item => ({
+    type: item.price_type,  // Storing price_type as type
+    price: item.price       // Storing price
+  }));
+  
+  console.log(priceObjectwithlab);
+  
 
   useEffect(() => {
     if (typeof window !== "undefined") {
