@@ -5,7 +5,6 @@ import DataTable from "react-data-table-component";
 import Modal from "react-modal";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
-import { TotalData } from "@/data/CustomerBookingData";
 import Select from "react-select";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -172,6 +171,38 @@ const CustomerDetaTable = () => {
           ? row.extra_data.map((item) => item.title).join(", ")
           : null, // Return null if the length is 0
       width: "150px",
+    },
+    { name: translate("Total"), selector: (row) => row.adult_price },
+    {
+      name: translate("Action"),
+      selector: (row) => (
+        <div className="flex_center">
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            onClick={() => openEditData(row?.id)} // Pass the current row
+          >
+            {translate("Edit")}
+          </button>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
+            onClick={() => openUploadFileModal(row.id, row.reservation_id)}
+          >
+            {translate("Document")}
+          </button>
+        </div>
+      ),
+      width: "200px", // Set a custom width for the button column
+    },
+  ];
+
+  const baby = [
+    { name: "Name", selector: (row) => row.personName, width: "100px" },
+    { name: "Surname", selector: (row) => row.personSurName },
+    { name: "Gender", selector: (row) => row.gender },
+    { name: translate("DOB"), selector: (row) => row.personBirthDay },
+    {
+      name: translate("Nationality"),
+      selector: (row) => row.personNationality,
     },
     { name: translate("Total"), selector: (row) => row.adult_price },
     {
@@ -778,7 +809,7 @@ const CustomerDetaTable = () => {
       {/* Baby Data Table */}
       <DataTable
         title="Baby Information"
-        columns={columnAduInfo_2}
+        columns={baby}
         data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
         highlightOnHover
       />
