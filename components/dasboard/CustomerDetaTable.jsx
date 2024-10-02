@@ -68,6 +68,15 @@ const CustomerDetaTable = () => {
   const [downloadDetails, setDownloadDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [pendingPaymentValue, setPendingPaymentValue] = useState({
+    firstAmount: "",
+    firstDate: "",
+    secondAmount: "",
+    secondDate: "",
+    thirdAmount: "",
+    thirdDate: "",
+  });
+
   useEffect(() => {
     Modal.setAppElement("#modelopen");
     Modal.setAppElement("#pendingpayment");
@@ -100,7 +109,7 @@ const CustomerDetaTable = () => {
       width: "100px",
     },
     { name: translate("Return"), selector: (row) => row.date_end },
-    { name: translate("Mekka"), selector: (row) =>   row.mekka_hotel },
+    { name: translate("Mekka"), selector: (row) => row.mekka_hotel },
     { name: translate("Madina"), selector: (row) => row.madina_hotel },
     { name: translate("Adult"), selector: (row) => row.adults },
     { name: translate("Child"), selector: (row) => row.child },
@@ -158,8 +167,8 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => 
-        row.extra_data.length !== 0 
+      selector: (row) =>
+        row.extra_data.length !== 0
           ? row.extra_data.map((item) => item.title).join(", ")
           : null, // Return null if the length is 0
       width: "150px",
@@ -331,6 +340,20 @@ const CustomerDetaTable = () => {
           url: "booking_details",
         });
         setBookingDetails(response?.Bookings);
+        if (response?.Bookings?.paymentData) {
+          setPendingPaymentValue({
+            firstAmount: response.Bookings.paymentData.payment_plan_1 || "", // Default to empty if null/undefined
+            secondAmount: response.Bookings.paymentData.payment_plan_2 || "",
+            thirdAmount: response.Bookings.paymentData.payment_plan_3 || "",
+            firstDate: response.Bookings.paymentData.payment_plan_date_1 || "",
+            secondDate: response.Bookings.paymentData.payment_plan_date_2 || "",
+            thirdDate: response.Bookings.paymentData.payment_plan_date_3 || "",
+          });
+        } else {
+          console.warn("paymentData not found in response");
+        }
+
+
         const FileDeta = [
           { name: "Document Name", selector: (row) => row.Name },
           {
@@ -452,9 +475,6 @@ const CustomerDetaTable = () => {
     });
   };
 
-  console.log("AddpersonData" , AddpersonData);
-  
-
   const FetchAddperson = async () => {
     const formData = new FormData();
 
@@ -464,11 +484,11 @@ const CustomerDetaTable = () => {
     formData.append("birthday", AddpersonData.birthDate);
     formData.append("gender", AddpersonData.gender);
     formData.append("nationality", AddpersonData.nationality);
-    formData.append('type' , AddpersonData.roomType);
-    formData.append('title' , RadioValue.title);
-    formData.append('price' , RadioValue.price);
-    formData.append('additional_order' , RadioValue.order);
-    formData.append('total' , 100);
+    formData.append("type", AddpersonData.roomType);
+    formData.append("title", RadioValue.title);
+    formData.append("price", RadioValue.price);
+    formData.append("additional_order", RadioValue.order);
+    formData.append("total", 100);
 
     try {
       const response = await POST.request({
@@ -482,7 +502,7 @@ const CustomerDetaTable = () => {
   };
 
   const handleAddPersong = () => {
-    FetchAddperson()
+    FetchAddperson();
     setTimeout(() => {
       closeModal();
     }, 2000);
@@ -596,6 +616,19 @@ const CustomerDetaTable = () => {
       showErrorToast("Document Upload Failed");
     }
   };
+
+  // for pending payment
+
+  // Function to handle input changes
+  const handlePaymentPending = (e) => {
+    const { name, value } = e.target;
+    setPendingPaymentValue((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  console.log("pendingPaymentValue" , pendingPaymentValue);
   
 
   return (
@@ -627,14 +660,20 @@ const CustomerDetaTable = () => {
             </button>
           </div>
 
-          <div className={`${BookingDetails?.reservation?.paymentType == '3' ? 'd-block' : 'd-none'}`}>
+          <div
+            className={`${
+              BookingDetails?.reservation?.paymentType == "3"
+                ? "d-block"
+                : "d-none"
+            }`}
+          >
             <button
               className="button -sm -accent-1 bg-info-2 text-white "
               onClick={openPaymentModal}
             >
               {translate("Pay")}
             </button>
-            <span>(10,00 €)</span>
+            <span>{`(${BookingDetails?.reservation?.subtotal})`} €</span>
           </div>
 
           <div className="">
@@ -706,7 +745,6 @@ const CustomerDetaTable = () => {
 
       <br />
 
- 
       {BookingDetails.reservation ? (
         <DataTable
           title="Total"
@@ -936,35 +974,38 @@ const CustomerDetaTable = () => {
           <div className=" y-gap-30 contactForm px-20 py-10">
             <div className="col-md-12">
               <h5 className="mb-3 t_center mt-3">
-                Total Amount : <b>2,55.50 €</b>
+                Total Amount : <b>{BookingDetails?.reservation?.subtotal}{" "}€</b>
               </h5>
             </div>
 
             <div className="row">
               <div className="col-md-5 col-12">
                 <div className="form-input spacing">
-                  <input type="text" value="85,17 €" />
+                  <input
+                    type="text"
+                    name="firstAmount"
+                    value={pendingPaymentValue.firstAmount}
+                    onChange={handlePaymentPending}
+                  />
                   <label className="lh-1 text-16 text-light-1">
                     1st Amount
                   </label>
                 </div>
               </div>
-
               <div className="col-md-5 col-12">
                 <div className="form-input spacing">
                   <input
                     type="text"
-                    value="31.05.2024"
-                    placeholder=""
+                    name="firstDate"
+                    value={pendingPaymentValue.firstDate}
                     disabled
                   />
-                  <label className="lh-1 text-16 text-light-1 ">Date</label>
+                  <label className="lh-1 text-16 text-light-1">Date</label>
                 </div>
               </div>
-
               <div className="col-md-2 col-12">
                 <button
-                  className="button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white "
+                  className="button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white"
                   disabled
                 >
                   {translate("PAID")}
@@ -973,60 +1014,62 @@ const CustomerDetaTable = () => {
             </div>
 
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-5 col-12">
                 <div className="form-input spacing">
-                  <input type="text" required value="85,17 €" />
+                  <input
+                    type="text"
+                    name="firstAmount"
+                    value={pendingPaymentValue.secondAmount}
+                    onChange={handlePaymentPending}
+                  />
                   <label className="lh-1 text-16 text-light-1">
-                    2nd Amount
+                    2st Amount
                   </label>
                 </div>
               </div>
-
-              <div className="col-md-5">
-                <div className="row">
-                  <div className="form-input spacing">
-                    <input
-                      type="text"
-                      value="31.05.2024"
-                      placeholder=""
-                      required
-                    />
-                    <label className="lh-1 text-16 text-light-1 ">Date</label>
-                  </div>
+              <div className="col-md-5 col-12">
+                <div className="form-input spacing">
+                  <input
+                    type="text"
+                    name="firstDate"
+                    value={pendingPaymentValue.secondDate}
+                    disabled
+                  />
+                  <label className="lh-1 text-16 text-light-1">Date</label>
                 </div>
               </div>
-
               <div className="col-md-2">
-                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white  ">
+                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
                   {translate("PAY")}
                 </button>
               </div>
             </div>
 
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-5 col-12">
                 <div className="form-input spacing">
-                  <input type="text" required value="85,17 €" />
+                  <input
+                    type="text"
+                    name="firstAmount"
+                    value={pendingPaymentValue.thirdAmount}
+                    onChange={handlePaymentPending}
+                  />
                   <label className="lh-1 text-16 text-light-1">
-                    3rd Amount
+                    3st Amount
                   </label>
                 </div>
               </div>
-
-              <div className="col-md-5">
-                <div className="row">
-                  <div className="form-input spacing">
-                    <input
-                      type="text"
-                      value="31.05.2024"
-                      placeholder=""
-                      required
-                    />
-                    <label className="lh-1 text-16 text-light-1 ">Date</label>
-                  </div>
+              <div className="col-md-5 col-12">
+                <div className="form-input spacing">
+                  <input
+                    type="text"
+                    name="firstDate"
+                    value={pendingPaymentValue.thirdDate}
+                    disabled
+                  />
+                  <label className="lh-1 text-16 text-light-1">Date</label>
                 </div>
               </div>
-
               <div className="col-md-2">
                 <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
                   {translate("PAY")}
