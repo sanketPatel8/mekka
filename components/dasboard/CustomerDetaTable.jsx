@@ -16,6 +16,7 @@ import { nationalities } from "@/data/nationalities";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ClipLoader } from "react-spinners";
+import { useCurrency } from "@/app/context/currencyContext";
 
 const customStyles = {
   overlay: {
@@ -76,6 +77,8 @@ const CustomerDetaTable = () => {
     thirdDate: "",
   });
 
+  const { formatPrice } = useCurrency();
+
   useEffect(() => {
     Modal.setAppElement("#modelopen");
     Modal.setAppElement("#pendingpayment");
@@ -126,7 +129,7 @@ const CustomerDetaTable = () => {
     { name: translate("Nationality"), selector: (row) => row.nationality },
     { name: translate("House No."), selector: (row) => row.houseNumber },
     { name: translate("Zip Code"), selector: (row) => row.plz },
-    { name: translate("Street"), selector: (row) => row.Strect },
+    { name: translate("Street"), selector: (row) => row.street },
     {
       name: translate("Additional Services"),
       selector: (row) => row.title,
@@ -228,12 +231,12 @@ const CustomerDetaTable = () => {
   ];
 
   const Total = [
-    { name: "Subtotal", selector: (row) => row.subtotal },
+    { name: "Subtotal", selector: (row) => row.subtotal , cell: row => formatPrice(row.subtotal)}  ,
     // { name: "Tax", selector: (row) => row.Total },
-    { name: "Discount", selector: (row) => row.discount },
+    { name: "Discount", selector: (row) => row.discount , cell: row => formatPrice(row.discount) },
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
-    { name: "Total", selector: (row) => row.total },
-    { name: "Amount Due", selector: (row) => row.amount_due },
+    { name: "Total", selector: (row) => row.total , cell: row => formatPrice(row.total) },
+    { name: "Amount Due", selector: (row) => row.amount_due , cell: row => formatPrice(row.amount_due)},
   ];
 
   function afterOpenModal() {

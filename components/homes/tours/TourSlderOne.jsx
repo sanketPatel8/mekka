@@ -178,7 +178,7 @@ export default function TourSlderOne() {
                                 {/* <span className="fw-500">{elm?.rating}</span> (
                                 {elm?.rating_count}) -{" "} */}
                                 {elm?.company_code == null
-                                  ? "No Compny  "
+                                  ? "  "
                                   : elm?.company_code}
                               </div>
                             </div>
