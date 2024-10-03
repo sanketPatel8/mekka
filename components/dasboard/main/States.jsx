@@ -27,7 +27,7 @@ export default function States({data,loading}) {
       {
         id: 3,
         title: translate("Total Booking"),
-        amount: `${data?.Total_Bookings} €`,
+        amount: `${data?.Total_Bookings} `,
         today: "90+",
         iconClass: "icon-booking text-accent-1",
       },
