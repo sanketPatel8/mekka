@@ -87,7 +87,7 @@ const CustomerDetaTable = () => {
     Modal.setAppElement("#editData");
     Modal.setAppElement("#Adult1Data");
     Modal.setAppElement("#invoice");
-  }, []);
+  }, []);  
 
   const ColumnReservation_details = [
     {
@@ -454,6 +454,31 @@ const CustomerDetaTable = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const fetchPayments = async () => {
+      const formData = new FormData();
+      formData.append("reservation_id", BookingDetails.reservation?.id);
+  
+      const response = await POST.request({
+        form: formData,
+        url: "invoicegenerate",
+      });
+      console.log("response" , response);
+      
+      if (response ) {
+      
+        showSuccessToast("sucess")
+        // setLoading(false);
+      } else {
+        // setLoading(false);
+        showErrorToast("Something went wrong");
+      }
+    };
+
+    fetchPayments()
+  }, [BookingDetails])
+  
 
   // for edit customer data
 
