@@ -88,6 +88,9 @@ export default function Register() {
           error.response.data.message
         ) {
           showErrorToast(error.response.data.message);
+          setTimeout(() => {
+            router.push("/verify-email");
+          }, 2000);
         } else {
           showErrorToast("An error occurred during registration.");
         }
@@ -102,9 +105,7 @@ export default function Register() {
       setConfirmpass("");
       setIsChecked(false);
       localStorage.setItem("emailForSignIn", RegisterData.email);
-      setTimeout(() => {
-        router.push("/verify-email");
-      }, 2000);
+      
     } else {
       showErrorToast("password dose not match");
     }
