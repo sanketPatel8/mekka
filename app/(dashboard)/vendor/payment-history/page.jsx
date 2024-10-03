@@ -56,7 +56,7 @@ export default function DBListing() {
       },
       {
         name: translate("Paid (€) "),
-        selector: (row) => row.Payment_Tax,
+        selector: (row) => row.paid_amount,
         sortable: true,
         width: "10%",
       },
@@ -120,7 +120,8 @@ export default function DBListing() {
         Total_Payment: payment.total,
         Booking_date: payment.date,
         Transation_id: payment.transaction_id,
-        pending_payment:payment.pending_payment
+        pending_payment:payment.pending_payment,
+        paid_amount:payment.paid_amount
       }));
       setPayment(bookingData);
 
