@@ -45,6 +45,11 @@ export default function TourSliderTwo({ setLength }) {
     }
   };
 
+  const maxSlide = BestSellerData.length >= 2 ? '2' : '1';
+  
+  console.log("maxSlide" , maxSlide);
+  
+
   const { translate } = useTranslation();
 
   return (
@@ -82,10 +87,10 @@ export default function TourSliderTwo({ setLength }) {
                       slidesPerView: 1,
                     },
                     1024: {
-                      slidesPerView: BestSellerData.length < 2 ? 1 : 2,
+                      slidesPerView: 2,
                     },
                     1200: {
-                      slidesPerView: BestSellerData.length < 2 ? 1 : 2,
+                      slidesPerView: maxSlide ,
                     },
                   }}
                 >
