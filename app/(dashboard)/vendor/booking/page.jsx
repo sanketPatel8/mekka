@@ -38,9 +38,9 @@ export default function DbBooking() {
 
     const BookingsData = [
       {
-        name: translate("Booking Id"),
+        name: translate("Id"),
         selector: (row) => row.BookingId,
-        width: "4%",
+        width: "5%",
         sortable: true,
       },
       {
@@ -80,17 +80,12 @@ export default function DbBooking() {
         width: "8%",
         sortable: true,
       },
-      {
-        name: translate("Terms "),
-        selector: (row) => row.Payment_Terms,
-        sortable: true,
-        width: "6%",
-      },
+   
       {
         name: translate("Method "),
         selector: (row) => row.Payment_Method,
         sortable: true,
-        width: "7%",
+        width: "10%",
       },
       {
         name: translate("Visas"),
@@ -147,7 +142,6 @@ export default function DbBooking() {
         Tour_name: booking.tour_name,
         Total_Payment: booking.total,
         Pending_Payment: booking.pending_payment,
-        Payment_Terms: booking.payment_terms,
         Payment_Method: booking.payment_method,
         Visas: booking.visa_confirm,
         Flight: booking.plane_confirm,
