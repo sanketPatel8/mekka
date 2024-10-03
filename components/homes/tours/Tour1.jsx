@@ -86,7 +86,7 @@ export default function Tour1() {
                 >
                   <Link
                     href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
-                    className="tourCard -type-1 py-10 px-10 border-1 rounded-12  -hover-shadow"
+                    className="tourCard -type-1 py-10 px-10 border-1 rounded-12 mx-2 -hover-shadow"
                   >
                     <div className="tourCard__header">
                       <div className="tourCard__image ratio ratio-28:20">
