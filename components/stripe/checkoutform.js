@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { post } from "@/app/utils/api";
+import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 const customStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -44,7 +45,7 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
         try {
             const response = await post("addbooking", newBooking);
             if(response){
-                toast.success("Booking successful");
+                showSuccessToast("Booking successful");
                 handleClose()
                 router.push("#ref");
                 setBookingStage(2);
@@ -82,12 +83,12 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
             });
             if (error) console.log(error);
             if (error && (error.type === "card_error" || error.type === "validation_error")) {
-                toast.error("Payment already succeeded");
+                showErrorToast("Payment already succeeded");
             } else if (paymentIntent && paymentIntent.status === "succeeded") {
                 console.log(paymentIntent, 'paymentIntent')
                 console.log(paymentIntent.id, 'paymentIntent.id')
                 const newAmount = paymentIntent.amount / 100;
-                toast.success("Payment successful");
+                showSuccessToast("Payment successful");
                 addBooking(paymentIntent.id, newAmount);
             }
         }
