@@ -29,17 +29,19 @@ export default function Register() {
 
   const handlePasswordChange = (e) => {
     const { value } = e.target;
-    console.log(value,"value")
+    console.log(value, "value");
     setConfirmpass(value);
     console.log(RegisterData.password);
     if (value !== RegisterData.password) {
       setError("Passwords do not match");
-      }else{
-        setError("");
-      }
-  }
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  
+    } else {
+      setError("");
+    }
+  };
+
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
   const handlePassword = (e) => {
     const passwordValue = e.target.value;
     setRegisterData((prevState) => ({
@@ -47,14 +49,17 @@ export default function Register() {
       password: passwordValue,
     }));
     if (!passwordRegex.test(passwordValue)) {
-      setPasswordError("At least 8 characters include uppercase and lowercase letters, numbers and special characters");
-    }  else {
+      setPasswordError(
+        "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
+      );
+    } else {
       setPasswordError("");
     }
-    if(!passwordValue){
+    if (!passwordValue) {
       setPasswordError("");
     }
   };
+
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
@@ -68,46 +73,127 @@ export default function Register() {
   };
 
   const MatchPass = (e) => {
-    setConfirm_pass(e.target.value);
+    setConfirmpass(e.target.value);
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if(!RegisterData.name || !RegisterData.surname || !RegisterData.email || !RegisterData.password || !confirm_pass || isChecked === false){
+  //     showErrorToast("Please fill all fields");
+  //     return;
+  //   }
+  //   if(!passwordRegex.test(RegisterData.password)){
+  //     if (RegisterData.password === confirm_pass) {
+  //       try {
+  //         const response = await post("register", RegisterData);
+  //         showSuccessToast(response.message);
+  //       } catch (error) {
+  //         if (
+  //           error.response &&
+  //           error.response.data &&
+  //           error.response.data.message
+  //         ) {
+  //           showErrorToast(error.response.data.message);
+  //           setTimeout(() => {
+  //             router.push("/verify-email");
+  //           }, 2000);
+  //         } else {
+  //           showErrorToast("An error occurred during registration.");
+  //         }
+  //       }
+  //       setRegisterData({
+  //         name: "",
+  //         surname: "",
+  //         email: "",
+  //         password: "",
+  //       });
+
+  //       setConfirmpass("");
+  //       setIsChecked(false);
+  //       localStorage.setItem("emailForSignIn", RegisterData.email);
+
+  //     } else {
+  //       showErrorToast("password dose not match");
+  //     }
+  //   }else{
+  //     showErrorToast('Please Fill Proper Password')
+  //   }
+
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!RegisterData.name || !RegisterData.surname || !RegisterData.email || !RegisterData.password || !confirm_pass || isChecked === false){
+
+    // Check if all required fields are filled
+    if (
+      !RegisterData.name ||
+      !RegisterData.surname ||
+      !RegisterData.email ||
+      !RegisterData.password ||
+      !confirm_pass ||
+      isChecked === false
+    ) {
       showErrorToast("Please fill all fields");
       return;
     }
-    if (RegisterData.password === confirm_pass) {
-      try {
-        const response = await post("register", RegisterData);
-        showSuccessToast(response.message);
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          showErrorToast(error.response.data.message);
-          setTimeout(() => {
-            router.push("/verify-email");
-          }, 2000);
-        } else {
-          showErrorToast("An error occurred during registration.");
-        }
-      }
-      setRegisterData({
-        name: "",
-        surname: "",
-        email: "",
-        password: "",
-      });
 
-      setConfirmpass("");
-      setIsChecked(false);
-      localStorage.setItem("emailForSignIn", RegisterData.email);
-      
-    } else {
-      showErrorToast("password dose not match");
+    // Validate the password using regex
+    if (!passwordRegex.test(RegisterData.password)) {
+      showErrorToast(
+        "Please check your password. It must meet the required criteria."
+      );
+      return;
+    }
+
+    // Check if passwords match
+    if (RegisterData.password !== confirm_pass) {
+      showErrorToast("Passwords do not match");
+      return;
+    }
+
+    // If all validation passes, then make the API call
+    try {
+      const response = await post("register", RegisterData);
+
+      if(response.status === "success"){
+        showSuccessToast(response.message);
+        // Clear the form and set email in local storage
+        setRegisterData({
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+        });
+  
+        setConfirmpass("");
+  
+        setIsChecked(false);
+  
+        localStorage.setItem("emailForSignIn", RegisterData.email);
+  
+        // Redirect after successful registration
+        setTimeout(() => {
+          router.push("/verify-email");
+        }, 2000);
+      }
+     
+    } catch (error) {
+      // Handle errors from the API
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setRegisterData({
+          name: RegisterData.name ,
+          surname: RegisterData.surname ,
+          email: "",
+          password: RegisterData.password,
+        });
+        showErrorToast(error.response.data.message);
+      } else {
+        showErrorToast("An error occurred during registration.");
+      }
     }
   };
 
@@ -190,8 +276,9 @@ export default function Register() {
                 <label className="lh-1 text-16 text-light-1">
                   {translate("Password")}
                 </label>
-                {passwordError && <div className="text-red">{passwordError}</div>}
-
+                {passwordError && (
+                  <div className="text-red">{passwordError}</div>
+                )}
               </div>
 
               <div className="form-input my-1">
@@ -205,8 +292,6 @@ export default function Register() {
                   {translate("Confirm Password")}
                 </label>
                 {error && <div className="text-red">{error}</div>}
-
-
               </div>
 
               <div className="d-flex items-center">
