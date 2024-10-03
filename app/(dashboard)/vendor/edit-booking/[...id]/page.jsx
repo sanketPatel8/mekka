@@ -78,9 +78,7 @@ export default function DbBooking({ params }) {
 
   useEffect(() => {
     const formatTotal = (value) => `${value} €`;
-    const formatDiscount = (value) => {
-      value > 0 ? `-${value}` : 0;
-    };
+ 
     const vendorDocuments = [
       { value: "Visa", label: translate("Visa") },
       {
@@ -109,11 +107,7 @@ export default function DbBooking({ params }) {
         width: "20%",
       },
 
-      {
-        name: translate("Country"),
-        selector: (row) => row.country,
-        width: "10%",
-      },
+ 
       { name: translate("DOB"), selector: (row) => row.DOB, width: "10%" },
       {
         name: translate("Nationality"),
@@ -203,7 +197,7 @@ export default function DbBooking({ params }) {
       { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
       {
         name: translate("Discount"),
-        selector: (row) => formatDiscount(row.Discount),
+        selector: (row) => row.Discount > 0 ? -(row.Discount) : 0,
       },
       {
         name: translate("Amount Paid"),
@@ -353,9 +347,7 @@ export default function DbBooking({ params }) {
 
     if (response.Bookings) {
       const formatTotal = (value) => `${value} €`;
-      const formatDiscount = (value) => {
-        value > 0 ? `-${value}` : 0;
-      };
+
 
       if (response.Bookings.adultData.length > 0) {
         const adults = response.Bookings.adultData.map((adult) => ({
@@ -363,7 +355,6 @@ export default function DbBooking({ params }) {
           name: adult.personName,
           surname: adult.personSurName,
           DOB: formatDateToDDMMYYYY(adult.personBirthDay),
-          country: adult.countryName,
           Nationality: adult.personNationality,
           price: adult.adult_price,
         }));
