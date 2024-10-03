@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Header1 from "@/components/layout/header/Header1";
 import $ from "jquery";
-import "select2/dist/css/select2.min.css"
+import "select2/dist/css/select2.min.css";
 import { POST } from "@/app/utils/api/post";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
@@ -40,7 +40,7 @@ const page = () => {
   const [SelectedCountry, setSelectedCountry] = useState("");
   const [website, setWebsite] = useState("");
   const { translate } = useTranslation();
-  
+
   const router = useRouter();
   const options = [
     { value: "1", label: "Zip Code" },
@@ -54,14 +54,14 @@ const page = () => {
   //     import("select2/dist/js/select2.min.js").then(() => {
   //       // Ensure jQuery is available globally
   //       window.$ = window.jQuery = $;
-  
+
   //       // Initialize Select2 on the component
   //       $("#my-select").select2({
   //         placeholder: "Select an option",
   //         width: "100%",
   //       });
   //     });
-  
+
   //     // Cleanup Select2 on component unmount
   //     return () => {
   //       if ($.fn.select2) {
@@ -70,8 +70,6 @@ const page = () => {
   //     };
   //   }
   // }, []);
-  
-
 
   const HandleCountryChange = (newValue, actionMeta) => {
     setSelectedCountry(newValue);
@@ -82,160 +80,177 @@ const page = () => {
     setRadioValue(event.target.value);
   };
 
-    
   const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
     setter(value);
+  };
 
-
-};
-
-const handlePasswordChange = (e) => {
-  const { value } = e.target;
-  if (value !== password) {
-    setError("Passwords do not match");
-    }else{
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    if (value !== password) {
+      setError("Passwords do not match");
+    } else {
       setError("");
     }
-}
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  };
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-const handlePassword = (e) => {
-  const passwordValue = e.target.value;
-  setPassword(passwordValue);
-  if (!passwordRegex.test(passwordValue)) {
-    setPasswordError("Invalid password. ");
-  }  else {
-    setPasswordError("");
-  }
-  if(!passwordValue){
-    setPasswordError("");
-  }
-};
-const handleCheckboxChange = (e) => {
-  setAgreeToTerms(e.target.checked);
-};
+  const handlePassword = (e) => {
+    const passwordValue = e.target.value;
+    setPassword(passwordValue);
+    if (!passwordRegex.test(passwordValue)) {
+      setPasswordError("Invalid password. ");
+    } else {
+      setPasswordError("");
+    }
+    if (!passwordValue) {
+      setPasswordError("");
+    }
+  };
+  const handleCheckboxChange = (e) => {
+    setAgreeToTerms(e.target.checked);
+  };
 
-const validate = () => {
-  let tempErrors = {};
+  const validate = () => {
+    let tempErrors = {};
 
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      tempErrors.email = 'Invalid email address';
-  }
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(company_email)) {
-      tempErrors.company_email = 'Invalid email address';
-  }
-
-  if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=])[a-zA-Z\d@#$%^&+=]{8,}$/.test(password)) {
-    tempErrors.password = 'Invalid password';
-  }
-  console.log("tempErrors", tempErrors)
-  return tempErrors;
-};
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if(!name || !surname || !email || !password || !mobile || !street || !houseNumber || !zipcode || !city || !state || !companyName || !SelectedCountry  || !company_email || !company_mobile || !agreeToTerms){ 
-    showErrorToast("Please fill all the fields");
-    return;
-  }
-  
-  const tempErrors = validate();
-  console.log(tempErrors)
-
-  if (Object.keys(tempErrors).length > 0) {
-    console.log("hi")
-      setErrors(tempErrors);
-      return;
-  }
-
-
-  
-
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("surname", surname);
-  formData.append("email", email);
-  formData.append("password", password);
-  formData.append("mobile", mobile);
-  formData.append("street", street);
-  formData.append("houseNumber", houseNumber);
-  formData.append("zipcode", zipcode);
-  formData.append("city", city);
-  formData.append("state", state);
-  formData.append("companyName", companyName);
-  formData.append("company_email", company_email);
-  formData.append("company_mobile", company_mobile);
-  formData.append("is_mosque", radioValue === "mosque" ? 1 : 0);
-  formData.append('country',  SelectedCountry.value);
-  formData.append('website',  website);
-
-  const url= `vendor_register`;
-  try{
-    const response = await POST.request({form:formData, url:url, header: { "Content-Type": "multipart/form-data" }});
-    if(response.status === "success"){
-      console.log("success")
-      
-      showSuccessToast(response.message);
-      router.push("/thank-you");
-    }else if(response.status === "error"){
-      console.log("error")
-      showErrorToast(response.message);
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      tempErrors.email = "Invalid email address";
+    }
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(company_email)) {
+      tempErrors.company_email = "Invalid email address";
     }
 
-    
-    // if(response.error){
-    //   console.log("error1")
-    //   showErrorToast(response.message);
-    // }
+    if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=])[a-zA-Z\d@#$%^&+=]{8,}$/.test(
+        password
+      )
+    ) {
+      tempErrors.password = "Invalid password";
+    }
+    console.log("tempErrors", tempErrors);
+    return tempErrors;
+  };
 
-    // if(!response){
-    //   console.log("error2")
-    //   showErrorToast("Something went wrong");
-    // }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // if(response.status == "error"){
-    //   console.log("error3")
-    //   showErrorToast("Unauthorized");
-    // }
+    if (
+      !name ||
+      !surname ||
+      !email ||
+      !password ||
+      !mobile ||
+      !street ||
+      !houseNumber ||
+      !zipcode ||
+      !city ||
+      !state ||
+      !companyName ||
+      !SelectedCountry ||
+      !company_email ||
+      !company_mobile ||
+      !agreeToTerms
+    ) {
+      showErrorToast("Please fill all the fields");
+      return;
+    }
 
-    // if(!response){
-    //   console.log("error4")
-    //   showErrorToast("Unauthorized");
-    // }
+    const tempErrors = validate();
+    console.log(tempErrors);
 
-  }catch(err){
-    console.log("error5")
-    showErrorToast("Something went wrong");
-  }
+    if (Object.keys(tempErrors).length > 0) {
+      console.log("hi");
+      setErrors(tempErrors);
+      return;
+    }
 
-}
-const handleCompanyMobileNumberChange = (e) => {
-  const value = e.target.value.replace(/[^0-9.]/g, '');
-  setCompanyMobile(value);
-};
-const handleMobileNumberChange = (e) => {
-  const value = e.target.value.replace(/[^0-9.]/g, '');
-  setMobile(value);
-};
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("surname", surname);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("mobile", mobile);
+    formData.append("street", street);
+    formData.append("houseNumber", houseNumber);
+    formData.append("zipcode", zipcode);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("companyName", companyName);
+    formData.append("company_email", company_email);
+    formData.append("company_mobile", company_mobile);
+    formData.append("is_mosque", radioValue === "mosque" ? 1 : 0);
+    formData.append("country", SelectedCountry.value);
+    formData.append("website", website);
+
+    const url = `vendor_register`;
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: url,
+        header: { "Content-Type": "multipart/form-data" },
+      });
+      if (response.status === "success") {
+        console.log("success");
+
+        showSuccessToast(response.message);
+        router.push("/thank-you");
+      } else if (response.status === "error") {
+        console.log("error");
+        showErrorToast(response.message);
+      }
+
+      // if(response.error){
+      //   console.log("error1")
+      //   showErrorToast(response.message);
+      // }
+
+      // if(!response){
+      //   console.log("error2")
+      //   showErrorToast("Something went wrong");
+      // }
+
+      // if(response.status == "error"){
+      //   console.log("error3")
+      //   showErrorToast("Unauthorized");
+      // }
+
+      // if(!response){
+      //   console.log("error4")
+      //   showErrorToast("Unauthorized");
+      // }
+    } catch (err) {
+      console.log("error5");
+      showErrorToast("Something went wrong");
+    }
+  };
+  const handleCompanyMobileNumberChange = (e) => {
+    const value = e.target.value.replace(/[^0-9.]/g, "");
+    setCompanyMobile(value);
+  };
+  const handleMobileNumberChange = (e) => {
+    const value = e.target.value.replace(/[^0-9.]/g, "");
+    setMobile(value);
+  };
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <Header1 />
       <div className="mt-80 mb-80">
-        <h1 className="text-center my-5">{translate("Partner Registration")} </h1>
+        <h1 className="text-center my-5">
+          {translate("Partner Registration")}{" "}
+        </h1>
         <div className="container">
-        <form
-                                className=" d-flex flex-column w-100"
-                                noValidate
-                                onSubmit={handleSubmit}
-                            >
+          <form
+            className=" d-flex flex-column w-100"
+            noValidate
+            onSubmit={handleSubmit}
+          >
             <div className="row shadow-2">
               <div className="col-md-6 col-12 text-center p-5 border-1 ">
                 <h1>{translate("Organization")}</h1>
-                
+
                 <div className="form_2">
                   <div className=" y-gap-30 contactForm px-20 py-20 ">
                     <div className="flex-center">
@@ -273,23 +288,37 @@ const handleMobileNumberChange = (e) => {
                             {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
                           </label>
                         </div>
-                        <div className="ml-10">{translate("Travel Agency")}</div>
+                        <div className="ml-10">
+                          {translate("Travel Agency")}
+                        </div>
                       </div>
                     </div>
                     <div className="row my-3">
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required value={companyName} onChange={handleInputChange(setCompanyName)} />
+                          <input
+                            type="text"
+                            required
+                            value={companyName}
+                            onChange={handleInputChange(setCompanyName)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("Organization Name")} <span className="text-red">*</span>
+                            {translate("Organization Name")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={state} onChange={handleInputChange(setState)}/>
+                          <input
+                            type="text"
+                            required
+                            value={state}
+                            onChange={handleInputChange(setState)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("State")} <span className="text-red">*</span>
+                            {translate("State")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
@@ -306,77 +335,146 @@ const handleMobileNumberChange = (e) => {
                           </div>
                         </div> */}
                         <div className="form-input spacing">
-                          <input type="text" required value={zipcode} onChange={handleInputChange(setZipcode)} />
+                          <input
+                            type="text"
+                            required
+                            value={zipcode}
+                            onChange={handleInputChange(setZipcode)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                          {translate("Zip Code")} <span className="text-red">*</span>
+                            {translate("Zip Code")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
-
                       </div>
                       <div className="col-md-6">
                         <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
                           <CreatableSelect
                             value={SelectedCountry}
                             onChange={HandleCountryChange}
-                            options={countries.map((country)=>({value: country.name, label: country.name}))}
+                            options={countries.map((country) => ({
+                              value: country.name,
+                              label: country.name,
+                            }))}
                             className="custom-select"
-                            placeholder="Select Country(required) "
+                            placeholder="Select Country (required)"
                             classNamePrefix="react-select"
                             isClearable
                             formatCreateLabel={(inputValue) =>
                               `Create custom gender: "${inputValue}"`
                             }
+                            styles={{
+                              option: (provided) => ({
+                                ...provided,
+                                textAlign: "left", // Align option text to the right
+                              }),
+                              singleValue: (provided) => ({
+                                ...provided,
+                                textAlign: "left", // Align selected value text to the right
+                              }),
+                            }}
                           />
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required value={city} onChange={handleInputChange(setCity)} />
+                          <input
+                            type="text"
+                            required
+                            value={city}
+                            onChange={handleInputChange(setCity)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("City")} <span className="text-red">*</span>
+                            {translate("City")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={street} onChange={handleInputChange(setStreet)}/>
+                          <input
+                            type="text"
+                            required
+                            value={street}
+                            onChange={handleInputChange(setStreet)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("Street")} <span className="text-red">*</span>
+                            {translate("Street")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={houseNumber} onChange={handleInputChange(setHouseNumber)}/>
+                          <input
+                            type="text"
+                            required
+                            value={houseNumber}
+                            onChange={handleInputChange(setHouseNumber)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("House No")} <span className="text-red">*</span>
+                            {translate("House No")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="email" required  value={company_email} className="mb-1" onChange={handleInputChange(setCompanyEmail)}/>
+                          <input
+                            type="email"
+                            required
+                            value={company_email}
+                            className="mb-1"
+                            onChange={handleInputChange(setCompanyEmail)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("E-Mail Address")} <span className="text-red">*</span>
+                            {translate("E-Mail Address")}{" "}
+                            <span className="text-red">*</span>
                           </label>
-                          {errors.company_email && <span className='text-red'> {errors.company_email}</span>}
+                          {errors.company_email && (
+                            <span className="text-red">
+                              {" "}
+                              {errors.company_email}
+                            </span>
+                          )}
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" min={0} max={10} pattern="[0-9]{10}"
-                        maxLength={10} required  value={company_mobile} onChange={handleCompanyMobileNumberChange}/>
+                          <input
+                            type="text"
+                            min={0}
+                            max={10}
+                            pattern="[0-9]{10}"
+                            maxLength={10}
+                            required
+                            value={company_mobile}
+                            onChange={handleCompanyMobileNumberChange}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("Phone Number")} <span className="text-red">*</span>
+                            {translate("Phone Number")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-6">
-                    <div className="form-input m-0">
-                      <input type="text" required defaultValue={ website !== "null" && website !== "" ? website : ""} onChange={handleInputChange(setWebsite)} />
-                      <label className="lh-1 text-16 text-light-1"> {translate("Website")}</label>
-                    </div>
-                  </div>
+                        <div className="form-input m-0">
+                          <input
+                            type="text"
+                            required
+                            defaultValue={
+                              website !== "null" && website !== ""
+                                ? website
+                                : ""
+                            }
+                            onChange={handleInputChange(setWebsite)}
+                          />
+                          <label className="lh-1 text-16 text-light-1">
+                            {" "}
+                            {translate("Website")}
+                          </label>
+                        </div>
+                      </div>
                     </div>
 
                     {/* <div className="col-12">
@@ -394,56 +492,100 @@ const handleMobileNumberChange = (e) => {
                     <div className="row my-3">
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required value={name} onChange={handleInputChange(setName)} />
+                          <input
+                            type="text"
+                            required
+                            value={name}
+                            onChange={handleInputChange(setName)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                          {translate("Name")} <span className="text-red">*</span>
+                            {translate("Name")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={surname} onChange={handleInputChange(setSurname)}/>
+                          <input
+                            type="text"
+                            required
+                            value={surname}
+                            onChange={handleInputChange(setSurname)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                          {translate("Surname")} <span className="text-red">*</span>
+                            {translate("Surname")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required  value={email} className="mb-1" onChange={handleInputChange(setEmail)}/>
+                          <input
+                            type="text"
+                            required
+                            value={email}
+                            className="mb-1"
+                            onChange={handleInputChange(setEmail)}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                          {translate("E-mail Address")} <span className="text-red">*</span>
+                            {translate("E-mail Address")}{" "}
+                            <span className="text-red">*</span>
                           </label>
-                          {errors.email && <span className='text-red'> {errors.email}</span>}
+                          {errors.email && (
+                            <span className="text-red"> {errors.email}</span>
+                          )}
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input type="text" required maxLength={10}  value={mobile} onChange={handleMobileNumberChange}/>
+                          <input
+                            type="text"
+                            required
+                            maxLength={10}
+                            value={mobile}
+                            onChange={handleMobileNumberChange}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                          {translate("Phone Number")} <span className="text-red">*</span>
+                            {translate("Phone Number")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-input spacing">
-                          <input type="password" required  value={password} onChange={handlePassword}/>
+                          <input
+                            type="password"
+                            required
+                            value={password}
+                            onChange={handlePassword}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                          {translate("Password")} <span className="text-red">*</span>
+                            {translate("Password")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                           <span>
-                          {translate("At least 8 characters include uppercase and lowercase letters, numbers and special characters")}
+                            {translate(
+                              "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
+                            )}
                           </span>
                           {/* {errors.password && <div className='text-red'> {errors.password}</div>} */}
 
-                          {passwordError && <div className="text-red">{passwordError}</div>}
+                          {passwordError && (
+                            <div className="text-red">{passwordError}</div>
+                          )}
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-input spacing">
-                          <input type="password" required className="mb-2"  onChange={handlePasswordChange}/>
+                          <input
+                            type="password"
+                            required
+                            className="mb-2"
+                            onChange={handlePasswordChange}
+                          />
                           <label className="lh-1 text-16 text-light-1">
-                          {translate("Confirm Password")} <span className="text-red">*</span> 
+                            {translate("Confirm Password")}{" "}
+                            <span className="text-red">*</span>
                           </label>
                           {error && <div className="text-red">{error}</div>}
                         </div>
@@ -474,7 +616,10 @@ const handleMobileNumberChange = (e) => {
                             </div>
                           </div>
                           <span className="text-14 lh-12 ml-10">
-                          <span className="text-red">*</span> {translate("I have read the data protection and I accept the conditions.")}
+                            <span className="text-red">*</span>{" "}
+                            {translate(
+                              "I have read the data protection and I accept the conditions."
+                            )}
                           </span>
                         </label>
                       </div>
@@ -482,7 +627,10 @@ const handleMobileNumberChange = (e) => {
 
                     <div className="col-12">
                       <div className="flex-center">
-                        <button type="submit" className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3">
+                        <button
+                          type="submit"
+                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                        >
                           Submit
                         </button>
                       </div>
@@ -494,8 +642,7 @@ const handleMobileNumberChange = (e) => {
           </form>
         </div>
       </div>
-      <FooterTwo/>
-      
+      <FooterTwo />
     </>
   );
 };
