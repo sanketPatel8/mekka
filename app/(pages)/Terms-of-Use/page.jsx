@@ -1,4 +1,6 @@
 
+"use client" ;
+import { useTranslation } from '@/app/context/TranslationContext'
 import FooterOne from '@/components/layout/footers/FooterOne'
 import FooterTwo from '@/components/layout/footers/FooterTwo'
 import Header1 from '@/components/layout/header/Header1'
@@ -6,6 +8,8 @@ import Link from 'next/link'
 
 
 const TermsofUse = () => {
+
+  const {translate} = useTranslation();
    
   return (
     <>
@@ -13,7 +17,7 @@ const TermsofUse = () => {
     <div className='container'>
       <br /><br /><br /><br />
     <h1 className='text-start'>AGB</h1>    
-    <p className="text-center">Allgemeine Geschäftsbedingungen der Mekka Booking GmbH.</p>
+    <p className="text-center">{translate("General Terms and Conditions of Mekka Booking GmbH")}</p>
 
     <p className="text-start"><b>§ 1 Geltungsbereich</b></p><br/>
 
@@ -27,7 +31,7 @@ const TermsofUse = () => {
 
     <hr />
 
-    <p className="text-start"><b>§ 2 Zustandekommen des Vertrages mit Drittanbietern</b></p><br/>
+    <p className="text-start"><b>§ 2 {translate("Conclusion of the contract with third-party providers")}</b></p><br/>
 
     <p className="text-start">(1) Die Darstellung der Drittanbieterleistungen auf unserer Website sowie die fernmündlich oder per E-Mail von uns vorgestellten Drittanbieterleistungen stellen kein rechtlich bindendes Angebot, sondern eine Aufforderung zur Buchung (invitatio ad offerendum) dar.</p>
 
