@@ -226,9 +226,8 @@ export default function TourSingleSidebar({
         setTotal("0.00");
       }
     } else {
-      // Handle cases where SidebarData or tour_price is not defined as expected
       console.warn("SidebarData or tour_price is not defined correctly.");
-      setTotal("0.00"); // Set a default total if the data is not available
+      setTotal("0.00"); 
     }
   }, [
     SidebarData,

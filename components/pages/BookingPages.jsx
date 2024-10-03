@@ -1240,7 +1240,10 @@ export default function BookingPages({ BookingData }) {
                       </div>
                       <div className="text-start">
                         {translate("Offered Languages")} :{" "}
-                        {BookingSideBar?.OfferedLanguages}
+                        {/* {BookingSideBar?.OfferedLanguages} */}
+                        {BookingSideBar?.OfferedLanguages?.length > 0
+                        ? BookingSideBar.OfferedLanguages.join(", ")
+                        : translate("No Languages Available")}
                       </div>
                     </div>
 
