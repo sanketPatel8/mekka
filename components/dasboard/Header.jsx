@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Language from "../layout/components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
+import Currency from "../layout/components/Currency";
 
 export default function Header({ setSideBarOpen }) {
   const { handleRedirect } = Useauthredirect();
@@ -23,6 +24,8 @@ export default function Header({ setSideBarOpen }) {
       setLocale(cookies.locale);
     }
   }, []);
+
+  const [currenyLocale, setCurrencyLocale] = useState("Euro");
 
   const { translate } = useTranslation(locale);
 
@@ -51,6 +54,9 @@ export default function Header({ setSideBarOpen }) {
             onLocaleChange={setLocale}
             locale={locale}
           />
+        </div>
+        <div>
+        <Currency currenyLocale={currenyLocale} />
         </div>
 
         {/* <div className="rounded-circle">
