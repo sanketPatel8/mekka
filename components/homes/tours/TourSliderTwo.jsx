@@ -17,9 +17,10 @@ import { showErrorToast } from "@/app/utils/tost";
 export default function TourSliderTwo({ setLength }) {
   const [showSwiper, setShowSwiper] = useState(false);
   const [BestSellerData, setBestSellerData] = useState([]);
+  const [ShowSlide, setShowSlide] = useState(0)
   useEffect(() => {
     setShowSwiper(true);
-    HandleLoginSubmite(BestSellerData.length);
+    HandleLoginSubmite();
   }, []);
 
   useEffect(() => {
@@ -30,6 +31,8 @@ export default function TourSliderTwo({ setLength }) {
     const BookingLoginData = { AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY };
     try {
       const response = await post("best_seller_tour", BookingLoginData);
+      const maxSlide = response?.Tours?.length >= 2 ? 2 : 1;
+      setShowSlide(maxSlide)
       setBestSellerData(response?.Tours);
     } catch (error) {
       console.error("Error:", error); // Log the full error for debugging
@@ -44,10 +47,6 @@ export default function TourSliderTwo({ setLength }) {
       }
     }
   };
-
-  const maxSlide = BestSellerData.length >= 2 ? '2' : '1';
-  
-  console.log("maxSlide" , maxSlide);
   
 
   const { translate } = useTranslation();
@@ -66,7 +65,7 @@ export default function TourSliderTwo({ setLength }) {
               data-aos-delay=""
               className="swiper-wrapper "
             >
-              {showSwiper && (
+              {showSwiper && ShowSlide !== 0  && (
                 <Swiper
                   spaceBetween={30}
                   className="w-50"
@@ -87,10 +86,10 @@ export default function TourSliderTwo({ setLength }) {
                       slidesPerView: 1,
                     },
                     1024: {
-                      slidesPerView: 2,
+                      slidesPerView: ShowSlide,
                     },
                     1200: {
-                      slidesPerView: maxSlide ,
+                      slidesPerView: ShowSlide ,
                     },
                   }}
                 >
