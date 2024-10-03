@@ -171,6 +171,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
                 onChange={handleChange}
                 className="dd-statusChange"
                 isClearable
+                placeholder="Select Status"
               />
             </div>
           </div>

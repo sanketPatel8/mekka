@@ -262,7 +262,7 @@ export default function DBListing() {
                               / {elm.capacity}
                             </p>
                             <p className="text-center">
-                              {translate("Total")} : €{elm.tour_price}{" "}
+                              {translate("Total")} : {elm.tour_price} €
                             </p>
                           </div>
 

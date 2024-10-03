@@ -176,7 +176,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
               </div>
 
               <div className="row y-gap-15">
-                <div className="col-lg-6 col-12">
+                <div className=" col-12">
                   <button
                     type="submit"
                     className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"

@@ -61,6 +61,12 @@ export default function DBListing() {
         width: "10%",
       },
       {
+        name: translate("Due (€) "),
+        selector: (row) => row.pending_payment,
+        sortable: true,
+        width: "10%",
+      },
+      {
         name: translate("Date "),
         selector: (row) => row.Booking_date,
         sortable: true,
@@ -80,14 +86,14 @@ export default function DBListing() {
       {
         id: 1,
         title: "Total Earnings",
-        amount: `${Total_Earnings}`,
+        amount: `${Total_Earnings} €`,
         today: "50 €",
         iconClass: "icon-wallet text-accent-1",
       },
       {
         id: 2,
         title: "Total Pending",
-        amount: `${Total_Pending}`,
+        amount: `${Total_Pending} €`,
         today: "40+",
         iconClass: "icon-payment text-accent-1",
       },
@@ -114,6 +120,7 @@ export default function DBListing() {
         Total_Payment: payment.total,
         Booking_date: payment.date,
         Transation_id: payment.transaction_id,
+        pending_payment:payment.pending_payment
       }));
       setPayment(bookingData);
 
