@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
+import { IoClose } from "react-icons/io5";
 import { post } from "@/app/utils/api";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 const customStyles = {
@@ -90,6 +91,7 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
                 const newAmount = paymentIntent.amount / 100;
                 showSuccessToast("Payment successful");
                 addBooking(paymentIntent.id, newAmount);
+                
             }
         }
 
@@ -107,6 +109,7 @@ export default function CheckoutForm({  showStripeModal, handleClose, Booking,se
 
             
 
+        <button onClick={handleClose}><IoClose size={20}/></button>
 
 
                 <form className="position-relative" id="payment-form" onSubmit={handleSubmit}>
