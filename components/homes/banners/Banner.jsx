@@ -1,11 +1,17 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import TourSliderTwo from "../tours/TourSliderTwo";
 import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Banner() {
   const { translate } = useTranslation();
+  const [Length, setLength] = useState(0)
+
+  console.log("Length" , Length); 
+  
   return (
     <section className="cta -type-3">
       <div className="cta__bg">
@@ -53,8 +59,8 @@ export default function Banner() {
               </div>
             </div>
           </div>
-          <div className="col-md-7">
-            <TourSliderTwo />
+          <div className={`${Length <= 1 ? 'col-md-4' : 'col-md-7'}`}>
+            <TourSliderTwo  setLength={setLength}/>
           </div>
         </div>
       </div>
