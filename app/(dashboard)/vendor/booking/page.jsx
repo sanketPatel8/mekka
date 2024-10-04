@@ -40,44 +40,37 @@ export default function DbBooking() {
       {
         name: translate("Id"),
         selector: (row) => row.BookingId,
-        width: "5%",
         sortable: true,
       },
       {
         name: translate("Booking No."),
         selector: (row) => row.BookingNo,
-        width: "10%",
 
         sortable: true,
       },
       {
         name: translate("Status"),
         selector: (row) => row.Status,
-        width: "8%",
         sortable: true,
       },
       {
         name: translate("Full Name"),
         selector: (row) => row.Full_Name,
-        width: "10%",
         sortable: true,
       },
       {
         name: translate("Tour Name"),
         selector: (row) => row.Tour_name,
-        width: "10%",
         sortable: true,
       },
       {
         name: translate("Total (€) "),
         selector: (row) => row.Total_Payment,
-        width: "7%",
         sortable: true,
       },
       {
         name: translate("Pending (€) "),
         selector: (row) => row.Pending_Payment,
-        width: "8%",
         sortable: true,
       },
    
@@ -85,24 +78,20 @@ export default function DbBooking() {
         name: translate("Method "),
         selector: (row) => row.Payment_Method,
         sortable: true,
-        width: "10%",
       },
       {
         name: translate("Visas"),
         selector: (row) => row.Visas,
-        width: "6%",
         sortable: true,
       },
       {
         name: translate("Flight"),
         selector: (row) => row.Flight,
-        width: "6%",
         sortable: true,
       },
       {
         name: translate("Initiated By"),
         selector: (row) => row.Initiated_By_Admin,
-        width: "8%",
         sortable: true,
       },
       {
@@ -117,7 +106,6 @@ export default function DbBooking() {
             </button>
           </Link>
         ),
-        width: "10%",
       },
     ];
 

@@ -99,146 +99,146 @@ const TermsofUse = () => {
 
     <p className="text-start"><b> 8 {translate("Customer's obligation to cooperate")}</b></p><br/>
 
-    <p className="text-start">(1) Für die Vollständigkeit und Richtigkeit sämtlicher von Ihnen im Rahmen des Buchungsprozesses eingegebenen oder sonst übermittelten Daten sind ausschließlich Sie verantwortlich. Änderungen der eingegebenen oder sonst übermittelten Daten haben Sie uns unverzüglich mitzuteilen.</p>
+    <p className="text-start">(1) {translate("You are solely responsible for the completeness and accuracy of all data entered or otherwise transmitted by you during the booking process. You must inform us immediately of any changes to the data entered or otherwise transmitted.")}</p>
 
-    <p className="text-start">(2) Sie werden in Ihrem eigenen Interesse gebeten, uns auf besondere Bedürfnisse oder Einschränkungen im Hinblick auf die nachgefragten Touristikleistungen hinzuweisen.</p>
+    <p className="text-start">(2) {translate("In your own interest, you are requested to inform us of any special needs or restrictions with regard to the tourism services requested.")}</p>
 
-    <p className="text-start">(3) Im Fall der Übermittlung vorsätzlich falscher oder unwahrer Daten behalten wir uns vor, den Ersatz für dadurch eingetretene Schäden zu verlangen.</p>
-
-    <hr />
-
-    <p className="text-start"><b>§ 9 Verarbeitung personenbezogener Daten</b></p><br/>
-
-    <p className="text-start">Wir dürfen die betreffenden Daten zur Erfüllung unserer vertraglichen Pflichten im Rahmen der geltenden gesetzlichen Vorschriften verarbeiten und speichern. Für Informationen zur Verarbeitung Ihrer Daten lesen Sie bitte unsere Datenschutzinformation, die Sie unter folgendem Link <Link rel="stylesheet" href="" >https://mekkabooking.de/Datenschutz</Link> abrufen können.</p>
+    <p className="text-start">(3) {translate("In the event of intentionally false or untrue data being transmitted, we reserve the right to demand compensation for any damage caused as a result.")}</p>
 
     <hr />
 
-    <p className="text-start"><b>§ 10 Preise und Zahlungsbedingungen</b></p><br/>
+    <p className="text-start"><b> 9 {translate("Processing of personal data")}</b></p><br/>
 
-    <p className="text-start">(1) Sämtliche Preisangaben auf unserer Website sind Bruttopreise inklusive der gesetzlichen Umsatzsteuer.</p>
-
-    <p className="text-start">(2) Für die Preise bei der Vermittlung von Flugbeförderungsleistungen von Fluggesellschaften gilt:</p>
-
-    <p className='text-start pl-5'>a) Die angegebenen und in Rechnung gestellten Preise sind Preise der Fluggesellschaften, die keine Provision oder ein sonstiges Entgelt der Fluggesellschaft für die Tätigkeit von Mekkabooking beinhalten.</p>
-
-    <p className='text-start pl-5'>b) Die Vergütung von Mekkabooking für die Erbringung der Vermittlungstätigkeit im Rahmen des vom Kunden zu bezahlenden Buchungsentgelt.</p>
-
-    <p className='text-start pl-5'>c) Das für die Vermittlungstätigkeit von Mekkabooking anfallende Serviceentgelte im Zusammenhang mit der Flugbuchung ergibt sich, soweit im Einzelfall nichts anderes vereinbart ist, aus den dem Kunden im Buchungsprozess bekannt gegebenen Entgelten.</p>
-
-    <p className="text-start">(3) Die Zahlung von Serviceentgelten für die Vermittlung sonstiger Touristikleistungen durch den Kunden, bedarf einer entsprechenden ausdrücklichen Vereinbarung. Vorbehaltlich einer solchen Vereinbarung erfolgt die Vermittlungstätigkeit unentgeltlich.</p>
-
-    <p className="text-start">(4) Der Anspruch von Mekkabooking auf Serviceentgelte bleibt durch Leistungsstörungen oder Änderungen, insbesondere Umbuchung, Namenswechsel, Rücktritt, Stornierung oder Kündigung des vermittelten Vertrages durch den Anbieter oder den Kunden unberührt. Dies gilt nicht, soweit dem Kunden ein Schadensersatzanspruch gegen uns wegen Verletzung der Beratungs- oder Vermittlungspflichten zusteht.</p>
+    <p className="text-start">{translate("We may process and store the data in question to fulfill our contractual obligations within the framework of the applicable legal regulations. For information on the processing of your data, please read our data protection information, which you can access at the following link")} <Link rel="stylesheet" href="" >https://mekkabooking.de/Datenschutz</Link> .</p>
 
     <hr />
 
-    <p className="text-start"><b>§ 11 Zahlungsbedingungen der Drittanbieter</b></p><br/>
+    <p className="text-start"><b> 10 {translate("Prices and payment terms")}</b></p><br/>
 
-    <p className="text-start">(1) Die Vergütung und Zahlung der gebuchten Touristikleistungen bestimmt sich nach den Vereinbarungen mit dem jeweiligen Drittanbieter.</p>
+    <p className="text-start">(1) {translate("All prices stated on our website are gross prices including statutory sales tax.")}</p>
 
-    <p className="text-start">(2) Der Drittanbieter kann vom Kunden einen Teil der vereinbarten Vergütung im Voraus als Anzahlung verlangen. Soweit es sich um Reisen im Sinne der §§ 651a ff. BGB handelt, darf eine Anzahlung nur gegen bzw. nach Übermittlung eines Sicherungsscheines mit Namen und Kontaktdaten des Kundengeldabsicherers des Drittanbieters verlangt werden.</p>
+    <p className="text-start">(2) {translate("The following applies to prices for arranging truck transport services from airlines:")}</p>
 
-    <p className="text-start">(3) Die Fälligkeit der Zahlung richtet sich nach den jeweiligen Vereinbarungen mit dem Drittanbieter. Restzahlungen auf Reisen im Sinne der §§ 651a ff. BGB werden spätestens mit Aushändigung oder Zugang des Reiseplans bzw. der Reiseunterlagen fällig. Abweichend von Vorstehendem werden Zahlungen für Luftbeförderungsverträge vorbehaltlich anderweitiger Vereinbarungen im Regelfall sofort bei Zugang der Bestätigung der Fluggesellschaft fällig. Entsprechendes gilt bei Mietwagen.</p>
+    <p className='text-start pl-5'>a) {translate("The prices indicated and invoiced are airline prices and do not include any commission or other fee charged by the airline for Mekkabooking's activities.")}</p>
 
-    <p className="text-start">(4) Abhängig von den gebuchten Touristikleistungen erfolgt der Zahlungseinzug durch den jeweiligen Drittanbieter, durch Mekkabooking oder durch einen zum Forderungseinzug eingesetzten Dienstleister. Soweit Mekkabooking oder ein von ihr zum Zahlungseinzug eingesetzter Dienstleister Touristikleistungen in Rechnung stellt und Zahlungen einzieht, geschieht dies im Namen und auf Rechnung des jeweiligen Drittanbieters. Ist Mekkabooking Inkassobevollmächtigte des Drittanbieters, gelten die vorstehenden Regelungen entsprechend für Stornokosten (Rücktrittsentschädigungen) und sonstige gesetzlich oder vertraglich begründete Forderungen des vermittelten Drittanbieters.
+    <p className='text-start pl-5'>b) {translate("The remuneration of Mekkabooking for the provision of the brokerage activity within the framework of the booking fee to be paid by the customer.")}</p>
+
+    <p className='text-start pl-5'>c) {translate("The service fees incurred by Mekkabooking for its brokerage activities in connection with the flight booking result, unless otherwise agreed in individual cases, from the fees communicated to the customer during the booking process.")}</p>
+
+    <p className="text-start">(3) {translate("The payment of service fees for the provision of other tourism services by the customer requires an appropriate express agreement. Subject to such an agreement, the brokerage activity is free of charge.")}</p>
+
+    <p className="text-start">(4) {translate("Mekkabooking's claim to service fees remains unaffected by service disruptions or changes, in particular rebooking, name changes, withdrawal, cancellation or termination of the brokered contract by the provider or the customer. This does not apply if the customer is entitled to a claim for damages against us due to a breach of the advisory or brokerage obligations.")}</p>
+
+    <hr />
+
+    <p className="text-start"><b> 11 {translate("Payment terms of third-party providers")}</b></p><br/>
+
+    <p className="text-start">(1) {translate("The remuneration and payment of the booked tourism services is determined according to the agreements with the respective third-party provider.")}</p>
+
+    <p className="text-start">(2) {translate("The third-party provider can demand part of the agreed remuneration from the customer in advance as a deposit. In the case of trips within the meaning of §§ 651a ff. BGB, a deposit may only be demanded against or after submission of a security certificate with the name and contact details of the third-party provider's customer money insurer.")}</p>
+
+    <p className="text-start">(3) {translate("The due date of payment depends on the respective agreements with the third-party provider. Remaining payments for trips within the meaning of §§ 651a ff. BGB are due at the latest upon delivery or receipt of the travel plan or travel documents. Deviating from the above, payments for air transport contracts are usually due immediately upon receipt of the airline's confirmation, unless otherwise agreed. The same applies to rental cars.")}</p>
+
+    <p className="text-start">(4) {translate("Depending on the tourism services booked, payment is collected by the respective third-party provider, by Mekkabooking or by a service provider appointed to collect the debt. If Mekkabooking or a service provider appointed by it to collect payments invoices tourism services and collects payments, this is done in the name and on behalf of the respective third-party provider. If Mekkabooking is the third-party provider's authorized collection agent, the above regulations apply accordingly to cancellation costs (cancellation compensation) and other legally or contractually justified claims of the third-party provider.")}
 
     </p>
 
-    <p className="text-start">(5) Die Bezahlung der gebuchten Touristikleistungen kann im Falle des Abs. 4 per</p>
+    <p className="text-start">(5) {translate("In the case of paragraph 4, payment for the booked tourist services can be made by")}</p>
 
-    <p className="text-start pl-5">- per Maestro- oder Kreditkarte (VISA, MasterCard, American Express) oder</p>
+    <p className="text-start pl-5">- {translate("by Maestro or credit card (VISA, MasterCard, American Express) or")}</p>
 
-    <p className="text-start pl-5">- per SEPA-Banklastschrift erfolgen.</p>
+    <p className="text-start pl-5">- {translate("by SEPA direct debit.")}</p>
 
-    <p>Einzelheiten zu den vom Drittanbieter angebotenen Zahlungsmitteln können Sie den Angaben im Buchungsverlauf und en Geschäftsbedingungen des jeweiligen Drittanbieters entnehmen.</p>
+    <p>{translate("Details of the payment methods offered by the third-party provider can be found in the booking history and the terms and conditions of the respective third-party provider.")}</p>
     
-    <p>(6) Mekkabooking ist berechtigt, im Namen des Drittanbieters den Preis für die gebuchten Touristikleistungen gegenüber dem Kunden geltend zu machen. Mekkabooking versichert, Inkassovollmacht zu besitzen.</p>
+    <p>(6) {translate("Mekkabooking is entitled to claim the price for the booked tourism services from the customer on behalf of the third-party provider. Mekkabooking assures that it has the authority to collect the payment.")}</p>
 
-    <p>geltend zu machen. Mekkabooking versichert, Inkassovollmacht zu besitzen.
+    <p>{translate("Mekkabooking assures that it has the authority to collect payments.")}
 
-    (7) Wir behalten uns das Recht vor, etwaige Rückbelastungsentgelte bei nicht eingelösten Kreditkartenbelastungen oder Banklastschriften dem Kunden in Rechnung zu stellen.</p>
+    (7) {translate("We reserve the right to charge the customer any chargeback fees for unredeemed credit card charges or bank direct debits.")}</p>
     <hr />
 
-    <p><b>§ 12 Vertragsänderung beim Drittanbieter</b></p>
+    <p><b> 12 {translate("Contract change with the third-party provider")}</b></p>
 
-    <p>(1) Nach Abschluss des Vertrages mit dem Drittanbieter richten sich die Bedingungen für von Ihnen veranlasste oder gewünschte Vertragsänderungen (z.B. Umbuchung) nach den Bedingungen des jeweiligen Drittanbieters. Mekkabooking ist berechtigt, Ihnen das vom Reiseveranstalter hierfür verlangte Umbuchungsentgelt im Namen des jeweiligen Drittanbieters in Rechnung zu stellen und den Betrag einzuziehen.</p>
+    <p>(1) {translate("After the contract with the third-party provider has been concluded, the conditions for any contract changes you request or request (e.g. rebooking) are based on the conditions of the respective third-party provider. Mekkabooking is entitled to invoice you for the rebooking fee requested by the tour operator on behalf of the respective third-party provider and to collect the amount.")}</p>
 
-    <p>(2) Sonderwünsche nimmt Mekkabooking nur zur Weiterleitung an den zu vermittelnden Drittanbieter entgegen. Soweit nichts anderes ausdrücklich vereinbart ist, hat Mekkabooking für die Erfüllung solcher Sonderwünsche nicht einzustehen. Diese sind auch nicht Bedingung oder Vertragsgrundlage für den Vermittlungsauftrag oder für von Mekkabooking an den Drittanbieter einer Pauschalreise zu übermittelnde Buchungserklärung. Wir weisen Sie ausdrücklich darauf hin, dass Sonderwünsche im Regelfall nur durch ausdrückliche Bestätigung des Drittanbieters der Pauschalreise zum Inhalt der vertraglichen Verpflichtungen werden.</p>
+    <p>(2) {translate("Mekkabooking only accepts special requests for forwarding to the third-party provider. Unless otherwise expressly agreed, Mekkabooking is not responsible for fulfilling such special requests. Nor are they a condition or contractual basis for the brokerage order or for the booking declaration to be sent by Mekkabooking to the third-party provider of a package tour. We expressly point out that special requests generally only become part of the contractual obligations if expressly confirmed by the third-party provider of the package tour.")}</p>
 
-    <p>(3) Sofern Sie Sonder- und Charterflüge gebucht haben, können Sie sich bis zum Reisebeginn bei der Durchführung der Reise durch einen Dritten ersetzen lassen. Hierdurch entstehende Mehrkosten gehen zu Ihren Lasten. Die Höhe der Mehrkosten wird stets durch den Drittanbieter bestimmt und kann je nach zeitlicher Nähe des Abreisetages sehr stark variieren. Der leistende Drittanbieter kann dem Wechsel in der Person des Reisenden widersprechen, wenn der Dritte den besonderen Reiseerfordernissen nicht genügt oder gesetzliche Vorschriften oder behördliche Anordnungen entgegenstehen.</p>
+    <p>(3) {translate("If you have booked special and charter flights, you can have a third party replace you in the execution of the trip up until the start of the trip. Any additional costs incurred as a result of this will be at your expense. The amount of the additional costs is always determined by the third party provider and can vary greatly depending on how close the departure date is. The third party provider can object to the change in the person of the traveler if the third party does not meet the special travel requirements or if legal regulations or official orders conflict with this.")}</p>
 
-    <p>(4) In jedem Fall haben die mit dem jeweiligen Drittanbieter vereinbarten Bedingungen Vorrang.</p>
+    <p>(4) {translate("In any case, the terms and conditions agreed with the respective third-party provider shall prevail.")}</p>
     <hr />
 
-    <p>§ 13 Vertragsbeendigung mit Drittanbieter</p>
+    <p><b> 13 {translate("Termination of contract with third-party provider")}</b></p>
 
-    <p>(1) Im Falle einer vermittelten Pauschalreise sind Sie berechtigt jederzeit vor Reisebeginn vom Vertrag mit dem jeweiligen Drittanbieter zurückzutreten. Wir weisen Sie daraufhin, dass der Reiseveranstalter von Ihnen eine angemessene Entschädigung verlangen kann (Rücktrittsgebühr), es sei denn, dass am Bestimmungsort oder in dessen unmittelbarer Nähe unvermeidbare, außergewöhnliche Umstände auftreten, die die Durchführung der Reise oder die Personenbeförderung an den Bestimmungsort erheblich beeinträchtigen.</p>
+    <p>(1) {translate("In the case of a package tour arranged by us, you are entitled to withdraw from the contract with the respective third-party provider at any time before the start of the trip. We would like to point out that the tour operator can demand appropriate compensation from you (cancellation fee), unless unavoidable, extraordinary circumstances occur at the destination or in its immediate vicinity that significantly affect the implementation of the trip or the transport of people to the destination.")}</p>
 
-    <p>(2) Die Bedingungen für die Vertragsbeendigung, insbesondere durch Rücktritt und/oder Stornierungen richten sich ausschließlich nach denn Vertragsbedingungen mit dem jeweiligen Drittanbieter.</p>
+    <p>(2) {translate("The conditions for termination of the contract, in particular through withdrawal and/or cancellation, are based exclusively on the contractual conditions with the respective third-party provider.")}</p>
 
-    <p>(3) Mekkabooking ist ermächtigt, Rücktritts- und/oder Stornierungserklärungen für den Drittanbieter entgegenzunehmen.</p>
+    <p>(3) {translate("Mekkabooking is authorized to accept declarations of withdrawal and/or cancellation on behalf of the third-party provider.")}</p>
 
-    <p>(4) Wir weisen Sie darauf hin, dass im Falle der Stornierung von gebuchten Linienflügen Stornogebühren bei der jeweiligen Fluggesellschaft (IATA-Richtlinie) anfallen können.</p>
+    <p>(4) {translate("Please note that in the event of cancellation of booked scheduled flights, cancellation fees may be charged by the respective airline (IATA guidelines).")}</p>
     <hr />
 
-    <p><b>§ 14 Reiseversicherungen</b></p>
+    <p><b> 14 {translate("Travel insurance")}</b></p>
 
-    <p>(1) Zur Minimierung eines Kostenrisikos bei von Ihnen erklärten Stornierungen, weisen wir auf die Möglichkeit zum Abschluss einer Reiserücktrittskostenversicherung bei Buchung der Touristikleistungen hin.</p>
+    <p>(1) {translate("In order to minimize the risk of costs in the event of cancellations by you, we would like to point out the possibility of taking out travel cancellation insurance when booking the tourism services.")}</p>
 
-    <p>(2) Wir weisen weiterhin darauf hin, dass eine Reiserücktrittskostenversicherung üblicherweise nicht den entstehenden Schaden abdeckt, der Ihnen durch einen - auch unverschuldeten - Abbruch der Inanspruchnahme der Pauschalreise nach deren Antritt entstehen kann. Eine Reiseabbruchversicherung ist in der Regel gesondert abzuschließen.</p>
+    <p>(2) {translate("We would also like to point out that travel cancellation insurance does not usually cover the damage that may arise if you cancel your package holiday after it has started - even if this is not your fault. Travel cancellation insurance must usually be taken out separately.")}</p>
 
-    <p>(3) Wir empfehlen bei Reisen ins nichteuropäische Ausland zudem auf einen ausreichenden Auslandskrankenversicherungsschutz zu achten.</p>
+    <p>(3) {translate("We also recommend that you ensure you have adequate international health insurance coverage when travelling outside of Europe.")}</p>
 
-    <p>(4) Maßgeblich für den Abschluss und Umfang von Reiseversicherungen sind die mit dem Versicherer vereinbarten Versicherungsbedingungen. Wir weisen Sie darauf hin, dass diese Bedingungen besondere Vertragsbedingungen und/oder Mitwirkungspflichten, insbesondere Haftungsausschlüsse (z.B. bei Vorerkrankungen), die Obliegenheit zur unverzüglichen Stornierung sowie Fristen für die Schadensanzeige und Selbstbehalte enthalten können.</p>
+    <p>(4) {translate("The insurance terms and conditions agreed with the insurer are decisive for the conclusion and scope of travel insurance. We would like to point out that these terms and conditions may contain special contractual conditions and/or obligations to cooperate, in particular exclusions of liability (e.g. in the case of pre-existing medical conditions), the obligation to cancel immediately, as well as deadlines for reporting damages and deductibles.")}</p>
 
-    <p>(5) Im Fall der Vermittlung von Reiseversicherungen haftet Mekkabooking nicht für den eingetretenen Versicherungsfall, soweit wir keine Falschauskunft bezüglich der Versicherungsbedingungen getätigt haben und dem Versicherer aufgrund wirksam vereinbarter Versicherungsbedingungen ein Leistungsverweigerungsrecht gegenüber Ihnen zusteht.</p>
+    <p>(5) {translate("In the case of travel insurance brokerage, Mekkabooking is not liable for the insurance event that has occurred, provided that we have not provided false information regarding the insurance conditions and the insurer has the right to refuse payment to you due to effectively agreed insurance conditions.")}</p>
     <hr />
 
-    <p><b>§ 15 Haftung</b></p>
+    <p><b> 15 {translate("Liability")}</b></p>
 
-    <p>(1) Wir übernehmen keinerlei Gewähr für die Richtigkeit, Vollständigkeit und Zuverlässigkeit von sonstigen Inhalten Dritter, insbesondere Landkarten, automatischen Übersetzungen, Kundenbewertungen, redaktionellen Texten und Bildern zu Orten und Regionen. Auf unserer Website angezeigte Geodaten, insbesondere Kartendarstellungen, dienen lediglich der unverbindlichen Orientierung über die örtliche Position des Angebots. Maßgeblich für den Vertragsschluss sind jedoch allein die Ortsangaben, die Ihnen im Angebot innerhalb des Online- Buchungsvorgangs und/oder in der Reisebestätigung gemacht werden. Der Ausschluss gilt nicht, soweit uns fehlerhafte und/oder unrichtige Angaben bekannt waren oder bei Anwendung der erforderlichen Sorgfalt hätten bekannt sein müssen.</p>
+    <p>(1) {translate("We assume no liability for the accuracy, completeness and reliability of other third-party content, in particular maps, automatic translations, customer reviews, editorial texts and images of places and regions. Geodata displayed on our website, in particular map representations, are intended solely as a non-binding guide to the local position of the offer. However, the location information provided to you in the offer during the online booking process and/or in the travel confirmation is the only decisive factor for the conclusion of the contract. The exclusion does not apply if we were aware of incorrect and/or inaccurate information or should have been aware of it if we had exercised the necessary care.")}</p>
 
-    <p>(2) Wir haften auf Schadens- und Aufwendungsersatz bei schuldhafter Verletzung des Lebens, des Körpers und der Gesundheit sowie bei Vorsatz und grober Fahrlässigkeit. Gleiches gilt für die Haftung unserer gesetzlichen Vertreter oder Erfüllungsgehilfen.</p>
+    <p>(2) {translate("We are liable for damages and reimbursement of expenses in the event of culpable injury to life, body or health as well as in the event of intent and gross negligence. The same applies to the liability of our legal representatives or vicarious agents.")}</p>
 
-    <p>(3) Wir haften ferner bei leicht fahrlässiger Verletzung einer wesentlichen Vertragspflicht (Kardinalpflicht). Wesentliche Vertragspflichten sind solche, deren Erfüllung die ordnungsgemäße Durchführung des Vertrags überhaupt erst ermöglicht und auf deren Einhaltung der Kunde regelmäßig vertrauen darf. Bei der Verletzung wesentlicher Vertragspflichten ist die Haftung jedoch der Höhe nach auf den Ersatz des vertragstypisch vorhersehbaren Schadens begrenzt.</p>
+    <p>(3) {translate("We are also liable for slightly negligent breach of a material contractual obligation (cardinal obligation). Material contractual obligations are those whose fulfilment enables the proper execution of the contract in the first place and whose compliance the customer can regularly rely on. In the event of a breach of material contractual obligations, however, liability is limited to compensation for the damage typically foreseeable under the contract.")}</p>
 
-    <p>(4) Jede weitere Haftung auf Schadens- und Aufwendungsersatz - gleich aus welchem Rechtsgrund - ist ausgeschlossen, insbesondere ist die Haftung ohne Verschulden ausgeschlossen. Die Haftung nach dem Produkthaftungsgesetz sowie die Haftung für Buchungsfehler nach § 651x BGB bleibt davon unberührt.</p>
+    <p>(4) {translate("Any further liability for damages and reimbursement of expenses - regardless of the legal basis - is excluded, in particular liability without fault is excluded. Liability under the Product Liability Act and liability for booking errors under Section 651x of the German Civil Code remain unaffected.")}</p>
 
-    <p>(5) Die vorstehenden Bestimmungen gelten auch zugunsten unserer gesetzlichen Vertreter und Erfüllungsgehilfen, wenn Ansprüche direkt gegen diese geltend gemacht werden. Wir weisen darauf hin, dass die vermittelten Drittanbieter keine Erfüllungsgehilfen oder gesetzlichen Vertreter von uns sind.</p>
+    <p>(5) {translate("The above provisions also apply to our legal representatives and vicarious agents if claims are asserted directly against them. We would like to point out that the third-party providers we use are not vicarious agents or legal representatives of us.")}</p>
 
-    <p>(6) Mekkabooking haftet nicht für die Verletzung von Vertragspflichten aus dem mit dem jeweiligen Drittanbieter geschlossenen Vertrag über die Erbringung von Touristikleistungen. Sämtliche vertragliche oder gesetzliche Ansprüche aus diesem Vertrag sind grundsätzlich gegenüber dem jeweiligen Drittanbieter geltend zu machen. Bezüglich etwaiger Ansprüche des Kunden gegenüber dem vermittelten Drittanbieter besteht keine Pflicht von Mekkabooking zur Beratung über Art, Umfang, Höhe, Anspruchsvoraussetzungen und einzuhaltende Fristen oder sonstige rechtliche Bestimmungen.</p>
+    <p>(6) {translate("Mekkabooking is not liable for the violation of contractual obligations from the contract concluded with the respective third-party provider for the provision of tourism services. All contractual or legal claims arising from this contract must be asserted against the respective third-party provider. With regard to any claims made by the customer against the third-party provider, Mekkabooking is not obliged to advise on the type, scope, amount, eligibility requirements and deadlines to be observed or other legal provisions.")}</p>
 
-    <p>(7) Handelt es sich bei den vermittelten Touristikleistungen um eine Pauschalreise im Sinne des § 651a BGB, gelten wir als vom Reiseveranstalter (Drittanbieter) bevollmächtigt, Mängelanzeigen sowie andere Erklärungen des Kunden bezüglich der Pauschalreise entgegenzunehmen. Mekkabooking wird den Drittanbieter unverzüglich von solchen Erklärungen des Kunden in Kenntnis setzen. Zur Vermeidung von Zeitverlusten empfehlen wir jedoch entsprechende Erklärungen unmittelbar gegenüber der Reiseleitung oder der Kontaktstelle des Drittanbieters abzugeben.</p>
+    <p>(7) {translate("If the travel services arranged are a package tour within the meaning of Section 651a of the German Civil Code (BGB), we are deemed to be authorized by the tour operator (third-party provider) to accept notifications of defects and other statements from the customer regarding the package tour. Mekkabooking will immediately inform the third-party provider of such statements from the customer. However, to avoid wasting time, we recommend making the relevant statements directly to the tour guide or the third-party provider's contact point.")}</p>
 
-    <p>(8) Für die Richtigkeit erteilter Auskünfte haften wir nicht, es sei denn, dass ein besonderer Auskunftsvertrag abgeschlossen wurde. Ein Auskunftsvertrag mit einer vertraglichen Hauptpflicht zur Auskunftserteilung kommt nur bei einer entsprechenden ausdrücklichen Vereinbarung zustande.</p>
+    <p>(8) {translate("We are not liable for the accuracy of the information provided unless a special information contract has been concluded. An information contract with a primary contractual obligation to provide information only comes into effect if there is an express agreement to that effect.")}</p>
 
-    <p><b>§ 16 Höhere Gewalt</b></p>
+    <p><b> 16 {translate("Force majeure")}</b></p>
 
-    <p>(1) In Fällen höherer Gewalt sind wir für die Dauer und im Umfang der Auswirkung von der Verpflichtung zur Leistung befreit. Höhere Gewalt ist jedes außerhalb des Einflussbereichs von uns liegende Ereignis, durch das wir ganz oder teilweise an der Erfüllung unserer Verpflichtungen gehindert werden, einschließlich Feuerschäden, Überschwemmungen, Streiks und rechtmäßiger Aussperrungen sowie nicht von uns verschuldeter Betriebsstörungen oder behördlicher Verfügungen.</p>
+    <p>(1) {translate("In cases of force majeure, we are released from our obligation to perform for the duration and to the extent of the impact. Force majeure is any event outside our control that prevents us from fulfilling our obligations in whole or in part, including fire damage, floods, strikes and lawful lockouts, as well as operational disruptions or official orders for which we are not responsible.")}</p>
 
-    <p>(2) Wir werden Ihnen unverzüglich den Eintritt sowie den Wegfall der höheren Gewalt anzeigen und uns nach besten Kräften bemühen, die höhere Gewalt zu beheben und in ihren Auswirkungen soweit wie möglich zu beschränken.</p>
+    <p>(2) {translate("We will notify you immediately of the occurrence and cessation of force majeure and will use our best efforts to remedy the force majeure and limit its effects as far as possible.")}</p>
 
-    <p>(3) Die Parteien werden einvernehmlich eine Frist bestimmen, nach dessen Ablauf jede Partei berechtigt ist, von dem Vertrag zurückzutreten, wenn die höhere Gewalt nicht innerhalb dieser Frist beendet ist. Das Recht den Vertrag aus wichtigem Grund zu kündigen, bleibt unberührt.</p>
+    <p>(3) {translate("The parties will mutually agree on a deadline after which each party is entitled to withdraw from the contract if the force majeure is not ended within this deadline. The right to terminate the contract for good cause remains unaffected.")}</p>
 
-    <p><b>§ 17 Urheberrecht</b></p>
+    <p><b> 17 {translate("Copyright")}</b></p>
 
-    <p>Alle Urheberrechte oder sonstige gewerbliche Schutzrechte an Bildern, Filmen und Texten, die in unserem Online-Shop oder unseren Dienstleistungen veröffentlicht werden, stehen ausschließlich uns zu. Der Vertrag mit dem Kunden begründet nicht die Einräumung solcher Rechte. Eine Verwendung der Bilder, Filme und Texte, ist ohne unsere ausdrückliche Zustimmung nicht gestattet.</p>
+    <p>{translate("We are the sole owner of all copyrights or other industrial property rights to images, films and texts published in our online shop or our services. The contract with the customer does not constitute the granting of such rights. The use of images, films and texts is not permitted without our express consent.")}</p>
 
-    <p><b>§ 18 Aufrechnung und Zurückbehaltungsrecht</b></p>
+    <p><b> 18 {translate("Offsetting and retention rights")}</b></p>
 
-    <p>(1) Sie sind nicht berechtigt, gegenüber unseren Forderungen aufzurechnen, es sei denn, Ihre Gegenansprüche sind rechtskräftig festgestellt oder unbestritten.</p>
+    <p>(1) {translate("You are not entitled to offset your claims against ours unless your counterclaims have been legally established or are undisputed.")}</p>
 
-    <p>(2) Sie dürfen ein Zurückbehaltungsrecht nur dann ausüben, wenn Ihr Gegenanspruch aus demselben Vertrag herrührt.</p>
+    <p>(2) {translate("You may only exercise a right of retention if your counterclaim arises from the same contract.")}</p>
 
-    <p><b>§ 19 Anwendbares Recht</b></p>
+    <p><b> 19 {translate("Applicable Law")}</b></p>
 
-    <p>Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts, wenn</p>
+    <p>{translate("The law of the Federal Republic of Germany applies, excluding the UN Convention on Contracts for the International Sale of Goods, if")}</p>
 
-    <p className="pl-5">(a) Sie Ihren gewöhnlichen Aufenthalt in Deutschland haben, oder</p>
-    <p className="pl-5">(b) Ihr gewöhnlicher Aufenthalt in einem Staat ist, der nicht Mitglied der Europäischen Union ist.</p>
+    <p className="pl-5">(a) {translate("You have your habitual residence in Germany, or")}</p>
+    <p className="pl-5">(b) {translate("Your habitual residence is in a country which is not a member of the European Union.")}</p>
 
-    <p>Für den Fall, dass Sie Ihren gewöhnlichen Aufenthalt in einem Mitgliedsland der Europäischen Union haben, gilt ebenfalls die Anwendbarkeit des deutschen Rechts, wobei zwingende Bestimmungen des Staates, in dem Sie Ihren gewöhnlichen Aufenthalt haben, unberührt bleiben.</p>
+    <p>{translate("In the event that you have your habitual residence in a member state of the European Union, German law also applies, without affecting any mandatory provisions of the state in which you have your habitual residence.")}</p>
 
-    <p><b>§ 20 Gerichtsstand, Online-Streitbeilegung und Schlussbestimmung</b></p>
+    <p><b> 20 {translate("Jurisdiction, Online Dispute Resolution and Final Provisions")}</b></p>
 
     <p>(1) Soweit Sie bei Abschluss des Vertrags Ihren Wohnsitz oder gewöhnlichen Aufenthalt in Deutschland hatten und entweder zum Zeitpunkt der Klageerhebung durch uns aus Deutschland verlegt haben oder Ihr Wohnsitz oder Ihr gewöhnlicher Aufenthaltsort zu diesem Zeitpunkt unbekannt ist, ist Gerichtsstand für alle Streitigkeiten der Sitz unseres Unternehmens in Much.</p>
 
