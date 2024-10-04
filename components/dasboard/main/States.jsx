@@ -1,19 +1,22 @@
 // import { states } from "@/data/dashboard";
+import { useCurrency } from "@/app/context/currencyContext";
 import { useTranslation } from "@/app/context/TranslationContext";
 import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 
-export default function States({ data, loading }) {
+export default function States({data,loading}) {
   const { translate } = useTranslation();
 
   const [states, setStates] = useState([]);
+
+  const {formatPrice} = useCurrency();
 
   useEffect(() => {
     const newStateItems = [
       {
         id: 1,
         title: translate("Total Earnings"),
-        amount: `${data?.Total_Earnings} €`,
+        amount: formatPrice(`${data?.Total_Earnings} `),
         today: "50 €",
         iconClass: "icon-wallet text-accent-1",
       },
@@ -35,18 +38,18 @@ export default function States({ data, loading }) {
     setStates(newStateItems);
   }, [translate]);
 
-  console.log(states, "states");
+  console.log(states,"states")
 
   return (
     <>
-      {loading ? (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "200px" }}
-        >
-          <ClipLoader color="#DAC04F" size={50} />
-        </div>
-      ) : (
+    { loading ?       
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "200px" }}
+      >
+        <ClipLoader color="#DAC04F" size={50} />
+      </div>
+      :
         <div className="row y-gap-30 pt-30 md:pt-30 pt-30">
           {states.map((elm, i) => (
             <div key={i} className="col-xl-3 col-sm-6 py-3 py-lg-1">
@@ -71,7 +74,7 @@ export default function States({ data, loading }) {
             </div>
           ))}
         </div>
-      )}
-    </>
+    }
+  </>
   );
 }
