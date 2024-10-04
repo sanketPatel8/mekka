@@ -8,6 +8,7 @@ import { FaUserTie } from "react-icons/fa";
 import Header1 from '@/components/layout/header/Header1';
 import FooterOne from '@/components/layout/footers/FooterOne';
 import FooterTwo from '@/components/layout/footers/FooterTwo';
+import { useTranslation } from '@/app/context/TranslationContext';
 
 
 const Impressum = () => {

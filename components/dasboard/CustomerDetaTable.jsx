@@ -87,7 +87,7 @@ const CustomerDetaTable = () => {
     Modal.setAppElement("#editData");
     Modal.setAppElement("#Adult1Data");
     Modal.setAppElement("#invoice");
-  }, []);  
+  }, []);
 
   const ColumnReservation_details = [
     {
@@ -231,12 +231,28 @@ const CustomerDetaTable = () => {
   ];
 
   const Total = [
-    { name: "Subtotal", selector: (row) => row.subtotal , cell: row => formatPrice(row.subtotal)}  ,
+    {
+      name: "Subtotal",
+      selector: (row) => row.subtotal,
+      cell: (row) => formatPrice(row.subtotal),
+    },
     // { name: "Tax", selector: (row) => row.Total },
-    { name: "Discount", selector: (row) => row.discount , cell: row => formatPrice(row.discount) },
+    {
+      name: "Discount",
+      selector: (row) => row.discount,
+      cell: (row) => formatPrice(row.discount),
+    },
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
-    { name: "Total", selector: (row) => row.total , cell: row => formatPrice(row.total) },
-    { name: "Amount Due", selector: (row) => row.amount_due , cell: row => formatPrice(row.amount_due)},
+    {
+      name: "Total",
+      selector: (row) => row.total,
+      cell: (row) => formatPrice(row.total),
+    },
+    {
+      name: "Amount Due",
+      selector: (row) => row.amount_due,
+      cell: (row) => formatPrice(row.amount_due),
+    },
   ];
 
   function afterOpenModal() {
@@ -455,28 +471,28 @@ const CustomerDetaTable = () => {
     }
   }, []);
 
-
+  const [PdfData, setPdfData] = useState("");
 
   useEffect(() => {
     const fetchPayments = async () => {
-      console.log("BookingDetails Fatch" , BookingDetails);
-      
+      console.log("BookingDetails Fatch", BookingDetails);
+
       const formData = new FormData();
       formData.append("reservation_id", BookingDetails.reservation?.id);
-  
+
       const response = await POST.request({
         form: formData,
-        url: "invoicegenerate",  
+        url: "invoicegenerate",
       });
 
-      console.log("invoice response" , response);
-      
-    
+      console.log("invoice response", response);
+      if (response) {
+        setPdfData(response.pdf_url);
+      }
     };
 
-    fetchPayments()
-  }, [BookingDetails])
-  
+    fetchPayments();
+  }, [BookingDetails]);
 
   // for edit customer data
 
@@ -533,7 +549,10 @@ const CustomerDetaTable = () => {
 
       // Safely parse RadioValue.price and conditionally add to subtotal
       const radioPrice =
-        RadioValue && RadioValue.price && !isNaN(parseFloat(RadioValue.price)) && AddpersonData.roomType !== '3'
+        RadioValue &&
+        RadioValue.price &&
+        !isNaN(parseFloat(RadioValue.price)) &&
+        AddpersonData.roomType !== "3"
           ? parseFloat(RadioValue.price)
           : 0;
 
@@ -542,7 +561,6 @@ const CustomerDetaTable = () => {
       setSubtotal(0); // Reset subtotal if conditions aren't met
     }
   }, [AdultPrice, AddpersonData, RadioValue]); // Dependency array
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -726,6 +744,8 @@ const CustomerDetaTable = () => {
     }));
   };
 
+  console.log("PdfData", PdfData);
+
   return (
     <div>
       <ToastContainer />
@@ -749,12 +769,18 @@ const CustomerDetaTable = () => {
 
         <div className="col-lg-6 flex small-flex-center">
           <div className="">
-            <button
+            {/* <button
               className="button -sm -info-2 bg-accent-1 text-white "
-              onClick={openInvoice}
-            >
-              {translate("Print Invoice")}
-            </button>
+            
+            > */}
+            {PdfData !== "undefined" && (
+              <a href={PdfData} target="_blank" className="button -sm -info-2 bg-accent-1 text-white"> 
+                {translate("Show Invoice")}
+              </a>
+            )}
+
+          
+            {/* </button> */}
           </div>
 
           <div
@@ -1777,6 +1803,7 @@ const CustomerDetaTable = () => {
           </div>
 
           <h1>Your invoice Here ......</h1>
+          {PdfData}
         </Modal>
       </div>
     </div>
