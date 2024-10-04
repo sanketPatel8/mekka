@@ -66,15 +66,15 @@ export default function Login({
     formData.append("auth_provider", type);
     formData.append("name", data?.name);
     formData.append("email", data?.email);
-    setIsLoading(true);
+   
     const resp = await POST.request({ form: formData, url: "social_login" });
-    setIsLoading(false);
+    
     if (resp) {
       if (resp) {
         showSuccessToast("Successfully logged in.");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-        setIsLoading(false);
+       
         LoginUpdate();
         setTimeout(() => {
           setLoginPer(true);
@@ -82,7 +82,7 @@ export default function Login({
         }, 1000);
       } else {
         showErrorToast("Invalid Credentials");
-        setIsLoading(false);
+     
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           email: "",
@@ -119,8 +119,10 @@ export default function Login({
     // const form = document.querySelector("form");
     // form.classList.remove("was-validated");
     // setLoading(true);
+    setIsLoading(true);
     Auth.user(data)
       .then((resp) => {
+        setIsLoading(false);
         if (resp.status == "error") {
           showErrorToast(resp.message);
         }
@@ -146,7 +148,8 @@ export default function Login({
         }
       })
       .catch((err) => {
-        // showErrorToast("Invalid Email or Password");
+        showErrorToast("Invalid Email or Password");
+        setIsLoading(false);
       });
   };
 

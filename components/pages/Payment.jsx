@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import Stripeform from "../stripe/stripeform";
 import { useCurrency } from "@/app/context/currencyContext";
 import { type } from "jquery";
+import { ClipLoader } from "react-spinners";
 
 export default function Payment() {
   const router = useRouter();
@@ -49,6 +50,7 @@ export default function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const companyCode =
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
@@ -273,13 +275,16 @@ export default function Payment() {
     };
   }, [handleDateChange]);
   const FatchallBooking = async (data) => {
+    setIsLoading(true)
     try {
       const response = await post("addbooking", data);
 
       if (response.Status == "1") {
+        setIsLoading(false)
         showSuccessToast(response.Message);
         setBookingStage((pre) => pre + 1);
         setReservationID(response.reservationNumber);
+
       } else {
         showErrorToast(response.Message);
       }
@@ -1082,7 +1087,18 @@ export default function Payment() {
                       bookingStage == 2 ? `d-none` : `d-block`
                     }`}
                   >
-                    Complete Reservation
+                     {isLoading ? (
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: "30px", width: "100%" }}
+                      >
+                        <ClipLoader color="#ffffff" size={30} />
+                      </div>
+                    ) : (
+                      translate("Complete Reservation")
+                    )}
+
+                    
                   </button>
                 </div>
               </div>
