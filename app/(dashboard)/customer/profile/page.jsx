@@ -29,6 +29,7 @@ export default function Profile() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
+  const [Phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [fileBlob, setFileBlob] = useState({});
@@ -42,12 +43,24 @@ export default function Profile() {
   const [old_password, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
+  const [PhoneError, setPhoneError] = useState("");
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    const regex = /^[0-9]{0,10}$/; // Adjust the regex as needed
+    if (regex.test(value)) {
+      setPhone(value); // Update phone only if it's valid
+      setPhoneError("*");
+    } else {
+      setPhoneError("");
+    }
+  };
+
   // console.log("formData", formData?.image1);
 
-  const { user , customer } = useAuthContext();
+  const { user, customer } = useAuthContext();
 
-  console.log("user" , customer?.authorisation.token); 
-  
+  console.log("user", customer?.authorisation.token);
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -90,12 +103,10 @@ export default function Profile() {
       }
     }
 
-    if(customer){
+    if (customer) {
       console.log(customer?.user?.id, "customer?.id");
       fetchProfile();
-
     }
-
 
     if (typeof window !== "undefined") {
       // Indicate that the component has mounted
@@ -152,46 +163,45 @@ export default function Profile() {
     // }
   };
 
-//   const fetchUpdateProfile = async (type) => {
-//     const formDatas = new FormData();
-  
-//     // Append form data fields
-//     formDatas.append("id", customer?.user?.id);
-//     formDatas.append("type", "profile");
-//     formDatas.append("name", name);
-//     formDatas.append("surname", surname);
-//     formDatas.append("email", email);
-//     formDatas.append("image", image1);
-  
-//     setIsLoading(true);
-  
-//     try {
-//       const response = await POST.request({
-//         form: formDatas,
-//         url: "update_profile",
-//       });
-  
-//       if (response) {
-//         setIsLoading(false);
-//         showSuccessToast(response?.message);
-        
-//       }
-//     } catch (e) {
-//       console.log(e);
-//       setIsLoading(false); 
-//   };
-// }
-  
+  //   const fetchUpdateProfile = async (type) => {
+  //     const formDatas = new FormData();
+
+  //     // Append form data fields
+  //     formDatas.append("id", customer?.user?.id);
+  //     formDatas.append("type", "profile");
+  //     formDatas.append("name", name);
+  //     formDatas.append("surname", surname);
+  //     formDatas.append("email", email);
+  //     formDatas.append("image", image1);
+
+  //     setIsLoading(true);
+
+  //     try {
+  //       const response = await POST.request({
+  //         form: formDatas,
+  //         url: "update_profile",
+  //       });
+
+  //       if (response) {
+  //         setIsLoading(false);
+  //         showSuccessToast(response?.message);
+
+  //       }
+  //     } catch (e) {
+  //       console.log(e);
+  //       setIsLoading(false);
+  //   };
+  // }
+
   const [someObject, setSomeObject] = useState({ toggle: false });
 
-// Function to update the toggle
-const toggleHandler = () => {
-  setSomeObject((prevObject) => ({
-    ...prevObject,      // Keep other properties
-    toggle: !prevObject.toggle // Update the 'toggle' property
-  }));
-};
-
+  // Function to update the toggle
+  const toggleHandler = () => {
+    setSomeObject((prevObject) => ({
+      ...prevObject, // Keep other properties
+      toggle: !prevObject.toggle, // Update the 'toggle' property
+    }));
+  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -203,12 +213,12 @@ const toggleHandler = () => {
     console.log("formType", formType);
 
     if (formType === "profile") {
-      if(!name || !surname || !email || !image1){
+      if (!name || !surname || !email || !image1) {
         showErrorToast("Please fill all fields");
         return;
       }
-    }else if(formType === "change_password"){
-      if(!old_password || !password || !confirm_password){
+    } else if (formType === "change_password") {
+      if (!old_password || !password || !confirm_password) {
         showErrorToast("Please fill all fields");
         return;
       }
@@ -216,12 +226,12 @@ const toggleHandler = () => {
 
     switch (formType) {
       case "profile":
-
         formDatas.append("id", customer?.user?.id);
         formDatas.append("type", "profile");
         formDatas.append("name", name);
         formDatas.append("surname", surname);
         formDatas.append("email", email);
+        formDatas.append("phone", Phone);
         formDatas.append("image", image1);
         break;
 
@@ -236,24 +246,21 @@ const toggleHandler = () => {
         break;
     }
 
-    if(formType === "profile"){
+    if (formType === "profile") {
       setIsLoading(true);
       const response = await POST.request({
         form: formDatas,
         url: "update_profile",
       });
-  
+
       setIsLoading(false);
       if (response.status === "success") {
         showSuccessToast(response?.message);
         fetchProfile();
-        
-      }else if(response.status === "error"){
+      } else if (response.status === "error") {
         showErrorToast(response?.message);
       }
-
-    }
-    else if(formType === "change_password"){
+    } else if (formType === "change_password") {
       setIsPasswordLoading(true);
       if (confirm_password === password) {
         const response = await POST.request({
@@ -261,15 +268,11 @@ const toggleHandler = () => {
           url: "update_profile",
         });
         setIsPasswordLoading(false);
-        if(response.status === "success"){
-  
-        showSuccessToast(response?.message);
-        fetchProfile();
-          
-        }else{
-  
+        if (response.status === "success") {
+          showSuccessToast(response?.message);
+          fetchProfile();
+        } else {
           showErrorToast(response?.message);
-          
         }
       } else {
         setIsPasswordLoading(false);
@@ -305,49 +308,40 @@ const toggleHandler = () => {
   //     if(response.status === "success"){
 
   //     showSuccessToast(response?.message);
-        
+
   //     }else{
 
   //       showErrorToast(response?.message);
-        
+
   //     }
   //   } catch (e) {
   //     console.log(e);
   //   }
   // };
 
-  const submitPasswordForm = (e) => {
-    e.preventDefault();
-    if (passwordData?.confirmPassword === passwordData?.newPassword) {
-      fetchUpdatePassword();
-    } else {
-      if (typeof window !== "undefined") {
-
-      showErrorToast("please fill proper details");
-      }
-    }
-    console.log(passwordData);
-  };
   const handlePasswordChange = (e) => {
     const { value } = e.target;
     setConfirmPassword(value);
     if (value !== password) {
       setError("Passwords do not match");
-      }else{
-        setError("");
-      }
-  }
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  
+    } else {
+      setError("");
+    }
+  };
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
   const handlePassword = (e) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
     if (!passwordRegex.test(passwordValue)) {
-      setPasswordError("Password must contain at least 8 characters, including uppercase, lowercase letters, numbers and special characters ");
-    }  else {
+      setPasswordError(
+        "Password must contain at least 8 characters, including uppercase, lowercase letters, numbers and special characters "
+      );
+    } else {
       setPasswordError("");
     }
-    if(!passwordValue){
+    if (!passwordValue) {
       setPasswordError("");
     }
   };
@@ -364,7 +358,7 @@ const toggleHandler = () => {
   //     }
   // }
   // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  
+
   // const handlePassword = (e) => {
   //   const {name,value} = e.target;
   //   setPasswordData((prevData) => ({
@@ -395,7 +389,7 @@ const toggleHandler = () => {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-          {loading ? (
+            {loading ? (
               <div
                 className="d-flex justify-content-center align-items-center"
                 style={{ height: "200px" }}
@@ -404,227 +398,246 @@ const toggleHandler = () => {
               </div>
             ) : (
               <>
-              
-            <h1 className="text-30">
-              {translate("Profile").charAt(0).toUpperCase() +
-                translate("Profile").slice(1)}{" "}
-              -
-              {" "}{UserProfile?.name?.charAt(0).toUpperCase() +
-                UserProfile?.name?.slice(1)}{" "}
-              {UserProfile?.surname?.charAt(0).toUpperCase() +
-                UserProfile?.surname?.slice(1)}
-            </h1>
+                <h1 className="text-30">
+                  {translate("Profile").charAt(0).toUpperCase() +
+                    translate("Profile").slice(1)}{" "}
+                  -{" "}
+                  {UserProfile?.name?.charAt(0).toUpperCase() +
+                    UserProfile?.name?.slice(1)}{" "}
+                  {UserProfile?.surname?.charAt(0).toUpperCase() +
+                    UserProfile?.surname?.slice(1)}
+                </h1>
 
-            <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40 ">
-              <h5 className="text-20 fw-500 mb-30">
-                {" "}
-                {translate("Profile Details")}
-              </h5>
+                <div className="mt-20 rounded-12 bg-white shadow-2 px-40 py-40 ">
+                  <h5 className="text-20 fw-500 mb-30">
+                    {" "}
+                    {translate("Profile Details")}
+                  </h5>
 
-              <form className="contactForm y-gap-30" onSubmit={handleSubmit} name="profile">
-                {loading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <>
-                    <div className="row my-3">
-                      <div className="col-md-6">
-                        <div className="form-input my-1">
-                          <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {translate("Name")}
-                          </label>
-                        </div>
-                      </div>
-
-                      <div className="col-md-6">
-                        <div className="form-input my-1">
-                          <input
-                            type="text"
-                            value={surname}
-                            onChange={(e) => setSurname(e.target.value)}
-                            required
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {translate("Surname")}
-                          </label>
-                        </div>
-                      </div>
-
-                      <div className="col-md-12">
-                        <div className="form-input my-1">
-                          <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {translate("Email")}
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-12">
-                      <h4 className="text-18 fw-500 mb-20">
-                        {translate("Your photo")}
-                      </h4>
-                      <div className="row x-gap-20 y-gap">
-                        {image1 ? (
-                          <div className="col-auto my-3">
-                            <div className="relative">
-                              <Image
-                                width={200}
-                                height={200}
-                                src={fileBlob}
-                                alt="image"
-                                className="size-200 rounded-12 object-cover my-3"
+                  <form
+                    className="contactForm y-gap-30"
+                    onSubmit={handleSubmit}
+                    name="profile"
+                  >
+                    {loading ? (
+                      <p>Loading...</p>
+                    ) : (
+                      <>
+                        <div className="row my-3">
+                          <div className="col-md-6">
+                            <div className="form-input my-1">
+                              <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
                               />
-                              <button
-                                onClick={() => {
-                                  setImage1("");
-                                  setFileBlob({});
-                                }}
-                                className="absoluteIcon1 button -dark-1"
-                              >
-                                <i className="icon-delete text-18"></i>
-                              </button>
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Name")}
+                              </label>
                             </div>
                           </div>
-                        ) : (
-                          <div className="col-auto">
-                            <label
-                              htmlFor="imageInp1"
-                              className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                            >
-                              <Image
-                                width="40"
-                                height="40"
-                                alt="image"
-                                src={"/img/dashboard/upload.svg"}
+
+                          <div className="col-md-6">
+                            <div className="form-input my-1">
+                              <input
+                                type="text"
+                                value={surname}
+                                onChange={(e) => setSurname(e.target.value)}
+                                required
                               />
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Surname")}
+                              </label>
+                            </div>
+                          </div>
 
-                              <div className="text-16 fw-500 text-accent-1 mt-10">
-                                {translate("Upload Images")}
+                          <div className="col-md-6">
+                            <div className="form-input my-1">
+                              <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                              />
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Email")}
+                              </label>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-input my-1">
+                              <input
+                                type="tel" // Use 'tel' for phone input
+                                value={Phone}
+                                onChange={(e) => handlePhoneChange(e)}
+                                required
+                                pattern="[0-9]{10}" // Pattern to allow only 10 digits (adjust as needed)
+                                title="Please enter a valid 10-digit phone number" // Tooltip when invalid
+                              />
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Phone")}
+                                <span className="text_red">{PhoneError}</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="col-12">
+                          <h4 className="text-18 fw-500 mb-20">
+                            {translate("Your photo")}
+                          </h4>
+                          <div className="row x-gap-20 y-gap">
+                            {image1 ? (
+                              <div className="col-auto my-3">
+                                <div className="relative">
+                                  <Image
+                                    width={200}
+                                    height={200}
+                                    src={fileBlob}
+                                    alt="image"
+                                    className="size-200 rounded-12 object-cover my-3"
+                                  />
+                                  <button
+                                    onClick={() => {
+                                      setImage1("");
+                                      setFileBlob({});
+                                    }}
+                                    className="absoluteIcon1 button -dark-1"
+                                  >
+                                    <i className="icon-delete text-18"></i>
+                                  </button>
+                                </div>
                               </div>
-                            </label>
-                            <input
-                              onChange={
-                                handleImageChange
-                              }
-                              accept="image/*"
-                              id="imageInp1"
-                              type="file"
-                              style={{ display: "none" }}
-                            />
+                            ) : (
+                              <div className="col-auto">
+                                <label
+                                  htmlFor="imageInp1"
+                                  className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                                >
+                                  <Image
+                                    width="40"
+                                    height="40"
+                                    alt="image"
+                                    src={"/img/dashboard/upload.svg"}
+                                  />
+
+                                  <div className="text-16 fw-500 text-accent-1 mt-10">
+                                    {translate("Upload Images")}
+                                  </div>
+                                </label>
+                                <input
+                                  onChange={handleImageChange}
+                                  accept="image/*"
+                                  id="imageInp1"
+                                  type="file"
+                                  style={{ display: "none" }}
+                                />
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
 
-                      <div className="text-14 mt-20">
-                        {translate(
-                          "PNG or JPG no bigger than 800px wide and tall."
-                        )}
-                      </div>
+                          <div className="text-14 mt-20">
+                            {translate(
+                              "PNG or JPG no bigger than 800px wide and tall."
+                            )}
+                          </div>
 
-                      <button className="button -md -info-2 bg-accent-1 text-white mt-30" type="submit">
-                       {isLoading ? (
-                          <div
-                            className="d-flex justify-content-center align-items-center"
-                            style={{ height: "30px", width: "100%" }}
+                          <button
+                            className="button -md -info-2 bg-accent-1 text-white mt-30"
+                            type="submit"
                           >
-                            <ClipLoader color="#ffffff" size={30} />
-                          </div>
-                        ) : (
-                          translate("Save Changes")
-                        )}
-                      </button>
-                    </div>
-                  </>
-                )}
-              </form>
-            </div>
-
-            <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-30">
-              <h5 className="text-20 fw-500 mb-30">
-                {" "}
-                {translate("Change Password")}
-              </h5>
-
-              <form
-                className="contactForm y-gap-30"
-                onSubmit={handleSubmit}
-                name="change_password"
-
-              >
-                <div className="row y-gap-30">
-                  <div className="col-md-6">
-                    <div className="form-input my-1">
-                      <input
-                        type="password"
-                        name="oldPassword"
-                        value={old_password}
-                        onChange={(e) => setOldPassword(e.target.value)}
-                        required
-                      />
-                      <label className="lh-1 text-16 text-light-1">
-                        {translate("Old password")}
-                      </label>
-                    </div>
-                  </div>
+                            {isLoading ? (
+                              <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ height: "30px", width: "100%" }}
+                              >
+                                <ClipLoader color="#ffffff" size={30} />
+                              </div>
+                            ) : (
+                              translate("Save Changes")
+                            )}
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </form>
                 </div>
 
-                <div className="row y-gap-30">
-                  <div className="col-md-6">
-                    <div className="form-input my-1">
-                      <input
-                        type="password"
-                        name="newPassword"
-                        value={password}
-                        onChange={handlePassword}
-                        required
-                      />
-                      <label className="lh-1 text-16 text-light-1">
-                        {translate("New password")}
-                      </label>
-                      {passwordError && <div className="text-red mb-1">{passwordError}</div>}
+                <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 mt-30">
+                  <h5 className="text-20 fw-500 mb-30">
+                    {" "}
+                    {translate("Change Password")}
+                  </h5>
 
+                  <form
+                    className="contactForm y-gap-30"
+                    onSubmit={handleSubmit}
+                    name="change_password"
+                  >
+                    <div className="row y-gap-30">
+                      <div className="col-md-6">
+                        <div className="form-input my-1">
+                          <input
+                            type="password"
+                            name="oldPassword"
+                            value={old_password}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            required
+                          />
+                          <label className="lh-1 text-16 text-light-1">
+                            {translate("Old password")}
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-input my-1">
-                      <input
-                        type="password"
-                        name="confirmPassword"
-                        value={confirm_password}
-                        onChange={handlePasswordChange}
-                        required
-                      />
-                      <label className="lh-1 text-16 text-light-1">
-                        {translate("Confirm new password")}
-                      </label>
-                      {error && <div className="text-red">{error}</div>}
-
+                    <div className="row y-gap-30">
+                      <div className="col-md-6">
+                        <div className="form-input my-1">
+                          <input
+                            type="password"
+                            name="newPassword"
+                            value={password}
+                            onChange={handlePassword}
+                            required
+                          />
+                          <label className="lh-1 text-16 text-light-1">
+                            {translate("New password")}
+                          </label>
+                          {passwordError && (
+                            <div className="text-red mb-1">{passwordError}</div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <div className="row">
-                  <div className="col-12">
-                    <button
-                      className="button -md -info-2 bg-accent-1 text-white"
-                      type="submit"
-                    >
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div className="form-input my-1">
+                          <input
+                            type="password"
+                            name="confirmPassword"
+                            value={confirm_password}
+                            onChange={handlePasswordChange}
+                            required
+                          />
+                          <label className="lh-1 text-16 text-light-1">
+                            {translate("Confirm new password")}
+                          </label>
+                          {error && <div className="text-red">{error}</div>}
+                        </div>
+                      </div>
+                    </div>
 
-                        {isPasswordLoading ? (
+                    <div className="row">
+                      <div className="col-12">
+                        <button
+                          className="button -md -info-2 bg-accent-1 text-white"
+                          type="submit"
+                        >
+                          {isPasswordLoading ? (
                             <div
                               className="d-flex justify-content-center align-items-center"
                               style={{ height: "30px", width: "100%" }}
@@ -633,18 +646,18 @@ const toggleHandler = () => {
                             </div>
                           ) : (
                             translate("Save Changes")
-                        )}
-                    </button>
-                  </div>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
 
-            <div className="text-center pt-30">
-              © Copyright MekkaBooking.com {new Date().getFullYear()}
-            </div>
+                <div className="text-center pt-30">
+                  © Copyright MekkaBooking.com {new Date().getFullYear()}
+                </div>
               </>
-  )}
+            )}
           </div>
         </div>
       </div>
