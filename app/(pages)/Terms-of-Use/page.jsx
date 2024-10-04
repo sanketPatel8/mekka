@@ -240,44 +240,44 @@ const TermsofUse = () => {
 
     <p><b> 20 {translate("Jurisdiction, Online Dispute Resolution and Final Provisions")}</b></p>
 
-    <p>(1) Soweit Sie bei Abschluss des Vertrags Ihren Wohnsitz oder gewöhnlichen Aufenthalt in Deutschland hatten und entweder zum Zeitpunkt der Klageerhebung durch uns aus Deutschland verlegt haben oder Ihr Wohnsitz oder Ihr gewöhnlicher Aufenthaltsort zu diesem Zeitpunkt unbekannt ist, ist Gerichtsstand für alle Streitigkeiten der Sitz unseres Unternehmens in Much.</p>
+    <p>(1) {translate("Soweit Sie bei Abschluss des Vertrags Ihren Wohnsitz oder gewöhnlichen Aufenthalt in Deutschland hatten und entweder zum Zeitpunkt der Klageerhebung durch uns aus Deutschland verlegt haben oder Ihr Wohnsitz oder Ihr gewöhnlicher Aufenthaltsort zu diesem Zeitpunkt unbekannt ist, ist Gerichtsstand für alle Streitigkeiten der Sitz unseres Unternehmens in Much.")}</p>
 
-    <p>(2) Die Europäische Kommission stellt unter<Link href='https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.chooseLanguage'> http://ec.europa.eu/consumers/odr/</Link> eine Plattform zur Online-Streitbeilegung (OS) bereit. Wir sind nicht bereit oder verpflichtet an einem Online-Streitbeteiligungsverfahren teilzunehmen.</p>
+    <p>(2) {translate("The European Commission provides")}<Link href='https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.chooseLanguage'> http://ec.europa.eu/consumers/odr/</Link> {translate("eine Plattform zur Online-Streitbeilegung (OS) bereit. Wir sind nicht bereit oder verpflichtet an einem Online-Streitbeteiligungsverfahren teilzunehmen.")}</p>
 
-    <p>(3) Zur Teilnahme an einem Streitbeilegungsverfahren nach dem Verbraucherstreitbeilegungsgesetz (VSBG) sind wir nicht verpflichtet und nicht bereit.</p>
+    <p>(3) {translate("We are neither obliged nor willing to participate in a dispute resolution procedure under the Consumer Dispute Resolution Act (VSBG).")}</p>
 
-    <p>(4) Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein, so wird hierdurch der Vertrag im Übrigen nicht berührt. Anstelle der unwirksamer Bestimmungen treten, soweit vorhanden, die gesetzlichen Vorschriften.</p>
+    <p>(4) {translate("Should individual provisions of this contract be invalid, this shall not affect the remainder of the contract. The invalid provisions shall be replaced by the statutory provisions, if applicable.")}</p>
 
-    <p><b>Anhang</b></p>
+    <p><b>{translate("Attachment")}</b></p>
 
-    <h2 className="text-center">WIDERRUFSBELEHRUNG</h2>
+    <h2 className="text-center">{("WIDERRUFSBELEHRUNG")}</h2>
 
-    <h2>WIDERRUFSRECHT</h2>
+    <h2>{translate("WIDERRUFSRECHT")}</h2>
 
-    <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsschlusses</p>
+    <p>{translate("Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsschlusses")}</p>
 
-    <p>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</p>
+    <p>{translate("To exercise your right of withdrawal, you must contact us")}</p>
 
-    <h2 className="text-center">Mekka Booking GmbH</h2>
+    <h2 className="text-center">{translate("Mekka Booking GmbH")}</h2>
     <h2 className="text-center">Frankfurter Str. 92</h2>
     <h2 className="text-center">65760 Eschborn am Taunus</h2>
     <h2 className="text-center">E-Mail: info@mekkabooking.de</h2>
 
-    <p>mittels einer eindeutigen Erklärung (zB ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
+    <p>{translate("by means of a clear statement (e.g. a letter sent by post or email) of your decision to withdraw from this contract. You can use the attached model withdrawal form for this purpose, but this is not mandatory.")}</p>
 
-    <p>Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</p>
+    <p>{translate("To meet the cancellation deadline, it is sufficient for you to send your communication concerning your exercise of the right of cancellation before the cancellation period has expired.")}</p>
 
-    <h2>FOLGEN DES WIDERRUFS</h2>
+    <h2>{translate("CONSEQUENCES OF REVOCATION")}</h2>
 
-    <p>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, einschließlich der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene, günstigste Standardlieferung gewählt haben), unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist. Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.</p>
+    <p>{translate("If you cancel this contract, we will refund all payments that we have received from you, including delivery costs (with the exception of additional costs resulting from your choice of a type of delivery other than the cheapest standard delivery offered by us), promptly and at the latest within fourteen days from the day on which we received notification of your cancellation of this contract. For this refund, we will use the same means of payment that you used for the original transaction, unless something else was expressly agreed with you; under no circumstances will you be charged any fees for this refund.")}</p>
 
-    <p>Haben Sie verlangt, dass die Dienstleistung während der Widerrufsfrist beginnen soll, so haben Sie uns einen angemessenen Betrag zu zahlen, der den Anteil der bis zum Zeitpunkt, an dem Sie uns von der Ausübung Ihres Widerrufsrechts hinsichtlich dieses Vertrages unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.</p>
+    <p>{translate("If you have requested that the service should begin during the cancellation period, you must pay us an appropriate amount corresponding to the proportion of the services already provided up to the point in time at which you notify us of the exercise of your right of cancellation with regard to this contract compared to the total scope of the services provided for in the contract.")}</p>
 
-    <h3>Muster-Widerrufsformular</h3>
+    <h3>{translate("Sample cancellation form")}</h3>
 
-    <p>Wenn Sie Ihren Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie per Post oder E-Mail an uns zurück.</p>
+    <p>{translate("If you want to cancel your contract, please fill out this form and send it back to us by post or email.")}</p>
 
-    <p>An:</p>
+    <p>{translate("To")}:</p>
 
     <p>Mekka Booking GmbH</p>
 
@@ -287,15 +287,19 @@ const TermsofUse = () => {
 
     <p>E-Mail: info@mekkabooking.de</p>
 
-    <p>Hiermit widerrufe/n ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf folgender Waren/die Erbringung der folgenden Dienstleistung/en (*):</p>
-        <p className="border border-dark">Bestellt am(*)/erhalten am(*):</p>
-        <p className="border border-dark">Name des/der Verbraucher/s: </p>
-        <p className="border border-dark">Anschrift des/der Verbraucher/s:</p>
-        <p className="border border-dark">Unterschrift des/der Verbraucher/s(nur bei Mitteilung auf Papier):</p>
-        <p className="border border-dark">Datum:</p>
+    <p>{translate("I/we (*) hereby revoke the contract concluded by me/us (*) for the purchase of the following goods/the provision of the following service(s) (*):")}</p>
+        <p className="border border-dark">{translate("Ordered on(*)/received on(*):")}</p>
+        <p className="border border-dark">{translate("Name of the consumer(s):")} </p>
+        <p className="border border-dark">{translate("Address of the consumer(s):")}</p>
+        <p className="border border-dark">{translate("Signature of the consumer(s) (only for notification on paper):")}</p>
+        <p className="border border-dark">{translate("Date:")}</p>
 
-        <p>(*) Unzutreffendes streichen.</p>
+        <p>(*) {translate("Delete as appropriate.")}</p>
     </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <FooterTwo />
     </>
   )
