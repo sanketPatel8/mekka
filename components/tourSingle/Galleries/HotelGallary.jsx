@@ -7,6 +7,7 @@ import ImageLightBox from "./ImageLightBox";
 
 
 export default function HotelGallary({  mekkaHotel,madinaHotel }) {
+  console.log(madinaHotel , "madinaHotel");
   const [activeLightBox, setActiveLightBox] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
  
@@ -26,7 +27,7 @@ export default function HotelGallary({  mekkaHotel,madinaHotel }) {
               alt="hotel image"
               onClick={() => {
                 setActiveLightBox(true);
-                setCurrentSlideIndex(image);
+                setCurrentSlideIndex(index);
               }}
               style={{ cursor: "pointer", height: "30vh" }}
             />
@@ -57,7 +58,7 @@ export default function HotelGallary({  mekkaHotel,madinaHotel }) {
               alt="madina_image"
               onClick={() => {
                 setActiveLightBox(true);
-                setCurrentSlideIndex(image);
+                setCurrentSlideIndex(index);
               }}
               style={{ cursor: "pointer", height: "30vh" }}
             />

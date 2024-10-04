@@ -10,9 +10,11 @@ export default function ImageLightBox({
   currentSlideIndex,
   setCurrentSlideIndex,
 }) {
-  
+  console.log(images, "images");
+
   // Check if images array is valid
   if (!images || images.length === 0) {
+    
     return null;
   }
 
