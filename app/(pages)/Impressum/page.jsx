@@ -106,39 +106,39 @@ const Impressum = () => {
         </div>
 
         <p>
-        By using the website and the contact form of the provider www.mekkabooking.de, no contractual relationship is established between the user and the provider.
+        {translate("By using the website and the contact form of the provider www.mekkabooking.de, no contractual relationship is established between the user and the provider.")}
         </p>
         <br />
 
         <p>
-        If you provide us with personal data, we will treat it with care and in accordance with data protection regulations. We are of course at your disposal for questions and suggestions.
+        {translate("If you provide us with personal data, we will treat it with care and in accordance with data protection regulations. We are of course at your disposal for questions and suggestions.")}
         </p>
         <br />
 
         <p>
-        Your data will not be shared with third parties. If you have expressly agreed, we will use your data to inform you about new products and innovations in the future. You can withdraw your consent to this at any time. You have the option to query the data stored about you free of charge and to have it changed or deleted.
+        {translate("Your data will not be shared with third parties. If you have expressly agreed, we will use your data to inform you about new products and innovations in the future. You can withdraw your consent to this at any time. You have the option to query the data stored about you free of charge and to have it changed or deleted.")}
 
 
         </p>
         <br />
 
         <p>
-        Trademarks and brands are usually not identified as such. The lack of such labeling does not mean that it is a free name in the sense of trademark and trademark law.
+        {translate("Trademarks and brands are usually not identified as such. The lack of such labeling does not mean that it is a free name in the sense of trademark and trademark law.")}
         </p>
         <br />
 
         <p>
-        The information on this website has been carefully checked and is updated regularly. There is no guarantee of completeness, correctness, and timeliness. All information can be removed or changed at any time without prior notice.
+        {translate("The information on this website has been carefully checked and is updated regularly. There is no guarantee of completeness, correctness, and timeliness. All information can be removed or changed at any time without prior notice.")}
         </p>
         <br />
 
         <p>
-        Despite careful control of the content, we assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content
+        {translate("Despite careful control of the content, we assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content")}
         </p>
         <br />
 
         <p>
-        All texts, illustrations and photos are the intellectual property of www.mekkabooking.de and may not be copied or reproduced.
+        {translate("All texts, illustrations and photos are the intellectual property of www.mekkabooking.de and may not be copied or reproduced.")}
         </p>
         <br />
       </div>
