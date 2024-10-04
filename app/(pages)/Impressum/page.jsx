@@ -7,10 +7,10 @@ import { FaUserTie } from "react-icons/fa";
 import Header1 from "@/components/layout/header/Header1";
 import FooterOne from "@/components/layout/footers/FooterOne";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
-
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const Impressum = () => {
-
+  const { translate } = useTranslation();
   return (
     <>
       <Header1 />
@@ -19,9 +19,9 @@ const Impressum = () => {
         <br />
         <br />
         <br />
-        <h1>{("Imprint")}</h1>
+        <h1>{translate("Imprint")}</h1>
 
-        <p className="text-center">{("Liability and data protection information")}</p>
+        <p className="text-center">{translate("Liability and data protection information")}</p>
 
         <div className="d-flex flex-row justify-content-center ">
           <div>
@@ -34,7 +34,7 @@ const Impressum = () => {
               </div>
               <div>
                 <p>
-                  <b>{("Tax Number")}</b>
+                  <b>{translate("Tax Number")}</b>
                 </p>
                 <p>043 239 18079</p>
               </div>
@@ -48,7 +48,7 @@ const Impressum = () => {
               </div>
               <div>
                 <p>
-                  <b>{("Phone")}</b>
+                  <b>{translate("Phone")}</b>
                 </p>
                 <p>+49 (0) 6196 204 72 40</p>
               </div>
@@ -62,7 +62,7 @@ const Impressum = () => {
               </div>
               <div>
                 <p>
-                  <b>{("Name and Adress")}</b>
+                  <b>{translate("Name and Adress")}</b>
                 </p>
                 <p>
                   Mekka Booking GmbH <br /> Frankfurter Str. 92 <br />
@@ -81,7 +81,7 @@ const Impressum = () => {
               </div>
               <div>
                 <p>
-                  <b>{("District Court Frankfurt am Main")}</b>
+                  <b>{translate("District Court Frankfurt am Main")}</b>
                 </p>
                 <p>HRB: 116404</p>
               </div>
@@ -95,7 +95,7 @@ const Impressum = () => {
               </div>
               <div>
                 <p>
-                  <b>{('Chairman')}</b>
+                  <b>{translate('Chairman')}</b>
                 </p>
                 <p>Kagan Kahraman</p>
               </div>
