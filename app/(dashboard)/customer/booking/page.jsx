@@ -256,9 +256,9 @@ export default function DbBooking() {
                         <p className="text-center">
                           Total : {elm?.total} €
                         </p>
-                        <p className="text-center">Due : {elm.due_payment}</p>
+                        <p className="text-center">Due : {elm.due_payment} € </p>
                       </div>
-
+ €
                       <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
