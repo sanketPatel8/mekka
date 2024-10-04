@@ -254,7 +254,7 @@ export default function DbBooking() {
                           Booking No : {elm.reservationNumber}
                         </p>
                         <p className="text-center">
-                          Total : {elm?.tour_details?.tour_price} €
+                          Total : {elm?.total} €
                         </p>
                         <p className="text-center">Due : {elm.due_payment}</p>
                       </div>

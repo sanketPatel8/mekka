@@ -13,6 +13,7 @@ import { Auth } from "@/app/utils/api/authenticate";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import dynamic from "next/dynamic";
 import { POST } from "@/app/utils/api/post";
+import { ClipLoader } from "react-spinners";
 
 export default function Login({
   onLoginSuccess,
@@ -43,6 +44,7 @@ export default function Login({
   const [LoginISChacked, setLoginISChacked] = useState(false);
   const { dispatch } = useAuthContext();
   const [LoginChecked, setLoginChecked] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -64,12 +66,15 @@ export default function Login({
     formData.append("auth_provider", type);
     formData.append("name", data?.name);
     formData.append("email", data?.email);
+    setIsLoading(true);
     const resp = await POST.request({ form: formData, url: "social_login" });
+    setIsLoading(false);
     if (resp) {
       if (resp) {
         showSuccessToast("Successfully logged in.");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        setIsLoading(false);
         LoginUpdate();
         setTimeout(() => {
           setLoginPer(true);
@@ -77,6 +82,7 @@ export default function Login({
         }, 1000);
       } else {
         showErrorToast("Invalid Credentials");
+        setIsLoading(false);
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           email: "",
@@ -239,7 +245,16 @@ export default function Login({
                     type="submit"
                     className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                   >
-                    {translate("Log In")}
+                    {isLoading ? (
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: "30px", width: "100%" }}
+                      >
+                        <ClipLoader color="#ffffff" size={30} />
+                      </div>
+                    ) : (
+                      translate("Log In")
+                    )}
                   </button>
                 </div>
               </div>
