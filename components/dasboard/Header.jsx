@@ -55,9 +55,9 @@ export default function Header({ setSideBarOpen }) {
             locale={locale}
           />
         </div>
-        <div>
+        {/* <div>
         <Currency currenyLocale={currenyLocale} />
-        </div>
+        </div> */}
 
         {/* <div className="rounded-circle">
           <Image

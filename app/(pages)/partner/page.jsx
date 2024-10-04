@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import CreatableSelect from "react-select/creatable";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { countries } from "@/data/nationalities";
+import { ClipLoader } from "react-spinners";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -40,7 +41,7 @@ const page = () => {
   const [SelectedCountry, setSelectedCountry] = useState("");
   const [website, setWebsite] = useState("");
   const { translate } = useTranslation();
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const options = [
     { value: "1", label: "Zip Code" },
@@ -186,18 +187,21 @@ const page = () => {
 
     const url = `vendor_register`;
     try {
+      setIsLoading(true);
       const response = await POST.request({
         form: formData,
         url: url,
         header: { "Content-Type": "multipart/form-data" },
       });
       if (response.status === "success") {
+        setIsLoading(false);
         console.log("success");
 
         showSuccessToast(response.message);
         router.push("/thank-you");
       } else if (response.status === "error") {
         console.log("error");
+        setIsLoading(false);
         showErrorToast(response.message);
       }
 
@@ -222,6 +226,7 @@ const page = () => {
       // }
     } catch (err) {
       console.log("error5");
+      setIsLoading(false);
       showErrorToast("Something went wrong");
     }
   };
@@ -631,7 +636,16 @@ const page = () => {
                           type="submit"
                           className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                         >
-                          Submit
+                            {isLoading ? (
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: "30px", width: "100%" }}
+                      >
+                        <ClipLoader color="#ffffff" size={30} />
+                      </div>
+                    ) : (
+                      translate("Submit")
+                    )}
                         </button>
                       </div>
                     </div>

@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { Auth } from "@/app/utils/api/authenticate";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
+import { ClipLoader } from "react-spinners";
 
 export default function PartnerLogin({ onLoginSuccess }) {
   const [LogInData, setLogInData] = useState({
@@ -20,6 +21,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
   });
   const { LoginPer, setLoginPer } = useGlobalState()
   const [LoginISChacked, setLoginISChacked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
   const router = useRouter();
@@ -54,14 +56,18 @@ export default function PartnerLogin({ onLoginSuccess }) {
     // const form = document.querySelector("form");
     // form.classList.remove("was-validated");
     // setLoading(true);
+    setIsLoading(true);
     Auth.user(data)
       .then((resp) => {
+        
         if (resp.status == "error") {
+          setIsLoading(false);
           showErrorToast(resp.message);
         }
 
         
         if (resp.user.user_type == "vendor") {
+          setIsLoading(false);
           typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
           dispatch({ type: "LOGIN", payload: resp });
           showSuccessToast("Login successful!");
@@ -71,6 +77,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
           }, 1000);
         }
         else{
+          setIsLoading(false);
           showErrorToast("Invalid Credentials. If you are a customer please login from the customer login page.");
           setLogInData({
             AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -181,8 +188,17 @@ export default function PartnerLogin({ onLoginSuccess }) {
                     type="submit"
                     className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                   >
-                    {translate("Log In")}
-                  </button>
+                  {isLoading ? (
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: "30px", width: "100%" }}
+                      >
+                        <ClipLoader color="#ffffff" size={30} />
+                      </div>
+                    ) : (
+                      translate("Log In")
+                    )}
+                    </button>
                 </div>
               </div>
 

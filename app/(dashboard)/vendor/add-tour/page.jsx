@@ -115,6 +115,7 @@ export default function AddTour() {
     setStartDate(e.target.value);
     setMinEndDate(e.target.value);
     setDateBegin(formatDateToDDMMYYYY(e.target.value));
+    console.log(date_begin);
   };
   
   const handleEndDateChange = (e) => {
