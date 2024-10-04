@@ -455,25 +455,23 @@ const CustomerDetaTable = () => {
     }
   }, []);
 
+
+
   useEffect(() => {
     const fetchPayments = async () => {
+      console.log("BookingDetails Fatch" , BookingDetails);
+      
       const formData = new FormData();
       formData.append("reservation_id", BookingDetails.reservation?.id);
   
       const response = await POST.request({
         form: formData,
-        url: "invoicegenerate",
+        url: "invoicegenerate",  
       });
-      console.log("response" , response);
+
+      console.log("invoice response" , response);
       
-      if (response ) {
-      
-        showSuccessToast("sucess")
-        // setLoading(false);
-      } else {
-        // setLoading(false);
-        showErrorToast("Something went wrong");
-      }
+    
     };
 
     fetchPayments()
