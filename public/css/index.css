@@ -26,6 +26,10 @@
     }
   }
 
+  .text_red{
+    color: red;
+  }
+
   .radio-label{
     cursor: pointer;
     height: 20px;
