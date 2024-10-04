@@ -987,7 +987,7 @@ export default function Payment() {
                     </div>
                     <div className="text-start">
                       {" "}
-                      {translate("Makka")} -{" "}
+                      {translate("Makka")} : {" "}
                       {SideBarData?.MakkaHotel?.hotel_name}
                     </div>
                   </div>
@@ -1000,7 +1000,7 @@ export default function Payment() {
                     </div>
                     <div className="text-start">
                       {" "}
-                      {translate("Madina")} -{" "}
+                      {translate("Madina")} : {" "}
                       {SideBarData?.MadinaHotel?.hotel_name}
                     </div>
                   </div>
