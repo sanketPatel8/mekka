@@ -198,6 +198,46 @@ const CustomerDetaTable = () => {
     },
   ];
 
+  const Child = [
+    { name: "Name", selector: (row) => row.personName, width: "100px" },
+    { name: "Surname", selector: (row) => row.personSurName },
+    { name: "Gender", selector: (row) => row.gender },
+    { name: translate("DOB"), selector: (row) => row.personBirthDay },
+    {
+      name: translate("Nationality"),
+      selector: (row) => row.personNationality,
+    },
+    {
+      name: translate("Additional Services"),
+      selector: (row) =>
+        row.extra_data.length !== 0
+          ? row.extra_data.map((item) => item.title).join(", ")
+          : null, // Return null if the length is 0
+      width: "150px",
+    },
+    { name: translate("Total"), selector: (row) => row.child_price },
+    {
+      name: translate("Action"),
+      selector: (row) => (
+        <div className="flex_center">
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            onClick={() => openEditData(row?.id)} // Pass the current row
+          >
+            {translate("Edit")}
+          </button>
+          <button
+            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
+            onClick={() => openUploadFileModal(row.id, row.reservation_id)}
+          >
+            {translate("Document")}
+          </button>
+        </div>
+      ),
+      width: "200px", // Set a custom width for the button column
+    },
+  ];
+
   const baby = [
     { name: "Name", selector: (row) => row.personName, width: "100px" },
     { name: "Surname", selector: (row) => row.personSurName },
@@ -207,7 +247,7 @@ const CustomerDetaTable = () => {
       name: translate("Nationality"),
       selector: (row) => row.personNationality,
     },
-    { name: translate("Total"), selector: (row) => row.adult_price },
+    { name: translate("Total"), selector: (row) => row.baby_price },
     {
       name: translate("Action"),
       selector: (row) => (
@@ -851,7 +891,7 @@ const CustomerDetaTable = () => {
       {/* Child Data Table */}
       <DataTable
         title="Child Information"
-        columns={columnAduInfo_2}
+        columns={Child}
         data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
         highlightOnHover
       />

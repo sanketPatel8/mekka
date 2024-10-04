@@ -26,6 +26,7 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { nationalities } from "@/data/nationalities";
 import Login from "./Login";
 import { useCurrency } from "@/app/context/currencyContext";
+import { ClipLoader } from "react-spinners";
 
 const customStyles = {
   overlay: {
@@ -60,13 +61,9 @@ export default function BookingPages({ BookingData }) {
 
   const [bookingStage, setBookingStage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [LoginISChacked, setLoginISChacked] = useState(false);
-  const [asLogin, setasLogin] = useState(false);
-  const [BookingLoginData, setBookingLoginData] = useState({
-    AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-    email: "",
-    password: "",
-  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [UserID, setUserID] = useState(0);
   const { selectedCheckbox, ExcludeFlight } = useGlobalState();
   const { customer } = useAuthContext();
@@ -1066,8 +1063,10 @@ export default function BookingPages({ BookingData }) {
     }
 
     handleUpdateLocalStorage();
+    setIsLoading(true)
 
     if(PhoneValid === true){
+      setIsLoading(false)
       router.push("/payment");
     }else{
       showErrorToast("Invalid Phone Number")
@@ -1359,7 +1358,18 @@ export default function BookingPages({ BookingData }) {
                       className={`button -md -info-2 bg-accent-1 text-white col-12 text-end `}
                       onClick={handleExternalButtonClick}
                     >
-                      {translate("Proceed to Payment")}
+                       {isLoading ? (
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: "30px", width: "100%" }}
+                      >
+                        <ClipLoader color="#ffffff" size={30} />
+                      </div>
+                    ) : (
+                      translate("Proceed to Payment")
+                    )}
+
+                      
                     </button>
                   </div>
                 </div>
