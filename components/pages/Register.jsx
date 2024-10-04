@@ -10,6 +10,7 @@ import { post } from "@/app/utils/api";
 import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { ClipLoader } from "react-spinners";
 
 export default function Register() {
   const [RegisterData, setRegisterData] = useState({
@@ -26,6 +27,7 @@ export default function Register() {
   const [isChecked, setIsChecked] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePasswordChange = (e) => {
     const { value } = e.target;
@@ -153,9 +155,10 @@ export default function Register() {
 
     // If all validation passes, then make the API call
     try {
+      setIsLoading(true);
       const response = await post("register", RegisterData);
-
       if(response.status === "success"){
+        setIsLoading(false)
         showSuccessToast(response.message);
         // Clear the form and set email in local storage
         setRegisterData({
@@ -331,7 +334,17 @@ export default function Register() {
                 className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                 type="submit"
               >
-                {translate("Register")}
+                {isLoading ? (
+                      <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: "30px", width: "100%" }}
+                      >
+                        <ClipLoader color="#ffffff" size={30} />
+                      </div>
+                    ) : (
+                      translate("Register")
+                    )}
+                
               </button>
 
               <div className="relative line mt-50 mb-30">

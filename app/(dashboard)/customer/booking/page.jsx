@@ -258,7 +258,7 @@ export default function DbBooking() {
                         </p>
                         <p className="text-center">Due : {elm.due_payment} € </p>
                       </div>
- €
+ 
                       <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
