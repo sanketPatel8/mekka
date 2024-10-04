@@ -1,18 +1,22 @@
+"use client";
+import { useTranslation } from '@/app/context/TranslationContext'
 import FooterOne from '@/components/layout/footers/FooterOne'
 import FooterTwo from '@/components/layout/footers/FooterTwo'
 import Header1 from '@/components/layout/header/Header1'
 import React from 'react'
 
 const Datenschutz = () => {
+    const {translate} = useTranslation();
+
   return (
     <>
     <Header1 />
     <div className="container">
         <br /><br /><br /><br />
-        <h1>Datenschutzerklärung</h1><br />
-        <p>Mit dieser Datenschutzerklärung möchten wir Sie über Art, Umfang und Zweck der Verarbeitung von personenbezogenen Daten (im Folgenden auch nur als "Daten" bezeichnet) aufklären. Personenbezogene Daten sind alle Daten, die einen persönlichen Bezug zu Ihnen aufweisen, z. B. Name, Adresse, E-Mail-Adresse oder Ihr Nutzerverhalten. Die Datenschutzerklärung gilt für alle von uns vorgenommene Daten-Verarbeitungsvorgänge sowohl im Rahmen unserer Kerntätigkeit als auch für die von uns vorgehaltenen Online-Medien.</p><br />
-        <h2>Wer bei uns für die Datenverarbeitung verantwortlich ist</h2><br />
-        <p>Verantwortlich für die Datenverarbeitung ist:</p><br />
+        <h1>{translate("Privacy policy")}</h1><br />
+        <p>{translate("With this privacy policy, we would like to inform you about the type, scope and purpose of the processing of personal data (hereinafter also referred to as 'data'). Personal data is all data that has a personal reference to you, e.g. name, address, email address or your user behavior. This privacy policy applies to all data processing operations carried out by us, both in the context of our core activities and for the online media we maintain.")}</p><br />
+        <h2>{translate("Who is responsible for data processing at our company")}</h2><br />
+        <p>{translate("Responsible for data processing is:")}</p><br />
         <p> Mekka Booking GmbH</p>
         <p> Kagan Kahraman</p>
         <p> Frankfurter Str. 92</p>
@@ -22,58 +26,62 @@ const Datenschutz = () => {
         <p> info@mekkabooking.com</p>
         <p> https://mekkabooking.com/Impressum</p>
         <br />
-        <h2>Verarbeitung Ihrer Daten im Rahmen der Kerntätigkeit unseres Unternehmens</h2>
-        <p>Sofern Sie unser Kunde oder Geschäftspartner sind oder sich für unsere Leistungen interessieren, richtet sich Art, Umfang und Zweck der Verarbeitung Ihrer Daten nach dem zwischen uns bestehenden vertraglichen bzw. vorvertraglichen Beziehungen. In diesem Sinne gehören zu den von uns verarbeiteten Daten all diejenigen Daten, die zum Zwecke der Inanspruchnahme der vertraglichen bzw. vorvertraglichen Leistungen durch Sie bereitgestellt werden bzw. wurden und die zur Abwicklung Ihrer Anfrage oder des zwischen uns geschlossenen Vertrages benötigt werden. Sofern sich aus den weiteren Hinweisen dieser Datenschutzerklärung nichts anderes ergibt, beschränkt sich die Verarbeitung Ihrer Daten sowie deren Weitergabe an Dritte auf diejenigen Daten, die zur Beantwortung Ihrer Anfragen und/oder zur Erfüllung des zwischen Ihnen und uns geschlossenen Vertrages, zur Wahrung unserer Rechte sowie zur Erfüllung gesetzlicher Pflichten erforderlich und zweckmäßig sind. Welche Daten hierfür erforderlich sind, teilen wir Ihnen vor oder im Rahmen der Datenerhebung mit. Soweit wir zur Erbringung unserer Leistungen Drittanbieter einsetzen, gelten die Datenschutzhinweise der jeweiligen Drittanbieter.</p>
-        <p><b>Betroffene Daten:</b></p>
+        <h2>{translate("Processing your data as part of the core activities of our company")}</h2>
+        <p>{translate("If you are our customer or business partner or are interested in our services, the type, scope and purpose of the processing of your data depends on the contractual or pre-contractual relationship that exists between us. In this sense, the data we process includes all data that is or was provided by you for the purpose of using the contractual or pre-contractual services and that is required to process your inquiry or the contract concluded between us. Unless otherwise stated in the further information in this data protection declaration, the processing of your data and its transfer to third parties is limited to the data that is necessary and appropriate to answer your inquiries and/or to fulfill the contract concluded between you and us, to protect our rights and to fulfill legal obligations. We will inform you which data is required for this before or as part of the data collection. If we use third parties to provide our services, the data protection information of the respective third parties applies.")}</p>
+        <p><b>{translate("Data affected:")}</b></p>
         <ul>
-            <li>Bestandsdaten (bspw. Namen, Adressen)</li>
-            <li>Zahlungsdaten (bspw. Bankverbindungsdaten, Rechnungen)</li>
-            <li>Kontakdaten (bspw. E-Mail-Adresse, Telefonnummer, Postanschrift)</li>
-            <li>Vertragsdaten (bspw. Vertragsgegenstand, Vertragsdauer)</li>
+            <li>{translate("Inventory data (e.g. names, addresses)")}</li>
+            <li>{translate("Payment data (e.g. bank details, invoices)")}</li>
+            <li>{translate("Contact details (e.g. email address, telephone number, postal address)")}</li>
+            <li>{translate("Contract data (e.g. subject matter of the contract, duration of the contract)")}</li>
         </ul>
-        <p><span><b>Betroffene Personen:</b></span>Interessenten, Geschäfts- und Vertragspartner</p>
-        <p><span><b>Verarbeitungszweck:</b></span>Abwicklung vertraglicher Leistungen, Kommunikation sowie Beantwortung von Kontaktanfragen, Büro und Organisationsverfahren</p>
-        <p><span><b>Rechtsgrundlage:</b></span>Vertragserfüllung und vorvertragliche Anfragen, Art. 6 Abs. 1 lit. b DSGVO, rechtliche Verpflichtung, Art. 6 Abs. 1 lit. c DSGVO, berechtigtes Interesse, Art. 6 Abs. 1 lit. f DSGVO</p>
-        <h1>Ihre Rechte nach der DSGVO</h1>
-        <p>Nach der DSGVO stehen Ihnen die nachfolgend aufgeführten Rechte zu, die Sie jederzeit bei dem in Ziffer 1. dieser Datenschutzerklärung genannten Verantwortlichen geltend machen können:</p>
+        <p><span><b>{translate("Affected persons:")}</b></span>{translate("Interested parties, business and contractual partners")}</p>
+        <p><span><b>{translate("Purpose of processing")}:</b></span>{translate("Processing of contractual services, communication and answering contact requests, office and organizational procedures")}</p>
+        <p><span><b>{translate("Legal basis")}:</b></span>{translate("Contractual performance and pre-contractual inquiries, Art. 6 Para. 1 lit. b GDPR, legal obligation, Art. 6 Para. 1 lit. c GDPR, legitimate interest, Art. 6 Para. 1 lit. f GDPR")}</p>
+        <h1>{translate("Your rights under the GDPR")}</h1>
+        <p>{translate("According to the GDPR, you are entitled to the following rights, which you can assert at any time with the person responsible named in section 1 of this data protection declaration:")}</p>
         <ul>
-            <li>  <p><span><b>Recht auf Auskunft: </b></span>Sie haben das Recht, von uns Auskunft darüber zu verlangen, ob und welche Daten wir von Ihnen verarbeiten.</p></li>
-            <li>  <p><span><b>Recht auf Berichtigung: </b></span>Sie haben das Recht, die Berichtigung unrichtiger oder Vervollständigung unvollständiger Daten zu verlangen.</p></li>
-            <li>  <p><span><b>Recht auf Löschung: </b></span>Recht auf Löschung: </p></li>
-            <li>  <p><span><b>Recht auf Einschränkung: </b></span>Sie haben in bestimmten Fällen das Recht zu verlangen, dass wir Ihre Daten nur noch eingeschränkt bearbeiten. </p></li>
-            <li>  <p><span><b>Recht auf Datenübertragbarkeit: </b></span>Sie haben das Recht zu verlangen, dass wir Ihnen oder einem anderen Verantwortlichen Ihre Daten in einem strukturierten, gängigen und maschinenlesebaren Format übermitteln. </p></li>
-            <li>  <p><span><b>Beschwerderecht: </b></span>Sie haben das Recht, sich bei einer Aufsichtsbehörde zu beschweren. Zuständig ist die Aufsichtsbehörde Ihres üblichen Aufenthaltsortes, Ihres Arbeitsplatzes oder unseres Firmensitzes.</p></li>
+            <li>  <p><span><b>{translate("Right to information:")} </b></span>{translate("You have the right to request information from us as to whether and which data we process about you.")}</p></li>
+            <li>  <p><span><b>{translate("Right to rectification")}: </b></span>{translate("You have the right to request the correction of inaccurate data or the completion of incomplete data.")}</p></li>
+            <li>  <p><span><b>{translate("Right to erasure:")} </b></span>{translate("Right to erasure:")} </p></li>
+            <li>  <p><span><b>{translate("Right to restriction:")} </b></span>{translate("In certain cases, you have the right to request that we only process your data to a limited extent.")} </p></li>
+            <li>  <p><span><b>{translate("Right to data portability:")} </b></span>{translate("You have the right to request that we transmit your data to you or another controller in a structured, common and machine-readable format.")} </p></li>
+            <li>  <p><span><b>{translate("Right to complain")}: </b></span>{translate("You have the right to complain to a supervisory authority. The supervisory authority responsible is the supervisory authority of your usual place of residence, your place of work or our company headquarters.")}</p></li>
         </ul>
 
-        <h1>Widerrufsrecht</h1>
-        <p>Sie haben das Recht, die von Ihnen erteilte Einwilligung zur Datenverarbeitung jederzeit zu widerrufen.</p>
-        <h1>Widerspruchsrecht</h1>
-        <p>Sie haben das Recht, jederzeit gegen die Verarbeitung Ihrer Daten, die wir auf unser berechtigtes Interesse nach Art. 6 Abs. 1 lit. f DSGVO stützen, Widerspruch einzulegen. Sofern Sie von Ihrem Widerspruchsrecht Gebrauch machen, bitten wir Sie um die Darlegung der Gründe. Wir werden Ihre personenbezogenen Daten dann nicht mehr verarbeiten, es sei denn, wir können Ihnen gegenüber nachweisen, dass zwingende schutzwürdige Gründe an der Datenverarbeitung Ihre Interessen und Rechte überwiegen.</p>
-        <p><b>Unabhängig vom vorstehend Gesagten, haben Sie das jederzeitige Recht, der Verarbeitung Ihrer personenbezogenen Daten für Zwecke der Werbung und Datenanalyse zu widersprechen.</b></p>
-        <p>Ihren Widerspruch richten Sie bitte an die oben angegebene Kontaktadresse des Verantwortlichen.</p>
-        <h1>Wann löschen wir Ihre Daten?</h1>
-        <p>Wir löschen Ihre Daten dann, wenn wir diese nicht mehr brauchen oder Sie uns dies vorgeben. Dass bedeutet, dass - sofern sich aus den einzelnen Datenschutzhinweisen dieser Datenschutzerklärung nichts anderes ergibt - wir Ihre Daten löschen,</p>
+        <h1>{translate("Right of withdrawal")}</h1>
+        <p>{translate("You have the right to revoke your consent to data processing at any time.")}</p>
+        <h1>{translate("Right of objection")}</h1>
+        <p>{translate("You have the right to object at any time to the processing of your data, which we base on our legitimate interest in accordance with Art. 6 (1) (f) GDPR. If you exercise your right of objection, we ask you to explain the reasons. We will then no longer process your personal data unless we can prove to you that compelling legitimate reasons for data processing outweigh your interests and rights.")}</p>
+        <p><b>{translate("Notwithstanding the foregoing, you have the right to object at any time to the processing of your personal data for advertising and data analysis purposes.")}</b></p>
+        <p>{translate("Please send your objection to the contact address of the person responsible given above.")}</p>
+        <h1>{translate("When do we delete your data?")}</h1>
+        <p>{translate("We delete your data when we no longer need it or when you tell us to do so. This means that - unless otherwise stated in the individual data protection notices in this data protection declaration - we delete your data,")}</p>
         <ul>
             <li>
-            wenn der Zweck der Datenverarbeitung weggefallen ist und damit die jeweilige in den einzelnen Datenschutzhinweisen genannte Rechtsgrundlage nicht mehr besteht, also bspw. 
+            {translate("if the purpose of the data processing no longer applies and the respective legal basis stated in the individual data protection notices no longer exists, e.g.")} 
                 <ul>
-                    <li>nach Beendigung der zwischen uns bestehenden vertraglichen oder mitgliedschaftlichen Beziehungen (Art. 6 Abs. 1 lit. a DSGVO) oder</li>
-                    <li>nach Wegfall unseres berechtigten Interesses an der weiteren Verarbeitung oder Speicherung Ihrer Daten (Art. 6 Abs. 1 lit. f DSGVO),</li>
+                    <li>{translate("after termination of the contractual or membership relationship between us (Art. 6 para. 1 lit. a GDPR) or")}</li>
+                    <li>{translate("after our legitimate interest in further processing or storing your data no longer exists (Art. 6 para. 1 lit. f GDPR)")},</li>
                 </ul>
             </li>
-            <li>wenn Sie von Ihrem Widerrufsrecht Gebrauch machen und keine anderweitige gesetzliche Rechtsgrundlage für die Verarbeitung im Sinne von Art. 6 Abs. 1 lit. b-f DSGVO eingreift,</li>
-            <li>wenn Sie vom Ihrem Widerspruchsrecht Gebrauch machen und der Löschung keine zwingenden schutzwürdigen Gründe entgegenstehen.</li>
+            <li>{translate("if you exercise your right of withdrawal and there is no other legal basis for the processing within the meaning of Art. 6 (1) lit. b-f GDPR")},</li>
+            <li>{translate("if you exercise your right of objection and there are no compelling legitimate reasons that prevent the deletion.")}</li>
 
         </ul>
-        <p>Sofern wir (bestimmte Teile) Ihre(r) Daten jedoch noch für andere Zwecke vorhalten müssen, weil dies etwa steuerliche Aufbewahrungsfristen (in der Regel 6 Jahre für Geschäftskorrespondenz bzw. 10 Jahre für Buchungsbelege) oder die Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen aus vertraglichen Beziehungen (bis zu vier Jahren) erforderlich machen oder die Daten zum Schutz der Rechte einer anderen natürlichen oder juristischen Person gebraucht werden, löschen wir (den Teil) Ihre(r) Daten erst nach Ablauf dieser Fristen. Bis zum Ablauf dieser Fristen beschränken wir die Verarbeitung dieser Daten jedoch auf diese Zwecke (Erfüllung der Aufbewahrungspflichten).</p> <br />
+        <p>{translate("However, if we still need to retain (certain parts of) your data for other purposes, for example because this is necessary due to tax retention periods (usually 6 years for business correspondence or 10 years for accounting documents) or the assertion, exercise or defense of legal claims arising from contractual relationships (up to four years) or the data is needed to protect the rights of another natural or legal person, we will only delete (that part of) your data after these periods have expired. However, until these periods have expired, we limit the processing of this data to these purposes (fulfillment of the retention obligations).")}.</p> <br />
         <h2><b>Cookies</b></h2> <br />
-        <p>Unsere Internetseite nutzt Cookies. Bei Cookies handelt es sich um kleine Textdateien, bestehend aus einer Reihe von Zahlen und Buchstaben, die auf dem von Ihnen genutzten Endgerät abgelegt und gespeichert werden. Cookies dienen vorrangig dazu, Informationen zwischen dem von Ihnen genutzten Endgerät und unserer Webseite auszutauschen. Hierzu gehören u. a. die Spracheinstellungen auf einer Webseite, der Login-Status oder die Stelle, an der ein Video geschaut wurde.</p>
-        <p>Beim Besuch unserer Webseiten werden zwei Typen von Cookies eingesetzt:</p>
+        <p>{translate("Our website uses cookies. Cookies are small text files consisting of a series of numbers and letters that are saved on the device you use. Cookies are primarily used to exchange information between the device you use and our website. This includes the language settings on a website, the login status or the point at which a video was watched.")}</p>
+        <p>{translate("When you visit our websites, two types of cookies are used")}:</p>
         <ul>
-            <li><p><span><b>Temporäre Cookies (Session Cookies):</b></span>Diese speichern eine sogenannte Session-ID, mit welcher sich verschiedene Anfragen Ihres Browsers der gemeinsamen Sitzung zuordnen lassen. Die Session-Cookies werden gelöscht, wenn Sie sich ausloggen oder Ihren Browser schließen.</p></li>
-            <li><p><span><b>Permanente Cookies:</b></span>DPermanente Cookies bleiben auch nach dem Schließen des Browsers gespeichert. Dadurch erkennt unsere Webseite Ihren Rechner wieder, wenn Sie auf unsere Webseite zurückkehren. In diesen Cookies werden beispielsweise Informationen zu Spracheinstellungen oder Log-In-Informationen gespeichert. Außerdem kann mit diesen Cookies Ihr Surfverhalten dokumentiert und gespeichert werden. Diese Daten können zu Statistik-, Marketing- und Personalisierungs-Zwecken verwendet werden.</p></li>
+            <li><p><span><b>{translate("Temporary cookies (session cookies)")}:</b></span>Diese speichern eine sogenannte Session-ID, mit welcher sich verschiedene Anfragen Ihres Browsers der gemeinsamen Sitzung zuordnen lassen. Die Session-Cookies werden gelöscht, wenn Sie sich ausloggen oder Ihren Browser schließen.</p></li>
+            <li><p><span><b>{translate("Permanente Cookies")}:</b></span>{translate("Permanent cookies remain stored even after you close your browser. This allows our website to recognize your computer when you return to our website. These cookies store information about language settings or log-in information, for example. These cookies can also be used to document and store your surfing behavior. This data can be used for statistical, marketing and personalization purposes.")}</p></li>
             </ul>
     </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <FooterTwo />
     </>
   )
