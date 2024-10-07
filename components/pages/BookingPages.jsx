@@ -1113,7 +1113,7 @@ export default function BookingPages({ BookingData }) {
                     </a>{" "}
                   </button>
                   {translate(
-                    " Book With Your Saved Details or Continue As a Guest To Book Your Travel."
+                    "Book With Your Saved Details or Continue As a Guest To Book Your Travel."
                   )}
                 </div>
               </div>
