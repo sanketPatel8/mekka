@@ -27,6 +27,7 @@ const sections = [
 export default function FooterLinks() {
 
   const { translate } = useTranslation();
+
   return (
     <>
       {sections.map((elm, i) => (
@@ -36,7 +37,7 @@ export default function FooterLinks() {
           <div className="y-gap-10 mt-20">
             {elm.links.map((elm2, i2) => (
               <Link key={i2} className="d-block fw-500" href={elm2.href}>
-                {translate(elm2.text)}
+                {elm2.text}
               </Link>
             ))}
           </div>
