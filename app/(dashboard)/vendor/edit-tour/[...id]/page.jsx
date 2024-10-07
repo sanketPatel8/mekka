@@ -1615,7 +1615,7 @@ const formatDateToMMDDYYYY = (date) => {
                                         <div className="col-2 d-flex">
                                           <button
                                             type="button"
-                                            className="button -sm -info-2 bg-accent-1 text-white  my-4 text-40 mx-1 mx-md-3 "
+                                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
                                             style={{height:"fit-content"}}
                                             onClick={handleAddMekkaRow}
                                           >
@@ -1624,7 +1624,7 @@ const formatDateToMMDDYYYY = (date) => {
                                           {index > 0 && (
                                             <button
                                               type="button"
-                                              className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-md-3 mx-1`}
+                                              className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
                                               style={{height:"fit-content"}}
 
                                               onClick={() =>
