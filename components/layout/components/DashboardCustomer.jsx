@@ -4,11 +4,12 @@ import { useCurrency } from "@/app/context/currencyContext";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link"; // Ensure Link is imported
+import Image from "next/image";
 
 const options = [
   { name: "Booking", path: "/customer/booking" },
   { name: "Profile", path: "/customer/profile" },
-  { name: "LogOut", path: "" }, // Ensure to handle logout separately
+  // { name: "LogOut", path: "" }, // Ensure to handle logout separately
 ];
 
 export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
@@ -19,17 +20,13 @@ export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
   const router = useRouter();
 
   const handleOptionChange = (option) => {
-    // Your logic for handling option changes (if needed)
     console.log("Option changed:", option); // Example logging
   };
 
   const handleButtonClick = (option) => {
     if (option.name === "LogOut") {
-      // Add your logout logic here
       handleLogoutClick(); // Replace this with your logout logic
-      // Optionally redirect after logout
     } else {
-      // Navigate to the specified path
       router.push(option.path);
     }
   };
@@ -55,11 +52,25 @@ export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
       ref={dropDownContainer}
       className={`${parentClass ? parentClass : "headerDropdown js-form-dd"}`}
     >
-      <div
+      {/* <div
         className="headerDropdown__button"
         onClick={() => setIsOpen((prev) => !prev)} // Toggle dropdown
       >
         {currentOption} <i className="icon-chevron-down text-18"></i>
+      </div> */}
+
+      {/* Image as Dropdown Toggle */}
+      <div
+        onClick={() => setIsOpen((prev) => !prev)} // Toggle dropdown when image is clicked
+        style={{ cursor: "pointer" }} // Make it clear that the image is clickable
+      >
+        <Image
+          width={60}
+          height={60}
+          src="/img/404/user.jpg"
+          alt="image"
+          className="rounded-full"
+        />
       </div>
 
       {isOpen && ( // Show dropdown content only when open

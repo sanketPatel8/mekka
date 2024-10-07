@@ -52,6 +52,7 @@ const CustomerDetaTable = () => {
   const [gender, setGender] = useState("");
   const [Nationality, setNationality] = useState("");
   const [From, setFrom] = useState("Frankfurt(FRA)");
+  const [PaymentCheckbox, setPaymentCheckbox] = useState(0)
   const [editCustomerData, setEditCustomerData] = useState({
     name: "",
     surname: "",
@@ -67,6 +68,7 @@ const CustomerDetaTable = () => {
   const [viewDetails, setViewDetails] = useState([]);
   const [downloadDetails, setDownloadDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedpaymentOption, setSelectedOption] = useState("adPay");
 
   const [pendingPaymentValue, setPendingPaymentValue] = useState({
     firstAmount: "",
@@ -663,6 +665,21 @@ const CustomerDetaTable = () => {
     }, 2000);
   };
 
+  const handleCheckboxChange = (index) => {
+    setPaymentCheckbox(index);
+    // if (index === 2) {
+    //   setInstallmentChecked(true);
+    // } else {
+    //   setInstallmentChecked(false);
+    // }
+    // if (index === 1) {
+    //   setShowStripeModal(true);
+    //   const newBooking = { ...Booking, paymentType: 2 };
+    //   setBooking(newBooking);
+    // }
+  };
+
+
   // for upload documnet
 
   const [rows, setRows] = useState([
@@ -814,12 +831,15 @@ const CustomerDetaTable = () => {
             
             > */}
             {PdfData !== "undefined" && (
-              <a href={PdfData} target="_blank" className="button -sm -info-2 bg-accent-1 text-white"> 
+              <a
+                href={PdfData}
+                target="_blank"
+                className="button -sm -info-2 bg-accent-1 text-white"
+              >
                 {translate("Show Invoice")}
               </a>
             )}
 
-          
             {/* </button> */}
           </div>
 
@@ -1126,6 +1146,160 @@ const CustomerDetaTable = () => {
                   </h5>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="d-flex items-center pointer-check py-3">
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="item2"
+                  name="item2"
+                  checked={PaymentCheckbox === 0}
+                  onChange={() => handleCheckboxChange(0)}
+                />
+                <label htmlFor="item2" className="form-checkbox__mark">
+                  <div className="form-checkbox__icon">
+                    <svg
+                      width="10"
+                      height="8"
+                      viewBox="0 0 10 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                </label>
+              </div>
+              <label htmlFor="item2" className="lh-16 ml-15">
+                {translate(
+                  "Payment in advance. Payment installment is possible."
+                )}
+              </label>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6 col-12">
+                <div
+                  className={`p-2 ${
+                    selectedpaymentOption === "adPay" ? "bg_dark" : "bg_dark_1"
+                  }`}
+                >
+                  <p>
+                    <span>
+                      <b>Kontoinhaber:</b>
+                    </span>
+                    Mekka Booking GmbH
+                  </p>
+                  <p>
+                    <span>
+                      <b>IBAN:</b>
+                    </span>
+                    DE71 5125 0000 0002 2282 11
+                  </p>
+                  <p>
+                    <span>
+                      <b>BIC:</b>
+                    </span>
+                    HELADEF1TSK
+                  </p>
+                  <p>
+                    <span>
+                      <b>Bank:</b>
+                    </span>
+                    Taunus Sparkasse
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-6 col-12 my-md-0 my-3">
+                <div className="p-2 border-5 d-inline-block">
+                  <p className="py-2">
+                    {translate(
+                      "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
+                    )}
+                  </p>
+                  <p className="text-red">
+                    {translate(
+                      "Note: Please make the payment within next 7 days. Post that the order will be cancelled."
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex items-center justify-between py-3">
+              <div className="row ">
+                <div className="col-12">
+                  <div className="d-flex items-center pointer-check">
+                    <div className="form-checkbox">
+                      <input
+                        type="checkbox"
+                        id="item4"
+                        name="item4"
+                        checked={PaymentCheckbox === 1}
+                        onChange={() => handleCheckboxChange(1)}
+                      />
+                      <label htmlFor="item4" className="form-checkbox__mark">
+                        <div className="form-checkbox__icon">
+                          <svg
+                            width="10"
+                            height="8"
+                            viewBox="0 0 10 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </div>
+                      </label>
+                    </div>
+                    <label htmlFor="item4" className="lh-16 ml-15">
+                      {translate(
+                        "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
+                      )}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="d-flex items-center pointer-check py-3">
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="installment"
+                  name="installment"
+                  checked={PaymentCheckbox === 2}
+                  onChange={() => handleCheckboxChange(2)}
+                />
+                <label htmlFor="installment" className="form-checkbox__mark">
+                  <div className="form-checkbox__icon">
+                    <svg
+                      width="10"
+                      height="8"
+                      viewBox="0 0 10 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                </label>
+              </div>
+              <label htmlFor="installment" className="lh-16 ml-15">
+                {translate("Click for Installment Payment")}
+              </label>
             </div>
           </div>
         </Modal>
