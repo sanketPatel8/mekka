@@ -17,7 +17,7 @@ import { showErrorToast } from "@/app/utils/tost";
 export default function TourSliderTwo({ setLength }) {
   const [showSwiper, setShowSwiper] = useState(false);
   const [BestSellerData, setBestSellerData] = useState([]);
-  const [ShowSlide, setShowSlide] = useState(0)
+  const [ShowSlide, setShowSlide] = useState(0);
   useEffect(() => {
     setShowSwiper(true);
     HandleLoginSubmite();
@@ -32,7 +32,7 @@ export default function TourSliderTwo({ setLength }) {
     try {
       const response = await post("best_seller_tour", BookingLoginData);
       const maxSlide = response?.Tours?.length >= 2 ? 2 : 1;
-      setShowSlide(maxSlide)
+      setShowSlide(maxSlide);
       setBestSellerData(response?.Tours);
     } catch (error) {
       console.error("Error:", error); // Log the full error for debugging
@@ -47,7 +47,6 @@ export default function TourSliderTwo({ setLength }) {
       }
     }
   };
-  
 
   const { translate } = useTranslation();
 
@@ -65,7 +64,7 @@ export default function TourSliderTwo({ setLength }) {
               data-aos-delay=""
               className="swiper-wrapper "
             >
-              {showSwiper && ShowSlide !== 0  && (
+              {showSwiper && ShowSlide !== 0 && (
                 <Swiper
                   spaceBetween={30}
                   className="w-50"
@@ -89,7 +88,7 @@ export default function TourSliderTwo({ setLength }) {
                       slidesPerView: ShowSlide,
                     },
                     1200: {
-                      slidesPerView: ShowSlide ,
+                      slidesPerView: ShowSlide,
                     },
                   }}
                 >
@@ -191,15 +190,17 @@ export default function TourSliderTwo({ setLength }) {
             </div>
           </div>
 
-          <div className="navAbsolute">
-            <button className="navAbsolute__button bg-white js-slider1-prev prev">
-              <i className="icon-arrow-left text-14"></i>
-            </button>
+          { ShowSlide !== 0 || (
+            <div className="navAbsolute">
+              <button className="navAbsolute__button bg-white js-slider1-prev prev">
+                <i className="icon-arrow-left text-14"></i>
+              </button>
 
-            <button className="navAbsolute__button bg-white js-slider1-next next">
-              <i className="icon-arrow-right text-14"></i>
-            </button>
-          </div>
+              <button className="navAbsolute__button bg-white js-slider1-next next">
+                <i className="icon-arrow-right text-14"></i>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
