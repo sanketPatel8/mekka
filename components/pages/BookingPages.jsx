@@ -27,6 +27,7 @@ import { nationalities } from "@/data/nationalities";
 import Login from "./Login";
 import { useCurrency } from "@/app/context/currencyContext";
 import { ClipLoader } from "react-spinners";
+import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
 
 const customStyles = {
   overlay: {
@@ -90,9 +91,6 @@ export default function BookingPages({ BookingData }) {
 
   const [LoginCheck, setLoginCheck] = useState();
 
-  console.log("adultData" , adultData);
-  console.log("Childrendata" , Childrendata);
-  console.log("babyData" , babyData);
 
   useEffect(() => {
     // Set modal's app element
@@ -205,13 +203,23 @@ export default function BookingPages({ BookingData }) {
 
   function openModal() {
     setIsOpen(true);
+    localStorage.setItem("setIsOpen", JSON.stringify(true));
   }
 
   function afterOpenModal() {}
 
   function closeModal() {
     setIsOpen(false);
+    
   }
+
+  // useEffect(()=>{
+  //   const open = typeof window !== "undefined" && localStorage.getItem("setIsOpen");
+  //   console.log(open , "open");
+  //   if(open === false ){
+  //     closeModal();
+  //   }
+  // },[setIsOpen])
 
 
   // for promocode
@@ -636,7 +644,6 @@ export default function BookingPages({ BookingData }) {
     if (LoginCheck === true) {
       fetchProfile();
     } else {
-      console.log("User not logged in");
     }
   }, [LoginCheck, customer]);
 
@@ -1019,8 +1026,6 @@ export default function BookingPages({ BookingData }) {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
-  console.log("Discount" , Discount);
-  console.log("bookingData" , bookingData);
   
   
 

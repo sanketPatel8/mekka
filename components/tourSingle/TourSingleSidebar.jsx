@@ -544,6 +544,11 @@ export default function TourSingleSidebar({
           selectedFlights?.name === undefined ? "" : selectedFlights?.name
         }`
       );
+      localStorage.setItem("Redirect_Login",`/booking?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
+          SidebarData?.tour_details?.type
+        }&selectedflight=${
+          selectedFlights?.name === undefined ? "" : selectedFlights?.name
+        }`);
     }
   };
 

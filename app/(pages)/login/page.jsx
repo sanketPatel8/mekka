@@ -4,6 +4,7 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Login from "@/components/pages/Login";
 import React, { useState, useEffect, useContext } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Page() {
   const handleLoginSuccess = () => {
@@ -16,6 +17,7 @@ export default function Page() {
 
   return (
     <>
+      <ToastContainer/>
       <main>
         <Header1 />
         <Login

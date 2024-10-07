@@ -132,10 +132,22 @@ export default function Login({
           dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
           showSuccessToast("Login successful!");
           LoginUpdate();
-          setTimeout(() => {
-            setLoginPer(true);
-            router.push(path);
-          }, 1000);
+
+          const redirect = typeof window !== "undefined" ? localStorage.getItem("Redirect_Login"): null;
+          console.log(redirect,"redirect");
+          if(redirect){
+        setTimeout(() => {
+          window.location.reload();
+          localStorage.removeItem("Redirect_Login");
+        },1000);
+          }
+
+          if(redirect == null){
+            setTimeout(() => {
+              setLoginPer(true);
+              router.push(path);
+            }, 1000);
+          }
         } else {
           showErrorToast(
             "Invalid Credentials. If you are tour agent, please login from the partner login page."
@@ -156,7 +168,6 @@ export default function Login({
   return (
     <section className={`${sectionClass}  layout-pb-lg`}>
       <div className={hide === false ? "d-none" : "d-block"}>
-        <ToastContainer />
       </div>
       <div className="container">
         <div className="row justify-center">
