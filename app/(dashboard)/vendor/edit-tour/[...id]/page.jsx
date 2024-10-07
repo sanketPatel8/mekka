@@ -72,6 +72,7 @@ export default function EditTour() {
     { departure_id:"", price: "",id:"" },
   ]);
   const [isChecked, setIsChecked] = useState(false);
+
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
     { id: 1, title: "1-bed room", price: "", checked: false },
@@ -102,6 +103,7 @@ export default function EditTour() {
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
   const [departures, setDepartures] = useState([]);
+  const [startDate, setStartDate] = useState("");
 
   const [flightDetails, setFlightDetails] = useState([]);
   const [tourType, setTourType] = useState([]);
@@ -115,6 +117,8 @@ export default function EditTour() {
   const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState('No');
   const [loading, setLoading] = useState(false);
   const [radioValueFlight, setRadioValueFlight] = useState('No');
+  const [minEndDate, setMinEndDate] = useState("");
+
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
@@ -175,14 +179,72 @@ export default function EditTour() {
     };
   }, []);
 
+  const handleStartDateChange = (e) => {
+    const [day, month, year] = e.target.value.split('-');
+    if (day && month && year) {
+      const formattedDate = formatDateToMMDDYYYY(e.target.value);
+      console.log(formattedDate,"formated")
+      const today = new Date();
+      const dateBegin = formatDateToMMDDYYYY(date_begin);
+      console.log(dateBegin,"dateBegin")
 
+      if (formattedDate < dateBegin) {
+        setDateBegin(dateBegin);
+        setMinEndDate(dateBegin);
+        setDateEnd(dateBegin);
+      } else {
+        setDateBegin(e.target.value);
+      }
+    }
+  };
+  
+  const handleEndDateChange = (e) => {
+    const [day, month, year] = e.target.value.split('-');
+    if (day && month && year) {
+      console.log(formatDateToMMDDYYYY(e.target.value),"e.target.value")
+      const formattedDate = formatDateToMMDDYYYY(e.target.value);
+      console.log(formattedDate,"formated")
+      const dateBegin = formatDateToMMDDYYYY(date_begin);
+      if (dateBegin && formattedDate < dateBegin) {
+        setDateEnd(dateBegin);
+      } else {
+        setDateEnd(e.target.value);
+      }
+    }
+  };
+  
+  const handleStartDateBlur = () => {
+    const [day, month, year] = date_begin.split('-');
+    if (day && month && year) {
+      const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
+      console.log(formattedDate,"formatedDate") 
+
+      setMinEndDate(formattedDate);
+      setStartDate(formattedDate);
+    }
+  };
+  
+  const handleEndDateBlur = () => {
+    const [day, month, year] = date_end.split('-');
+    if (day && month && year) {
+      const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
+      setDateEnd(formattedDate);
+      const start_Date = new Date(date_begin);
+      console.log(start_Date,"start_Date")
+      const endDate = new Date(date_end);
+      console.log(endDate,"endDate")
+      const daysDifference = Math.round((endDate - start_Date) / (1000 * 3600 * 24));
+      console.log(daysDifference,"daysDifference")
+      setDaysCount(daysDifference + 1)
+    }
+  };
   const formatedDate = (dateString) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
   
-    return `${day}-${month}-${year}`;
+    return `${year}-${month}-${day}`;
   };
 
   useEffect(()=>{
@@ -245,8 +307,10 @@ useEffect(() => {
   useEffect(() => {
     if(tourDetails){
       setSelectedTour({value:tourDetails.type,label:tourDetails.type});
-      setDateBegin(formatedDate(tourDetails.date_begin));
-      setDateEnd(formatedDate(tourDetails.date_end));
+      setDateBegin(tourDetails.date_begin);
+      console.log(date_begin,"date_begin")
+      setDateEnd(tourDetails.date_end);
+      setMinEndDate(tourDetails.date_begin);
 
       if(tourDetails.tour_image){
         setImage2(tourDetails.tour_image || []);
@@ -349,7 +413,7 @@ useEffect(() => {
       setDaysCount(daysDifference + 1)
     
     }
-  }, [date_begin, date_end]);
+  }, []);
 
   const onEditorStateChange = (newEditorState) => {
     const editorContent = newEditorState.getCurrentContent();
@@ -789,8 +853,8 @@ useEffect(() => {
     formData.append("type", SelectedTour.value);
     formData.append("name", name);
     formData.append("capacity", capacity);
-    formData.append("date_begin", start_date);
-    formData.append("date_end", end_date);
+    formData.append("date_begin", formatDateToMMDDYYYY(start_date));
+    formData.append("date_end", formatDateToDDMMYYYY(end_date));
     formData.append("tour_languages", languageString);
     formData.append("adult_price", adult_price);
     formData.append("child_price", child_price);
@@ -951,7 +1015,7 @@ const formatDateToMMDDYYYY = (date) => {
 
                                   <div className="col-md-6">
                                     <div className="form-input my-1">
-                                      <input type="date" required value={date_begin? formatDateToMMDDYYYY(date_begin) : ''} onChange={handleInputChange(setDateBegin)}/>
+                                      <input type="date" required value={date_begin ||  ''}  pattern="\d{2}-\d{2}-\d{4}" min={minEndDate} onBlur={handleStartDateBlur} onChange={handleStartDateChange}/>
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Start Date of Tour") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -961,7 +1025,7 @@ const formatDateToMMDDYYYY = (date) => {
 
                                   <div className="col-md-6">
                                     <div className="form-input my-1">
-                                      <input type="date" required value={date_end? formatDateToMMDDYYYY(date_end) : ''} onChange={handleInputChange(setDateEnd)}/>
+                                      <input type="date" required value={date_end || ''} min={minEndDate}  pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} onChange={handleEndDateChange}  />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("End Date of Tour") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>

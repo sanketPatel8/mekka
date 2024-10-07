@@ -111,34 +111,30 @@ export default function AddTour() {
   const [minEndDate, setMinEndDate] = useState("");
   const [loading, setLoading] = useState(false);
   const handleStartDateChange = (e) => {
-    const [day, month, year] = e.target.value.split('-');
-    if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(e.target.value);
-      console.log(formattedDate,"formated")
       const today = new Date();
       const todayString = formatDateToDDMMYYYY(today.toISOString().split("T")[0]);
-      console.log(todayString,"today")
       if (formattedDate < todayString) {
         setDateBegin(todayString);
       } else {
         setDateBegin(e.target.value);
       }
-    }
+
+      
+    
   };
   
   const handleEndDateChange = (e) => {
-    const [day, month, year] = e.target.value.split('-');
-    if (day && month && year) {
+
       const formattedDate = formatDateToMMDDYYYY(e.target.value);
-      console.log(formattedDate,"formated")
       const dateBegin = formatDateToMMDDYYYY(date_begin);
-      console.log(dateBegin,"dateBegin")
       if (dateBegin && formattedDate < dateBegin) {
         setDateEnd(dateBegin);
       } else {
         setDateEnd(e.target.value);
       }
-    }
+    
+    
   };
   
   const handleStartDateBlur = () => {
@@ -154,17 +150,22 @@ export default function AddTour() {
     const [day, month, year] = date_end.split('-');
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
-      setEndDate(formattedDate);
+      console.log(formattedDate,"formatedDate") 
+      setDateEnd(formattedDate);
+      const start_Date = new Date(date_begin);
+      console.log(start_Date,"start_Date")
+      const endDate = new Date(date_end);
+      console.log(endDate,"endDate")
+      const daysDifference = Math.round((endDate - start_Date) / (1000 * 3600 * 24));
+      console.log(daysDifference,"daysDifference")
+      setDaysCount(daysDifference + 1)
     }
   };
   const { translate } = useTranslation();
 
   useEffect(() => {
     if (date_begin && date_end) {
-      const startDate = new Date(formatDateToMMDDYYYY(date_begin));
-      const endDate = new Date(formatDateToMMDDYYYY(date_end));
-      const daysDifference = Math.round((endDate - startDate) / (1000 * 3600 * 24));
-      setDaysCount(daysDifference + 1)
+     
  
     }
   }, []);
@@ -173,9 +174,7 @@ export default function AddTour() {
     const today = new Date();
     const todayString = today.toISOString().split("T")[0];
    
-    setDateBegin(todayString);
 
-    setDateEnd(todayString);
     setMinEndDate(todayString);
   }, []);
   
@@ -553,8 +552,7 @@ const isCurrentTabValid = () => {
     setLoading(true);
 
   
-    const end_date = formatDateToMMDDYYYY(date_end);
-    const start_date = formatDateToMMDDYYYY(date_begin);
+
 
     const languageValues = $(selectRef.current).val();
 
@@ -627,8 +625,8 @@ const isCurrentTabValid = () => {
     formData.append("type", SelectedTour.value);
     formData.append("name", name);
     formData.append("capacity", capacity);
-    formData.append("date_begin", start_date);
-    formData.append("date_end", end_date);
+    formData.append("date_begin", date_begin);
+    formData.append("date_end", date_end);
     formData.append("tour_languages", languageString);
     formData.append("departures",JSON.stringify(departureData) );
     formData.append("adult_price", adult_price);
