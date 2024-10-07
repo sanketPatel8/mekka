@@ -533,4 +533,7 @@ hr{
   transform: translateY(-29px);
 }
 
-
+.dd_l_top10 {
+  /* position: absolute !important; */
+  top: 10px !important;
+}
