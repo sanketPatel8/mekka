@@ -331,7 +331,7 @@ export default function TourList4({
                           <Link
                             href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
                           >
-                            SHOW AVAILABILITY
+                            {translate("SHOW AVAILABILITY")}
                           </Link>
                         </button>
                       </div>

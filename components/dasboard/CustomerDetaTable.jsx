@@ -424,8 +424,6 @@ const CustomerDetaTable = () => {
               fileLink: doc.full_path,
             }));
 
-      
-
             setDownloadDetails(download);
           }
         });
@@ -529,8 +527,6 @@ const CustomerDetaTable = () => {
 
   useEffect(() => {
     const fetchPayments = async () => {
-
-
       const formData = new FormData();
       formData.append("reservation_id", BookingDetails.reservation?.id);
 
@@ -539,7 +535,6 @@ const CustomerDetaTable = () => {
         url: "invoicegenerate",
       });
 
-   
       if (response) {
         setPdfData(response.pdf_url);
       }
@@ -593,9 +588,8 @@ const CustomerDetaTable = () => {
   const dateInputRef = useRef(null);
 
   useEffect(() => {
-    setPaymentCheckbox(BookingDetails?.reservation?.paymentType)
-  }, [BookingDetails])
-  
+    setPaymentCheckbox(BookingDetails?.reservation?.paymentType);
+  }, [BookingDetails]);
 
   useEffect(() => {
     // Ensure AddpersonData, AdultPrice, and RadioValue are defined before using them
@@ -657,23 +651,20 @@ const CustomerDetaTable = () => {
       const startDateString = BookingDetails?.reservation?.date_begin;
       if (startDateString) {
         try {
-          const startDate = new Date(startDateString)
+          const startDate = new Date(startDateString);
 
-          console.log("startDate" , startDate); 
-          
+          console.log("startDate", startDate);
 
           const sixDaysBefore = new Date(
             startDate.getTime() - 5 * 24 * 60 * 60 * 1000
           );
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
 
-          console.log("sixDaysBeforeString" , sixDaysBeforeString); 
-          
-      
-          if(sixDaysBeforeString > todayString){
+          console.log("sixDaysBeforeString", sixDaysBeforeString);
+
+          if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
-          }
-          else{
+          } else {
             const nextDay = today.setDate(today.getDate() + 1);
             const nextDayString = new Date(nextDay).toISOString().split("T")[0];
             setDateEnd(nextDayString);
@@ -697,7 +688,6 @@ const CustomerDetaTable = () => {
   };
 
   const handleCheckboxChange = (index) => {
-   
     // setPaymentCheckbox(index);
 
     if (index === 3) {
@@ -809,13 +799,13 @@ const CustomerDetaTable = () => {
 
   const handlePayment = () => {
     if (PaymentCheckbox == 1) {
-      FetchAddperson()
+      FetchAddperson();
     }
 
     if (PaymentCheckbox == 3) {
       if (!firstAmount || !secondAmount || !seconddate || !thirdAmount) {
         showErrorToast("Please fill all the fields");
-        return ;
+        return;
       }
 
       setShowStripeModal(true);
@@ -824,14 +814,11 @@ const CustomerDetaTable = () => {
     }
 
     if (PaymentCheckbox == 2) {
-      console.log("payment checkbox " , PaymentCheckbox);
+      console.log("payment checkbox ", PaymentCheckbox);
       setShowStripeModal(true);
     }
   };
 
-
-
-  
   // for upload documnet
 
   const [rows, setRows] = useState([
@@ -952,7 +939,6 @@ const CustomerDetaTable = () => {
       [name]: value,
     }));
   };
-
 
   return (
     <div>
@@ -2288,8 +2274,6 @@ const CustomerDetaTable = () => {
       {showStripeModal && (
         <Stripeform
           amount={amount ? amount : subtotal}
-      
-       
           subtotal={subtotal}
           showStripeModal={showStripeModal}
           handleClose={handleClose}
@@ -2298,7 +2282,6 @@ const CustomerDetaTable = () => {
           RadioValue={RadioValue}
         />
       )}
-
     </div>
   );
 };
