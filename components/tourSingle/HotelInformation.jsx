@@ -22,7 +22,7 @@ const RoadMap = ({ PAckageData,hotelData }) => {
           <h5>{hotelData?.mekka_hotel.hotel_name} ({hotelData?.mekka_hotel?.hotel_stars} star)</h5>
           <p>{hotelData?.mekka_hotel.hotel_info}</p>
           <br />
-          <p>The distance to the Kaaba is {hotelData?.mekka_hotel.km}</p>
+          {/* <p>The distance is {hotelData?.mekka_hotel.km}</p> */}
           <br />
             
           {/* <p>Food included:</p>
@@ -42,7 +42,7 @@ const RoadMap = ({ PAckageData,hotelData }) => {
           <h5>{hotelData?.madina_hotel.hotel_name} ({hotelData?.madina_hotel?.hotel_stars} star)</h5>
           <p>{hotelData?.madina_hotel.hotel_info}</p>
           <br />
-          <p>The distance to the Kaaba is {hotelData?.madina_hotel.km}</p>
+          {/* <p>The distance to the Kaaba is {hotelData?.madina_hotel.km}</p> */}
           <br />
           {/* <p>Food included:</p>
           <p className="text-danger">{hotelData?.madina_hotel.meals_included == 1 ? "Included" : "Not Included"}</p> */}
