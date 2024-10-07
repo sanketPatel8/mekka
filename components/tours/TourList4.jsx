@@ -236,7 +236,9 @@ export default function TourList4({
                                   elm?.tour_hotels?.mekka_hotels[0]?.hotel_name
                                 )}
                                 -(
-                                {elm.tour_hotels?.mekka_hotels[0]?.hotel_stars}{" "}
+                                {
+                                  elm.tour_hotels?.mekka_hotels[0]?.hotel_stars
+                                }{" "}
                                 <FaStar color="#dabf4f" className="" /> )
                               </p>
                             )}
@@ -253,7 +255,9 @@ export default function TourList4({
                                   elm?.tour_hotels?.medina_hotels[0]?.hotel_name
                                 )}
                                 -(
-                                {elm.tour_hotels?.medina_hotels[0]?.hotel_stars}{" "}
+                                {
+                                  elm.tour_hotels?.medina_hotels[0]?.hotel_stars
+                                }{" "}
                                 <FaStar color="#dabf4f" className="" /> )
                               </p>
                             )}
@@ -271,17 +275,23 @@ export default function TourList4({
                               : "ALL"}
                           </p>
                         </div>
-                        <div className="d-flex items-center mt-5">
-                          <div className="d-flex items-center x-gap-5">
-                            {/* <Stars star={elm?.rating_count} font={12} /> */}
-                            <PiBuildingApartmentFill   color="#dabf4f" className="" size={25} />
+                        {company_code !== " " && (
+                          <div className="d-flex items-center mt-5">
+                            <div className="d-flex items-center x-gap-5">
+                              {/* <Stars star={elm?.rating_count} font={12} /> */}
+                              <PiBuildingApartmentFill
+                                color="#dabf4f"
+                                className=""
+                                size={25}
+                              />
+                            </div>
+                            <div className="text-14 ml-10">
+                              {/* <span className="fw-500">{elm?.rating}</span> ( */}
+                              {/* {elm?.rating_count}) - */}
+                              {elm?.company_code}
+                            </div>
                           </div>
-                          <div className="text-14 ml-10">
-                            {/* <span className="fw-500">{elm?.rating}</span> ( */}
-                            {/* {elm?.rating_count}) - */}
-                            {elm?.company_code}
-                          </div>
-                        </div>
+                        )}
 
                         <div className="row x-gap-20 y-gap-5 pt-30">
                           <div className="col-auto">
