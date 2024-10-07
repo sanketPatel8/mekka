@@ -160,10 +160,10 @@ export default function DbBooking() {
                     </div>
 
                     <div className="tourCard__content">
-                      <div className="tourCard__location border_yellow px-2">
+                      {/* <div className="tourCard__location border_yellow px-2">
                         <FaPersonWalking color="white" size={18} />
                         Zu Kaaba {elm?.tour_details?.distance_to_hotel}
-                      </div>
+                      </div> */}
 
                       <h3 className="tourCard__title mt-5">
                         <span>

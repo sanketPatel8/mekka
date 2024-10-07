@@ -162,6 +162,7 @@ export default function Register() {
         showSuccessToast(response.message);
         // Clear the form and set email in local storage
         setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
           surname: "",
           email: "",
@@ -189,6 +190,7 @@ export default function Register() {
       ) {
         setIsLoading(false)
         setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: RegisterData.name ,
           surname: RegisterData.surname ,
           email: "",
