@@ -1152,9 +1152,10 @@ export default function BookingPages({ BookingData }) {
                   <div className="d-flex mt-30">
                     <Image
                       width={90}
-                      height={84}
+                      height={100}
                       src={BookingSideBar.TourThumbnail}
                       alt="image"
+                      className="object-cover max-h-100"
                     />
                     <div className="ml-20">
                       {TourType} - {TourName}{" "}

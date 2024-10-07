@@ -537,3 +537,7 @@ hr{
   /* position: absolute !important; */
   top: 10px !important;
 }
+
+.max-h-100{
+  max-height: 100px;
+}
