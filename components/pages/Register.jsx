@@ -187,6 +187,7 @@ export default function Register() {
         error.response.data &&
         error.response.data.message
       ) {
+        setIsLoading(false)
         setRegisterData({
           name: RegisterData.name ,
           surname: RegisterData.surname ,
