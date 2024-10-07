@@ -845,13 +845,15 @@ export default function BookingPages({ BookingData }) {
                               ))}
                             </select>
 
-                            <label className="lh-1 text-16 text-light-1">
-                              {fieldValue
-                                ? `${field.label}: ${
-                                    fieldValue.charAt(0).toUpperCase() +
-                                    fieldValue.slice(1)
-                                  }`
-                                : field.label}
+                            <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                              {
+                              // fieldValue
+                              //   ? `${field.label}: ${
+                              //       fieldValue.charAt(0).toUpperCase() +
+                              //       fieldValue.slice(1)
+                              //     }`
+                              //   : 
+                                field.label}
                             </label>
                           </>
                         ) : (

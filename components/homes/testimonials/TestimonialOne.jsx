@@ -106,7 +106,7 @@ export default function TestimonialOne() {
                           <div className="lh-16 text-16 fw-500">
                             {elm.authorName}
                           </div>
-                          <div className="lh-16">{elm.authorRole}</div>
+                          {/* <div className="lh-16">{elm.authorRole}</div> */}
                         </div>
                       </div>
                     </SwiperSlide>
