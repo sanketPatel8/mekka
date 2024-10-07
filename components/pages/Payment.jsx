@@ -62,11 +62,7 @@ export default function Payment() {
     } else {
       setInstallmentChecked(false);
     }
-    // if (index === 1) {
-    //   setShowStripeModal(true);
-    //   const newBooking = { ...Booking, paymentType: 2 };
-    //   setBooking(newBooking);
-    // }
+  
   };
 
   const formatPriceChange = (price) => {
@@ -274,6 +270,7 @@ export default function Payment() {
       }
     };
   }, [handleDateChange]);
+  
   const FatchallBooking = async (data) => {
     setIsLoading(true)
     try {
