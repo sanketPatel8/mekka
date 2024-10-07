@@ -268,14 +268,14 @@ export default function TourList4({
                               icon={faQuoteRight}
                               className="px-1 text-accent-1"
                             />
-                            {elm.type == "Hajj"
+                            {translate("Destination")} : {elm.type == "Hajj"
                               ? "JED"
                               : elm.type == "madina"
                               ? "MAD"
                               : "ALL"}
                           </p>
                         </div>
-                        {company_code !== " " && (
+                        {elm?.company_code !== " " && elm?.company_code !== null && (
                           <div className="d-flex items-center mt-5">
                             <div className="d-flex items-center x-gap-5">
                               {/* <Stars star={elm?.rating_count} font={12} /> */}
