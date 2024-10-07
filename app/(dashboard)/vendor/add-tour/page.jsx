@@ -110,17 +110,52 @@ export default function AddTour() {
   const [endDate, setEndDate] = useState("");
   const [minEndDate, setMinEndDate] = useState("");
   const [loading, setLoading] = useState(false);
-
   const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
-    setMinEndDate(e.target.value);
-    setDateBegin(formatDateToDDMMYYYY(e.target.value));
-    console.log(date_begin);
+    const [day, month, year] = e.target.value.split('-');
+    if (day && month && year) {
+      const formattedDate = formatDateToMMDDYYYY(e.target.value);
+      console.log(formattedDate,"formated")
+      const today = new Date();
+      const todayString = formatDateToDDMMYYYY(today.toISOString().split("T")[0]);
+      console.log(todayString,"today")
+      if (formattedDate < todayString) {
+        setDateBegin(todayString);
+      } else {
+        setDateBegin(e.target.value);
+      }
+    }
   };
   
   const handleEndDateChange = (e) => {
-    setEndDate(e.target.value);
-    setDateEnd(formatDateToDDMMYYYY(e.target.value));
+    const [day, month, year] = e.target.value.split('-');
+    if (day && month && year) {
+      const formattedDate = formatDateToMMDDYYYY(e.target.value);
+      console.log(formattedDate,"formated")
+      const dateBegin = formatDateToMMDDYYYY(date_begin);
+      console.log(dateBegin,"dateBegin")
+      if (dateBegin && formattedDate < dateBegin) {
+        setDateEnd(dateBegin);
+      } else {
+        setDateEnd(e.target.value);
+      }
+    }
+  };
+  
+  const handleStartDateBlur = () => {
+    const [day, month, year] = date_begin.split('-');
+    if (day && month && year) {
+      const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
+      setStartDate(formattedDate);
+      setMinEndDate(formattedDate);
+    }
+  };
+  
+  const handleEndDateBlur = () => {
+    const [day, month, year] = date_end.split('-');
+    if (day && month && year) {
+      const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
+      setEndDate(formattedDate);
+    }
   };
   const { translate } = useTranslation();
 
@@ -132,13 +167,14 @@ export default function AddTour() {
       setDaysCount(daysDifference + 1)
  
     }
-  }, [date_begin, date_end]);
+  }, []);
 
   useEffect(() => {
     const today = new Date();
     const todayString = today.toISOString().split("T")[0];
    
     setDateBegin(todayString);
+
     setDateEnd(todayString);
     setMinEndDate(todayString);
   }, []);
@@ -773,7 +809,7 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="date" required value={date_begin? formatDateToMMDDYYYY(date_begin) : ''} onChange={handleStartDateChange} min={minEndDate}/>
+                                        <input type="date" required value={date_begin ||  ''}   pattern="\d{2}-\d{2}-\d{4}" onBlur={handleStartDateBlur} onChange={handleStartDateChange} min={minEndDate}/>
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Start Date of Tour") ||
                                             "Find Latest Packages"} <span className="text-red">*</span>
@@ -783,7 +819,7 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="date" required value={date_end? formatDateToMMDDYYYY(date_end) : ''} onChange={handleEndDateChange}       min={minEndDate}
+                                        <input type="date" required value={date_end || ''} pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} onChange={handleEndDateChange}       min={minEndDate}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("End Date of Tour") ||
