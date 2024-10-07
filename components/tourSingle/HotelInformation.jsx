@@ -22,7 +22,7 @@ const RoadMap = ({ PAckageData,hotelData }) => {
           <h5>{hotelData?.mekka_hotel.hotel_name} ({hotelData?.mekka_hotel?.hotel_stars} star)</h5>
           <p>{hotelData?.mekka_hotel.hotel_info}</p>
           <br />
-          {/* <p>The distance is {hotelData?.mekka_hotel.km}</p> */}
+          <p>The distance to the Kaaba is {hotelData?.mekka_hotel.km}</p>
           <br />
             
           {/* <p>Food included:</p>
