@@ -14,6 +14,7 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { countries } from "@/data/nationalities";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 
 export default function Profile() {
   const { user } = useAuthContext();
@@ -54,8 +55,13 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [isBankLoading, setIsBankLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const {handleRedirect} = Useauthredirect();
+
   useEffect(() => {
+    handleRedirect();
+    setLoading(false);
     if (user) {
+
       fetchProfile();
     }
   }, []);

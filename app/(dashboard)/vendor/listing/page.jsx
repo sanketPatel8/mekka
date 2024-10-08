@@ -22,6 +22,7 @@ import { ClipLoader } from "react-spinners";
 import VendorFooter from "@/components/dasboard/VendorFooter";
 import { showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 
 const customStyles = {
   overlay: {
@@ -54,7 +55,7 @@ export default function DBListing() {
   const [range, setRange] = useState(1);
   const [pageStart, setPageStart] = useState(1);
   const [tourList, setTourList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [invoice, setinvoice] = useState(false);
   const [note, setNote] = useState("");
@@ -119,6 +120,9 @@ export default function DBListing() {
     }
   };
 
+  const {handleRedirect} = Useauthredirect();
+
+
   useEffect(() => {
     if (typeof window !== "undefined") {
 
@@ -132,7 +136,8 @@ export default function DBListing() {
       };
 
       handleResize();
-
+      handleRedirect();
+    setLoading(false);
       fetchListing();
 
       window.addEventListener("resize", handleResize);

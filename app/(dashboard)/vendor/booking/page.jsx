@@ -9,6 +9,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 
 const tabs = ["All", "Completed", "In Progress", "Cancelled"];
 
@@ -209,7 +210,11 @@ export default function DbBooking() {
     }
   }, []);
 
+  const {handleRedirect} = Useauthredirect();
+
   useEffect(() => {
+    handleRedirect();
+    setLoading(false);
     setIsClient(true);
     fetchBookings(currentTab);
   }, [currentTab]);

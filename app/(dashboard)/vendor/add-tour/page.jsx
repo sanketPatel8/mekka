@@ -22,6 +22,7 @@ import { ClipLoader } from "react-spinners";
 import draftToHtml from "draftjs-to-html";
 import VendorFooter from "@/components/dasboard/VendorFooter";
 import { useRouter } from "next/navigation";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 
 
 const Editor = dynamic(
@@ -110,6 +111,8 @@ export default function AddTour() {
   const [endDate, setEndDate] = useState("");
   const [minEndDate, setMinEndDate] = useState("");
   const [loading, setLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
+  
   const handleStartDateChange = (e) => {
       const formattedDate = formatDateToMMDDYYYY(e.target.value);
       const today = new Date();
@@ -123,6 +126,14 @@ export default function AddTour() {
       
     
   };
+
+  const {handleRedirect} = Useauthredirect();
+
+  useEffect(() => {
+    handleRedirect();
+    // setIsLoading(false);
+    accessdata()
+  }, []);
   
   const handleEndDateChange = (e) => {
 
@@ -180,15 +191,15 @@ export default function AddTour() {
   
   
 
-  useEffect(()=>{
-    accessdata()
-  },[])
+ 
 
   const accessdata = async() => {
+    // setIsLoading(true);
     const url ="tour_data"
 
     try{
       const response = await POST.request({url:url})
+      // setIsLoading(false);
       if(response.Data){
         setMekkaHotel(response.Data.mekka_hotels)
         setMadinaHotel(response.Data.medina_hotels)
@@ -704,6 +715,7 @@ const isCurrentTabValid = () => {
     <>  
     
       <ToastContainer />
+    
       <div
         className={`dashboard overflow-hidden ${
           sideBarOpen ? "-is-sidebar-visible" : ""
@@ -1948,6 +1960,7 @@ const isCurrentTabValid = () => {
           </div>
         </div>
       </div>
+        
     </>
   );
 }

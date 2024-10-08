@@ -19,6 +19,7 @@ import Modal from "react-modal";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -428,8 +429,12 @@ export default function DbBooking({ params }) {
       }
     }
   };
+  const {handleRedirect} = Useauthredirect();
+
 
   useEffect(() => {
+    handleRedirect();
+    setLoading(false);
     fetchDetails();
   }, [user]);
 

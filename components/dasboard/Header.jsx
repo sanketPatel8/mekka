@@ -8,10 +8,10 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import Currency from "../layout/components/Currency";
 
 export default function Header({ setSideBarOpen }) {
-  const { handleRedirect } = Useauthredirect();
-  useEffect(() => {
-    handleRedirect();
-  }, []);
+  // const { handleRedirect } = Useauthredirect();
+  // useEffect(() => {
+  //   handleRedirect();
+  // }, []);
   const [locale, setLocale] = useState("DE"); // default locale
 
   useEffect(() => {

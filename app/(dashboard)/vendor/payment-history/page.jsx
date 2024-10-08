@@ -9,6 +9,7 @@ import { POST } from "@/app/utils/api/post";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { ClipLoader } from "react-spinners";
 import { showErrorToast } from "@/app/utils/tost";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 
 export default function DBListing() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -104,7 +105,7 @@ export default function DBListing() {
   const fetchPayments = async () => {
     const formData = new FormData();
     formData.append("company_id", company_id);
-
+    setLoading(true);
     const response = await POST.request({
       form: formData,
       url: "payment_history",
@@ -131,9 +132,15 @@ export default function DBListing() {
       showErrorToast("Something went wrong");
     }
   };
+  const {handleRedirect} = Useauthredirect();
 
   useEffect(() => {
-    fetchPayments();
+    handleRedirect();
+    setLoading(false);
+    if(user){
+
+      fetchPayments();
+    }
   }, [company_id]);
 
   useEffect(() => {

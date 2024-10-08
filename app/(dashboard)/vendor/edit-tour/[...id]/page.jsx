@@ -22,6 +22,7 @@ import { languages } from "@/data/tourFilteringOptions";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -162,6 +163,7 @@ export default function EditTour() {
     }
   }
 
+  const {handleRedirect} = Useauthredirect();
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1000) {
@@ -170,6 +172,8 @@ export default function EditTour() {
         setSideBarOpen(false);
       }
     };
+    handleRedirect();
+    setLoading(false);
     fetchTour(id);
     accessdata();
     handleResize();

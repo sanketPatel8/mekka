@@ -12,15 +12,24 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
+import Useauthredirect from "@/app/hooks/useAuthRedirect";
 
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const { user } = useAuthContext();
 
+
   const company_id = user === null ? 0 : user?.user.company_id;
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const { handleRedirect } = Useauthredirect();
+  useEffect(() => {
+    handleRedirect();
+    setLoading(false);
+    fetchDetails();
+  }, [company_id]);
 
   const fetchDetails = async () => {
     const formData = new FormData();
@@ -37,7 +46,7 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
-    fetchDetails();
+    
     const handleResize = () => {
       if (window.innerWidth >= 1000) {
         setSideBarOpen(true);
@@ -53,7 +62,7 @@ export default function Sidebar() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [company_id]);
+  }, []);
 
   const { translate } = useTranslation();
   return (

@@ -562,13 +562,14 @@ const page = () => {
                             type="password"
                             required
                             value={password}
+                            className="mb-0"
                             onChange={handlePassword}
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Password")}{" "}
                             <span className="text-red">*</span>
                           </label>
-                          <span>
+                          <span className="text-red">
                             {translate(
                               "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
                             )}
