@@ -236,7 +236,7 @@ export default function Profile() {
         break;
 
       case "change_password":
-        formDatas.append("id", USerData?.id);
+        formDatas.append("id", customer?.user?.id);
         formDatas.append("type", "change_password");
         formDatas.append("old_password", old_password);
         formDatas.append("password", password);
