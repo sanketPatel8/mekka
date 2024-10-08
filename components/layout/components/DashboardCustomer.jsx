@@ -9,7 +9,7 @@ import Image from "next/image";
 const options = [
   { name: "Booking", path: "/customer/booking" },
   { name: "Profile", path: "/customer/profile" },
-  // { name: "LogOut", path: "" }, // Ensure to handle logout separately
+  { name: "LogOut", path: "" }, // Ensure to handle logout separately
 ];
 
 export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
