@@ -16,7 +16,7 @@ export default function States({data,loading}) {
       {
         id: 1,
         title: translate("Total Earnings"),
-        amount: formatPrice(`${data?.Total_Earnings} `),
+        amount: `${data?.Total_Earnings} €`,
         today: "50 €",
         iconClass: "icon-wallet text-accent-1",
       },
@@ -38,7 +38,6 @@ export default function States({data,loading}) {
     setStates(newStateItems);
   }, [translate]);
 
-  console.log(states,"states")
 
   return (
     <>
