@@ -90,20 +90,15 @@ export default function MainInformation({ PAckageData }) {
             {InformationData?.Tour_Details?.tour_details?.name}
           </h2>
 
-  
           <div className="row x-gap-20 y-gap-20 items-center pt-20">
             <div className="col-auto mr-10 px-0">
               <div className="d-flex items-center">
-              {InformationData?.Tour_Details?.tour_details?.company_code !== "" && InformationData?.Tour_Details?.tour_details?.company_code !== null && (
-      
                 <div className="d-flex items-center x-gap-5 mx-2">
-                <PiBuildingApartmentFill   color="#dabf4f" className="" size={25} /> <span>
-                {InformationData?.Tour_Details?.tour_details?.company_code}
-                </span>
+                <PiBuildingApartmentFill   color="#dabf4f" className="" size={25} />
                 </div>
-              
-               
-    )}
+                {/* {InformationData?.Tour_Details?.tour_details?.rating} (
+                {InformationData?.Tour_Details?.tour_details?.rating_count}) -{" "} */}
+                {InformationData?.Tour_Details?.tour_details?.company_code}
               </div>
             </div>
 
@@ -138,7 +133,7 @@ export default function MainInformation({ PAckageData }) {
                   ? "Seat available"
                   : InformationData?.Tour_Details?.tour_details
                       ?.capacity_empty > 1
-                  ? translate("Seats available")
+                  ? "Seats available"
                   : null}
               </div>
             </div>
@@ -150,7 +145,7 @@ export default function MainInformation({ PAckageData }) {
             <div className="">
               <button className=" d-flex items-center " onClick={openInvoice}>
                 <i className="icon-share flex-center text-16 mr-10"></i>
-                {translate('Share')}
+                Share
               </button>
             </div>
           </div>
@@ -164,7 +159,7 @@ export default function MainInformation({ PAckageData }) {
             contentLabel="Pending Payment Modal"
           >
             <div className="d-flex justify-content-between" id="modelopen">
-              <h2 className="px-20"> {translate('Share This Package')}</h2>
+              <h2 className="px-20"> Share This Package</h2>
               <button onClick={closeInvoice}>
                 <IoClose size={25} />
               </button>
@@ -215,7 +210,7 @@ export default function MainInformation({ PAckageData }) {
                       className="button -sm -info-2 bg-accent-1 text-white "
                       onClick={handleCopyClick}
                     >
-                      {translate('Copy')}
+                      Copy
                     </button>
                   </div>
                   <p>

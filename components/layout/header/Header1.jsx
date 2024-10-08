@@ -10,7 +10,7 @@ import Language from "../components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
 import Currency from "../components/Currency";
 import { FaUserPlus, FaUser } from "react-icons/fa";
-import { MdOutlinePersonAddAlt } from "react-icons/md";
+import { ToastContainer } from "react-toastify";
 import DashboardCustomer from "../components/DashboardCustomer";
 
 export default function Header1() {
@@ -110,31 +110,16 @@ export default function Header1() {
           </div>
 
           <div className="headerMobile__right">
-            {LoginCheck ? (
-              // If the user is logged in, show the DashboardCustomer component
-              <DashboardCustomer
-                onLocaleChange={setLocale}
-                handleLogoutClick={handleLogoutClick}
-              />
-            ) : (
-              // If the user is not logged in, show the Register and Login/Logout buttons
-              <>
-                <button
-                  onClick={() => router.push("/register")}
-                  className="d-flex items-center"
-                >
-                  <span>{translate("Register")}</span>
-                  {/* <MdOutlinePersonAddAlt size={25} /> */}
-                </button>
+            <button onClick={() => router.push("/tour")} className="d-flex">
+              <i className="icon-search text-18"></i>
+            </button>
 
-                <button
-                  onClick={LoginCheck ? handleLogoutClick : handleLoginClick}
-                  className="d-flex ml-10 items-center"
-                >
-                  <i className="icon-person text-18"></i>
-                </button>
-              </>
-            )}
+            <button
+              onClick={LoginCheck ? handleLogoutClick : handleLoginClick}
+              className="d-flex ml-10"
+            >
+              <i className="icon-person text-18"></i>
+            </button>
           </div>
 
           <div className="header__right">
@@ -143,13 +128,13 @@ export default function Header1() {
             </div>
 
             <div className="row items-center">
-              <div className={`${!LoginCheck ? "col-2" : "col-3"}`}>
+              <div className="col-2 ">
                 <div className="d-flex justify-content-center">
                   <Currency currenyLocale={currenyLocale} />
                 </div>
               </div>
 
-              <div className={`${!LoginCheck ? "col-2 ml-10" : "col-3 ml-20"}`}>
+              <div className="col-2 ml-10">
                 <div className="d-flex justify-content-center">
                   <Language
                     parentClass="headerDropdown"
@@ -203,8 +188,19 @@ export default function Header1() {
               {LoginCheck ? (
                 <>
                   {/* Reverse order for when logged in */}
-
                   <div className="col-4">
+                    <div className="d-flex justify-content-center">
+                      <button
+                        className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                        onClick={handleLogoutClick}
+                      >
+                        {translate("Log Out")}
+                      </button>
+                    </div>
+                    
+                  </div>
+
+                  <div className="col-3">
                     <div className="d-flex justify-content-center">
                       <DashboardCustomer
                         onLocaleChange={setLocale}
@@ -251,10 +247,6 @@ export default function Header1() {
       <MobileMenu
         setMobileMenuOpen={setMobileMenuOpen}
         mobileMenuOpen={mobileMenuOpen}
-        currenyLocale={currenyLocale}
-        parentClass="headerDropdown"
-        onLocaleChange={setLocale}
-        locale={locale}
       />
     </>
   );

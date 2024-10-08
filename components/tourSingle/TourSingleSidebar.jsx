@@ -607,10 +607,10 @@ export default function TourSingleSidebar({
               <div className="d-flex items-center justify-between">
                 <div className="text-14 col-8">
                   {group.price_type === "1"
-                    ? `${translate("Adult")} (18+ Years)`
+                    ? "Adult (18+ Years)"
                     : group.price_type === "2"
-                    ? `${translate("Child")} (13-17 Years)`
-                    : `${translate("Baby")} (0-12 Years)` }
+                    ? "Child (13-17 Years)"
+                    : "Baby (0-12 Years)"}
                   <span className="fw-500">
                     {""} {formatPrice((group.price * count).toFixed(2))}
                   </span>
@@ -895,11 +895,11 @@ export default function TourSingleSidebar({
                     data-x-click="time"
                   >
                     <div className="searchFormItem__content">
-                      <h5>{translate('Departure')}</h5>
+                      <h5>Departure</h5>
                       <div className={`js-select-control-chosen `}>
                         {selectDeparture?.name
                           ? selectDeparture?.name
-                          : translate('Departure') }
+                          : "Departure"}
                       </div>
                     </div>
                     <div className="searchFormItem__icon_chevron">
@@ -958,7 +958,7 @@ export default function TourSingleSidebar({
         </div>
 
         <div className="d-flex items-center justify-between pt-1">
-          <div className="text-18 fw-500">{translate('Total')}:</div>
+          <div className="text-18 fw-500">Total:</div>
           <div>
             <div className="text-18 fw-500">
               {formatPrice(SelectedAllPrice)}

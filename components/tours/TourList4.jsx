@@ -362,7 +362,7 @@ export default function TourList4({
                 />
 
                 <div className="text-14 text-center mt-20">
-                  {translate('Showing results')} 1 - {TourData?.length} of {count}
+                  Showing results 1 - {TourData?.length} of {count}
                 </div>
               </div>
             </div>

@@ -4,9 +4,6 @@ import { menuData } from "@/data/mobileMenu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import Currency from "./Currency";
-import Language from "./Langauge";
-import { useTranslation } from "@/app/context/TranslationContext";
 
 const socialMediaLinks = [
   { id: 1, class: "icon-facebook", href: "#" },
@@ -15,20 +12,11 @@ const socialMediaLinks = [
   { id: 4, class: "icon-linkedin", href: "#" },
 ];
 
-export default function MobileMenu({
-  mobileMenuOpen,
-  setMobileMenuOpen,
-  currenyLocale,
-  parentClass,
-  onLocaleChange,
-  locale,
-}) {
+export default function MobileMenu({ mobileMenuOpen, setMobileMenuOpen }) {
   const [activeSub, setActiveSub] = useState("");
   const pathname = usePathname();
 
-  const {translate} = useTranslation();
-
-  return (    
+  return (
     <div
       data-aos="fade"
       data-aos-delay=""
@@ -57,34 +45,19 @@ export default function MobileMenu({
         </div>
 
         <div className="menu__content">
-        
-
           <ul
             className="menuNav js-navList -is-active"
             style={{ maxHeight: "calc(100vh - 262px)", overflowY: "auto" }}
           >
             {menuData.map((elm, i) => (
-              <li className="menuNav__item" key={elm.id}>
-                <Link href={elm.href}>{translate(elm.label)}</Link>
-              </li>
+           
+           <li className="menuNav__item" key={elm.id}>
+              <Link href={elm.href}>{elm.label}</Link>
+            </li>
+             
             ))}
-          </ul>
 
-          <hr />
-          
-          <div className="row">
-            <div className="col-6">
-              {" "}
-              <Currency currenyLocale={currenyLocale} />
-            </div>
-            <div className="col-6">
-              <Language
-                parentClass="headerDropdown"
-                onLocaleChange={onLocaleChange}
-                locale={locale}
-              />
-            </div>
-          </div>
+          </ul>
         </div>
 
         <div className="menu__footer">
