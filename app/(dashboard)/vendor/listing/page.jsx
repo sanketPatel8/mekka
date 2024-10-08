@@ -211,7 +211,7 @@ export default function DBListing() {
                           </h3>
 
                           <div className="tourCard__title">
-                            {translate("Tour Name:")} {elm.name}
+                            {translate("Tour Name")}: {elm.name}
                           </div>
 
                         
@@ -251,7 +251,7 @@ export default function DBListing() {
                                 openInvoice(`${elm?.reject_note}`)
                               }
                             >
-                              <b>{elm.tour_status}</b>
+                              <b>{translate(elm.tour_status)}</b>
                             </button>
 
                             <div className="d-flex items-center text-14 ">
@@ -260,7 +260,7 @@ export default function DBListing() {
                             </div>
 
                             <p className="text-cente text-Danger">
-                              {translate("Available Seats :")}{" "}
+                              {translate("Available Seats")} :{" "}
                               {elm.capacity_empty === null
                                 ? 0
                                 : elm.capacity_empty}{" "}

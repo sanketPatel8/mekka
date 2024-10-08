@@ -1039,8 +1039,7 @@ export default function Profile() {
                         </div>
 
                         <div className="text-14 mt-20">
-                          PDF or PNG or JPG or DOC no bigger than 800px wide and
-                          tall.
+                        {translate("PDF or PNG or JPG or DOC no bigger than 800px wide and tall.")}
                         </div>
 
                         <button

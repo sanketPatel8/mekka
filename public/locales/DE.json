@@ -172,7 +172,7 @@
   "Add Tour page ": "----------------------------------------------------------------------------------------------------",
   "Add Tour": "Tour hinzufügen",
   "Edit Tour": "Tour bearbeiten",
-  "Tour Name": "Tour name",
+  "Tour Name": "Tourname",
   "Seat Availibility": "Sitzplatzverfügbarkeit",
   "Start Date of Tour": "Startdatum der Tour",
   "End Date of Tour": "Enddatum der Tour",
@@ -214,7 +214,7 @@
   "Company Logo": "Firmenlogo",
   "Documents": "Unterlagen",
   "Payout Account (IBAN)": "Auszahlungskonto (IBAN)",
-  "Bank Name": "Bank Name",
+  "Bank Name": "Name der Bank",
   "Owner Name": "Besitzername",
   "IBAN": "IBAN",
   "Old password": "Altes Kennwort",
@@ -516,5 +516,50 @@
   
 
   "Footer": "------------------------------------------------------------------------------------------------------",
-  "Speak to our expert at" : "Sprechen Sie mit unserem Experten unter"
+  "Speak to our expert at" : "Sprechen Sie mit unserem Experten unter",
+
+
+  "No Tours Found" : "Keine Touren gefunden",
+  "There are no records to display" :  "Es sind keine Datensätze zum Anzeigen vorhanden",
+  "Cancelled" : "Abgesagt",
+  "Completed" : "Vollendet",
+  "In Progress" : "Im Gange",
+  "Total Earnings" : "Gesamteinnahmen",
+  "Total Pending" : "Insgesamt ausstehend",
+  "Total Booking" : "Gesamtbuchung",
+  "Hours" : "Std",
+  "Weekly" : "Wöchentlich",
+  "Monthly" : "Monatlich",
+  "Content" : "Inhalt",
+  "Pricing" : "Preise",
+  "Included" : "Inbegriffen",
+  "Overview" : "Überblick",
+  "Flight Hotel And Visa" : "Flug Hotel und Visum",
+  "Select Tour Type (Required)" : "Tourtyp auswählen (Erforderlich)",
+  "Language" : "Sprache",
+  "Select Departure (Required)" : "Abfahrt auswählen (Erforderlich)",
+  "PNG or JPG no Bigger Than 800px Wide And Tall." : "PNG oder JPG nicht größer als 800 Pixel in Breite und Höhe.",
+  "Next" : "Nächste",
+  "Previous" : "Vorherige",
+  "Bed-Room" : "Schlafzimmer",
+  "Day" : "Tag",
+  "Select Hotel For Mekka (Required)" : "Wählen Sie ein Hotel für Mekka (Erforderlich)",
+  "Select Hotel For Madina (Required)" : "Wählen Sie ein Hotel für Madina (Erforderlich)",
+  "Allow Exclude Flight Details" : "Flugdetails ausschließen zulassen",
+  "Add Flight Information" : "Fluginformationen hinzufügen",
+  "Enter Flight Details" : "Geben Sie die Flugdetails ein",
+  "Save Details" : "Details speichern",
+  "Luggage" : "Gepäck",
+  "Pending" : "Ausstehend",
+  "Approved" : "Genehmigt",
+  "Rejected" : "Abgelehnt",
+  "Available Seats" : "Verfügbare Plätze",
+  "EDIT TOUR" : "TOUR BEARBEITEN",
+  "Duplicate Tour" : "Tour duplizieren",
+  "Upload Image" : "Bild hochladen",
+  "PDF or PNG or JPG or DOC no bigger than 800px wide and tall." : "PDF oder PNG oder JPG oder DOC, nicht größer als 800 Pixel in Breite und Höhe."
+  
+  
+
+
 }

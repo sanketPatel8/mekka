@@ -301,7 +301,7 @@ export default function DbBooking() {
                           tab === currentTab ? "is-tab-el-active" : ""
                         }`}
                       >
-                        {tab}
+                        {translate(tab)}
                       </button>
                     </div>
                   ))}

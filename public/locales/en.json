@@ -516,7 +516,11 @@
   "End Date" : "End Date",
   "Child" : "Child",
   "Baby" : "Baby",
-  "Is Also The Contact Person For The Reservation." : "Is Also The Contact Person For The Reservation."
+  "Is Also The Contact Person For The Reservation." : "Is Also The Contact Person For The Reservation.",
+
+  "Hours" : "Hours",
+  "Weekly" : "Weekly",
+  "Monthly" : "Monthly"
   
   
 }

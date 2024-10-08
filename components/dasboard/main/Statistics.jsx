@@ -15,6 +15,7 @@ import {
 
 export default function Statistics({data}) {
 
+  const { translate } = useTranslation();
 
   function concatTime(date) {
     const getTime  = new Date(date)
@@ -45,7 +46,6 @@ export default function Statistics({data}) {
       })
     },
   ]);
-  console.log(data, "data")
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const chart = (interval) => (
     <ResponsiveContainer height={500} width="100%">
@@ -72,7 +72,6 @@ export default function Statistics({data}) {
     </ResponsiveContainer>
   );
 
-  const { translate } = useTranslation();
   return (
     <div className="col-12 my-3">
       <div className="rounded-12 bg-white shadow-2 h-full">
@@ -93,7 +92,7 @@ export default function Statistics({data}) {
                         activeTab.label == elm.label ? "is-tab-el-active" : ""
                       }`}
                     >
-                      {elm.label}
+                      {translate(elm.label)}
                     </button>
                   </div>
                 ))}

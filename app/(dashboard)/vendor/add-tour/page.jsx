@@ -748,7 +748,7 @@ const isCurrentTabValid = () => {
                             disabled={i > activeTabIndex && !enabledTabs.includes(i)}
 
                           >
-                            {i + 1}. {elm}
+                            {i + 1}. {translate(elm)}
                           </button>
                         </div>
                       ))}
@@ -776,7 +776,7 @@ const isCurrentTabValid = () => {
                                           onChange={HandleTourChange}
                                           options={options}
                                           className="custom-select"
-                                          placeholder="Select or Tour Type (required)"
+                                          placeholder={`${translate("Select Tour Type (Required)")}`}
                                           classNamePrefix="react-select"
                                           isClearable
                                           formatCreateLabel={(inputValue) =>
@@ -883,7 +883,7 @@ const isCurrentTabValid = () => {
                                     <div className="col-md-12">
                                     <h6>
                                     {" "}
-                                    {translate("Departure ") }
+                                    {translate("Departure") }
                                   </h6>
                                   <ul className="">
                                     
@@ -900,7 +900,7 @@ const isCurrentTabValid = () => {
                                                   }
                                                   options={departureOption}
                                                   className="custom-select Hotel-Madina-dd"
-                                                  placeholder="Select Departure (required)"
+                                                  placeholder={`${translate("Select Departure (Required)")}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
                                                   formatCreateLabel={(inputValue) =>
@@ -920,7 +920,7 @@ const isCurrentTabValid = () => {
                                                     })} />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
-                                                    {translate(" Price") ||
+                                                    {translate("Price") ||
                                                       "Find Latest Packages"} <span className="text-red">*</span>
                                                   </label>
                                                 </div>
@@ -1023,7 +1023,7 @@ const isCurrentTabValid = () => {
                                     </div>
 
                                     <div className="text-14 mt-20">
-                                      PNG or JPG no Bigger Than 800px Wide And Tall.
+                                      {translate("PNG or JPG no Bigger Than 800px Wide And Tall.")}
                                     </div>
                                   </div>
 
@@ -1036,7 +1036,7 @@ const isCurrentTabValid = () => {
                                   onClick={handleNextTab }
                                   type="button"
                                 >
-                                  Next
+                                  {translate("Next")}
                                 </button>
                               )}
                             
@@ -1138,7 +1138,7 @@ const isCurrentTabValid = () => {
                                               htmlFor={`service-${service.id}`}
                                               className="lh-16 ml-15 my-2"
                                           >
-                                            {index + 1} Bed-Room
+                                            {index + 1} {translate("Bed-Room")}
                                           </label>
                                         </div>
                                       </div>
@@ -1172,7 +1172,7 @@ const isCurrentTabValid = () => {
                                   onClick={handleNextTab}
                                   type="button"
                                 >
-                                  Next
+                                  {translate("Next")}
                                 </button>
                               )}
                               {activeTabIndex > 0 && (
@@ -1181,7 +1181,7 @@ const isCurrentTabValid = () => {
                                   onClick={handlePrevTab}
                                   type="button"
                                 >
-                                  Previous
+                                  {translate("Previous")}
                                 </button>
                               )}
                               </div>
@@ -1261,7 +1261,7 @@ const isCurrentTabValid = () => {
                                       onClick={handleNextTab}
                                       type="button"
                                     >
-                                      Next
+                                      {translate("Next")}
                                     </button>
                                   )}
                                   {activeTabIndex > 0 && (
@@ -1270,7 +1270,7 @@ const isCurrentTabValid = () => {
                                       onClick={handlePrevTab}
                                       type="button"
                                     >
-                                      Previous
+                                      {translate("Previous")}
                                     </button>
                                   )}
                                 </div>
@@ -1303,7 +1303,7 @@ const isCurrentTabValid = () => {
                                       onClick={handleNextTab}
                                       type="button"
                                     >
-                                      Next
+                                      {translate("Next")}
                                     </button>
                                   )}
                                   {activeTabIndex > 0 && (
@@ -1312,7 +1312,7 @@ const isCurrentTabValid = () => {
                                       onClick={handlePrevTab}
                                       type="button"
                                     >
-                                      Previous
+                                      {translate("Previous")}
                                     </button>
                                   )}
                                 </div>
@@ -1368,7 +1368,7 @@ const isCurrentTabValid = () => {
                                       onClick={handleNextTab}
                                       type="button"
                                     >
-                                      Next
+                                      {translate("Next")}
                                     </button>
                                   )}
                                   {activeTabIndex > 0 && (
@@ -1377,7 +1377,7 @@ const isCurrentTabValid = () => {
                                       onClick={handlePrevTab}
                                       type="button"
                                     >
-                                      Previous
+                                      {translate("Previous")}
                                     </button>
                                   )}
                               </div>
@@ -1460,7 +1460,7 @@ const isCurrentTabValid = () => {
                                                   }
                                                   options={options2}
                                                   className="custom-select Hotel-Mekka-dd"
-                                                  placeholder="Select Hotel For Mekka(required)"
+                                                  placeholder={`${translate("Select Hotel For Mekka (Required)")}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
                                                   formatCreateLabel={(inputValue) =>
@@ -1557,7 +1557,7 @@ const isCurrentTabValid = () => {
                                                   }
                                                   options={Madina}
                                                   className="custom-select Hotel-Madina-dd"
-                                                  placeholder="Select Hotel For Madina (required)"
+                                                  placeholder={`${translate("Select Hotel For Madina (Required)")}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
                                                   formatCreateLabel={(inputValue) =>
@@ -1821,7 +1821,7 @@ const isCurrentTabValid = () => {
                                                     }
                                                     options={ChooseFlight}
                                                     className="custom-select Flight-selected-dd"
-                                                    placeholder="Select Flight"
+                                                    placeholder={`${translate("Select Flight")}`}
                                                     classNamePrefix="react-select"
                                                     isClearable
                                                     formatCreateLabel={(inputValue) =>
@@ -1942,7 +1942,7 @@ const isCurrentTabValid = () => {
                                       onClick={handlePrevTab}
                                       type="button"
                                     >
-                                      Previous
+                                      {translate("Previous")}
                                     </button>
                                   )}
                               </div>
