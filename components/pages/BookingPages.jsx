@@ -804,16 +804,16 @@ export default function BookingPages({ BookingData }) {
                   <FaUser />
                 </span>
                 <span>
-                  <b>{`${i + 1}. ${
-                    type.charAt(0).toUpperCase() + type.slice(1)
-                  } Information`}</b>
+                 
+                  <b>{`${i + 1}. ${translate(type.charAt(0).toUpperCase() + type.slice(1))} ${translate("Information")}`}</b>
+
                 </span>
               </p>
               <p>
                 <span>
                   <MdError />
                 </span>
-                <span>{` Is Also The Contact Person For The Reservation.`}</span>
+                <span>{ translate('Is Also The Contact Person For The Reservation.')}</span>
               </p>
             </div>
 
@@ -919,7 +919,7 @@ export default function BookingPages({ BookingData }) {
                   }`}
                 >
                   <h5 className="text-18 fw-500 my-2">
-                    Possible Additional Services Per Person:
+                    {translate("Possible Additional Services Per Person:")}
                   </h5>
                   <div>
                     {AdditionalServices?.map((option, idx) => (
@@ -972,10 +972,10 @@ export default function BookingPages({ BookingData }) {
 
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    Subtotal{" "}
+                    {translate('Subtotal')}{" "}
                     <span>{`${SubtotalPriceWithAdditional(type, i)} `}</span>
                   </h5>
-                  <p className="text-right">Including Taxes And Fee</p>
+                  <p className="text-right">{translate("Including Taxes And Fee")}</p>
                 </div>
               </div>
             </div>
