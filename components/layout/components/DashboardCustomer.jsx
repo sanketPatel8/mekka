@@ -65,8 +65,8 @@ export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
         style={{ cursor: "pointer" }} // Make it clear that the image is clickable
       >
         <Image
-          width={60}
-          height={60}
+          width={55}
+          height={55}
           src="/img/404/user.jpg"
           alt="image"
           className="rounded-full"

@@ -144,7 +144,7 @@ export default function Header1() {
                 </div>
               </div>
 
-              <div className="col-3">
+              {/* <div className="col-3">
                 <div className="d-flex justify-content-center">
                   <Link href={LoginCheck ? "" : "/register"} className={`mx-2`}>
                     {LoginCheck ? (
@@ -183,7 +183,55 @@ export default function Header1() {
                     </>
                   )}
                 </div>
-              </div>
+              </div> */}
+
+              {LoginCheck ? (
+                <>
+                  {/* Reverse order for when logged in */}
+                  <div className="col-4">
+                    <div className="d-flex justify-content-center">
+                      <button
+                        className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                        onClick={handleLogoutClick}
+                      >
+                        {translate("Log Out")}
+                      </button>
+                    </div>
+                    
+                  </div>
+
+                  <div className="col-3">
+                    <div className="d-flex justify-content-center">
+                      <DashboardCustomer
+                        onLocaleChange={setLocale}
+                        handleLogoutClick={handleLogoutClick}
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Default order for when not logged in */}
+                  <div className="col-3">
+                    <div className="d-flex justify-content-center">
+                      <Link href="/register" className={`mx-2`}>
+                        {translate("Register")}
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="col-4">
+                    <div className="d-flex justify-content-center">
+                      <button
+                        className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
+                        onClick={handleLoginClick}
+                      >
+                        {translate("Log In")}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             <button
