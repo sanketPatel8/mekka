@@ -27,7 +27,7 @@ export const CurrencyProvider = ({ children }) => {
   }
 
   const formatPrice = (price) => {
-    if (currency === "Euro") {
+    if (currency === "EURO") {
       const eurAmount = price / currencyEUR;
       return new Intl.NumberFormat('de-DE', {
           style: 'currency',
