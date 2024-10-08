@@ -152,7 +152,7 @@ const HeroSearch = ({ CustomClass }) => {
         >
           <button className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}>
             <i className="icon-search text-16 mr-10"></i>
-            Search
+            {translate('Search')}
           </button>
         </Link>
       </div>

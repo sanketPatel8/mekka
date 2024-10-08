@@ -13,6 +13,7 @@ import "@/public/css/index.css";
 import { post } from "@/app/utils/api";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { showErrorToast } from "@/app/utils/tost";
+import { useCurrency } from "@/app/context/currencyContext";
 
 export default function TourSliderTwo({ setLength }) {
   const [showSwiper, setShowSwiper] = useState(false);
@@ -49,6 +50,7 @@ export default function TourSliderTwo({ setLength }) {
   };
 
   const { translate } = useTranslation();
+  const {formatPrice} = useCurrency()
 
   return (
     <section className="relative">
@@ -177,7 +179,7 @@ export default function TourSliderTwo({ setLength }) {
                             >
                               From{" "}
                               <span className="text-16 fw-500">
-                                {elm.tour_price} €
+                                {formatPrice(elm.tour_price)} 
                               </span>
                             </div>
                           </div>
