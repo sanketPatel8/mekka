@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import Image from "next/image";
@@ -72,6 +73,8 @@ export default function HeaderSerch({ white }) {
     }
   }, [selected]);
 
+  const {translate} = useTranslation()
+
   return (
     <>
       <div
@@ -90,7 +93,7 @@ export default function HeaderSerch({ white }) {
           }}
           ref={inputRef}
           type="text"
-          placeholder="Search Packages"
+          placeholder={translate("Search Packages")}
           className={`js-search ${white ? "text-white" : ""}`}
         />
 

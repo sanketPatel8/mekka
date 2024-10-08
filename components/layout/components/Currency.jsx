@@ -3,7 +3,7 @@
 import { useCurrency } from "@/app/context/currencyContext";
 import { useState, useEffect, useRef } from "react";
 
-const currencies = ["Euro", "USD"];
+const currencies = ["EURO", "USD"];
 
 export default function Currency({ parentClass, currencyLocale }) {
   const [currentdd, setCurrentdd] = useState("");
@@ -46,7 +46,7 @@ export default function Currency({ parentClass, currencyLocale }) {
           console.log(currentdd, "currentdd");
         }}
       >
-        {currency == "Euro" ? "Euro" : "USD"}
+        {currency == "EURO" ? "EURO" : "USD"}
         <i className="icon-chevron-down text-18"></i>
       </div>
 

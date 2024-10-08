@@ -153,7 +153,7 @@ export default function Header1() {
                         handleLogoutClick={handleLogoutClick}
                       />
                     ) : (
-                      "Register"
+                      translate("Register")
                     )}
                   </Link>
                 </div>
@@ -168,7 +168,7 @@ export default function Header1() {
                           className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
                           onClick={handleLoginClick}
                         >
-                          Log In
+                          {translate("Log In")}
                         </button>
                       )}
 
@@ -177,7 +177,7 @@ export default function Header1() {
                           className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
                           onClick={handleLogoutClick}
                         >
-                          Log Out
+                          {translate('Log Out')}
                         </button>
                       )}
                     </>
