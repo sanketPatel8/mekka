@@ -289,10 +289,11 @@ export default function SingleFour({ PAckageData }) {
               </div>
             </div>
           </div>
-          <div className="py-40">
-            <hr />
-          </div>
+        
         </div>
+        <div className="py-40">
+            <span className="border-1-top " />
+          </div>
       </section>
     </>
   );

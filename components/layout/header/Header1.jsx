@@ -12,12 +12,15 @@ import Currency from "../components/Currency";
 import { FaUserPlus, FaUser } from "react-icons/fa";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 import DashboardCustomer from "../components/DashboardCustomer";
+import { useUserProfile } from "@/app/context/ProfileContext";
+
 
 export default function Header1() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
   const [LoginCheck, setLoginCheck] = useState(false);
+  const { profileImage } = useUserProfile();
 
   const handleLogoutClick = () => {
     if (typeof window !== "undefined") {

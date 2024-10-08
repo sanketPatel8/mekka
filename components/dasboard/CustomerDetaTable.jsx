@@ -314,6 +314,7 @@ const CustomerDetaTable = () => {
   }
 
   function openModal() {
+    
     setIsOpen(true);
   }
 
@@ -374,6 +375,7 @@ const CustomerDetaTable = () => {
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
   const CustomerID = searchParams.get("customerID");
+  const TourID = searchParams.get("TourID");
 
   function openUploadFileModal(personId, reservationId) {
     setuploadFileisOpen(true);
@@ -575,6 +577,11 @@ const CustomerDetaTable = () => {
   };
 
   // for Add New Person
+
+  useEffect(() => {
+    
+  }, [])
+  
 
   const [AddpersonData, setAddpersonData] = useState({
     name: "",
@@ -792,6 +799,7 @@ const CustomerDetaTable = () => {
         url: "addperson",
       });
       showSuccessToast(response?.Message);
+      closeModal();
     } catch (e) {
       console.error(e);
     }

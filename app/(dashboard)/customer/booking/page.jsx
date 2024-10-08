@@ -263,7 +263,7 @@ export default function DbBooking() {
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
                         <Link
-                          href={`/customer/booking-details/?id=${elm.id}&customerID=${UserID?.id}`}
+                          href={`/customer/booking-details/?id=${elm.id}&customerID=${UserID?.id}&TourID=${elm.tourId}`}
                         >
                           {translate("VIEW DETAILS")}
                         </Link>

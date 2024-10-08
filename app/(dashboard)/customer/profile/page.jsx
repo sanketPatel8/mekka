@@ -60,7 +60,7 @@ export default function Profile() {
 
   const { user, customer } = useAuthContext();
 
-  console.log("user", customer?.authorisation.token);
+
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -70,6 +70,9 @@ export default function Profile() {
     });
     setLoading(false);
 
+    
+    
+
     // Handle case where response.user is a single object
     if (response.user && typeof response.user === "object") {
       const userProfile = response.user;
@@ -77,6 +80,7 @@ export default function Profile() {
       setName(userProfile.name);
       setSurname(userProfile.surname);
       setEmail(userProfile.email);
+      setPhone(userProfile.mobile)
       setImage1(userProfile.profile_image);
       setFileBlob(userProfile.profile_image);
     } else {
@@ -104,7 +108,7 @@ export default function Profile() {
     }
 
     if (customer) {
-      console.log(customer?.user?.id, "customer?.id");
+      
       fetchProfile();
     }
 
@@ -144,7 +148,7 @@ export default function Profile() {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log(file, "file");
+    
     const allowedType = ["image/jpeg", "image/x-png", "image/png"];
     if (file && allowedType.includes(file?.type)) {
       setImage1(file);
@@ -188,7 +192,7 @@ export default function Profile() {
 
   //       }
   //     } catch (e) {
-  //       console.log(e);
+  //    
   //       setIsLoading(false);
   //   };
   // }
@@ -210,7 +214,7 @@ export default function Profile() {
     const formDatas = new FormData();
 
     const formType = e.target.name;
-    console.log("formType", formType);
+
 
     if (formType === "profile") {
       if (!name || !surname || !email || !image1) {
@@ -293,7 +297,7 @@ export default function Profile() {
   // const fetchUpdatePassword = async (type) => {
   //   const formDatas = new FormData();
 
-  //   // console.log("Update data: ", formDatas)
+  //
   //   formDatas.append("id", USerData?.id);
   //   formDatas.append("type", "change_password");
   //   formDatas.append("old_password", passwordData?.oldPassword);
