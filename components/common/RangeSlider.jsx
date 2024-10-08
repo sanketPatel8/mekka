@@ -21,11 +21,6 @@ const theme = createTheme({
 
 export default function RangeSlider({ value, setValue }) {
   const {formatPrice} = useCurrency();
-<<<<<<< Updated upstream
-  // const {value , setValue} = useGlobalState()
-=======
-  console.log(formatPrice(JSON.stringify(value[0])), "value");
->>>>>>> Stashed changes
   const handleChange = (event, newValue) => { 
     setValue(newValue);
   };
