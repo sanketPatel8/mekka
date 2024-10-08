@@ -101,7 +101,7 @@ const HeroSearch = ({ CustomClass }) => {
             <div className="searchFormItem__content">
               <h5>{translate("Tour Type")}</h5>
               <div className="js-select-control-chosen">
-                {translate(location) ? translate(location) : "Search Destinations"}
+                {translate(location) ? translate(location) : translate("Search Destinations")}
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ const HeroSearch = ({ CustomClass }) => {
             <div className="searchFormItem__content">
               <h5>{translate("Passenger")}</h5>
               <div className="js-select-control-chosen">
-                {translate("Passenger")} {person ? person : "person"}
+                {translate("Passenger")} {person ? person : translate("person")}
               </div>
             </div>
           </div>

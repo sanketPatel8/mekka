@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker from "react-multi-date-picker";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Calender() {
   const { calender, setCalender, setFormattedDates } = useGlobalState();
@@ -11,6 +12,8 @@ export default function Calender() {
     const formattedDates = newDates.map((date) => date.format("YYYY.MM.DD"));
     setFormattedDates(formattedDates); // Store the formatted dates globally
   };
+
+  const { translate } = useTranslation()
 
   return (
     <DatePicker
@@ -23,7 +26,7 @@ export default function Calender() {
       format="YYYY.MM.DD"
       inputClass="custom_input-picker"
       containerClassName="custom_container-picker"
-      placeholder="Please Select Your Date "
+      placeholder={translate("Please Select Your Date")}
       minDate={new Date()} 
     />
   );

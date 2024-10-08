@@ -13,6 +13,7 @@ import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
 import HeroSearch from "@/components/HeroSearch";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const slides = [
   {
@@ -26,28 +27,28 @@ const slides = [
     imageSrc: "/img/hero/7/image 2.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages, Globally",
+    title: "Tours and Trip packages",
   },
   {
     id: 3,
     imageSrc: "/img/hero/7/image 3.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages, Globally",
+    title: "Tours and Trip packages",
   },
   {
     id: 4,
     imageSrc: "/img/hero/7/image 4.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages, Globally",
+    title: "Tours and Trip packages",
   },
   {
     id: 5,
     imageSrc: "/img/hero/7/image 1.jpg",
     subtitle:
       "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages, Globally",
+    title: "Tours and Trip packages",
   },
 ];
 
@@ -83,6 +84,8 @@ export default function Hero7() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
+  const { translate } = useTranslation()
 
   return (
     <>
@@ -134,7 +137,7 @@ export default function Hero7() {
                             data-aos-delay="100"
                             className="hero__subtitle text-white mb-5 md:mb-5"
                           >
-                            {elm.subtitle}
+                            {translate(elm.subtitle)}
                           </h1>
 
                           <div
@@ -143,7 +146,7 @@ export default function Hero7() {
                             className="hero__title text--color-accent-1"
                           >
                             <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
-                              {elm.title.split(",")[0]}
+                              {translate(elm.title)}
                             </h2>
                           </div>
                         </div>
