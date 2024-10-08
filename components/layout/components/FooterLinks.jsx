@@ -1,30 +1,41 @@
 
+"use client"
+import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const sections = [
-  {
-    title: "Company",
-    links: [
-      { id: 1, text: "Contact", href: "/contact" },
-      { id: 2, text: "Login", href: "/login" },
-      { id: 3, text: "Sign Up", href: "/register" },
-      { id: 4, text: "Partners", href: "/partner" },
-      { id: 4, text: "Partners Login", href: "/partner-login" },
-      { id: 5, text: "My Account", href: "/vendor/dashboard" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { id: 9, text: "Terms of Use", href: "/Terms-of-Use" },
-      { id: 10, text: "Imprint", href: "/Impressum" },
-      { id: 11, text: "Data Protection", href: "/Datenschutz" },
-      { id: 12, text: "Cookie Policy", href: "/cookie-richtline" },
-    ],
-  },
-];
+
 
 export default function FooterLinks() {
+  const { translate } = useTranslation();
+
+  const [sections, setSections] = useState([]);
+
+  useEffect(() => {
+    const newSections = [
+      {
+        title:`${translate("Company")}`,
+        links: [
+          { id: 1, text: `${translate("Contact")}`, href: "/contact" },
+          { id: 2, text: `${translate("Login")}`, href: "/login" },
+          { id: 3, text: `${translate("Sign Up")}`, href: "/register" },
+          { id: 4, text: `${translate("Partners")}`, href: "/partner" },
+          { id: 4, text: `${translate("Partners Login")}`, href: "/partner-login" },
+          { id: 5, text: `${translate("My Account")}`, href: "/vendor/dashboard" },
+        ],
+      },
+      {
+        title:`${translate("Support")}`,
+        links: [
+          { id: 9, text:`${translate("Terms of Use")}`, href: "/Terms-of-Use" },
+          { id: 10, text:`${translate("Imprint")}`, href: "/Impressum" },
+          { id: 11, text:`${translate("Data Protection")}`, href: "/Datenschutz" },
+          { id: 12, text:`${translate("Cookie Policy")}` , href: "/cookie-richtline" },
+        ],
+      },
+    ];
+    setSections(newSections);
+  });
 
   return (
     <>

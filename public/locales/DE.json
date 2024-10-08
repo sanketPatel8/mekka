@@ -466,13 +466,12 @@
   "Performance cookies collect information about how our websites are used in order to improve their attractiveness, content and functionality. These cookies help us, for example, to determine whether and which subpages of our website are visited and which content users are particularly interested in. We record the number of accesses to a page, the number of subpages accessed, the time spent on our website, the order of the pages visited, which search terms led our users to us, the country, region and, if applicable, the city from which access is made, and the proportion of mobile devices that access our websites. The IP address of a computer transmitted for technical reasons is automatically anonymized and does not allow us to draw any conclusions about the individual user.": "Performance-Cookies sammeln Informationen darüber, wie unsere Webseiten genutzt werden, um darauf basierend deren Attraktivität, Inhalt und Funktionalität zu verbessern. Diese Cookies helfen uns beispielsweise festzustellen, ob und welche Unterseiten unserer Webseite besucht werden und für welche Inhalte sich die Nutzer besonders interessieren. Wir erfassen die Anzahl der Zugriffe auf eine Seite, die Anzahl der aufgerufenen Unterseiten, die auf unserer Webseite verbrachte Zeit, die Reihenfolge der besuchten Seiten, welche Suchbegriffe unsere Nutzer zu uns geführt haben, das Land, die Region und gegebenenfalls die Stadt aus der der Zugriff erfolgt, sowie den Anteil von mobilen Endgeräten, die auf unsere Webseiten zugreifen. Die aus technischen Gründen übermittelte IP-Adresse eines Rechners wird automatisch anonymisiert und ermöglicht uns keinen Rückschluss auf den einzelnen Nutzer.",
   "Login": "Login",
   "Sign Up": "Melden Sie sich an",
-  "Partners": "Partner",
+  "Partners": "Partner-Angebote",
   "Partners Login": "Partner-Login",
   "My Account": "Mein Konto",
-  "Terms Of Use": "Nutzungsbedingungen",
+  "Terms of Use": "Nutzungsbedingungen",
   "imprint": "Impressum",
   "Data Protection": "Datenschutz",
-  "Cookie Policy": "Cookie-Richtlinie",
   "Company": "Unternehmen",
   "Support": "Unterstützung",
   "Newsletter": "Newsletter",
@@ -503,7 +502,9 @@
   "Price" : "Preis",
   "No Tours Available" : "Keine Touren verfügbar",
   "results" : "Ergebnisse",
-  "including taxes and fee" : "inklusive Steuern und Gebühren"
+  "including taxes and fee" : "inklusive Steuern und Gebühren",
   
 
+  "Footer": "------------------------------------------------------------------------------------------------------",
+  "Speak to our expert at" : "Sprechen Sie mit unserem Experten unter"
 }
