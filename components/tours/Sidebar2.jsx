@@ -25,7 +25,7 @@ export default function Sidebar2({
   };
 
   useEffect(() => {
-    console.log("FilterSidebar", FilterSidebar);
+   
   }, [FilterSidebar]);
 
   const { translate } = useTranslation();
@@ -126,7 +126,7 @@ export default function Sidebar2({
                                     <span className="radio__icon"></span>
                                   </span>
                                   <span className="text-14 lh-1 ml-10">
-                                    {elm}
+                                    {translate(elm)}
                                   </span>
                                 </label>
                               </div>
@@ -554,7 +554,7 @@ export default function Sidebar2({
                                   </label>
                                 </div>
                                 <label htmlFor={elm} className="lh-16 ml-15">
-                                  {elm} {translate('Star')}
+                                  {elm} {translate("Star")}
                                 </label>
                               </div>
                             </div>

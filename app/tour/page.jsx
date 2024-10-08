@@ -77,9 +77,6 @@ export default function PageData() {
       console.error(e);
     }
   };
-
-  console.log("value" , value[0]);
-  console.log("Distance" , Distance[0]);
   
 
   const onPageChange = async (pageIndex) => {
@@ -122,7 +119,7 @@ export default function PageData() {
       Distance[0] === 0
       // FilterSidebar.selectedRatings.length !== 0
     ) {
-      console.log("Fetch Filter Data");
+     
       
       await FetchFilterData(pageIndex);
     } else {
@@ -194,7 +191,7 @@ export default function PageData() {
         // FilterSidebar.selectedRatings.length !== 0
         
       ) {
-        console.log("FEthch Filter ");
+      
         
         FetchFilterData();
       } else if (
@@ -204,13 +201,7 @@ export default function PageData() {
           SearchData.endDate !== null &&
           SearchData.person !== null)
       ) {
-        console.log(
-          "searhdata was this in condition :",
-          SearchData.tourType,
-          SearchData.startDate,
-          SearchData.endDate,
-          SearchData.person
-        );
+        
         // fetchSearch1Data(
         //   SearchData.tourType,
         //   SearchData.startDate,

@@ -24,7 +24,7 @@
   "Departure": "Abfahrt",
   "Filter Price": "Filterpreis",
   "Distance to Mosque": "Entfernung zur Moschee",
-  "Hotel Star": "Hotel Star",
+  "Hotel Star": "Hotel sterne",
   "Agent Rating": "Agentenbewertung",
   "Amenities": "Ausstattung",
   "this for single tour page": "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------",
@@ -498,6 +498,12 @@
   "Please Select Your Date" : "Bitte wählen Sie Ihr Datum aus",
   "Search" : "Suchen",
   "Log Out" : "Abmelden",
-  "Search Packages" : "Pakete suchen"
+  "Search Packages" : "Pakete suchen" , 
+  "Range" : "Reichweite",
+  "Price" : "Preis",
+  "No Tours Available" : "Keine Touren verfügbar",
+  "results" : "Ergebnisse",
+  "including taxes and fee" : "inklusive Steuern und Gebühren"
+  
 
 }

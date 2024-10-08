@@ -146,7 +146,7 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData?.length == 0 ? 0 : TourData?.length} results
+                  {TourData?.length == 0 ? 0 : TourData?.length} {translate('results')}
                 </div>
               </div>
 
@@ -185,7 +185,7 @@ export default function TourList4({
               </div>
             ) : Array.isArray(TourData) && TourData.length === 0 ? (
               <div className="d-flex justify-content-center align-items-center">
-                <p>No Tours Available</p>
+                <p>{translate('No Tours Available')}</p>
               </div>
             ) : (
               Array.isArray(TourData) &&
@@ -333,7 +333,7 @@ export default function TourList4({
                               </p>
                             </div>
                             <p className="text-left text-md-center text-lg-center text-xl-center">
-                              including taxes and fee
+                              {translate('including taxes and fee')}
                             </p>
                           </div>
                         </div>

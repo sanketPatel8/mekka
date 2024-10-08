@@ -502,6 +502,12 @@
   "Please Select Your Date" : "Please Select Your Date",
   "Search" : "Search",
   "Log Out" : "Log Out",
-  "Search Packages" : "Search Packages"
+  "Search Packages" : "Search Packages",
+  "Range" : "Range",
+  "Price" : "Price",
+  "No Tours Available" : "No Tours Available",
+  "results" : "results",
+  "including taxes and fee" : "including taxes and fee"
+
   
 }

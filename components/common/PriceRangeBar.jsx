@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import { createTheme } from "@mui/material/styles";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const theme = createTheme({
   palette: {
@@ -25,6 +26,9 @@ export default function PriceRangeBar({ Distance, setDistance }) {
     
     setDistance(newValue);
   };
+
+  const {translate} = useTranslation();
+
   return (
     <>
       <div className="js-price-rangeSlider" style={{ padding: "40px 15px" }}>
@@ -44,7 +48,7 @@ export default function PriceRangeBar({ Distance, setDistance }) {
 
         <div className="d-flex justify-between mt-20">
           <div className="">
-            <span className="">Range: </span>
+            <span className="">{translate('Range')}: </span>
             <span className="fw-500 js-lower">{Distance[0]} m</span>
             <span> - </span>
             <span className="fw-500 js-upper">{Distance[1]} m</span>
