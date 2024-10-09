@@ -149,7 +149,7 @@ const CustomerDetaTable = () => {
       selector: (row) => row.title,
       width: "150px",
     },
-    { name: translate("Total"), selector: (row) => row.price },
+    { name: translate("Total"), selector: (row) => formatPrice(row.price) },
     {
       name: translate("Action"),
       selector: (row) => (
@@ -193,7 +193,10 @@ const CustomerDetaTable = () => {
           : null, // Return null if the length is 0
       width: "150px",
     },
-    { name: translate("Total"), selector: (row) => row.adult_price },
+    {
+      name: translate("Total"),
+      selector: (row) => formatPrice(row.adult_price),
+    },
     {
       name: translate("Action"),
       selector: (row) => (
@@ -237,7 +240,10 @@ const CustomerDetaTable = () => {
           : null, // Return null if the length is 0
       width: "150px",
     },
-    { name: translate("Total"), selector: (row) => row.child_price },
+    {
+      name: translate("Total"),
+      selector: (row) => formatPrice(row.child_price),
+    },
     {
       name: translate("Action"),
       selector: (row) => (
@@ -273,7 +279,10 @@ const CustomerDetaTable = () => {
       name: translate("Nationality"),
       selector: (row) => row.personNationality,
     },
-    { name: translate("Total"), selector: (row) => row.baby_price },
+    {
+      name: translate("Total"),
+      selector: (row) => formatPrice(row.baby_price),
+    },
     {
       name: translate("Action"),
       selector: (row) => (
@@ -343,10 +352,6 @@ const CustomerDetaTable = () => {
 
   function openCancelPopUp() {
     setCanclePopUp(true);
-  }
-
-  function CloseCancelPopUp() {
-    setCanclePopUp(false);
   }
 
   function closeUploadFileModal() {
@@ -839,7 +844,7 @@ const CustomerDetaTable = () => {
         closeModal();
         handleClose();
         setTimeout(() => {
-          window.location.reload(); 
+          window.location.reload();
         }, 3500);
       }
     } catch (e) {
@@ -989,6 +994,29 @@ const CustomerDetaTable = () => {
       [name]: value,
     }));
   };
+
+  // for cancel booking
+
+  function CloseCancelPopUp() {
+    const fatchCancelBooking = async () => {
+      const formData = new FormData();
+      formData.append("reservation_id", BookingDetails?.reservation?.id);
+
+      try {
+        const response = await POST.request({
+          form: formData,
+          url: "cancelBooking",
+        });
+        if (response) {
+          showSuccessToast(response.Message);
+          setCanclePopUp(false);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fatchCancelBooking()
+  }
 
   return (
     <div>
