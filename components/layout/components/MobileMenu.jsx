@@ -46,7 +46,7 @@ export default function MobileMenu({
 
       <div className="menu__container">
         <div className="menu__header">
-          <h4>Main Menu</h4>
+          <h4></h4>
 
           <button
             onClick={() => setMobileMenuOpen(false)}
@@ -88,13 +88,6 @@ export default function MobileMenu({
         </div>
 
         <div className="menu__footer">
-          <i className="icon-headphone text-50"></i>
-
-          <div className="text-20 lh-12 fw-500 mt-20">
-            <div>Speak to our expert at</div>
-            <div className="text-accent-1">+49 (0)6196 204 72 40</div>
-          </div>
-
           <div className="d-flex items-center x-gap-10 pt-30">
             {socialMediaLinks.map((elm, i) => (
               <div key={i}>
