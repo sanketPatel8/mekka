@@ -19,6 +19,8 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
       : "";
   const [sidebarItemsAgentDB, setSidebarItemsAgentDB] = useState([]);
 
+  console.log("sidebarItemsAgentDB", sidebarItemsAgentDB);
+
   useEffect(() => {
     const translatedSidebarItems = [
       {
@@ -57,7 +59,7 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
         iconClass: "icon-payment text-26",
         label: translate("Payment History"),
       },
-      { id: 7, iconClass: "icon-logout text-26", label: translate("Logout") },
+      { id: 7, iconClass: "icon-logout text-26", label: translate("Logout") , href : "/" },
     ];
     setSidebarItemsAgentDB(translatedSidebarItems);
   }, [translate]);

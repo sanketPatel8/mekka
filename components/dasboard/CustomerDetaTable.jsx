@@ -173,9 +173,9 @@ const CustomerDetaTable = () => {
   ];
 
   const columnAduInfo_2 = [
-    { name: "Name", selector: (row) => row.personName, width: "100px" },
-    { name: "Surname", selector: (row) => row.personSurName },
-    { name: "Gender", selector: (row) => row.gender },
+    { name: translate("Name"), selector: (row) => row.personName, width: "100px" },
+    { name: translate("Surname"), selector: (row) => row.personSurName },
+    { name: translate("Gender"), selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
     {
       name: translate("Nationality"),
@@ -213,9 +213,9 @@ const CustomerDetaTable = () => {
   ];
 
   const Child = [
-    { name: "Name", selector: (row) => row.personName, width: "100px" },
-    { name: "Surname", selector: (row) => row.personSurName },
-    { name: "Gender", selector: (row) => row.gender },
+    { name: translate("Name"), selector: (row) => row.personName, width: "100px" },
+    { name: translate("Surname"), selector: (row) => row.personSurName },
+    { name: translate("Gender"), selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
     {
       name: translate("Nationality"),
@@ -253,9 +253,9 @@ const CustomerDetaTable = () => {
   ];
 
   const baby = [
-    { name: "Name", selector: (row) => row.personName, width: "100px" },
-    { name: "Surname", selector: (row) => row.personSurName },
-    { name: "Gender", selector: (row) => row.gender },
+    { name: translate("Name"), selector: (row) => row.personName, width: "100px" },
+    { name: translate("Surname"), selector: (row) => row.personSurName },
+    { name: translate("Gender"), selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
     {
       name: translate("Nationality"),
@@ -286,24 +286,24 @@ const CustomerDetaTable = () => {
 
   const Total = [
     {
-      name: "Subtotal",
+      name: translate("Subtotal"),
       selector: (row) => row.subtotal,
       cell: (row) => formatPrice(row.subtotal),
     },
     // { name: "Tax", selector: (row) => row.Total },
     {
-      name: "Discount",
+      name: translate("Discount"),
       selector: (row) => row.discount,
       cell: (row) => formatPrice(row.discount),
     },
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
     {
-      name: "Total",
+      name: translate("Total"),
       selector: (row) => row.total,
       cell: (row) => formatPrice(row.total),
     },
     {
-      name: "Amount Due",
+      name: translate("Amount Due"),
       selector: (row) => row.amount_due,
       cell: (row) => formatPrice(row.amount_due),
     },
