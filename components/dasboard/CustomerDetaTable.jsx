@@ -81,6 +81,7 @@ const CustomerDetaTable = () => {
   const [minEndDate, setMinEndDate] = useState("");
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
+  const [EditUserData, setEditUserData] = useState({})
 
   const [pendingPaymentValue, setPendingPaymentValue] = useState({
     firstAmount: "",
@@ -156,7 +157,7 @@ const CustomerDetaTable = () => {
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={() => openEditData(row?.id)} // Pass the current row
+            onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
@@ -203,7 +204,7 @@ const CustomerDetaTable = () => {
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={() => openEditData(row?.id)} // Pass the current row
+            onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
@@ -250,7 +251,7 @@ const CustomerDetaTable = () => {
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={() => openEditData(row?.id)} // Pass the current row
+            onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
@@ -289,7 +290,7 @@ const CustomerDetaTable = () => {
         <div className="flex_center">
           <button
             className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
-            onClick={() => openEditData(row?.id)} // Pass the current row
+            onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
@@ -358,10 +359,23 @@ const CustomerDetaTable = () => {
     setuploadFileisOpen(false);
   }
 
-  function openEditData(id) {
-    setPersonalUserID(id);
+  function openEditData(row) {
+    setPersonalUserID(row.id);
+    console.log("row data " , row);
+    setEditUserData(row)
+    setEditCustomerData({
+      name: row.personName,
+      surname: row.personSurName,
+      gender: row.gender, // Default value
+      birthday: row.personBirthDay,
+      nationality: row.personNationality , // Default value
+    })
+    
     setEditData(true);
   }
+
+  console.log("EditUserData" , EditUserData); 
+  
 
   function closeEditData() {
     setEditData(false);
@@ -998,25 +1012,25 @@ const CustomerDetaTable = () => {
   // for cancel booking
 
   function CloseCancelPopUp() {
-    const fatchCancelBooking = async () => {
-      const formData = new FormData();
-      formData.append("reservation_id", BookingDetails?.reservation?.id);
-
-      try {
-        const response = await POST.request({
-          form: formData,
-          url: "cancelBooking",
-        });
-        if (response) {
-          showSuccessToast(response.Message);
-          setCanclePopUp(false);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fatchCancelBooking()
+    setCanclePopUp(false);
   }
+
+  const fatchCancelBooking = async () => {
+    const formData = new FormData();
+    formData.append("reservation_id", BookingDetails?.reservation?.id);
+
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "cancelBooking",
+      });
+      if (response) {
+        showSuccessToast(response.Message);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div>
@@ -1841,6 +1855,7 @@ const CustomerDetaTable = () => {
                 className="button -sm -red-2 bg-red-3 text-white"
                 onClick={() => {
                   alert("Your Booking Is canceled !!");
+                  fatchCancelBooking();
                   setTimeout(() => {
                     CloseCancelPopUp();
                   }, 2000);
