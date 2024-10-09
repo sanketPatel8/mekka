@@ -94,7 +94,7 @@ export default function BannerOne() {
                     <div className="col-md-auto col-12">
                       <input
                         type="email"
-                        placeholder="Email"
+                        placeholder={`${translate("Email")}`}
                         className=""
                         value={DiscountMail}
                         onChange={handlemailchange}
@@ -107,7 +107,7 @@ export default function BannerOne() {
                         className="button -md -accent-1 bg-white col-12 text-accent-2"
                         onClick={HandleDiscountClick}
                       >
-                        Send
+                        {translate("Send")}
                       </button>
                     </div>
                   </div>

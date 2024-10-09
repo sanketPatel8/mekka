@@ -138,13 +138,13 @@ export default function FooterTwo() {
               <FooterLinks />
 
               <div className="col-lg-3 col-md-6">
-                <h4 className="text-20 fw-500">Newsletter</h4>
+                <h4 className="text-20 fw-500">{translate('Newsletter')}</h4>
                 <p className="mt-20">
                   {translate("Subscribe to the free newsletter and stay up to date")}
                 </p>
 
                 <div className="footer__newsletter" style={{background:"white",borderRadius:"16px"}}>
-                  <input type="email" placeholder="Your email address" value={email} onChange={handleEmailchange}  name="email" style={{width:"75%"}}/>
+                  <input type="email" placeholder={`${translate("Your email address")}`} value={email} onChange={handleEmailchange}  name="email" style={{width:"75%"}}/>
                   <button type="button" onClick={handleClick}>{translate("Send")}</button>
                 </div>
                 {errors.email && <div className="text-red">{errors.email}</div>}
