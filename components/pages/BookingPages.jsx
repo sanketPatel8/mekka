@@ -647,6 +647,14 @@ export default function BookingPages({ BookingData }) {
     }
   }, [LoginCheck, customer]);
 
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const renderForms = (type, count) => {
     const fields = {
       Adult: [
@@ -875,6 +883,7 @@ export default function BookingPages({ BookingData }) {
                               maxLength={
                                 field.type == "number" ? 10 : undefined
                               }
+                              max={field.type == 'date' ? getTodayDate() : undefined}
                               required
                             />
 
