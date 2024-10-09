@@ -42,6 +42,7 @@ export default function CheckoutForm({
   setBookingStage,
   setReservationID,
   setPaidAmount,
+  closeModal,
 }) {
   const { dispatch, customer } = useAuthContext();
   const stripe = useStripe();
@@ -104,8 +105,12 @@ export default function CheckoutForm({
         url: "addperson",
       });
       if (response?.Status == "1") {
-        showSuccessToast(response?.Message);
+        showSuccessToast("Person was added successfully !!");
+        closeModal();
         handleClose();
+        setTimeout(() => {
+          window.location.reload(); 
+        }, 3500);
       } else {
         showErrorToast(response?.Message);
       }

@@ -5,7 +5,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
 import { useCurrency } from '@/app/context/currencyContext';
 
-function Stripeform({RadioValue, showStripeModal, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
+function Stripeform({RadioValue, closeModal ,showStripeModal, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
   console.log(amount, 'amount')
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
@@ -63,6 +63,7 @@ function Stripeform({RadioValue, showStripeModal, subtotal ,  handleClose, amoun
         reservation_id={reservation_id}
         RadioValue={RadioValue}
         subtotal={subtotal}
+        closeModal={closeModal}
       />
     </Elements>
   )

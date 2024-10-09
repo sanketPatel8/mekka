@@ -13,7 +13,7 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { POST } from "@/app/utils/api/post";
 import { nationalities } from "@/data/nationalities";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 import { useCurrency } from "@/app/context/currencyContext";
@@ -90,6 +90,7 @@ const CustomerDetaTable = () => {
     thirdAmount: "",
     thirdDate: "",
   });
+  const router = useRouter();
 
   const { formatPrice } = useCurrency();
 
@@ -532,8 +533,6 @@ const CustomerDetaTable = () => {
       //     console.error("Error parsing userData:", error);
       //   }
       // }
-
-      
     }
   }, []);
 
@@ -624,8 +623,7 @@ const CustomerDetaTable = () => {
 
   useEffect(() => {
     setAdultPrice(AddpersonDetails?.tour_price);
-  }, [AddpersonDetails])
-  
+  }, [AddpersonDetails]);
 
   useEffect(() => {
     setPaymentCheckbox(BookingDetails?.reservation?.paymentType);
@@ -659,7 +657,7 @@ const CustomerDetaTable = () => {
     } else {
       setSubtotal(0); // Reset subtotal if conditions aren't met
     }
-  }, [AdultPrice, AddpersonData , RadioValue]); // Dependency array
+  }, [AdultPrice, AddpersonData, RadioValue]); // Dependency array
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -836,8 +834,14 @@ const CustomerDetaTable = () => {
         form: formData,
         url: "addperson",
       });
-      showSuccessToast(response?.Message);
-      closeModal();
+      if (response) {
+        showSuccessToast("Person was added successfully !!");
+        closeModal();
+        handleClose();
+        setTimeout(() => {
+          window.location.reload(); 
+        }, 3500);
+      }
     } catch (e) {
       console.error(e);
     }
@@ -2313,6 +2317,7 @@ const CustomerDetaTable = () => {
           AddpersonData={AddpersonData}
           reservation_id={BookingDetails.reservation?.id}
           RadioValue={RadioValue}
+          closeModal={closeModal}
         />
       )}
     </div>
