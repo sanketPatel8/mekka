@@ -533,7 +533,7 @@ const page = () => {
                             onChange={handleInputChange(setEmail)}
                           />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("E-mail Address")}{" "}
+                            {translate("Email Address")}{" "}
                             <span className="text-red font_11">*</span>
                           </label>
                           {errors.email && (
