@@ -535,7 +535,18 @@
   "Baby Information" : "Baby Information",
   "Show Invoice" : "Show Invoice",
   "PNG oder JPG, nicht größer als 800 Pixel in Breite und Höhe." : "PNG oder JPG, nicht größer als 800 Pixel in Breite und Höhe.",
-  "Discount" : "Discount"
+  "Discount" : "Discount",
+  "Adult Type" : "Adult Type",
+  "Account holder" : "Account holder",
+  "PENDING PAYMENT" : "PENDING PAYMENT",
+  "Total Package Fees" : "Total Package Fees",
+  "Mekka Fees" : "Mekka Fees",
+  "Total Tax Amount" : "Total Tax Amount",
+  "Agent Payable" : "Agent Payable",
+  "Time frame" : "Time frame",
+  "MekkaBooking Fee" : "MekkaBooking Fee",
+  "Download Your Tickets and Visa" : "Download Your Tickets and Visa",
+  "SUBMIT" : "SUBMIT"
   
   
   
