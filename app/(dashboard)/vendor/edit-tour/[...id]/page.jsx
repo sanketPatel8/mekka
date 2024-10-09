@@ -8,8 +8,14 @@ import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import CreatableSelect from "react-select/creatable";
 import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
-import { ContentState, convertFromRaw, convertToRaw, EditorState, Modifier } from "draft-js";
-import draftToHtml, { stateToHTML } from 'draftjs-to-html';
+import {
+  ContentState,
+  convertFromRaw,
+  convertToRaw,
+  EditorState,
+  Modifier,
+} from "draft-js";
+import draftToHtml, { stateToHTML } from "draftjs-to-html";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import $ from "jquery";
@@ -40,11 +46,11 @@ const tabs = [
 
 export default function EditTour() {
   const router = useRouter();
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const { translate } = useTranslation();
   const params = useParams();
   const id = params.id[0];
-  const [tourDetails,setTourDetails] = useState({});
+  const [tourDetails, setTourDetails] = useState({});
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [SelectedTour, setSelectedTour] = useState({ value: "", label: "" });
@@ -70,36 +76,41 @@ export default function EditTour() {
   const [free_cancellation, setFreeCancellation] = useState(0);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [departureRows, setDepartureRows] = useState([
-    { departure_id:"", price: "",id:"" },
+    { departure_id: "", price: "", id: "" },
   ]);
   const [isChecked, setIsChecked] = useState(false);
 
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
     { id: 1, title: "1-bed room", price: "", checked: false },
-    { id: 2, title: "2-bed room", price: "", checked: false  },
-    { id: 3, title: "3-bed room", price: "", checked: false},
+    { id: 2, title: "2-bed room", price: "", checked: false },
+    { id: 3, title: "3-bed room", price: "", checked: false },
     { id: 4, title: "4-bed room", price: "", checked: false },
   ]);
   const [isNextClicked, setIsNextClicked] = useState(false);
   const [enabledTabs, setEnabledTabs] = useState([0]);
   const [visa_processing, setVisaProcessing] = useState(0);
-  const [dayData,setDayData] = useState("");
+  const [dayData, setDayData] = useState("");
   const [daysCount, setDaysCount] = useState(0);
   const [dayDescription, setDayDescription] = useState("");
-  const [included,setIncluded] = useState([]);
+  const [included, setIncluded] = useState([]);
   const [includedData, setIncludedData] = useState([]);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [canGoBack, setCanGoBack] = useState(false);
   const [mekkaRows, setMekkaRows] = useState([
-    { hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"",id:"" },
-
+    { hotel_id: "", hotel_name: null, hotel_price: "", hotel_info: "", id: "" },
   ]);
   const [madinaRows, setMadinaRows] = useState([
-    {hotel_id:"", hotel_name: null, hotel_price: "",hotel_info:"",id:"" },
+    { hotel_id: "", hotel_name: null, hotel_price: "", hotel_info: "", id: "" },
   ]);
   const [flightRow, setFlightRow] = useState([
-    { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"",id:"" },
+    {
+      flight_id: " ",
+      flight_amount: " ",
+      no_of_stop: " ",
+      luggage: "",
+      id: "",
+    },
   ]);
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
@@ -111,13 +122,13 @@ export default function EditTour() {
   const [amenities, setAmenities] = useState([]);
   const [departureDetails, setDepartureDetails] = useState([]);
   const [tourInclude, setTourInclude] = useState("");
-  const [radioValueVisa, setRadioValueVisa] = useState('No');
+  const [radioValueVisa, setRadioValueVisa] = useState("No");
   const [languagesData, setlanguagesData] = useState([]);
   const [flightData, setFlightData] = useState([]);
   const [additionalServices, setAdditionalServices] = useState([]);
-  const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState('No');
+  const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState("No");
   const [loading, setLoading] = useState(false);
-  const [radioValueFlight, setRadioValueFlight] = useState('No');
+  const [radioValueFlight, setRadioValueFlight] = useState("No");
   const [minEndDate, setMinEndDate] = useState("");
 
   const options2 = mekkaHotel.map((hotel) => ({
@@ -127,8 +138,8 @@ export default function EditTour() {
   const fetchTour = async (id) => {
     const formData = new FormData();
     formData.append("id", id);
-    const response = await POST.request({form:formData , url: "tourdetails"});
-    if(response){
+    const response = await POST.request({ form: formData, url: "tourdetails" });
+    if (response) {
       setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
       setAdditionalServices(response.Tour_Details.addition_service || "");
@@ -136,34 +147,87 @@ export default function EditTour() {
       setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
       setTourInclude(response.Tour_Details.details.tour_included || "");
-      const adultPrice = response.Tour_Details.adult_price.map((price) => (setAdultPrice(price.price)));
-      const childPrice = response.Tour_Details.child_price.map((price) => (setChildPrice(price.price)));
-      const babyPrice = response.Tour_Details.baby_price.map((price) => (setBabyPrice(price.price)));
-
-      
-
+      const adultPrice = response.Tour_Details.adult_price.map((price) =>
+        setAdultPrice(price.price)
+      );
+      const childPrice = response.Tour_Details.child_price.map((price) =>
+        setChildPrice(price.price)
+      );
+      const babyPrice = response.Tour_Details.baby_price.map((price) =>
+        setBabyPrice(price.price)
+      );
     }
-  }
-  const accessdata = async() => {
-    const url ="tour_data"
+  };
 
-    try{
-      const response = await POST.request({url:url})
-      if(response.Data){
-        setMekkaHotel(response.Data.mekka_hotels)
-        setMadinaHotel(response.Data.medina_hotels)
-        setFlightDetails(response.Data.airline)
-        setTourType(response.Data.tour_type)
-        setlanguagesData(response.Data.languages)
-        setIncludedData(response.Data.amenities)
-        setDepartures(response.Data.departure)
+  const numberInputRef1 = useRef(null);
+  const numberInputRef2 = useRef(null);
+  const numberInputRef3 = useRef(null);
+  const numberInputRef4 = useRef(null);
+  const numberInputRef5 = useRef(null);
+  const numberInputRef6 = useRef(null);
+  const numberInputRef7 = useRef(null);
+  const numberInputRef8 = useRef(null);
+  const numberInputRef9 = useRef(null);
+  const numberInputRef10 = useRef(null);
+  const numberInputRef11 = useRef(null);
+
+  // Function to disable scrolling on number inputs
+  const disableScroll = (event) => {
+    event.preventDefault(); // Prevent scrolling
+  };
+
+  useEffect(() => {
+    // Attach wheel event listeners to each input ref
+    const refs = [
+      numberInputRef1,
+      numberInputRef2,
+      numberInputRef3,
+      numberInputRef4,
+      numberInputRef5,
+      numberInputRef6,
+      numberInputRef7,
+      numberInputRef8,
+      numberInputRef9,
+      numberInputRef10,
+      numberInputRef11,
+    ];
+
+    refs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.addEventListener("wheel", disableScroll);
       }
-    }catch(error){
+    });
+
+    // Cleanup event listeners on unmount
+    return () => {
+      refs.forEach((ref) => {
+        if (ref.current) {
+          ref.current.removeEventListener("wheel", disableScroll);
+        }
+      });
+    };
+  }, []);
+
+  const accessdata = async () => {
+    const url = "tour_data";
+
+    try {
+      const response = await POST.request({ url: url });
+      if (response.Data) {
+        setMekkaHotel(response.Data.mekka_hotels);
+        setMadinaHotel(response.Data.medina_hotels);
+        setFlightDetails(response.Data.airline);
+        setTourType(response.Data.tour_type);
+        setlanguagesData(response.Data.languages);
+        setIncludedData(response.Data.amenities);
+        setDepartures(response.Data.departure);
+      }
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  const {handleRedirect} = Useauthredirect();
+  const { handleRedirect } = Useauthredirect();
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1000) {
@@ -184,13 +248,13 @@ export default function EditTour() {
   }, []);
 
   const handleStartDateChange = (e) => {
-    const [day, month, year] = e.target.value.split('-');
+    const [day, month, year] = e.target.value.split("-");
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(e.target.value);
-      console.log(formattedDate,"formated")
+      console.log(formattedDate, "formated");
       const today = new Date();
       const dateBegin = formatDateToMMDDYYYY(date_begin);
-      console.log(dateBegin,"dateBegin")
+      console.log(dateBegin, "dateBegin");
 
       if (formattedDate < dateBegin) {
         setDateBegin(dateBegin);
@@ -201,13 +265,13 @@ export default function EditTour() {
       }
     }
   };
-  
+
   const handleEndDateChange = (e) => {
-    const [day, month, year] = e.target.value.split('-');
+    const [day, month, year] = e.target.value.split("-");
     if (day && month && year) {
-      console.log(formatDateToMMDDYYYY(e.target.value),"e.target.value")
+      console.log(formatDateToMMDDYYYY(e.target.value), "e.target.value");
       const formattedDate = formatDateToMMDDYYYY(e.target.value);
-      console.log(formattedDate,"formated")
+      console.log(formattedDate, "formated");
       const dateBegin = formatDateToMMDDYYYY(date_begin);
       if (dateBegin && formattedDate < dateBegin) {
         setDateEnd(dateBegin);
@@ -216,30 +280,32 @@ export default function EditTour() {
       }
     }
   };
-  
+
   const handleStartDateBlur = () => {
-    const [day, month, year] = date_begin.split('-');
+    const [day, month, year] = date_begin.split("-");
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
-      console.log(formattedDate,"formatedDate") 
+      console.log(formattedDate, "formatedDate");
 
       setMinEndDate(formattedDate);
       setStartDate(formattedDate);
     }
   };
-  
+
   const handleEndDateBlur = () => {
-    const [day, month, year] = date_end.split('-');
+    const [day, month, year] = date_end.split("-");
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
       setDateEnd(formattedDate);
       const start_Date = new Date(date_begin);
-      console.log(start_Date,"start_Date")
+      console.log(start_Date, "start_Date");
       const endDate = new Date(date_end);
-      console.log(endDate,"endDate")
-      const daysDifference = Math.round((endDate - start_Date) / (1000 * 3600 * 24));
-      console.log(daysDifference,"daysDifference")
-      setDaysCount(daysDifference + 1)
+      console.log(endDate, "endDate");
+      const daysDifference = Math.round(
+        (endDate - start_Date) / (1000 * 3600 * 24)
+      );
+      console.log(daysDifference, "daysDifference");
+      setDaysCount(daysDifference + 1);
     }
   };
   const formatedDate = (dateString) => {
@@ -247,81 +313,79 @@ export default function EditTour() {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
-  
+
     return `${year}-${month}-${day}`;
   };
 
-  useEffect(()=>{
- 
-    if(tourInformation){
+  useEffect(() => {
+    if (tourInformation) {
       const htmlToDraft = require("html-to-draftjs").default;
 
       const blocksFromHtml = htmlToDraft(tourInformation);
       const { contentBlocks, entityMap } = blocksFromHtml;
 
-
-    const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+      const contentState = ContentState.createFromBlockArray(
+        contentBlocks,
+        entityMap
+      );
       const editorState = EditorState.createWithContent(contentState);
-    
- 
-    setEditorState(editorState);
+
+      setEditorState(editorState);
     }
-
-
-  },[tourInformation])
+  }, [tourInformation]);
   useEffect(() => {
+    const updatedIncluded = includedData.map((item) => {
+      const isChecked = tourInclude.split(",").includes(item.id);
 
-      const updatedIncluded = includedData.map((item) => {
-        const isChecked = tourInclude.split(',').includes(item.id);
-        
-        return { ...item, checked: isChecked };
-      });
-      setIncluded(updatedIncluded);
-    
-  }, [ tourInclude,includedData]);
-
-  
-  useEffect(() => {
-   
-
-        const updatedServices = services.map((service) => {
-          const foundService = additionalServices.find((additionalService) => additionalService.title === service.title);
-          if (foundService) {
-            return { ...service, checked: true, price: foundService.price, service_id: foundService.id,title:foundService.title };
-          }
-          return service;
-        });
-        setServices(updatedServices);
-
-
-  },[additionalServices]);
-useEffect(() => {
-  if(departureDetails){
-    const updatedDepartures = departureDetails.map((departure) => {
-      const foundDeparture = departures.find((departureData) => departureData.id === departure.departure_id);
-      if (foundDeparture) {
-        return { ...departure, departure_id: foundDeparture.id };
-      }
-      return departure;
+      return { ...item, checked: isChecked };
     });
-    setDepartureRows(updatedDepartures);
-  }
-},[departureDetails])
+    setIncluded(updatedIncluded);
+  }, [tourInclude, includedData]);
 
   useEffect(() => {
-    if(tourDetails){
-      setSelectedTour({value:tourDetails.type,label:tourDetails.type});
+    const updatedServices = services.map((service) => {
+      const foundService = additionalServices.find(
+        (additionalService) => additionalService.title === service.title
+      );
+      if (foundService) {
+        return {
+          ...service,
+          checked: true,
+          price: foundService.price,
+          service_id: foundService.id,
+          title: foundService.title,
+        };
+      }
+      return service;
+    });
+    setServices(updatedServices);
+  }, [additionalServices]);
+  useEffect(() => {
+    if (departureDetails) {
+      const updatedDepartures = departureDetails.map((departure) => {
+        const foundDeparture = departures.find(
+          (departureData) => departureData.id === departure.departure_id
+        );
+        if (foundDeparture) {
+          return { ...departure, departure_id: foundDeparture.id };
+        }
+        return departure;
+      });
+      setDepartureRows(updatedDepartures);
+    }
+  }, [departureDetails]);
+
+  useEffect(() => {
+    if (tourDetails) {
+      setSelectedTour({ value: tourDetails.type, label: tourDetails.type });
       setDateBegin(tourDetails.date_begin);
-      console.log(date_begin,"date_begin")
+      console.log(date_begin, "date_begin");
       setDateEnd(tourDetails.date_end);
       setMinEndDate(tourDetails.date_begin);
 
-      if(tourDetails.tour_image){
+      if (tourDetails.tour_image) {
         setImage2(tourDetails.tour_image || []);
-
-
-        
-            }
+      }
       setName(tourDetails.name);
       setCapacity(tourDetails.capacity);
       if (tourDetails.route_data) {
@@ -334,88 +398,100 @@ useEffect(() => {
               dayData: day.day,
               description: day.description,
             }));
-            
+
             setRouteData(newRouteDataLen);
           }
         } catch (error) {
           console.error(error);
         }
       }
-      {tourDetails.flight_info !== ""  ? setFlightInformation(tourDetails.flight_info) : setFlightInformation("")}
-      {tourDetails.flight_exclude == 1 ? setRadioValueExcludeFlight("Yes") : setRadioValueExcludeFlight("No")}
-     
-      {tourDetails.visa_processing == 1 ? setRadioValueVisa("Yes") : setRadioValueVisa("No")}
+      {
+        tourDetails.flight_info !== ""
+          ? setFlightInformation(tourDetails.flight_info)
+          : setFlightInformation("");
+      }
+      {
+        tourDetails.flight_exclude == 1
+          ? setRadioValueExcludeFlight("Yes")
+          : setRadioValueExcludeFlight("No");
+      }
 
+      {
+        tourDetails.visa_processing == 1
+          ? setRadioValueVisa("Yes")
+          : setRadioValueVisa("No");
+      }
     }
-
   }, [tourDetails]);
 
-
-
-
-  
-  useEffect(()=>{
-    if(flightData){
-      {flightData.length > 0 ? setRadioValueFlight("Yes") : setRadioValueFlight("No")}
-      if(flightData.length > 0){
+  useEffect(() => {
+    if (flightData) {
+      {
+        flightData.length > 0
+          ? setRadioValueFlight("Yes")
+          : setRadioValueFlight("No");
+      }
+      if (flightData.length > 0) {
         const updatedFlight = flightData.map((flight) => {
-          const foundFlight = flightDetails.find((flightData) => flightData.id === flight.flight_id);
+          const foundFlight = flightDetails.find(
+            (flightData) => flightData.id === flight.flight_id
+          );
           if (foundFlight) {
-            return { ...flight, flight_id: foundFlight.id,flight_name:foundFlight.airline_name };
+            return {
+              ...flight,
+              flight_id: foundFlight.id,
+              flight_name: foundFlight.airline_name,
+            };
           }
           return flight;
         });
         setFlightRow(updatedFlight);
-      }else{
-
+      } else {
         setFlightData(...flightRow);
       }
     }
-  },[flightData,flightDetails])
+  }, [flightData, flightDetails]);
 
   useEffect(() => {
-    const mekkaHotels = hotel_data.filter((hotel) => hotel.hotel_type == '1');
-    const madinaHotels = hotel_data.filter((hotel) => hotel.hotel_type == '2');
-    
-    if(mekkaHotels){
+    const mekkaHotels = hotel_data.filter((hotel) => hotel.hotel_type == "1");
+    const madinaHotels = hotel_data.filter((hotel) => hotel.hotel_type == "2");
 
+    if (mekkaHotels) {
       const updatedMekka = mekkaHotels.map((hotel) => {
         return {
           hotel_id: hotel.hotel_id,
           hotel_name: hotel.hotel_name,
           hotel_price: hotel.hotel_price,
           hotel_info: hotel.hotel_info,
-          id: hotel.id
+          id: hotel.id,
         };
       });
-    
+
       setMekkaRows(updatedMekka);
     }
 
-    if(madinaHotels){
+    if (madinaHotels) {
       const updatedMadina = madinaHotels.map((hotel) => {
         return {
           hotel_id: hotel.hotel_id,
           hotel_name: hotel.hotel_name,
           hotel_price: hotel.hotel_price,
           hotel_info: hotel.hotel_info,
-          id: hotel.id
+          id: hotel.id,
         };
       });
       setMadinaRows(updatedMadina);
-  
     }
-
-
-  },[hotel_data]);
+  }, [hotel_data]);
 
   useEffect(() => {
     if (date_begin && date_end) {
       const startDate = new Date(formatDateToMMDDYYYY(date_begin));
       const endDate = new Date(formatDateToMMDDYYYY(date_end));
-      const daysDifference = Math.round((endDate - startDate) / (1000 * 3600 * 24));
-      setDaysCount(daysDifference + 1)
-    
+      const daysDifference = Math.round(
+        (endDate - startDate) / (1000 * 3600 * 24)
+      );
+      setDaysCount(daysDifference + 1);
     }
   }, []);
 
@@ -425,32 +501,33 @@ useEffect(() => {
     const plainText = rawContent.blocks[0].text;
     setTourInfo(plainText);
     setEditorState(newEditorState);
-    };
+  };
 
-    const handleDeleteImage2 = (index,event) => {
-      
-      event.preventDefault();
-      if(image2){
-        const url = new URL(image2);
-        const fileName = url.pathname.split('/').pop();
-  
-        const formData = new FormData();
-        formData.append('image', fileName);
-        formData.append('type', 'tour_image');
-        formData.append('tour_id', id);
-  
-        const response = POST.request({ form: formData, url: 'remove_imageordocument' });
-        if(response){
-          showSuccessToast("Image removed successfully");
-          fetchTour(id);
-         
-        }
-      }else if(uploadImage.length > 0){
-           const newImages = [...image2];
+  const handleDeleteImage2 = (index, event) => {
+    event.preventDefault();
+    if (image2) {
+      const url = new URL(image2);
+      const fileName = url.pathname.split("/").pop();
+
+      const formData = new FormData();
+      formData.append("image", fileName);
+      formData.append("type", "tour_image");
+      formData.append("tour_id", id);
+
+      const response = POST.request({
+        form: formData,
+        url: "remove_imageordocument",
+      });
+      if (response) {
+        showSuccessToast("Image removed successfully");
+        fetchTour(id);
+      }
+    } else if (uploadImage.length > 0) {
+      const newImages = [...image2];
       newImages.splice(index, 1);
       setImage2(newImages);
-      }
-    };
+    }
+  };
   const handleTabClick = (tab, index) => {
     if (index < activeTabIndex) {
       setCanGoBack(true);
@@ -460,7 +537,6 @@ useEffect(() => {
 
     setActiveTab(tab);
     setActiveTabIndex(index);
-    
   };
 
   const handlePrevTab = () => {
@@ -473,52 +549,79 @@ useEffect(() => {
 
   const isCurrentTabValid = () => {
     if (activeTab === "Content") {
-      return (SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value  && image2.length > 0 && departureRows.length > 0 &&
-        departureRows.every((departure) => departure.departure_id && departure.price));
-      } else if (activeTab === "Pricing") {
-      return adult_price && child_price && baby_price ;
+      return (
+        SelectedTour &&
+        name &&
+        capacity &&
+        date_begin &&
+        date_end &&
+        selectRef.current.value &&
+        image2.length > 0 &&
+        departureRows.length > 0 &&
+        departureRows.every(
+          (departure) => departure.departure_id && departure.price
+        )
+      );
+    } else if (activeTab === "Pricing") {
+      return adult_price && child_price && baby_price;
     } else if (activeTab === "Included") {
-      return true
+      return true;
     } else if (activeTab === "Overview") {
       return editorState !== EditorState.createEmpty();
     } else if (activeTab === "Itinerary") {
-      
       return route_data.every((day) => day.dayData && day.description);
     } else if (activeTab === "Flight Hotel And Visa") {
-  
-      return mekkaRows.every((mekka) =>mekka.hotel_id, mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_id,madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage && flightInformation &&  radioValueVisa && radioValueExcludeFlight);
+      return (
+        mekkaRows.every(
+          (mekka) => mekka.hotel_id,
+          mekka.hotel_name,
+          mekka.hotel_price,
+          mekka.hotel_info
+        ) &&
+        madinaRows.every(
+          (madina) => madina.hotel_id,
+          madina.hotel_name,
+          madina.hotel_price,
+          madina.hotel_info
+        ) &&
+        flightRow.every(
+          (flight) =>
+            flight.flight_id &&
+            flight.flight_amount &&
+            flight.no_of_stop &&
+            flight.luggage &&
+            flightInformation &&
+            radioValueVisa &&
+            radioValueExcludeFlight
+        )
+      );
     }
     return false;
   };
-  
 
   const handleNextTab = () => {
     if (isCurrentTabValid()) {
-
-    const nextTabIndex = activeTabIndex + 1;
-    if (nextTabIndex < tabs.length) {
-      setActiveTabIndex(nextTabIndex);
-      setActiveTab(tabs[nextTabIndex]);
-      setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
+      const nextTabIndex = activeTabIndex + 1;
+      if (nextTabIndex < tabs.length) {
+        setActiveTabIndex(nextTabIndex);
+        setActiveTab(tabs[nextTabIndex]);
+        setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
+      }
+    } else {
+      showErrorToast("Please fill in all required fields before proceeding.");
     }
-  } else {
-    showErrorToast("Please fill in all required fields before proceeding.");
-  }
-
-
-  } 
+  };
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
       const newData = [...prevData];
       const existingDay = newData.find((day) => day.day === dayNumber);
-    if (existingDay) {
-      existingDay.dayData = dayData;
-      existingDay.description = description;
-    } else {
-      newData.push({ day: dayNumber, dayData, description });
-    }
-    return newData;
-
+      if (existingDay) {
+        existingDay.dayData = dayData;
+        existingDay.description = description;
+      } else {
+        newData.push({ day: dayNumber, dayData, description });
+      }
+      return newData;
     });
   };
 
@@ -543,12 +646,13 @@ useEffect(() => {
   }, [activeTabIndex]);
   const handleCheckboxChange = (event, id) => {
     const updatedServices = services.map((service) =>
-      service.id === id ? { ...service, checked: event.target.checked, service_id:0 } : service
+      service.id === id
+        ? { ...service, checked: event.target.checked, service_id: 0 }
+        : service
     );
     setServices(updatedServices);
-
   };
-  
+
   const handlePriceChange = (event, id) => {
     const updatedServices = services.map((service) =>
       service.id === id ? { ...service, price: event.target.value } : service
@@ -560,7 +664,7 @@ useEffect(() => {
     const files = event.target.files;
     const promises = [];
     const uploadedImages = [...image2];
-  
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const promise = new Promise((resolve) => {
@@ -573,21 +677,20 @@ useEffect(() => {
       });
       promises.push(promise);
     }
-  
+
     Promise.all(promises).then(() => {
       setImage2(uploadedImages);
     });
   };
 
-  
   const HandleTourChange = (newValue, actionMeta) => {
     setSelectedTour(newValue);
   };
-  
+
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
-  
+
   const options = tourType.map((type) => ({
     value: type,
     label: `${type}`,
@@ -600,19 +703,18 @@ useEffect(() => {
   const handleAddDepartureRow = () => {
     setDepartureRows([
       ...departureRows,
-      { departure_id:"", price: "",id:"" },
+      { departure_id: "", price: "", id: "" },
     ]);
   };
 
   const handleRemoveDepartureRow = (index) => {
     if (departureRows.length === 1) {
-      return; 
+      return;
     }
     const newRows = [...departureRows];
     newRows.splice(index, 1);
     setDepartureRows(newRows);
   };
-  
 
   const Madina = madinaHotel.map((hotel) => ({
     value: hotel.id,
@@ -624,18 +726,22 @@ useEffect(() => {
     label: `${flight.airline_name}`,
   }));
 
-
-
   const handleAddMekkaRow = () => {
     setMekkaRows([
       ...mekkaRows,
-      { hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"",id:"" },
+      {
+        hotel_id: "",
+        hotel_name: null,
+        hotel_price: "",
+        hotel_info: "",
+        id: "",
+      },
     ]);
   };
 
   const handleRemoveMekkaRow = (index) => {
     if (mekkaRows.length === 1) {
-      return; 
+      return;
     }
     const newRows = [...mekkaRows];
     newRows.splice(index, 1);
@@ -645,13 +751,19 @@ useEffect(() => {
   const handleAddMadinaRow = () => {
     setMadinaRows([
       ...madinaRows,
-      { hotel_id:"",hotel_name: null, hotel_price: "",hotel_info:"",id:"" },
+      {
+        hotel_id: "",
+        hotel_name: null,
+        hotel_price: "",
+        hotel_info: "",
+        id: "",
+      },
     ]);
   };
 
   const handleRemoveMadinaRow = (index) => {
     if (madinaRows.length === 1) {
-      return; 
+      return;
     }
     const newRows = [...madinaRows];
     newRows.splice(index, 1);
@@ -659,22 +771,24 @@ useEffect(() => {
   };
   const handleMekkaChange = (value, index) => {
     if (!value) return;
-    const selectedOption = mekkaHotel.find((option) => option.id === value.value);
-      const mekkaData = {
-        ...mekkaRows[index],
-        hotel_id: selectedOption.id,
-        hotel_name: selectedOption.hotel_name,
-       
-      };
-      const newRows = [...mekkaRows];
-      newRows[index] = mekkaData;
-      setMekkaRows(newRows);
-    
+    const selectedOption = mekkaHotel.find(
+      (option) => option.id === value.value
+    );
+    const mekkaData = {
+      ...mekkaRows[index],
+      hotel_id: selectedOption.id,
+      hotel_name: selectedOption.hotel_name,
+    };
+    const newRows = [...mekkaRows];
+    newRows[index] = mekkaData;
+    setMekkaRows(newRows);
   };
 
   const handleDepartureChange = (value, index) => {
-    if (!value) return; 
-    const selectedOption = departures.find((option) => option.id === value.value);
+    if (!value) return;
+    const selectedOption = departures.find(
+      (option) => option.id === value.value
+    );
     if (departureRows[index].departure_id !== selectedOption?.id) {
       const departureData = {
         ...departureRows[index],
@@ -687,10 +801,11 @@ useEffect(() => {
     }
   };
 
-
   const handleMadinaChange = (value, index) => {
-    if (!value) return; 
-    const selectedOption = madinaHotel.find((option) => option.id === value.value);
+    if (!value) return;
+    const selectedOption = madinaHotel.find(
+      (option) => option.id === value.value
+    );
 
     const madinaData = {
       ...madinaRows[index],
@@ -700,14 +815,13 @@ useEffect(() => {
     const newRows = [...madinaRows];
     newRows[index] = madinaData;
     setMadinaRows(newRows);
-    
-    
   };
 
-  
   const handleFlightSelectChange = (value, index) => {
-    if (!value) return; 
-    const selectedOption = flightDetails.find((option) => option.id === value.value);
+    if (!value) return;
+    const selectedOption = flightDetails.find(
+      (option) => option.id === value.value
+    );
 
     const flight_data = {
       ...flightRow[index],
@@ -718,7 +832,6 @@ useEffect(() => {
     const newRows = [...flightRow];
     newRows[index] = flight_data;
     setFlightRow(newRows);
-
   };
 
   const selectRef = useRef(null);
@@ -733,10 +846,7 @@ useEffect(() => {
         };
       });
     }
-
-
   }, []);
-
 
   const handleFlightChange = (e, index, field) => {
     const { value } = e.target;
@@ -746,13 +856,21 @@ useEffect(() => {
   };
 
   const HandleAddFlightRow = () => {
-    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " ",luggage:"",id:"" },
+    setFlightRow([
+      ...flightRow,
+      {
+        flight_id: " ",
+        flight_amount: " ",
+        no_of_stop: " ",
+        luggage: "",
+        id: "",
+      },
     ]);
   };
 
   const HandleRemoveFlightRow = (index) => {
     if (flightRow.length === 1) {
-      return; 
+      return;
     }
     const newRows = [...flightRow];
     newRows.splice(index, 1);
@@ -761,96 +879,109 @@ useEffect(() => {
 
   const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
-    if (e.target.type === 'date') {
-        const formattedDate = formatDateToDDMMYYYY(value);
-        setter(formattedDate);
+    if (e.target.type === "date") {
+      const formattedDate = formatDateToDDMMYYYY(value);
+      setter(formattedDate);
     } else {
-        setter(value);
+      setter(value);
     }
-
   };
 
-
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     setLoading(true);
-  
+
     const end_date = formatDateToMMDDYYYY(date_end);
     const start_date = formatDateToMMDDYYYY(date_begin);
 
     const languageValues = $(selectRef.current).val();
 
-    const languageString = languageValues.join(',');
+    const languageString = languageValues.join(",");
 
-    const mekkaData =mekkaRows.map((mekka)=>({
-      hotel_type:1,
-      hotel_name: mekka.hotel_name ? mekka.hotel_name : '', 
-      hotel_id: mekka.hotel_id ? mekka.hotel_id : '', 
-      hotel_price:mekka.hotel_price,
-      hotel_info:mekka.hotel_info,
-      id:mekka.id?mekka.id:0
-    }))
+    const mekkaData = mekkaRows.map((mekka) => ({
+      hotel_type: 1,
+      hotel_name: mekka.hotel_name ? mekka.hotel_name : "",
+      hotel_id: mekka.hotel_id ? mekka.hotel_id : "",
+      hotel_price: mekka.hotel_price,
+      hotel_info: mekka.hotel_info,
+      id: mekka.id ? mekka.id : 0,
+    }));
 
-    const madinaData =madinaRows.map((madina)=>({
-      hotel_type:2,
-      hotel_name: madina.hotel_name ? madina.hotel_name : '', 
-      hotel_id: madina.hotel_id ? madina.hotel_id : '',
-      hotel_price:madina.hotel_price,
-      hotel_info:madina.hotel_info,
-      id:madina.id?madina.id:0
-    }))
+    const madinaData = madinaRows.map((madina) => ({
+      hotel_type: 2,
+      hotel_name: madina.hotel_name ? madina.hotel_name : "",
+      hotel_id: madina.hotel_id ? madina.hotel_id : "",
+      hotel_price: madina.hotel_price,
+      hotel_info: madina.hotel_info,
+      id: madina.id ? madina.id : 0,
+    }));
 
-    
-    const flight_data =flightRow.map((flight)=>({ 
-      flight_id: flight.flight_id ? flight.flight_id : '',
+    const flight_data = flightRow.map((flight) => ({
+      flight_id: flight.flight_id ? flight.flight_id : "",
       flight_amount: flight.flight_amount,
       no_of_stop: flight.no_of_stop,
       luggage: flight.luggage,
-      id: flight.id?flight.id:0
-    }))
+      id: flight.id ? flight.id : 0,
+    }));
 
-    if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) &&
-    !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) &&
-    (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false) && !flightInformation  ) {
+    if (
+      !mekkaData.some(
+        (mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info
+      ) &&
+      !madinaData.some(
+        (madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info
+      ) &&
+      (radioValueFlight === "Yes"
+        ? !flightData.some(
+            (flight) =>
+              flight.flight_id &&
+              flight.flight_amount &&
+              flight.no_of_stop &&
+              flight.luggage
+          )
+        : false) &&
+      !flightInformation
+    ) {
       setLoading(false);
       showErrorToast("Please fill in all required fields before proceeding.");
       return;
     }
-
 
     const hotel_data = [...mekkaData, ...madinaData];
 
     const checkedServices = services.filter((service) => service.checked);
     const servicesData = checkedServices.reduce((acc, service) => {
       if (service.price !== "") {
-        acc.push({ title: service.title, price: service.price, service_id: service.service_id });
+        acc.push({
+          title: service.title,
+          price: service.price,
+          service_id: service.service_id,
+        });
       }
       return acc;
     }, []);
 
-
     const checkedIncluded = included.filter((item) => item.checked);
     const includedData = checkedIncluded.map((item) => item.id).join(",");
-  
-    const newRouteData = route_data.map((day, index) => (
-      {
-        day:day.dayData,
-        description:day.description
-      }
-    ));
+
+    const newRouteData = route_data.map((day, index) => ({
+      day: day.dayData,
+      description: day.description,
+    }));
 
     const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
     const image2File = document.querySelector('input[name="image2"]').files;
-    const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
+    const image2FileArray = Object.entries(image2File).map(
+      ([key, value]) => value
+    );
 
-
-    const departureData =departureRows.map((departure)=>({
-      departure_id: departure.departure_id ? departure.departure_id : '',
-      price: departure.price ? departure.price : '',
-      id: departure.id ? departure.id : ''
-    }))
+    const departureData = departureRows.map((departure) => ({
+      departure_id: departure.departure_id ? departure.departure_id : "",
+      price: departure.price ? departure.price : "",
+      id: departure.id ? departure.id : "",
+    }));
 
     const formData = new FormData();
 
@@ -869,28 +1000,38 @@ useEffect(() => {
     formData.append("flight_info", flightInformation);
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
-    formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flight_data):"");
+    formData.append(
+      "flight_data",
+      radioValueFlight === "Yes" ? JSON.stringify(flight_data) : ""
+    );
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
+    formData.append(
+      "flight_exclude",
+      radioValueExcludeFlight === "Yes" ? 1 : 0
+    );
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_id", id);
-    
-    if(image2FileArray.length === 0){
+
+    if (image2FileArray.length === 0) {
       formData.append("tour_image", "");
-    }else{
+    } else {
       image2FileArray.forEach((file, index) => {
-          formData.append(`tour_image[${index}]`, file);
-        });
-      }
+        formData.append(`tour_image[${index}]`, file);
+      });
+    }
     formData.append("departures ", JSON.stringify(departureData));
 
     const url = "updatetour";
 
-    try{
-      const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: url,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       setLoading(false);
-      if(response){
+      if (response) {
         toast.success("Tour Updated Successfully");
         // setActiveTab("Content");
         // setActiveTabIndex(0);
@@ -898,24 +1039,23 @@ useEffect(() => {
         setTimeout(() => {
           router.push("/vendor/listing");
         }, 1000);
-        
       }
-    }catch(error){
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
   const formatDateToDDMMYYYY = (date) => {
-    const [year, month, day] = date.split('-');
+    const [year, month, day] = date.split("-");
     return `${day}-${month}-${year}`;
-};
+  };
 
-const formatDateToMMDDYYYY = (date) => {
-    const [day, month, year] = date.split('-');
+  const formatDateToMMDDYYYY = (date) => {
+    const [day, month, year] = date.split("-");
     return `${year}-${month}-${day}`;
-};
+  };
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <div
         className={`dashboard overflow-hidden ${
           sideBarOpen ? "-is-sidebar-visible" : ""
@@ -927,424 +1067,511 @@ const formatDateToMMDDYYYY = (date) => {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content ">
-            <h1 className="text-30">
-               {translate("Edit Tour") }
-            </h1>
-          
-              <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
-                <div className="tabs -underline-2 js-tabs">
-                  <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
-                    {tabs.map((elm, i) => (
-                      <div
-                        key={elm}
-                        className="col-auto"
+            <h1 className="text-30">{translate("Edit Tour")}</h1>
+
+            <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
+              <div className="tabs -underline-2 js-tabs">
+                <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
+                  {tabs.map((elm, i) => (
+                    <div key={elm} className="col-auto">
+                      <button
+                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
+                          activeTab == elm ? "is-tab-el-active" : ""
+                        }`}
+                        onClick={() => isNextClicked && handleTabClick(elm, i)}
+                        disabled={
+                          i > activeTabIndex && !enabledTabs.includes(i)
+                        }
                       >
-                        <button
-                          className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
-                            activeTab == elm ? "is-tab-el-active" : ""
+                        {i + 1}. {translate(elm)}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                <form noValidate onSubmit={handleSubmit}>
+                  <div className="row pt-40">
+                    <div className="col-xl-12 col-lg-12">
+                      <div className="tabs__content js-tabs-content">
+                        <div
+                          className={`tabs__pane  ${
+                            activeTab == "Content" ? "is-tab-el-active" : ""
                           }`}
-
-                          onClick={() => isNextClicked && handleTabClick(elm, i)}
-                          disabled={i > activeTabIndex && !enabledTabs.includes(i)}
-
                         >
-                          {i + 1}. {translate(elm)}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-
-                  <form
-                      noValidate
-                      onSubmit={handleSubmit}
-                  >
-                    <div className="row pt-40">
-                      <div className="col-xl-12 col-lg-12">
-                        <div className="tabs__content js-tabs-content">
-                          <div
-                            className={`tabs__pane  ${
-                              activeTab == "Content" ? "is-tab-el-active" : ""
-                            }`}
-                          >
-                            <div className="form_2">
-                              <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
-                                <div className="row ">
-                                  <div className="col-md-6">
-                                    <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
-                                      <CreatableSelect
-                                        value={SelectedTour}
-                                        onChange={HandleTourChange}
-                                        options={options}
-                                        className="custom-select"
-                                        placeholder={`${translate("Select Tour Type (Required)")}`}
-                                        classNamePrefix="react-select"
-                                        isClearable
-                                        formatCreateLabel={(inputValue) =>
-                                          `Create custom gender: "${inputValue}"`
+                          <div className="form_2">
+                            <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
+                              <div className="row ">
+                                <div className="col-md-6">
+                                  <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
+                                    <CreatableSelect
+                                      value={SelectedTour}
+                                      onChange={HandleTourChange}
+                                      options={options}
+                                      className="custom-select"
+                                      placeholder={`${translate(
+                                        "Select Tour Type (Required)"
+                                      )}`}
+                                      classNamePrefix="react-select"
+                                      isClearable
+                                      formatCreateLabel={(inputValue) =>
+                                        `Create custom gender: "${inputValue}"`
+                                      }
+                                    />
+                                    {gender && gender.__isNew__ && (
+                                      <input
+                                        type="text"
+                                        value={tourDetails.type || SelectedTour}
+                                        onChange={(e) =>
+                                          setSelectedTour(e.target.value)
                                         }
+                                        placeholder="Enter custom gender"
+                                        className="form-control mt-2 custom-input"
                                       />
-                                      {gender && gender.__isNew__ && (
-                                        <input
-                                          type="text"
-                                          value={tourDetails.type || SelectedTour}
-                                          onChange={(e) =>
-                                            setSelectedTour(e.target.value)
+                                    )}
+                                  </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                  <div className="form-input my-1">
+                                    <input
+                                      type="text"
+                                      required
+                                      value={name}
+                                      onChange={handleInputChange(setName)}
+                                    />
+                                    <label className="lh-1 text-16 text-light-1">
+                                      {translate("Tour Name") ||
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                  <div className="form-input my-1">
+                                    <input
+                                      type="number"
+                                      ref={numberInputRef1}
+                                      min={1}
+                                      required
+                                      value={capacity}
+                                      onChange={handleInputChange(setCapacity)}
+                                    />
+                                    <label className="lh-1 text-16 text-light-1">
+                                      {translate("Seat Availibility") ||
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                  <div className="form-input my-1">
+                                    <input
+                                      type="date"
+                                      required
+                                      value={date_begin || ""}
+                                      pattern="\d{2}-\d{2}-\d{4}"
+                                      min={minEndDate}
+                                      onBlur={handleStartDateBlur}
+                                      onChange={handleStartDateChange}
+                                    />
+                                    <label className="lh-1 text-16 text-light-1">
+                                      {translate("Start Date of Tour") ||
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                  <div className="form-input my-1">
+                                    <input
+                                      type="date"
+                                      required
+                                      value={date_end || ""}
+                                      min={minEndDate}
+                                      pattern="\d{2}-\d{2}-\d{4}"
+                                      onBlur={handleEndDateBlur}
+                                      onChange={handleEndDateChange}
+                                    />
+                                    <label className="lh-1 text-16 text-light-1">
+                                      {translate("End Date of Tour") ||
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                  <div className="form-input my-1 position-relative">
+                                    <select
+                                      ref={selectRef}
+                                      className="js-example-basic-multiple"
+                                      name="states[]"
+                                      multiple={true}
+                                      placeholder="Langauge"
+                                    >
+                                      {languagesData.map((language) => (
+                                        <option
+                                          key={language.id}
+                                          value={language.id}
+                                          selected={
+                                            tourDetails.tour_languages &&
+                                            tourDetails.tour_languages.includes(
+                                              language.id
+                                            )
                                           }
-                                          placeholder="Enter custom gender"
-                                          className="form-control mt-2 custom-input"
-                                        />
-                                      )}
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-input my-1">
-                                      <input type="text" required value={ name} onChange={handleInputChange(setName)}/>
-                                      <label className="lh-1 text-16 text-light-1">
-                                        {translate("Tour Name")  ||
-                                          "Find Latest Packages"} <span className="text-red">*</span>
-                                      </label>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-input my-1">
-                                      <input type="number" min={1} required value={capacity} onChange={handleInputChange(setCapacity)}/>
-                                      <label className="lh-1 text-16 text-light-1">
-                                        {translate("Seat Availibility") ||
-                                          "Find Latest Packages"} <span className="text-red">*</span>
-                                      </label>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-input my-1">
-                                      <input type="date" required value={date_begin ||  ''}  pattern="\d{2}-\d{2}-\d{4}" min={minEndDate} onBlur={handleStartDateBlur} onChange={handleStartDateChange}/>
-                                      <label className="lh-1 text-16 text-light-1">
-                                        {translate("Start Date of Tour") ||
-                                          "Find Latest Packages"} <span className="text-red">*</span>
-                                      </label>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-input my-1">
-                                      <input type="date" required value={date_end || ''} min={minEndDate}  pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} onChange={handleEndDateChange}  />
-                                      <label className="lh-1 text-16 text-light-1">
-                                        {translate("End Date of Tour") ||
-                                          "Find Latest Packages"} <span className="text-red">*</span>
-                                      </label>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-input my-1 position-relative">
-                                      <select
-                                        ref={selectRef}
-                                        className="js-example-basic-multiple"
-                                        name="states[]"
-                                        multiple={true}
-                                        placeholder="Langauge"
-                                      >
-                                        {languagesData.map((language) => (
-                                          <option key={language.id} value={language.id} selected={tourDetails.tour_languages && tourDetails.tour_languages.includes(language.id)}>
-                                            {translate(language.languages_en) ||
+                                        >
+                                          {translate(language.languages_en) ||
                                             "Find Latest Packages"}
-                                          </option>
-                                        ))}
-                                      
-                                      </select>
-                                      <label className="multi-lan-select">
-                                        {translate("Langauge") ||
-                                          "Find Latest Packages"} <span className="text-red">*</span>
-                                      </label>
-                                    </div>
+                                        </option>
+                                      ))}
+                                    </select>
+                                    <label className="multi-lan-select">
+                                      {translate("Langauge") ||
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
+                                    </label>
                                   </div>
-                                  <div className="col-md-12">
-                                  <h6>
-                                  {" "}
-                                  {translate("Departure") }
-                                </h6>
-                                <ul className="">
-                                  
-                                  {departureRows.map((row, index) => (
-                                    <li key={index}>
-                                      <div className=" row">
-                                        <div className="col-lg-8">
-                                          <div className="row">
-                                            <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
-                                              <CreatableSelect
-                                                value={{ value: departureRows[index].departure_id, label: departureRows[index].departure }}
-                                                onChange={(value) =>
-                                                  handleDepartureChange(value, index)
-                                                }
-                                                options={departureOption}
-                                                className="custom-select Hotel-Madina-dd"
-                                                placeholder={`${translate("Select Departure (Required)")}`}
-                                                classNamePrefix="react-select"
-                                                isClearable
-                                                formatCreateLabel={(inputValue) =>
-                                                  `Not Found: "${inputValue}"`
-                                                }
-                                              />
-                                            </div>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6> {translate("Departure")}</h6>
+                                  <ul className="">
+                                    {departureRows.map((row, index) => (
+                                      <li key={index}>
+                                        <div className=" row">
+                                          <div className="col-lg-8">
+                                            <div className="row">
+                                              <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
+                                                <CreatableSelect
+                                                  value={{
+                                                    value:
+                                                      departureRows[index]
+                                                        .departure_id,
+                                                    label:
+                                                      departureRows[index]
+                                                        .departure,
+                                                  }}
+                                                  onChange={(value) =>
+                                                    handleDepartureChange(
+                                                      value,
+                                                      index
+                                                    )
+                                                  }
+                                                  options={departureOption}
+                                                  className="custom-select Hotel-Madina-dd"
+                                                  placeholder={`${translate(
+                                                    "Select Departure (Required)"
+                                                  )}`}
+                                                  classNamePrefix="react-select"
+                                                  isClearable
+                                                  formatCreateLabel={(
+                                                    inputValue
+                                                  ) =>
+                                                    `Not Found: "${inputValue}"`
+                                                  }
+                                                />
+                                              </div>
 
-                                            <div className="col-md-6">
-                                              <div className="form-input spacing">
-                                                <input type="number" required
-                                                  value={departureRows[index].price}
-                                                  onChange={(e) => setDepartureRows(prevRows => {
-                                                    const newRows = [...prevRows];
-                                                    newRows[index].price = e.target.value;
-                                                    return newRows;
-                                                  })} />
-                                                <label className="lh-1 text-16 text-light-1">
-                                                  {" "}
-                                                  {translate("Price") ||
-                                                    "Find Latest Packages"} <span className="text-red">*</span>
-                                                </label>
+                                              <div className="col-md-6">
+                                                <div className="form-input spacing">
+                                                  <input
+                                                    type="number"
+                                                    ref={numberInputRef2}
+                                                    required
+                                                    value={
+                                                      departureRows[index].price
+                                                    }
+                                                    onChange={(e) =>
+                                                      setDepartureRows(
+                                                        (prevRows) => {
+                                                          const newRows = [
+                                                            ...prevRows,
+                                                          ];
+                                                          newRows[index].price =
+                                                            e.target.value;
+                                                          return newRows;
+                                                        }
+                                                      )
+                                                    }
+                                                  />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {" "}
+                                                    {translate("Price") ||
+                                                      "Find Latest Packages"}{" "}
+                                                    <span className="text-red">
+                                                      *
+                                                    </span>
+                                                  </label>
+                                                </div>
                                               </div>
                                             </div>
-
-                                            
-                                        
                                           </div>
-                                        </div>
 
-                                        <div className="col-2 d-flex">
-                                          <button
-                                            type="button"
-                                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                            onClick={handleAddDepartureRow}
-                                            style={{height:"fit-content"}}
-
-                                          >
-                                            +
-                                          </button>
-                                          {index > 0 && (
+                                          <div className="col-2 d-flex">
                                             <button
                                               type="button"
-                                              className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                              style={{height:"fit-content"}}
-
-                                              onClick={() =>
-                                                handleRemoveDepartureRow(index)
-                                              }
+                                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                              onClick={handleAddDepartureRow}
+                                              style={{ height: "fit-content" }}
                                             >
-                                              -
+                                              +
                                             </button>
-                                          )}
+                                            {index > 0 && (
+                                              <button
+                                                type="button"
+                                                className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                                style={{
+                                                  height: "fit-content",
+                                                }}
+                                                onClick={() =>
+                                                  handleRemoveDepartureRow(
+                                                    index
+                                                  )
+                                                }
+                                              >
+                                                -
+                                              </button>
+                                            )}
+                                          </div>
+
+                                          <hr />
                                         </div>
-
-
-                                        <hr />
-                                      </div>
-                                    </li>
-                                  ))}
-                                </ul>
-                                  </div>
-                                </div>
-
-                                <div className="col-12">
-                                  <h4 className="text-18 fw-500 mb-20">
-                                    {" "}
-                                    {translate("Gallery") } <span className="text-red">*</span>
-                                  </h4>
-
-                                  <div className="row x-gap-20 y-gap-20">
-                                    {image2.map((image, index) => (
-                                      <div className="col-auto my-2" key={index}>
-                                        <div className="relative">
-                                          <Image
-                                            width={200}
-                                            height={200}
-                                            src={image} alt={`image-${index}`} className="size-200 rounded-12 object-cover"
-                                          />
-                                          <button
-                                            onClick={(e) => handleDeleteImage2(index,e)}
-                                            className="absoluteIcon1 button -dark-1"
-                                          >
-                                            <i className="icon-delete text-18"></i>
-                                          </button>
-
-
-                                        </div>
-                                      </div>
+                                      </li>
                                     ))}
+                                  </ul>
+                                </div>
+                              </div>
 
-                                    <div className="col-auto my-2">
-                                      <label
-                                        htmlFor="imageInp2"
-                                        className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
-                                      >
+                              <div className="col-12">
+                                <h4 className="text-18 fw-500 mb-20">
+                                  {" "}
+                                  {translate("Gallery")}{" "}
+                                  <span className="text-red">*</span>
+                                </h4>
+
+                                <div className="row x-gap-20 y-gap-20">
+                                  {image2.map((image, index) => (
+                                    <div className="col-auto my-2" key={index}>
+                                      <div className="relative">
                                         <Image
-                                          width="40"
-                                          height="40"
-                                          alt="image"
-                                          name="image2"
-                                          src={"/img/dashboard/upload.svg"}
+                                          width={200}
+                                          height={200}
+                                          src={image}
+                                          alt={`image-${index}`}
+                                          className="size-200 rounded-12 object-cover"
                                         />
-
-                                        <div className="text-16 fw-500 text-accent-1 mt-10">
-                                          {translate("Upload Images") }
-                                        </div>
-                                      </label>
-                                      <input
-                                        onChange={handleImageChange2}
-                                        accept="image/*"
-                                        id="imageInp2"
-                                        type="file"
-                                        name="image2"
-                                        multiple
-                                        style={{ display: "none" }}
-                                      />
+                                        <button
+                                          onClick={(e) =>
+                                            handleDeleteImage2(index, e)
+                                          }
+                                          className="absoluteIcon1 button -dark-1"
+                                        >
+                                          <i className="icon-delete text-18"></i>
+                                        </button>
+                                      </div>
                                     </div>
-                                  </div>
+                                  ))}
 
-                                  <div className="text-14 mt-20">
-                                    {translate("PNG or JPG no Bigger Than 800px Wide And Tall.")}
+                                  <div className="col-auto my-2">
+                                    <label
+                                      htmlFor="imageInp2"
+                                      className="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column"
+                                    >
+                                      <Image
+                                        width="40"
+                                        height="40"
+                                        alt="image"
+                                        name="image2"
+                                        src={"/img/dashboard/upload.svg"}
+                                      />
+
+                                      <div className="text-16 fw-500 text-accent-1 mt-10">
+                                        {translate("Upload Images")}
+                                      </div>
+                                    </label>
+                                    <input
+                                      onChange={handleImageChange2}
+                                      accept="image/*"
+                                      id="imageInp2"
+                                      type="file"
+                                      name="image2"
+                                      multiple
+                                      style={{ display: "none" }}
+                                    />
                                   </div>
                                 </div>
 
-                              
+                                <div className="text-14 mt-20">
+                                  {translate(
+                                    "PNG or JPG no Bigger Than 800px Wide And Tall."
+                                  )}
+                                </div>
                               </div>
                             </div>
-                            {activeTabIndex < tabs.length - 1 && (
-                              <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
-                                onClick={handleNextTab }
-                                type="button"
-                              >
-                                {translate("Next")}
-                              </button>
-                            )}
-                          
                           </div>
+                          {activeTabIndex < tabs.length - 1 && (
+                            <button
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                              onClick={handleNextTab}
+                              type="button"
+                            >
+                              {translate("Next")}
+                            </button>
+                          )}
+                        </div>
 
-                          <div
-                            className={`tabs__pane  ${
-                              activeTab === "Pricing" ? "is-tab-el-active" : ""
-                            }`}
-                          >
-                            <div className="y-gap-30 contactForm px-lg-20 px-0 ">
-                              <div className="contactForm row y-gap-30 items-center ">
-                                <div className="col-lg-4">
-                                  <div className="form-input my-1">
-                                    <input type="number" required value={adult_price} onChange={handleInputChange(setAdultPrice)}/>
-                                    <label className="lh-1 text-16 text-light-1">
-                                      {translate("Price (€) Per Adult") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="col-lg-4">
-                                  <div className="form-input my-1">
-                                    <input type="number" required value={child_price} onChange={handleInputChange(setChildPrice)} />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      {translate("Price (€) Per Child") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="col-lg-4">
-                                  <div className="form-input my-1">
-                                    <input type="number" required value={baby_price} onChange={handleInputChange(setBabyPrice)}/>
-                                    <label className="lh-1 text-16 text-light-1">
-                                      {translate("Price (€) Per Baby") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
-                                    </label>
-                                  </div>
+                        <div
+                          className={`tabs__pane  ${
+                            activeTab === "Pricing" ? "is-tab-el-active" : ""
+                          }`}
+                        >
+                          <div className="y-gap-30 contactForm px-lg-20 px-0 ">
+                            <div className="contactForm row y-gap-30 items-center ">
+                              <div className="col-lg-4">
+                                <div className="form-input my-1">
+                                  <input
+                                    type="number"
+                                    ref={numberInputRef3}
+                                    required
+                                    value={adult_price}
+                                    onChange={handleInputChange(setAdultPrice)}
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    {translate("Price (€) Per Adult") ||
+                                      "Find Latest Packages"}{" "}
+                                    <span className="text-red">*</span>
+                                  </label>
                                 </div>
                               </div>
-                              <div className="mt-30">
-                                <h3 className="text-18 fw-500 mb-20">
-                                  {translate("Additional Services") ||
-                                    "Find Latest Packages"}
-                                </h3>
-
-                                <div className="row">
-                                  <div className="col-lg-4">
-                                    <p>
-                                      {" "}
-                                      {translate("Additional Services") ||
-                                        "Find Latest Packages"}
-                                    </p>
-                                  </div>
-                                  <div className="col-lg-6">
-                                    <p>
-                                      {" "}
-                                      {translate("Price (€) Per Person") ||
-                                        "Find Latest Packages"}
-                                    </p>
-                                  </div>
+                              <div className="col-lg-4">
+                                <div className="form-input my-1">
+                                  <input
+                                    type="number"
+                                    ref={numberInputRef4}
+                                    required
+                                    value={child_price}
+                                    onChange={handleInputChange(setChildPrice)}
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    {translate("Price (€) Per Child") ||
+                                      "Find Latest Packages"}{" "}
+                                    <span className="text-red">*</span>
+                                  </label>
                                 </div>
+                              </div>
+                              <div className="col-lg-4">
+                                <div className="form-input my-1">
+                                  <input
+                                    type="number"
+                                    ref={numberInputRef5}
+                                    required
+                                    value={baby_price}
+                                    onChange={handleInputChange(setBabyPrice)}
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    {translate("Price (€) Per Baby") ||
+                                      "Find Latest Packages"}{" "}
+                                    <span className="text-red">*</span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="mt-30">
+                              <h3 className="text-18 fw-500 mb-20">
+                                {translate("Additional Services") ||
+                                  "Find Latest Packages"}
+                              </h3>
 
-                                {services.map((service, index) => (
-                                  <div
-                                    key={service.id}
-                                    className="contactForm row y-gap-30 items-center pt-lg-0 pt-10"
-                                  >
-                                    <div className="col-lg-4">
-                                      <div className="d-flex items-center pointer-check">
-                                        <div className="form-checkbox">
-                                          <input
-                                            type="checkbox"
-                                            id={`service-${service.id}`}
-                                            checked={service.checked}
-                                            onChange={(event) => handleCheckboxChange(event, service.id)}
-                                            />
-                                          <label
-                                            htmlFor={`service-${service.id}`}
-                                            className="form-checkbox__mark"
-                                          >
-                                            <div className="form-checkbox__icon">
-                                              <svg
-                                                width="10"
-                                                height="8"
-                                                viewBox="0 0 10 8"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <path
-                                                  d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                                  fill="white"
-                                                />
-                                              </svg>
-                                            </div>
-                                          </label>
-                                        </div>
+                              <div className="row">
+                                <div className="col-lg-4">
+                                  <p>
+                                    {" "}
+                                    {translate("Additional Services") ||
+                                      "Find Latest Packages"}
+                                  </p>
+                                </div>
+                                <div className="col-lg-6">
+                                  <p>
+                                    {" "}
+                                    {translate("Price (€) Per Person") ||
+                                      "Find Latest Packages"}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {services.map((service, index) => (
+                                <div
+                                  key={service.id}
+                                  className="contactForm row y-gap-30 items-center pt-lg-0 pt-10"
+                                >
+                                  <div className="col-lg-4">
+                                    <div className="d-flex items-center pointer-check">
+                                      <div className="form-checkbox">
+                                        <input
+                                          type="checkbox"
+                                          id={`service-${service.id}`}
+                                          checked={service.checked}
+                                          onChange={(event) =>
+                                            handleCheckboxChange(
+                                              event,
+                                              service.id
+                                            )
+                                          }
+                                        />
                                         <label
-                                            htmlFor={`service-${service.id}`}
-                                            className="lh-16 ml-15 my-2"
+                                          htmlFor={`service-${service.id}`}
+                                          className="form-checkbox__mark"
                                         >
-                                          {index + 1} {translate("Bed-Room")}
+                                          <div className="form-checkbox__icon">
+                                            <svg
+                                              width="10"
+                                              height="8"
+                                              viewBox="0 0 10 8"
+                                              fill="none"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <path
+                                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                                fill="white"
+                                              />
+                                            </svg>
+                                          </div>
+                                        </label>
+                                      </div>
+                                      <label
+                                        htmlFor={`service-${service.id}`}
+                                        className="lh-16 ml-15 my-2"
+                                      >
+                                        {index + 1} {translate("Bed-Room")}
+                                      </label>
+                                    </div>
+                                  </div>
+                                  {service.checked && (
+                                    <div className="col-lg-6">
+                                      <div className="form-input my-1">
+                                        <input
+                                          type="number"
+                                          ref={numberInputRef6}
+                                          id={`service-${service.id}`}
+                                          value={service.price}
+                                          onChange={(event) =>
+                                            handlePriceChange(event, service.id)
+                                          }
+                                          required
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          {translate("Price")}
                                         </label>
                                       </div>
                                     </div>
-                                    {service.checked && (
-                                      <div className="col-lg-6">
-                                        <div className="form-input my-1">
-                                          <input
-                                            type="number"
-                                            id={`service-${service.id}`}
-                                            value={service.price}
-                                            onChange={(event) => handlePriceChange(event, service.id)}
-                                            required
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">
-                                            {translate("Price")}
-                                          </label>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                ))}
-
-                              
-                              </div>
+                                  )}
+                                </div>
+                              ))}
                             </div>
-                            <div className=" flex_start">
-
+                          </div>
+                          <div className=" flex_start">
                             {activeTabIndex < tabs.length - 1 && (
                               <button
                                 className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
@@ -1363,592 +1590,712 @@ const formatDateToMMDDYYYY = (date) => {
                                 {translate("Previous")}
                               </button>
                             )}
-                            </div>
-
                           </div>
+                        </div>
 
-                          <div
-                            className={`tabs__pane ${
-                              activeTab == "Included" ? "is-tab-el-active" : ""
-                            }`}
-                          >
-                            <div className="row  y-gap-30 contactForm px-lg-20 px-0">
-                                      {included.map((item, index) => (
-                                        <div className="col-md-4" key={index}>
-                                          <div className="row y-gap-20">
-                                            <div className="col-12 px-0 my-1">
-
-                                              <div className="d-flex items-center pointer-check">
-                                                <div className="form-checkbox" >
-                                                
-                                                  <input
-                                                    type="checkbox"
-                                                    id={`item-${item.id}`}
-                                                    name={`item-${item.id}`}
-                                                    checked={item.checked}
-                                                  onChange={(e) => {
-                                                    const updatedIncluded = included.map((includedItem) =>
-                                                      includedItem.id === item.id
-                                                        ? { ...includedItem, checked: e.target.checked }
-                                                        : includedItem
-                                                    );
-                                                    setIncluded(updatedIncluded);
-                                                  }}
-
-                                                  />
-                                                  <label
-                                                    htmlFor={`item-${item.id}`}
-                                                    className="form-checkbox__mark"
-                                                  >
-                                                    <div className="form-checkbox__icon">
-                                                      <svg
-                                                        width="10"
-                                                        height="8"
-                                                        viewBox="0 0 10 8"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                      >
-                                                        <path
-                                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                                          fill="white"
-                                                        />
-                                                      </svg>
-                                                    </div>
-                                                  </label>
-                                                </div>
-                                                <label
-                                                  htmlFor={`item-${item.id}`}
-                                                  className="lh-16 ml-15"
-                                                >
-                                                  {translate(item.option) || "Find Latest Packages" }
-                                                </label>
-                                              </div>
-                                            </div>
-
-                                        
-                                          </div>
-                                        </div>
-                                      ))}
-
-                            
-                            </div>
-                            <div className=" flex_start">
-
-                                {activeTabIndex < tabs.length - 1 && (
-                                  <button
-                                    className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                                    onClick={handleNextTab}
-                                    type="button"
-                                  >
-                                    {translate("Next")}
-                                  </button>
-                                )}
-                                {activeTabIndex > 0 && (
-                                  <button
-                                    className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
-                                    onClick={handlePrevTab}
-                                    type="button"
-                                  >
-                                    {translate("Previous")}
-                                  </button>
-                                )}
-                              </div>
-                        
-                          </div>
-
-                          <div
-                            className={`tabs__pane  ${
-                              activeTab == "Overview" ? "is-tab-el-active" : ""
-                            }`}
-                          >
-                            <div className="y-gap-30 contactForm px-lg-20 px-0 ">
-                            {typeof window != "undefined" && <Editor editorState={editorState} toolbarClassName="border" wrapperClassName="" editorClassName="border px-2" onEditorStateChange={(e) => setEditorState(e)} />}
-                            <input type="hidden" name="Title" id="Title" value={editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
-                    
-                            </div>
-                            <div className=" flex_start">
-
-                                {activeTabIndex < tabs.length - 1 && (
-                                  <button
-                                    className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                                    onClick={handleNextTab}
-                                    type="button"
-                                  >
-                                    {translate("Next")}
-                                  </button>
-                                )}
-                                {activeTabIndex > 0 && (
-                                  <button
-                                    className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
-                                    onClick={handlePrevTab}
-                                    type="button"
-                                  >
-                                    {translate("Previous")}
-                                  </button>
-                                )}
-                              </div>
-                          </div>
-
-                          <div
-                            className={`tabs__pane  ${
-                              activeTab == "Itinerary" ? "is-tab-el-active" : ""
-                            }`}
-                          >
-                            <div className="form_2">
-                              <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
-                                  {Array.from({ length: daysCount }, (_, i) => i + 1).map((dayNumber) => (
-                                    // <ItineraryDayInput key={dayNumber} dayNumber={dayNumber} />
-
-                                    <div className="row">
-                                    <div className="col-md-6">
-                                      <div className="form-input my-1">
-                                      <input
-                                          type="text"
-                                          required
-                                          value={route_data.find((day) => day.day === dayNumber)?.dayData || ""}
-                                          onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, "")}
-                                          className=""
+                        <div
+                          className={`tabs__pane ${
+                            activeTab == "Included" ? "is-tab-el-active" : ""
+                          }`}
+                        >
+                          <div className="row  y-gap-30 contactForm px-lg-20 px-0">
+                            {included.map((item, index) => (
+                              <div className="col-md-4" key={index}>
+                                <div className="row y-gap-20">
+                                  <div className="col-12 px-0 my-1">
+                                    <div className="d-flex items-center pointer-check">
+                                      <div className="form-checkbox">
+                                        <input
+                                          type="checkbox"
+                                          id={`item-${item.id}`}
+                                          name={`item-${item.id}`}
+                                          checked={item.checked}
+                                          onChange={(e) => {
+                                            const updatedIncluded =
+                                              included.map((includedItem) =>
+                                                includedItem.id === item.id
+                                                  ? {
+                                                      ...includedItem,
+                                                      checked: e.target.checked,
+                                                    }
+                                                  : includedItem
+                                              );
+                                            setIncluded(updatedIncluded);
+                                          }}
                                         />
-                                        <label className="lh-1 text-16 text-light-1">{translate("Day")} {dayNumber} <span className="text-red">*</span></label>
+                                        <label
+                                          htmlFor={`item-${item.id}`}
+                                          className="form-checkbox__mark"
+                                        >
+                                          <div className="form-checkbox__icon">
+                                            <svg
+                                              width="10"
+                                              height="8"
+                                              viewBox="0 0 10 8"
+                                              fill="none"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <path
+                                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                                fill="white"
+                                              />
+                                            </svg>
+                                          </div>
+                                        </label>
                                       </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                      <div className="form-input my-1">
-                                      <textarea
-                                            type="text"
-                                            required
-                                            rows="2"
-                                            cols="80"
-                                            value={route_data.find((day) => day.day === dayNumber)?.description || ""}
-                                            onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
-                                          />
-                                        <label className="lh-1 text-16 text-light-1">{translate("Description")} <span className="text-red">*</span></label>
-                                      </div>
+                                      <label
+                                        htmlFor={`item-${item.id}`}
+                                        className="lh-16 ml-15"
+                                      >
+                                        {translate(item.option) ||
+                                          "Find Latest Packages"}
+                                      </label>
                                     </div>
                                   </div>
-                                  ))}
-
-                        
+                                </div>
                               </div>
-                            </div>
-                            <div className=" flex_start">
-
-                                {activeTabIndex < tabs.length - 1 && (
-                                  <button
-                                    className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                                    onClick={handleNextTab}
-                                    type="button"
-                                  >
-                                    {translate("Next")}
-                                  </button>
-                                )}
-                                {activeTabIndex > 0 && (
-                                  <button
-                                    className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
-                                    onClick={handlePrevTab}
-                                    type="button"
-                                  >
-                                    {translate("Previous")}
-                                  </button>
-                                )}
-                            </div>
+                            ))}
                           </div>
+                          <div className=" flex_start">
+                            {activeTabIndex < tabs.length - 1 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                onClick={handleNextTab}
+                                type="button"
+                              >
+                                {translate("Next")}
+                              </button>
+                            )}
+                            {activeTabIndex > 0 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                onClick={handlePrevTab}
+                                type="button"
+                              >
+                                {translate("Previous")}
+                              </button>
+                            )}
+                          </div>
+                        </div>
 
-                          <div
-                            className={`tabs__pane  ${
-                              activeTab == "Flight Hotel And Visa"
-                                ? "is-tab-el-active"
-                                : ""
-                            }`}
-                          >
+                        <div
+                          className={`tabs__pane  ${
+                            activeTab == "Overview" ? "is-tab-el-active" : ""
+                          }`}
+                        >
+                          <div className="y-gap-30 contactForm px-lg-20 px-0 ">
+                            {typeof window != "undefined" && (
+                              <Editor
+                                editorState={editorState}
+                                toolbarClassName="border"
+                                wrapperClassName=""
+                                editorClassName="border px-2"
+                                onEditorStateChange={(e) => setEditorState(e)}
+                              />
+                            )}
+                            <input
+                              type="hidden"
+                              name="Title"
+                              id="Title"
+                              value={
+                                editorState &&
+                                draftToHtml(
+                                  convertToRaw(editorState.getCurrentContent())
+                                )
+                              }
+                            />
+                          </div>
+                          <div className=" flex_start">
+                            {activeTabIndex < tabs.length - 1 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                onClick={handleNextTab}
+                                type="button"
+                              >
+                                {translate("Next")}
+                              </button>
+                            )}
+                            {activeTabIndex > 0 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                onClick={handlePrevTab}
+                                type="button"
+                              >
+                                {translate("Previous")}
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        <div
+                          className={`tabs__pane  ${
+                            activeTab == "Itinerary" ? "is-tab-el-active" : ""
+                          }`}
+                        >
+                          <div className="form_2">
                             <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
-                              <div className="d-flex item-center justify-content-between">
-                                <h6>
-                                  {" "}
-                                  {translate("Visa Processing") }
-                                </h6>
-                                <div className="flex_start visaYESNOFLEx my-3">
-                                  <div className="d-flex items-center mx-2">
-                                    <div className="form-radio d-flex items-center">
-                                      <label className="radio d-flex items-center">
-                                        <input
-                                            type="radio"
-                                            name="radioGroupVisa"
-                                            value="Yes"
-                                            checked={radioValueVisa === "Yes"}
-                                            onChange={(event) => setRadioValueVisa(event.target.value)}
-                                          />
-                                        <span className="radio__mark">
-                                          <span className="radio__icon"></span>
-                                        </span>
-                                        <span className="text-14 lh-1 ml-5">
-                                          {" "}
-                                          {translate("Yes") }
-                                        </span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div className="d-flex items-center mx-2">
-                                    <div className="form-radio d-flex items-center">
-                                      <label className="radio d-flex items-center">
+                              {Array.from(
+                                { length: daysCount },
+                                (_, i) => i + 1
+                              ).map((dayNumber) => (
+                                // <ItineraryDayInput key={dayNumber} dayNumber={dayNumber} />
+
+                                <div className="row">
+                                  <div className="col-md-6">
+                                    <div className="form-input my-1">
                                       <input
-                                          type="radio"
-                                          name="radioGroupVisa"
-                                          value="No"
-
-                                          checked={radioValueVisa === "No"}
-                                          onChange={(event) => setRadioValueVisa(event.target.value)}
-                                        />
-                                        <span className="radio__mark">
-                                          <span className="radio__icon"></span>
-                                        </span>
-                                        <span className="text-14 lh-1 ml-5">
-                                          {" "}
-                                          {translate("No") }
-                                        </span>
+                                        type="text"
+                                        required
+                                        value={
+                                          route_data.find(
+                                            (day) => day.day === dayNumber
+                                          )?.dayData || ""
+                                        }
+                                        onChange={(e) =>
+                                          handleDayDescriptionChange(
+                                            dayNumber,
+                                            e.target.value,
+                                            ""
+                                          )
+                                        }
+                                        className=""
+                                      />
+                                      <label className="lh-1 text-16 text-light-1">
+                                        {translate("Day")} {dayNumber}{" "}
+                                        <span className="text-red">*</span>
                                       </label>
                                     </div>
                                   </div>
-                                </div>
-                              </div>
-                              <div className="">
-                                <h6>
-                                  {" "}
-                                  {translate("Mekka Hotel") }
-                                </h6>
-
-                                <ul className="">
-                                  {mekkaRows.map((row, index) => (
-                                    <li key={index}>
-                                      <div className=" row">
-                                        <div className="col-lg-8">
-                                          <div className="row">
-
-                                            <div className="col-lg-6 col-md-auto col-12 form-input spacing d-flex flex-column align-items-center hotel-mekka">
-                                              <CreatableSelect
-                                                value={{ value: mekkaRows[index].hotel_id, label: mekkaRows[index].hotel_name }}
-                                                onChange={(value) =>
-                                                  handleMekkaChange(value, index)
-                                                }
-                                                options={options2}
-                                                className="custom-select Hotel-Mekka-dd"
-                                                placeholder={`${translate("Select Hotel For Mekka (Required)")}`}
-                                                classNamePrefix="react-select"
-                                                isClearable
-                                                formatCreateLabel={(inputValue) =>
-                                                  `Not Found: "${inputValue}"`
-                                                }
-                                              />
-                                            </div>
-
-                                            <div className="col-lg-6 col-md-auto col-12">
-                                              <div className="form-input spacing">
-                                                <input type="number" required  
-                                                value={mekkaRows[index].hotel_price}
-                                                onChange={(e) => setMekkaRows(prevRows => {
-                                                  const newRows = [...prevRows];
-                                                  newRows[index].hotel_price = e.target.value;
-                                                  return newRows;
-                                                })}
-                                                />
-                                                <label className="lh-1 text-16 text-light-1">
-                                                  {" "}
-                                                  {translate("Hotel Price") ||
-                                                    "Find Latest Packages"} <span className="text-red">*</span>
-                                                </label>
-                                              </div>
-                                            </div>
-
-                                            <div className="col-lg-12 col-md-auto col-12">
-                                              <div className="form-input m-0">
-                                                <textarea required rows="1"
-                                                value={mekkaRows[index].hotel_info}
-                                                onChange={(e) => setMekkaRows(prevRows => {
-                                                  const newRows = [...prevRows];
-                                                  newRows[index].hotel_info = e.target.value;
-                                                  return newRows;
-                                                })}
-                                                ></textarea>
-                                                <label className="lh-1 text-16 text-light-1">
-                                                  {" "}
-                                                  {translate("Description") ||
-                                                    "Find Latest Packages"} <span className="text-red">*</span>
-                                                </label>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                        </div>
-
-                                        <div className="col-2 d-flex">
-                                          <button
-                                            type="button"
-                                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                            style={{height:"fit-content"}}
-                                            onClick={handleAddMekkaRow}
-                                          >
-                                            +
-                                          </button>
-                                          {index > 0 && (
-                                            <button
-                                              type="button"
-                                              className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                              style={{height:"fit-content"}}
-
-                                              onClick={() =>
-                                                handleRemoveMekkaRow(index)
-                                              }
-                                            >
-                                              -
-                                            </button>
-                                          )}
-                                        </div>
-                                  
-                                        <hr />
-                                      </div>
-                                    </li>
-                                  ))}
-                                </ul>
-
-                                <h6>
-                                  {" "}
-                                  {translate("Madina Hotel ") }
-                                </h6>
-                                <ul className="">
-                                  
-                                  {madinaRows.map((row, index) => (
-                                    <li key={index}>
-                                      <div className=" row">
-                                        <div className="col-lg-8">
-                                          <div className="row">
-                                            <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
-                                              <CreatableSelect
-                                                value={{ value: madinaRows[index].hotel_id, label: madinaRows[index].hotel_name }}
-                                                onChange={(value) =>
-                                                  handleMadinaChange(value, index)
-                                                }
-                                                options={Madina}
-                                                className="custom-select Hotel-Madina-dd"
-                                                placeholder={`${translate("Select Hotel For Madina (Required)")}`}
-                                                classNamePrefix="react-select"
-                                                isClearable
-                                                formatCreateLabel={(inputValue) =>
-                                                  `Not Found: "${inputValue}"`
-                                                }
-                                              />
-                                            </div>
-
-                                            <div className="col-md-6">
-                                              <div className="form-input spacing">
-                                                <input type="number" required
-                                                  value={madinaRows[index].hotel_price}
-                                                  onChange={(e) => setMadinaRows(prevRows => {
-                                                    const newRows = [...prevRows];
-                                                    newRows[index].hotel_price = e.target.value;
-                                                    return newRows;
-                                                  })} />
-                                                <label className="lh-1 text-16 text-light-1">
-                                                  {" "}
-                                                  {translate("Hotel Price") ||
-                                                    "Find Latest Packages"} <span className="text-red">*</span>
-                                                </label>
-                                              </div>
-                                            </div>
-
-                                            
-                                            <div className="col-md-12">
-                                              <div className="form-input m-0">
-                                                <textarea required rows="1"
-                                                value={madinaRows[index].hotel_info}
-                                                onChange={(e) => setMadinaRows(prevRows => {
-                                                  const newRows = [...prevRows];
-                                                  newRows[index].hotel_info = e.target.value;
-                                                  return newRows;
-                                                })}
-                                                ></textarea>
-                                                <label className="lh-1 text-16 text-light-1">
-                                                  {" "}
-                                                  {translate("Description") ||
-                                                    "Find Latest Packages"} <span className="text-red">*</span>
-                                                </label>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div className="col-2 d-flex">
-                                          <button
-                                            type="button"
-                                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                            onClick={handleAddMadinaRow}
-                                            style={{height:"fit-content"}}
-
-                                          >
-                                            +
-                                          </button>
-                                          {index > 0 && (
-                                            <button
-                                              type="button"
-                                              className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                              style={{height:"fit-content"}}
-
-                                              onClick={() =>
-                                                handleRemoveMadinaRow(index)
-                                              }
-                                            >
-                                              -
-                                            </button>
-                                          )}
-                                        </div>
-
-
-                                        <hr />
-                                      </div>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                              <div className="d-flex item-center justify-content-between">
-                                <h6>
-                                {translate("Allow Exclude Flight Details") }
-                                </h6>
-                                <div className="flex_start visaYESNOFLEx my-3">
-                                  <div className="d-flex items-center mx-2">
-                                    <div className="form-radio d-flex items-center">
-                                      <label className="radio d-flex items-center">
-                                      <input
-                                          type="radio"
-                                          name="radioGroupFreeCancel"
-                                          value="Yes"
-                                          checked={radioValueExcludeFlight === "Yes"}
-                                          onChange={(event) => setRadioValueExcludeFlight(event.target.value)}
-                                        />
-                                        <span className="radio__mark">
-                                          <span className="radio__icon"></span>
-                                        </span>
-                                        <span className="text-14 lh-1 ml-5">
-                                          {" "}
-                                          {translate("Yes") }
-                                        </span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div className="d-flex items-center mx-2">
-                                    <div className="form-radio d-flex items-center">
-                                      <label className="radio d-flex items-center">
-                                      <input
-                                          type="radio"
-                                          name="radioGroupFreeCancel"
-                                          value="No"
-                                          checked={radioValueExcludeFlight === "No"}
-                                          onChange={(event) => setRadioValueExcludeFlight(event.target.value)}
-                                        />
-                                        <span className="radio__mark">
-                                          <span className="radio__icon"></span>
-                                        </span>
-                                        <span className="text-14 lh-1 ml-5">
-                                          {" "}
-                                          {translate("No") }
-                                        </span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className=" ">
-                              <h6 className="mb-1">
-                                {translate("Add Flight Information") }
-                                </h6>
-                              
-                                  <div className="col-12">
-                                      <div className="form-input m-0">
+                                  <div className="col-md-6">
+                                    <div className="form-input my-1">
                                       <textarea
-                                            type="text"
-                                            required
-                                            rows="3"
-                                            value={flightInformation}
-                                            onChange={(e) => setFlightInformation(e.target.value)}
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">{translate("Flight Information")} <span className="text-red">*</span></label>
-                                      </div>
-                                  </div>
-
-                              </div>
-                              <div className="d-flex item-center justify-content-between">
-                                <h6>
-                                {translate("Enter Flight Details") }
-                                </h6>
-                                <div className="flex_start visaYESNOFLEx my-3">
-                                  <div className="d-flex items-center mx-2">
-                                    <div className="form-radio d-flex items-center">
-                                      <label className="radio d-flex items-center">
-                                        <input
-                                          type="radio"
-                                          name="radioGroupFlight"
-                                          value="Yes"
-                                          checked={radioValueFlight === "Yes"}
-                                          onChange={(event) => setRadioValueFlight(event.target.value)}
-                                        />
-                                        <span className="radio__mark">
-                                          <span className="radio__icon"></span>
-                                        </span>
-                                        <span className="text-14 lh-1 ml-5">
-                                          {" "}
-                                          {translate("Yes") }
-                                        </span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div className="d-flex items-center mx-2">
-                                    <div className="form-radio d-flex items-center">
-                                      <label className="radio d-flex items-center">
-                                        <input
-                                          type="radio"
-                                          name="radioGroupFlight"
-                                          value="No"
-                                          checked={radioValueFlight === "No"}
-                                          onChange={(event) => setRadioValueFlight(event.target.value)}
-                                        />
-                                        <span className="radio__mark">
-                                          <span className="radio__icon"></span>
-                                        </span>
-                                        <span className="text-14 lh-1 ml-5">
-                                          {" "}
-                                          {translate("No") }
-                                        </span>
+                                        type="text"
+                                        required
+                                        rows="2"
+                                        cols="80"
+                                        value={
+                                          route_data.find(
+                                            (day) => day.day === dayNumber
+                                          )?.description || ""
+                                        }
+                                        onChange={(e) =>
+                                          handleDayDescriptionChange(
+                                            dayNumber,
+                                            route_data.find(
+                                              (day) => day.day === dayNumber
+                                            )?.dayData,
+                                            e.target.value
+                                          )
+                                        }
+                                      />
+                                      <label className="lh-1 text-16 text-light-1">
+                                        {translate("Description")}{" "}
+                                        <span className="text-red">*</span>
                                       </label>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              {radioValueFlight === "Yes" && (
-                              <>
-                              <div className="d-flex item-center justify-content-between pt-10">
-                                <h6>
-                                {" "}
-                                  {translate("Add Flight Details") }
-                                </h6>
-                              </div>
-                              <div className="form_2">
-                                <div className=" y-gap-30 contactForm py-20 ">
-                                  {flightRow.map((row, index) => {
-                                    return (
-                                      <div className="row">
-                                        <div className="col-md-9">
-                                          <div className="row">
+                              ))}
+                            </div>
+                          </div>
+                          <div className=" flex_start">
+                            {activeTabIndex < tabs.length - 1 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                onClick={handleNextTab}
+                                type="button"
+                              >
+                                {translate("Next")}
+                              </button>
+                            )}
+                            {activeTabIndex > 0 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                onClick={handlePrevTab}
+                                type="button"
+                              >
+                                {translate("Previous")}
+                              </button>
+                            )}
+                          </div>
+                        </div>
 
+                        <div
+                          className={`tabs__pane  ${
+                            activeTab == "Flight Hotel And Visa"
+                              ? "is-tab-el-active"
+                              : ""
+                          }`}
+                        >
+                          <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
+                            <div className="d-flex item-center justify-content-between">
+                              <h6> {translate("Visa Processing")}</h6>
+                              <div className="flex_start visaYESNOFLEx my-3">
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                      <input
+                                        type="radio"
+                                        name="radioGroupVisa"
+                                        value="Yes"
+                                        checked={radioValueVisa === "Yes"}
+                                        onChange={(event) =>
+                                          setRadioValueVisa(event.target.value)
+                                        }
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("Yes")}
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                      <input
+                                        type="radio"
+                                        name="radioGroupVisa"
+                                        value="No"
+                                        checked={radioValueVisa === "No"}
+                                        onChange={(event) =>
+                                          setRadioValueVisa(event.target.value)
+                                        }
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("No")}
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="">
+                              <h6> {translate("Mekka Hotel")}</h6>
+
+                              <ul className="">
+                                {mekkaRows.map((row, index) => (
+                                  <li key={index}>
+                                    <div className=" row">
+                                      <div className="col-lg-8">
+                                        <div className="row">
+                                          <div className="col-lg-6 col-md-auto col-12 form-input spacing d-flex flex-column align-items-center hotel-mekka">
+                                            <CreatableSelect
+                                              value={{
+                                                value:
+                                                  mekkaRows[index].hotel_id,
+                                                label:
+                                                  mekkaRows[index].hotel_name,
+                                              }}
+                                              onChange={(value) =>
+                                                handleMekkaChange(value, index)
+                                              }
+                                              options={options2}
+                                              className="custom-select Hotel-Mekka-dd"
+                                              placeholder={`${translate(
+                                                "Select Hotel For Mekka (Required)"
+                                              )}`}
+                                              classNamePrefix="react-select"
+                                              isClearable
+                                              formatCreateLabel={(inputValue) =>
+                                                `Not Found: "${inputValue}"`
+                                              }
+                                            />
+                                          </div>
+
+                                          <div className="col-lg-6 col-md-auto col-12">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                ref={numberInputRef7}
+                                                required
+                                                value={
+                                                  mekkaRows[index].hotel_price
+                                                }
+                                                onChange={(e) =>
+                                                  setMekkaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_price =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Hotel Price") ||
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div className="col-lg-12 col-md-auto col-12">
+                                            <div className="form-input m-0">
+                                              <textarea
+                                                required
+                                                rows="1"
+                                                value={
+                                                  mekkaRows[index].hotel_info
+                                                }
+                                                onChange={(e) =>
+                                                  setMekkaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_info =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                              ></textarea>
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Description") ||
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div className="col-2 d-flex">
+                                        <button
+                                          type="button"
+                                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                          style={{ height: "fit-content" }}
+                                          onClick={handleAddMekkaRow}
+                                        >
+                                          +
+                                        </button>
+                                        {index > 0 && (
+                                          <button
+                                            type="button"
+                                            className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                            style={{ height: "fit-content" }}
+                                            onClick={() =>
+                                              handleRemoveMekkaRow(index)
+                                            }
+                                          >
+                                            -
+                                          </button>
+                                        )}
+                                      </div>
+
+                                      <hr />
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
+
+                              <h6> {translate("Madina Hotel ")}</h6>
+                              <ul className="">
+                                {madinaRows.map((row, index) => (
+                                  <li key={index}>
+                                    <div className=" row">
+                                      <div className="col-lg-8">
+                                        <div className="row">
+                                          <div className="col-md-6 form-input spacing d-flex flex-column align-items-center">
+                                            <CreatableSelect
+                                              value={{
+                                                value:
+                                                  madinaRows[index].hotel_id,
+                                                label:
+                                                  madinaRows[index].hotel_name,
+                                              }}
+                                              onChange={(value) =>
+                                                handleMadinaChange(value, index)
+                                              }
+                                              options={Madina}
+                                              className="custom-select Hotel-Madina-dd"
+                                              placeholder={`${translate(
+                                                "Select Hotel For Madina (Required)"
+                                              )}`}
+                                              classNamePrefix="react-select"
+                                              isClearable
+                                              formatCreateLabel={(inputValue) =>
+                                                `Not Found: "${inputValue}"`
+                                              }
+                                            />
+                                          </div>
+
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                ref={numberInputRef8}
+                                                required
+                                                value={
+                                                  madinaRows[index].hotel_price
+                                                }
+                                                onChange={(e) =>
+                                                  setMadinaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_price =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Hotel Price") ||
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div className="col-md-12">
+                                            <div className="form-input m-0">
+                                              <textarea
+                                                required
+                                                rows="1"
+                                                value={
+                                                  madinaRows[index].hotel_info
+                                                }
+                                                onChange={(e) =>
+                                                  setMadinaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_info =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                              ></textarea>
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Description") ||
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div className="col-2 d-flex">
+                                        <button
+                                          type="button"
+                                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                          onClick={handleAddMadinaRow}
+                                          style={{ height: "fit-content" }}
+                                        >
+                                          +
+                                        </button>
+                                        {index > 0 && (
+                                          <button
+                                            type="button"
+                                            className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                            style={{ height: "fit-content" }}
+                                            onClick={() =>
+                                              handleRemoveMadinaRow(index)
+                                            }
+                                          >
+                                            -
+                                          </button>
+                                        )}
+                                      </div>
+
+                                      <hr />
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div className="d-flex item-center justify-content-between">
+                              <h6>
+                                {translate("Allow Exclude Flight Details")}
+                              </h6>
+                              <div className="flex_start visaYESNOFLEx my-3">
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                      <input
+                                        type="radio"
+                                        name="radioGroupFreeCancel"
+                                        value="Yes"
+                                        checked={
+                                          radioValueExcludeFlight === "Yes"
+                                        }
+                                        onChange={(event) =>
+                                          setRadioValueExcludeFlight(
+                                            event.target.value
+                                          )
+                                        }
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("Yes")}
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                      <input
+                                        type="radio"
+                                        name="radioGroupFreeCancel"
+                                        value="No"
+                                        checked={
+                                          radioValueExcludeFlight === "No"
+                                        }
+                                        onChange={(event) =>
+                                          setRadioValueExcludeFlight(
+                                            event.target.value
+                                          )
+                                        }
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("No")}
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className=" ">
+                              <h6 className="mb-1">
+                                {translate("Add Flight Information")}
+                              </h6>
+
+                              <div className="col-12">
+                                <div className="form-input m-0">
+                                  <textarea
+                                    type="text"
+                                    required
+                                    rows="3"
+                                    value={flightInformation}
+                                    onChange={(e) =>
+                                      setFlightInformation(e.target.value)
+                                    }
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    {translate("Flight Information")}{" "}
+                                    <span className="text-red">*</span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="d-flex item-center justify-content-between">
+                              <h6>{translate("Enter Flight Details")}</h6>
+                              <div className="flex_start visaYESNOFLEx my-3">
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                      <input
+                                        type="radio"
+                                        name="radioGroupFlight"
+                                        value="Yes"
+                                        checked={radioValueFlight === "Yes"}
+                                        onChange={(event) =>
+                                          setRadioValueFlight(
+                                            event.target.value
+                                          )
+                                        }
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("Yes")}
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="d-flex items-center mx-2">
+                                  <div className="form-radio d-flex items-center">
+                                    <label className="radio d-flex items-center">
+                                      <input
+                                        type="radio"
+                                        name="radioGroupFlight"
+                                        value="No"
+                                        checked={radioValueFlight === "No"}
+                                        onChange={(event) =>
+                                          setRadioValueFlight(
+                                            event.target.value
+                                          )
+                                        }
+                                      />
+                                      <span className="radio__mark">
+                                        <span className="radio__icon"></span>
+                                      </span>
+                                      <span className="text-14 lh-1 ml-5">
+                                        {" "}
+                                        {translate("No")}
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            {radioValueFlight === "Yes" && (
+                              <>
+                                <div className="d-flex item-center justify-content-between pt-10">
+                                  <h6> {translate("Add Flight Details")}</h6>
+                                </div>
+                                <div className="form_2">
+                                  <div className=" y-gap-30 contactForm py-20 ">
+                                    {flightRow.map((row, index) => {
+                                      return (
+                                        <div className="row">
+                                          <div className="col-md-9">
+                                            <div className="row">
                                               <div className="col-md-6">
                                                 <CreatableSelect
-                                                value={{ value: flightRow[index].id, label: flightRow[index].flight_name }}
-                                                onChange={(value) =>
-                                                    handleFlightSelectChange(value, index)
+                                                  value={{
+                                                    value: flightRow[index].id,
+                                                    label:
+                                                      flightRow[index]
+                                                        .flight_name,
+                                                  }}
+                                                  onChange={(value) =>
+                                                    handleFlightSelectChange(
+                                                      value,
+                                                      index
+                                                    )
                                                   }
                                                   options={ChooseFlight}
                                                   className="custom-select Flight-selected-dd"
-                                                  placeholder={`${translate("Select Flight")}`}
+                                                  placeholder={`${translate(
+                                                    "Select Flight"
+                                                  )}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
-                                                  formatCreateLabel={(inputValue) =>
+                                                  formatCreateLabel={(
+                                                    inputValue
+                                                  ) =>
                                                     `Not Found: "${inputValue}"`
                                                   }
                                                 />
@@ -1957,18 +2304,32 @@ const formatDateToMMDDYYYY = (date) => {
                                                 <div className="form-input spacing">
                                                   <input
                                                     type="number"
+                                                    ref={numberInputRef9}
                                                     required
-                                                    value={flightRow[index].flight_amount}
-                                                    onChange={(e) => setFlightRow(prevRows => {
-                                                      const newRows = [...prevRows];
-                                                      newRows[index].flight_amount = e.target.value;
-                                                      return newRows;
-                                                    })}
+                                                    value={
+                                                      flightRow[index]
+                                                        .flight_amount
+                                                    }
+                                                    onChange={(e) =>
+                                                      setFlightRow(
+                                                        (prevRows) => {
+                                                          const newRows = [
+                                                            ...prevRows,
+                                                          ];
+                                                          newRows[
+                                                            index
+                                                          ].flight_amount =
+                                                            e.target.value;
+                                                          return newRows;
+                                                        }
+                                                      )
+                                                    }
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
-                                                    {translate("Flight Amount") ||
-                                                      "Find Latest Packages"}
+                                                    {translate(
+                                                      "Flight Amount"
+                                                    ) || "Find Latest Packages"}
                                                   </label>
                                                 </div>
                                               </div>
@@ -1976,18 +2337,32 @@ const formatDateToMMDDYYYY = (date) => {
                                                 <div className="form-input spacing">
                                                   <input
                                                     type="number"
+                                                    ref={numberInputRef10}
                                                     required
-                                                    value={flightRow[index].no_of_stop}
-                                                    onChange={(e) => setFlightRow(prevRows => {
-                                                      const newRows = [...prevRows];
-                                                      newRows[index].no_of_stop = e.target.value;
-                                                      return newRows;
-                                                    })}
+                                                    value={
+                                                      flightRow[index]
+                                                        .no_of_stop
+                                                    }
+                                                    onChange={(e) =>
+                                                      setFlightRow(
+                                                        (prevRows) => {
+                                                          const newRows = [
+                                                            ...prevRows,
+                                                          ];
+                                                          newRows[
+                                                            index
+                                                          ].no_of_stop =
+                                                            e.target.value;
+                                                          return newRows;
+                                                        }
+                                                      )
+                                                    }
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
-                                                    {translate("No of Flight Stops") ||
-                                                      "Find Latest Packages"}
+                                                    {translate(
+                                                      "No of Flight Stops"
+                                                    ) || "Find Latest Packages"}
                                                   </label>
                                                 </div>
                                               </div>
@@ -1995,13 +2370,25 @@ const formatDateToMMDDYYYY = (date) => {
                                                 <div className="form-input spacing">
                                                   <input
                                                     type="number"
+                                                    ref={numberInputRef11}
                                                     required
-                                                    value={flightRow[index].luggage}
-                                                    onChange={(e) => setFlightRow(prevRows => {
-                                                      const newRows = [...prevRows];
-                                                      newRows[index].luggage = e.target.value;
-                                                      return newRows;
-                                                    })}
+                                                    value={
+                                                      flightRow[index].luggage
+                                                    }
+                                                    onChange={(e) =>
+                                                      setFlightRow(
+                                                        (prevRows) => {
+                                                          const newRows = [
+                                                            ...prevRows,
+                                                          ];
+                                                          newRows[
+                                                            index
+                                                          ].luggage =
+                                                            e.target.value;
+                                                          return newRows;
+                                                        }
+                                                      )
+                                                    }
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -2010,74 +2397,73 @@ const formatDateToMMDDYYYY = (date) => {
                                                   </label>
                                                 </div>
                                               </div>
+                                            </div>
                                           </div>
-
-                                        </div>
-                                        <div className="col-md-2 col-lg-auto col-12 d-flex">
-                                          <button
-                                            type="button"
-                                            className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                            onClick={HandleAddFlightRow}
-                                            style={{height:"fit-content"}}
-
-                                          >
-                                            +
-                                          </button>
-                                          {index > 0 && (
+                                          <div className="col-md-2 col-lg-auto col-12 d-flex">
                                             <button
                                               type="button"
                                               className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                              onClick={() =>
-                                                HandleRemoveFlightRow(index)
-                                              }
-                                              style={{height:"fit-content"}}
-
+                                              onClick={HandleAddFlightRow}
+                                              style={{ height: "fit-content" }}
                                             >
-                                              -
+                                              +
                                             </button>
-                                          )}
+                                            {index > 0 && (
+                                              <button
+                                                type="button"
+                                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                                onClick={() =>
+                                                  HandleRemoveFlightRow(index)
+                                                }
+                                                style={{
+                                                  height: "fit-content",
+                                                }}
+                                              >
+                                                -
+                                              </button>
+                                            )}
+                                          </div>
                                         </div>
-                                      </div>
-                                    );
-                                  })}
+                                      );
+                                    })}
+                                  </div>
                                 </div>
-                              </div>
                               </>
+                            )}
+                          </div>
+                          <div className=" flex_start">
+                            <button
+                              type="submit"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                            >
+                              {loading ? (
+                                <div
+                                  className="d-flex justify-content-center align-items-center"
+                                  style={{ height: "30px", width: "100%" }}
+                                >
+                                  <ClipLoader color="#ffffff" size={30} />
+                                </div>
+                              ) : (
+                                translate("Save Details")
                               )}
-                          
-                            </div>
-                            <div className=" flex_start">
-
-                            <button type="submit" className="button -sm -info-2 bg-accent-1 text-white  mt-4  ">
-                              {loading ? <div
-                                className="d-flex justify-content-center align-items-center"
-                                style={{ height: "30px", width: "100%" }}
-                              >
-                                <ClipLoader color="#ffffff" size={30} />
-                              </div>
-                              :
-                              translate("Save Details") 
-                              }
                             </button>
-                                {activeTabIndex > 0 && (
-                                  <button
-                                    className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
-                                    onClick={handlePrevTab}
-                                    type="button"
-                                  >
-                                    {translate("Previous")}
-                                  </button>
-                                )}
-                            </div>
-                          
+                            {activeTabIndex > 0 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                onClick={handlePrevTab}
+                                type="button"
+                              >
+                                {translate("Previous")}
+                              </button>
+                            )}
                           </div>
                         </div>
-                      
                       </div>
                     </div>
-                  </form>
-                </div>
+                  </div>
+                </form>
               </div>
+            </div>
 
             <div className="text-center pt-30">
               © Copyright MekkaBooking.com {new Date().getFullYear()}

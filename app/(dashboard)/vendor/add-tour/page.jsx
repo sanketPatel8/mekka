@@ -41,6 +41,22 @@ const tabs = [
 
 export default function AddTour() {
   const {user} = useAuthContext();
+  const numberInputRef1 = useRef(null);
+  const numberInputRef2 = useRef(null);
+  const numberInputRef3 = useRef(null);
+  const numberInputRef4 = useRef(null);
+  const numberInputRef5 = useRef(null);
+  const numberInputRef6 = useRef(null);
+  const numberInputRef7 = useRef(null);
+  const numberInputRef8 = useRef(null);
+  const numberInputRef9 = useRef(null);
+  const numberInputRef10 = useRef(null);
+  const numberInputRef11 = useRef(null);
+
+  // Function to disable scrolling on number inputs
+  const disableScroll = (event) => {
+    event.preventDefault(); // Prevent scrolling
+  };
 
   const router = useRouter();
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -134,7 +150,38 @@ export default function AddTour() {
     // setIsLoading(false);
     accessdata()
   }, []);
-  
+
+  useEffect(() => {
+    // Attach wheel event listeners to each input ref
+    const refs = [
+      numberInputRef1,
+      numberInputRef2,
+      numberInputRef3,
+      numberInputRef4,
+      numberInputRef5,
+      numberInputRef6,
+      numberInputRef7,
+      numberInputRef8,
+      numberInputRef9,
+      numberInputRef10,
+      numberInputRef11,
+    ];
+
+    refs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.addEventListener('wheel', disableScroll);
+      }
+    });
+
+    // Cleanup event listeners on unmount
+    return () => {
+      refs.forEach((ref) => {
+        if (ref.current) {
+          ref.current.removeEventListener('wheel', disableScroll);
+        }
+      });
+    };
+  }, []);
   const handleEndDateChange = (e) => {
 
       const formattedDate = formatDateToMMDDYYYY(e.target.value);
@@ -809,7 +856,7 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="number" min={1} required value={capacity} onChange={handleInputChange(setCapacity)}/>
+                                        <input type="number" min={1} ref={numberInputRef1}  required value={capacity} onChange={handleInputChange(setCapacity)}/>
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Seat Availibility") ||
                                             "Find Latest Packages"} <span className="text-red">*</span>
@@ -911,7 +958,7 @@ const isCurrentTabValid = () => {
 
                                               <div className="col-md-6">
                                                 <div className="form-input spacing">
-                                                  <input type="number" required
+                                                  <input type="number" required ref={numberInputRef2}
                                                     value={departureRows[index].hotel_price}
                                                     onChange={(e) => setDepartureRows(prevRows => {
                                                       const newRows = [...prevRows];
@@ -1051,7 +1098,7 @@ const isCurrentTabValid = () => {
                                 <div className="contactForm row y-gap-30 items-center ">
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
-                                      <input type="number" required value={adult_price} onChange={handleInputChange(setAdultPrice)}/>
+                                      <input type="number" ref={numberInputRef3} required value={adult_price} onChange={handleInputChange(setAdultPrice)}/>
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Adult") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -1060,7 +1107,7 @@ const isCurrentTabValid = () => {
                                   </div>
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
-                                      <input type="number" required value={child_price} onChange={handleInputChange(setChildPrice)} />
+                                      <input type="number" ref={numberInputRef4} required value={child_price} onChange={handleInputChange(setChildPrice)} />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Child") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -1069,7 +1116,7 @@ const isCurrentTabValid = () => {
                                   </div>
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
-                                      <input type="number" required value={baby_price} onChange={handleInputChange(setBabyPrice)}/>
+                                      <input type="number" ref={numberInputRef5} required value={baby_price} onChange={handleInputChange(setBabyPrice)}/>
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Baby") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -1147,6 +1194,7 @@ const isCurrentTabValid = () => {
                                           <div className="form-input my-1">
                                             <input
                                               type="number"
+                                              ref={numberInputRef6}
                                               id={`service-${service.id}`}
                                               value={service.price}
                                               onChange={(event) => handlePriceChange(event, service.id)}
@@ -1471,7 +1519,7 @@ const isCurrentTabValid = () => {
 
                                               <div className="col-lg-6 col-md-auto col-12">
                                                 <div className="form-input spacing">
-                                                  <input type="number" required  
+                                                  <input type="number" ref={numberInputRef7} required  
                                                   value={mekkaRows[index].hotel_price}
                                                   onChange={(e) => setMekkaRows(prevRows => {
                                                     const newRows = [...prevRows];
@@ -1568,7 +1616,7 @@ const isCurrentTabValid = () => {
 
                                               <div className="col-md-6">
                                                 <div className="form-input spacing">
-                                                  <input type="number" required
+                                                  <input type="number" ref={numberInputRef8} required
                                                     value={madinaRows[index].hotel_price}
                                                     onChange={(e) => setMadinaRows(prevRows => {
                                                       const newRows = [...prevRows];
@@ -1833,6 +1881,7 @@ const isCurrentTabValid = () => {
                                                   <div className="form-input spacing">
                                                     <input
                                                       type="number"
+                                                      ref={numberInputRef9}
                                                       required
                                                       value={flightRow[index].flight_amount}
                                                       onChange={(e) => setFlightRow(prevRows => {
@@ -1852,6 +1901,7 @@ const isCurrentTabValid = () => {
                                                   <div className="form-input spacing">
                                                     <input
                                                       type="number"
+                                                      ref={numberInputRef10}
                                                       required
                                                       value={flightRow[index].no_of_stop}
                                                       onChange={(e) => setFlightRow(prevRows => {
@@ -1871,6 +1921,7 @@ const isCurrentTabValid = () => {
                                                   <div className="form-input spacing">
                                                     <input
                                                       type="number"
+                                                      ref={numberInputRef11}
                                                       required
                                                       value={flightRow[index].luggage}
                                                       onChange={(e) => setFlightRow(prevRows => {
