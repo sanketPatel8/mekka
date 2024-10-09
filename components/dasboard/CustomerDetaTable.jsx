@@ -533,7 +533,7 @@ const CustomerDetaTable = () => {
       //   }
       // }
 
-      setAdultPrice(AddpersonDetails.tour_price);
+      
     }
   }, []);
 
@@ -542,7 +542,7 @@ const CustomerDetaTable = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       const formData = new FormData();
-      formData.append("reservation_id", BookingDetails.reservation?.id);
+      formData.append("reservation_id", BookingDetails?.reservation?.id);
 
       const response = await POST.request({
         form: formData,
@@ -623,6 +623,11 @@ const CustomerDetaTable = () => {
   const dateInputRef = useRef(null);
 
   useEffect(() => {
+    setAdultPrice(AddpersonDetails?.tour_price);
+  }, [AddpersonDetails])
+  
+
+  useEffect(() => {
     setPaymentCheckbox(BookingDetails?.reservation?.paymentType);
   }, [BookingDetails]);
 
@@ -654,7 +659,7 @@ const CustomerDetaTable = () => {
     } else {
       setSubtotal(0); // Reset subtotal if conditions aren't met
     }
-  }, [AdultPrice, AddpersonData , RadioValue, AddpersonDetails]); // Dependency array
+  }, [AdultPrice, AddpersonData , RadioValue]); // Dependency array
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -1109,7 +1114,7 @@ const CustomerDetaTable = () => {
 
       <br />
 
-      {BookingDetails.reservation ? (
+      {BookingDetails?.reservation ? (
         <DataTable
           title={translate("Total")}
           columns={Total}
@@ -1263,7 +1268,7 @@ const CustomerDetaTable = () => {
                   </h5>
 
                   <div>
-                    {AddpersonDetails.addtional_price?.map((option, idx) => (
+                    {AddpersonDetails?.addtional_price?.map((option, idx) => (
                       <div
                         key={option.id}
                         className="d-flex items-center justify-between radio_hight"
