@@ -965,7 +965,7 @@ const CustomerDetaTable = () => {
             {BookingDetails?.reservation?.reservation_status}
           </p>
           <p className="text-red t_center">
-            Available {BookingDetails?.reservation?.capacity_empty} seats
+            {translate('Available')} {BookingDetails?.reservation?.capacity_empty} {translate('seats')}
           </p>
         </div>
 
@@ -1018,13 +1018,13 @@ const CustomerDetaTable = () => {
       {/* Reservation Details Table */}
       {BookingDetails?.reservation ? (
         <DataTable
-          title="Reservation Details"
+          title={translate('Reservation Details')}
           columns={ColumnReservation_details}
           data={[BookingDetails.reservation]}
           highlightOnHover
         />
       ) : (
-        <p>No Reservation Details Found</p>
+        <p></p>
       )}
 
       <br />
@@ -1032,20 +1032,20 @@ const CustomerDetaTable = () => {
       {/* Adult Data Table */}
       {BookingDetails?.reservation ? (
         <DataTable
-          title={`Adult: ${BookingDetails.reservation.bookingName} (${BookingDetails.reservation.gender})`}
+          title={`${translate('Adult')}: ${BookingDetails.reservation.bookingName} (${BookingDetails.reservation.gender})`}
           columns={columnAdu_1}
           data={[BookingDetails.reservation]}
           highlightOnHover
         />
       ) : (
-        <p>No Adult Details Found</p>
+        <p></p>
       )}
 
       <br />
 
       {/* Adult Data List */}
       <DataTable
-        title="Adult Information"
+        title={translate("Adult Information")}
         columns={columnAduInfo_2}
         data={BookingDetails?.adultData?.length ? BookingDetails.adultData : []} // Change data dynamically
         highlightOnHover
@@ -1055,7 +1055,7 @@ const CustomerDetaTable = () => {
 
       {/* Child Data Table */}
       <DataTable
-        title="Child Information"
+        title={translate('Child Information')}
         columns={Child}
         data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
         highlightOnHover
@@ -1065,7 +1065,7 @@ const CustomerDetaTable = () => {
 
       {/* Baby Data Table */}
       <DataTable
-        title="Baby Information"
+        title={translate("Baby Information")}
         columns={baby}
         data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
         highlightOnHover
@@ -1075,13 +1075,13 @@ const CustomerDetaTable = () => {
 
       {BookingDetails.reservation ? (
         <DataTable
-          title="Total"
+          title={translate('Total')}
           columns={Total}
           data={[BookingDetails.reservation]}
           highlightOnHover
         />
       ) : (
-        <p>No Total Data Found</p>
+        <p></p>
       )}
 
       <br />

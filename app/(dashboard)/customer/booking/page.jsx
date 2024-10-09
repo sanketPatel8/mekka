@@ -128,13 +128,13 @@ export default function DbBooking() {
             ) : BookingsCustomer && BookingsCustomer.length === 0 ? (
               <div className="d-flex justify-content-center align-items-center">
                 <p>
-                  No bookings available{" "}
+                  {translate('No bookings available')}{" "}
                   <Link href="/tour" className="text-blue">
                     <b>
-                      <i>Click here</i>
+                      <i>{translate('Click here')}</i>
                     </b>
                   </Link>{" "}
-                  to book your first tour.
+                  {translate('to book your first tour')}.
                 </p>
               </div>
             ) : (
@@ -155,7 +155,7 @@ export default function DbBooking() {
                             : "d-block"
                         }`}
                       >
-                        Direct Flight
+                        {translate('Direct Flight')}
                       </button>
                     </div>
 
@@ -221,7 +221,7 @@ export default function DbBooking() {
                       )}
 
                       <div className="Location">
-                        <span>Departure : {elm?.tour_details?.departures}</span>
+                        <span>{translate('Departure')} : {elm?.tour_details?.departures}</span>
                       </div>
 
                       <div className="row x-gap-20 y-gap-5 pt-30">
@@ -251,12 +251,12 @@ export default function DbBooking() {
                         </div>
 
                         <p className="text-center">
-                          Booking No : {elm.reservationNumber}
+                          {translate('Booking No')} : {elm.reservationNumber}
                         </p>
                         <p className="text-center">
-                          Total : {elm?.total} €
+                          {translate("Total")} : {elm?.total} €
                         </p>
-                        <p className="text-center">Due : {elm.due_payment} € </p>
+                        <p className="text-center">{translate('Due')} : {elm.due_payment} € </p>
                       </div>
  
                       <label className="badge bg-secondary"></label>

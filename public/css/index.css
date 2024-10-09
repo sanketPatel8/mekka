@@ -554,3 +554,7 @@ hr{
   font-size: 11px;
   text-align: left;
 }
+
+.Payment_Sidebar_img{
+  max-height: 100px;
+}

@@ -870,6 +870,7 @@ export default function Payment() {
                     height={84}
                     src={SideBarData?.TourThumbnail}
                     alt="image"
+                    className="Payment_Sidebar_img"
                   />
                   <div className="ml-20">
                     {SideBarData?.type} - {SideBarData?.name}

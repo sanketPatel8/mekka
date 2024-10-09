@@ -58,7 +58,7 @@
   "Is Also The Contact Person For The Reservation": "Ist auch Ansprechpartner für die Reservierung",
   "Name": "Name",
   "Surname": "Nachname",
-  "Email": "Email",
+  "Email": "E-Mail",
   "Phone": "Telefon",
   "City": "Stadt",
   "Gender": "Geschlecht",
@@ -557,7 +557,21 @@
   "EDIT TOUR" : "TOUR BEARBEITEN",
   "Duplicate Tour" : "Tour duplizieren",
   "Upload Image" : "Bild hochladen",
-  "PDF or PNG or JPG or DOC no bigger than 800px wide and tall." : "PDF oder PNG oder JPG oder DOC, nicht größer als 800 Pixel in Breite und Höhe."
+  "PDF or PNG or JPG or DOC no bigger than 800px wide and tall." : "PDF oder PNG oder JPG oder DOC, nicht größer als 800 Pixel in Breite und Höhe.",
+  "Logout" : "Abmelden",
+  "Go To Home" : "Gehe nach Hause",
+  "No bookings available" : "Keine Buchungen verfügbar",
+  "Click here" : "klicken Sie hier",
+  "to book your first tour" : "um Ihre erste Tour zu buchen",
+  "Booking No" : "Buchungsnr",
+  "Due" : "Fällig",
+  "Available" : "Verfügbar",
+  "seats" : "Sitze",
+"Adult Information" : "Informationen für Erwachsene",
+"Child Information" : "Informationen zu Kindern",
+"Baby Information" : "Baby informationen",
+"Show Invoice" : "Rechnung anzeigen",
+"PNG oder JPG, nicht größer als 800 Pixel in Breite und Höhe." : " PNG oder JPG, nicht größer als 800 Pixel in Breite und Höhe."
   
   
 

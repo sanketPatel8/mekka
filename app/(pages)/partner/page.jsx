@@ -537,7 +537,10 @@ const page = () => {
                             <span className="text-red font_11">*</span>
                           </label>
                           {errors.email && (
-                            <span className="text-red font_11"> {errors.email}</span>
+                            <span className="text-red font_11">
+                              {" "}
+                              {errors.email}
+                            </span>
                           )}
                         </div>
                       </div>
@@ -577,7 +580,9 @@ const page = () => {
                           {/* {errors.password && <div className='text-red font_11'> {errors.password}</div>} */}
 
                           {passwordError && (
-                            <div className="text-red font_11">{passwordError}</div>
+                            <div className="text-red font_11">
+                              {passwordError}
+                            </div>
                           )}
                         </div>
                       </div>
@@ -593,7 +598,9 @@ const page = () => {
                             {translate("Confirm Password")}{" "}
                             <span className="text-red font_11">*</span>
                           </label>
-                          {error && <div className="text-red font_11">{error}</div>}
+                          {error && (
+                            <div className="text-red font_11">{error}</div>
+                          )}
                         </div>
                       </div>
                       <div className="d-flex items-center mt-3">
@@ -637,16 +644,16 @@ const page = () => {
                           type="submit"
                           className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                         >
-                            {isLoading ? (
-                      <div
-                        className="d-flex justify-content-center align-items-center"
-                        style={{ height: "30px", width: "100%" }}
-                      >
-                        <ClipLoader color="#ffffff" size={30} />
-                      </div>
-                    ) : (
-                      translate("Submit")
-                    )}
+                          {isLoading ? (
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: "30px", width: "100%" }}
+                            >
+                              <ClipLoader color="#ffffff" size={30} />
+                            </div>
+                          ) : (
+                            translate("Submit")
+                          )}
                         </button>
                       </div>
                     </div>

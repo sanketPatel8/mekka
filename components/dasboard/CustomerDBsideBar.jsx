@@ -8,6 +8,7 @@ import React from "react";
 import { showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useState } from "react";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const CustomerDBsideBar = ({ setSideBarOpen }) => {
   const pathname = usePathname();
@@ -23,6 +24,8 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
     console.log("hello logout ");
     
   }
+
+  const {translate} = useTranslation()
     
 
   return (
@@ -55,7 +58,7 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
           >
             <Link href={elm.href}  onClick={elm.label === "Logout" ? handleLogoutAndCloseSidebar : ""}>
               <i className={elm.iconClass}></i>
-              <span className="ml-10">{elm.label}</span>
+              <span className="ml-10">{translate(elm.label)}</span>
             </Link>
           </div>
         ))}
