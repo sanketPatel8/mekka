@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link"; // Ensure Link is imported
 import Image from "next/image";
+import { useUserProfile } from "@/app/context/ProfileContext";
 
 const options = [
   { name: "Booking", path: "/customer/booking" },
@@ -12,16 +13,27 @@ const options = [
   { name: "LogOut", path: "" }, // Ensure to handle logout separately
 ];
 
-export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
+export default function DashboardCustomer({
+  parentClass,
+  handleLogoutClick,
+  
+}) {
   const [currentOption, setCurrentOption] = useState("Dashboard");
   const dropDownContainer = useRef();
   const { currency, setCurrency } = useCurrency();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
+  const { profileImage  } = useUserProfile();
+
+  console.log("profileImage" , profileImage ); 
+
   const handleOptionChange = (option) => {
     console.log("Option changed:", option); // Example logging
   };
+
+  console.log("profileImage for DAshboard dd" , profileImage);
+  
 
   const handleButtonClick = (option) => {
     if (option.name === "LogOut") {
@@ -67,9 +79,9 @@ export default function DashboardCustomer({ parentClass, handleLogoutClick }) {
         <Image
           width={55}
           height={55}
-          src="/img/404/user.jpg"
+          src={profileImage || "/img/404/user.jpg"}
           alt="image"
-          className="rounded-full"
+          className="rounded-full profile_img"
         />
       </div>
 
