@@ -549,3 +549,8 @@ hr{
   height: 55px !important;
   border: 1px solid black;
 }
+
+.font_11{
+  font-size: 11px;
+  text-align: left;
+}

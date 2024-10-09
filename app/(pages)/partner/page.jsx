@@ -309,7 +309,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Organization Name")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -323,7 +323,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("State")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -348,7 +348,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Zip Code")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -391,7 +391,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("City")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -405,7 +405,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Street")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -419,7 +419,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("House No")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -434,10 +434,10 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("E-Mail Address")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                           {errors.company_email && (
-                            <span className="text-red">
+                            <span className="text-red font_11">
                               {" "}
                               {errors.company_email}
                             </span>
@@ -458,7 +458,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Phone Number")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -505,7 +505,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Name")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -519,7 +519,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Surname")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -534,10 +534,10 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("E-mail Address")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                           {errors.email && (
-                            <span className="text-red"> {errors.email}</span>
+                            <span className="text-red font_11"> {errors.email}</span>
                           )}
                         </div>
                       </div>
@@ -552,7 +552,7 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Phone Number")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
                         </div>
                       </div>
@@ -567,17 +567,17 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Password")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
-                          <span className="text-red">
+                          <span className="text-red font_11">
                             {translate(
                               "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
                             )}
                           </span>
-                          {/* {errors.password && <div className='text-red'> {errors.password}</div>} */}
+                          {/* {errors.password && <div className='text-red font_11'> {errors.password}</div>} */}
 
                           {passwordError && (
-                            <div className="text-red">{passwordError}</div>
+                            <div className="text-red font_11">{passwordError}</div>
                           )}
                         </div>
                       </div>
@@ -591,9 +591,9 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Confirm Password")}{" "}
-                            <span className="text-red">*</span>
+                            <span className="text-red font_11">*</span>
                           </label>
-                          {error && <div className="text-red">{error}</div>}
+                          {error && <div className="text-red font_11">{error}</div>}
                         </div>
                       </div>
                       <div className="d-flex items-center mt-3">
@@ -622,7 +622,7 @@ const page = () => {
                             </div>
                           </div>
                           <span className="text-14 lh-12 ml-10">
-                            <span className="text-red">*</span>{" "}
+                            <span className="text-red font_11">*</span>{" "}
                             {translate(
                               "I have read the data protection and I accept the conditions."
                             )}

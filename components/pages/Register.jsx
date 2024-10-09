@@ -283,7 +283,7 @@ export default function Register() {
                   {translate("Password")}
                 </label>
                 {passwordError && (
-                  <div className="text-red">{passwordError}</div>
+                  <div className="text-red font_11">{passwordError}</div>
                 )}
               </div>
 
@@ -297,7 +297,7 @@ export default function Register() {
                 <label className="lh-1 text-16 text-light-1">
                   {translate("Confirm Password")}
                 </label>
-                {error && <div className="text-red">{error}</div>}
+                {error && <div className="text-red font_11">{error}</div>}
               </div>
 
               <div className="d-flex items-center">
