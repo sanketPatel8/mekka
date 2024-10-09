@@ -100,7 +100,6 @@ const CustomerDetaTable = () => {
     Modal.setAppElement("#upload_file");
     Modal.setAppElement("#editData");
     Modal.setAppElement("#Adult1Data");
- 
   }, []);
 
   const ColumnReservation_details = [
@@ -173,7 +172,11 @@ const CustomerDetaTable = () => {
   ];
 
   const columnAduInfo_2 = [
-    { name: translate("Name"), selector: (row) => row.personName, width: "100px" },
+    {
+      name: translate("Name"),
+      selector: (row) => row.personName,
+      width: "100px",
+    },
     { name: translate("Surname"), selector: (row) => row.personSurName },
     { name: translate("Gender"), selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
@@ -213,7 +216,11 @@ const CustomerDetaTable = () => {
   ];
 
   const Child = [
-    { name: translate("Name"), selector: (row) => row.personName, width: "100px" },
+    {
+      name: translate("Name"),
+      selector: (row) => row.personName,
+      width: "100px",
+    },
     { name: translate("Surname"), selector: (row) => row.personSurName },
     { name: translate("Gender"), selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
@@ -253,7 +260,11 @@ const CustomerDetaTable = () => {
   ];
 
   const baby = [
-    { name: translate("Name"), selector: (row) => row.personName, width: "100px" },
+    {
+      name: translate("Name"),
+      selector: (row) => row.personName,
+      width: "100px",
+    },
     { name: translate("Surname"), selector: (row) => row.personSurName },
     { name: translate("Gender"), selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.personBirthDay },
@@ -314,7 +325,6 @@ const CustomerDetaTable = () => {
   }
 
   function openModal() {
-    
     setIsOpen(true);
   }
 
@@ -369,7 +379,7 @@ const CustomerDetaTable = () => {
 
   const [personId, setPersonId] = useState(0);
   const [AdditionalService, setAdditionalService] = useState([]);
-  const [AdultPrice, setAdultPrice] = useState({});
+  const [AdultPrice, setAdultPrice] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
 
   const searchParams = useSearchParams();
@@ -469,7 +479,7 @@ const CustomerDetaTable = () => {
                 target="_blank"
                 className="button -sm -accent-1 bg-info-2 text-white my-2"
               >
-                {translate('View')} {translate(" ")}
+                {translate("View")} {translate(" ")}
               </Link>
             ),
           },
@@ -486,7 +496,7 @@ const CustomerDetaTable = () => {
                 className="button -sm -accent-1 bg-info-2 text-white my-2"
                 onClick={() => downloadFile(row.fileLink, row.Name)}
               >
-                {translate('Download')}
+                {translate("Download")}
               </button>
             ),
           },
@@ -514,14 +524,16 @@ const CustomerDetaTable = () => {
           console.error("Error parsing userData:", error);
         }
       }
-      if (AdultsPrice && AdultsPrice !== "undefined") {
-        try {
-          const addiPrice = JSON.parse(AdultsPrice);
-          setAdultPrice(addiPrice);
-        } catch (error) {
-          console.error("Error parsing userData:", error);
-        }
-      }
+      // if (AdultsPrice && AdultsPrice !== "undefined") {
+      //   try {
+      //     const addiPrice = JSON.parse(AdultsPrice);
+      //     setAdultPrice(addiPrice);
+      //   } catch (error) {
+      //     console.error("Error parsing userData:", error);
+      //   }
+      // }
+
+      setAdultPrice(AddpersonDetails.tour_price);
     }
   }, []);
 
@@ -578,10 +590,26 @@ const CustomerDetaTable = () => {
 
   // for Add New Person
 
+  const [AddpersonDetails, setAddpersonDetails] = useState([]);
+
   useEffect(() => {
-    
-  }, [])
-  
+    const FatchUserDetails = async () => {
+      const formData = new FormData();
+
+      formData.append("tour_id", TourID);
+
+      try {
+        const response = await POST.request({
+          form: formData,
+          url: "pricedetail",
+        });
+        setAddpersonDetails(response?.Tour_Details);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    FatchUserDetails();
+  }, [TourID]);
 
   const [AddpersonData, setAddpersonData] = useState({
     name: "",
@@ -601,12 +629,17 @@ const CustomerDetaTable = () => {
   useEffect(() => {
     // Ensure AddpersonData, AdultPrice, and RadioValue are defined before using them
     if (AddpersonData && AddpersonData.roomType && Array.isArray(AdultPrice)) {
+      console.log("AdultPrice in function", AdultPrice);
+      console.log("AddpersonData.roomType", AddpersonData.roomType);
+
       const total = AdultPrice.reduce((total, e) => {
-        // Check if the type matches the room type
-        return e.type === AddpersonData.roomType
+        // Check if price_type matches the room type
+        return e.price_type == AddpersonData.roomType
           ? total + parseFloat(e.price)
           : total;
       }, 0);
+
+      console.log("total", total); // This will log the total price for the matching room type
 
       // Safely parse RadioValue.price and conditionally add to subtotal
       const radioPrice =
@@ -621,7 +654,7 @@ const CustomerDetaTable = () => {
     } else {
       setSubtotal(0); // Reset subtotal if conditions aren't met
     }
-  }, [AdultPrice, AddpersonData, RadioValue]); // Dependency array
+  }, [AdultPrice, AddpersonData , RadioValue, AddpersonDetails]); // Dependency array
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -965,7 +998,8 @@ const CustomerDetaTable = () => {
             {BookingDetails?.reservation?.reservation_status}
           </p>
           <p className="text-red t_center">
-            {translate('Available')} {BookingDetails?.reservation?.capacity_empty} {translate('seats')}
+            {translate("Available")}{" "}
+            {BookingDetails?.reservation?.capacity_empty} {translate("seats")}
           </p>
         </div>
 
@@ -1018,7 +1052,7 @@ const CustomerDetaTable = () => {
       {/* Reservation Details Table */}
       {BookingDetails?.reservation ? (
         <DataTable
-          title={translate('Reservation Details')}
+          title={translate("Reservation Details")}
           columns={ColumnReservation_details}
           data={[BookingDetails.reservation]}
           highlightOnHover
@@ -1032,7 +1066,9 @@ const CustomerDetaTable = () => {
       {/* Adult Data Table */}
       {BookingDetails?.reservation ? (
         <DataTable
-          title={`${translate('Adult')}: ${BookingDetails.reservation.bookingName} (${BookingDetails.reservation.gender})`}
+          title={`${translate("Adult")}: ${
+            BookingDetails.reservation.bookingName
+          } (${BookingDetails.reservation.gender})`}
           columns={columnAdu_1}
           data={[BookingDetails.reservation]}
           highlightOnHover
@@ -1055,7 +1091,7 @@ const CustomerDetaTable = () => {
 
       {/* Child Data Table */}
       <DataTable
-        title={translate('Child Information')}
+        title={translate("Child Information")}
         columns={Child}
         data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
         highlightOnHover
@@ -1075,7 +1111,7 @@ const CustomerDetaTable = () => {
 
       {BookingDetails.reservation ? (
         <DataTable
-          title={translate('Total')}
+          title={translate("Total")}
           columns={Total}
           data={[BookingDetails.reservation]}
           highlightOnHover
@@ -1191,7 +1227,7 @@ const CustomerDetaTable = () => {
                     </select>
 
                     <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                    {translate("Nationality ")}
+                      {translate("Nationality ")}
                     </label>
                   </div>
                 </div>
@@ -1215,20 +1251,19 @@ const CustomerDetaTable = () => {
                         : AddpersonData.roomType == "2"
                         ? "Child"
                         : "Baby"} */}
-                        {translate("Adult Type")}
+                      {translate("Adult Type")}
                     </label>
                   </div>
                 </div>
               </div>
-
-              {AddpersonData.roomType !== "3" && (
+              {AddpersonData.length !== 0 && AddpersonData.roomType !== "3" && (
                 <div className="my-3 border_b px-md-40">
                   <h5 className="text-18 fw-500 my-2">
                     {translate("Possible additional services per person")} :
                   </h5>
 
                   <div>
-                    {AdditionalService?.map((option, idx) => (
+                    {AddpersonDetails.addtional_price?.map((option, idx) => (
                       <div
                         key={option.id}
                         className="d-flex items-center justify-between radio_hight"
@@ -1557,7 +1592,7 @@ const CustomerDetaTable = () => {
               </button>
 
               <h6 className="booking-form-price col-4">
-                {translate('Subtotal')}:<span>{subtotal}€</span>
+                {translate("Subtotal")}:<span>{subtotal}€</span>
               </h6>
             </div>
           </div>
@@ -1572,7 +1607,7 @@ const CustomerDetaTable = () => {
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between p-2" id="modelopen">
-            <h2 className="px-20">{translate('PENDING PAYMENT')}</h2>
+            <h2 className="px-20">{translate("PENDING PAYMENT")}</h2>
             <button onClick={closePaymentModal}>
               <IoClose size={25} />
             </button>
@@ -1580,7 +1615,8 @@ const CustomerDetaTable = () => {
           <div className=" y-gap-30 contactForm px-20 py-10">
             <div className="col-md-12">
               <h5 className="mb-3 t_center mt-3">
-                {translate('Total Amount')} : <b>{BookingDetails?.reservation?.subtotal} €</b>
+                {translate("Total Amount")} :{" "}
+                <b>{BookingDetails?.reservation?.subtotal} €</b>
               </h5>
             </div>
 
@@ -1694,7 +1730,7 @@ const CustomerDetaTable = () => {
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="">{translate('Cancel Trip')}</h2>
+            <h2 className="">{translate("Cancel Trip")}</h2>
             <button onClick={CloseCancelPopUp}>
               <IoClose size={25} />
             </button>
@@ -1714,19 +1750,21 @@ const CustomerDetaTable = () => {
               </thead>
               <tbody>
                 <tr>
-                  <td className="px-1 py-2">{translate('Total Package Fees')}</td>
+                  <td className="px-1 py-2">
+                    {translate("Total Package Fees")}
+                  </td>
                   <td className="px-1 py-2">300.00 €</td>
                 </tr>
                 <tr>
-                  <td className="px-1 py-2">{translate('Mekka Fees')}</td>
+                  <td className="px-1 py-2">{translate("Mekka Fees")}</td>
                   <td className="px-1 py-2">0.00 €</td>
                 </tr>
                 <tr>
-                  <td className="px-1 py-2">{translate('Total Tax Amount')}</td>
+                  <td className="px-1 py-2">{translate("Total Tax Amount")}</td>
                   <td className="px-1 py-2">-13.00 €</td>
                 </tr>
                 <tr>
-                  <td className="px-1 py-2">{translate('Agent Payable')}</td>
+                  <td className="px-1 py-2">{translate("Agent Payable")}</td>
                   <td className="px-1 py-2">1.000,00 €</td>
                 </tr>
               </tbody>
@@ -2016,7 +2054,7 @@ const CustomerDetaTable = () => {
                         <option value="other">{translate("Other")}</option>
                       </select>
                       <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                        {translate('Gender')}
+                        {translate("Gender")}
                       </label>
                     </div>
                   </div>
@@ -2058,7 +2096,7 @@ const CustomerDetaTable = () => {
                         ))}
                       </select>
                       <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                        {translate('Nationality')}
+                        {translate("Nationality")}
                       </label>
                     </div>
                   </div>
@@ -2193,7 +2231,7 @@ const CustomerDetaTable = () => {
                       <option value="canadian"> {translate("Canadian")}</option>
                     </select>
                     <label className="lh-1 text-16 text-light-1">
-                      {translate('Nationality')}
+                      {translate("Nationality")}
                     </label>
                   </div>
                 </div>
