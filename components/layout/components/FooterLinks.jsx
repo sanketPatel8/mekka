@@ -35,7 +35,7 @@ export default function FooterLinks() {
       },
     ];
     setSections(newSections);
-  },[sections]);
+  },[]);
 
   return (
     <>
