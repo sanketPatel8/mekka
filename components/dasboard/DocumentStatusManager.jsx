@@ -51,7 +51,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
   const [selectedTime, setSelectedTime] = useState("");
   const reservationDataArray = [reservationData];
   const totalDataArray = [totalData];
-
+  const {translate} = useTranslation();
 
   // Function to set selected time
   const handleSelectTime = (time) => {
@@ -141,7 +141,6 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
     }
   };
 
-  const { translate } = useTranslation();
   return (
     <div>
       <ToastContainer/>
@@ -171,7 +170,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
                 onChange={handleChange}
                 className="dd-statusChange"
                 isClearable
-                placeholder="Select Status"
+                placeholder={translate("Select Status")}
               />
             </div>
           </div>
@@ -187,7 +186,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
         reservationData && 
         <>
         <DataTable
-          title="Reservation Details"
+          title={translate("Reservation Details")}
           columns={reservationHeader}
           data={reservationDataArray}
           highlightOnHover
@@ -201,7 +200,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
         <>
         
         <DataTable
-          title="Adult "
+          title={translate("Adult")}
           columns={adultHeaders}
           data={adultBookings}
           highlightOnHover
@@ -214,7 +213,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
         childBookings &&
         <>
         <DataTable
-          title="Children "
+          title={translate("Children")}
           columns={adultHeaders}
           data={childBookings}
           highlightOnHover
@@ -226,7 +225,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
       {
         babyBookings &&
         <>
-          <DataTable title="Baby " columns={adultHeaders} data={babyBookings} highlightOnHover />
+          <DataTable title="Baby" columns={adultHeaders} data={babyBookings} highlightOnHover />
           <br />
         </>
 
@@ -237,7 +236,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
         <>
         
         <DataTable
-          title="Total"
+          title={translate("Total")}
           columns={totalHeaders}
           data={totalDataArray}
           highlightOnHover

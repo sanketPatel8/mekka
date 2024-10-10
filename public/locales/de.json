@@ -240,7 +240,7 @@
   "Transaction ID ": "Transaktions-ID",
   "Full Name": "Vollständiger Name",
   "Terms": "Bedingungen",
-  "Method": "Methode",
+  "Method": "Verfahren",
   "Flight": "Flug",
   "Initiated By": "Eingeführt von",
   "Bookings": "Buchungen",
@@ -608,7 +608,13 @@
 "Salam, I am very grateful that this site exists. It helped me and my family plan their trip perfectly and the people at Mekkabooking are reliable and trustworthy: everything was perfect from start to finish. Thanks also to Yasim" : "Salam, bin sehr dankbar das es diese Seite gebt. Habe dadurch die Reise von mir und meine Familie perfekt planen können und die Leute bei Mekkabooking sind seriös und vertrauensvoll: alles war perfekt von Anfang bis Ende. Danke auch an Yasim",
 "I did my Umrah with the organizer. Everything was great. Khattab is a great tour guide. Thank you for everything." : "Ich habe meine Umra mit dem Veranstalter gemacht. Alles war super. Khattab ist ein super Reiseführer. Dankeschön für alles.",
 "Lost your password" : "Passwort vergessen",
-"Select Country (Required)" : "Land auswählen (Erforderlich)"
+"Select Country (Required)" : "Land auswählen (Erforderlich)",
+"Pending (€)" : "Ausstehend (€)",
+"Total (€)" : "Gesamt (€)",
+"Visas" : "Visum",
+"Booking Id" : "Buchungs-ID",
+"Select Status" : "Status auswählen",
+"Children" : "Kinder"
   
   
   

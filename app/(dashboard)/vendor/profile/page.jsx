@@ -871,7 +871,7 @@ export default function Profile() {
                                         className="col-auto my-2"
                                         key={index}
                                       >
-                                        <div className="relative">
+                                        <div className="relative"  style={{width:"200px"}} >
                                           <div className="size-200 rounded-12 border-1 bg-white flex-center flex-column">
                                             <Image
                                               width="40"
@@ -881,7 +881,7 @@ export default function Profile() {
 
                                             />
                                           </div>
-                                          <div className="file-name">
+                                          <div className="file-name" style={{lineBreak:"anywhere"}}>
                                             {document.split("/").pop()}
                                           </div>
                                           <button

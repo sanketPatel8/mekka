@@ -65,18 +65,18 @@ export default function DbBooking() {
         sortable: true,
       },
       {
-        name: translate("Total (€) "),
+        name: translate("Total (€)"),
         selector: (row) => row.Total_Payment,
         sortable: true,
       },
       {
-        name: translate("Pending (€) "),
+        name: translate("Pending (€)"),
         selector: (row) => row.Pending_Payment,
         sortable: true,
       },
    
       {
-        name: translate("Method "),
+        name: translate("Method"),
         selector: (row) => row.Payment_Method,
         sortable: true,
       },
@@ -107,6 +107,7 @@ export default function DbBooking() {
             </button>
           </Link>
         ),
+        width:"10%"
       },
     ];
 
