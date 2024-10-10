@@ -384,15 +384,8 @@ export default function EditTour() {
   useEffect(() => {
     if (tourDetails) {
       setSelectedTour({ value: tourDetails.type, label: tourDetails.type });
-      setDateBegin(tourDetails.date_begin);
-      console.log(date_begin, "date_begin");
-      setDateEnd(tourDetails.date_end);
-      setMinEndDate(tourDetails.date_begin);
-      const nextDay = new Date(tourDetails.date_begin);
-      console.log(nextDay,"nextDay")
-      nextDay.setDate(nextDay.getDate() + 1);
-      setMinDate(nextDay.toISOString().split("T")[0]);
-
+ 
+     
       if (tourDetails.tour_image) {
         setImage2(tourDetails.tour_image || []);
       }
@@ -433,6 +426,20 @@ export default function EditTour() {
       }
     }
   }, [tourDetails]);
+
+  useEffect(()=>{
+    if (tourDetails && tourDetails.date_begin) {
+      setSelectedTour({ value: tourDetails.type, label: tourDetails.type });
+      setDateBegin(tourDetails.date_begin);
+      setDateEnd(tourDetails.date_end);
+      setMinEndDate(tourDetails.date_begin);
+      const nextDay = new Date(tourDetails.date_begin);
+      nextDay.setDate(nextDay.getDate() + 1);
+      setMinDate(nextDay.toISOString().split("T")[0]);
+    }
+  
+
+  },[tourDetails])
 
   useEffect(() => {
     if (flightData) {

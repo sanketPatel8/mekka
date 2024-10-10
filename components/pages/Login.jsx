@@ -46,7 +46,16 @@ export default function Login({
   const [LoginChecked, setLoginChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
+  const {customer} = useAuthContext();
+  console.log(customer)
+
   const router = useRouter();
+  // useEffect(()=>{
+  //   if(customer){
+  //     router.push("/")
+  //   }
+  // },[customer])
+
 
   const LoginUpdate = () => {
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
