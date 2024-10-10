@@ -23,6 +23,9 @@ export default function Login({
   path,
   Loading
 }) {
+
+  
+
   const LoginSocialFacebook = dynamic(
     () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
     { ssr: false }
@@ -36,6 +39,9 @@ export default function Login({
     { ssr: false }
   );
 
+ 
+
+  
   const [LogInData, setLogInData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     email: "",
@@ -46,7 +52,6 @@ export default function Login({
   const { dispatch } = useAuthContext();
   const [LoginChecked, setLoginChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
   const router= useRouter();
 
 
@@ -299,14 +304,15 @@ export default function Login({
                   >
                     <LoginSocialFacebook
                       appId={process.env.REACT_APP_FB_APP_ID || ""}
-                      client_id={process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID || ""}
 
                       fieldsProfile={
                         "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                       }
+                      scope='email,public_profile'
                       onLoginStart={() => console.log("start")}
-                      onResolve={({ provider, data }) => {
-                        signinSocial({ type: "facebook", data });
+                      onResolve={({ provider, data } ) => {
+                        const { id, name, email } = data;
+                        signinSocial({ type: "facebook", data: { id, name, email } });
                       }}
                       onReject={(err) => {
                         console.log(err);
@@ -320,7 +326,9 @@ export default function Login({
                 </div>
 
                 <div className="col">
-                  <button
+                <FaGoogle size={15} className="mx-1" />
+                {translate("Google")}
+                  {/* <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
                   >
@@ -337,10 +345,9 @@ export default function Login({
                         console.log(err);
                       }}
                     >
-                      <FaGoogle size={15} className="mx-1" />
-                      {translate("Google")}
+   
                     </LoginSocialGoogle>
-                  </button>
+                  </button> */}
                   {/* <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
@@ -350,7 +357,7 @@ export default function Login({
                 </div>
               </div>
               <br />
-              <div className="row y-gap-15">
+              {/* <div className="row y-gap-15">
                 <div className="col">
                   <button
                     type="button"
@@ -361,7 +368,7 @@ export default function Login({
                       scope={"name email"}
                       onLoginStart={() => console.log("start")}
                       onResolve={({ provider, data }) => {
-                        signinSocial({ type: "facebook", data });
+                        signinSocial({ type: "apple", data });
                       }}
                       onReject={(err) => {
                         console.log(err);
@@ -372,7 +379,7 @@ export default function Login({
                     </LoginSocialApple>
                   </button>
                 </div>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
