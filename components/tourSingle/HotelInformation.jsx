@@ -13,6 +13,9 @@ const RoadMap = ({ PAckageData,hotelData }) => {
   //   setMainHotelData(PAckageData?.Tour_Details?.tour_hotels)
   // }, [PAckageData])
 
+  console.log("hotelData" , hotelData);
+  
+
 
   return (
     <>

@@ -11,7 +11,7 @@ export default function RoadMap2({ PAckageData }) {
     setRoadMap(PAckageData?.Tour_Details?.itinerary || []);
   }, [PAckageData]);
 
-  console.log("RoadMap" , RoadMap);
+
   
 
   // Combine RoadMap and roadmapData2

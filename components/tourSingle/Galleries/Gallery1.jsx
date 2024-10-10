@@ -17,14 +17,6 @@ export default function Gallery1({ PAckageData  , }) {
  
   
 
-//  useEffect(() => {
-
-//     const imgArray = JSON.parse(Images)
-//     const img = imgArray?.map((e) =>  e )
-//     console.log("selected" , img );
-    
-//   }, [Images])
-
   
 
 
