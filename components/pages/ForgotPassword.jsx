@@ -22,27 +22,21 @@ export default function ForgotPassword({ onLoginSuccess }) {
 
   const handleLoginSubmite = async (e) => {
     e.preventDefault();
-   
-    try {
-      const formData = new FormData();
-      formData.append("email", email);
-      const response = await POST.request({form: formData, url:"forgot_password"});
+    const formData = new FormData();
+    formData.append("email", email);
+    const response = await POST.request({form: formData, url:"forgot_password"});
+    if(response.status == 1 ){
+
       showSuccessToast(response.msg);
       setEmail("")
       setTimeout(() => {
         route.push('/login')
       }, 4000);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        showErrorToast("Please verify your email");
-      } else {
-        showErrorToast("An error occurred during registration.");
-      }
+    }else if(response.status == 0){
+      showErrorToast(response.msg);
+      setEmail("");
     }
+ 
   };
 
   const { translate } = useTranslation();

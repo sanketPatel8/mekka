@@ -38,6 +38,19 @@ const tabs = [
   "Itinerary",
   "Flight Hotel And Visa",
 ];
+const handleHotelPriceChange = (e, index) => {
+  const value = e.target.value;
+  if (!/^[0-9]+$/.test(value)) {
+    // Display an error message
+    console.error("Invalid hotel price");
+  } else {
+    setMekkaRows(prevRows => {
+      const newRows = [...prevRows];
+      newRows[index].hotel_price = value;
+      return newRows;
+    });
+  }
+};
 
 export default function AddTour() {
   const {user} = useAuthContext();
@@ -870,7 +883,12 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="number" min={1} ref={numberInputRef1}  required value={capacity} onChange={handleInputChange(setCapacity)}/>
+                                        <input type="number" min={1} ref={numberInputRef1}  required value={capacity} onChange={handleInputChange(setCapacity)}   
+                                        onKeyDown={(e) => {
+                                                    if (!/^[0-9]+$/.test(e.key)) {
+                                                      e.preventDefault();
+                                                    }
+                                                  }}/>
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Seat Availibility") ||
                                             "Find Latest Packages"} <span className="text-red">*</span>
@@ -978,7 +996,13 @@ const isCurrentTabValid = () => {
                                                       const newRows = [...prevRows];
                                                       newRows[index].price = e.target.value;
                                                       return newRows;
-                                                    })} />
+                                                    })}
+                                                    onKeyDown={(e) => {
+                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
+                                                    />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
                                                     {translate("Price") ||
@@ -1112,7 +1136,13 @@ const isCurrentTabValid = () => {
                                 <div className="contactForm row y-gap-30 items-center ">
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
-                                      <input type="number" ref={numberInputRef3} required value={adult_price} onChange={handleInputChange(setAdultPrice)}/>
+                                      <input type="number" ref={numberInputRef3} required value={adult_price} onChange={handleInputChange(setAdultPrice)}
+                                        onKeyDown={(e) => {
+                                          if (!/^[0-9]+$/.test(e.key)) {
+                                            e.preventDefault();
+                                          }
+                                        }}
+                                      />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Adult") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -1121,7 +1151,13 @@ const isCurrentTabValid = () => {
                                   </div>
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
-                                      <input type="number" ref={numberInputRef4} required value={child_price} onChange={handleInputChange(setChildPrice)} />
+                                      <input type="number" ref={numberInputRef4} required value={child_price} onChange={handleInputChange(setChildPrice)}
+                                        onKeyDown={(e) => {
+                                          if (!/^[0-9]+$/.test(e.key)) {
+                                            e.preventDefault();
+                                          }
+                                        }}
+                                      />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Child") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -1130,7 +1166,12 @@ const isCurrentTabValid = () => {
                                   </div>
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
-                                      <input type="number" ref={numberInputRef5} required value={baby_price} onChange={handleInputChange(setBabyPrice)}/>
+                                      <input type="number" ref={numberInputRef5} required value={baby_price} onChange={handleInputChange(setBabyPrice)} 
+                                        onKeyDown={(e) => {
+                                          if (!/^[0-9]+$/.test(e.key)) {
+                                            e.preventDefault();
+                                          }
+                                        }}/>
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Baby") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -1213,6 +1254,11 @@ const isCurrentTabValid = () => {
                                               value={service.price}
                                               onChange={(event) => handlePriceChange(event, service.id)}
                                               required
+                                              onKeyDown={(e) => {
+                                                if (!/^[0-9]+$/.test(e.key)) {
+                                                  e.preventDefault();
+                                                }
+                                              }}
                                             />
                                             <label className="lh-1 text-16 text-light-1">
                                               {translate("Price")}
@@ -1540,6 +1586,11 @@ const isCurrentTabValid = () => {
                                                     newRows[index].hotel_price = e.target.value;
                                                     return newRows;
                                                   })}
+                                                  onKeyDown={(e) => {
+                                                    if (!/^[0-9]+$/.test(e.key)) {
+                                                      e.preventDefault();
+                                                    }
+                                                  }}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -1574,7 +1625,7 @@ const isCurrentTabValid = () => {
                                             <button
                                               type="button"
                                               className="button -sm -info-2 bg-accent-1 text-white  my-4 text-40 mx-1 mx-md-3 "
-                                              style={{height:"fit-content"}}
+                                              style={{height:"fit-content",width: "fit-content"}}
                                               onClick={handleAddMekkaRow}
                                             >
                                               +
@@ -1583,7 +1634,7 @@ const isCurrentTabValid = () => {
                                               <button
                                                 type="button"
                                                 className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-md-3 mx-1`}
-                                                style={{height:"fit-content"}}
+                                                style={{height:"fit-content",width: "fit-content"}}
 
                                                 onClick={() =>
                                                   handleRemoveMekkaRow(index)
@@ -1630,13 +1681,21 @@ const isCurrentTabValid = () => {
 
                                               <div className="col-md-6">
                                                 <div className="form-input spacing">
-                                                  <input type="number" ref={numberInputRef8} required
-                                                    value={madinaRows[index].hotel_price}
-                                                    onChange={(e) => setMadinaRows(prevRows => {
-                                                      const newRows = [...prevRows];
-                                                      newRows[index].hotel_price = e.target.value;
-                                                      return newRows;
-                                                    })} />
+                                                <input
+                                                  type="text"
+                                                  required
+                                                  value={mekkaRows[index].hotel_price}
+                                                  onChange={(e) => setMekkaRows(prevRows => {
+                                                    const newRows = [...prevRows];
+                                                    newRows[index].hotel_price = e.target.value;
+                                                    return newRows;
+                                                  })}
+                                                  onKeyDown={(e) => {
+                                                    if (!/^[0-9]+$/.test(e.key)) {
+                                                      e.preventDefault();
+                                                    }
+                                                  }}
+                                                />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
                                                     {translate("Hotel Price") ||
@@ -1671,7 +1730,7 @@ const isCurrentTabValid = () => {
                                               type="button"
                                               className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
                                               onClick={handleAddMadinaRow}
-                                              style={{height:"fit-content"}}
+                                              style={{height:"fit-content",width: "fit-content"}}
 
                                             >
                                               +
@@ -1680,7 +1739,7 @@ const isCurrentTabValid = () => {
                                               <button
                                                 type="button"
                                                 className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                                style={{height:"fit-content"}}
+                                                style={{height:"fit-content",width: "fit-content"}}
 
                                                 onClick={() =>
                                                   handleRemoveMadinaRow(index)
@@ -1903,6 +1962,11 @@ const isCurrentTabValid = () => {
                                                         newRows[index].flight_amount = e.target.value;
                                                         return newRows;
                                                       })}
+                                                      onKeyDown={(e) => {
+                                                        if (!/^[0-9]+$/.test(e.key)) {
+                                                          e.preventDefault();
+                                                        }
+                                                      }}
                                                     />
                                                     <label className="lh-1 text-16 text-light-1">
                                                       {" "}

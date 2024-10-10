@@ -625,6 +625,8 @@ export default function EditTour() {
   };
 
   const isCurrentTabValid = () => {
+    console.log(route_data.every((day) => day.dayData && day.description), "uploaded"),
+    console.log(image2,"image2")
     if (activeTab === "Content") {
       return (
         SelectedTour &&
@@ -633,12 +635,14 @@ export default function EditTour() {
         date_begin &&
         date_end &&
         selectRef.current.value &&
-        image2.length > 0 &&
         departureRows.length > 0 &&
         departureRows.every(
           (departure) => departure.departure_id && departure.price
-        )
-      );
+        ) &&
+        (image2.length > 0 || Object.keys(uploadedImage).some((key) => uploadedImage[key]))
+ 
+
+      )
     } else if (activeTab === "Pricing") {
       return adult_price && child_price && baby_price;
     } else if (activeTab === "Included") {
@@ -685,9 +689,10 @@ export default function EditTour() {
         setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
       }
     } else {
-      showErrorToast("Please fill in all required fields before proceeding.");
-    }
-  };
+  
+        showErrorToast("Please fill in all required fields before proceeding.");
+      }
+      }
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
       const newData = [...prevData];
@@ -1066,6 +1071,7 @@ export default function EditTour() {
       id: departure.id ? departure.id : "",
     }));
 
+
     const formData = new FormData();
 
     formData.append("type", SelectedTour.value);
@@ -1239,6 +1245,11 @@ export default function EditTour() {
                                       required
                                       value={capacity}
                                       onChange={handleInputChange(setCapacity)}
+                                      onKeyDown={(e) => {
+                                        if (!/^[0-9]+$/.test(e.key)) {
+                                          e.preventDefault();
+                                        }
+                                      }}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Seat Availibility") ||
@@ -1378,6 +1389,11 @@ export default function EditTour() {
                                                         }
                                                       )
                                                     }
+                                                    onKeyDown={(e) => {
+                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -1520,6 +1536,11 @@ export default function EditTour() {
                                     required
                                     value={adult_price}
                                     onChange={handleInputChange(setAdultPrice)}
+                                    onKeyDown={(e) => {
+                                      if (!/^[0-9]+$/.test(e.key)) {
+                                        e.preventDefault();
+                                      }
+                                    }}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Adult") ||
@@ -1536,6 +1557,11 @@ export default function EditTour() {
                                     required
                                     value={child_price}
                                     onChange={handleInputChange(setChildPrice)}
+                                    onKeyDown={(e) => {
+                                      if (!/^[0-9]+$/.test(e.key)) {
+                                        e.preventDefault();
+                                      }
+                                    }}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Child") ||
@@ -1552,6 +1578,11 @@ export default function EditTour() {
                                     required
                                     value={baby_price}
                                     onChange={handleInputChange(setBabyPrice)}
+                                    onKeyDown={(e) => {
+                                      if (!/^[0-9]+$/.test(e.key)) {
+                                        e.preventDefault();
+                                      }
+                                    }}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Baby") ||
@@ -1642,6 +1673,11 @@ export default function EditTour() {
                                           onChange={(event) =>
                                             handlePriceChange(event, service.id)
                                           }
+                                          onKeyDown={(e) => {
+                                            if (!/^[0-9]+$/.test(e.key)) {
+                                              e.preventDefault();
+                                            }
+                                          }}
                                           required
                                         />
                                         <label className="lh-1 text-16 text-light-1">
@@ -2012,6 +2048,11 @@ export default function EditTour() {
                                                     return newRows;
                                                   })
                                                 }
+                                                onKeyDown={(e) => {
+                                                  if (!/^[0-9]+$/.test(e.key)) {
+                                                    e.preventDefault();
+                                                  }
+                                                }}
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
@@ -2135,6 +2176,11 @@ export default function EditTour() {
                                                     return newRows;
                                                   })
                                                 }
+                                                onKeyDown={(e) => {
+                                                  if (!/^[0-9]+$/.test(e.key)) {
+                                                    e.preventDefault();
+                                                  }
+                                                }}
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
@@ -2407,6 +2453,11 @@ export default function EditTour() {
                                                         }
                                                       )
                                                     }
+                                                    onKeyDown={(e) => {
+                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -2440,6 +2491,11 @@ export default function EditTour() {
                                                         }
                                                       )
                                                     }
+                                                    onKeyDown={(e) => {
+                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -2472,6 +2528,11 @@ export default function EditTour() {
                                                         }
                                                       )
                                                     }
+                                                    onKeyDown={(e) => {
+                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}

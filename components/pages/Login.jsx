@@ -303,16 +303,22 @@ export default function Login({
                     className="button -md -outline-blue-1 text-blue-1 col-12"
                   >
                     <LoginSocialFacebook
-                      appId={process.env.REACT_APP_FB_APP_ID || ""}
+                      appId={process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""}
 
                       fieldsProfile={
                         "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                       }
                       scope='email,public_profile'
                       onLoginStart={() => console.log("start")}
-                      onResolve={({ provider, data } ) => {
+                      onResolve={({ provider, data }) => {
                         const { id, name, email } = data;
-                        signinSocial({ type: "facebook", data: { id, name, email } });
+                        console.log(data);
+                        window.FB.getLoginStatus((response) => {
+                          if (response.status === 'connected') {
+                            signinSocial({ type: "facebook", data: { id, name, email } });
+                          }
+                        });
+                        window.FB.logout();
                       }}
                       onReject={(err) => {
                         console.log(err);
