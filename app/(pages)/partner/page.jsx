@@ -362,7 +362,7 @@ const page = () => {
                               label: country.name,
                             }))}
                             className="custom-select"
-                            placeholder="Select Country (required)"
+                            placeholder={`${translate("Select Country (Required)")}`}
                             classNamePrefix="react-select"
                             isClearable
                             formatCreateLabel={(inputValue) =>
@@ -580,7 +580,7 @@ const page = () => {
                           {/* {errors.password && <div className='text-red font_11'> {errors.password}</div>} */}
 
                           {passwordError && (
-                            <div className="text-red font_11">
+                            <div className="text-red  font_11">
                               {passwordError}
                             </div>
                           )}

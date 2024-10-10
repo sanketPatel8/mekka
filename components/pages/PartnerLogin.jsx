@@ -177,7 +177,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
                 </div> */}
                 <button>
                   <Link href="/forgot-password">
-                    Lost your password?
+                    {translate("Lost your password")}?
                   </Link>
                 </button>
               </div>

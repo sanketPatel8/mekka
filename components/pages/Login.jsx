@@ -249,7 +249,7 @@ export default function Login({
                   </label>
                 </div> */}
                 <button>
-                  <Link href="/login/forgot-password">Lost your password?</Link>
+                  <Link href="/login/forgot-password">{translate("Lost your password")}?</Link>
                 </button>
               </div>
 
