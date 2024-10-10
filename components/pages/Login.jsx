@@ -21,6 +21,7 @@ export default function Login({
   sectionClass,
   hide,
   path,
+  Loading
 }) {
   const LoginSocialFacebook = dynamic(
     () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
@@ -46,15 +47,7 @@ export default function Login({
   const [LoginChecked, setLoginChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const {customer} = useAuthContext();
-  console.log(customer)
-
-  const router = useRouter();
-  // useEffect(()=>{
-  //   if(customer){
-  //     router.push("/")
-  //   }
-  // },[customer])
+  const router= useRouter();
 
 
   const LoginUpdate = () => {
@@ -175,6 +168,18 @@ export default function Login({
   };
 
   return (
+    <>
+    
+    {
+      Loading ?
+      <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "500px" }}
+    >
+      <ClipLoader color="#DAC04F" size={50} />
+    </div>
+       :
+     
     <section className={`${sectionClass}  layout-pb-lg`}>
       <div className={hide === false ? "d-none" : "d-block"}>
       </div>
@@ -370,5 +375,7 @@ export default function Login({
         </div>
       </div>
     </section>
+  }
+    </>
   );
 }

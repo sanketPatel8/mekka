@@ -12,6 +12,7 @@ import Currency from "../components/Currency";
 import { FaUserPlus, FaUser } from "react-icons/fa";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 import DashboardCustomer from "../components/DashboardCustomer";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 
 
@@ -20,7 +21,7 @@ export default function Header1() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
   const [LoginCheck, setLoginCheck] = useState(false);
- 
+  const {dispatch} = useAuthContext();
   
   const handleLogoutClick = () => {
     if (typeof window !== "undefined") {
@@ -28,6 +29,8 @@ export default function Header1() {
       localStorage.removeItem("customer");
       localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
     }
+    dispatch({ type: "LOGOUT_CUSTOMER" });
+
     setLoginCheck(false);
     router.push("/");
   };

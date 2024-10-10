@@ -67,6 +67,8 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
     if (typeof window != "undefined" && user) {
       localStorage.removeItem("user");
       window.location.href = "/partner-login";
+      dispatch({ type: "LOGOUT"});
+
     }
   };
 

@@ -9,10 +9,12 @@ import { showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useState } from "react";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 const CustomerDBsideBar = ({ setSideBarOpen }) => {
   const pathname = usePathname();
  const Key = process.env.NEXT_PUBLIC_ACCESS_KEY
+ const { dispatch} = useAuthContext();
 
   const handleCloseSidebar = () => {
     setSideBarOpen(false);
@@ -21,8 +23,9 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
   const handleLogoutAndCloseSidebar = async () => {
     localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
     localStorage.removeItem("customer");
-    console.log("hello logout ");
-    
+
+    dispatch({type: "LOGOUT_CUSTOMER"});
+
   }
 
   const {translate} = useTranslation()
