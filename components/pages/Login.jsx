@@ -299,6 +299,8 @@ export default function Login({
                   >
                     <LoginSocialFacebook
                       appId={process.env.REACT_APP_FB_APP_ID || ""}
+                      client_id={process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID || ""}
+
                       fieldsProfile={
                         "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                       }
@@ -309,6 +311,7 @@ export default function Login({
                       onReject={(err) => {
                         console.log(err);
                       }}
+
                     >
                       <FaFacebookF size={15} className="mx-1" />
                       {translate("Facebook")}

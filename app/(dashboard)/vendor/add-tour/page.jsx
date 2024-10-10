@@ -151,7 +151,7 @@ export default function AddTour() {
       setDateBegin(e.target.value);
       const nextDay = new Date(selectedDate);
       nextDay.setDate(nextDay.getDate() + 1);
-      setMinDate(nextDay.toISOString().split("T")[0]);      }
+      setMinDate(nextDay.toISOString().split("T")[0]);}
     
   
 };
@@ -351,10 +351,13 @@ if (day && month && year) {
 
 
   
-  const handleDeleteImage2 = (index) => {
+  const handleDeleteImage2 = (index, event) => {
+    event.preventDefault();
+
     const newImages = [...image2];
     newImages.splice(index, 1);
     setImage2(newImages);
+
   };
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
@@ -366,6 +369,7 @@ if (day && month && year) {
     const files = event.target.files;
     const promises = [];
     const uploadedImages = [...image2];
+    console.log(uploadedImages,"uploaded")
   
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -1040,7 +1044,7 @@ const isCurrentTabValid = () => {
                                               className="size-200 rounded-12 object-cover"
                                             />
                                             <button
-                                              onClick={() => handleDeleteImage2(index)}
+                                              onClick={(e) => handleDeleteImage2(index,e)}
                                               className="absoluteIcon1 button -dark-1"
                                             >
                                               <i className="icon-delete text-18"></i>

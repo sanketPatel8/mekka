@@ -131,6 +131,9 @@ export default function EditTour() {
   const [radioValueFlight, setRadioValueFlight] = useState("No");
   const [minEndDate, setMinEndDate] = useState("");
   const [minDate, setMinDate] = useState("");
+  const [uploadedImage , setUploadedImage] = useState({});
+  const [newImages, setNewImages] = useState([]);
+  const [newImageIndex, setNewImageIndex] = useState(0);
 
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
@@ -522,15 +525,16 @@ export default function EditTour() {
 
   const handleDeleteImage2 = (index, event) => {
     event.preventDefault();
-    if (image2) {
-      const url = new URL(image2);
+  
+    if (index < image2.length) {
+      const url = new URL(image2[index]);
       const fileName = url.pathname.split("/").pop();
-
+  
       const formData = new FormData();
       formData.append("image", fileName);
       formData.append("type", "tour_image");
       formData.append("tour_id", id);
-
+  
       const response = POST.request({
         form: formData,
         url: "remove_imageordocument",
@@ -539,12 +543,68 @@ export default function EditTour() {
         showSuccessToast("Image removed successfully");
         fetchTour(id);
       }
-    } else if (uploadImage.length > 0) {
-      const newImages = [...image2];
-      newImages.splice(index, 1);
-      setImage2(newImages);
+    }  else {
+    
+      const newImagesCopy = [...newImages];
+      newImagesCopy.splice(index - image2.length, 1);
+      setNewImages(newImagesCopy);
+      const uploadedImagesCopy = { ...uploadedImage };
+      delete uploadedImagesCopy[index - image2.length];
+      setUploadedImage(uploadedImagesCopy);
     }
   };
+
+  // const handleDeleteImage2 = (index, event) => {
+  //   event.preventDefault();
+  //   console.log(newImages,"image2");
+  //   console.log(index,"index")
+
+  //   if (image2[index]) {
+  //     const url = new URL(image2[index]);
+  //     const fileName = url.pathname.split("/").pop();
+  
+  //     const formData = new FormData();
+  //     formData.append("image", fileName);
+  //     formData.append("type", "tour_image");
+  //     formData.append("tour_id", id);
+  
+  //     const response = POST.request({
+  //       form: formData,
+  //       url: "remove_imageordocument",
+  //     });
+  //     if (response) {
+  //       showSuccessToast("Image removed successfully");
+  //       fetchTour(id);
+  //     }
+  //   } else {
+  //     const newImagesCopy = [...newImages];
+  //     newImagesCopy.splice(index, 1);
+  //     setNewImages(newImagesCopy);
+  //   }
+
+  //   // if () {
+  //   //   const url = new URL(image2);
+  //   //   const fileName = url.pathname.split("/").pop();
+
+  //   //   const formData = new FormData();
+  //   //   formData.append("image", fileName);
+  //   //   formData.append("type", "tour_image");
+  //   //   formData.append("tour_id", id);
+
+  //   //   const response = POST.request({
+  //   //     form: formData,
+  //   //     url: "remove_imageordocument",
+  //   //   });
+  //   //   if (response) {
+  //   //     showSuccessToast("Image removed successfully");
+  //   //     fetchTour(id);
+  //   //   }
+  //   // } else {
+  //   //   const newImages = [...image2];
+  //   //   newImages.splice(index, 1);
+  //   //   setImage2(newImages);
+  //   // }
+  // };
   const handleTabClick = (tab, index) => {
     if (index < activeTabIndex) {
       setCanGoBack(true);
@@ -680,23 +740,29 @@ export default function EditTour() {
   const handleImageChange2 = (event) => {
     const files = event.target.files;
     const promises = [];
-    const uploadedImages = [...image2];
-
+    const uploadedImagesCopy = [...newImages];
+  
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const promise = new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => {
-          uploadedImages.push(reader.result);
+          uploadedImagesCopy.push(reader.result);
+          setUploadedImage((prevUploadedImages) => ({
+            ...prevUploadedImages,
+            [newImageIndex + i]: file,
+          }));
           resolve();
         };
         reader.readAsDataURL(file);
       });
       promises.push(promise);
     }
-
+  
     Promise.all(promises).then(() => {
-      setImage2(uploadedImages);
+      setNewImages(uploadedImagesCopy);
+      setNewImageIndex(newImageIndex + files.length);
+
     });
   };
 
@@ -1369,7 +1435,7 @@ export default function EditTour() {
                                 </h4>
 
                                 <div className="row x-gap-20 y-gap-20">
-                                  {image2.map((image, index) => (
+                                  {[...image2, ...newImages].map((image, index) => (
                                     <div className="col-auto my-2" key={index}>
                                       <div className="relative">
                                         <Image
