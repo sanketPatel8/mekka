@@ -148,7 +148,7 @@ const CustomerDetaTable = () => {
     { name: translate("Street"), selector: (row) => row.street },
     {
       name: translate("Additional Services"),
-      selector: (row) => row.title,
+      selector: (row) => (row.title === undefined ? 0 : row.title),
       width: "150px",
     },
     { name: translate("Total"), selector: (row) => formatPrice(row.price) },
@@ -189,10 +189,7 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) =>
-        row.extra_data.length !== 0
-          ? row.extra_data.map((item) => item.title).join(", ")
-          : null, // Return null if the length is 0
+      selector: (row) => (row.title === undefined ? 0 : row.title), // Return null if the length is 0
       width: "150px",
     },
     {
@@ -236,10 +233,7 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) =>
-        row.extra_data.length !== 0
-          ? row.extra_data.map((item) => item.title).join(", ")
-          : null, // Return null if the length is 0
+      selector: (row) => (row.title === undefined ? 0 : row.title), // Return null if the length is 0
       width: "150px",
     },
     {
@@ -705,7 +699,17 @@ const CustomerDetaTable = () => {
   };
 
   const handleAddPersong = () => {
-    handlePayment();
+    if (
+      AddpersonData.name !== "" ||
+      AddpersonData.surname !== "" ||
+      AddpersonData.gender !== "" ||
+      AddpersonData.birthDate !== "" ||
+      AddpersonData.nationality !== ""
+    ) {
+      handlePayment();
+    } else {
+      showErrorToast("All Fields are Require");
+    }
     // setTimeout(() => {
     //   closeModal();
     // }, 2000);

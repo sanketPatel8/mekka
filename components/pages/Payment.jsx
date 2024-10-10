@@ -1020,7 +1020,7 @@ export default function Payment() {
                               <IoIosBed size={20} color="#DAC04F" />
                             </div>
                             <div className="col-6">{e.title}</div>
-                            <div className="col-4">{e.price} €</div>
+                            <div className="col-4">{formatPrice(e.price)} </div>
                           </div>
                         ))}
                       </div>

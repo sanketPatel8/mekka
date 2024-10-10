@@ -30,7 +30,7 @@ export default function PageData() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [value, setValue] = useState([0, 0]);
-  const [Distance, setDistance] = useState([0, 500]);
+  const [Distance, setDistance] = useState([0, 0]);
 
   const [range, setRange] = useState(1);
   const [SearchData, setSearchData] = useState({});
