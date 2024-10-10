@@ -22,7 +22,6 @@ export const UserProfileProvider = ({ children }) => {
         token: `${customer?.authorisation.token}`,
       });
 
-      console.log("Response received:", response); // Log the API response
 
       // Handle case where response.user is a single object
       if (response.user && typeof response.user === "object") {
@@ -40,7 +39,6 @@ export const UserProfileProvider = ({ children }) => {
     fetchProfile();
   }, [customer]);
 
-  console.log("Current profile image state:", profileImage); // Log the current state
 
   return (
     <UserProfileContext.Provider value={{ profileImage, setProfileImage }}>

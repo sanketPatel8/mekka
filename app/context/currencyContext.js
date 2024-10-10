@@ -19,7 +19,6 @@ export const CurrencyProvider = ({ children }) => {
 
   const fetchCurrencyDetails = async() => {
     const response = await POST.request({url:"currecyDetails"});
-    console.log(response, "response");
     if(response){
         setCurrencyUSD(response.Currency?.USD);
         setCurrencyEUR(response.Currency?.EUR);

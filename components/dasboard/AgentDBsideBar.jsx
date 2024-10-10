@@ -19,7 +19,6 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
       : "";
   const [sidebarItemsAgentDB, setSidebarItemsAgentDB] = useState([]);
 
-  console.log("sidebarItemsAgentDB", sidebarItemsAgentDB);
 
   useEffect(() => {
     const translatedSidebarItems = [
