@@ -130,15 +130,25 @@ export default function AddTour() {
   // const [isLoading, setIsLoading] = useState(true);
   
   const handleStartDateChange = (e) => {
-      const formattedDate = formatDateToMMDDYYYY(e.target.value);
+      // const formattedDate = new Date(formatDateToMMDDYYYY(e.target.value));
+      // console.log(formattedDate, "format")
+      // const today = new Date();
+      // console.log(today,"today")
+      // console.log(formattedDate < today , "datebegin" )
+      // if (formattedDate < today) {
+      //   setDateBegin(todayString);
+      // } else {
+      //   setDateBegin(e.target.value);
+      // }
+      const selectedDate = new Date(e.target.value);
       const today = new Date();
-      const todayString = formatDateToDDMMYYYY(today.toISOString().split("T")[0]);
-      if (formattedDate < todayString) {
-        setDateBegin(todayString);
+      const minDate = new Date(today.toISOString().split("T")[0]);
+    
+      if (selectedDate < minDate) {
+        setDateBegin(today.toISOString().split("T")[0]);
       } else {
         setDateBegin(e.target.value);
       }
-
       
     
   };
