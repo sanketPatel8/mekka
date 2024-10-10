@@ -17,11 +17,11 @@ export default function FooterLinks() {
         title:`${translate("Company")}`,
         links: [
           { id: 1, text: `${translate("Contact")}`, href: "/contact" },
-          { id: 2, text: `${translate("Login")}`, href: "/login" },
-          { id: 3, text: `${translate("Sign Up")}`, href: "/register" },
+          // { id: 2, text: `${translate("Login")}`, href: "/login" },
+          // { id: 3, text: `${translate("Sign Up")}`, href: "/register" },
           { id: 4, text: `${translate("Partners")}`, href: "/partner" },
           { id: 4, text: `${translate("Partners Login")}`, href: "/partner-login" },
-          { id: 5, text: `${translate("My Account")}`, href: "/vendor/dashboard" },
+          // { id: 5, text: `${translate("My Account")}`, href: "/vendor/dashboard" },
         ],
       },
       {

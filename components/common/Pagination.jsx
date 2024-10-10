@@ -11,7 +11,11 @@ const Pagination = ({
   const [data, setData] = useState([]); // Fetched data
   const [loading, setLoading] = useState(false); // Loading indicator
 
+
   const handleClick = (type, index) => {
+
+    console.log("Handle Click Value " , type , index);
+    
     if (type === "prev") {
       setActiveIndex((prev) => Math.max(0, prev - 1));
     } else if (type === "next") {
@@ -57,7 +61,7 @@ const Pagination = ({
           {/* <p>Current Active Index: {activeIndex}</p> */}
           <div className="pagination justify-center">
             <button
-              onClick={() => handleClick("prev")}
+              onClick={() => handleClick("page" , activeIndex)}
               className="pagination__button customStylePaginationPre button -accent-1 mr-15 -prev"
             >
               <i className="icon-arrow-left text-15"></i>
@@ -68,7 +72,7 @@ const Pagination = ({
             </div>
 
             <button
-              onClick={() => handleClick("next")}
+              onClick={() => handleClick("page" , activeIndex)}
               className="pagination__button customStylePaginationNext button -accent-1 ml-15 -next"
             >
               <i className="icon-arrow-right text-15"></i>

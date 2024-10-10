@@ -78,6 +78,8 @@ export default function PageData() {
     }
   };
   
+  console.log("FilterSidebar" , FilterSidebar); 
+  
 
   const onPageChange = async (pageIndex) => {
     const tourTypeFromParam = searchParams.get("TourType") || "";
@@ -102,6 +104,8 @@ export default function PageData() {
       searchParams.get("type") === undefined ? "" : searchParams.get("type");
 
     if (tourType || startDate || endDate || person) {
+      console.log("run search tour ");
+      
       await fetchSearch1Data({
         pageIndex,
         tourType,
@@ -115,14 +119,14 @@ export default function PageData() {
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
       FilterSidebar.selectedDurations.length !== 0 ||
-      value[0] === 0 ||
-      Distance[0] === 0
+      value[0] !== 0 ||
+      Distance[0] !== 0
       // FilterSidebar.selectedRatings.length !== 0
     ) {
-     
-      
+      console.log("run filter tour ");
       await FetchFilterData(pageIndex);
     } else {
+      console.log("run listning tour ");
       await fetchListing(pageIndex);
     }
   };
