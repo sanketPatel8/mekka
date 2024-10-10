@@ -272,6 +272,9 @@ export default function Profile() {
           url: "update_profile",
         });
         setIsPasswordLoading(false);
+        setOldPassword('')
+        setPassword("")
+        setConfirmPassword("")
         if (response.status === "success") {
           showSuccessToast(response?.message);
           fetchProfile();
