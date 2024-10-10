@@ -432,7 +432,7 @@ export default function TourSingleSidebar({
     price: item.price       // Storing price
   }));
   
-  console.log(priceObjectwithlab);
+
   
 
   useEffect(() => {
@@ -466,7 +466,7 @@ export default function TourSingleSidebar({
         : 0
     );
 
-  console.log("SelectedAllPrice", SelectedAllPrice);
+ 
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +

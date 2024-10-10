@@ -56,6 +56,9 @@ export default function Profile() {
     }
   };
 
+  console.log("Phone" , Phone);
+  
+
   // console.log("formData", formData?.image1);
 
   const { user, customer } = useAuthContext();

@@ -148,7 +148,7 @@ const CustomerDetaTable = () => {
     { name: translate("Street"), selector: (row) => row.street },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row.title == 'undefined' ? 0 : row.title),
+      selector: (row) => (row?.extra_data?.title == 'undefined' ? 0 : row?.extra_data?.title),
       width: "150px",
     },
     { name: translate("Total"), selector: (row) => formatPrice(row.price) },
@@ -189,7 +189,7 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row.title == 'undefined' ? 0 : row.title), // Return null if the length is 0
+      selector: (row) => (row?.extra_data?.title == 'undefined' ? 0 : row?.extra_data?.title), // Return null if the length is 0
       width: "150px",
     },
     {
@@ -233,7 +233,7 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row.title == 'undefined' ? 0 : row.title), // Return null if the length is 0
+      selector: (row) => (row?.extra_data?.title == 'undefined' ? 0 : row?.extra_data?.title), // Return null if the length is 0
       width: "150px",
     },
     {
@@ -957,7 +957,7 @@ const CustomerDetaTable = () => {
   };
 
   const downloadFile = (fileLink, fileName) => {
-    alert();
+   
     const xhr = new XMLHttpRequest();
     xhr.open("GET", fileLink, true);
     xhr.responseType = "blob";

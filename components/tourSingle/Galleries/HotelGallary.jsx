@@ -7,7 +7,7 @@ import ImageLightBox from "./ImageLightBox";
 
 
 export default function HotelGallary({  mekkaHotel,madinaHotel }) {
-  console.log(madinaHotel , "madinaHotel");
+ 
   const [activeLightBox, setActiveLightBox] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
  

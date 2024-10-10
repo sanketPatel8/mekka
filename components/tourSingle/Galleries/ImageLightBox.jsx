@@ -10,7 +10,7 @@ export default function ImageLightBox({
   currentSlideIndex,
   setCurrentSlideIndex,
 }) {
-  console.log(images, "images");
+ 
 
   // Check if images array is valid
   if (!images || images.length === 0) {
@@ -30,7 +30,7 @@ export default function ImageLightBox({
     return () => window.removeEventListener("click", closeModalOnOutsideClick);
   }, [setActiveLightBox]);
 
-  console.log("currentSlideIndex" , currentSlideIndex);
+
   
 
   return (
