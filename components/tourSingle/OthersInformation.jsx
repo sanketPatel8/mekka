@@ -87,11 +87,26 @@ export default function OthersInformation({ PAckageData, id }) {
               <div className="lh-16">{translate("Languages")}</div>
               <div className="text-14 text-light-2 lh-16">
                 <div className="row">
-                  {TourList?.en_language?.map((elm, index) => (
+                  {/* {TourList?.en_language?.map((elm, index) => (
                     <div className="col-6" key={index}>
                       {elm}
                     </div>
-                  ))}
+                  ))} */}
+                  {TourList?.en_language?.length > 0 && (
+                    <>
+                      {/* Join the first 3 elements */}
+                      <div className="col-12">
+                        {TourList?.en_language.slice(0, 2).join(", ")}
+                      </div>
+
+                      {/* Check if there are more than 3 elements and display the rest */}
+                      {TourList?.en_language.length > 3 && (
+                        <div className="col-12">
+                          {TourList?.en_language.slice(2).join(", ")}
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
             </div>

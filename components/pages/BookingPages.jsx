@@ -994,6 +994,9 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  console.log("adultData" , adultData);
+  
+
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
@@ -1002,16 +1005,17 @@ export default function BookingPages({ BookingData }) {
       LoginCheck == true
         ? JSON.stringify(userData)
         : JSON.stringify(formValues.Adult[0]),
+
     ...(formValues.Adult.slice(1).length !== 0 && {
       adult: JSON.stringify(formValues.Adult.slice(1)),
     }),
     ...(formValues.Child.length !== 0 && {
       child: JSON.stringify(formValues.Child),
     }),
-    // Exclude the baby field if its length is 0
     ...(formValues.Baby.length !== 0 && {
       baby: JSON.stringify(formValues.Baby),
     }),
+
     departure: JSON.parse(
       BookingSideBar?.Departure?.value === undefined
         ? 0
@@ -1035,6 +1039,9 @@ export default function BookingPages({ BookingData }) {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
+
+  console.log("bookingData" , bookingData);
+  
   
   
 
