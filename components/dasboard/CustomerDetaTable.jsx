@@ -81,7 +81,8 @@ const CustomerDetaTable = () => {
   const [minEndDate, setMinEndDate] = useState("");
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
-  const [EditUserData, setEditUserData] = useState({})
+  const [EditUserData, setEditUserData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const [pendingPaymentValue, setPendingPaymentValue] = useState({
     firstAmount: "",
@@ -361,21 +362,20 @@ const CustomerDetaTable = () => {
 
   function openEditData(row) {
     setPersonalUserID(row.id);
-    console.log("row data " , row);
-    setEditUserData(row)
+    console.log("row data ", row);
+    setEditUserData(row);
     setEditCustomerData({
       name: row.personName,
       surname: row.personSurName,
       gender: row.gender, // Default value
       birthday: row.personBirthDay,
-      nationality: row.personNationality , // Default value
-    })
-    
+      nationality: row.personNationality, // Default value
+    });
+
     setEditData(true);
   }
 
-  console.log("EditUserData" , EditUserData); 
-  
+  console.log("EditUserData", EditUserData);
 
   function closeEditData() {
     setEditData(false);
@@ -578,6 +578,8 @@ const CustomerDetaTable = () => {
   // for edit customer data
 
   const FetchEditData = async () => {
+    setLoading(true);
+
     const formData = new FormData();
 
     formData.append("reservation_person_id", PersonalUserID);
@@ -593,8 +595,10 @@ const CustomerDetaTable = () => {
         url: "edit_person",
       });
       showSuccessToast(response?.Message);
+      setLoading(false);
     } catch (e) {
       console.error(e);
+      setLoading(false);
     }
   };
 
@@ -603,6 +607,7 @@ const CustomerDetaTable = () => {
     FetchEditData();
     setTimeout(() => {
       closeEditData();
+      window.location.reload();
     }, 2000);
   };
 
@@ -859,7 +864,7 @@ const CustomerDetaTable = () => {
         handleClose();
         setTimeout(() => {
           window.location.reload();
-        }, 3500);
+        }, 2000);
       }
     } catch (e) {
       console.error(e);
@@ -2160,7 +2165,16 @@ const CustomerDetaTable = () => {
                       type="submit" // Ensure this is a submit button
                       className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                     >
-                      {translate("UPDATE")}
+                      {loading ? (
+                        <div
+                          className="d-flex justify-content-center align-items-center"
+                          style={{ height: "30px", width: "100%" }}
+                        >
+                          <ClipLoader color="#ffffff" size={30} />
+                        </div>
+                      ) : (
+                        translate("UPDATE")
+                      )}
                     </button>
                   </div>
                 </div>
