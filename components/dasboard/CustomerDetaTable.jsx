@@ -957,7 +957,7 @@ const CustomerDetaTable = () => {
   };
 
   const downloadFile = (fileLink, fileName) => {
-    alert();
+   
     const xhr = new XMLHttpRequest();
     xhr.open("GET", fileLink, true);
     xhr.responseType = "blob";
