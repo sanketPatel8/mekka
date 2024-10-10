@@ -3,12 +3,59 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { useEffect, useState } from "react";
-import { testimonialsOne } from "@/data/testimonials";
+// import { testimonialsOne } from "@/data/testimonials";
 import Image from "next/image";
 import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function TestimonialOne() {
   const { translate } = useTranslation();
+
+   const [testimonialsOne, setTestimonialsOne] = useState([]);
+
+  useEffect(()=>{
+
+    const reviews = [
+      {
+        id: 1,
+        imageSrc: "/img/404/user.jpg",
+        title: `5 ${translate("Stars")}`,
+        content:
+          `${translate("The organization and planning was flexible and adapted to the group, which is a huge plus from my point of view. The group leader was very educated and professional. I was able to learn a lot of new things and take a lot with me for my life. Apart from the price-performance ratio, which no other organization can match, I can wholeheartedly and with a clear conscience recommend the Umrah with Sheikh Yassin.")}`,
+        authorName: "Chahid Mouhinou",
+        autorRole: "5 stars",
+      },
+      {
+        id: 2,
+        imageSrc: "/img/404/user.jpg",
+        title: `5 ${translate("Stars")}`,
+        content:
+        `${translate("First of all, thank you for the most wonderful experience. It was perfect from start to finish. Yasmin, who took care of the visa, did a great job. Fast and smooth. The tour guide Khattab was a very personable and competent tour guide. The way he told us things was really good and it was nice to listen to him. He also felt responsible for everything. Simply a great team. Definitely highly recommended! Thank you")}`,
+        authorName: "Ali Shams",
+        authorRole: "Explorer",
+      },
+      {
+        id: 3,
+        imageSrc: "/img/404/user.jpg",
+        title: `5 ${translate("Stars")}`,
+        content:
+        `${translate("Salam, I am very grateful that this site exists. It helped me and my family plan their trip perfectly and the people at Mekkabooking are reliable and trustworthy: everything was perfect from start to finish. Thanks also to Yasim")}`,
+        authorName: "Munim Oualali",
+        authorRole: "Adventurer",
+      },
+      {
+        id: 4,
+        imageSrc: "/img/404/user.jpg",
+        title: `5 ${translate("Stars")}`,
+        content:
+        `${translate("I did my Umrah with the organizer. Everything was great. Khattab is a great tour guide. Thank you for everything.")}`,
+        authorName: "Aseel M",
+        authorRole: "Adventurer",
+      },
+      
+    ];
+    setTestimonialsOne(reviews)
+  },[translate])
+  
   return (
     <section className="relative layout-pt-xl layout-pb-xl">
       <div className="sectionBg md:d-none">

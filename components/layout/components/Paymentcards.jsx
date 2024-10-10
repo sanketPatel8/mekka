@@ -9,6 +9,7 @@ const imageSources = [
   "/img/footer/cards/6.png",
 ];
 
+
 export default function Paymentcards() {
   return (
     <>

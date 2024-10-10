@@ -177,7 +177,7 @@ export default function TourSliderTwo({ setLength }) {
                                 elm.tour_price == "0" ? "d-none" : "d-block"
                               }`}
                             >
-                              From{" "}
+                              {translate("From")}{" "}
                               <span className="text-16 fw-500">
                                 {formatPrice(elm.tour_price)} 
                               </span>
