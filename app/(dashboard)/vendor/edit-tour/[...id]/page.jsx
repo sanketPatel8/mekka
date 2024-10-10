@@ -130,6 +130,7 @@ export default function EditTour() {
   const [loading, setLoading] = useState(false);
   const [radioValueFlight, setRadioValueFlight] = useState("No");
   const [minEndDate, setMinEndDate] = useState("");
+  const [minDate, setMinDate] = useState("");
 
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
@@ -247,21 +248,27 @@ export default function EditTour() {
     };
   }, []);
 
+  
+
   const handleStartDateChange = (e) => {
     const [day, month, year] = e.target.value.split("-");
     if (day && month && year) {
-      const formattedDate = formatDateToMMDDYYYY(e.target.value);
-      console.log(formattedDate, "formated");
-      const today = new Date();
-      const dateBegin = formatDateToMMDDYYYY(date_begin);
-      console.log(dateBegin, "dateBegin");
 
-      if (formattedDate < dateBegin) {
-        setDateBegin(dateBegin);
-        setMinEndDate(dateBegin);
-        setDateEnd(dateBegin);
+      const selectedDate = new Date(e.target.value);
+      const today = new Date();
+
+    const min_date = new Date(today.toISOString().split("T")[0]);
+ 
+
+      if (selectedDate < min_date) {
+        setDateBegin(min_date);
+        setMinDate(min_date);
+        setDateEnd(min_date);
       } else {
         setDateBegin(e.target.value);
+        const nextDay = new Date(selectedDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+        setMinDate(nextDay.toISOString().split("T")[0]);
       }
     }
   };
@@ -287,7 +294,6 @@ export default function EditTour() {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
       console.log(formattedDate, "formatedDate");
 
-      setMinEndDate(formattedDate);
       setStartDate(formattedDate);
     }
   };
@@ -382,6 +388,10 @@ export default function EditTour() {
       console.log(date_begin, "date_begin");
       setDateEnd(tourDetails.date_end);
       setMinEndDate(tourDetails.date_begin);
+      const nextDay = new Date(tourDetails.date_begin);
+      console.log(nextDay,"nextDay")
+      nextDay.setDate(nextDay.getDate() + 1);
+      setMinDate(nextDay.toISOString().split("T")[0]);
 
       if (tourDetails.tour_image) {
         setImage2(tourDetails.tour_image || []);
@@ -1190,7 +1200,7 @@ export default function EditTour() {
                                       type="date"
                                       required
                                       value={date_end || ""}
-                                      min={minEndDate}
+                                      min={minDate}
                                       pattern="\d{2}-\d{2}-\d{4}"
                                       onBlur={handleEndDateBlur}
                                       onChange={handleEndDateChange}
