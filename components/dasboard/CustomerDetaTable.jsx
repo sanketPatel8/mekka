@@ -57,9 +57,9 @@ const CustomerDetaTable = () => {
   const [editCustomerData, setEditCustomerData] = useState({
     name: "",
     surname: "",
-    gender: "male", // Default value
+    gender: "", 
     birthday: "",
-    nationality: "indian", // Default value
+    nationality: "", 
   });
   const [showStripeModal, setShowStripeModal] = useState(false);
   const [PersonalUserID, setPersonalUserID] = useState(0);
@@ -148,7 +148,7 @@ const CustomerDetaTable = () => {
     { name: translate("Street"), selector: (row) => row.street },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row.title === undefined ? 0 : row.title),
+      selector: (row) => (row.title == 'undefined' ? 0 : row.title),
       width: "150px",
     },
     { name: translate("Total"), selector: (row) => formatPrice(row.price) },
@@ -189,7 +189,7 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row.title === undefined ? 0 : row.title), // Return null if the length is 0
+      selector: (row) => (row.title == 'undefined' ? 0 : row.title), // Return null if the length is 0
       width: "150px",
     },
     {
@@ -233,7 +233,7 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row.title === undefined ? 0 : row.title), // Return null if the length is 0
+      selector: (row) => (row.title == 'undefined' ? 0 : row.title), // Return null if the length is 0
       width: "150px",
     },
     {
@@ -368,6 +368,9 @@ const CustomerDetaTable = () => {
 
     setEditData(true);
   }
+
+  console.log("editCustomerData.nationality" , editCustomerData.nationality);
+  
 
   console.log("EditUserData", EditUserData);
 
