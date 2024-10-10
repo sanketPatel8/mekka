@@ -705,7 +705,11 @@ const CustomerDetaTable = () => {
   };
 
   const handleAddPersong = () => {
-    handlePayment();
+    if(AddpersonData.name !== "" || AddpersonData.surname !== "" || AddpersonData.gender !== "" || AddpersonData.birthDate !== "" || AddpersonData.nationality !== "" ){
+      handlePayment();
+    }else{
+      showErrorToast("All Fields are Require")
+    }
     // setTimeout(() => {
     //   closeModal();
     // }, 2000);
