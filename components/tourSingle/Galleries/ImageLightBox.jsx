@@ -5,21 +5,17 @@ import React, { useEffect } from "react";
 
 export default function ImageLightBox({
   images,
-  setActiveLightBox,
   activeLightBox,
+  setActiveLightBox,
   currentSlideIndex,
   setCurrentSlideIndex,
 }) {
- 
-
   // Check if images array is valid
   if (!images || images.length === 0) {
-    
     return null;
   }
 
-  console.log("activeLightBox" , activeLightBox);
-
+  console.log("activeLightBox for light box:", activeLightBox);
 
   // Auto-close modal when clicking outside of the image
   useEffect(() => {
@@ -31,9 +27,6 @@ export default function ImageLightBox({
     window.addEventListener("click", closeModalOnOutsideClick);
     return () => window.removeEventListener("click", closeModalOnOutsideClick);
   }, [setActiveLightBox]);
-
-
-  
 
   return (
     <div
