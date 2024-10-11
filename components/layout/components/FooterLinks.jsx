@@ -1,6 +1,7 @@
 
 "use client"
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -8,6 +9,8 @@ import { useEffect, useState } from "react";
 
 export default function FooterLinks() {
   const { translate } = useTranslation();
+
+  const { user} = useAuthContext();
 
   const [sections, setSections] = useState([]);
 
@@ -17,11 +20,13 @@ export default function FooterLinks() {
         title:`${translate("Company")}`,
         links: [
           { id: 1, text: `${translate("Contact")}`, href: "/contact" },
-          // { id: 2, text: `${translate("Login")}`, href: "/login" },
-          // { id: 3, text: `${translate("Sign Up")}`, href: "/register" },
-          { id: 4, text: `${translate("Partners")}`, href: "/partner" },
-          { id: 4, text: `${translate("Partners Login")}`, href: "/partner-login" },
-          // { id: 5, text: `${translate("My Account")}`, href: "/vendor/dashboard" },
+         
+          
+          ...(user ? [] : [
+            { id: 4, text: `${translate("Partners")}`, href: "/partner" },
+            { id: 5, text: `${translate("Partners Login")}`, href: "/partner-login" },
+          ]),
+          ...(user ? [{ id: 3, text: `${translate("Partner Dashboard")}`, href: "/vendor/dashboard" }] : []),
         ],
       },
       {

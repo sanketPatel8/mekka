@@ -134,6 +134,7 @@ export default function EditTour() {
   const [uploadedImage , setUploadedImage] = useState({});
   const [newImages, setNewImages] = useState([]);
   const [newImageIndex, setNewImageIndex] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
 
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
@@ -383,6 +384,13 @@ export default function EditTour() {
       setDepartureRows(updatedDepartures);
     }
   }, [departureDetails]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      setIsFocused(false);
+    });
+  }, [isFocused])
+  
 
   useEffect(() => {
     if (tourDetails) {
@@ -1246,10 +1254,14 @@ export default function EditTour() {
                                       value={capacity}
                                       onChange={handleInputChange(setCapacity)}
                                       onKeyDown={(e) => {
+                                        setIsFocused(true);
                                         if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                           e.preventDefault();
                                         }
                                       }}
+                                      onKeyUp={()=>setIsFocused(false)}
+                                      onFocus={() => setIsFocused(true)}
+                                      onBlur={() => setIsFocused(false)}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Seat Availibility") ||
@@ -1390,10 +1402,14 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
+                                                      setIsFocused(true);
                                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
+                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() => setIsFocused(false)}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -1537,10 +1553,14 @@ export default function EditTour() {
                                     value={adult_price}
                                     onChange={handleInputChange(setAdultPrice)}
                                     onKeyDown={(e) => {
+                                      setIsFocused(true);
                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                         e.preventDefault();
                                       }
                                     }}
+                                    onKeyUp={()=>setIsFocused(false)}
+                                    onFocus={() => setIsFocused(true)}
+                                    onBlur={() => setIsFocused(false)}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Adult") ||
@@ -1558,10 +1578,14 @@ export default function EditTour() {
                                     value={child_price}
                                     onChange={handleInputChange(setChildPrice)}
                                     onKeyDown={(e) => {
+                                      setIsFocused(true);
                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                         e.preventDefault();
                                       }
                                     }}
+                                    onKeyUp={()=>setIsFocused(false)}
+                                    onFocus={() => setIsFocused(true)}
+                                    onBlur={() => setIsFocused(false)}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Child") ||
@@ -1579,10 +1603,14 @@ export default function EditTour() {
                                     value={baby_price}
                                     onChange={handleInputChange(setBabyPrice)}
                                     onKeyDown={(e) => {
+                                      setIsFocused(true);
                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                         e.preventDefault();
                                       }
                                     }}
+                                    onKeyUp={()=>setIsFocused(false)}
+                                    onFocus={() => setIsFocused(true)}
+                                    onBlur={() => setIsFocused(false)}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Baby") ||
@@ -1674,10 +1702,14 @@ export default function EditTour() {
                                             handlePriceChange(event, service.id)
                                           }
                                           onKeyDown={(e) => {
+                                            setIsFocused(true);
                                             if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                               e.preventDefault();
                                             }
                                           }}
+                                          onKeyUp={()=>setIsFocused(false)}
+                                          onFocus={() => setIsFocused(true)}
+                                          onBlur={() => setIsFocused(false)}
                                           required
                                         />
                                         <label className="lh-1 text-16 text-light-1">
@@ -2049,10 +2081,14 @@ export default function EditTour() {
                                                   })
                                                 }
                                                 onKeyDown={(e) => {
+                                                  setIsFocused(true);
                                                   if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                     e.preventDefault();
                                                   }
                                                 }}
+                                                onKeyUp={()=>setIsFocused(false)}
+                                                onFocus={() => setIsFocused(true)}
+                                                onBlur={() => setIsFocused(false)}
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
@@ -2177,10 +2213,14 @@ export default function EditTour() {
                                                   })
                                                 }
                                                 onKeyDown={(e) => {
+                                                  setIsFocused(true);
                                                   if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                     e.preventDefault();
                                                   }
                                                 }}
+                                                onKeyUp={()=>setIsFocused(false)}
+                                                onFocus={() => setIsFocused(true)}
+                                                onBlur={() => setIsFocused(false)}
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
@@ -2454,10 +2494,14 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
+                                                      setIsFocused(true);
                                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
+                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() => setIsFocused(false)}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -2492,10 +2536,14 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
+                                                      setIsFocused(true);
                                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
+                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() => setIsFocused(false)}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -2529,10 +2577,14 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
+                                                      setIsFocused(true);
                                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
+                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() => setIsFocused(false)}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}

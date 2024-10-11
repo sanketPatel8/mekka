@@ -248,10 +248,15 @@ if (day && month && year) {
       });
     };
 
+   
+  }, []);
+
+  
+  useEffect(() => {
     window.addEventListener('scroll', () => {
       setIsFocused(false);
     });
-  }, []);
+  }, [isFocused])
   
   const { translate } = useTranslation();
 
@@ -897,6 +902,8 @@ const isCurrentTabValid = () => {
                                               e.preventDefault();
                                             }
                                           }}
+                                          onKeyUp={()=>setIsFocused(false)}
+
                                           onFocus={() => setIsFocused(true)}
                                           onBlur={() => setIsFocused(false)}
                                         />
@@ -1015,6 +1022,8 @@ const isCurrentTabValid = () => {
                                                         e.preventDefault();
                                                       }
                                                     }}
+                                                    onKeyUp={()=>setIsFocused(false)}
+
                                                     onFocus={() => setIsFocused(true)}
                                                     onBlur={() => setIsFocused(false)}
                                                     />
@@ -1171,11 +1180,15 @@ const isCurrentTabValid = () => {
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
                                       <input type="number" ref={numberInputRef4} required value={child_price} onChange={handleInputChange(setChildPrice)}
-                                       onKeyDown={(e) => {
-                                        if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                          e.preventDefault();
-                                        }
-                                      }}
+                                         onKeyDown={(e) => {
+                                          setIsFocused(true);
+                                          if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                            e.preventDefault();
+                                          }
+                                        }}
+                                        onKeyUp={()=>setIsFocused(false)}
+                                        onFocus={() => setIsFocused(true)}
+                                        onBlur={() => setIsFocused(false)}
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Child") ||
@@ -1186,11 +1199,15 @@ const isCurrentTabValid = () => {
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
                                       <input type="number" ref={numberInputRef5} required value={baby_price} onChange={handleInputChange(setBabyPrice)} 
-                                         onKeyDown={(e) => {
-                                          if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                            e.preventDefault();
-                                          }
-                                        }}/>
+                                           onKeyDown={(e) => {
+                                            setIsFocused(true);
+                                            if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                              e.preventDefault();
+                                            }
+                                          }}
+                                          onKeyUp={()=>setIsFocused(false)}
+                                          onFocus={() => setIsFocused(true)}
+                                          onBlur={() => setIsFocused(false)}/>
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Baby") ||
                                           "Find Latest Packages"} <span className="text-red">*</span>
@@ -1273,11 +1290,7 @@ const isCurrentTabValid = () => {
                                               value={service.price}
                                               onChange={(event) => handlePriceChange(event, service.id)}
                                               required
-                                              onKeyDown={(e) => {
-                                                if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                                  e.preventDefault();
-                                                }
-                                              }}
+                                              
                                             />
                                             <label className="lh-1 text-16 text-light-1">
                                               {translate("Price")}
@@ -1606,10 +1619,14 @@ const isCurrentTabValid = () => {
                                                     return newRows;
                                                   })}
                                                   onKeyDown={(e) => {
+                                                    setIsFocused(true);
                                                     if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                       e.preventDefault();
                                                     }
                                                   }}
+                                                  onKeyUp={()=>setIsFocused(false)}
+                                                  onFocus={() => setIsFocused(true)}
+                                                  onBlur={() => setIsFocused(false)}
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -1710,10 +1727,14 @@ const isCurrentTabValid = () => {
                                                     return newRows;
                                                   })}
                                                   onKeyDown={(e) => {
+                                                    setIsFocused(true);
                                                     if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                       e.preventDefault();
                                                     }
                                                   }}
+                                                  onKeyUp={()=>setIsFocused(false)}
+                                                  onFocus={() => setIsFocused(true)}
+                                                  onBlur={() => setIsFocused(false)}
                                                 />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -1982,10 +2003,14 @@ const isCurrentTabValid = () => {
                                                         return newRows;
                                                       })}
                                                       onKeyDown={(e) => {
+                                                        setIsFocused(true);
                                                         if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                           e.preventDefault();
                                                         }
                                                       }}
+                                                      onKeyUp={()=>setIsFocused(false)}
+                                                      onFocus={() => setIsFocused(true)}
+                                                      onBlur={() => setIsFocused(false)}
                                                     />
                                                     <label className="lh-1 text-16 text-light-1">
                                                       {" "}

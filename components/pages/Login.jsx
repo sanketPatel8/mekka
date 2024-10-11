@@ -54,7 +54,8 @@ export default function Login({
   const [isLoading, setIsLoading] = useState(false);
   const router= useRouter();
 
-  const REDIRECT_URI = "https://mekkabooking.vercel.app/gresponse"
+  const REDIRECT_GOOGLE_URI = "https://mekkabooking.vercel.app/gresponse"
+  const REDIRECT_APPLE_URI = "https://mekkabooking.vercel.app/appleresponse"
     const LoginUpdate = () => {
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
 
@@ -65,39 +66,82 @@ export default function Login({
     console.log("Updated login status:", updatedStatus);
   };
 
-  const signinSocial = async ({ type, data }) => {
-    console.log(data);
-    console.log("hi");
-    const formData = new FormData();
-    formData.append("auth_id", data?.sub);
-    formData.append("auth_provider", type);
-    formData.append("name", data?.name);
-    formData.append("email", data?.email);
+  // const signinSocial = async ({ type, data }) => {
+  //   console.log(data);
+  //   console.log("hi");
+  //   const formData = new FormData();
+  //   formData.append("auth_id", data?.sub);
+  //   formData.append("auth_provider", type);
+  //   formData.append("name", data?.name);
+  //   formData.append("email", data?.email);
    
-    const resp = await POST.request({ form: formData, url: "social_login" });
+  //   const resp = await POST.request({ form: formData, url: "social_login" });
     
-    if (resp) {
-      if (resp) {
-        showSuccessToast("Successfully logged in.");
-        localStorage.setItem("customer", JSON.stringify(resp));
-        dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+  //   if (resp) {
+  //     if (resp) {
+  //       showSuccessToast("Successfully logged in.");
+  //       localStorage.setItem("customer", JSON.stringify(resp));
+  //       dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
        
-        LoginUpdate();
-        setTimeout(() => {
-          setLoginPer(true);
-          router.push("/");
-        }, 1000);
-      } else {
-        showErrorToast("Invalid Credentials");
+  //       LoginUpdate();
+  //       setTimeout(() => {
+  //         setLoginPer(true);
+  //         router.push("/");
+  //       }, 1000);
+  //     } else {
+  //       showErrorToast("Invalid Credentials");
      
-        setLogInData({
-          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-          email: "",
-          password: "",
-        });
-      }
+  //       setLogInData({
+  //         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  //         email: "",
+  //         password: "",
+  //       });
+  //     }
+  //   }
+  // };
+
+  const signinSocial = async ({ type, email, id, name, data }) => {
+    if (data?.email) {
+         const resp = await POST.request({
+             form: {
+                   email,
+                   auth_provider: type,
+                   provider_id: id,
+                   name: name,
+              },  url: 'social_login'
+         });
+         if (resp && resp.Status == 1) {
+          showSuccessToast("Successfully logged in.");
+          localStorage.setItem("customer", JSON.stringify(resp));
+          dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+          const redirect = typeof window !== "undefined" ? localStorage.getItem("Redirect_Login"): null;
+          console.log(redirect,"redirect");
+          LoginUpdate();
+          if(redirect){
+            setTimeout(() => {
+              window.location.reload();
+              localStorage.removeItem("Redirect_Login");
+            },1000);
+          }
+
+          if(redirect == null){
+            setTimeout(() => {
+              setLoginPer(true);
+              router.push(path);
+            }, 1000);
+          }
+         }else if(resp && resp.Status == 0){
+          showErrorToast("Invalid Credentials");
+          setLogInData({
+            AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+            email: "",
+            password: "",
+          });
+         }
+    } else {
+
     }
-  };
+};
 
   const { translate } = useTranslation();
 
@@ -118,7 +162,6 @@ export default function Login({
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-
     Auth.handleForm({ form: e, url: "login", type: "Add User", post: post });
   };
 
@@ -219,7 +262,7 @@ export default function Login({
                   required
                 />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Email Address")}
+                  {translate("Email Address")} <span className="text-red">*</span>
                 </label>
               </div>
 
@@ -229,10 +272,11 @@ export default function Login({
                   onChange={HandleLogInChange}
                   value={LogInData.password}
                   name="password"
+                  
                   required
                 />
                 <label className="lh-1 text-16 text-light-1">
-                  {translate("Password")}
+                  {translate("Password")} <span className="text-red">*</span>
                 </label>
               </div>
 
@@ -343,13 +387,13 @@ export default function Login({
                       client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
                       client_secret={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""}
 
-                      redirect_uri={REDIRECT_URI}
+                      redirect_uri={window.location.origin + '/login'}
                       onLoginStart={() => console.log("start")}
                       scope="openid profile email"
                       discoveryDocs="claims_supported"
                       access_type="online"
                       onResolve={({ provider, data }) => {
-                        signinSocial({ type: "google", data });
+                        signinSocial({ type: 'google', email: data?.email || '', id: data.sub || '', name : data?.given_name , data });
                       }}
                       onReject={(err) => {
                         console.log(err);
@@ -368,7 +412,7 @@ export default function Login({
                 </div>
               </div>
               <br />
-              {/* <div className="row y-gap-15">
+              <div className="row y-gap-15">
                 <div className="col">
                   <button
                     type="button"
@@ -378,6 +422,8 @@ export default function Login({
                       client_id={process.env.REACT_APP_APPLE_ID || ""}
                       scope={"name email"}
                       onLoginStart={() => console.log("start")}
+                      redirect_uri={window.location.origin + '/login'}
+
                       onResolve={({ provider, data }) => {
                         signinSocial({ type: "apple", data });
                       }}
@@ -390,7 +436,7 @@ export default function Login({
                     </LoginSocialApple>
                   </button>
                 </div>
-              </div> */}
+              </div>
             </form>
           </div>
         </div>
