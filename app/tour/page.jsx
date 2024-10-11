@@ -77,9 +77,8 @@ export default function PageData() {
       console.error(e);
     }
   };
-  
-  console.log("FilterSidebar" , FilterSidebar); 
-  
+
+  console.log("FilterSidebar", FilterSidebar);
 
   const onPageChange = async (pageIndex) => {
     const tourTypeFromParam = searchParams.get("TourType") || "";
@@ -105,7 +104,7 @@ export default function PageData() {
 
     if (tourType || startDate || endDate || person) {
       console.log("run search tour ");
-      
+
       await fetchSearch1Data({
         pageIndex,
         tourType,
@@ -193,10 +192,7 @@ export default function PageData() {
         value[0] == 0 ||
         Distance[0] == 0
         // FilterSidebar.selectedRatings.length !== 0
-        
       ) {
-      
-        
         FetchFilterData();
       } else if (
         SearchData.tourType !== null ||
@@ -205,7 +201,6 @@ export default function PageData() {
           SearchData.endDate !== null &&
           SearchData.person !== null)
       ) {
-        
         // fetchSearch1Data(
         //   SearchData.tourType,
         //   SearchData.startDate,
@@ -219,7 +214,7 @@ export default function PageData() {
     } else {
       isMounted.current = true;
     }
-  }, [FilterSidebar , Distance , value]);
+  }, [FilterSidebar, Distance, value]);
 
   const FetchTourDataAPi = async () => {
     const sendData = {
@@ -305,7 +300,7 @@ export default function PageData() {
             range={range}
             Distance={Distance}
             setDistance={setDistance}
-            onPageChange={onPageChange}
+            onPageChange={(index) => onPageChange(index)}
             setLanActives={setLanActives}
             FilterSidebar={FilterSidebar}
             LanActives={LanActives}
