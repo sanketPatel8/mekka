@@ -479,6 +479,7 @@ export default function Login({
                           redirect_uri={window.location.origin + "/login"}
                           onLoginStart={() => console.log("start apple login")}
                           onResolve={({ provider, data }) => {
+                            console.log(data,"data")
                             signinSocial({ type: "apple", data: data });
                           }}
                           onReject={(err) => {
