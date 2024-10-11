@@ -9,6 +9,7 @@ import { IoClose } from "react-icons/io5";
 import { post } from "@/app/utils/api";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { POST } from "@/app/utils/api/post";
+import { useTranslation } from "@/app/context/TranslationContext";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -109,8 +110,8 @@ export default function CheckoutForm({
         closeModal();
         handleClose();
         setTimeout(() => {
-          window.location.reload(); 
-        }, 3500);
+          window.location.reload();
+        }, 1500);
       } else {
         showErrorToast(response?.Message);
       }
@@ -175,6 +176,8 @@ export default function CheckoutForm({
     setIsProcessing(false);
   };
 
+  const { translate } = useTranslation();
+
   return (
     <Modal
       isOpen={showStripeModal}
@@ -209,7 +212,7 @@ export default function CheckoutForm({
           id="submit"
         >
           <span id="button-text">
-            {isProcessing ? "Processing ... " : "Pay now"}
+            {isProcessing ? "Processing ... " : translate("Pay now")}
           </span>
         </button>
       </form>

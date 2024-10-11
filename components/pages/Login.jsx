@@ -334,6 +334,11 @@ export default function Login({
                 <div className="col">
            
                   <button
+                <button className="button -md -outline-red-1 text-red-1 col-12">
+                <FaGoogle size={15} className="mx-1" />
+                {translate("Google")}
+                </button>
+                  {/* <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
                   >

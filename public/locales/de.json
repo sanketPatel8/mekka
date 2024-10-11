@@ -37,7 +37,7 @@
   "FAQ": "FAQ",
   "Customer Reviews": "Kundenbewertungen",
   "You might also like...": "Weitere Empfehlungen",
-  "Tickets": "Tickets",
+  "Tickets": "Fahrkarten",
   "Hotel For Mekka": "Hotel für Mekka",
   "Hotel For Madina": "Hotel für Madina",
   "Select Flight" : "Wählen Sie Flug" ,
@@ -254,7 +254,7 @@
   "Amount Due": "Fälliger Betrag",
   "Do you have a promo code?": "Haben Sie einen Promo-Code?",
   "Promo Code": "Aktionscode",
-  "(The Standard Offer May Include a Multi-Bed Room.)": "(Das Standardangebot kann ein Mehrbettzimmer beinhalten.)",
+  "The Standard Offer May Include a Multi-Bed Room": "Das Standardangebot kann ein Mehrbettzimmer beinhalten",
   "Selected Additional Services Per Person:": "Ausgewählte Zusatzleistungen pro Person:",
   "Subscribe to the free newsletter and stay up to date": "Abonnieren Sie den kostenlosen Newsletter und bleiben Sie immer auf dem Laufenden",
   "General Terms and Conditions of Mekka Booking GmbH": "Allgemeine Geschäftsbedingungen der Mekka Booking GmbH.",
@@ -614,8 +614,18 @@
 "Visas" : "Visum",
 "Booking Id" : "Buchungs-ID",
 "Select Status" : "Status auswählen",
-"Children" : "Kinder"
-  
+"Children" : "Kinder",
+"The distance to the Kaaba is" : "Die Entfernung zur Kaaba beträgt",
+"Years" : "Jahre",
+"Apply" : "Bewerben",
+"Remove" : "Entfernen",
+"Complete Reservation" : "Reservierung abschließen",
+"Pay now" : "Jetzt bezahlen",
+"Reservation Number" : "Reservierungsnummer",
+"Date" : "Datum",
+"Payment Method" : "Zahlungsmethode",
+"Booking details have been sent to your registered email address" : "Die Buchungsdetails wurden an Ihre registrierte E-Mail-Adresse gesendet",
+"Amount Paid" : "Betrag bezahlt"
   
   
 

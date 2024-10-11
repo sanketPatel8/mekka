@@ -19,6 +19,7 @@ export default function SingleFour({ PAckageData }) {
   const [activeAcorditions, setActiveAcorditions] = useState([]);
   const [FlightInc, setFlightInc] = useState(null);
   const [hotelData, setHotelData] = useState(null);
+  const [isLoading, setisLoading] = useState(false)
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
@@ -208,6 +209,8 @@ export default function SingleFour({ PAckageData }) {
                         <HotelInformation
                           PAckageData={PAckageData}
                           hotelData={hotelData}
+                          isLoading={isLoading}
+                          setisLoading={setisLoading}
                         />
                       </div>
                     </div>
@@ -285,6 +288,8 @@ export default function SingleFour({ PAckageData }) {
                 <TourSingleSidebar
                   PAckageData={PAckageData}
                   setHotelData={setHotelData}
+                  isLoading={isLoading}
+                  setisLoading={setisLoading}
                 />
               </div>
             </div>

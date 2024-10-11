@@ -692,7 +692,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-          options: ["Male", "Female", "Other"],
+          options: [translate("Male"), translate('Female'), translate("Other")],
           value: userData.gender,
         },
         {
@@ -734,7 +734,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-          options: ["Male", "Female", "Other"],
+            options: [translate("Male"), translate('Female'), translate("Other")],
         },
         { label: translate("Birthday Date"), type: "date", name: "birthday" },
         {
@@ -751,7 +751,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-          options: ["Male", "Female", "Other"],
+            options: [translate("Male"), translate('Female'), translate("Other")],
         },
         { label: translate("Birthday Date"), type: "date", name: "birthday" },
         {
@@ -768,7 +768,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-          options: ["Male", "Female", "Other"],
+            options: [translate("Male"), translate('Female'), translate("Other")],
         },
         { label: translate("Birthday Date"), type: "date", name: "birthday" },
         {
@@ -1298,7 +1298,7 @@ export default function BookingPages({ BookingData }) {
                     </div>
 
                     <p className="text-12">
-                      (The Standard Offer May Include a Multi-Bed Room.)
+                      ({translate('The Standard Offer May Include a Multi-Bed Room')}.)
                     </p>
                   </div>
 

@@ -17,6 +17,8 @@ export default function TourSingleSidebar({
   PAckageData,
   ThumbnailImage,
   setHotelData,
+  isLoading,
+  setisLoading
 }) {
   const {
     prices,
@@ -103,6 +105,7 @@ export default function TourSingleSidebar({
   }, [mekkaId, madinaId]);
 
   const fetchHotelData = async () => {
+    setisLoading(true)
     const formData = new FormData();
     formData.append("tour_id", Tourid);
     formData.append("mekka_id", mekkaId);
@@ -114,6 +117,9 @@ export default function TourSingleSidebar({
     });
 
     if (response) {
+      setisLoading(false)
+      console.log("response.hotel_data" , response.hotel_data);
+      
       setHotelData(response.hotel_data);
     }
   };
@@ -607,10 +613,10 @@ export default function TourSingleSidebar({
               <div className="d-flex items-center justify-between">
                 <div className="text-14 col-8">
                   {group.price_type === "1"
-                    ? `${translate("Adult")} (18+ Years)`
+                    ? `${translate("Adult")} 18+ ${translate("Years")}`
                     : group.price_type === "2"
-                    ? `${translate("Child")} (13-17 Years)`
-                    : `${translate("Baby")} (0-12 Years)` }
+                    ? `${translate("Child")} 13-17 ${translate("Years")}`
+                    : `${translate("Baby")} 0-12 ${translate("Years")}` }
                   <span className="fw-500">
                     {""} {formatPrice((group.price * count).toFixed(2))}
                   </span>

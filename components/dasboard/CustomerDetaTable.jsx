@@ -54,13 +54,15 @@ const CustomerDetaTable = () => {
   const [Nationality, setNationality] = useState("");
   const [From, setFrom] = useState("Frankfurt(FRA)");
   const [installmentChecked, setInstallmentChecked] = useState(false);
+
   const [editCustomerData, setEditCustomerData] = useState({
     name: "",
     surname: "",
-    gender: "", 
+    gender: "",
     birthday: "",
-    nationality: "", 
+    nationality: "",
   });
+
   const [showStripeModal, setShowStripeModal] = useState(false);
   const [PersonalUserID, setPersonalUserID] = useState(0);
   const [UploadDocID, setUploadDocID] = useState({});
@@ -148,7 +150,8 @@ const CustomerDetaTable = () => {
     { name: translate("Street"), selector: (row) => row.street },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row?.extra_data?.title == 'undefined' ? 0 : row?.extra_data?.title),
+      selector: (row) =>
+        row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title,
       width: "150px",
     },
     { name: translate("Total"), selector: (row) => formatPrice(row.price) },
@@ -189,7 +192,8 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row?.extra_data?.title == 'undefined' ? 0 : row?.extra_data?.title), // Return null if the length is 0
+      selector: (row) =>
+        row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
       width: "150px",
     },
     {
@@ -233,7 +237,8 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Additional Services"),
-      selector: (row) => (row?.extra_data?.title == 'undefined' ? 0 : row?.extra_data?.title), // Return null if the length is 0
+      selector: (row) =>
+        row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
       width: "150px",
     },
     {
@@ -369,8 +374,7 @@ const CustomerDetaTable = () => {
     setEditData(true);
   }
 
-  console.log("editCustomerData.nationality" , editCustomerData.nationality);
-  
+  console.log("editCustomerData.nationality", editCustomerData.nationality);
 
   console.log("EditUserData", EditUserData);
 
@@ -839,6 +843,7 @@ const CustomerDetaTable = () => {
   }, [handleDateChange]);
 
   const FetchAddperson = async () => {
+    setIsLoading(true);
     const formData = new FormData();
 
     formData.append("reservation_id", BookingDetails.reservation?.id);
@@ -866,12 +871,13 @@ const CustomerDetaTable = () => {
         url: "addperson",
       });
       if (response) {
+        setIsLoading(false);
         showSuccessToast("Person was added successfully !!");
         closeModal();
         handleClose();
         setTimeout(() => {
           window.location.reload();
-        }, 2000);
+        }, 1000);
       }
     } catch (e) {
       console.error(e);
@@ -957,7 +963,6 @@ const CustomerDetaTable = () => {
   };
 
   const downloadFile = (fileLink, fileName) => {
-   
     const xhr = new XMLHttpRequest();
     xhr.open("GET", fileLink, true);
     xhr.responseType = "blob";
@@ -1038,11 +1043,16 @@ const CustomerDetaTable = () => {
       });
       if (response) {
         showSuccessToast(response.Message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       }
     } catch (e) {
       console.error(e);
     }
   };
+
+  console.log("editCustomerData.nationality", editCustomerData.nationality);
 
   return (
     <div>
@@ -1065,51 +1075,54 @@ const CustomerDetaTable = () => {
             {BookingDetails?.reservation?.capacity_empty} {translate("seats")}
           </p>
         </div>
+        {BookingDetails?.reservation?.reservation_status != "Cancelled" && (
+          <div className="col-lg-6 flex small-flex-center">
+            <div className="">
+              {/* <button
+     className="button -sm -info-2 bg-accent-1 text-white "
+   
+   > */}
+              {PdfData !== "undefined" && (
+                <a
+                  href={PdfData}
+                  target="_blank"
+                  className="button -sm -info-2 bg-accent-1 text-white"
+                >
+                  {translate("Show Invoice")}
+                </a>
+              )}
 
-        <div className="col-lg-6 flex small-flex-center">
-          <div className="">
-            {/* <button
-              className="button -sm -info-2 bg-accent-1 text-white "
-            
-            > */}
-            {PdfData !== "undefined" && (
-              <a
-                href={PdfData}
-                target="_blank"
-                className="button -sm -info-2 bg-accent-1 text-white"
+              {/* </button> */}
+            </div>
+
+            <div
+              className={`${
+                BookingDetails?.reservation?.paymentType == "3"
+                  ? "d-block"
+                  : "d-none"
+              }`}
+            >
+              <button
+                className="button -sm -accent-1 bg-info-2 text-white "
+                onClick={openPaymentModal}
               >
-                {translate("Show Invoice")}
-              </a>
+                {translate("Pay")}
+              </button>
+              <span>{`(${BookingDetails?.reservation?.subtotal})`} €</span>
+            </div>
+
+            {BookingDetails?.reservation?.capacity_empty != "0" && (
+              <div className="">
+                <button
+                  className="button -sm -info-2 bg-accent-1 text-white "
+                  onClick={openModal}
+                >
+                  {translate("Add Person")}
+                </button>
+              </div>
             )}
-
-            {/* </button> */}
           </div>
-
-          <div
-            className={`${
-              BookingDetails?.reservation?.paymentType == "3"
-                ? "d-block"
-                : "d-none"
-            }`}
-          >
-            <button
-              className="button -sm -accent-1 bg-info-2 text-white "
-              onClick={openPaymentModal}
-            >
-              {translate("Pay")}
-            </button>
-            <span>{`(${BookingDetails?.reservation?.subtotal})`} €</span>
-          </div>
-
-          <div className="">
-            <button
-              className="button -sm -info-2 bg-accent-1 text-white "
-              onClick={openModal}
-            >
-              {translate("Add Person")}
-            </button>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Reservation Details Table */}
@@ -1184,13 +1197,14 @@ const CustomerDetaTable = () => {
       )}
 
       <br />
-
-      <button
-        className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
-        onClick={openCancelPopUp}
-      >
-        {translate("Cancel")}
-      </button>
+      {BookingDetails?.reservation?.reservation_status != "Cancelled" && (
+        <button
+          className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
+          onClick={openCancelPopUp}
+        >
+          {translate("Cancel")}
+        </button>
+      )}
 
       <div id="modelopen">
         <Modal
@@ -1645,7 +1659,16 @@ const CustomerDetaTable = () => {
                 className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                 onClick={handleAddPersong}
               >
-                {translate("ADD PERSON")}
+                {isLoading ? (
+                  <div
+                    className="d-flex justify-content-center align-items-center"
+                    style={{ height: "30px", width: "100%" }}
+                  >
+                    <ClipLoader color="#ffffff" size={30} />
+                  </div>
+                ) : (
+                  translate("ADD PERSON")
+                )}
               </button>
               <button
                 className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
@@ -1866,11 +1889,22 @@ const CustomerDetaTable = () => {
               <button
                 className="button -sm -red-2 bg-red-3 text-white"
                 onClick={() => {
-                  alert("Your Booking Is canceled !!");
-                  fatchCancelBooking();
-                  setTimeout(() => {
-                    CloseCancelPopUp();
-                  }, 2000);
+                  const confirmDelete = window.confirm(
+                    "Are you sure you want to delete this Booking ?"
+                  );
+                  if (confirmDelete) {
+                    // Proceed with the delete operation
+                    console.log("Item deleted");
+                    fatchCancelBooking();
+                    setTimeout(() => {
+                      CloseCancelPopUp();
+                    }, 2000);
+                  } else {
+                    console.log("Delete operation canceled");
+                    setTimeout(() => {
+                      CloseCancelPopUp();
+                    }, 2000);
+                  }
                 }}
               >
                 {translate("Cancel Booking")}
@@ -2140,6 +2174,30 @@ const CustomerDetaTable = () => {
                       </label>
                     </div>
                   </div>
+                  {/* <div className="col-md-6">
+                    <div className="form-input spacing">
+                      <select
+                        value={editCustomerData.nationality}
+                        onChange={(e) =>
+                          setEditCustomerData({
+                            ...editCustomerData,
+                            nationality: e.target.value,
+                          })
+                        }
+                        required
+                        className="form-control"
+                      >
+                        {nationalities.map((e) => (
+                          <option key={e} value={e}>
+                            {translate(e)}
+                          </option>
+                        ))}
+                      </select>
+                      <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                        {translate("Nationality")}
+                      </label>
+                    </div>
+                  </div> */}
                   <div className="col-md-6">
                     <div className="form-input spacing">
                       <select
