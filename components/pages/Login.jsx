@@ -276,7 +276,7 @@ export default function Login({
             <div className="row justify-center">
               <div className={classfor}>
                 <div className="text-center mb-60 md:mb-30">
-                  <h1 className="text-30"> {translate("Log In")}</h1>
+                  <h1 className="text-30"> {translate("Log In x")}</h1>
                   <div className={hide === false ? "d-none" : "d-block"}>
                     <div className="text-18 fw-500 mt-20 md:mt-15">
                       {translate("We're Glad To See You Again!")}
