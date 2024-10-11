@@ -109,8 +109,8 @@ export default function CheckoutForm({
         closeModal();
         handleClose();
         setTimeout(() => {
-          window.location.reload(); 
-        }, 3500);
+          window.location.reload();
+        }, 1500);
       } else {
         showErrorToast(response?.Message);
       }
