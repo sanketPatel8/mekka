@@ -1108,7 +1108,7 @@ export default function Payment() {
         </div>
       </div>
       {showStripeModal && (
-        <StripefForm
+        <Stripeform
           amount={amount ? amount : SideBarData?.BookingFild?.SubTotal}
           setPaidAmount={setPaidAmount}
           Booking={Booking}
