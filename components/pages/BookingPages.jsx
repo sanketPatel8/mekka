@@ -1089,6 +1089,7 @@ export default function BookingPages({ BookingData }) {
       router.push("/payment");
     }else{
       showErrorToast("Invalid Phone Number")
+      isLoading(false)
     }
   };
 
