@@ -1086,10 +1086,14 @@ export default function BookingPages({ BookingData }) {
 
     if(PhoneValid === true){
       setIsLoading(false)
-      router.push("/payment");
+      setTimeout(() => {
+        router.push("/payment");
+      }, 2000);
     }else{
-      setIsLoading(false)
       showErrorToast("Invalid Phone Number")
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1000);
     }
   };
 
