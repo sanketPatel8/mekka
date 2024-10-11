@@ -422,7 +422,7 @@ export default function Login({
                       client_id={process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""}
                       scope={"name email"}
                       onLoginStart={() => console.log("start apple login")}
-                      redirect_uri={window.location.origin}
+                      redirect_uri={window.location.origin + '/login'}
 
                       onResolve={({ provider, data }) => {
                         signinSocial({ type: "apple", data });
