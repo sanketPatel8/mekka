@@ -421,12 +421,11 @@ export default function Login({
                     <LoginSocialApple
                       client_id={process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""}
                       scope={"name email"}
-                      onLoginStart={() => console.log("start apple login")}
                       redirect_uri={window.location.origin + '/login'}
-
+                      onLoginStart={() => console.log("start apple login")}
                       onResolve={({ provider, data }) => {
                         console.log(data)
-                        signinSocial({ type: "apple", email: data?.email || '', id: data.sub || '', name : data?.given_name , data });
+                        // signinSocial({ type: "apple", email: data?.email || '', id: data.sub || '', name : data?.given_name , data });
                       }}
                       onReject={(err) => {
                         console.log(err);
