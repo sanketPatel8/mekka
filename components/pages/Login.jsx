@@ -118,40 +118,40 @@ export default function Login({
 
       console.log(resp, "apple response");
 
-      // if (resp && resp.status == "success") {
-      //   showSuccessToast("Successfully logged in.");
-      //   localStorage.setItem("customer", JSON.stringify(resp));
-      //   dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-      //   const redirect =
-      //     typeof window !== "undefined"
-      //       ? localStorage.getItem("Redirect_Login")
-      //       : null;
-      //   LoginUpdate();
-      //   if (redirect) {
-      //     setTimeout(() => {
-      //       window.location.reload();
-      //       localStorage.removeItem("Redirect_Login");
-      //     }, 1000);
-      //   }
+      if (resp && resp.status == "success") {
+        showSuccessToast("Successfully logged in.");
+        localStorage.setItem("customer", JSON.stringify(resp));
+        dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        const redirect =
+          typeof window !== "undefined"
+            ? localStorage.getItem("Redirect_Login")
+            : null;
+        LoginUpdate();
+        if (redirect) {
+          setTimeout(() => {
+            window.location.reload();
+            localStorage.removeItem("Redirect_Login");
+          }, 1000);
+        }
 
-      //   if (redirect == null) {
-      //     setTimeout(() => {
-      //       setLoginPer(true);
-      //       router.push(path);
-      //     }, 1000);
-      //   }
-      // }
+        if (redirect == null) {
+          setTimeout(() => {
+            setLoginPer(true);
+            router.push(path);
+          }, 1000);
+        }
+      }
     } else {
       const resp = await POST.request({
         form: {
-          email,
+          email:email,
           auth_provider: type,
           provider_id: id,
           name: name,
         },
         url: "social_login",
       });
-      if (resp && resp.Status == 1) {
+      if (resp && resp.status == "success" ) {
         showSuccessToast("Successfully logged in.");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
@@ -174,7 +174,7 @@ export default function Login({
             router.push(path);
           }, 1000);
         }
-      } else if (resp && resp.Status == 0) {
+      } else  {
         showErrorToast("Invalid Credentials");
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
