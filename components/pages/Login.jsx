@@ -118,7 +118,9 @@ export default function Login({
 
       console.log(resp, "apple response");
 
-      if (resp && resp.status == "success") {
+      if (resp.status == "success") {
+
+        console.log("success",resp.status);
         showSuccessToast("Successfully logged in.");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
@@ -151,7 +153,7 @@ export default function Login({
         },
         url: "social_login",
       });
-      if (resp && resp.status == "success" ) {
+      if ( resp.status == "success" ) {
         showSuccessToast("Successfully logged in.");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
