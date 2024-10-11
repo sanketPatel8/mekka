@@ -297,6 +297,7 @@ export default function Payment() {
     if (selectedCheckbox === 0) {
       if (!agbAcceptance.checked || !item5.checked) {
         showErrorToast("Please fill all the fields");
+        setIsLoading(false);
         return;
       }
       const newBooking = { ...Booking, paymentType: 1 };
@@ -324,6 +325,7 @@ export default function Payment() {
         !item5.checked
       ) {
         showErrorToast("Please fill all the fields");
+        setIsLoading(false);
         return;
       }
 
