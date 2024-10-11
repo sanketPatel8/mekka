@@ -2662,7 +2662,7 @@ export default function EditTour() {
             </div>
 
             <div className="text-center pt-30">
-              © Copyright MekkaBooking.com {new Date().getFullYear()}
+              © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
             </div>
           </div>
         </div>

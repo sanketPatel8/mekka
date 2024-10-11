@@ -85,16 +85,18 @@ export default function Header1() {
             </button>
           </div>
 
-          <div className="header__logo">
-            <Link href="/" className="header__logo mx-2">
+          <Link href="/" className="header__logo mx-2">
               <Image
                 width="167"
-                height="32"
+                height="80"
                 src="/img/general/logo-1.png"
                 alt="logo icon"
                 priority
               />
             </Link>
+
+          <div className="header__logo">
+           
             <div className="media">
               <Link href="/" className="mx-3">
                 {translate("Home")}

@@ -868,7 +868,7 @@ export default function BookingPages({ BookingData }) {
                               //       fieldValue.slice(1)
                               //     }`
                               //   : 
-                                field.label}
+                                field.label} <span className="text-red">*</span>
                             </label>
                           </>
                         ) : (
@@ -900,7 +900,7 @@ export default function BookingPages({ BookingData }) {
                                 </>
                               ) : (
                                 field.label
-                              )}
+                              )} <span className="text-red">*</span>
                             </label>
                           </>
                         )}
@@ -1353,16 +1353,16 @@ export default function BookingPages({ BookingData }) {
                         {ShowbtnName === false ? (
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
+                            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
                             onClick={handlePromoSubmit}
-                            style={{ whiteSpace: "nowrap" }}
+                            // style={{ whiteSpace: "nowrap" }}
                           >
                             {translate("Apply")}
                           </button>
                         ) : (
                           <button
                             type="button"
-                            className="button -sm -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
+                            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
                             onClick={handlePromoremove}
                             style={{ whiteSpace: "nowrap" }}
                           >

@@ -84,7 +84,7 @@
   "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)": "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)",
   "Click for Installment Payment": "Click for Installment Payment",
   "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH": "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH",
-  "I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE.": "I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the IDEALGATE.",
+  "I have read the AGB (mekkabooking) and I accept the conditions": "I have read the AGB (mekkabooking) and I accept the conditions",
   "Cancellation Rules": "Cancellation Rules",
   "15% if canceled before 90 days of the trip": "15% if canceled before 90 days of the trip",
   "60% if canceled before 30 days of the trip": "60% if canceled before 30 days of the trip",
@@ -574,7 +574,13 @@
   "Date" : "Date",
   "Payment Method" : "Payment Method",
   "Booking details have been sent to your registered email address" : "Booking details have been sent to your registered email address",
-  "Amount Paid" : "Amount Paid"
+  "Amount Paid" : "Amount Paid",
+  "Copyright MekkaBookings" : "Copyright MekkaBookings",
+  "Total Pending" : "Total Pending",
+  "Total Earnings" : "Total Earnings",
+  "Total Booking" : "Total Booking",
+  "Payment Data" : "Payment Data",
+  "Copyright MekkaBooking.com" : "Copyright MekkaBooking.com"
   
   
   
