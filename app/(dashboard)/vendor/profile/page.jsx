@@ -722,6 +722,10 @@ export default function Profile() {
                         </div>
                       </div>
 
+                      <div className="com-12 mb-30">
+                        <p>Agent Commission : </p>
+                      </div>
+
                       <div className="col-12">
                         <h4 className="text-18 fw-500 mb-20">
                           {" "}
