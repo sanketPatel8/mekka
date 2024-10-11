@@ -50,7 +50,7 @@ export default function CustomerDb() {
           />
 
           <div className="text-center pt-30">
-            © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
+            © Copyright MekkaBooking.com {new Date().getFullYear()}
           </div>
         </div>
       </div>
