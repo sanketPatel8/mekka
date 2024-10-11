@@ -778,32 +778,32 @@ export default function Payment() {
                       </h2>
                       <div className="mt-10">
                         {translate(
-                          " Booking details have been sent to your registered email address."
-                        )}
+                          "Booking details have been sent to your registered email address"
+                        )}.
                       </div>
                     </div>
 
                     <div className="border-dashed-1 py-30 px-50 rounded-12 mt-30">
                       <div className="row y-gap-15">
                         <div className="col-md-3 col-6">
-                          <div>Reservation Number</div>
+                          <div>{translate('Reservation Number')}</div>
                           <div className="text-accent-2">{ReservationID}</div>
                         </div>
 
                         <div className="col-md-3 col-6">
-                          <div>Date</div>
+                          <div>{translate('Date')}</div>
                           <div className="text-accent-2">{todayDate}</div>
                         </div>
 
                         <div className="col-md-3 col-6">
-                          <div>Total</div>
+                          <div>{translate("Total")}</div>
                           <div className="text-accent-2">
                             {formatPrice(SideBarData?.BookingFild?.SubTotal)}
                           </div>
                         </div>
 
                         <div className="col-md-3 col-6">
-                          <div>Payment Method</div>
+                          <div>{translate('Payment Method')}</div>
                           <div className="text-accent-2">
                             {selectedCheckbox === 0
                               ? "Direct Bank Transfer"
@@ -863,6 +863,8 @@ export default function Payment() {
                   {" "}
                   {translate("Reservation Details")}
                 </h2>
+
+                <div className="line mt-20 mb-2"></div>
 
                 <div className="d-flex mt-30">
                   <Image
@@ -1008,7 +1010,7 @@ export default function Payment() {
                       <div className="line mt-5 mb-5"></div>
 
                       <p className="my-1 fs-6 my-2">
-                      {translate("(The Standard Offer May Include a Multi-Bed Room.)")}
+                      ({translate("The Standard Offer May Include a Multi-Bed Room")}.)
                       </p>
 
                       <div>
@@ -1099,13 +1101,14 @@ export default function Payment() {
                     
                   </button>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
       {showStripeModal && (
-        <Stripeform
+        <StripefForm
           amount={amount ? amount : SideBarData?.BookingFild?.SubTotal}
           setPaidAmount={setPaidAmount}
           Booking={Booking}
