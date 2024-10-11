@@ -20,6 +20,7 @@ export default function Gallery1({ PAckageData  , }) {
   
 
 
+
   const imagesWithDimensions = [
     { width: 1155, height: 765 }, // Size for first image
     { width: 765, height: 375 }, // Size for second image
