@@ -1088,8 +1088,8 @@ export default function BookingPages({ BookingData }) {
       setIsLoading(false)
       router.push("/payment");
     }else{
+      setIsLoading(false)
       showErrorToast("Invalid Phone Number")
-      isLoading(false)
     }
   };
 
