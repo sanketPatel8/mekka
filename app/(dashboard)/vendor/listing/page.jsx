@@ -58,6 +58,7 @@ export default function DBListing() {
   const [loading, setLoading] = useState(true);
 
   const [invoice, setinvoice] = useState(false);
+  
   const [note, setNote] = useState("");
   useEffect(() => {
     Modal.setAppElement("#invoice");
@@ -80,6 +81,7 @@ export default function DBListing() {
 
               fetchListing();
               setLoading(false);
+              // router.push(`/vendor/edit-tour/${}`)
             },1000)
 
           }else{
