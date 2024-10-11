@@ -30,9 +30,10 @@ const RoadMap = ({ PAckageData, hotelData, isLoading, setisLoading }) => {
         </div>
       ) : (
         <>
+      
           {hotelData && hotelData.mekka_hotel ? (
             <div>
-              <h4>{translate('Hotel for Makkah')}</h4>
+              <h4>{translate('Hotel For Mekka')}</h4>
               <h5>
                 {hotelData.mekka_hotel.hotel_name} (
                 {hotelData.mekka_hotel.hotel_stars} star)
@@ -52,7 +53,7 @@ const RoadMap = ({ PAckageData, hotelData, isLoading, setisLoading }) => {
 
           {hotelData && hotelData.madina_hotel ? (
             <div className="mt-50">
-              <h4>{translate('Hotel for Madina')}</h4>
+              <h4>{translate('Hotel For Madina')}</h4>
               <h5>
                 {hotelData.madina_hotel.hotel_name} (
                 {hotelData.madina_hotel.hotel_stars} star)
