@@ -55,6 +55,7 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [isBankLoading, setIsBankLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [Commision, setCommision] = useState('')
   const {handleRedirect} = Useauthredirect();
 
   useEffect(() => {
@@ -85,6 +86,7 @@ export default function Profile() {
       setStreet(response.user.street);
       setHouseNumber(response.user.houseNumber);
       setZipcode(response.user.plz);
+      setCommision(response.user.company.commission)
       if (
         response.user.company.Link !== null &&
         response.user.company.Link !== ""
@@ -723,7 +725,7 @@ export default function Profile() {
                       </div>
 
                       <div className="com-12 mb-30">
-                        <p>Agent Commission : </p>
+                        <p>Agent Commission : {Commision}</p>
                       </div>
 
                       <div className="col-12">

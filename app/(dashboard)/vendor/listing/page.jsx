@@ -81,7 +81,7 @@ export default function DBListing() {
 
               fetchListing();
               setLoading(false);
-              // router.push(`/vendor/edit-tour/${}`)
+              router.push(`/vendor/edit-tour/${response?.tour_id}`)
             },1000)
 
           }else{

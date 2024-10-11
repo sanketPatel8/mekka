@@ -6,6 +6,7 @@ import Header from "@/components/dasboard/Header";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { useSearchParams } from "next/navigation";
 import { POST } from "@/app/utils/api/post";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 // Dynamically import CustomerDetaTable with client-side only rendering
 const CustomerDetaTable = dynamic(
@@ -15,6 +16,8 @@ const CustomerDetaTable = dynamic(
 
 export default function CustomerDb() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+
+  const {translate} = useTranslation()
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +53,7 @@ export default function CustomerDb() {
           />
 
           <div className="text-center pt-30">
-            © Copyright MekkaBooking.com {new Date().getFullYear()}
+            © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
           </div>
         </div>
       </div>
