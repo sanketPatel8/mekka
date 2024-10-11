@@ -14,6 +14,7 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import dynamic from "next/dynamic";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
+import { jwtDecode } from "jwt-decode";
 
 export default function Login({
   onLoginSuccess,
@@ -101,7 +102,45 @@ export default function Login({
   // };
 
   const signinSocial = async ({ type, email, id, name, data }) => {
-    if (data?.email) {
+    if (type === 'apple'){
+      const token = data.authorization.id_token;
+      const decodedToken = jwtDecode(token);
+  
+      const appleData = {
+        email: decodedToken.email,
+        auth_provider: type,
+        provider_id: decodedToken.sub,
+        name: decodedToken.name,
+        token: data.authorization.code,
+      };
+  
+      const resp = await POST.request({
+        form: appleData,
+        url: 'social_login',
+      });
+  
+        if (resp && resp.Status == 1) {
+          showSuccessToast("Successfully logged in.");
+          localStorage.setItem("customer", JSON.stringify(resp));
+          dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+          const redirect = typeof window !== "undefined" ? localStorage.getItem("Redirect_Login"): null;
+          LoginUpdate();
+          if(redirect){
+            setTimeout(() => {
+              window.location.reload();
+              localStorage.removeItem("Redirect_Login");
+            },1000);
+          }
+    
+          if(redirect == null){
+            setTimeout(() => {
+              setLoginPer(true);
+              router.push(path);
+            }, 1000);
+          }
+        }
+    }
+    else {
          const resp = await POST.request({
              form: {
                    email,
@@ -138,9 +177,7 @@ export default function Login({
             password: "",
           });
          }
-    } else {
-
-    }
+    } 
 };
 
   const { translate } = useTranslation();
@@ -424,8 +461,8 @@ export default function Login({
                       redirect_uri={window.location.origin + '/login'}
                       onLoginStart={() => console.log("start apple login")}
                       onResolve={({ provider, data }) => {
-                        console.log(data)
-                        // signinSocial({ type: "apple", email: data?.email || '', id: data.sub || '', name : data?.given_name , data });
+                        signinSocial({ type: "apple", data: data });
+
                       }}
                       onReject={(err) => {
                         console.log(err);
