@@ -98,18 +98,15 @@ export default function Login({
   const signinSocial = async ({ type, email, id, name, data }) => {
     if (type === "apple") {
       const token = data.authorization.id_token;
-      const codeToken = data.authorization.code;
       const decodedToken = jwtDecode(token);
-      const decodedCodeToken = jwtDecode(codeToken);
 
       console.log(decodedToken, "decoded token");
-      console.log(decodedCodeToken, "decodedCodeToken");
 
       const appleData = {
         email: decodedToken.email,
         auth_provider: type,
         provider_id: decodedToken.sub,
-        name: decodedToken.name,
+        name: "",
       };
 
       console.log(appleData, "apple data");
@@ -279,7 +276,7 @@ export default function Login({
             <div className="row justify-center">
               <div className={classfor}>
                 <div className="text-center mb-60 md:mb-30">
-                  <h1 className="text-30"> {translate("Log In xxx")}</h1>
+                  <h1 className="text-30"> {translate("Log In")}</h1>
                   <div className={hide === false ? "d-none" : "d-block"}>
                     <div className="text-18 fw-500 mt-20 md:mt-15">
                       {translate("We're Glad To See You Again!")}
