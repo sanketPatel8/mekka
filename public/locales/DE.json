@@ -37,7 +37,7 @@
   "FAQ": "FAQ",
   "Customer Reviews": "Kundenbewertungen",
   "You might also like...": "Weitere Empfehlungen",
-  "Tickets": "Tickets",
+  "Tickets": "Fahrkarten",
   "Hotel For Mekka": "Hotel für Mekka",
   "Hotel For Madina": "Hotel für Madina",
   "Select Flight" : "Wählen Sie Flug" ,
@@ -614,7 +614,8 @@
 "Visas" : "Visum",
 "Booking Id" : "Buchungs-ID",
 "Select Status" : "Status auswählen",
-"Children" : "Kinder"
+"Children" : "Kinder",
+"The distance to the Kaaba is" : "Die Entfernung zur Kaaba beträgt"
   
   
   

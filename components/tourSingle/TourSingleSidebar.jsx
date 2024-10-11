@@ -17,6 +17,8 @@ export default function TourSingleSidebar({
   PAckageData,
   ThumbnailImage,
   setHotelData,
+  isLoading,
+  setisLoading
 }) {
   const {
     prices,
@@ -103,6 +105,7 @@ export default function TourSingleSidebar({
   }, [mekkaId, madinaId]);
 
   const fetchHotelData = async () => {
+    setisLoading(true)
     const formData = new FormData();
     formData.append("tour_id", Tourid);
     formData.append("mekka_id", mekkaId);
@@ -114,6 +117,9 @@ export default function TourSingleSidebar({
     });
 
     if (response) {
+      setisLoading(false)
+      console.log("response.hotel_data" , response.hotel_data);
+      
       setHotelData(response.hotel_data);
     }
   };

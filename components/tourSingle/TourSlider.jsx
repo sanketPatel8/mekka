@@ -98,7 +98,7 @@ export default function TourSlider({ PAckageData }) {
                             elm.direct_flight == "0" ? "d-none" : "d-block"
                           }`}
                         >
-                          Direct Flight
+                          {translate('Direct Flight')}
                         </button>
                       </div>
 
@@ -156,7 +156,7 @@ export default function TourSlider({ PAckageData }) {
                               elm.tour_price == "0" ? "d-none" : "d-block"
                             }`}
                           >
-                            From{" "}
+                            {translate('From')}{" "}
                             <span className="text-16 fw-500">
                               {formatPrice(elm.tour_price)}
                             </span>
