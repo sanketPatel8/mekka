@@ -78,7 +78,6 @@ export default function PageData() {
     }
   };
 
-  console.log("FilterSidebar", FilterSidebar);
 
   const onPageChange = async (pageIndex) => {
     const tourTypeFromParam = searchParams.get("TourType") || "";
@@ -122,10 +121,8 @@ export default function PageData() {
       Distance[0] !== 0
       // FilterSidebar.selectedRatings.length !== 0
     ) {
-      console.log("run filter tour ");
       await FetchFilterData(pageIndex);
     } else {
-      console.log("run listning tour ");
       await fetchListing(pageIndex);
     }
   };

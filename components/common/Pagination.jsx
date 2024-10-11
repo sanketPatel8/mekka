@@ -10,24 +10,19 @@ const Pagination = ({
 }) => {
   const [data, setData] = useState([]); // Fetched data
   const [loading, setLoading] = useState(false); // Loading indicator
-  console.log(onPageChange, "onPageChange");
 
   const handleClick = (type, index) => {
-    console.log("Handle Click Value ", type, index);
 
     if (type === "prev") {
-      console.log("prev");
       const newIndex = Math.max(0, index - 1);
       setActiveIndex(newIndex);
 
       onPageChange(newIndex * 10);
     } else if (type === "next") {
-      console.log("next");
       const newIndex = Math.min(index + 1, range - 1);
       setActiveIndex(newIndex);
       onPageChange(newIndex * 10);
     } else if (type === "page") {
-      console.log("page");
       setActiveIndex(index);
       if (index === 0) {
         onPageChange(index);
