@@ -884,11 +884,12 @@ const isCurrentTabValid = () => {
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
                                         <input type="number" min={1} ref={numberInputRef1}  required value={capacity} onChange={handleInputChange(setCapacity)}   
-                                        onKeyDown={(e) => {
-                                                    if (!/^[0-9]+$/.test(e.key)) {
-                                                      e.preventDefault();
-                                                    }
-                                                  }}/>
+                                          onKeyDown={(e) => {
+                                            if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                              e.preventDefault();
+                                            }
+                                          }}
+                                        />
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Seat Availibility") ||
                                             "Find Latest Packages"} <span className="text-red">*</span>
@@ -998,7 +999,7 @@ const isCurrentTabValid = () => {
                                                       return newRows;
                                                     })}
                                                     onKeyDown={(e) => {
-                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
@@ -1097,7 +1098,7 @@ const isCurrentTabValid = () => {
                                         </label>
                                         <input
                                           onChange={handleImageChange2}
-                                          accept="image/*"
+                                          accept="image/jpg,image/png"
                                           id="imageInp2"
                                           type="file"
                                           name="image2"
@@ -1137,8 +1138,8 @@ const isCurrentTabValid = () => {
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
                                       <input type="number" ref={numberInputRef3} required value={adult_price} onChange={handleInputChange(setAdultPrice)}
-                                        onKeyDown={(e) => {
-                                          if (!/^[0-9]+$/.test(e.key)) {
+                                         onKeyDown={(e) => {
+                                          if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                             e.preventDefault();
                                           }
                                         }}
@@ -1152,11 +1153,11 @@ const isCurrentTabValid = () => {
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
                                       <input type="number" ref={numberInputRef4} required value={child_price} onChange={handleInputChange(setChildPrice)}
-                                        onKeyDown={(e) => {
-                                          if (!/^[0-9]+$/.test(e.key)) {
-                                            e.preventDefault();
-                                          }
-                                        }}
+                                       onKeyDown={(e) => {
+                                        if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                          e.preventDefault();
+                                        }
+                                      }}
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Child") ||
@@ -1167,8 +1168,8 @@ const isCurrentTabValid = () => {
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
                                       <input type="number" ref={numberInputRef5} required value={baby_price} onChange={handleInputChange(setBabyPrice)} 
-                                        onKeyDown={(e) => {
-                                          if (!/^[0-9]+$/.test(e.key)) {
+                                         onKeyDown={(e) => {
+                                          if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                             e.preventDefault();
                                           }
                                         }}/>
@@ -1255,7 +1256,7 @@ const isCurrentTabValid = () => {
                                               onChange={(event) => handlePriceChange(event, service.id)}
                                               required
                                               onKeyDown={(e) => {
-                                                if (!/^[0-9]+$/.test(e.key)) {
+                                                if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                   e.preventDefault();
                                                 }
                                               }}
@@ -1587,7 +1588,7 @@ const isCurrentTabValid = () => {
                                                     return newRows;
                                                   })}
                                                   onKeyDown={(e) => {
-                                                    if (!/^[0-9]+$/.test(e.key)) {
+                                                    if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                       e.preventDefault();
                                                     }
                                                   }}
@@ -1684,14 +1685,14 @@ const isCurrentTabValid = () => {
                                                 <input
                                                   type="text"
                                                   required
-                                                  value={mekkaRows[index].hotel_price}
-                                                  onChange={(e) => setMekkaRows(prevRows => {
+                                                  value={madinaRows[index].hotel_price}
+                                                  onChange={(e) => setMadinaRows(prevRows => {
                                                     const newRows = [...prevRows];
                                                     newRows[index].hotel_price = e.target.value;
                                                     return newRows;
                                                   })}
                                                   onKeyDown={(e) => {
-                                                    if (!/^[0-9]+$/.test(e.key)) {
+                                                    if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                       e.preventDefault();
                                                     }
                                                   }}
@@ -1963,7 +1964,7 @@ const isCurrentTabValid = () => {
                                                         return newRows;
                                                       })}
                                                       onKeyDown={(e) => {
-                                                        if (!/^[0-9]+$/.test(e.key)) {
+                                                        if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                           e.preventDefault();
                                                         }
                                                       }}

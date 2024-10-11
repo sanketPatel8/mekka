@@ -1246,7 +1246,7 @@ export default function EditTour() {
                                       value={capacity}
                                       onChange={handleInputChange(setCapacity)}
                                       onKeyDown={(e) => {
-                                        if (!/^[0-9]+$/.test(e.key)) {
+                                        if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                           e.preventDefault();
                                         }
                                       }}
@@ -1390,7 +1390,7 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
-                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
@@ -1492,7 +1492,7 @@ export default function EditTour() {
                                     </label>
                                     <input
                                       onChange={handleImageChange2}
-                                      accept="image/*"
+                                      accept="image/jpg,image/png"
                                       id="imageInp2"
                                       type="file"
                                       name="image2"
@@ -1537,7 +1537,7 @@ export default function EditTour() {
                                     value={adult_price}
                                     onChange={handleInputChange(setAdultPrice)}
                                     onKeyDown={(e) => {
-                                      if (!/^[0-9]+$/.test(e.key)) {
+                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1558,7 +1558,7 @@ export default function EditTour() {
                                     value={child_price}
                                     onChange={handleInputChange(setChildPrice)}
                                     onKeyDown={(e) => {
-                                      if (!/^[0-9]+$/.test(e.key)) {
+                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1579,7 +1579,7 @@ export default function EditTour() {
                                     value={baby_price}
                                     onChange={handleInputChange(setBabyPrice)}
                                     onKeyDown={(e) => {
-                                      if (!/^[0-9]+$/.test(e.key)) {
+                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1674,7 +1674,7 @@ export default function EditTour() {
                                             handlePriceChange(event, service.id)
                                           }
                                           onKeyDown={(e) => {
-                                            if (!/^[0-9]+$/.test(e.key)) {
+                                            if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                               e.preventDefault();
                                             }
                                           }}
@@ -2049,7 +2049,7 @@ export default function EditTour() {
                                                   })
                                                 }
                                                 onKeyDown={(e) => {
-                                                  if (!/^[0-9]+$/.test(e.key)) {
+                                                  if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                     e.preventDefault();
                                                   }
                                                 }}
@@ -2177,7 +2177,7 @@ export default function EditTour() {
                                                   })
                                                 }
                                                 onKeyDown={(e) => {
-                                                  if (!/^[0-9]+$/.test(e.key)) {
+                                                  if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                     e.preventDefault();
                                                   }
                                                 }}
@@ -2454,7 +2454,7 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
-                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
@@ -2492,7 +2492,7 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
-                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
@@ -2529,7 +2529,7 @@ export default function EditTour() {
                                                       )
                                                     }
                                                     onKeyDown={(e) => {
-                                                      if (!/^[0-9]+$/.test(e.key)) {
+                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}

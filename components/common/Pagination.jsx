@@ -18,8 +18,10 @@ const Pagination = ({
     
     if (type === "prev") {
       setActiveIndex((prev) => Math.max(0, prev - 1));
+      onPageChange(activeIndex - 1); // Update onPageChange to use the updated activeIndex value
     } else if (type === "next") {
       setActiveIndex((prev) => Math.min(prev + 1, range - 1));
+      onPageChange(activeIndex + 1); // Update onPageChange to use the updated activeIndex value
     } else if (type === "page") {
       setActiveIndex(index);
       if (index === 0) {
