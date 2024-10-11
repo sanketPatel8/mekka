@@ -1117,7 +1117,7 @@ export default function EditTour() {
         formData.append(`tour_image[${index}]`, file);
       });
     }
-    formData.append("departures ", JSON.stringify(departureData));
+    formData.append("departures", JSON.stringify(departureData));
 
     const url = "updatetour";
 
