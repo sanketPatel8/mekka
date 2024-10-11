@@ -337,9 +337,12 @@ export default function Login({
                   <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
+
                   >
                     <LoginSocialGoogle
                       client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
+                      client_secret={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""}
+
                       redirect_uri={REDIRECT_URI}
                       onLoginStart={() => console.log("start")}
                       scope="openid profile email"
