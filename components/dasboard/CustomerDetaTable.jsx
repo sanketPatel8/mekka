@@ -500,7 +500,7 @@ const CustomerDetaTable = () => {
                 target="_blank"
                 className="button -sm -accent-1 bg-info-2 text-white my-2"
               >
-                {translate("View")} {translate(" ")}
+                {translate("View")} {" "}
               </Link>
             ),
           },
@@ -1051,8 +1051,6 @@ const CustomerDetaTable = () => {
       console.error(e);
     }
   };
-
-  console.log("editCustomerData.nationality", editCustomerData.nationality);
 
   return (
     <div>
