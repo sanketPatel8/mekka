@@ -425,6 +425,7 @@ export default function Login({
                       redirect_uri={window.location.origin + '/login'}
 
                       onResolve={({ provider, data }) => {
+                        console.log(data)
                         signinSocial({ type: "apple", email: data?.email || '', id: data.sub || '', name : data?.given_name , data });
                       }}
                       onReject={(err) => {
