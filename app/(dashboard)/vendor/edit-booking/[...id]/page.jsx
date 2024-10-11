@@ -708,7 +708,7 @@ export default function DbBooking({ params }) {
                                     onChange={(e) =>
                                       handleImageChange(e, index)
                                     }
-                                    accept="image/*, application/*"
+                                    accept="image/jpg,image/png, application/*"
                                     id={`imageInp-${index}`}
                                     type="file"
                                     name="image2"

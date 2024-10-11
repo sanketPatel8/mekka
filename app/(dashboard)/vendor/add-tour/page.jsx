@@ -23,6 +23,7 @@ import draftToHtml from "draftjs-to-html";
 import VendorFooter from "@/components/dasboard/VendorFooter";
 import { useRouter } from "next/navigation";
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
+import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
 
 
 const Editor = dynamic(
@@ -142,7 +143,8 @@ export default function AddTour() {
   const [minDate, setMinDate] = useState("");
   const [loading, setLoading] = useState(false);
   // const [isLoading, setIsLoading] = useState(true);
-  
+  const [isFocused, setIsFocused] = useState(false);
+
   const handleStartDateChange = (e) => {
     // const formattedDate = new Date(formatDateToMMDDYYYY(e.target.value));
     // console.log(formattedDate, "format")
@@ -245,6 +247,10 @@ if (day && month && year) {
         }
       });
     };
+
+    window.addEventListener('scroll', () => {
+      setIsFocused(false);
+    });
   }, []);
   
   const { translate } = useTranslation();
@@ -885,10 +891,14 @@ const isCurrentTabValid = () => {
                                       <div className="form-input my-1">
                                         <input type="number" min={1} ref={numberInputRef1}  required value={capacity} onChange={handleInputChange(setCapacity)}   
                                           onKeyDown={(e) => {
+                                            if (!isFocused) return;
+
                                             if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                               e.preventDefault();
                                             }
                                           }}
+                                          onFocus={() => setIsFocused(true)}
+                                          onBlur={() => setIsFocused(false)}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Seat Availibility") ||
@@ -999,10 +1009,14 @@ const isCurrentTabValid = () => {
                                                       return newRows;
                                                     })}
                                                     onKeyDown={(e) => {
+                                                      if (!isFocused) return;
+          
                                                       if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                                         e.preventDefault();
                                                       }
                                                     }}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() => setIsFocused(false)}
                                                     />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {" "}
@@ -1138,11 +1152,15 @@ const isCurrentTabValid = () => {
                                   <div className="col-lg-4">
                                     <div className="form-input my-1">
                                       <input type="number" ref={numberInputRef3} required value={adult_price} onChange={handleInputChange(setAdultPrice)}
-                                         onKeyDown={(e) => {
+                                        onKeyDown={(e) => {
+                                          setIsFocused(true);
                                           if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
                                             e.preventDefault();
                                           }
                                         }}
+                                        onKeyUp={()=>setIsFocused(false)}
+                                        onFocus={() => setIsFocused(true)}
+                                        onBlur={() => setIsFocused(false)}
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Price (€) Per Adult") ||

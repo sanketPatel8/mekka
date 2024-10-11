@@ -54,8 +54,8 @@ export default function Login({
   const [isLoading, setIsLoading] = useState(false);
   const router= useRouter();
 
-
-  const LoginUpdate = () => {
+  const REDIRECT_URI = "https://mekkabooking.vercel.app/gresponse"
+    const LoginUpdate = () => {
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
 
     const updatedStatus = loginStatus !== undefined ? true : false;
@@ -332,14 +332,14 @@ export default function Login({
                 </div>
 
                 <div className="col">
-                <FaGoogle size={15} className="mx-1" />
-                {translate("Google")}
-                  {/* <button
+           
+                  <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
                   >
                     <LoginSocialGoogle
                       client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
+                      redirect_uri={REDIRECT_URI}
                       onLoginStart={() => console.log("start")}
                       scope="openid profile email"
                       discoveryDocs="claims_supported"
@@ -351,9 +351,10 @@ export default function Login({
                         console.log(err);
                       }}
                     >
-   
+                      <FaGoogle size={15} className="mx-1" />
+                      {translate("Google")}
                     </LoginSocialGoogle>
-                  </button> */}
+                  </button>
                   {/* <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
