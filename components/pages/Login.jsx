@@ -419,7 +419,7 @@ export default function Login({
                     className="button -md -outline-dark-1 text-dark-1 col-12"
                   >
                     <LoginSocialApple
-                      client_id={process.env.NEXT_PUBLIC_REACT_APP_APPLE_ID || ""}
+                      client_id={process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""}
                       scope={"name email"}
                       onLoginStart={() => console.log("start apple login")}
                       redirect_uri={window.location.origin + '/login'}
