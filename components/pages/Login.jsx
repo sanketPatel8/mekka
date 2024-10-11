@@ -22,11 +22,8 @@ export default function Login({
   sectionClass,
   hide,
   path,
-  Loading
+  Loading,
 }) {
-
-  
-
   const LoginSocialFacebook = dynamic(
     () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
     { ssr: false }
@@ -40,9 +37,6 @@ export default function Login({
     { ssr: false }
   );
 
- 
-
-  
   const [LogInData, setLogInData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     email: "",
@@ -53,11 +47,11 @@ export default function Login({
   const { dispatch } = useAuthContext();
   const [LoginChecked, setLoginChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const router= useRouter();
+  const router = useRouter();
 
-  const REDIRECT_GOOGLE_URI = "https://mekkabooking.vercel.app/gresponse"
-  const REDIRECT_APPLE_URI = "https://mekkabooking.vercel.app/appleresponse"
-    const LoginUpdate = () => {
+  const REDIRECT_GOOGLE_URI = "https://mekkabooking.vercel.app/gresponse";
+  const REDIRECT_APPLE_URI = "https://mekkabooking.vercel.app/appleresponse";
+  const LoginUpdate = () => {
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
 
     const updatedStatus = loginStatus !== undefined ? true : false;
@@ -75,15 +69,15 @@ export default function Login({
   //   formData.append("auth_provider", type);
   //   formData.append("name", data?.name);
   //   formData.append("email", data?.email);
-   
+
   //   const resp = await POST.request({ form: formData, url: "social_login" });
-    
+
   //   if (resp) {
   //     if (resp) {
   //       showSuccessToast("Successfully logged in.");
   //       localStorage.setItem("customer", JSON.stringify(resp));
   //       dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-       
+
   //       LoginUpdate();
   //       setTimeout(() => {
   //         setLoginPer(true);
@@ -91,7 +85,7 @@ export default function Login({
   //       }, 1000);
   //     } else {
   //       showErrorToast("Invalid Credentials");
-     
+
   //       setLogInData({
   //         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
   //         email: "",
@@ -102,83 +96,94 @@ export default function Login({
   // };
 
   const signinSocial = async ({ type, email, id, name, data }) => {
-    if (type === 'apple'){
+    if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
-  
+
+      console.log(decodedToken, "decoded token");
+
       const appleData = {
         email: decodedToken.email,
         auth_provider: type,
         provider_id: decodedToken.sub,
         name: decodedToken.name,
-        token: data.authorization.code,
       };
-  
+
+      console.log(appleData, "apple data");
+
       const resp = await POST.request({
         form: appleData,
-        url: 'social_login',
+        url: "social_login",
       });
-  
-        if (resp && resp.Status == 1) {
-          showSuccessToast("Successfully logged in.");
-          localStorage.setItem("customer", JSON.stringify(resp));
-          dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-          const redirect = typeof window !== "undefined" ? localStorage.getItem("Redirect_Login"): null;
-          LoginUpdate();
-          if(redirect){
-            setTimeout(() => {
-              window.location.reload();
-              localStorage.removeItem("Redirect_Login");
-            },1000);
-          }
-    
-          if(redirect == null){
-            setTimeout(() => {
-              setLoginPer(true);
-              router.push(path);
-            }, 1000);
-          }
-        }
-    }
-    else {
-         const resp = await POST.request({
-             form: {
-                   email,
-                   auth_provider: type,
-                   provider_id: id,
-                   name: name,
-              },  url: 'social_login'
-         });
-         if (resp && resp.Status == 1) {
-          showSuccessToast("Successfully logged in.");
-          localStorage.setItem("customer", JSON.stringify(resp));
-          dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-          const redirect = typeof window !== "undefined" ? localStorage.getItem("Redirect_Login"): null;
-          console.log(redirect,"redirect");
-          LoginUpdate();
-          if(redirect){
-            setTimeout(() => {
-              window.location.reload();
-              localStorage.removeItem("Redirect_Login");
-            },1000);
-          }
 
-          if(redirect == null){
-            setTimeout(() => {
-              setLoginPer(true);
-              router.push(path);
-            }, 1000);
-          }
-         }else if(resp && resp.Status == 0){
-          showErrorToast("Invalid Credentials");
-          setLogInData({
-            AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-            email: "",
-            password: "",
-          });
-         }
-    } 
-};
+      console.log(resp, "apple response");
+
+      // if (resp && resp.status == "success") {
+      //   showSuccessToast("Successfully logged in.");
+      //   localStorage.setItem("customer", JSON.stringify(resp));
+      //   dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+      //   const redirect =
+      //     typeof window !== "undefined"
+      //       ? localStorage.getItem("Redirect_Login")
+      //       : null;
+      //   LoginUpdate();
+      //   if (redirect) {
+      //     setTimeout(() => {
+      //       window.location.reload();
+      //       localStorage.removeItem("Redirect_Login");
+      //     }, 1000);
+      //   }
+
+      //   if (redirect == null) {
+      //     setTimeout(() => {
+      //       setLoginPer(true);
+      //       router.push(path);
+      //     }, 1000);
+      //   }
+      // }
+    } else {
+      const resp = await POST.request({
+        form: {
+          email,
+          auth_provider: type,
+          provider_id: id,
+          name: name,
+        },
+        url: "social_login",
+      });
+      if (resp && resp.Status == 1) {
+        showSuccessToast("Successfully logged in.");
+        localStorage.setItem("customer", JSON.stringify(resp));
+        dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        const redirect =
+          typeof window !== "undefined"
+            ? localStorage.getItem("Redirect_Login")
+            : null;
+        console.log(redirect, "redirect");
+        LoginUpdate();
+        if (redirect) {
+          setTimeout(() => {
+            window.location.reload();
+            localStorage.removeItem("Redirect_Login");
+          }, 1000);
+        }
+
+        if (redirect == null) {
+          setTimeout(() => {
+            setLoginPer(true);
+            router.push(path);
+          }, 1000);
+        }
+      } else if (resp && resp.Status == 0) {
+        showErrorToast("Invalid Credentials");
+        setLogInData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          email: "",
+          password: "",
+        });
+      }
+    }
+  };
 
   const { translate } = useTranslation();
 
@@ -220,16 +225,19 @@ export default function Login({
           showSuccessToast("Login successful!");
           LoginUpdate();
 
-          const redirect = typeof window !== "undefined" ? localStorage.getItem("Redirect_Login"): null;
-          console.log(redirect,"redirect");
-          if(redirect){
-        setTimeout(() => {
-          window.location.reload();
-          localStorage.removeItem("Redirect_Login");
-        },1000);
+          const redirect =
+            typeof window !== "undefined"
+              ? localStorage.getItem("Redirect_Login")
+              : null;
+          console.log(redirect, "redirect");
+          if (redirect) {
+            setTimeout(() => {
+              window.location.reload();
+              localStorage.removeItem("Redirect_Login");
+            }, 1000);
           }
 
-          if(redirect == null){
+          if (redirect == null) {
             setTimeout(() => {
               setLoginPer(true);
               router.push(path);
@@ -254,71 +262,68 @@ export default function Login({
 
   return (
     <>
-    
-    {
-      Loading ?
-      <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: "500px" }}
-    >
-      <ClipLoader color="#DAC04F" size={50} />
-    </div>
-       :
-     
-    <section className={`${sectionClass}  layout-pb-lg`}>
-      <div className={hide === false ? "d-none" : "d-block"}>
-      </div>
-      <div className="container">
-        <div className="row justify-center">
-          <div className={classfor}>
-            <div className="text-center mb-60 md:mb-30">
-              <h1 className="text-30"> {translate("Log In")}</h1>
-              <div className={hide === false ? "d-none" : "d-block"}>
-                <div className="text-18 fw-500 mt-20 md:mt-15">
-                  {translate("We're Glad To See You Again!")}
+      {Loading ? (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "500px" }}
+        >
+          <ClipLoader color="#DAC04F" size={50} />
+        </div>
+      ) : (
+        <section className={`${sectionClass}  layout-pb-lg`}>
+          <div className={hide === false ? "d-none" : "d-block"}></div>
+          <div className="container">
+            <div className="row justify-center">
+              <div className={classfor}>
+                <div className="text-center mb-60 md:mb-30">
+                  <h1 className="text-30"> {translate("Log In")}</h1>
+                  <div className={hide === false ? "d-none" : "d-block"}>
+                    <div className="text-18 fw-500 mt-20 md:mt-15">
+                      {translate("We're Glad To See You Again!")}
+                    </div>
+                    <div className="mt-5">
+                      {translate("Don't Have An Account?")}
+                      <Link href="/register" className="text-accent-1">
+                        {translate("Sign Up")}!
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-5">
-                  {translate("Don't Have An Account?")}
-                  <Link href="/register" className="text-accent-1">
-                    {translate("Sign Up")}!
-                  </Link>
-                </div>
-              </div>
-            </div>
 
-            <form
-              onSubmit={handleLoginSubmit}
-              className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
-            >
-              <div className="form-input my-1">
-                <input
-                  type="email"
-                  onChange={HandleLogInChange}
-                  value={LogInData.email}
-                  name="email"
-                  required
-                />
-                <label className="lh-1 text-16 text-light-1">
-                  {translate("Email Address")} <span className="text-red">*</span>
-                </label>
-              </div>
+                <form
+                  onSubmit={handleLoginSubmit}
+                  className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
+                >
+                  <div className="form-input my-1">
+                    <input
+                      type="email"
+                      onChange={HandleLogInChange}
+                      value={LogInData.email}
+                      name="email"
+                      required
+                    />
+                    <label className="lh-1 text-16 text-light-1">
+                      {translate("Email Address")}{" "}
+                      <span className="text-red">*</span>
+                    </label>
+                  </div>
 
-              <div className="form-input my-1">
-                <input
-                  type="password"
-                  onChange={HandleLogInChange}
-                  value={LogInData.password}
-                  name="password"
-                  
-                  required
-                />
-                <label className="lh-1 text-16 text-light-1">
-                  {translate("Password")} <span className="text-red">*</span>
-                </label>
-              </div>
+                  <div className="form-input my-1">
+                    <input
+                      type="password"
+                      onChange={HandleLogInChange}
+                      value={LogInData.password}
+                      name="password"
+                      required
+                    />
+                    <label className="lh-1 text-16 text-light-1">
+                      {translate("Password")}{" "}
+                      <span className="text-red">*</span>
+                    </label>
+                  </div>
 
-              <div className="d-flex justify-content-end">
-                {/* <div className="d-flex items-center">
+                  <div className="d-flex justify-content-end">
+                    {/* <div className="d-flex items-center">
                   <label className="form-checkbox d-flex align-items-center">
                     <input
                       type="checkbox"
@@ -348,138 +353,150 @@ export default function Login({
                     </span>
                   </label>
                 </div> */}
-                <button>
-                  <Link href="/login/forgot-password">{translate("Lost your password")}?</Link>
-                </button>
-              </div>
+                    <button>
+                      <Link href="/login/forgot-password">
+                        {translate("Lost your password")}?
+                      </Link>
+                    </button>
+                  </div>
 
-              <div className="row y-gap-15">
-                <div className=" col-12">
-                  <button
-                    type="submit"
-                    className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
-                  >
-                    {isLoading ? (
-                      <div
-                        className="d-flex justify-content-center align-items-center"
-                        style={{ height: "30px", width: "100%" }}
+                  <div className="row y-gap-15">
+                    <div className=" col-12">
+                      <button
+                        type="submit"
+                        className="button -md -info-2 bg-accent-1 text-white col-12 mt-30"
                       >
-                        <ClipLoader color="#ffffff" size={30} />
-                      </div>
-                    ) : (
-                      translate("Log In")
-                    )}
-                  </button>
-                </div>
-              </div>
+                        {isLoading ? (
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: "30px", width: "100%" }}
+                          >
+                            <ClipLoader color="#ffffff" size={30} />
+                          </div>
+                        ) : (
+                          translate("Log In")
+                        )}
+                      </button>
+                    </div>
+                  </div>
 
-              <div className="relative line mt-50 mb-30">
-                <div className="line__word fw-500">OR</div>
-              </div>
+                  <div className="relative line mt-50 mb-30">
+                    <div className="line__word fw-500">OR</div>
+                  </div>
 
-              <div className="row y-gap-15">
-                <div className="col">
-                  <button
-                    type="button"
-                    className="button -md -outline-blue-1 text-blue-1 col-12"
-                  >
-                    <LoginSocialFacebook
-                      appId={process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""}
-
-                      fieldsProfile={
-                        "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
-                      }
-                      scope='email,public_profile'
-                      onLoginStart={() => console.log("start")}
-                      onResolve={({ provider, data }) => {
-                        const { id, name, email } = data;
-                        console.log(data);
-                        window.FB.getLoginStatus((response) => {
-                          if (response.status === 'connected') {
-                            signinSocial({ type: "facebook", data: { id, name, email } });
+                  <div className="row y-gap-15">
+                    <div className="col">
+                      <button
+                        type="button"
+                        className="button -md -outline-blue-1 text-blue-1 col-12"
+                      >
+                        <LoginSocialFacebook
+                          appId={
+                            process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
                           }
-                        });
-                        window.FB.logout();
-                      }}
-                      onReject={(err) => {
-                        console.log(err);
-                      }}
+                          fieldsProfile={
+                            "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
+                          }
+                          scope="email,public_profile"
+                          onLoginStart={() => console.log("start")}
+                          onResolve={({ provider, data }) => {
+                            const { id, name, email } = data;
+                            console.log(data);
+                            window.FB.getLoginStatus((response) => {
+                              if (response.status === "connected") {
+                                signinSocial({
+                                  type: "facebook",
+                                  data: { id, name, email },
+                                });
+                              }
+                            });
+                            window.FB.logout();
+                          }}
+                          onReject={(err) => {
+                            console.log(err);
+                          }}
+                        >
+                          <FaFacebookF size={15} className="mx-1" />
+                          {translate("Facebook")}
+                        </LoginSocialFacebook>
+                      </button>
+                    </div>
 
-                    >
-                      <FaFacebookF size={15} className="mx-1" />
-                      {translate("Facebook")}
-                    </LoginSocialFacebook>
-                  </button>
-                </div>
-
-                <div className="col">
-           
-              
-                  <button
-                    type="button"
-                    className="button -md -outline-red-1 text-red-1 col-12"
-
-                  >
-                    <LoginSocialGoogle
-                      client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}
-                      client_secret={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""}
-
-                      redirect_uri={window.location.origin + '/login'}
-                      onLoginStart={() => console.log("start")}
-                      scope="openid profile email"
-                      discoveryDocs="claims_supported"
-                      access_type="online"
-                      onResolve={({ provider, data }) => {
-                        signinSocial({ type: 'google', email: data?.email || '', id: data.sub || '', name : data?.given_name , data });
-                      }}
-                      onReject={(err) => {
-                        console.log(err);
-                      }}
-                    >
-                      <FaGoogle size={15} className="mx-1" />
-                      {translate("Google")}
-                    </LoginSocialGoogle>
-                  </button>
-                  {/* <button
+                    <div className="col">
+                      <button
+                        type="button"
+                        className="button -md -outline-red-1 text-red-1 col-12"
+                      >
+                        <LoginSocialGoogle
+                          client_id={
+                            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
+                          }
+                          client_secret={
+                            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
+                          }
+                          redirect_uri={window.location.origin + "/login"}
+                          onLoginStart={() => console.log("start")}
+                          scope="openid profile email"
+                          discoveryDocs="claims_supported"
+                          access_type="online"
+                          onResolve={({ provider, data }) => {
+                            signinSocial({
+                              type: "google",
+                              email: data?.email || "",
+                              id: data.sub || "",
+                              name: data?.given_name,
+                              data,
+                            });
+                          }}
+                          onReject={(err) => {
+                            console.log(err);
+                          }}
+                        >
+                          <FaGoogle size={15} className="mx-1" />
+                          {translate("Google")}
+                        </LoginSocialGoogle>
+                      </button>
+                      {/* <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
                   >
                     {translate("Google")}
                   </button> */}
-                </div>
+                    </div>
+                  </div>
+                  <br />
+                  <div className="row y-gap-15">
+                    <div className="col">
+                      <button
+                        type="button"
+                        className="button -md -outline-dark-1 text-dark-1 col-12"
+                      >
+                        <LoginSocialApple
+                          client_id={
+                            process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
+                          }
+                          scope={"name email"}
+                          redirect_uri={window.location.origin + "/login"}
+                          onLoginStart={() => console.log("start apple login")}
+                          onResolve={({ provider, data }) => {
+                            signinSocial({ type: "apple", data: data });
+                          }}
+                          onReject={(err) => {
+                            console.log(err);
+                          }}
+                        >
+                          <FaApple size={15} className="mx-1" />
+                          {translate("Sign in With Apple")}
+                        </LoginSocialApple>
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
-              <br />
-              <div className="row y-gap-15">
-                <div className="col">
-                  <button
-                    type="button"
-                    className="button -md -outline-dark-1 text-dark-1 col-12"
-                  >
-                    <LoginSocialApple
-                      client_id={process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""}
-                      scope={"name email"}
-                      redirect_uri={window.location.origin + '/login'}
-                      onLoginStart={() => console.log("start apple login")}
-                      onResolve={({ provider, data }) => {
-                        signinSocial({ type: "apple", data: data });
-
-                      }}
-                      onReject={(err) => {
-                        console.log(err);
-                      }}
-                    >
-                      <FaApple size={15} className="mx-1" />
-                      {translate("Sign in With Apple")}
-                    </LoginSocialApple>
-                  </button>
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-  }
+        </section>
+      )}
     </>
   );
 }
