@@ -22,7 +22,6 @@ export default function Page() {
 
 
   const {customer} = useAuthContext();
-  console.log(customer , "customer")
 
   const router = useRouter();
   useEffect(()=>{

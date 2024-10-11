@@ -86,14 +86,14 @@ export default function DBListing() {
     setPaymentHistory([
       {
         id: 1,
-        title: "Total Earnings",
+        title: `${translate("Total Earnings")}`,
         amount: `${Total_Earnings} €`,
         today: "50 €",
         iconClass: "icon-wallet text-accent-1",
       },
       {
         id: 2,
-        title: "Total Pending",
+        title:`${translate("Total Pending")}` ,
         amount: `${Total_Pending} €`,
         today: "40+",
         iconClass: "icon-payment text-accent-1",

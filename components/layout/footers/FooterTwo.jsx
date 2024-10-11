@@ -45,10 +45,8 @@ export default function FooterTwo() {
     const formData = new FormData();
     formData.append("email", email);
 
-    console.log(formData,"formData");
 
     const response = await POST.request({form: formData, url: "newsemail"});
-    console.log(response,"response");
 
     if(response){
       showSuccessToast(response.message);
