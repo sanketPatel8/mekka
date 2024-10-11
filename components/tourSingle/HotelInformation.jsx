@@ -40,7 +40,7 @@ const RoadMap = ({ PAckageData, hotelData, isLoading, setisLoading }) => {
               </h5>
               <p>{hotelData.mekka_hotel.hotel_info}</p>
               <br />
-              <p>{translate('The distance to the Kaaba is')} {hotelData.mekka_hotel.km} km</p>
+              <p>{translate('The distance to the Kaaba is')} {hotelData.mekka_hotel.km} </p>
               <br />
               {/* Display Gallery */}
               <HotelGallary

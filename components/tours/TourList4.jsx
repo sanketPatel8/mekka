@@ -298,7 +298,7 @@ export default function TourList4({
                           </div>
                         )}
 
-                        <div className="row x-gap-20 y-gap-5 pt-30">
+                        <div className="row x-gap-20 y-gap-5 ">
                           <div className="col-auto">
                             <div className="d-flex text-14 items-center">
                               <FaCalendar color="dabf4f" size={17} />

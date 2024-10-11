@@ -236,14 +236,14 @@ export default function DbBooking() {
                       <div className="">
                         <label
                           className={
-                            elm.arriving === "Upcoming"
+                            elm.reservation_status === "Upcoming"
                               ? "text-orange"
-                              : elm.arriving === "Completed"
+                              : elm.reservation_status === "Completed"
                               ? "text-green"
                               : ""
                           }
                         >
-                          <b>{elm.arriving}</b>
+                          <b>{elm.reservation_status}</b>
                         </label>
                         <div className="d-flex items-center text-14 ">
                           <i className="icon-clock mr-10"></i>
@@ -276,7 +276,7 @@ export default function DbBooking() {
           </div>
 
           <div className="text-center pt-30">
-            © Copyright MekkaBooking.com {new Date().getFullYear()}
+            © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
           </div>
         </div>
       </div>

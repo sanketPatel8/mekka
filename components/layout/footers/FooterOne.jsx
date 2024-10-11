@@ -96,7 +96,7 @@ export default function FooterOne() {
         <div className="footer__bottom">
           <div className="row y-gap-5 justify-between items-center">
             <div className="col-auto">
-              <div>© Copyright MekkaBooking.com {new Date().getFullYear()}</div>
+              <div>© {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}</div>
             </div>
 
             <div className="col-auto">

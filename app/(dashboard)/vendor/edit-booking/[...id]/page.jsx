@@ -619,7 +619,7 @@ export default function DbBooking({ params }) {
                 />
 
                 <div className="text-center pt-30">
-                  © Copyright MekkaBooking.com {new Date().getFullYear()}
+                  © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
                 </div>
               </>
             )}

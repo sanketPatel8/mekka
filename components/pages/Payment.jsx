@@ -62,7 +62,6 @@ export default function Payment() {
     } else {
       setInstallmentChecked(false);
     }
-  
   };
 
   const formatPriceChange = (price) => {
@@ -226,11 +225,10 @@ export default function Payment() {
             startDate.getTime() - 5 * 24 * 60 * 60 * 1000
           );
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
-      
-          if(sixDaysBeforeString > todayString){
+
+          if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
-          }
-          else{
+          } else {
             const nextDay = today.setDate(today.getDate() + 1);
             const nextDayString = new Date(nextDay).toISOString().split("T")[0];
             setDateEnd(nextDayString);
@@ -270,18 +268,17 @@ export default function Payment() {
       }
     };
   }, [handleDateChange]);
-  
+
   const FatchallBooking = async (data) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const response = await post("addbooking", data);
 
       if (response.Status == "1") {
-        setIsLoading(false)
+        setIsLoading(false);
         showSuccessToast(response.Message);
         setBookingStage((pre) => pre + 1);
         setReservationID(response.reservationNumber);
-
       } else {
         showErrorToast(response.Message);
       }
@@ -358,7 +355,6 @@ export default function Payment() {
   };
 
   const { translate } = useTranslation();
-
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
@@ -553,7 +549,11 @@ export default function Payment() {
                           <div className="col-md-12">
                             <h5 className="text-center">
                               {translate("Total Amount")} :{" "}
-                              <b>{SideBarData?.BookingFild?.SubTotal} €</b>
+                              <b>
+                                {formatPrice(
+                                  SideBarData?.BookingFild?.SubTotal
+                                )}
+                              </b>
                             </h5>
                           </div>
 
@@ -726,9 +726,16 @@ export default function Payment() {
                         </div>
                         <label htmlFor="agbAcceptance" className="lh-16 ml-15">
                           <span className="text-red">* </span>
+                          <span>
+                            {translate(
+                              "I have read the AGB (mekkabooking) and I accept the conditions"
+                            )}
+                          </span>
                           {translate(
-                            `I have read the AGB (mekkabooking) and I accept the conditions. This trip is operated by the ${
-                              companyCode !== null ? companyCode : ""
+                            `. ${
+                              companyCode !== null
+                                ? `This trip is operated by the ${companyCode}.`
+                                : ""
                             }.`
                           )}
                         </label>
@@ -779,31 +786,32 @@ export default function Payment() {
                       <div className="mt-10">
                         {translate(
                           "Booking details have been sent to your registered email address"
-                        )}.
+                        )}
+                        .
                       </div>
                     </div>
 
                     <div className="border-dashed-1 py-30 px-50 rounded-12 mt-30">
-                      <div className="row y-gap-15">
-                        <div className="col-md-3 col-6">
-                          <div>{translate('Reservation Number')}</div>
+                      <div className="row y-gap-10">
+                        <div className="col-md-4 col-6">
+                          <div>{translate("Reservation Number")}</div>
                           <div className="text-accent-2">{ReservationID}</div>
                         </div>
 
-                        <div className="col-md-3 col-6">
-                          <div>{translate('Date')}</div>
+                        <div className="col-md-2 col-6">
+                          <div>{translate("Date")}</div>
                           <div className="text-accent-2">{todayDate}</div>
                         </div>
 
-                        <div className="col-md-3 col-6">
+                        <div className="col-md-2 col-6">
                           <div>{translate("Total")}</div>
                           <div className="text-accent-2">
                             {formatPrice(SideBarData?.BookingFild?.SubTotal)}
                           </div>
                         </div>
 
-                        <div className="col-md-3 col-6">
-                          <div>{translate('Payment Method')}</div>
+                        <div className="col-md-4 col-6">
+                          <div>{translate("Payment Method")}</div>
                           <div className="text-accent-2">
                             {selectedCheckbox === 0
                               ? "Direct Bank Transfer"
@@ -987,7 +995,7 @@ export default function Payment() {
                     </div>
                     <div className="text-start">
                       {" "}
-                      {translate("Makka")} : {" "}
+                      {translate("Makka")} :{" "}
                       {SideBarData?.MakkaHotel?.hotel_name}
                     </div>
                   </div>
@@ -1000,7 +1008,7 @@ export default function Payment() {
                     </div>
                     <div className="text-start">
                       {" "}
-                      {translate("Madina")} : {" "}
+                      {translate("Madina")} :{" "}
                       {SideBarData?.MadinaHotel?.hotel_name}
                     </div>
                   </div>
@@ -1010,11 +1018,19 @@ export default function Payment() {
                       <div className="line mt-5 mb-5"></div>
 
                       <p className="my-1 fs-6 my-2">
-                      ({translate("The Standard Offer May Include a Multi-Bed Room")}.)
+                        (
+                        {translate(
+                          "The Standard Offer May Include a Multi-Bed Room"
+                        )}
+                        .)
                       </p>
 
                       <div>
-                        <b>{translate("Selected Additional Services Per Person:")}</b>
+                        <b>
+                          {translate(
+                            "Selected Additional Services Per Person:"
+                          )}
+                        </b>
                         <div className="line my-2"></div>
                         {GetAdditionals.map((e, index) => (
                           <div className="row" key={index}>
@@ -1032,6 +1048,21 @@ export default function Payment() {
 
                 <div className="line mt-10 mb-10"></div>
 
+                {SideBarData?.BookingFild?.Discount?.Discount !== null &&
+                SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
+                  <div className="">
+                    <div className={`d-flex items-center justify-between`}>
+                      <div className="fw-500"> {translate("Discount")}</div>
+                      <div className="">
+                        -
+                        {formatPrice(
+                          SideBarData?.BookingFild?.Discount?.Discount || 0
+                        )}{" "}
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
                 <div className="">
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Subtotal")}</div>
@@ -1040,23 +1071,6 @@ export default function Payment() {
                       {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}
                     </div>
                   </div>
-
-                  {SideBarData?.BookingFild?.Discount?.Discount !== null &&
-                  SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
-                    <div className="">
-                      <div className={`d-flex items-center justify-between`}>
-                        <div className="fw-500"> {translate("Discount")}</div>
-                        <div className="">
-                          -{SideBarData?.BookingFild?.Discount?.Discount || 0} €{" "}
-                        </div>
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {/* <div className="d-flex items-center justify-between">
-                    <p className="fw-500"> {translate("Tax")}</p>
-                    <div className=""> {SideBarData?.BookingFild?.Tax} € </div>
-                  </div> */}
 
                   {paidAmount && (
                     <div className="d-flex items-center justify-between">
@@ -1087,7 +1101,7 @@ export default function Payment() {
                       bookingStage == 2 ? `d-none` : `d-block`
                     }`}
                   >
-                     {isLoading ? (
+                    {isLoading ? (
                       <div
                         className="d-flex justify-content-center align-items-center"
                         style={{ height: "30px", width: "100%" }}
@@ -1097,11 +1111,8 @@ export default function Payment() {
                     ) : (
                       translate("Complete Reservation")
                     )}
-
-                    
                   </button>
                 </div>
-
               </div>
             </div>
           </div>
