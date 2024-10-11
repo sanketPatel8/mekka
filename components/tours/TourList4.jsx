@@ -47,7 +47,7 @@ export default function TourList4({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (TourData && TourData.length === 0) {
+    if (TourData) {
       setIsLoading(false);
     } else {
       setTimeout(() => {
@@ -177,17 +177,22 @@ export default function TourList4({
             </div>
 
             {isLoading ? (
+
               <div
                 className="d-flex justify-content-center align-items-center"
                 style={{ height: "200px" }}
               >
                 <ClipLoader color="#DAC04F" size={50} />
               </div>
-            ) : Array.isArray(TourData) && TourData.length === 0 ? (
+
+            ) : Array.isArray(TourData) && TourData.length == 0 ? (
+
               <div className="d-flex justify-content-center align-items-center">
                 <p>{translate('No Tours Available')}</p>
               </div>
+
             ) : (
+
               Array.isArray(TourData) &&
               TourData.map((elm, ind) => (
                 <div className="row mt-20" key={ind}>
@@ -349,6 +354,7 @@ export default function TourList4({
                   </div>
                 </div>
               ))
+              
             )}
 
             <div className={`${TourData?.length === 0 ? "d-none" : "d-block"}`}>
