@@ -1356,9 +1356,9 @@ path-type@^4.0.0:
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
 picocolors@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz"
-  integrity sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.1.0.tgz"
+  integrity sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==
 
 pkg-dir@^4.2.0:
   version "4.2.0"
@@ -1419,6 +1419,11 @@ proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
   integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
+
+react-awesome-lightbox@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.npmjs.org/react-awesome-lightbox/-/react-awesome-lightbox-1.8.1.tgz"
+  integrity sha512-E/0Y+D1PaD3blNtzsjwEE0WNo+Zu6V0x0kpuM2eR8XdHh+7Iz783UP47jA1m/XxaCpO7xuvzRiV8mbUceCij6g==
 
 react-data-table-component@^7.6.2:
   version "7.6.2"
