@@ -100,7 +100,7 @@ export default function OthersInformation({ PAckageData, id }) {
                       </div>
 
                       {/* Check if there are more than 3 elements and display the rest */}
-                      {TourList?.en_language.length > 3 && (
+                      {TourList?.en_language.length >= 3 && (
                         <div className="col-12">
                           {TourList?.en_language.slice(2).join(", ")}
                         </div>

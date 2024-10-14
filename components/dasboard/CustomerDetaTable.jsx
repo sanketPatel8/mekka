@@ -483,12 +483,16 @@ const CustomerDetaTable = () => {
           {
             name: "Action",
             selector: (row) => (
-              <button
-                className="button -sm -accent-1 bg-info-2 text-white my-2"
-                onClick={() => downloadFile(row.fileLink, row.Name)}
-              >
-                {translate("Download")}
-              </button>
+              <a
+              href={row.fileLink}
+              download={row.Name} // Ensure the file gets downloaded with the correct name
+              target="_blank" // Open the link in a new tab if needed
+              rel="noopener noreferrer" // Security measure for external links
+              className="button -sm -accent-1 bg-info-2 text-white my-2" // Button-like styles for the anchor tag
+            >
+              {translate("Download")}
+            </a>
+            
             ),
           },
         ];
