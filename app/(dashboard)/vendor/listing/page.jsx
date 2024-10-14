@@ -23,6 +23,7 @@ import VendorFooter from "@/components/dasboard/VendorFooter";
 import { showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
+import { FaCalendar } from "react-icons/fa";
 
 const customStyles = {
   overlay: {
@@ -58,44 +59,39 @@ export default function DBListing() {
   const [loading, setLoading] = useState(true);
 
   const [invoice, setinvoice] = useState(false);
-  
+
   const [note, setNote] = useState("");
   useEffect(() => {
     Modal.setAppElement("#invoice");
   }, []);
 
   const handleClick = (id) => {
-    
-
-    if(id){
-      const confirmResult = window.confirm("Are you sure you want to duplicate this tour?");
-      if(confirmResult){
-          const formData = new FormData();
-          formData.append("id", id);
-          formData.append("vendor_id", user?.user.id);
-          setLoading(true);
-          const response = POST.request({ form: formData, url: "duplicatetour" });
-          if (response) {
-            showSuccessToast("Tour Duplicated Successfully");
-            setTimeout(()=>{
-
-              fetchListing();
-              setLoading(false);
-              router.push(`/vendor/edit-tour/${response?.tour_id}`)
-            },1000)
-
-          }else{
+    if (id) {
+      const confirmResult = window.confirm(
+        "Are you sure you want to duplicate this tour?"
+      );
+      if (confirmResult) {
+        const formData = new FormData();
+        formData.append("id", id);
+        formData.append("vendor_id", user?.user.id);
+        setLoading(true);
+        const response = POST.request({ form: formData, url: "duplicatetour" });
+        if (response) {
+          showSuccessToast("Tour Duplicated Successfully");
+          setTimeout(() => {
+            fetchListing();
             setLoading(false);
-          }
-      }else{
+            router.push(`/vendor/edit-tour/${response?.tour_id}`);
+          }, 1000);
+        } else {
+          setLoading(false);
+        }
+      } else {
         return;
       }
-     }
-
-   
+    }
   };
   const openInvoice = (note) => {
-
     setinvoice(true);
     setNote(note);
   };
@@ -118,17 +114,13 @@ export default function DBListing() {
       setLoading(false);
       setTourList(response.Tours);
       setRange(response.Total_Page);
-    } catch (e) {
-    }
+    } catch (e) {}
   };
 
-  const {handleRedirect} = Useauthredirect();
-
+  const { handleRedirect } = Useauthredirect();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-
-
       const handleResize = () => {
         if (window.innerWidth >= 1000) {
           setSideBarOpen(true);
@@ -139,7 +131,7 @@ export default function DBListing() {
 
       handleResize();
       handleRedirect();
-    setLoading(false);
+      setLoading(false);
       fetchListing();
 
       window.addEventListener("resize", handleResize);
@@ -158,7 +150,7 @@ export default function DBListing() {
 
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <div
         className={`dashboard ${
           sideBarOpen ? "-is-sidebar-visible" : ""
@@ -206,8 +198,6 @@ export default function DBListing() {
                         </div>
 
                         <div className="tourCard__content">
-                       
-
                           <h3 className="tourCard__title mt-5">
                             <span>{elm.type}</span>
                           </h3>
@@ -216,7 +206,6 @@ export default function DBListing() {
                             {translate("Tour Name")}: {elm.name}
                           </div>
 
-                        
                           {elm.departures && (
                             <div className="Location">
                               <span>
@@ -232,6 +221,17 @@ export default function DBListing() {
                               </div>
                             ))}
                           </div>
+
+                          <div className="row x-gap-20 y-gap-5 ">
+                            <div className="col-auto">
+                              <div className="d-flex text-14 items-center">
+                                <FaCalendar color="dabf4f" size={17} />
+                                <p className="mx-1">
+                                  {elm?.date_begin} - {elm?.date_end}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
 
                         <div className="tourCard__info tourCard__info_Dash ">
@@ -242,12 +242,16 @@ export default function DBListing() {
                                   ? "badge-orange"
                                   : elm.tour_status === "Approved"
                                   ? "badge-green"
-                                  : elm.tour_status === "Rejected" || elm.tour_status === "Cancelled"
+                                  : elm.tour_status === "Rejected" ||
+                                    elm.tour_status === "Cancelled"
                                   ? "badge-red"
                                   : ""
                               }
                               disabled={
-                                elm.tour_status === "Rejected" || elm.tour_status === "Cancelled" ? false : true
+                                elm.tour_status === "Rejected" ||
+                                elm.tour_status === "Cancelled"
+                                  ? false
+                                  : true
                               }
                               onClick={(note) =>
                                 openInvoice(`${elm?.reject_note}`)
@@ -293,7 +297,6 @@ export default function DBListing() {
                 </>
               )}
             </div>
-
 
             <div id="invoice">
               <Modal
