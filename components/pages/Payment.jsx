@@ -20,6 +20,7 @@ import Stripeform from "../stripe/stripeform";
 import { useCurrency } from "@/app/context/currencyContext";
 import { type } from "jquery";
 import { ClipLoader } from "react-spinners";
+import { set } from "lodash";
 
 export default function Payment() {
   const router = useRouter();
@@ -232,10 +233,12 @@ export default function Payment() {
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
+            setMaxEndDate(sixDaysBeforeString);
           } else {
             const nextDay = today.setDate(today.getDate() + 1);
             const nextDayString = new Date(nextDay).toISOString().split("T")[0];
             setDateEnd(nextDayString);
+            setMaxEndDate(nextDayString);
           }
         } catch (error) {
           console.error("Error parsing date string:", error);
@@ -260,6 +263,13 @@ export default function Payment() {
     },
     [dateEnd]
   );
+
+  const handleEndDateChange =
+    (event) => {
+      const selectedDate = event.target.value;
+      setDateEnd(selectedDate);
+    }
+  
 
   useEffect(() => {
     if (dateInputRef.current) {
@@ -622,6 +632,7 @@ export default function Payment() {
                                   value={seconddate}
                                   onChange={handleDateChange}
                                   min={minEndDate}
+                                  max={maxEndDate}
                                   ref={dateInputRef}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
@@ -653,8 +664,9 @@ export default function Payment() {
                                   required
                                   placeholder="3rd Date"
                                   value={dateEnd}
-                                  disabled={true}
-                                  onChange={handleDateChange}
+                                  max={maxEndDate}
+                                  min={seconddate}
+                                  onChange={handleEndDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   {translate("3rd Date")}
