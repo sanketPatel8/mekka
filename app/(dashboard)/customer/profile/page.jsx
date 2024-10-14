@@ -507,7 +507,7 @@ export default function Profile() {
                                     height={200}
                                     src={fileBlob}
                                     alt="image"
-                                    className="size-200 rounded-12 object-cover my-3"
+                                    className="size-200 rounded-12 object-cover"
                                   />
                                   <button
                                     onClick={() => {
