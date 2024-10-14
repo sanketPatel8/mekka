@@ -222,9 +222,13 @@ export default function Payment() {
           const startDate = parseDate(startDateString);
 
           const sixDaysBefore = new Date(
-            startDate.getTime() - 5 * 24 * 60 * 60 * 1000
+            startDate.getTime() - 7 * 24 * 60 * 60 * 1000
           );
+
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
+
+          console.log("sixDaysBeforeString" , sixDaysBeforeString );
+          
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
