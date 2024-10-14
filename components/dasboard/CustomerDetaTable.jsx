@@ -1084,7 +1084,7 @@ const CustomerDetaTable = () => {
               >
                 {translate("Pay")}
               </button>
-              <span>{`(${BookingDetails?.reservation?.subtotal})`} €</span>
+              <span>{`(${formatPrice(BookingDetails?.reservation?.amount_due)})`}</span>
             </div>
 
             {BookingDetails?.reservation?.capacity_empty != "0" && (

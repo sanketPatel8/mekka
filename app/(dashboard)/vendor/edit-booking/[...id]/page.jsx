@@ -100,7 +100,7 @@ export default function DbBooking({ params }) {
     setOptions(optionsLabel);
 
     const columnAdu_1 = [
-      { name: translate("id"), selector: (row) => row.id, width: "10%" },
+      // { name: translate("id"), selector: (row) => row.id, width: "10%" },
       { name: translate("Name"), selector: (row) => row.name, width: "20%" },
       {
         name: translate("Surname"),
@@ -114,6 +114,12 @@ export default function DbBooking({ params }) {
         name: translate("Nationality"),
         selector: (row) => row.Nationality,
         width: "10%",
+      },
+      {
+        name: translate("Additional Services"),
+        selector: (row) =>
+          row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
+        width: "150px",
       },
 
       {
