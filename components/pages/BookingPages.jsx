@@ -86,11 +86,13 @@ export default function BookingPages({ BookingData }) {
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
-    localStorage.setItem("additionalfordashboard", JSON.stringify(BookingData?.Tour_Details?.addtional_price));
+    localStorage.setItem(
+      "additionalfordashboard",
+      JSON.stringify(BookingData?.Tour_Details?.addtional_price)
+    );
   }, [BookingData]);
 
   const [LoginCheck, setLoginCheck] = useState();
-
 
   useEffect(() => {
     // Set modal's app element
@@ -210,7 +212,6 @@ export default function BookingPages({ BookingData }) {
 
   function closeModal() {
     setIsOpen(false);
-    
   }
 
   // useEffect(()=>{
@@ -220,7 +221,6 @@ export default function BookingPages({ BookingData }) {
   //     closeModal();
   //   }
   // },[setIsOpen])
-
 
   // for promocode
 
@@ -308,7 +308,7 @@ export default function BookingPages({ BookingData }) {
   // for form validation
 
   const [isFormValid, setIsFormValid] = useState(false);
-  const [PhoneValid, setPhoneValid] = useState(false)
+  const [PhoneValid, setPhoneValid] = useState(false);
 
   useEffect(() => {
     // Extract form values and validate
@@ -341,10 +341,10 @@ export default function BookingPages({ BookingData }) {
       // Check if the mobile number is less than 10 digits and show an error
       if (value.length !== 10) {
         setShowPhoneError("*");
-        setPhoneValid(false)
-      }else{
-        setShowPhoneError("")
-        setPhoneValid(true)
+        setPhoneValid(false);
+      } else {
+        setShowPhoneError("");
+        setPhoneValid(true);
       }
     }
 
@@ -443,9 +443,9 @@ export default function BookingPages({ BookingData }) {
       return [...updatedAdditional, newItem];
     });
 
-   if(HandlePromo == true){
-    handlePromoremove()
-   }
+    if (HandlePromo == true) {
+      handlePromoremove();
+    }
 
     getPriceForadditional(type, i);
   };
@@ -551,7 +551,7 @@ export default function BookingPages({ BookingData }) {
     try {
       const PromoResponse = await post("check_coupon", sendData);
 
-      if (PromoResponse.Status !== '0') {
+      if (PromoResponse.Status !== "0") {
         setShowbtnName(true); // Show the button for removing the promo
         showSuccessToast(PromoResponse.Message);
         setDiscount(PromoResponse); // Apply the discount
@@ -650,8 +650,8 @@ export default function BookingPages({ BookingData }) {
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
@@ -692,7 +692,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-          options: [translate("Male"), translate('Female'), translate("Other")],
+          options: [translate("Male"), translate("Female"), translate("Other")],
           value: userData.gender,
         },
         {
@@ -734,7 +734,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-            options: [translate("Male"), translate('Female'), translate("Other")],
+          options: [translate("Male"), translate("Female"), translate("Other")],
         },
         { label: translate("Birthday Date"), type: "date", name: "birthday" },
         {
@@ -751,7 +751,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-            options: [translate("Male"), translate('Female'), translate("Other")],
+          options: [translate("Male"), translate("Female"), translate("Other")],
         },
         { label: translate("Birthday Date"), type: "date", name: "birthday" },
         {
@@ -768,7 +768,7 @@ export default function BookingPages({ BookingData }) {
           label: translate("Gender"),
           type: "select",
           name: "gender",
-            options: [translate("Male"), translate('Female'), translate("Other")],
+          options: [translate("Male"), translate("Female"), translate("Other")],
         },
         { label: translate("Birthday Date"), type: "date", name: "birthday" },
         {
@@ -812,16 +812,18 @@ export default function BookingPages({ BookingData }) {
                   <FaUser />
                 </span>
                 <span>
-                 
-                  <b>{`${i + 1}. ${translate(type.charAt(0).toUpperCase() + type.slice(1))} ${translate("Information")}`}</b>
-
+                  <b>{`${i + 1}. ${translate(
+                    type.charAt(0).toUpperCase() + type.slice(1)
+                  )} ${translate("Information")}`}</b>
                 </span>
               </p>
               <p>
                 <span>
                   <MdError />
                 </span>
-                <span>{ translate('Is Also The Contact Person For The Reservation.')}</span>
+                <span>
+                  {translate("Is Also The Contact Person For The Reservation.")}
+                </span>
               </p>
             </div>
 
@@ -862,13 +864,15 @@ export default function BookingPages({ BookingData }) {
 
                             <label className="lh-1 text-16 text-light-1 dd_l_top10">
                               {
-                              // fieldValue
-                              //   ? `${field.label}: ${
-                              //       fieldValue.charAt(0).toUpperCase() +
-                              //       fieldValue.slice(1)
-                              //     }`
-                              //   : 
-                                field.label} <span className="text-red">*</span>
+                                // fieldValue
+                                //   ? `${field.label}: ${
+                                //       fieldValue.charAt(0).toUpperCase() +
+                                //       fieldValue.slice(1)
+                                //     }`
+                                //   :
+                                field.label
+                              }{" "}
+                              <span className="text-red">*</span>
                             </label>
                           </>
                         ) : (
@@ -883,7 +887,11 @@ export default function BookingPages({ BookingData }) {
                               maxLength={
                                 field.type == "number" ? 10 : undefined
                               }
-                              max={field.type == 'date' ? getTodayDate() : undefined}
+                              max={
+                                field.type == "date"
+                                  ? getTodayDate()
+                                  : undefined
+                              }
                               required
                             />
 
@@ -893,14 +901,14 @@ export default function BookingPages({ BookingData }) {
                                   {field.label}
                                   {ShowPhoneError && (
                                     <span style={{ color: "red" }}>
-                                      
                                       {ShowPhoneError}
                                     </span>
                                   )}
                                 </>
                               ) : (
                                 field.label
-                              )} <span className="text-red">*</span>
+                              )}{" "}
+                              <span className="text-red">*</span>
                             </label>
                           </>
                         )}
@@ -981,10 +989,12 @@ export default function BookingPages({ BookingData }) {
 
                 <div className="mt-3 col-md-12">
                   <h5 className="booking-form-price">
-                    {translate('Subtotal')}{" "}
+                    {translate("Subtotal")}{" "}
                     <span>{`${SubtotalPriceWithAdditional(type, i)} `}</span>
                   </h5>
-                  <p className="text-right">{translate("Including Taxes And Fee")}</p>
+                  <p className="text-right">
+                    {translate("Including Taxes And Fee")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -994,8 +1004,7 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  console.log("formValues" , formValues.Adult);
-  
+  console.log("formValues", formValues.Adult);
 
   const bookingData = {
     AccessKey: "Mekka@24",
@@ -1038,9 +1047,6 @@ export default function BookingPages({ BookingData }) {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
-  
-  
-
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
     if (SidebarData && SidebarData !== "undefined") {
@@ -1078,22 +1084,30 @@ export default function BookingPages({ BookingData }) {
     if (typeof window !== "undefined") {
       localStorage.setItem("BookingData", JSON.stringify(bookingData));
       localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
-      
     }
 
     handleUpdateLocalStorage();
-    setIsLoading(true)
+    setIsLoading(true);
 
-    if(PhoneValid === true){
-      setIsLoading(false)
+    if (LoginCheck) {
+      // When the user is logged in, skip phone validation
+      setIsLoading(false);
       setTimeout(() => {
         router.push("/payment");
       }, 2000);
-    }else{
-      showErrorToast("Invalid Phone Number")
-      setTimeout(() => {
-        setIsLoading(false)
-      }, 1000);
+    } else {
+      // If the user is not logged in, check phone validity
+      if (PhoneValid === true) {
+        setIsLoading(false);
+        setTimeout(() => {
+          router.push("/payment");
+        }, 2000);
+      } else {
+        showErrorToast("Invalid Phone Number");
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }
     }
   };
 
@@ -1266,8 +1280,8 @@ export default function BookingPages({ BookingData }) {
                         {translate("Offered Languages")} :{" "}
                         {/* {BookingSideBar?.OfferedLanguages} */}
                         {BookingSideBar?.OfferedLanguages?.length > 0
-                        ? BookingSideBar.OfferedLanguages.join(", ")
-                        : translate("No Languages Available")}
+                          ? BookingSideBar.OfferedLanguages.join(", ")
+                          : translate("No Languages Available")}
                       </div>
                     </div>
 
@@ -1303,7 +1317,11 @@ export default function BookingPages({ BookingData }) {
                     </div>
 
                     <p className="text-12">
-                      ({translate('The Standard Offer May Include a Multi-Bed Room')}.)
+                      (
+                      {translate(
+                        "The Standard Offer May Include a Multi-Bed Room"
+                      )}
+                      .)
                     </p>
                   </div>
 
@@ -1318,7 +1336,10 @@ export default function BookingPages({ BookingData }) {
                     <div className={discountClass}>
                       <div className={`d-flex items-center justify-between `}>
                         <div className="fw-500">{translate("Discount")}</div>
-                        <div className=""> - {formatPrice(Discount.Discount)}  </div>
+                        <div className="">
+                          {" "}
+                          - {formatPrice(Discount.Discount)}{" "}
+                        </div>
                       </div>
                     </div>
 
@@ -1383,18 +1404,16 @@ export default function BookingPages({ BookingData }) {
                       className={`button -md -info-2 bg-accent-1 text-white col-12 text-end `}
                       onClick={handleExternalButtonClick}
                     >
-                       {isLoading ? (
-                      <div
-                        className="d-flex justify-content-center align-items-center"
-                        style={{ height: "30px", width: "100%" }}
-                      >
-                        <ClipLoader color="#ffffff" size={30} />
-                      </div>
-                    ) : (
-                      translate("Proceed to Payment")
-                    )}
-
-                      
+                      {isLoading ? (
+                        <div
+                          className="d-flex justify-content-center align-items-center"
+                          style={{ height: "30px", width: "100%" }}
+                        >
+                          <ClipLoader color="#ffffff" size={30} />
+                        </div>
+                      ) : (
+                        translate("Proceed to Payment")
+                      )}
                     </button>
                   </div>
                 </div>
