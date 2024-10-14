@@ -19,8 +19,13 @@ const theme = createTheme({
   },
 });
 
-export default function RangeSlider({ value, setValue }) {
+export default function RangeSlider({ value, setValue , FliterData }) {
   const {formatPrice} = useCurrency();
+
+   // Convert min_price and max_price to numbers
+   const maxPrice = Number(FliterData.max_price);
+   const minPrice = Number(FliterData.min_price);
+
   const handleChange = (event, newValue) => { 
     setValue(newValue);
   };
@@ -40,8 +45,8 @@ export default function RangeSlider({ value, setValue }) {
               value={value}
               onChange={handleChange}
               valueLabelDisplay="auto"
-              max={100000}
-              min={0}
+             max={maxPrice}  
+              min={minPrice} 
               disableSwap
             />
           </ThemeProvider>

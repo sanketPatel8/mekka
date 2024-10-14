@@ -18,7 +18,7 @@ const theme = createTheme({
   },
 });
 
-export default function PriceRangeBar({ Distance, setDistance }) {
+export default function PriceRangeBar({ Distance, setDistance , FliterData }) {
   // const {Distance, setDistance} = useGlobalState()
 
   const handleChange = (event, newValue) => {
@@ -39,8 +39,8 @@ export default function PriceRangeBar({ Distance, setDistance }) {
               value={Distance}
               onChange={handleChange}
               valueLabelDisplay="auto"
-              max={1500}
-              min={100}
+              max={FliterData?.max_km}
+              min={FliterData?.min_km}
               disableSwap
             />
           </ThemeProvider>

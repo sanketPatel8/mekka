@@ -435,7 +435,7 @@ export default function Sidebar2({
                   ddActives.includes("Distance") ? { maxHeight: "300px" } : {}
                 }
               >
-                <PriceRangeBar Distance={Distance} setDistance={setDistance} />
+                <PriceRangeBar Distance={Distance} setDistance={setDistance} FliterData={FliterData} />
               </div>
             </div>
           </div>
@@ -473,11 +473,12 @@ export default function Sidebar2({
                 }
               >
                 <RangeSlider
-                  min={0}
-                  max={1000}
+                  min={FilterSidebar?.min_price}
+                  max={FilterSidebar?.max_price}
                   step={10}
                   value={value}
                   setValue={setValue}
+                  FliterData={FliterData}
                 />
               </div>
             </div>
