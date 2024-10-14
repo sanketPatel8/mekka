@@ -158,7 +158,7 @@ export default function FooterTwo() {
         <div className="footer__bottom">
           <div className="row y-gap-5 justify-between items-center">
             <div className="col-auto">
-              <div>© Copyright MekkaBookings {new Date().getFullYear()}</div>
+              <div>© {translate('Copyright MekkaBookings')} {new Date().getFullYear()}</div>
             </div>
 
             <div className="col-auto">
