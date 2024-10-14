@@ -33,10 +33,11 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     padding: "10px",
     width: "100%",
-    maxWidth: "700px",
+    maxWidth: "750px",
     height: "80vh",
     overflowY: "auto",
     backgroundColor: "#fff",
+    overflowX: "hidden",
   },
 };
 
@@ -500,7 +501,7 @@ const CustomerDetaTable = () => {
                 target="_blank"
                 className="button -sm -accent-1 bg-info-2 text-white my-2"
               >
-                {translate("View")} {" "}
+                {translate("View")}{" "}
               </Link>
             ),
           },
@@ -575,6 +576,15 @@ const CustomerDetaTable = () => {
 
     fetchPayments();
   }, [BookingDetails]);
+
+  useEffect(() => {
+    if (!editCustomerData.nationality) {
+      setEditCustomerData({
+        ...editCustomerData,
+        nationality: nationalities[0],
+      }); // Default to the first nationality
+    }
+  }, [editCustomerData, nationalities]);
 
   // for edit customer data
 
@@ -1384,7 +1394,7 @@ const CustomerDetaTable = () => {
             </div>
           </div>
 
-          <div>
+          <div className="px-20">
             {BookingDetails?.reservation?.paymentType && (
               <>
                 {/* Payment Type 1: Payment in Advance */}
@@ -1651,7 +1661,7 @@ const CustomerDetaTable = () => {
             )}
           </div>
 
-          <div className="col-12">
+          <div className="col-12 px-20">
             <div className="row items-center">
               <button
                 className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
@@ -2198,7 +2208,7 @@ const CustomerDetaTable = () => {
                   </div> */}
                   <div className="col-md-6">
                     <div className="form-input spacing">
-                      <select
+                      {/* <select
                         value={editCustomerData.nationality}
                         onChange={(e) =>
                           setEditCustomerData({
@@ -2214,7 +2224,29 @@ const CustomerDetaTable = () => {
                             {translate(e)}
                           </option>
                         ))}
+                      </select> */}
+                      <select
+                        value={editCustomerData.nationality}
+                        onChange={(e) =>
+                          setEditCustomerData({
+                            ...editCustomerData,
+                            nationality: e.target.value,
+                          })
+                        }
+                        required
+                        className="form-control"
+                      >
+                        <option value="">
+                          {/* {translate("Select Nationality")} */}
+                          {editCustomerData.nationality}
+                        </option>
+                        {nationalities.map((e) => (
+                          <option key={e} value={e}>
+                            {translate(e)}
+                          </option>
+                        ))}
                       </select>
+
                       <label className="lh-1 text-16 text-light-1 dd_l_top10">
                         {translate("Nationality")}
                       </label>
