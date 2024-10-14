@@ -692,8 +692,11 @@ const CustomerDetaTable = () => {
       AddpersonData.birthDate !== "" ||
       AddpersonData.nationality !== ""
     ) {
+
       handlePayment();
     } else {
+      console.log("AddpersonData" , AddpersonData);
+      
       showErrorToast("All Fields are Require");
     }
     // setTimeout(() => {
@@ -869,10 +872,7 @@ const CustomerDetaTable = () => {
     }
 
     if (PaymentCheckbox == 3) {
-      if (!firstAmount || !secondAmount || !seconddate || !thirdAmount) {
-        showErrorToast("Please fill all the fields");
-        return;
-      }
+      
 
       setShowStripeModal(true);
 
@@ -1534,102 +1534,7 @@ const CustomerDetaTable = () => {
                       </label>
                     </div>
 
-                    {installmentChecked && (
-                      <div className="y-gap-30 contactForm px-20 py-10">
-                        <div className="col-md-12">
-                          <h5 className="text-center">
-                            {translate("Total Amount")} : <b>{subtotal} €</b>
-                          </h5>
-                        </div>
-
-                        <div className="row my-3">
-                          <div className="col-md-6">
-                            <div className="form-input spacing">
-                              <input
-                                type="text"
-                                required
-                                value={firstAmount}
-                                onChange={handleFirstAmountChange}
-                                placeholder=""
-                              />
-                              <label className="lh-1 text-16 text-light-1">
-                                1st Amount<span className="text-red">*</span>
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-input spacing">
-                              <input
-                                type="text"
-                                required
-                                value={secondAmount}
-                                onChange={handleSecondAmountChange}
-                                placeholder=""
-                              />
-                              <label className="lh-1 text-16 text-light-1">
-                                2nd Amount<span className="text-red">*</span>
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-input spacing">
-                              <input
-                                type="text"
-                                required
-                                value={thirdAmount}
-                                onChange={handleThirdAmountChange}
-                                placeholder=""
-                              />
-                              <label className="lh-1 text-16 text-light-1">
-                                3rd Amount<span className="text-red">*</span>
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-input spacing">
-                              <input
-                                type="text"
-                                required
-                                value={fourthAmount}
-                                onChange={handleFourthAmountChange}
-                                placeholder=""
-                              />
-                              <label className="lh-1 text-16 text-light-1">
-                                4th Amount<span className="text-red">*</span>
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-input spacing">
-                              <input
-                                type="text"
-                                required
-                                value={fifthAmount}
-                                onChange={handleFifthAmountChange}
-                                placeholder=""
-                              />
-                              <label className="lh-1 text-16 text-light-1">
-                                5th Amount<span className="text-red">*</span>
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-input spacing">
-                              <input
-                                type="text"
-                                required
-                                value={sixthAmount}
-                                onChange={handleSixthAmountChange}
-                                placeholder=""
-                              />
-                              <label className="lh-1 text-16 text-light-1">
-                                6th Amount<span className="text-red">*</span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                  
                   </div>
                 )}
               </>
