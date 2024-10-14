@@ -47,7 +47,7 @@ export default function Payment() {
   const [paymentType, setPaymentType] = useState("");
   const [firstAmount, setFirstAmount] = useState("");
   const [secondAmount, setSecondAmount] = useState("");
-  const [thirdAmount, setThirdAmount] = useState(0);
+  const [thirdAmount, setThirdAmount] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState("");
   const [paidAmount, setPaidAmount] = useState("");
@@ -71,7 +71,15 @@ export default function Payment() {
     }
   };
   const handleFirstAmountChange = (e) => {
-    setFirstAmount(e.target.value);
+    const rawAmount = e.target.value;
+    const totalAmount = SideBarData?.BookingFild?.SubTotal;
+
+    if(rawAmount < totalAmount){
+      setFirstAmount(rawAmount);
+    }else{
+      setFirstAmount(0);
+    }
+
   };
   // const handleFirstAmountChange = (e) => {
   //   const rawAmount = e.target.value;
@@ -99,9 +107,11 @@ export default function Payment() {
   // };
   const handleSecondAmountChange = (e) => {
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
+    console.log(totalAmount, "totalAmount");
     const total = totalAmount - firstAmount;
+    console.log(total, "total");  
     const secondAmount = e.target.value;
-    if (secondAmount < total) {
+    if (secondAmount <= total) {
       setSecondAmount(secondAmount);
     } else {
       setSecondAmount(0);
@@ -118,12 +128,19 @@ export default function Payment() {
     const secondAmountValue = parseFloat(secondAmount);
 
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
+    console.log(totalAmount, "totalAmount");
     const total = firstAmountValue + secondAmountValue;
+    console.log(total, "total");
 
     if (total < totalAmount) {
       const thirdAmountValue = parseFloat(totalAmount - total).toFixed(2);
+      console.log(thirdAmountValue, "thirdAmountValue");
       setThirdAmount(thirdAmountValue);
     } else {
+      setThirdAmount(0);
+    }
+
+    if(total == totalAmount){
       setThirdAmount(0);
     }
   };
@@ -646,7 +663,7 @@ export default function Payment() {
                                 <input
                                   type="text"
                                   required
-                                  value={thirdAmount > 0 ? thirdAmount : ""}
+                                  value={thirdAmount}
                                   disabled={true}
                                   placeholder=""
                                 />
