@@ -512,7 +512,7 @@ export default function Profile() {
                           <input
                             type="text"
                             required
-                            defaultValue={name}
+                            defaultValue={name === "undefined" ? "" : name}
                             onChange={handleInputChange(setName)}
                           />
                           <label className="lh-1 text-16 text-light-1">
