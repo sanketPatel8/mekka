@@ -1775,7 +1775,7 @@ const CustomerDetaTable = () => {
                 className="button -sm -red-2 bg-red-3 text-white"
                 onClick={() => {
                   const confirmDelete = window.confirm(
-                    "Are you sure you want to delete this Booking ?"
+                    "Are you sure you want to Cancel this Booking ?"
                   );
                   if (confirmDelete) {
                     // Proceed with the delete operation

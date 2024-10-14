@@ -195,7 +195,7 @@ export default function DbBooking({ params }) {
         name: translate("Subtotal"),
         selector: (row) => formatTotal(row.Subtotal),
       },
-      { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
+      // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
       {
         name: translate("Discount"),
         selector: (row) => row.Discount > 0 ? -(row.Discount) : 0,
