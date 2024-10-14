@@ -692,11 +692,10 @@ const CustomerDetaTable = () => {
       AddpersonData.birthDate !== "" ||
       AddpersonData.nationality !== ""
     ) {
-
       handlePayment();
     } else {
-      console.log("AddpersonData" , AddpersonData);
-      
+      console.log("AddpersonData", AddpersonData);
+
       showErrorToast("All Fields are Require");
     }
     // setTimeout(() => {
@@ -872,11 +871,7 @@ const CustomerDetaTable = () => {
     }
 
     if (PaymentCheckbox == 3) {
-      
-
-      setShowStripeModal(true);
-
-      setAmount(firstAmount);
+      FetchAddperson();
     }
 
     if (PaymentCheckbox == 2) {
@@ -1533,8 +1528,6 @@ const CustomerDetaTable = () => {
                         {translate("Click for Installment Payment")}
                       </label>
                     </div>
-
-                  
                   </div>
                 )}
               </>
