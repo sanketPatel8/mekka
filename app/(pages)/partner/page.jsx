@@ -14,6 +14,7 @@ import CreatableSelect from "react-select/creatable";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { countries } from "@/data/nationalities";
 import { ClipLoader } from "react-spinners";
+import { set } from "lodash";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -48,6 +49,7 @@ const page = () => {
     { value: "2", label: "152523" },
     { value: "3", label: "1634748" },
   ];
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // useEffect(() => {
   //   if (typeof window !== "undefined") {
@@ -88,9 +90,12 @@ const page = () => {
 
   const handlePasswordChange = (e) => {
     const { value } = e.target;
-    if (value !== password) {
-      setError("Passwords do not match");
-    } else {
+    setConfirmPassword(value);
+    if(!password){
+      setError(`${translate("Please enter password first")}`);
+    }else if (password && value !== password) {
+      setError(`${translate("Passwords do not match")}`);
+    } else if(password && value === password) {
       setError("");
     }
   };
@@ -101,7 +106,9 @@ const page = () => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
     if (!passwordRegex.test(passwordValue)) {
-      setPasswordError("Invalid password. ");
+      setPasswordError( `${translate(
+        "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
+      )}`);
     } else {
       setPasswordError("");
     }
@@ -117,10 +124,10 @@ const page = () => {
     let tempErrors = {};
 
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-      tempErrors.email = "Invalid email address";
+      tempErrors.email = `${translate("Invalid email address")}`;
     }
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(company_email)) {
-      tempErrors.company_email = "Invalid email address";
+      tempErrors.company_email = `${translate("Invalid email address")}`;
     }
 
     if (
@@ -128,9 +135,8 @@ const page = () => {
         password
       )
     ) {
-      tempErrors.password = "Invalid password";
+      tempErrors.password = `${translate("At least 8 characters include uppercase and lowercase letters, numbers and special characters")}`;
     }
-    console.log("tempErrors", tempErrors);
     return tempErrors;
   };
 
@@ -152,7 +158,7 @@ const page = () => {
       !SelectedCountry ||
       !company_email ||
       !company_mobile ||
-      !agreeToTerms
+      !agreeToTerms 
     ) {
       showErrorToast("Please fill all the fields");
       return;
@@ -162,8 +168,13 @@ const page = () => {
     console.log(tempErrors);
 
     if (Object.keys(tempErrors).length > 0) {
-      console.log("hi");
       setErrors(tempErrors);
+      showErrorToast("Please fill all the fields");
+      return;
+    }
+
+    if(password !== confirmPassword){
+      showErrorToast("Passwords do not match");
       return;
     }
 
@@ -572,11 +583,11 @@ const page = () => {
                             {translate("Password")}{" "}
                             <span className="text-red font_11">*</span>
                           </label>
-                          <span className="text-red font_11">
+                          {/* <span className="text-red font_11">
                             {translate(
                               "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
                             )}
-                          </span>
+                          </span> */}
                           {/* {errors.password && <div className='text-red font_11'> {errors.password}</div>} */}
 
                           {passwordError && (
@@ -593,6 +604,7 @@ const page = () => {
                             required
                             className="mb-2"
                             onChange={handlePasswordChange}
+                            value={confirmPassword}
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("Confirm Password")}{" "}

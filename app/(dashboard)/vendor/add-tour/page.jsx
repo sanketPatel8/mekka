@@ -142,20 +142,10 @@ export default function AddTour() {
   const [minEndDate, setMinEndDate] = useState("");
   const [minDate, setMinDate] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleStartDateChange = (e) => {
-    // const formattedDate = new Date(formatDateToMMDDYYYY(e.target.value));
-    // console.log(formattedDate, "format")
-    // const today = new Date();
-    // console.log(today,"today")
-    // console.log(formattedDate < today , "datebegin" )
-    // if (formattedDate < today) {
-    //   setDateBegin(todayString);
-    // } else {
-    //   setDateBegin(e.target.value);
-    // }
+    
     const selectedDate = new Date(e.target.value);
     const today = new Date();
     const minDate = new Date(today.toISOString().split("T")[0]);
@@ -173,12 +163,13 @@ export default function AddTour() {
 
 const handleEndDateChange = (e) => {
 
-  const formattedDate = formatDateToMMDDYYYY(e.target.value);
-  const dateBegin = formatDateToMMDDYYYY(date_begin);
+  const formattedDate = new Date(e.target.value);
+  const dateBegin = new Date(date_begin);
   if (dateBegin && formattedDate < dateBegin) {
     setDateEnd(dateBegin);
   } else {
     setDateEnd(e.target.value);
+
   }
 
 
@@ -197,14 +188,10 @@ const handleEndDateBlur = () => {
 const [day, month, year] = date_end.split('-');
 if (day && month && year) {
   const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
-  console.log(formattedDate,"formatedDate") 
   setDateEnd(formattedDate);
   const start_Date = new Date(date_begin);
-  console.log(start_Date,"start_Date")
   const endDate = new Date(date_end);
-  console.log(endDate,"endDate")
   const daysDifference = Math.round((endDate - start_Date) / (1000 * 3600 * 24));
-  console.log(daysDifference,"daysDifference")
   setDaysCount(daysDifference + 1)
 }
 };
@@ -393,7 +380,6 @@ if (day && month && year) {
     const files = event.target.files;
     const promises = [];
     const uploadedImages = [...image2];
-    console.log(uploadedImages,"uploaded")
   
     for (let i = 0; i < files.length; i++) {
       const file = files[i];

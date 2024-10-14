@@ -627,13 +627,13 @@
 "Booking details have been sent to your registered email address" : "Die Buchungsdetails wurden an Ihre registrierte E-Mail-Adresse gesendet",
 "Amount Paid" : "Betrag bezahlt",
 "Copyright MekkaBookings" : "Urheberrecht MekkaBookings",
-"Total Pending" : "Gesamt ausstehend",
-"Total Earnings" : "Gesamteinnahmen",
-"Total Booking" : "Gesamtbuchungen",
 "Payment Data" : "Zahlungsdaten",
-"Copyright MekkaBooking.com" : "Urheberrecht MekkaBooking.com"
-  
-  
+"Copyright MekkaBooking.com" : "Urheberrecht MekkaBooking.com",
+"At least 8 characters include uppercase and lowercase letters, numbers and special characters" : "Mindestens 8 Zeichen, darunter Groß- und Kleinbuchstaben, Zahlen und Sonderzeichen",
+"Passwords do not match" : "Passwörter stimmen nicht überein",
+"Please enter password first" : "Bitte geben Sie zuerst Ihr Passwort ein",
+"Invalid email address" : "Ungültige E-Mail-Adresse",
+"Invalid password" : "Ungültiges Passwort"
 
 
 }

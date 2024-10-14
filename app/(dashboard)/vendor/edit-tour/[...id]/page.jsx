@@ -280,10 +280,8 @@ export default function EditTour() {
   const handleEndDateChange = (e) => {
     const [day, month, year] = e.target.value.split("-");
     if (day && month && year) {
-      console.log(formatDateToMMDDYYYY(e.target.value), "e.target.value");
-      const formattedDate = formatDateToMMDDYYYY(e.target.value);
-      console.log(formattedDate, "formated");
-      const dateBegin = formatDateToMMDDYYYY(date_begin);
+      const formattedDate = new Date(e.target.value);
+      const dateBegin = new Date(date_begin);
       if (dateBegin && formattedDate < dateBegin) {
         setDateEnd(dateBegin);
       } else {
@@ -296,7 +294,6 @@ export default function EditTour() {
     const [day, month, year] = date_begin.split("-");
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
-      console.log(formattedDate, "formatedDate");
 
       setStartDate(formattedDate);
     }
@@ -308,13 +305,10 @@ export default function EditTour() {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
       setDateEnd(formattedDate);
       const start_Date = new Date(date_begin);
-      console.log(start_Date, "start_Date");
       const endDate = new Date(date_end);
-      console.log(endDate, "endDate");
       const daysDifference = Math.round(
         (endDate - start_Date) / (1000 * 3600 * 24)
       );
-      console.log(daysDifference, "daysDifference");
       setDaysCount(daysDifference + 1);
     }
   };
@@ -562,57 +556,7 @@ export default function EditTour() {
     }
   };
 
-  // const handleDeleteImage2 = (index, event) => {
-  //   event.preventDefault();
-  //   console.log(newImages,"image2");
-  //   console.log(index,"index")
 
-  //   if (image2[index]) {
-  //     const url = new URL(image2[index]);
-  //     const fileName = url.pathname.split("/").pop();
-  
-  //     const formData = new FormData();
-  //     formData.append("image", fileName);
-  //     formData.append("type", "tour_image");
-  //     formData.append("tour_id", id);
-  
-  //     const response = POST.request({
-  //       form: formData,
-  //       url: "remove_imageordocument",
-  //     });
-  //     if (response) {
-  //       showSuccessToast("Image removed successfully");
-  //       fetchTour(id);
-  //     }
-  //   } else {
-  //     const newImagesCopy = [...newImages];
-  //     newImagesCopy.splice(index, 1);
-  //     setNewImages(newImagesCopy);
-  //   }
-
-  //   // if () {
-  //   //   const url = new URL(image2);
-  //   //   const fileName = url.pathname.split("/").pop();
-
-  //   //   const formData = new FormData();
-  //   //   formData.append("image", fileName);
-  //   //   formData.append("type", "tour_image");
-  //   //   formData.append("tour_id", id);
-
-  //   //   const response = POST.request({
-  //   //     form: formData,
-  //   //     url: "remove_imageordocument",
-  //   //   });
-  //   //   if (response) {
-  //   //     showSuccessToast("Image removed successfully");
-  //   //     fetchTour(id);
-  //   //   }
-  //   // } else {
-  //   //   const newImages = [...image2];
-  //   //   newImages.splice(index, 1);
-  //   //   setImage2(newImages);
-  //   // }
-  // };
   const handleTabClick = (tab, index) => {
     if (index < activeTabIndex) {
       setCanGoBack(true);
@@ -633,8 +577,6 @@ export default function EditTour() {
   };
 
   const isCurrentTabValid = () => {
-    console.log(route_data.every((day) => day.dayData && day.description), "uploaded"),
-    console.log(image2,"image2")
     if (activeTab === "Content") {
       return (
         SelectedTour &&
