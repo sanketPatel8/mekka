@@ -339,7 +339,7 @@ export default function Payment() {
           localStorage.removeItem("AdultPrice&count");
           localStorage.removeItem("SelectedPackageHotelNDFlight");
           localStorage.removeItem("PackageBookingData");
-          // localStorage.removeItem("BookingData");
+          localStorage.removeItem("AllAdultsData");
           localStorage.removeItem("AdditionalServices");
         }, 10000);
       }, 3000);
