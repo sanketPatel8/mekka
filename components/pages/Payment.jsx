@@ -56,6 +56,8 @@ export default function Payment() {
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
 
+  alert(companyCode)
+
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
     if (index === 2) {
@@ -74,12 +76,11 @@ export default function Payment() {
     const rawAmount = e.target.value;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
 
-    if(rawAmount < totalAmount){
+    if (rawAmount < totalAmount) {
       setFirstAmount(rawAmount);
-    }else{
+    } else {
       setFirstAmount(0);
     }
-
   };
   // const handleFirstAmountChange = (e) => {
   //   const rawAmount = e.target.value;
@@ -109,7 +110,7 @@ export default function Payment() {
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
     console.log(totalAmount, "totalAmount");
     const total = totalAmount - firstAmount;
-    console.log(total, "total");  
+    console.log(total, "total");
     const secondAmount = e.target.value;
     if (secondAmount <= total) {
       setSecondAmount(secondAmount);
@@ -140,7 +141,7 @@ export default function Payment() {
       setThirdAmount(0);
     }
 
-    if(total == totalAmount){
+    if (total == totalAmount) {
       setThirdAmount(0);
     }
   };
@@ -245,8 +246,7 @@ export default function Payment() {
 
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
 
-          console.log("sixDaysBeforeString" , sixDaysBeforeString );
-          
+          console.log("sixDaysBeforeString", sixDaysBeforeString);
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
@@ -281,12 +281,10 @@ export default function Payment() {
     [dateEnd]
   );
 
-  const handleEndDateChange =
-    (event) => {
-      const selectedDate = event.target.value;
-      setDateEnd(selectedDate);
-    }
-  
+  const handleEndDateChange = (event) => {
+    const selectedDate = event.target.value;
+    setDateEnd(selectedDate);
+  };
 
   useEffect(() => {
     if (dateInputRef.current) {
@@ -766,13 +764,19 @@ export default function Payment() {
                               "I have read the AGB (mekkabooking) and I accept the conditions"
                             )}
                           </span>
-                          {translate(
-                            `. ${
-                              companyCode !== null
-                                ? `This trip is operated by the ${companyCode}.`
-                                : ""
-                            }.`
-                          )}
+                          {/* {companyCode && translate(`. This trip is operated by ${companyCode}.`)} */}
+                          <span className={companyCode ? "d-none" : "d-block"}>
+                            {translate(
+                              `This trip is operated by ${companyCode}.`
+                            )}
+                          </span>
+                          {/* {companyCode !== null && (
+                            <div >
+                              {translate(
+                                `This trip is operated by ${companyCode}.`
+                              )}
+                            </div>
+                          )} */}
                         </label>
                       </div>
                     </div>
