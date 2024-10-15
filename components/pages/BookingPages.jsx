@@ -1122,6 +1122,12 @@ export default function BookingPages({ BookingData }) {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
+
+  console.log("BookingSideBar" , BookingSideBar);
+  
+    console.log("BookingSideBar?.Airline?.luggage" , BookingSideBar?.Airline?.luggage);
+    
+
   return (
     <>
       {/* sidebarr no aa badhi data static che to ane jyare page refrash thay tyare kai rite jato na re evu store karavi sakay  */}
@@ -1285,18 +1291,20 @@ export default function BookingPages({ BookingData }) {
                       </div>
                     </div>
 
-                    <div className="d-flex items-center justify-content-space-arround">
-                      <div className="mr-5">
-                        <FaLuggageCart size={25} color="#DAC04F" />
+                    {BookingSideBar?.Airline !== null && (
+                      <div className="d-flex items-center justify-content-space-arround">
+                        <div className="mr-5">
+                          <FaLuggageCart size={25} color="#DAC04F" />
+                        </div>
+                        <div className="text-start">
+                          {translate("Max Luggage Per Person")} :{" "}
+                          {BookingSideBar?.Airline?.luggage === null
+                            ? " null aa raha hei ! "
+                            : BookingSideBar?.Airline?.luggage}{" "}
+                          kg
+                        </div>
                       </div>
-                      <div className="text-start">
-                        {translate("Max Luggage Per Person")} :{" "}
-                        {BookingSideBar?.Airline?.luggage === null
-                          ? " null aa raha hei ! "
-                          : BookingSideBar?.Airline?.luggage}{" "}
-                        kg
-                      </div>
-                    </div>
+                    )}
 
                     <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">

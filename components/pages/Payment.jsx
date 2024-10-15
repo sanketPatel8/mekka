@@ -208,10 +208,10 @@ export default function Payment() {
     }
   }, []);
 
-  function isValidDate(date) {
-    const dateRegex = /^\d{2}-\d{2}-\d{4}$/;
-    return dateRegex.test(date);
-  }
+  // function isValidDate(date) {
+  //   const dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+  //   return dateRegex.test(date);
+  // }
 
   const parseDate = (dateString) => {
     const parts = dateString.split(".");
@@ -221,15 +221,15 @@ export default function Payment() {
     return new Date(year, month - 1, day);
   };
 
-  const formatDateToDDMMYYYY = (date) => {
-    const [year, month, day] = date.split("-");
-    return `${day}-${month}-${year}`;
-  };
+  // const formatDateToDDMMYYYY = (date) => {
+  //   const [year, month, day] = date.split("-");
+  //   return `${day}-${month}-${year}`;
+  // };
 
-  const formatDateToMMDDYYYY = (date) => {
-    const [day, month, year] = date.split("-");
-    return `${year}-${month}-${day}`;
-  };
+  // const formatDateToMMDDYYYY = (date) => {
+  //   const [day, month, year] = date.split("-");
+  //   return `${year}-${month}-${day}`;
+  // };
 
   useEffect(() => {
     const today = new Date();
@@ -384,6 +384,9 @@ export default function Payment() {
       setBooking(newBooking);
     }
   };
+
+  console.log("SideBarData?.Airline?.luggage" , SideBarData?.Airline?.luggage);
+  
 
   const { translate } = useTranslation();
 
@@ -1003,7 +1006,7 @@ export default function Payment() {
                     </div>
                   </div>
 
-                  <div className="line mt-5 mb-5"></div>
+                  
 
                   <div
                     className={
@@ -1012,18 +1015,22 @@ export default function Payment() {
                         : "d-block"
                     }
                   >
-                    <div className="d-flex items-center justify-content-space-arround">
-                      <div className="mr-5">
-                        <FaLuggageCart size={25} color="#DAC04F" />
+                    
+                    {SideBarData?.Airline !== null && (
+                      <div className="d-flex items-center justify-content-space-arround">
+                        <div className="line mt-5 mb-5"></div>
+                        <div className="mr-5">
+                          <FaLuggageCart size={25} color="#DAC04F" />
+                        </div>
+                        <div className="text-start">
+                          {translate("Max Luggage Per Person")} :{" "}
+                          {SideBarData?.Airline?.luggage === null
+                            ? " null aa raha hei ! "
+                            : SideBarData?.Airline?.luggage}{" "}
+                          kg
+                        </div>
                       </div>
-                      <div className="text-start">
-                        {translate("Max Luggage Per Person")} :{" "}
-                        {SideBarData?.Airline?.luggage === null
-                          ? " null aa raha hei ! "
-                          : SideBarData?.Airline?.luggage}{" "}
-                        kg
-                      </div>
-                    </div>
+                    )}
 
                     <div className="line mt-5 mb-5"></div>
                   </div>
