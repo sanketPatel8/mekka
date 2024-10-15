@@ -56,7 +56,7 @@ export default function Payment() {
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
 
-  alert(companyCode)
+  // alert(companyCode)
 
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
