@@ -294,7 +294,7 @@ export default function BookingPages({ BookingData }) {
 
   // useEffect(()=>{
   //   const open = typeof window !== "undefined" && localStorage.getItem("setIsOpen");
-  //   console.log(open , "open");
+  
   //   if(open === false ){
   //     closeModal();
   //   }
@@ -728,10 +728,11 @@ export default function BookingPages({ BookingData }) {
 
   const getTodayDate = () => {
     const today = new Date();
+    
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
     const day = String(today.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return today.toISOString().split('T')[0]; // Returns 'YYYY-MM-DD'
   };
 
   const renderForms = (type, count) => {
@@ -1083,8 +1084,6 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  console.log("formValues", formValues.Adult);
-
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
@@ -1129,8 +1128,6 @@ export default function BookingPages({ BookingData }) {
   useEffect(() => {
     setAllAdultsData(formValues);
   }, []);
-
-  console.log("AllAdultsData", AllAdultsData);
 
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
