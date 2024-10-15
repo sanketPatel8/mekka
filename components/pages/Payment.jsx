@@ -385,8 +385,7 @@ export default function Payment() {
     }
   };
 
-  console.log("SideBarData?.Airline?.luggage" , SideBarData?.Airline?.luggage);
-  
+  console.log("SideBarData?.Airline?.luggage", SideBarData?.Airline?.luggage);
 
   const { translate } = useTranslation();
 
@@ -1006,8 +1005,6 @@ export default function Payment() {
                     </div>
                   </div>
 
-                  
-
                   <div
                     className={
                       SideBarData?.selectedCheckbox !== false
@@ -1015,19 +1012,20 @@ export default function Payment() {
                         : "d-block"
                     }
                   >
-                    
                     {SideBarData?.Airline !== null && (
-                      <div className="d-flex items-center justify-content-space-arround">
+                      <div>
                         <div className="line mt-5 mb-5"></div>
-                        <div className="mr-5">
-                          <FaLuggageCart size={25} color="#DAC04F" />
-                        </div>
-                        <div className="text-start">
-                          {translate("Max Luggage Per Person")} :{" "}
-                          {SideBarData?.Airline?.luggage === null
-                            ? " null aa raha hei ! "
-                            : SideBarData?.Airline?.luggage}{" "}
-                          kg
+                        <div className="d-flex items-center justify-content-space-arround">
+                          <div className="mr-5">
+                            <FaLuggageCart size={25} color="#DAC04F" />
+                          </div>
+                          <div className="text-start">
+                            {translate("Max Luggage Per Person")} :{" "}
+                            {SideBarData?.Airline?.luggage === null
+                              ? " null aa raha hei ! "
+                              : SideBarData?.Airline?.luggage}{" "}
+                            kg
+                          </div>
                         </div>
                       </div>
                     )}
