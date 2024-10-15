@@ -209,7 +209,10 @@ export default function DBListing() {
                           {elm.departures && (
                             <div className="Location">
                               <span>
-                                {translate("Departure")} : {elm.departures}
+                                <span style={{ marginLeft: "5px" }}>
+                                  {translate("Departure")} :{" "}
+                                  {elm.departures.join("   ,  ")} 
+                                </span>
                               </span>
                             </div>
                           )}
