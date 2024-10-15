@@ -10,7 +10,7 @@ import { FaStar } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import { convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import $ from "jquery";
+import $, { get } from "jquery";
 import "select2/dist/css/select2.css";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { toast, ToastContainer } from "react-toastify";
@@ -143,42 +143,59 @@ export default function AddTour() {
   const [minDate, setMinDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, "0");
+    return today.toISOString().split("T")[0];
+  };
   const handleStartDateChange = (e) => {
     
     const selectedDate = new Date(e.target.value);
-    const today = new Date();
-    const minDate = new Date(today.toISOString().split("T")[0]);
+    const minDate = getTodayDate();
   
     if (selectedDate < minDate) {
       setDateBegin(today.toISOString().split("T")[0]);
     } else {
       setDateBegin(e.target.value);
-      const nextDay = new Date(selectedDate);
+      const nextDay = selectedDate;
       nextDay.setDate(nextDay.getDate() + 1);
-      setMinDate(nextDay.toISOString().split("T")[0]);}
+      setMinDate(nextDay.toISOString().split("T")[0]);
+    }
     
   
 };
 
 const handleEndDateChange = (e) => {
+  const inputValue = e.target.value;
+  const dateParts = inputValue.split('-');
 
-  const formattedDate = new Date(e.target.value);
-  const dateBegin = new Date(date_begin);
-  if (dateBegin && formattedDate < dateBegin) {
-    setDateEnd(dateBegin);
+  
+  if (dateParts.length === 3) {
+    const day = dateParts[0];
+    const month = dateParts[1];
+    const year = dateParts[2];
+
+    const selectedDate = new Date(`${year}-${month}-${day}`);
+    const dateBegin = new Date(date_begin);
+
+    if (dateBegin && selectedDate < dateBegin) {
+      setDateEnd(dateBegin);
+    } else {
+      setDateEnd(inputValue);
+    }
   } else {
-    setDateEnd(e.target.value);
-
+    setDateEnd(inputValue);
   }
-
-
 };
+
 
 const handleStartDateBlur = () => {
 const [day, month, year] = date_begin.split('-');
 if (day && month && year) {
   const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
+  console.log(formattedDate,"formattedDate")
   setStartDate(formattedDate);
 
 }
@@ -250,11 +267,9 @@ if (day && month && year) {
  
 
   useEffect(() => {
-    const today = new Date();
-    const todayString = today.toISOString().split("T")[0];
    
 
-    setMinEndDate(todayString);
+    setMinEndDate(getTodayDate());
   }, []);
   
   
