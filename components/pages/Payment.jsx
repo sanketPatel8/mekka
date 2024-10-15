@@ -21,6 +21,7 @@ import { useCurrency } from "@/app/context/currencyContext";
 import { type } from "jquery";
 import { ClipLoader } from "react-spinners";
 import { set } from "lodash";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function Payment() {
   const router = useRouter();
@@ -400,8 +401,10 @@ export default function Payment() {
                 bookingStage === 2 ? "d-none" : "d-block"
               }`}
             >
-              {translate("Payment Methods")}
+              <button onClick={() => router.back()}><IoMdArrowRoundBack /> </button> {translate("Payment Methods")}
             </h2>
+
+             
 
             <div className="bg-white rounded py-30">
               {bookingStage === 1 && (

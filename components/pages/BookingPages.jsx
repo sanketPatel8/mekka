@@ -110,6 +110,8 @@ export default function BookingPages({ BookingData }) {
 
       const SidebarData = localStorage.getItem("PackageBookingData");
 
+      const BackAdultData = localStorage.getItem("AllAdultsData");
+
       const loginStatus = JSON.parse(
         localStorage.getItem("CustomerLoginCheck")
       );
@@ -148,6 +150,82 @@ export default function BookingPages({ BookingData }) {
           setbabyData(childrenData);
         } catch (error) {
           console.error("Error parsing savedData:", error);
+        }
+      }
+
+      if (BackAdultData && BackAdultData !== "undefined") {
+        try {
+          const AdultD = JSON.parse(BackAdultData);
+
+          // Extract the user object
+          if (AdultD) {
+            setFormValues((prevValues) => {
+              const updatedValues = { ...prevValues };
+
+              if (!updatedValues["Adult"]) {
+                updatedValues["Adult"] = [];
+              }
+              if (!updatedValues["Adult"][0]) {
+                updatedValues["Adult"][0] = {};
+              }
+
+              AdultD?.Adult?.map(
+                (e, i) =>
+                  (updatedValues["Adult"][i] = {
+                    ...updatedValues["Adult"][i],
+                    name: e.name,
+                    surname: e.surname,
+                    birthday: e.birthday,
+                    city: e.city,
+                    email: e.email,
+                    gender: e.gender,
+                    houseNumber: e.houseNumber,
+                    mobile: e.mobile,
+                    nationality: e.nationality,
+                    street: e.street,
+                    zipcode: e.zipcode,
+                  })
+              );
+              AdultD?.Child?.map(
+                (e, i) =>
+                  (updatedValues["Child"][i] = {
+                    ...updatedValues["Child"][i],
+                    name: e.name,
+                    surname: e.surname,
+                    birthday: e.birthday,
+                    city: e.city,
+                    email: e.email,
+                    gender: e.gender,
+                    houseNumber: e.houseNumber,
+                    mobile: e.mobile,
+                    nationality: e.nationality,
+                    street: e.street,
+                    zipcode: e.zipcode,
+                  })
+              );
+              AdultD?.Baby?.map(
+                (e, i) =>
+                  (updatedValues["Baby"][i] = {
+                    ...updatedValues["Baby"][i],
+                    name: e.name,
+                    surname: e.surname,
+                    birthday: e.birthday,
+                    city: e.city,
+                    email: e.email,
+                    gender: e.gender,
+                    houseNumber: e.houseNumber,
+                    mobile: e.mobile,
+                    nationality: e.nationality,
+                    street: e.street,
+                    zipcode: e.zipcode,
+                  })
+              );
+
+              return updatedValues;
+            });
+          }
+        } catch (error) {
+          console.error("Error parsing userData:", error);
         }
       }
 
@@ -240,6 +318,7 @@ export default function BookingPages({ BookingData }) {
     }
     return Array.from({ length: count }, () => ({ ...defaultValues }));
   };
+  const [AllAdultsData, setAllAdultsData] = useState([]);
 
   const [formValues, setFormValues] = useState({
     Adult: initializeFormValues(adultData?.length || 0, {
@@ -1047,6 +1126,12 @@ export default function BookingPages({ BookingData }) {
     // tax: JSON.parse(formattedTaxAmount),
   };
 
+  useEffect(() => {
+    setAllAdultsData(formValues);
+  }, []);
+
+  console.log("AllAdultsData", AllAdultsData);
+
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
     if (SidebarData && SidebarData !== "undefined") {
@@ -1084,31 +1169,22 @@ export default function BookingPages({ BookingData }) {
     if (typeof window !== "undefined") {
       localStorage.setItem("BookingData", JSON.stringify(bookingData));
       localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
+      localStorage.setItem("AllAdultsData", JSON.stringify(formValues));
     }
 
     handleUpdateLocalStorage();
-    setIsLoading(true);
 
-    if (LoginCheck) {
-      // When the user is logged in, skip phone validation
-      setIsLoading(false);
-      setTimeout(() => {
-        router.push("/payment");
-      }, 2000);
-    } else {
-      // If the user is not logged in, check phone validity
-      if (PhoneValid === true) {
-        setIsLoading(false);
-        setTimeout(() => {
-          router.push("/payment");
-        }, 2000);
-      } else {
-        showErrorToast("Invalid Phone Number");
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-      }
-    }
+    // Assuming this code is inside an event handler or a function
+    setIsLoading(true); // Start loading
+
+    // Use setTimeout to simulate a delay (e.g., for a loading spinner)
+    setTimeout(() => {
+      router.push("/payment"); // Always navigate to the payment page
+    }, 2000);
+
+    // If you want to handle loading state after navigation, consider removing loading state only if needed
+    // For instance, you can keep setIsLoading(false) if you need it before navigating
+    setIsLoading(false);
   };
 
   const handleExternalButtonClick = () => {
@@ -1121,12 +1197,6 @@ export default function BookingPages({ BookingData }) {
 
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
-
-
-  console.log("BookingSideBar" , BookingSideBar);
-  
-    console.log("BookingSideBar?.Airline?.luggage" , BookingSideBar?.Airline?.luggage);
-    
 
   return (
     <>
