@@ -546,3 +546,18 @@ input[type="number"]::-webkit-inner-spin-button {
 .Payment_Sidebar_img {
   max-height: 100px;
 }
+
+.phone-input {
+  width: 100%;
+  padding: 12px 45px;
+  border-radius: 12px;
+  border: 1px solid #E7E6E6;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.phone_lable{
+  position: absolute !important;
+  top: -15px !important;
+  left: 25px !important;
+}

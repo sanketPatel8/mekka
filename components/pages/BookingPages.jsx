@@ -294,7 +294,7 @@ export default function BookingPages({ BookingData }) {
 
   // useEffect(()=>{
   //   const open = typeof window !== "undefined" && localStorage.getItem("setIsOpen");
-  
+
   //   if(open === false ){
   //     closeModal();
   //   }
@@ -728,11 +728,11 @@ export default function BookingPages({ BookingData }) {
 
   const getTodayDate = () => {
     const today = new Date();
-    
+
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
     const day = String(today.getDate()).padStart(2, "0");
-    return today.toISOString().split('T')[0]; // Returns 'YYYY-MM-DD'
+    return today.toISOString().split("T")[0]; // Returns 'YYYY-MM-DD'
   };
 
   const renderForms = (type, count) => {
@@ -1204,8 +1204,14 @@ export default function BookingPages({ BookingData }) {
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-11 mx-auto px-0">
-              <div className={LoginCheck === true ? "d-none" : "d-block bg-white rounded-12  py-15"}>
-                <div >
+              <div
+                className={
+                  LoginCheck === true
+                    ? "d-none"
+                    : "d-block bg-white rounded-12  py-15"
+                }
+              >
+                <div>
                   <button
                     onClick={() => {
                       openModal();
@@ -1405,7 +1411,12 @@ export default function BookingPages({ BookingData }) {
                   <div className="">
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Subtotal")}</div>
-                      <div className=""> {formatPrice(PackagePrices + adultadiPrices + adPrice)} </div>
+                      <div className="">
+                        {" "}
+                        {formatPrice(
+                          PackagePrices + adultadiPrices + adPrice
+                        )}{" "}
+                      </div>
                     </div>
 
                     <div className={discountClass}>

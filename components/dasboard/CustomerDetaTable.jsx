@@ -960,6 +960,8 @@ const CustomerDetaTable = () => {
     xhr.send();
   };
 
+  console.log("rows" , rows);
+  
   const handleDocumentSubmit = async () => {
     const formData = new FormData();
     formData.append("reservation_person_id", UploadDocID?.personId);
@@ -1534,6 +1536,7 @@ const CustomerDetaTable = () => {
                     </div>
                   </div>
                 )}
+                
               </>
             )}
           </div>
@@ -1715,60 +1718,64 @@ const CustomerDetaTable = () => {
                     <b>Type of fee</b>
                   </th>
                   <th scope="col" className="px-1 py-2">
-                    <b>Fee (gross)</b>
+                    <b>Fee </b>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td className="px-1 py-2">
-                    {translate("Total Package Fees")}
+                    {translate("refund_amount")}
                   </td>
-                  <td className="px-1 py-2">300.00 €</td>
+                  <td className="px-1 py-2">{BookingDetails?.reservation?.refund_amount} €</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td className="px-1 py-2">{translate("Mekka Fees")}</td>
                   <td className="px-1 py-2">0.00 €</td>
-                </tr>
-                <tr>
+                </tr> */}
+                {/* <tr>
                   <td className="px-1 py-2">{translate("Total Tax Amount")}</td>
                   <td className="px-1 py-2">-13.00 €</td>
                 </tr>
                 <tr>
                   <td className="px-1 py-2">{translate("Agent Payable")}</td>
                   <td className="px-1 py-2">1.000,00 €</td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
 
             <hr />
 
-            <table className="table table-success table-striped my-3 custom-table-bordered full_width">
-              <thead>
-                <tr>
-                  <th scope="col" className="px-1 py-2">
-                    <b>{translate("Time frame")}</b>
-                  </th>
-                  <th scope="col" className="px-1 py-2">
-                    <b>{translate("MekkaBooking Fee")}</b>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="px-1 py-2">0 hours to 3 hours*</td>
-                  <td className="px-1 py-2 ">ADULT : Non Refundable</td>
-                </tr>
-                <tr>
-                  <td className="px-1 py-2">3 hours to 4 days*</td>
-                  <td className="px-1 py-2">ADULT : 3,500 € + 300 € </td>
-                </tr>
-                <tr>
-                  <td className="px-1 py-2">4 days to 365 days*</td>
-                  <td className="px-1 py-2">ADULT : 3,000 € + 300 €</td>
-                </tr>
-              </tbody>
-            </table>
+            <p><span className="text-red">*</span>{translate('Amount will be credited within 7 days in your bank account')}</p>
+
+            <div
+                    className="border-1 rounded-12 shadow-1 overflow-hidden mt-20 mb-20"
+                    id="ref"
+                  >
+                    <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
+                      <b> {translate("Cancellation Rules")}</b>
+                    </p>
+                    <div className="px-3">
+                      <ul className="">
+                        <li className="text-center py-1">
+                          {translate(
+                            "15% if canceled before 90 days of the trip"
+                          )}
+                        </li>
+                        <li className="text-center py-1">
+                          {translate(
+                            "60% if canceled before 30 days of the trip"
+                          )}
+                        </li>
+                        <li className="text-center py-1">
+                          {translate(
+                            "100% if canceled before 7 days of the trip"
+                          )}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+            
 
             <div className="col-lg-12 d-flex justify-content-center">
               <button
