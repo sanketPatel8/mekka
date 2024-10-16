@@ -75,17 +75,23 @@ export default function DBListing() {
         formData.append("id", id);
         formData.append("vendor_id", user?.user.id);
         setLoading(true);
-        const response = POST.request({ form: formData, url: "duplicatetour" });
-        if (response) {
-          showSuccessToast("Tour Duplicated Successfully");
-          setTimeout(() => {
-            fetchListing();
+        POST.request({ form: formData, url: "duplicatetour" })
+          .then((response) => {
+            if (response) {
+              showSuccessToast("Tour Duplicated Successfully");
+              setTimeout(() => {
+                fetchListing();
+                setLoading(false);
+                router.push(`/vendor/edit-tour/${response.tour_id}`);
+              }, 1000);
+            } else {
+              setLoading(false);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
             setLoading(false);
-            router.push(`/vendor/edit-tour/${response?.tour_id}`);
-          }, 1000);
-        } else {
-          setLoading(false);
-        }
+          });
       } else {
         return;
       }

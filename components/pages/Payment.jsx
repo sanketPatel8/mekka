@@ -263,7 +263,7 @@ export default function Payment() {
         }
       }
     }
-
+    setSecondAmount("")
     setDateBegin(todayString);
     setMinEndDate(todayString);
   }, [SideBarData?.startDate]);
@@ -618,7 +618,6 @@ export default function Payment() {
                                   value={dateBegin}
                                   disabled={true}
                                   min={minEndDate}
-                                  onChange={handleDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   1st Date<span className="text-red"> *</span>

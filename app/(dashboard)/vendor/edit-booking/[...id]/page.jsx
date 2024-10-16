@@ -118,7 +118,7 @@ export default function DbBooking({ params }) {
       {
         name: translate("Additional Services"),
         selector: (row) =>
-          row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
+          row?.extra_data,
         width: "150px",
       },
 
@@ -184,12 +184,12 @@ export default function DbBooking({ params }) {
       {
         name: translate("Action"),
         selector: (row) => (
-          <button
+          <a href={row.fileLink} target="_blank"
             className="button -sm -accent-1 bg-info-2 text-white my-2"
-            onClick={() => downloadFile(row.fileLink, row.Name)}
+            
           >
             {translate("Download")}
-          </button>
+          </a>
         ),
       },
     ];
@@ -364,6 +364,7 @@ export default function DbBooking({ params }) {
           DOB: formatDateToDDMMYYYY(adult.personBirthDay),
           Nationality: adult.personNationality,
           price: adult.adult_price,
+          extra_data: `${adult.extra_data === null ? "" :`${adult.extra_data.additional_order } Bed-Room` } `
         }));
 
         setAdultBookings(adults);
@@ -404,6 +405,7 @@ export default function DbBooking({ params }) {
           country: child.countryName,
           Nationality: child.personNationality,
           price: child.child_price,
+          extra_data: `${child.extra_data === null ? "" :`${child.extra_data.additional_order } Bed-Room` } `
         }));
         setChildBookings(children);
       }
@@ -417,17 +419,17 @@ export default function DbBooking({ params }) {
           country: baby.countryName,
           Nationality: baby.personNationality,
           price: baby.baby_price,
+          extra_data: `${baby.extra_data === null ? "" :`${baby.extra_data.additional_order } Bed-Room` } `
         }));
         setBabyBookings(babies);
       }
 
       if (response.Bookings.reservation) {
         const total = {
-          Subtotal: response.Bookings.reservation.subtotal,
-          Total: response.Bookings.reservation.tax,
+          Subtotal: response.Bookings.reservation.total,
           Discount: response.Bookings.reservation.discount,
           Amount_Paid: response.Bookings.reservation.amount_paid,
-          Total: response.Bookings.reservation.total,
+          Total: response.Bookings.reservation.subtotal,
           Amount_Due: response.Bookings.reservation.amount_due,
         };
 
