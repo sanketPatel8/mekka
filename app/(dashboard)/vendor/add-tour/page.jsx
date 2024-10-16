@@ -151,21 +151,68 @@ export default function AddTour() {
     return today.toISOString().split("T")[0];
   };
   const handleStartDateChange = (e) => {
-    
-    const selectedDate = new Date(e.target.value);
-    const minDate = getTodayDate();
+    const inputValue = e.target.value;
+
+    setDateBegin(inputValue);
+    const nextDay = new Date(inputValue);
+    nextDay.setDate(nextDay.getDate() + 1);
+    setMinDate(nextDay.toISOString().split("T")[0]);
   
-    if (selectedDate < minDate) {
-      setDateBegin(today.toISOString().split("T")[0]);
-    } else {
-      setDateBegin(e.target.value);
-      const nextDay = selectedDate;
-      nextDay.setDate(nextDay.getDate() + 1);
-      setMinDate(nextDay.toISOString().split("T")[0]);
+    
+  };
+  const handleStartDateKeyDown = (e) => {
+    const inputValue = e.target.value;
+    const dateParts = inputValue.split('-');
+    console.log(dateParts,"dateParts")
+  
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+      setDateBegin(inputValue);
+      return; // Allow the user to delete characters
     }
+    if (!/[\d-]/.test(e.key)) {
+      console.log("hi")
+      e.preventDefault();
+    }else{
+      console.log("hello")
+      if (dateParts.length === 3) {
+        console.log("date")
+        const year = dateParts[0];
+        console.log(year,"year")
+        if (year.length < 4) {
+          return; // Allow typing in the year part
+        }else{
+          console.log("else part")
+            // Check if the year is greater than 2023
+            if (parseInt(year) <= 2023) {
+              console.error("Year must be greater than 2023");
+              setDateBegin("");
+              return; // Exit if the year is invalid
+            }
+      
+            const selectedDate = new Date(`${year}-${month}-${day}`);
+            const minDate = getTodayDate();
+            console.log(minDate, "minDate");
+            console.log(selectedDate < minDate, "selectedDate < minDate");
+      
+            if (selectedDate < minDate) {
+              setDateBegin(minDate);
+              setMinDate(minDate);
+            } else {
+              setDateBegin(inputValue);
+              const nextDay = new Date(selectedDate);
+              nextDay.setDate(nextDay.getDate() + 1);
+              setMinDate(nextDay.toISOString().split("T")[0]);
+            }
+          } 
+      }
+    }
+
+
+
+
     
-  
-};
+
+  };
 
 const handleEndDateChange = (e) => {
   const inputValue = e.target.value;
@@ -917,7 +964,7 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="date" required value={date_begin ||  ''}   pattern="\d{2}-\d{2}-\d{4}" onBlur={handleStartDateBlur} onChange={handleStartDateChange} min={minEndDate}/>
+                                        <input type="date" required value={date_begin ||  ''}   pattern="\d{2}-\d{2}-\d{4}" onBlur={handleStartDateBlur} onKeyDown={handleStartDateKeyDown} onChange={handleStartDateChange} min={minEndDate}/>
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Start Date of Tour") ||
                                             "Find Latest Packages"} <span className="text-red">*</span>
