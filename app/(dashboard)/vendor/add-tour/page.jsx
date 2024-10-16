@@ -164,49 +164,55 @@ export default function AddTour() {
     const inputValue = e.target.value;
     const dateParts = inputValue.split('-');
     console.log(dateParts,"dateParts")
-  
+    const selectedDate = getTodayDate();
+    console.log(selectedDate,"selectedDate")
+    setDateBegin(inputValue);
+    const nextDay = new Date(selectedDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    setMinDate(nextDay.toISOString().split("T")[0]);
    
-    if (!/[\d-]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-      e.preventDefault();
-      return;
-  }
-      if (dateParts.length === 3) {
-        console.log("date")
-        const year = dateParts[0];
-        console.log(year,"year")
-        if (year.length < 4) {
-          return; // Allow typing in the year part
-        }else{
-          console.log("else part")
-            // Check if the year is greater than 2023
-            if (parseInt(year) <= 2023) {
-              console.error("Year must be greater than 2023");
-              setDateBegin("");
-              return; // Exit if the year is invalid
-            }
+  //   if (!/[\d-]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+  //     e.preventDefault();
+  //     return;
+  // }
+  //     if (dateParts.length === 3) {
+  //       console.log("date")
+  //       const year = dateParts[0];
+  //       console.log(year,"year")
+  //       if (year.length < 4) {
+  //         return; // Allow typing in the year part
+  //       }else{
+  //         console.log("else part")
+  //           // Check if the year is greater than 2023
+  //           if (parseInt(year) <= 2023) {
+  //             console.error("Year must be greater than 2023");
+  //             setDateBegin("");
+  //             return; // Exit if the year is invalid
+  //           }
       
-            const selectedDate = new Date(`${year}-${month}-${day}`);
-            const minDate = getTodayDate();
-            console.log(minDate, "minDate");
-            console.log(selectedDate < minDate, "selectedDate < minDate");
+  //           const minDate = getTodayDate();
+  //           console.log(minDate, "minDate");
+  //           console.log(selectedDate < minDate, "selectedDate < minDate");
       
-            if (selectedDate < minDate) {
-              setDateBegin(minDate);
-              setMinDate(minDate);
-            } else {
-              setDateBegin(inputValue);
-              const nextDay = new Date(selectedDate);
-              nextDay.setDate(nextDay.getDate() + 1);
-              setMinDate(nextDay.toISOString().split("T")[0]);
-            }
-          } 
-      }
+  //           if (selectedDate < minDate) {
+  //             setDateBegin(minDate);
+  //             setMinDate(minDate);
+  //           } else {
+              
+  //           }
+  //         } 
+  //     }
     
 
-
-
-
-    
+  };
+  const handleEndDateKeyDown = (e) => {
+    const inputValue = e.target.value;
+    const dateParts = inputValue.split('-');
+    console.log(dateParts,"dateParts")
+   
+    setDateEnd(inputValue);
+   
+ 
 
   };
 
@@ -973,7 +979,7 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="date" required value={date_end || ''} pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} onChange={handleEndDateChange}       min={minDate}
+                                        <input type="date" required value={date_end || ''} pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} onKeyDown={handleEndDateKeyDown} onChange={handleEndDateChange}       min={minDate}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("End Date of Tour") ||
