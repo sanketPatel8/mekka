@@ -10,6 +10,8 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css"; // Import the library's CSS for styling
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -45,36 +47,52 @@ export default function Profile() {
   const [confirm_password, setConfirmPassword] = useState("");
   const [PhoneError, setPhoneError] = useState("");
 
-  const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    const regex = /^[0-9]{0,10}$/; // Adjust the regex as needed
-    if (regex.test(value)) {
-      setPhone(value); // Update phone only if it's valid
-      setPhoneError("*");
+  // const handlePhoneChange = (e) => {
+  //   const value = e.target.value;
+  //   const regex = /^[0-9]{0,10}$/; // Adjust the regex as needed
+  //   if (regex.test(value)) {
+  //     setPhone(value); // Update phone only if it's valid
+  //     setPhoneError("*");
+  //   } else {
+  //     setPhoneError("");
+  //   }
+  // };
+
+  const handlePhoneChange = (value) => {
+    setPhone(value);
+
+    // Validation: Check if phone number is too short or too long
+    if (value.length < 10 || value.length > 15) {
+      setPhoneError(translate("Phone number must be between 10 and 15 digits"));
+    }
+    // Validation to ensure only numbers
+    else if (!/^\d+$/.test(value.replace(/[^0-9]/g, ""))) {
+      setPhoneError(translate("Phone number can only contain digits"));
+    }
+    // Validation to ensure country code is present
+    else if (!value.includes("+")) {
+      setPhoneError(translate("Please include country code"));
     } else {
-      setPhoneError("");
+      setPhoneError(""); // Clear error if the phone number is valid
     }
   };
 
-  console.log("Phone" , Phone);
-  
+  console.log("Phone", Phone);
 
   // console.log("formData", formData?.image1);
 
   const { user, customer } = useAuthContext();
 
-
+  console.log("customer", customer);
 
   const fetchProfile = async () => {
     const url = "my_profile";
     const response = await POST.request({
       url: url,
       token: `${customer?.authorisation.token}`,
+      user_id: customer?.user?.id,
     });
     setLoading(false);
-
-    
-    
 
     // Handle case where response.user is a single object
     if (response.user && typeof response.user === "object") {
@@ -83,7 +101,7 @@ export default function Profile() {
       setName(userProfile.name);
       setSurname(userProfile.surname);
       setEmail(userProfile.email);
-      setPhone(userProfile.mobile)
+      setPhone(userProfile.mobile);
       setImage1(userProfile.profile_image);
       setFileBlob(userProfile.profile_image);
     } else {
@@ -111,7 +129,6 @@ export default function Profile() {
     }
 
     if (customer) {
-      
       fetchProfile();
     }
 
@@ -151,7 +168,7 @@ export default function Profile() {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    
+
     const allowedType = ["image/jpeg", "image/x-png", "image/png"];
     if (file && allowedType.includes(file?.type)) {
       setImage1(file);
@@ -195,7 +212,7 @@ export default function Profile() {
 
   //       }
   //     } catch (e) {
-  //    
+  //
   //       setIsLoading(false);
   //   };
   // }
@@ -217,7 +234,6 @@ export default function Profile() {
     const formDatas = new FormData();
 
     const formType = e.target.name;
-
 
     if (formType === "profile") {
       if (!name || !surname || !email || !image1) {
@@ -275,9 +291,9 @@ export default function Profile() {
           url: "update_profile",
         });
         setIsPasswordLoading(false);
-        setOldPassword('')
-        setPassword("")
-        setConfirmPassword("")
+        setOldPassword("");
+        setPassword("");
+        setConfirmPassword("");
         if (response.status === "success") {
           showSuccessToast(response?.message);
           fetchProfile();
@@ -478,17 +494,35 @@ export default function Profile() {
 
                           <div className="col-md-6">
                             <div className="form-input my-1">
-                              <input
-                                type="tel" // Use 'tel' for phone input
+                              <PhoneInput
+                                country={"in"} 
                                 value={Phone}
-                                onChange={(e) => handlePhoneChange(e)}
-                                required
-                                pattern="[0-9]{10}" // Pattern to allow only 10 digits (adjust as needed)
-                                title="Please enter a valid 10-digit phone number" // Tooltip when invalid
+                                onChange={handlePhoneChange}
+                                inputProps={{
+                                  name: "phone",
+                                  required: true,
+                                  autoFocus: true,
+                                }}
+                                containerStyle={{
+                                  width: "100%", 
+                                  marginBottom: "10px",
+                                  backgroundColor : "white"
+                                }}
+                                inputStyle={{
+                                  width: "100%",
+                                  padding: "12px 45px", 
+                                  borderRadius: "4px",
+                                  border: "1px solid #E7E6E6",
+                                  fontSize: "16px",
+                                  boxSizing: "border-box",
+                                  borderRadius : "12px",
+                                  backgroundColor : "white"
+                                }}
+                                className = "form-input  "
                               />
-                              <label className="lh-1 text-16 text-light-1">
+                              <label className="phone_lable">
                                 {translate("Phone")}
-                                <span className="text_red">{PhoneError}</span>
+                                {/* <span className="text_red">{PhoneError}</span> */}
                               </label>
                             </div>
                           </div>
@@ -664,7 +698,8 @@ export default function Profile() {
                 </div>
 
                 <div className="text-center pt-30">
-                  © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
+                  © {translate("Copyright MekkaBooking.com")}{" "}
+                  {new Date().getFullYear()}
                 </div>
               </>
             )}

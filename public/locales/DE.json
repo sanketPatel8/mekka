@@ -633,7 +633,8 @@
 "Passwords do not match" : "Passwörter stimmen nicht überein",
 "Please enter password first" : "Bitte geben Sie zuerst Ihr Passwort ein",
 "Invalid email address" : "Ungültige E-Mail-Adresse",
-"Invalid password" : "Ungültiges Passwort"
+"Invalid password" : "Ungültiges Passwort",
+"Amount will be credited within 7 days in your bank account" : "Der Betrag wird innerhalb von 7 Tagen auf Ihr Bankkonto gutgeschrieben"
 
 
 }

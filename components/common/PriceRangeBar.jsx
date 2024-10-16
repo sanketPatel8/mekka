@@ -25,7 +25,13 @@ export default function PriceRangeBar({ Distance, setDistance , FliterData }) {
     console.log("newValue" , newValue); 
     
     setDistance(newValue);
+
   };
+
+  // useEffect(() => {
+  //   setDistance()
+  // }, [FliterData])
+  
 
   const {translate} = useTranslation();
 

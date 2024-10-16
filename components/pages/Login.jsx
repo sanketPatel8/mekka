@@ -286,7 +286,7 @@ export default function Login({
                     <div className="mt-5">
                       {translate("Don't Have An Account?")}
                       <Link href="/register" className="text-accent-1">
-                        {translate("Sign Up")}!
+                        {" "}{translate("Sign Up")}!
                       </Link>
                     </div>
                   </div>

@@ -30,7 +30,7 @@ export default function PageData() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [value, setValue] = useState([0, 0]);
-  const [Distance, setDistance] = useState([0, 0]);
+  const [Distance, setDistance] = useState([0 , 0 ]);
 
   const [range, setRange] = useState(1);
   const [SearchData, setSearchData] = useState({});
@@ -78,7 +78,6 @@ export default function PageData() {
     }
   };
 
-
   const onPageChange = async (pageIndex) => {
     const tourTypeFromParam = searchParams.get("TourType") || "";
     const typeFromParam = searchParams.get("type") || "";
@@ -117,8 +116,8 @@ export default function PageData() {
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
       FilterSidebar.selectedDurations.length !== 0 ||
-      value[0] !== 0 ||
-      Distance[0] !== 0
+      value[0] == value[0] ||
+      Distance[0] == Distance[0] 
       // FilterSidebar.selectedRatings.length !== 0
     ) {
       await FetchFilterData(pageIndex);
@@ -130,6 +129,9 @@ export default function PageData() {
   useEffect(() => {
     setActiveIndex(0);
   }, [FilterSidebar]);
+
+  
+  
 
   useEffect(() => {
     FetchTourDataAPi();
@@ -173,6 +175,7 @@ export default function PageData() {
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);
+      route.push("#redirect");
     } catch (e) {
       console.error(e);
     }
@@ -186,8 +189,8 @@ export default function PageData() {
         FilterSidebar.selectedCities.length !== 0 ||
         FilterSidebar.selectedFeatures.length !== 0 ||
         FilterSidebar.selectedDurations.length !== 0 ||
-        value[0] == 0 ||
-        Distance[0] == 0
+        value[0] == value[0] ||
+        Distance[0] == Distance[0]
         // FilterSidebar.selectedRatings.length !== 0
       ) {
         FetchFilterData();
@@ -221,6 +224,8 @@ export default function PageData() {
     try {
       const response = await post("tour_data", sendData);
       setFliterData(response.Data);
+      setDistance([response?.Data?.min_km , response?.Data?.max_km])
+      setValue([response?.Data?.min_price , response?.Data?.max_price])
     } catch (error) {
       showErrorToast("An error occurred during registration.");
     }
@@ -248,6 +253,7 @@ export default function PageData() {
       setRange(response.Total_Page);
       setCount(response.Count);
       setRoute("search data");
+      route.push("#redirect");
     } catch (error) {
       console.error("Error caught:", error);
 
