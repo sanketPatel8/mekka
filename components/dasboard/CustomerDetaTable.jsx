@@ -305,6 +305,18 @@ const CustomerDetaTable = () => {
     },
   ];
 
+  // const AmountPaid = [
+  //   {
+  //     name: translate("Date"),
+  //     selector: (row) => row?.payment_plan_date_1 || "N/A", // Use null check and fallback
+  //   },
+  //   {
+  //     name: translate("Amount"),
+  //     selector: (row) => row?.payment_plan_1 || 0, // Use null check and fallback
+  //     cell: (row) => formatPrice(row?.payment_plan_1 || 0), // Avoid undefined values in formatPrice
+  //   },
+  // ];
+
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
   }
@@ -1165,6 +1177,46 @@ const CustomerDetaTable = () => {
         data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
         highlightOnHover
       />
+
+      <br />
+
+      {/* <DataTable
+          title={translate("AmountPaid")}
+          columns={AmountPaid}
+          data={[BookingDetails.paymentData]}
+          highlightOnHover
+        /> */}
+
+      <div className="row">
+        <div className="col-12">
+          <table class="table bg-light">
+            <thead>
+              <tr>
+                <th scope="col-6">Date</th>
+                <th scope="col-6">Amount</th>
+                <th scope="col-6">Paid Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{BookingDetails.paymentData?.payment_plan_date_1}</td>
+                <td>{BookingDetails.paymentData?.payment_plan_1}</td>
+                <td>{BookingDetails.paymentData?.paid_date_1}</td>
+              </tr>
+              <tr>
+                <td>{BookingDetails.paymentData?.payment_plan_date_2}</td>
+                <td>{BookingDetails.paymentData?.payment_plan_1}</td>
+                <td>{BookingDetails.paymentData?.paid_date_2}</td>
+              </tr>
+              <tr>
+                <td >{BookingDetails.paymentData?.payment_plan_date_3}</td>
+                <td>{BookingDetails.paymentData?.payment_plan_1}</td>
+                <td>{BookingDetails.paymentData?.paid_date_3}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <br />
 
