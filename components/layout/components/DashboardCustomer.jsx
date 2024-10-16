@@ -26,13 +26,11 @@ export default function DashboardCustomer({
 
   const { profileImage  } = useUserProfile();
 
-  console.log("profileImage" , profileImage ); 
 
   const handleOptionChange = (option) => {
     console.log("Option changed:", option); // Example logging
   };
 
-  console.log("profileImage for DAshboard dd" , profileImage);
   
 
   const handleButtonClick = (option) => {
