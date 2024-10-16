@@ -217,9 +217,23 @@ export default function DBListing() {
                               <span>
                                 <span style={{ marginLeft: "5px" }}>
                                   {translate("Departure")} :{" "}
-                                  {elm.departures.join("   ,  ")} 
+                                  {elm.departures.join("   ,  ")}
                                 </span>
                               </span>
+                            </div>
+                          )}
+
+                          {elm.tour_commission !== null && (
+                            <div className="row x-gap-20 y-gap-5 pt-30">
+                              {/* {elm.features?.map((elm2, i2) => ( */}
+                              <div className="col-auto">
+                                <div className="text-14 ">
+                                  {translate("Commision")} :{" "}
+                                  {elm.tour_commission}
+                                  {elm.commission_type == "1" ? " €" : "%"}
+                                </div>
+                              </div>
+                              {/* ))} */}
                             </div>
                           )}
 
