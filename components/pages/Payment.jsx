@@ -651,7 +651,7 @@ export default function Payment() {
                                   value={seconddate}
                                   onChange={handleDateChange}
                                   min={minEndDate}
-                                  max={maxEndDate}
+                                  // max={maxEndDate}
                                   ref={dateInputRef}
                                 />
                                 <label className="lh-1 text-16 text-light-1">

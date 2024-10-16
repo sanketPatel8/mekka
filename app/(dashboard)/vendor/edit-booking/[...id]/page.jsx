@@ -567,6 +567,8 @@ export default function DbBooking({ params }) {
       };
     });
 
+    console.log(documentData)
+
     formData.append("documents_data", JSON.stringify(documentData));
     setIsLoading(true);
     const response = await POST.request({

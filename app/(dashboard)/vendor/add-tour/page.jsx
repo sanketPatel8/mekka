@@ -142,7 +142,7 @@ export default function AddTour() {
   const [minEndDate, setMinEndDate] = useState("");
   const [minDate, setMinDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(true);
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -152,13 +152,20 @@ export default function AddTour() {
   };
   const handleStartDateChange = (e) => {
     const inputValue = e.target.value;
-
+    if(inputValue){
+      setIsFocused(false);
+    }
     setDateBegin(inputValue);
+
     const nextDay = new Date(inputValue);
     nextDay.setDate(nextDay.getDate() + 1);
     setMinDate(nextDay.toISOString().split("T")[0]);
   
     
+  };
+
+  const handleDateFocus = (e) => {
+    e.target.showPicker(); // This will open the date picker
   };
   const handleStartDateKeyDown = (e) => {
     const inputValue = e.target.value;
@@ -969,7 +976,7 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="date" required value={date_begin ||  ''}   pattern="\d{2}-\d{2}-\d{4}" onBlur={handleStartDateBlur} onKeyDown={handleStartDateKeyDown} onChange={handleStartDateChange} min={minEndDate}/>
+                                        <input type="date" required value={date_begin ||  ''}   pattern="\d{2}-\d{2}-\d{4}" onBlur={handleStartDateBlur}   onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()} onChange={handleStartDateChange} min={minEndDate}/>
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Start Date of Tour") ||
                                             "Find Latest Packages"} <span className="text-red">*</span>
@@ -979,7 +986,7 @@ const isCurrentTabValid = () => {
 
                                     <div className="col-md-6">
                                       <div className="form-input my-1">
-                                        <input type="date" required value={date_end || ''} pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} onKeyDown={handleEndDateKeyDown} onChange={handleEndDateChange}       min={minDate}
+                                        <input type="date" required value={date_end || ''} pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} disabled={isFocused} onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()} onChange={handleEndDateChange}       min={minDate}
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("End Date of Tour") ||
