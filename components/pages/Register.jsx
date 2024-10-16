@@ -132,10 +132,17 @@ export default function Register() {
       !RegisterData.surname ||
       !RegisterData.email ||
       !RegisterData.password ||
-      !confirm_pass ||
-      isChecked === false
+      !confirm_pass 
+      
     ) {
       showErrorToast("Please fill all fields");
+      return;
+    }
+
+    if(
+      isChecked === false
+    ){
+      showErrorToast("Please Accept the terms and conditions");
       return;
     }
 

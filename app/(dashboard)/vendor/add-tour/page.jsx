@@ -148,7 +148,7 @@ export default function AddTour() {
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
     const day = String(today.getDate()).padStart(2, "0");
-    return today.toISOString().split("T")[0];
+    return `${year}-${month}-${day}`;
   };
   const handleStartDateChange = (e) => {
     const inputValue = e.target.value;
@@ -165,15 +165,11 @@ export default function AddTour() {
     const dateParts = inputValue.split('-');
     console.log(dateParts,"dateParts")
   
-    if (e.key === 'Backspace' || e.key === 'Delete') {
-      setDateBegin(inputValue);
-      return; // Allow the user to delete characters
-    }
-    if (!/[\d-]/.test(e.key)) {
-      console.log("hi")
+   
+    if (!/[\d-]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
       e.preventDefault();
-    }else{
-      console.log("hello")
+      return;
+  }
       if (dateParts.length === 3) {
         console.log("date")
         const year = dateParts[0];
@@ -205,7 +201,7 @@ export default function AddTour() {
             }
           } 
       }
-    }
+    
 
 
 
