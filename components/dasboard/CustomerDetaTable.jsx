@@ -1603,6 +1603,7 @@ const CustomerDetaTable = () => {
                     name="firstAmount"
                     value={pendingPaymentValue.firstAmount}
                     onChange={handlePaymentPending}
+                    disabled
                   />
                   <label className="lh-1 text-16 text-light-1">
                     1st Amount
@@ -1640,6 +1641,7 @@ const CustomerDetaTable = () => {
                     name="firstAmount"
                     value={pendingPaymentValue.secondAmount}
                     onChange={handlePaymentPending}
+                    disabled
                   />
                   <label className="lh-1 text-16 text-light-1">
                     2st Amount
@@ -1679,6 +1681,7 @@ const CustomerDetaTable = () => {
                     name="firstAmount"
                     value={pendingPaymentValue.thirdAmount}
                     onChange={handlePaymentPending}
+                    disabled
                   />
                   <label className="lh-1 text-16 text-light-1">
                     3st Amount
