@@ -979,7 +979,7 @@ const CustomerDetaTable = () => {
       url: "upload_bookingdocuments",
     });
 
-    if (response) {
+    if (response.Status == 1) {
       setIsLoading(false);
       showSuccessToast("Document Uploaded Successfully");
       setTimeout(() => {

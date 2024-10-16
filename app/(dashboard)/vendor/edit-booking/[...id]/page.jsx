@@ -573,7 +573,7 @@ export default function DbBooking({ params }) {
       form: formData,
       url: "upload_bookingdocuments",
     });
-    if (response) {
+    if (response.Status == 1) {
       setIsLoading(false);
       showSuccessToast("Document Uploaded Successfully");
       setuploadFileisOpen(false);
@@ -582,6 +582,7 @@ export default function DbBooking({ params }) {
       setIsLoading(false);
       showErrorToast("Document Upload Failed");
     }
+ 
   };
 
   return (
