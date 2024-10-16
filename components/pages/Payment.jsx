@@ -56,7 +56,9 @@ export default function Payment() {
   const companyCode =
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
-
+  const handleDateFocus = (e) => {
+    e.target.showPicker(); // This will open the date picker
+  };
   // alert(companyCode)
 
   const handleCheckboxChange = (index) => {
@@ -652,6 +654,7 @@ export default function Payment() {
                                   onChange={handleDateChange}
                                   min={minEndDate}
                                   // max={maxEndDate}
+                                  onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
                                   ref={dateInputRef}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
@@ -685,6 +688,8 @@ export default function Payment() {
                                   value={dateEnd}
                                   max={maxEndDate}
                                   min={seconddate}
+                                  onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
+                                  disabled={seconddate === "" ? true : false}
                                   onChange={handleEndDateChange}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
