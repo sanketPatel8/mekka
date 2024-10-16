@@ -929,6 +929,52 @@ export default function EditTour() {
     e.preventDefault();
 
     setLoading(true);
+    console.log(departureRows.length)
+    console.log(image2.length)
+    console.log(newImages.length)
+
+    if( !date_begin || !date_end || !name || !capacity ||  departureRows.length == 0  || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price) {
+      showErrorToast("Please fill in all required fields before proceeding.");
+      setLoading(false);
+      return;
+    }
+
+    if (route_data.length > 0) {
+      const hasEmptyDayOrDescription = route_data.some((day) => !day.dayData || !day.description);
+      if (hasEmptyDayOrDescription) {
+        showErrorToast("Please fill in all day and description fields in the itinerary.");
+        setLoading(false);
+        return;
+      }
+    }
+    if (mekkaRows.length > 0) {
+      const hasEmptyMekka = mekkaRows.some((mekka) => !mekka.hotel_name || !mekka.hotel_price || !mekka.hotel_info);
+      if (hasEmptyMekka) {
+        showErrorToast("Please fill in all fields for Mekka hotels.");
+        setLoading(false);
+        return;
+      }
+    }
+  
+    // Validate madinaRows
+    if (madinaRows.length > 0) {
+      const hasEmptyMadina = madinaRows.some((madina) => !madina.hotel_name || !madina.hotel_price || !madina.hotel_info);
+      if (hasEmptyMadina) {
+        showErrorToast("Please fill in all fields for Madina hotels.");
+        setLoading(false);
+        return;
+      }
+    }
+  
+    // Validate flightRow
+    if (flightRow.length > 0) {
+      const hasEmptyFlight = flightRow.some((flight) => !flight.flight_id || !flight.flight_amount || !flight.no_of_stop || !flight.luggage);
+      if (hasEmptyFlight) {
+        showErrorToast("Please fill in all fields for flight details.");
+        setLoading(false);
+        return;
+      }
+    }
 
     const end_date = formatDateToMMDDYYYY(date_end);
     const start_date = formatDateToMMDDYYYY(date_begin);
@@ -1469,13 +1515,33 @@ export default function EditTour() {
                             </div>
                           </div>
                           {activeTabIndex < tabs.length - 1 && (
+                            <div className="d-flex">
+
                             <button
-                              className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2"
                               onClick={handleNextTab}
                               type="button"
                             >
                               {translate("Next")}
                             </button>
+                            <button
+                              type="submit"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                            >
+                              {loading ? (
+                                <div
+                                  className="d-flex justify-content-center align-items-center"
+                                  style={{ height: "30px", width: "100%" }}
+                                >
+                                  <ClipLoader color="#ffffff" size={30} />
+                                </div>
+                              ) : (
+                                translate("Save Details")
+                              )}
+                            </button>
+                            </div>
+
+                            
                           )}
                         </div>
 
@@ -1675,13 +1741,30 @@ export default function EditTour() {
                               </button>
                             )}
                             {activeTabIndex > 0 && (
+                              <div className="d-flex">
                               <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
                                 onClick={handlePrevTab}
                                 type="button"
                               >
                                 {translate("Previous")}
                               </button>
+                              <button
+                              type="submit"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                            >
+                              {loading ? (
+                                <div
+                                  className="d-flex justify-content-center align-items-center"
+                                  style={{ height: "30px", width: "100%" }}
+                                >
+                                  <ClipLoader color="#ffffff" size={30} />
+                                </div>
+                              ) : (
+                                translate("Save Details")
+                              )}
+                            </button>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -1760,13 +1843,30 @@ export default function EditTour() {
                               </button>
                             )}
                             {activeTabIndex > 0 && (
+                              <div className="d-flex">
                               <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
                                 onClick={handlePrevTab}
                                 type="button"
                               >
                                 {translate("Previous")}
                               </button>
+                              <button
+                              type="submit"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                            >
+                              {loading ? (
+                                <div
+                                  className="d-flex justify-content-center align-items-center"
+                                  style={{ height: "30px", width: "100%" }}
+                                >
+                                  <ClipLoader color="#ffffff" size={30} />
+                                </div>
+                              ) : (
+                                translate("Save Details")
+                              )}
+                            </button>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -1809,13 +1909,30 @@ export default function EditTour() {
                               </button>
                             )}
                             {activeTabIndex > 0 && (
+                              <div className="d-flex">
                               <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
                                 onClick={handlePrevTab}
                                 type="button"
                               >
                                 {translate("Previous")}
                               </button>
+                              <button
+                              type="submit"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                            >
+                              {loading ? (
+                                <div
+                                  className="d-flex justify-content-center align-items-center"
+                                  style={{ height: "30px", width: "100%" }}
+                                >
+                                  <ClipLoader color="#ffffff" size={30} />
+                                </div>
+                              ) : (
+                                translate("Save Details")
+                              )}
+                            </button>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -1902,13 +2019,30 @@ export default function EditTour() {
                               </button>
                             )}
                             {activeTabIndex > 0 && (
+                              <div className="d-flex">
                               <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2"
                                 onClick={handlePrevTab}
                                 type="button"
                               >
                                 {translate("Previous")}
                               </button>
+                              <button
+                              type="submit"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                            >
+                              {loading ? (
+                                <div
+                                  className="d-flex justify-content-center align-items-center"
+                                  style={{ height: "30px", width: "100%" }}
+                                >
+                                  <ClipLoader color="#ffffff" size={30} />
+                                </div>
+                              ) : (
+                                translate("Save Details")
+                              )}
+                            </button>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -2570,6 +2704,15 @@ export default function EditTour() {
                             )}
                           </div>
                           <div className=" flex_start">
+                          {activeTabIndex > 0 && (
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
+                                onClick={handlePrevTab}
+                                type="button"
+                              >
+                                {translate("Previous")}
+                              </button>
+                            )}
                             <button
                               type="submit"
                               className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
@@ -2585,15 +2728,7 @@ export default function EditTour() {
                                 translate("Save Details")
                               )}
                             </button>
-                            {activeTabIndex > 0 && (
-                              <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
-                                onClick={handlePrevTab}
-                                type="button"
-                              >
-                                {translate("Previous")}
-                              </button>
-                            )}
+                         
                           </div>
                         </div>
                       </div>

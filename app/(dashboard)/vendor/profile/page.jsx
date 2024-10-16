@@ -69,13 +69,17 @@ export default function Profile() {
 
   const fetchProfile = async () => {
     const url = "my_profile";
+    const formData = new FormData();
+    formData.append("user_id", user?.user.id);
     setLoading(true);
     const response = await POST.request({
+      form: formData,
       url: url,
       token: `${user?.authorisation.token}`,
+      
     });
-    setLoading(false);
     if (response.user) {
+      setLoading(false);
       setUserData(response.user);
       setName(response.user.name);
       setSurname(response.user.surname);
@@ -112,6 +116,8 @@ export default function Profile() {
       setBankName(response.user.company.bankName);
       setOwnerName(response.user.company.account_owner);
       setIBAN(response.user.company.bankIban);
+    }else{
+      setLoading(true)
     }
   };
 
@@ -381,43 +387,35 @@ export default function Profile() {
   };
 
   const handleDeleteImage2 = (index, event) => {
-    // const newImages = [...image2];
-    // newImages.splice(index, 1);
-    // setImage2(newImages);
     event.preventDefault();
-
-    console.log(image2 , "image2")
-    if ( image2.length > 0) {
-      console.log("image2")
-      const url = new URL(image2);
-      const fileName = url.pathname.split("/").pop();
-
-      const formData = new FormData();
-      formData.append("image", fileName);
-      formData.append("type", "company_document");
-      formData.append(
-        "company_id",
-        userData.company === "{}" || userData.company === null
-          ? 0
-          : userData.company.id
+  
+    const url = new URL(companyData.company_document[index]);
+    const fileName = url.pathname.split("/").pop();
+  
+    const formData = new FormData();
+    formData.append("image", fileName);
+    formData.append("type", "company_document");
+    formData.append(
+      "company_id",
+      userData.company === "{}" || userData.company === null
+        ? 0
+        : userData.company.id
+    );
+  
+    const response = POST.request({
+      form: formData,
+      url: "remove_imageordocument",
+    });
+    if (response) {
+      const newCompanyDocument = companyData.company_document.filter(
+        (document) => document !== companyData.company_document[index]
       );
-
-      const response = POST.request({
-        form: formData,
-        url: "remove_imageordocument",
-      });
-      if (response) {
-        showSuccessToast("Image removed successfully");
-        setTimeout(()=>{
-
-          fetchProfile();
-        },1000)
-
-    
-      }
-    } 
-  
-  
+      setCompanyData({ ...companyData, company_document: newCompanyDocument });
+      showSuccessToast("Image removed successfully");
+      setTimeout(() => {
+        fetchProfile();
+      }, 1000);
+    }
   };
   const handleDeleteImage3 = (index, event) => {
     // const newImages = [...image2];
@@ -723,10 +721,13 @@ export default function Profile() {
                           </label>
                         </div>
                       </div>
+                      {
+                        Commision && 
 
                       <div className="com-12 mb-30">
-                        <p>Agent Commission : {Commision}</p>
+                        <p>Agent Commission : {Commision} %</p>
                       </div>
+                      }
 
                       <div className="col-12">
                         <h4 className="text-18 fw-500 mb-20">
@@ -844,7 +845,8 @@ export default function Profile() {
                                     document.endsWith(".png");
                                   const isDocument =
                                     document.endsWith(".pdf") ||
-                                    document.endsWith(".docx");
+                                    document.endsWith(".docx") ||
+                                    document.endsWith(".bin");
 
                                   if (isImage) {
                                     return (
@@ -1034,7 +1036,7 @@ export default function Profile() {
                             </label>
                             <input
                               onChange={handleImageChange2}
-                              accept=".pdf, .png, .jpg, .doc"
+                              accept=".pdf, .png, .jpg , .docx"
                               id="imageInp2"
                               type="file"
                               name="image2"

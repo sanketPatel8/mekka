@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,6 +10,7 @@ import React, { useEffect, useState } from "react";
 const AgentDBsideBar = ({ setSideBarOpen }) => {
   const pathname = usePathname();
   const { translate } = useTranslation();
+  const { dispatch} = useAuthContext();
   const user =
     typeof window != "undefined"
       ? JSON.parse(localStorage.getItem("user"))

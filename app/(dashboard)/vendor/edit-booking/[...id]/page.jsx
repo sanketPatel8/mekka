@@ -156,7 +156,7 @@ export default function DbBooking({ params }) {
       { name: translate("Adult"), selector: (row) => row.adult },
       { name: translate("Child"), selector: (row) => row.child },
       { name: translate("Baby"), selector: (row) => row.baby },
-      { name: translate("Total"), selector: (row) => formatTotal(row.total) },
+      { name: translate("Total"), selector: (row) => row.total },
     ];
 
     setReservationHeader(ColumnReservation_details);
@@ -199,7 +199,7 @@ export default function DbBooking({ params }) {
     const Total = [
       {
         name: translate("Subtotal"),
-        selector: (row) => formatTotal(row.Subtotal),
+        selector: (row) => row.Subtotal,
       },
       // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
       {
@@ -208,12 +208,12 @@ export default function DbBooking({ params }) {
       },
       {
         name: translate("Amount Paid"),
-        selector: (row) => formatTotal(row.Amount_Paid),
+        selector: (row) => row.Amount_Paid,
       },
-      { name: translate("Total"), selector: (row) => formatTotal(row.Total) },
+      { name: translate("Total"), selector: (row) => row.Total },
       {
         name: translate("Amount Due"),
-        selector: (row) => formatTotal(row.Amount_Due),
+        selector: (row) => row.Amount_Due,
       },
     ];
 
@@ -353,7 +353,6 @@ export default function DbBooking({ params }) {
     }
 
     if (response.Bookings) {
-      const formatTotal = (value) => `${value} €`;
 
 
       if (response.Bookings.adultData.length > 0) {
@@ -386,7 +385,7 @@ export default function DbBooking({ params }) {
           adult: response.Bookings.reservation.adults,
           child: response.Bookings.reservation.child,
           baby: response.Bookings.reservation.baby,
-          total: response.Bookings.reservation.total,
+          total: `${response.Bookings.reservation.total} €`,
         };
 
         setReservationData(reservation);
@@ -426,11 +425,11 @@ export default function DbBooking({ params }) {
 
       if (response.Bookings.reservation) {
         const total = {
-          Subtotal: response.Bookings.reservation.total,
+          Subtotal: `${response.Bookings.reservation.total} €`,
           Discount: response.Bookings.reservation.discount,
-          Amount_Paid: response.Bookings.reservation.amount_paid,
-          Total: response.Bookings.reservation.subtotal,
-          Amount_Due: response.Bookings.reservation.amount_due,
+          Amount_Paid: `${response.Bookings.reservation.amount_paid} €`,
+          Total: `${response.Bookings.reservation.subtotal} €`,
+          Amount_Due: `${response.Bookings.reservation.amount_due} €`,
         };
 
         setTotalData(total);
