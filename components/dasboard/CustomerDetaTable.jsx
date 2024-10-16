@@ -484,15 +484,14 @@ const CustomerDetaTable = () => {
             name: "Action",
             selector: (row) => (
               <a
-              href={row.fileLink}
-              download={row.Name} // Ensure the file gets downloaded with the correct name
-              target="_blank" // Open the link in a new tab if needed
-              rel="noopener noreferrer" // Security measure for external links
-              className="button -sm -accent-1 bg-info-2 text-white my-2" // Button-like styles for the anchor tag
-            >
-              {translate("Download")}
-            </a>
-            
+                href={row.fileLink}
+                download={row.Name} // Ensure the file gets downloaded with the correct name
+                target="_blank" // Open the link in a new tab if needed
+                rel="noopener noreferrer" // Security measure for external links
+                className="button -sm -accent-1 bg-info-2 text-white my-2" // Button-like styles for the anchor tag
+              >
+                {translate("Download")}
+              </a>
             ),
           },
         ];
@@ -960,8 +959,8 @@ const CustomerDetaTable = () => {
     xhr.send();
   };
 
-  console.log("rows" , rows);
-  
+  console.log("rows", rows);
+
   const handleDocumentSubmit = async () => {
     const formData = new FormData();
     formData.append("reservation_person_id", UploadDocID?.personId);
@@ -1032,6 +1031,12 @@ const CustomerDetaTable = () => {
     }
   };
 
+  // to pay instalment payment
+
+  const HandleInstallmentPay = (e) => {
+    setShowStripeModal(true);
+  };
+
   return (
     <div>
       <ToastContainer />
@@ -1086,7 +1091,9 @@ const CustomerDetaTable = () => {
               >
                 {translate("Pay")}
               </button>
-              <span>{`(${formatPrice(BookingDetails?.reservation?.amount_due)})`}</span>
+              <span>{`(${formatPrice(
+                BookingDetails?.reservation?.amount_due
+              )})`}</span>
             </div>
 
             {BookingDetails?.reservation?.capacity_empty != "0" && (
@@ -1299,11 +1306,6 @@ const CustomerDetaTable = () => {
                       <option value="3">{translate("Baby")}</option>
                     </select>
                     <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                      {/* {AddpersonData.roomType == "1"
-                        ? "Adult"
-                        : AddpersonData.roomType == "2"
-                        ? "Child"
-                        : "Baby"} */}
                       {translate("Adult Type")}
                     </label>
                   </div>
@@ -1536,7 +1538,6 @@ const CustomerDetaTable = () => {
                     </div>
                   </div>
                 )}
-                
               </>
             )}
           </div>
@@ -1613,7 +1614,9 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstDate"
-                    value={pendingPaymentValue.firstDate}
+                    value={new Date(
+                      pendingPaymentValue.firstDate
+                    ).toLocaleDateString("de-DE")}
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
@@ -1648,13 +1651,20 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstDate"
-                    value={pendingPaymentValue.secondDate}
+                    value={new Date(
+                      pendingPaymentValue.secondDate
+                    ).toLocaleDateString("de-DE")}
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
                 </div>
               </div>
-              <div className="col-md-2">
+              <div
+                className="col-md-2"
+                onClick={() => {
+                  HandleInstallmentPay(pendingPaymentValue.secondAmount);
+                }}
+              >
                 <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
                   {translate("PAY")}
                 </button>
@@ -1680,13 +1690,20 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstDate"
-                    value={pendingPaymentValue.thirdDate}
+                    value={new Date(
+                      pendingPaymentValue.thirdDate
+                    ).toLocaleDateString("de-DE")}
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
                 </div>
               </div>
-              <div className="col-md-2">
+              <div
+                className="col-md-2"
+                onClick={() => {
+                  HandleInstallmentPay(pendingPaymentValue.thirdAmount);
+                }}
+              >
                 <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
                   {translate("PAY")}
                 </button>
@@ -1724,10 +1741,10 @@ const CustomerDetaTable = () => {
               </thead>
               <tbody>
                 <tr>
+                  <td className="px-1 py-2">{translate("refund_amount")}</td>
                   <td className="px-1 py-2">
-                    {translate("refund_amount")}
+                    {BookingDetails?.reservation?.refund_amount} €
                   </td>
-                  <td className="px-1 py-2">{BookingDetails?.reservation?.refund_amount} €</td>
                 </tr>
                 {/* <tr>
                   <td className="px-1 py-2">{translate("Mekka Fees")}</td>
@@ -1746,36 +1763,34 @@ const CustomerDetaTable = () => {
 
             <hr />
 
-            <p><span className="text-red">*</span>{translate('Amount will be credited within 7 days in your bank account')}</p>
+            <p>
+              <span className="text-red">*</span>
+              {translate(
+                "Amount will be credited within 7 days in your bank account"
+              )}
+            </p>
 
             <div
-                    className="border-1 rounded-12 shadow-1 overflow-hidden mt-20 mb-20"
-                    id="ref"
-                  >
-                    <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
-                      <b> {translate("Cancellation Rules")}</b>
-                    </p>
-                    <div className="px-3">
-                      <ul className="">
-                        <li className="text-center py-1">
-                          {translate(
-                            "15% if canceled before 90 days of the trip"
-                          )}
-                        </li>
-                        <li className="text-center py-1">
-                          {translate(
-                            "60% if canceled before 30 days of the trip"
-                          )}
-                        </li>
-                        <li className="text-center py-1">
-                          {translate(
-                            "100% if canceled before 7 days of the trip"
-                          )}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-            
+              className="border-1 rounded-12 shadow-1 overflow-hidden mt-20 mb-20"
+              id="ref"
+            >
+              <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
+                <b> {translate("Cancellation Rules")}</b>
+              </p>
+              <div className="px-3">
+                <ul className="">
+                  <li className="text-center py-1">
+                    {translate("15% if canceled before 90 days of the trip")}
+                  </li>
+                  <li className="text-center py-1">
+                    {translate("60% if canceled before 30 days of the trip")}
+                  </li>
+                  <li className="text-center py-1">
+                    {translate("100% if canceled before 7 days of the trip")}
+                  </li>
+                </ul>
+              </div>
+            </div>
 
             <div className="col-lg-12 d-flex justify-content-center">
               <button
