@@ -1204,8 +1204,8 @@ export default function BookingPages({ BookingData }) {
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-11 mx-auto px-0">
-              <div className="bg-white rounded-12  py-15">
-                <div className={LoginCheck === true ? "d-none" : "d-block"}>
+              <div className={LoginCheck === true ? "d-none" : "d-block bg-white rounded-12  py-15"}>
+                <div >
                   <button
                     onClick={() => {
                       openModal();
@@ -1405,7 +1405,7 @@ export default function BookingPages({ BookingData }) {
                   <div className="">
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Subtotal")}</div>
-                      <div className=""> {formatPrice(totalSum)} </div>
+                      <div className=""> {formatPrice(PackagePrices + adultadiPrices + adPrice)} </div>
                     </div>
 
                     <div className={discountClass}>

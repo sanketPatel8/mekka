@@ -426,9 +426,10 @@ if (day && month && year) {
   
   const handleDeleteImage2 = (index, event) => {
     event.preventDefault();
-
+    console.log(image2,"image2")
     const newImages = [...image2];
-    newImages.splice(index, 1);
+    newImages.splice(index-image2.length, 1);
+    console.log(newImages,"newImages")
     setImage2(newImages);
 
   };
@@ -762,7 +763,9 @@ const isCurrentTabValid = () => {
 
 
     const image2File = document.querySelector('input[name="image2"]').files;
+
     const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
+    console.log(image2FileArray,"image2FileArray")
 
     const formData = new FormData();
 
