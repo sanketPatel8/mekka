@@ -455,7 +455,7 @@ export default function Payment() {
                         </div>
                         <label htmlFor="item2" className="lh-16 ml-15">
                           {translate(
-                            "Payment in advance. Payment installment is possible."
+                            "Payment in advance. Payment installment is possible. Full Payment (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover) "
                           )}
                         </label>
                       </div>
@@ -609,11 +609,14 @@ export default function Payment() {
                                   value={firstAmount}
                                   onChange={handleFirstAmountChange}
                                   placeholder=""
+                                  className="mb-0"
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   1st Amount<span className="text-red"> *</span>
                                 </label>
+                                <span >This amount will be done using credit card (Stripe)</span>
                               </div>
+                              
                             </div>
 
                             <div className="col-md-6">
