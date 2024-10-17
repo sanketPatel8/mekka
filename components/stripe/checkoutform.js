@@ -71,6 +71,14 @@ export default function CheckoutForm({
         setReservationID(response.reservationNumber);
         setPaidAmount(amount);
         console.log(setPaidAmount, "setPaidAmount");
+        setTimeout(() => {
+          localStorage.removeItem("AdultPrice&count");
+          localStorage.removeItem("SelectedPackageHotelNDFlight");
+          localStorage.removeItem("PackageBookingData");
+          localStorage.removeItem("AllAdultsData");
+          localStorage.removeItem("AdditionalServices");
+          localStorage.removeItem("getUserData");
+        }, 10000);
       }
     } catch (error) {
       console.error("Error caught:", error);
@@ -112,6 +120,7 @@ export default function CheckoutForm({
         setTimeout(() => {
           window.location.reload();
         }, 1500);
+        
       } else {
         showErrorToast(response?.Message);
       }

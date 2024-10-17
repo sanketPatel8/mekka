@@ -344,6 +344,7 @@ export default function Payment() {
           localStorage.removeItem("PackageBookingData");
           localStorage.removeItem("AllAdultsData");
           localStorage.removeItem("AdditionalServices");
+          localStorage.removeItem("getUserData");
         }, 10000);
       }, 3000);
     }
