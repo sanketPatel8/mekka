@@ -162,6 +162,7 @@ export default function DbBooking({ params }) {
     setReservationHeader(ColumnReservation_details);
 
     const FileDeta = [
+      { name: translate("Document Type"), selector: (row) => row.type },
       { name: translate("Document Name"), selector: (row) => row.Name },
       {
         name: translate("Action"),
@@ -180,6 +181,8 @@ export default function DbBooking({ params }) {
     setViewData(FileDeta);
 
     const DownloadData = [
+      { name: translate("Document Type"), selector: (row) => row.type },
+
       { name: translate("Document Name"), selector: (row) => row.Name },
       {
         name: translate("Action"),
@@ -315,6 +318,7 @@ export default function DbBooking({ params }) {
         const docs = matchedData.map((doc) => {
           if (doc.documets.length > 0) {
             const docFiles = doc.documets.map((doc) => ({
+              type: doc.document_type,
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));
@@ -328,6 +332,8 @@ export default function DbBooking({ params }) {
         const downloads = matchedData.map((doc) => {
           if (doc.download_documets && doc.download_documets.length > 0) {
             const download = doc.download_documets.map((doc) => ({
+              type: doc.document_type,
+
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));

@@ -424,6 +424,7 @@ const CustomerDetaTable = () => {
         const docs = matchedData.map((doc) => {
           if (doc.documets && doc.documets.length > 0) {
             const docFiles = doc.documets.map((doc) => ({
+              type: doc.document_type,
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));
@@ -435,6 +436,7 @@ const CustomerDetaTable = () => {
         const downloads = matchedData.map((doc) => {
           if (doc.download_documets && doc.download_documets.length > 0) {
             const download = doc.download_documets.map((doc) => ({
+              type: doc.document_type,
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));
@@ -473,6 +475,8 @@ const CustomerDetaTable = () => {
         }
 
         const FileDeta = [
+          { name: translate("Document Type"), selector: (row) => row.type },
+
           { name: "Document Name", selector: (row) => row.Name },
           {
             name: "Action",
@@ -491,6 +495,8 @@ const CustomerDetaTable = () => {
         setViewData(FileDeta);
 
         const DownloadData = [
+          { name: translate("Document Type"), selector: (row) => row.type },
+
           { name: "Document Name", selector: (row) => row.Name },
           {
             name: "Action",
