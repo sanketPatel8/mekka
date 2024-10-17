@@ -153,14 +153,14 @@ export default function Payment() {
 
   useEffect(() => {
     const currentDate = new Date();
-    const formattedDate = `${currentDate.getDate().toString().padStart(2, "0")}.${(
-      currentDate.getMonth() + 1
-    )
+    const formattedDate = `${currentDate
+      .getDate()
+      .toString()
+      .padStart(2, "0")}.${(currentDate.getMonth() + 1)
       .toString()
       .padStart(2, "0")}.${currentDate.getFullYear()}`;
-    
+
     setTodayDate(formattedDate);
-    
 
     if (typeof window !== "undefined") {
       const sidebardata = localStorage.getItem("PackageBookingData");
@@ -266,7 +266,7 @@ export default function Payment() {
         }
       }
     }
-    setSecondAmount("")
+    setSecondAmount("");
     setDateBegin(todayString);
     setMinEndDate(todayString);
   }, [SideBarData?.startDate]);
@@ -389,7 +389,7 @@ export default function Payment() {
     }
   };
 
-  console.log("SideBarData?.Airline?.luggage", SideBarData?.Airline?.luggage);
+  console.log("SideBarData?.Airline?.luggage", SideBarData);
 
   const { translate } = useTranslation();
 
@@ -404,10 +404,11 @@ export default function Payment() {
                 bookingStage === 2 ? "d-none" : "d-block"
               }`}
             >
-              <button onClick={() => router.back()}><IoMdArrowRoundBack /> </button> {translate("Payment Methods")}
+              <button onClick={() => router.back()}>
+                <IoMdArrowRoundBack />{" "}
+              </button>{" "}
+              {translate("Payment Methods")}
             </h2>
-
-             
 
             <div className="bg-white rounded py-30">
               {bookingStage === 1 && (
@@ -655,7 +656,8 @@ export default function Payment() {
                                   onChange={handleDateChange}
                                   min={minEndDate}
                                   // max={maxEndDate}
-                                  onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
+                                  onFocus={handleDateFocus}
+                                  onKeyDown={(e) => e.preventDefault()}
                                   ref={dateInputRef}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
@@ -689,7 +691,8 @@ export default function Payment() {
                                   value={dateEnd}
                                   max={maxEndDate}
                                   min={seconddate}
-                                  onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
+                                  onFocus={handleDateFocus}
+                                  onKeyDown={(e) => e.preventDefault()}
                                   disabled={seconddate === "" ? true : false}
                                   onChange={handleEndDateChange}
                                 />
@@ -1100,6 +1103,14 @@ export default function Payment() {
 
                 <div className="line mt-10 mb-10"></div>
 
+                <div className="d-flex items-center justify-between">
+                  <div className="fw-500"> {translate("Subtotal")}</div>
+                  <div className="">
+                    {" "}
+                    {formatPrice(SideBarData?.BookingFild?.Total)}{" "}
+                  </div>
+                </div>
+
                 {SideBarData?.BookingFild?.Discount?.Discount !== null &&
                 SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
                   <div className="">
@@ -1117,7 +1128,7 @@ export default function Payment() {
 
                 <div className="">
                   <div className="d-flex items-center justify-between">
-                    <div className="fw-500"> {translate("Subtotal")}</div>
+                    <div className="fw-500"> {translate("Amount Due")}</div>
                     <div className="">
                       {" "}
                       {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}

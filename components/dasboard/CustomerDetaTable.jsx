@@ -292,12 +292,12 @@ const CustomerDetaTable = () => {
       selector: (row) => row.discount,
       cell: (row) => formatPrice(row.discount),
     },
-    // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
     {
       name: translate("Total"),
       selector: (row) => row.subtotal,
       cell: (row) => formatPrice(row.subtotal),
     },
+    { name: 'Amount Paid', selector: (row) => row.amount_paid },
     {
       name: translate("Amount Due"),
       selector: (row) => row.amount_due,
@@ -1061,7 +1061,7 @@ const CustomerDetaTable = () => {
       <ToastContainer />
       <h3 className="t_center">
         {" "}
-        {translate("Booking Details")} :{" "}
+        {translate("Booking Number")} :{" "}
         {BookingDetails?.reservation?.reservationNumber}
       </h3>
       <div className="row px-0 pb-10 mt-20 ">
@@ -1214,12 +1214,12 @@ const CustomerDetaTable = () => {
                 </tr>
                 <tr className="row">
                   <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_2}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_2}</td>
                   <td className="col-4">{BookingDetails.paymentData?.paid_date_2}</td>
                 </tr>
                 <tr className="row">
                   <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_3}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_3}</td>
                   <td className="col-4">{BookingDetails.paymentData?.paid_date_3}</td>
                 </tr>
               </tbody>

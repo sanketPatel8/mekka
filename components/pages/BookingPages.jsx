@@ -1137,6 +1137,7 @@ export default function BookingPages({ BookingData }) {
 
         // New price object to add
         const newPrice = {
+          Total : PackagePrices + adultadiPrices + adPrice ,
           SubTotal: totalSum,
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,

@@ -280,7 +280,7 @@ export default function TourList4({
                               : "ALL"}
                           </p>
                         </div>
-                        {elm?.company_code !== " " && elm?.company_code !== null && (
+                        {elm?.company_name !== " " && elm?.company_name !== null && (
                           <div className="d-flex items-center mt-5">
                             <div className="d-flex items-center x-gap-5">
                               {/* <Stars star={elm?.rating_count} font={12} /> */}
@@ -293,7 +293,7 @@ export default function TourList4({
                             <div className="text-14 ml-10">
                               {/* <span className="fw-500">{elm?.rating}</span> ( */}
                               {/* {elm?.rating_count}) - */}
-                              {elm?.company_code}
+                              {elm?.company_name}
                             </div>
                           </div>
                         )}
