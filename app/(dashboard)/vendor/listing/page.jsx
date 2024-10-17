@@ -250,7 +250,7 @@ export default function DBListing() {
                               <div className="d-flex text-14 items-center">
                                 <FaCalendar color="dabf4f" size={17} />
                                 <p className="mx-1">
-                                  {elm?.date_begin} - {elm?.date_end}
+                                  {elm?.date_begin} to {elm?.date_end}
                                 </p>
                               </div>
                             </div>
