@@ -115,9 +115,9 @@ export default function PageData() {
       FilterSidebar.selectedLanguages.length !== 0 ||
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
-      FilterSidebar.selectedDurations.length !== 0 ||
-      value[0] == value[0] ||
-      Distance[0] == Distance[0] 
+      FilterSidebar.selectedDurations.length !== 0 
+      // value[0] == value[0] ||
+      // Distance[0] == Distance[0] 
       // FilterSidebar.selectedRatings.length !== 0
     ) {
       await FetchFilterData(pageIndex);

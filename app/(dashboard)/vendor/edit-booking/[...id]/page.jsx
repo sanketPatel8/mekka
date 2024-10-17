@@ -209,11 +209,11 @@ export default function DbBooking({ params }) {
         name: translate("Discount"),
         selector: (row) => row.Discount > 0 ? -(row.Discount) : 0,
       },
+      { name: translate("Total"), selector: (row) => row.Total },
       {
         name: translate("Amount Paid"),
         selector: (row) => row.Amount_Paid,
       },
-      { name: translate("Total"), selector: (row) => row.Total },
       {
         name: translate("Amount Due"),
         selector: (row) => row.Amount_Due,
