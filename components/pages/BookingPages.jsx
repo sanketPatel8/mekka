@@ -1151,7 +1151,7 @@ export default function BookingPages({ BookingData }) {
           "PackageBookingData",
           JSON.stringify(BookingSideData)
         );
-
+        console.log(BookingSideData)
         // Update state to reflect new data
         setBookingSideBar(BookingSideData);
       } catch (error) {

@@ -165,85 +165,88 @@ export default function AddTour() {
   };
 
   const handleDateFocus = (e) => {
-    e.target.showPicker(); // This will open the date picker
-  };
-  const handleStartDateKeyDown = (e) => {
-    const inputValue = e.target.value;
-    const dateParts = inputValue.split('-');
-    console.log(dateParts,"dateParts")
-    const selectedDate = getTodayDate();
-    console.log(selectedDate,"selectedDate")
-    setDateBegin(inputValue);
-    const nextDay = new Date(selectedDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-    setMinDate(nextDay.toISOString().split("T")[0]);
+    // Ensure this is a user gesture
+    if (e.target === document.activeElement) {
+        e.target.showPicker();
+    }
+};
+  // const handleStartDateKeyDown = (e) => {
+  //   const inputValue = e.target.value;
+  //   const dateParts = inputValue.split('-');
+  //   console.log(dateParts,"dateParts")
+  //   const selectedDate = getTodayDate();
+  //   console.log(selectedDate,"selectedDate")
+  //   setDateBegin(inputValue);
+  //   const nextDay = new Date(selectedDate);
+  //   nextDay.setDate(nextDay.getDate() + 1);
+  //   setMinDate(nextDay.toISOString().split("T")[0]);
    
-  //   if (!/[\d-]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-  //     e.preventDefault();
-  //     return;
-  // }
-  //     if (dateParts.length === 3) {
-  //       console.log("date")
-  //       const year = dateParts[0];
-  //       console.log(year,"year")
-  //       if (year.length < 4) {
-  //         return; // Allow typing in the year part
-  //       }else{
-  //         console.log("else part")
-  //           // Check if the year is greater than 2023
-  //           if (parseInt(year) <= 2023) {
-  //             console.error("Year must be greater than 2023");
-  //             setDateBegin("");
-  //             return; // Exit if the year is invalid
-  //           }
+  // //   if (!/[\d-]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+  // //     e.preventDefault();
+  // //     return;
+  // // }
+  // //     if (dateParts.length === 3) {
+  // //       console.log("date")
+  // //       const year = dateParts[0];
+  // //       console.log(year,"year")
+  // //       if (year.length < 4) {
+  // //         return; // Allow typing in the year part
+  // //       }else{
+  // //         console.log("else part")
+  // //           // Check if the year is greater than 2023
+  // //           if (parseInt(year) <= 2023) {
+  // //             console.error("Year must be greater than 2023");
+  // //             setDateBegin("");
+  // //             return; // Exit if the year is invalid
+  // //           }
       
-  //           const minDate = getTodayDate();
-  //           console.log(minDate, "minDate");
-  //           console.log(selectedDate < minDate, "selectedDate < minDate");
+  // //           const minDate = getTodayDate();
+  // //           console.log(minDate, "minDate");
+  // //           console.log(selectedDate < minDate, "selectedDate < minDate");
       
-  //           if (selectedDate < minDate) {
-  //             setDateBegin(minDate);
-  //             setMinDate(minDate);
-  //           } else {
+  // //           if (selectedDate < minDate) {
+  // //             setDateBegin(minDate);
+  // //             setMinDate(minDate);
+  // //           } else {
               
-  //           }
-  //         } 
-  //     }
+  // //           }
+  // //         } 
+  // //     }
     
 
-  };
-  const handleEndDateKeyDown = (e) => {
-    const inputValue = e.target.value;
-    const dateParts = inputValue.split('-');
-    console.log(dateParts,"dateParts")
+  // };
+  // const handleEndDateKeyDown = (e) => {
+  //   const inputValue = e.target.value;
+  //   const dateParts = inputValue.split('-');
+  //   console.log(dateParts,"dateParts")
    
-    setDateEnd(inputValue);
+  //   setDateEnd(inputValue);
    
  
 
-  };
+  // };
 
 const handleEndDateChange = (e) => {
   const inputValue = e.target.value;
-  const dateParts = inputValue.split('-');
+  setDateEnd(inputValue);
 
   
-  if (dateParts.length === 3) {
-    const day = dateParts[0];
-    const month = dateParts[1];
-    const year = dateParts[2];
+  // if (dateParts.length === 3) {
+  //   const day = dateParts[0];
+  //   const month = dateParts[1];
+  //   const year = dateParts[2];
 
-    const selectedDate = new Date(`${year}-${month}-${day}`);
-    const dateBegin = new Date(date_begin);
+  //   const selectedDate = new Date(`${year}-${month}-${day}`);
+  //   const dateBegin = new Date(date_begin);
 
-    if (dateBegin && selectedDate < dateBegin) {
-      setDateEnd(dateBegin);
-    } else {
-      setDateEnd(inputValue);
-    }
-  } else {
-    setDateEnd(inputValue);
-  }
+  //   if (dateBegin && selectedDate < dateBegin) {
+  //     setDateEnd(dateBegin);
+  //   } else {
+  //     setDateEnd(inputValue);
+  //   }
+  // } else {
+  //   setDateEnd(inputValue);
+  // }
 };
 
 

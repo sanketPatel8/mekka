@@ -366,7 +366,7 @@ export default function DbBooking({ params }) {
           id: adult.id,
           name: adult.personName,
           surname: adult.personSurName,
-          DOB: formatDateToDDMMYYYY(adult.personBirthDay),
+          DOB: adult.personBirthDay,
           Nationality: adult.personNationality,
           price: adult.adult_price,
           extra_data: `${adult.extra_data === null ? "" :`${adult.extra_data.additional_order } Bed-Room` } `
@@ -380,12 +380,12 @@ export default function DbBooking({ params }) {
           Airline: response.Bookings.reservation.airlines,
           // From: response.Bookings.reservation.from,
           // To: response.Bookings.reservation.to,
-          date_begin: formatDateToDDMMYYYY(
+          date_begin: 
             response.Bookings.reservation.date_begin
-          ),
-          date_end: formatDateToDDMMYYYY(
+          ,
+          date_end: 
             response.Bookings.reservation.date_end
-          ),
+          ,
           Mekka_hotel: response.Bookings.reservation.mekka_hotel,
           Madina_hotel: response.Bookings.reservation.madina_hotel,
           adult: response.Bookings.reservation.adults,
@@ -406,7 +406,7 @@ export default function DbBooking({ params }) {
           id: child.id,
           name: child.personName,
           surname: child.personSurName,
-          DOB: formatDateToDDMMYYYY(child.personBirthDay),
+          DOB: child.personBirthDay,
           country: child.countryName,
           Nationality: child.personNationality,
           price: child.child_price,
@@ -420,7 +420,7 @@ export default function DbBooking({ params }) {
           id: baby.id,
           name: baby.personName,
           surname: baby.personSurName,
-          DOB: formatDateToDDMMYYYY(baby.personBirthDay),
+          DOB: baby.personBirthDay,
           country: baby.countryName,
           Nationality: baby.personNationality,
           price: baby.baby_price,

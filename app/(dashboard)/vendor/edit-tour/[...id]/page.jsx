@@ -277,6 +277,13 @@ export default function EditTour() {
     }
   };
 
+  const handleDateFocus = (e) => {
+    // Ensure this is a user gesture
+    if (e.target === document.activeElement) {
+        e.target.showPicker();
+    }
+};
+
   const handleEndDateChange = (e) => {
     const [day, month, year] = e.target.value.split("-");
     if (day && month && year) {
@@ -1269,6 +1276,7 @@ export default function EditTour() {
                                       min={minEndDate}
                                       onBlur={handleStartDateBlur}
                                       onChange={handleStartDateChange}
+                                      onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Start Date of Tour") ||
@@ -1288,6 +1296,7 @@ export default function EditTour() {
                                       pattern="\d{2}-\d{2}-\d{4}"
                                       onBlur={handleEndDateBlur}
                                       onChange={handleEndDateChange}
+                                      onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("End Date of Tour") ||
