@@ -80,9 +80,8 @@ export default function DBListing() {
             if (response) {
               showSuccessToast("Tour Duplicated Successfully");
               setTimeout(() => {
-                fetchListing();
-                setLoading(false);
                 router.push(`/vendor/edit-tour/${response.tour_id}`);
+                setLoading(true);
               }, 1000);
             } else {
               setLoading(false);
