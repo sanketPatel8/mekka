@@ -153,13 +153,14 @@ export default function Payment() {
 
   useEffect(() => {
     const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}.${(
+    const formattedDate = `${currentDate.getDate().toString().padStart(2, "0")}.${(
       currentDate.getMonth() + 1
     )
       .toString()
-      .padStart(2, "0")}.${currentDate.getDate().toString().padStart(2, "0")}`;
-
+      .padStart(2, "0")}.${currentDate.getFullYear()}`;
+    
     setTodayDate(formattedDate);
+    
 
     if (typeof window !== "undefined") {
       const sidebardata = localStorage.getItem("PackageBookingData");
@@ -668,7 +669,7 @@ export default function Payment() {
                                 <input
                                   type="text"
                                   required
-                                  value={thirdAmount}
+                                  value={formatPrice(thirdAmount)}
                                   disabled={true}
                                   placeholder=""
                                 />
