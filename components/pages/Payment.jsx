@@ -404,7 +404,9 @@ export default function Payment() {
                 bookingStage === 2 ? "d-none" : "d-block"
               }`}
             >
-              <button onClick={() => router.back()}>
+              <button onClick={() => {router.back();
+                localStorage.setItem("getUserData", "true");
+              }}>
                 <IoMdArrowRoundBack />{" "}
               </button>{" "}
               {translate("Payment Methods")}

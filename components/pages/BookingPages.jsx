@@ -28,6 +28,7 @@ import Login from "./Login";
 import { useCurrency } from "@/app/context/currencyContext";
 import { ClipLoader } from "react-spinners";
 import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
+import { update } from "lodash";
 
 const customStyles = {
   overlay: {
@@ -83,6 +84,8 @@ export default function BookingPages({ BookingData }) {
   const [BookingApiData, setBookingApiData] = useState({});
 
   const [BookingSideBar, setBookingSideBar] = useState({});
+  const newdata = typeof window !== "undefined" && localStorage.getItem("getUserData");
+  console.log(newdata,"newdata");
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
@@ -158,7 +161,7 @@ export default function BookingPages({ BookingData }) {
           const AdultD = JSON.parse(BackAdultData);
 
           // Extract the user object
-          if (AdultD) {
+          if (AdultD ) {
             setFormValues((prevValues) => {
               const updatedValues = { ...prevValues };
 
@@ -668,6 +671,7 @@ export default function BookingPages({ BookingData }) {
     // Handle case where response.user is a single object
     if (response.user && typeof response.user === "object") {
       const userProfile = response.user;
+      if(newdata === null){
       setUserData({
         name: userProfile.name || "",
         surname: userProfile.surname || "",
@@ -688,6 +692,8 @@ export default function BookingPages({ BookingData }) {
         additional_price_id: userProfile.additional_price_id || "",
         address: userProfile.address || "",
       });
+    }
+    
     } else {
       console.error("Unexpected response structure:", response);
     }
@@ -726,11 +732,100 @@ export default function BookingPages({ BookingData }) {
   };
 
   useEffect(() => {
-    if (LoginCheck === true) {
-      fetchProfile();
+    console.log(LoginCheck, "LoginCheck");
+
+    if (LoginCheck === true && newdata === null ) {
+        console.log("hello")
+        fetchProfile();
+      
     } else {
+      console.log("hi")
+      console.log(formValues,"formValues")
+      const BackAdultData = localStorage.getItem("AllAdultsData");
+      // console.log(BackAdultData,"BackAdultData")
+
+      if (BackAdultData && BackAdultData !== "undefined") {
+        try {
+          const AdultD = JSON.parse(BackAdultData);
+          console.log(AdultD,"AdultD")
+          // Extract the user object
+          if (AdultD ) {
+            setFormValues((prevValues) => {
+              const updatedValues = { ...prevValues };
+              console.log(updatedValues,"updatedValues")
+
+              if (!updatedValues["Adult"]) {
+                updatedValues["Adult"] = [];
+              }
+              if (!updatedValues["Adult"][0]) {
+                updatedValues["Adult"][0] = {};
+              }
+
+              AdultD?.Adult?.map(
+                (e, i) =>
+                  (updatedValues["Adult"][i] = {
+                    ...updatedValues["Adult"][i],
+                    name: e.name,
+                    surname: e.surname,
+                    birthday: e.birthday,
+                    city: e.city,
+                    email: e.email,
+                    gender: e.gender,
+                    houseNumber: e.houseNumber,
+                    mobile: e.mobile,
+                    nationality: e.nationality,
+                    street: e.street,
+                    zipcode: e.zipcode,
+                  })
+              );
+              
+              AdultD?.Child?.map(
+                (e, i) =>
+                  (updatedValues["Child"][i] = {
+                    ...updatedValues["Child"][i],
+                    name: e.name,
+                    surname: e.surname,
+                    birthday: e.birthday,
+                    city: e.city,
+                    email: e.email,
+                    gender: e.gender,
+                    houseNumber: e.houseNumber,
+                    mobile: e.mobile,
+                    nationality: e.nationality,
+                    street: e.street,
+                    zipcode: e.zipcode,
+                  })
+              );
+              AdultD?.Baby?.map(
+                (e, i) =>
+                  (updatedValues["Baby"][i] = {
+                    ...updatedValues["Baby"][i],
+                    name: e.name,
+                    surname: e.surname,
+                    birthday: e.birthday,
+                    city: e.city,
+                    email: e.email,
+                    gender: e.gender,
+                    houseNumber: e.houseNumber,
+                    mobile: e.mobile,
+                    nationality: e.nationality,
+                    street: e.street,
+                    zipcode: e.zipcode,
+                  })
+              );
+
+              return updatedValues;
+            });
+
+         
+
+          }
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+      }
     }
-  }, [LoginCheck, customer]);
+  }, [LoginCheck, newdata]);
 
   const getTodayDate = () => {
     const today = new Date();
@@ -748,69 +843,69 @@ export default function BookingPages({ BookingData }) {
           label: translate("Name"),
           type: "text",
           name: "name",
-          value: userData.name,
+          value: userData?.name || "mallika",
         },
         {
           label: translate("Surname"),
           type: "text",
           name: "surname",
-          value: userData.surname,
+          value: userData?.surname,
         },
         {
           label: translate("Email"),
           type: "email",
           name: "email",
-          value: userData.email,
+          value: userData?.email,
         },
         {
           label: translate("Phone"),
           type: "number",
           name: "mobile",
-          value: userData.mobile,
+          value: userData?.mobile,
         },
         {
           label: translate("City"),
           type: "text",
           name: "city",
-          value: userData.city,
+          value: userData?.city,
         },
         {
           label: translate("Gender"),
           type: "select",
           name: "gender",
           options: [translate("Male"), translate("Female"), translate("Other")],
-          value: userData.gender,
+          value: userData?.gender,
         },
         {
           label: translate("Birthday Date"),
           type: "date",
           name: "birthday",
-          value: userData.birthday,
+          value: userData?.birthday,
         },
         {
           label: translate("Nationality"),
           type: "select",
           name: "nationality",
           options: nationalities,
-          value: userData.nationality,
+          value: userData?.nationality,
         },
         {
           label: translate("House No"),
           type: "text",
           name: "houseNumber",
-          value: userData.houseNumber,
+          value: userData?.houseNumber,
         },
         {
           label: translate("ZIP Code"),
           type: "text",
           name: "zipcode",
-          value: userData.zipcode,
+          value: userData?.zipcode,
         },
         {
           label: translate("Street"),
           type: "text",
           name: "street",
-          value: userData.street,
+          value: userData?.street,
         },
       ],
       adultFieldsForExtraAdults: [
@@ -917,7 +1012,7 @@ export default function BookingPages({ BookingData }) {
               <div className="my-3 row">
                 {currentFields?.map((field, index) => {
                   const fieldValue =
-                    LoginCheck === true && type === "Adult" && i === 0
+                    LoginCheck === true && type === "Adult" && (newdata === null && i === 0)
                       ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 

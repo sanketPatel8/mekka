@@ -555,6 +555,8 @@ export default function TourSingleSidebar({
         }&selectedflight=${
           selectedFlights?.name === undefined ? "" : selectedFlights?.name
         }`);
+        localStorage.removeItem("AllAdultsData")
+        localStorage.removeItem("BookingData")
     }
   };
 

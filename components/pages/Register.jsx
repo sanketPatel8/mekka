@@ -11,8 +11,21 @@ import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
+import dynamic from "next/dynamic";
 
 export default function Register() {
+  const LoginSocialFacebook = dynamic(
+    () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
+    { ssr: false }
+  );
+  const LoginSocialGoogle = dynamic(
+    () => import("reactjs-social-login").then((mod) => mod.LoginSocialGoogle),
+    { ssr: false }
+  );
+  const LoginSocialApple = dynamic(
+    () => import("reactjs-social-login").then((mod) => mod.LoginSocialApple),
+    { ssr: false }
+  );
   const [RegisterData, setRegisterData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     name: "",
@@ -362,32 +375,113 @@ export default function Register() {
               </div>
 
               <div className="row y-gap-15">
-                <div className="col">
-                  <button
-                    type="submit"
-                    className="button -md -outline-blue-1 text-blue-1 col-12"
-                  >
-                    <FaFacebookF size={15} className="mx-1" />
-                    {translate("Facebook")}
-                  </button>
-                </div>
+                    <div className="col">
+                      <button
+                        type="button"
+                        className="button -md -outline-blue-1 text-blue-1 col-12"
+                      >
+                        <LoginSocialFacebook
+                          appId={
+                            process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
+                          }
+                          fieldsProfile={
+                            "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
+                          }
+                          scope="email,public_profile"
+                          onLoginStart={() => console.log("start")}
+                          onResolve={({ provider, data }) => {
+                            const { id, name, email } = data;
+                            console.log(data);
+                            window.FB.getLoginStatus((response) => {
+                              if (response.status === "connected") {
+                                signinSocial({
+                                  type: "facebook",
+                                  data: { id, name, email },
+                                });
+                              }
+                            });
+                            window.FB.logout();
+                          }}
+                          onReject={(err) => {
+                            console.log(err);
+                          }}
+                        >
+                          <FaFacebookF size={15} className="mx-1" />
+                          {translate("Facebook")}
+                        </LoginSocialFacebook>
+                      </button>
+                    </div>
 
-                <div className="col">
-                  <button className="button -md -outline-red-1 text-red-1 col-12">
-                    <FaGoogle size={15} className="mx-1" />
+                    <div className="col">
+                      <button
+                        type="button"
+                        className="button -md -outline-red-1 text-red-1 col-12"
+                      >
+                        <LoginSocialGoogle
+                          client_id={
+                            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
+                          }
+                          client_secret={
+                            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
+                          }
+                          redirect_uri={window.location.origin + "/login"}
+                          onLoginStart={() => console.log("start")}
+                          scope="openid profile email"
+                          discoveryDocs="claims_supported"
+                          access_type="online"
+                          onResolve={({ provider, data }) => {
+                            signinSocial({
+                              type: "google",
+                              email: data?.email || "",
+                              id: data.sub || "",
+                              name: data?.given_name,
+                              data,
+                            });
+                          }}
+                          onReject={(err) => {
+                            console.log(err);
+                          }}
+                        >
+                          <FaGoogle size={15} className="mx-1" />
+                          {translate("Google")}
+                        </LoginSocialGoogle>
+                      </button>
+                      {/* <button
+                    type="button"
+                    className="button -md -outline-red-1 text-red-1 col-12"
+                  >
                     {translate("Google")}
-                  </button>
-                </div>
-              </div>
-              <br />
-              <div className="row y-gap-15">
-                <div className="col">
-                  <button className="button -md -outline-dark-1 text-dark-1 col-12">
-                    <FaApple size={15} className="mx-1" />
-                    {translate("Sign in With Apple")}
-                  </button>
-                </div>
-              </div>
+                  </button> */}
+                    </div>
+                  </div>
+                  <br />
+                  <div className="row y-gap-15">
+                    <div className="col">
+                      <button
+                        type="button"
+                        className="button -md -outline-dark-1 text-dark-1 col-12"
+                      >
+                        <LoginSocialApple
+                          client_id={
+                            process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
+                          }
+                          scope={"name email"}
+                          redirect_uri={window.location.origin + "/login"}
+                          onLoginStart={() => console.log("start apple login")}
+                          onResolve={({ provider, data }) => {
+                            console.log(data,"data")
+                            signinSocial({ type: "apple", data: data });
+                          }}
+                          onReject={(err) => {
+                            console.log(err);
+                          }}
+                        >
+                          <FaApple size={15} className="mx-1" />
+                          {translate("Sign up With Apple")}
+                        </LoginSocialApple>
+                      </button>
+                    </div>
+                  </div>
             </form>
           </div>
         </div>
