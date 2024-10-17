@@ -1193,36 +1193,38 @@ const CustomerDetaTable = () => {
           highlightOnHover
         /> */}
 
-      <div className="row">
-        <div className="col-12">
-          <table class="table bg-light">
-            <thead>
-              <tr>
-                <th scope="col-6">Date</th>
-                <th scope="col-6">Amount</th>
-                <th scope="col-6">Paid Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{BookingDetails.paymentData?.payment_plan_date_1}</td>
-                <td>{BookingDetails.paymentData?.payment_plan_1}</td>
-                <td>{BookingDetails.paymentData?.paid_date_1}</td>
-              </tr>
-              <tr>
-                <td>{BookingDetails.paymentData?.payment_plan_date_2}</td>
-                <td>{BookingDetails.paymentData?.payment_plan_1}</td>
-                <td>{BookingDetails.paymentData?.paid_date_2}</td>
-              </tr>
-              <tr>
-                <td >{BookingDetails.paymentData?.payment_plan_date_3}</td>
-                <td>{BookingDetails.paymentData?.payment_plan_1}</td>
-                <td>{BookingDetails.paymentData?.paid_date_3}</td>
-              </tr>
-            </tbody>
-          </table>
+{BookingDetails.reservation?.paymentType !== '1' && (
+        <div className="row">
+          <div className="col-12">
+            <table class="table bg-light">
+              <thead>
+                <tr>
+                  <th scope="col-6">Date</th>
+                  <th scope="col-6">Amount</th>
+                  <th scope="col-6">Paid Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{BookingDetails.paymentData?.payment_plan_date_1}</td>
+                  <td>{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td>{BookingDetails.paymentData?.paid_date_1}</td>
+                </tr>
+                <tr>
+                  <td>{BookingDetails.paymentData?.payment_plan_date_2}</td>
+                  <td>{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td>{BookingDetails.paymentData?.paid_date_2}</td>
+                </tr>
+                <tr>
+                  <td>{BookingDetails.paymentData?.payment_plan_date_3}</td>
+                  <td>{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td>{BookingDetails.paymentData?.paid_date_3}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
 
       <br />
 
@@ -1659,7 +1661,7 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstAmount"
-                    value={pendingPaymentValue.firstAmount}
+                    value={formatPrice(pendingPaymentValue.firstAmount)}
                     onChange={handlePaymentPending}
                     disabled
                   />
@@ -1697,7 +1699,7 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstAmount"
-                    value={pendingPaymentValue.secondAmount}
+                    value={formatPrice(pendingPaymentValue.secondAmount)}
                     onChange={handlePaymentPending}
                     disabled
                   />
@@ -1737,7 +1739,7 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstAmount"
-                    value={pendingPaymentValue.thirdAmount}
+                    value={formatPrice(pendingPaymentValue.thirdAmount)}
                     onChange={handlePaymentPending}
                     disabled
                   />
