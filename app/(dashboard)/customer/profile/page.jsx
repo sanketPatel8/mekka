@@ -11,7 +11,8 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css"; // Import the library's CSS for styling
+import "react-phone-input-2/lib/style.css"; 
+
 
 export default function Profile() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -62,7 +63,7 @@ export default function Profile() {
     setPhone(value);
 
     // Validation: Check if phone number is too short or too long
-    if (value.length < 10 || value.length > 15) {
+    if (value.length < 15 || value.length > 20) {
       setPhoneError(translate("Phone number must be between 10 and 15 digits"));
     }
     // Validation to ensure only numbers
@@ -503,6 +504,7 @@ export default function Profile() {
                                   required: true,
                                   autoFocus: true,
                                 }}
+                                inputClass='phonenumber_input'
                                 containerStyle={{
                                   width: "100%", 
                                   marginBottom: "10px",
@@ -519,6 +521,7 @@ export default function Profile() {
                                   backgroundColor : "white"
                                 }}
                                 className = "form-input  "
+                                enableSearch = {true}
                               />
                               <label className="phone_lable">
                                 {translate("Phone")}

@@ -186,6 +186,7 @@ export default function BookingPages({ BookingData }) {
                     zipcode: e.zipcode,
                   })
               );
+              
               AdultD?.Child?.map(
                 (e, i) =>
                   (updatedValues["Child"][i] = {
@@ -223,6 +224,11 @@ export default function BookingPages({ BookingData }) {
 
               return updatedValues;
             });
+
+            setUserData(() => {
+
+            })
+
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -413,12 +419,12 @@ export default function BookingPages({ BookingData }) {
     // Validate phone number: Allow only numeric values and limit to 10 characters
     if (ftype === "number" && name === "mobile") {
       value = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-      if (value.length > 10) {
-        value = value.slice(0, 10); // Limit to 10 characters
+      if (value.length > 15) {
+        value = value.slice(0, 15); // Limit to 10 characters
       }
 
       // Check if the mobile number is less than 10 digits and show an error
-      if (value.length !== 10) {
+      if (value.length !== 15) {
         setShowPhoneError("*");
         setPhoneValid(false);
       } else {
@@ -965,7 +971,7 @@ export default function BookingPages({ BookingData }) {
                                 handleInputChange(type, i, e, field.type)
                               }
                               maxLength={
-                                field.type == "number" ? 10 : undefined
+                                field.type == "number" ? 15 : undefined
                               }
                               max={
                                 field.type == "date"
