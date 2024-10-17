@@ -29,6 +29,8 @@ import { useCurrency } from "@/app/context/currencyContext";
 import { ClipLoader } from "react-spinners";
 import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
 import { update } from "lodash";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css"; 
 
 const customStyles = {
   overlay: {
@@ -449,8 +451,11 @@ export default function BookingPages({ BookingData }) {
 
       updatedValues[type][index] = {
         ...updatedValues[type][index],
-        [name]: value,
+        [name]: e.target.e,
       };
+
+   
+      
 
       // Optional: Update userData if type is 'Adult' and index is 0
       if (type === "Adult" && index === 0) {
@@ -1019,7 +1024,7 @@ export default function BookingPages({ BookingData }) {
                   return (
                     <div key={index} className="col-md-6">
                       <div className="form-input my-1">
-                        {field.type === "select" ? (
+                        {/* {field.type === "select" ? (
                           <>
                             <select
                               name={field.name}
@@ -1092,7 +1097,91 @@ export default function BookingPages({ BookingData }) {
                               <span className="text-red">*</span>
                             </label>
                           </>
-                        )}
+                        )} */}
+                        {field.type === "select" ? (
+  <>
+    <select
+      name={field.name}
+      value={fieldValue || ""}
+      onChange={(e) => handleInputChange(type, i, e, field.type)}
+      required
+      className="form-control"
+    >
+      <option value="" disabled>
+        {field.label}
+      </option>
+      {field.options?.map((option, optIndex) => (
+        <option key={optIndex} value={option.toLowerCase()}>
+          {option}
+        </option>
+      ))}
+    </select>
+
+    <label className="lh-1 text-16 text-light-1 dd_l_top10">
+      {field.label} <span className="text-red">*</span>
+    </label>
+  </>
+) : field.type === "number" ? (
+  <>
+    <PhoneInput
+      country={"in"}
+      value={fieldValue}
+      onChange={(e) => handleInputChange(type, i, { target: { name: "mobile", e } }, "phone")}
+      inputProps={{
+        name: "phone",
+        required: true,
+        autoFocus: true,
+      }}
+      inputClass="phonenumber_input"
+      containerStyle={{
+        width: "100%",
+        marginBottom: "10px",
+        backgroundColor: "white",
+      }}
+      inputStyle={{
+        width: "100%",
+        padding: "12px 45px",
+        borderRadius: "4px",
+        border: "1px solid #E7E6E6",
+        fontSize: "16px",
+        boxSizing: "border-box",
+        backgroundColor: "white",
+      }}
+      className="form-input"
+      enableSearch={true}
+    />
+    <label className="phone_lable">
+      {translate("Phone")}
+      
+    </label>
+  </>
+) : (
+  <>
+    <input
+      type={field.type}
+      name={field.name}
+      value={fieldValue || ""}
+      onChange={(e) => handleInputChange(type, i, e, field.type)}
+      maxLength={field.type === "number" ? 15 : undefined}
+      max={field.type === "date" ? getTodayDate() : undefined}
+      required
+    />
+    <label className="lh-1 text-16 text-light-1">
+      {field.label === "Phone" ? (
+        <>
+          {field.label}
+          {ShowPhoneError && (
+            <span style={{ color: "red" }}>{ShowPhoneError}</span>
+          )}
+        </>
+      ) : (
+        field.label
+      )}{" "}
+      <span className="text-red">*</span>
+    </label>
+  </>
+)}
+
                       </div>
                     </div>
                   );

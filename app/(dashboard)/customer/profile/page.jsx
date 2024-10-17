@@ -76,6 +76,7 @@ export default function Profile() {
     } else {
       setPhoneError(""); // Clear error if the phone number is valid
     }
+    
   };
 
   console.log("Phone", Phone);
