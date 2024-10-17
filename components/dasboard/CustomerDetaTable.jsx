@@ -283,8 +283,8 @@ const CustomerDetaTable = () => {
   const Total = [
     {
       name: translate("Subtotal"),
-      selector: (row) => row.subtotal,
-      cell: (row) => formatPrice(row.subtotal),
+      selector: (row) => row.total,
+      cell: (row) => formatPrice(row.total),
     },
     // { name: "Tax", selector: (row) => row.Total },
     {
@@ -295,14 +295,14 @@ const CustomerDetaTable = () => {
     // { name: 'Amount Paid', selector: (row) => row.Amount_Paid },
     {
       name: translate("Total"),
-      selector: (row) => row.total,
-      cell: (row) => formatPrice(row.total),
+      selector: (row) => row.subtotal,
+      cell: (row) => formatPrice(row.subtotal),
     },
     {
       name: translate("Amount Due"),
       selector: (row) => row.amount_due,
-      cell: (row) => formatPrice(row.amount_due),
-    },
+        cell: (row) => formatPrice(row.amount_due),
+      },
   ];
 
   // const AmountPaid = [
@@ -563,8 +563,9 @@ const CustomerDetaTable = () => {
         setPdfData(response.pdf_url);
       }
     };
-
-    fetchPayments();
+    if(BookingDetails?.reservation?.id){
+      fetchPayments();
+    }
   }, [BookingDetails]);
 
   useEffect(() => {
@@ -1193,32 +1194,33 @@ const CustomerDetaTable = () => {
           highlightOnHover
         /> */}
 
-{BookingDetails.reservation?.paymentType !== '1' && (
-        <div className="row">
-          <div className="col-12">
-            <table class="table bg-light">
+      {BookingDetails.reservation?.paymentType !== "1" && (
+        <div className="row bg-white mx-0">
+          <div className="col-12 row">
+            <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
+            <table class="table bg-light col-12" >
               <thead>
-                <tr>
-                  <th scope="col-6">Date</th>
-                  <th scope="col-6">Amount</th>
-                  <th scope="col-6">Paid Date</th>
+                <tr className="row"> 
+                  <th className="col-4 pb-1">Date</th>
+                  <th className="col-4 pb-1">Amount</th>
+                  <th className="col-4 pb-1">Paid Date</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>{BookingDetails.paymentData?.payment_plan_date_1}</td>
-                  <td>{BookingDetails.paymentData?.payment_plan_1}</td>
-                  <td>{BookingDetails.paymentData?.paid_date_1}</td>
+                <tr className="row">
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_1}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.paid_date_1}</td>
                 </tr>
-                <tr>
-                  <td>{BookingDetails.paymentData?.payment_plan_date_2}</td>
-                  <td>{BookingDetails.paymentData?.payment_plan_1}</td>
-                  <td>{BookingDetails.paymentData?.paid_date_2}</td>
+                <tr className="row">
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_2}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.paid_date_2}</td>
                 </tr>
-                <tr>
-                  <td>{BookingDetails.paymentData?.payment_plan_date_3}</td>
-                  <td>{BookingDetails.paymentData?.payment_plan_1}</td>
-                  <td>{BookingDetails.paymentData?.paid_date_3}</td>
+                <tr className="row">
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_3}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_1}</td>
+                  <td className="col-4">{BookingDetails.paymentData?.paid_date_3}</td>
                 </tr>
               </tbody>
             </table>
