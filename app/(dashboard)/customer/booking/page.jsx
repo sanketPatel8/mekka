@@ -236,11 +236,11 @@ export default function DbBooking() {
                       <div className="">
                         <label
                           className={
-                            elm.reservation_status === "Upcoming"
+                            elm.reservation_status === "In Progress"
                               ? "text-orange"
-                              : elm.reservation_status === "Completed"
-                              ? "text-green"
-                              : ""
+                              : elm.reservation_status === "Cancelled"
+                              ? "text-red"
+                              : "text-green"
                           }
                         >
                           <b>{elm.reservation_status}</b>
