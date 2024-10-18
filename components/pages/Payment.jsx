@@ -309,7 +309,7 @@ export default function Payment() {
 
       if (response.Status == "1") {
         setIsLoading(false);
-        showSuccessToast(translate , "Booking successful");
+        showSuccessToast(translate, "Booking successful");
         setBookingStage((pre) => pre + 1);
         setReservationID(response.reservationNumber);
       } else {
@@ -405,9 +405,12 @@ export default function Payment() {
                 bookingStage === 2 ? "d-none" : "d-block"
               }`}
             >
-              <button onClick={() => {router.back();
-                localStorage.setItem("getUserData", "true");
-              }}>
+              <button
+                onClick={() => {
+                  router.back();
+                  localStorage.setItem("getUserData", "true");
+                }}
+              >
                 <IoMdArrowRoundBack />{" "}
               </button>{" "}
               {translate("Payment Methods")}
@@ -614,9 +617,11 @@ export default function Payment() {
                                 <label className="lh-1 text-16 text-light-1">
                                   1st Amount<span className="text-red"> *</span>
                                 </label>
-                                <span >This amount will be done using credit card (Stripe)</span>
+                                <span>
+                                  This amount will be done using credit card
+                                  (Stripe)
+                                </span>
                               </div>
-                              
                             </div>
 
                             <div className="col-md-6">
@@ -1148,7 +1153,8 @@ export default function Payment() {
                     </div>
                   )}
 
-                  {paidAmount &&
+                  {installmentChecked === true &&
+                    paidAmount &&
                     SideBarData?.BookingFild?.SubTotal - paidAmount > 0 && (
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Amount Due")}</div>
