@@ -30,7 +30,8 @@ import { ClipLoader } from "react-spinners";
 import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
 import { update } from "lodash";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css"; 
+import "react-phone-input-2/lib/style.css";
+import { useCountryCode } from "@/app/context/useCountryCode";
 
 const customStyles = {
   overlay: {
@@ -62,6 +63,7 @@ export default function BookingPages({ BookingData }) {
   const TourName = searchParams.get("name");
   const TourId = searchParams.get("id");
   const { formatPrice } = useCurrency();
+  const { countryCode } = useCountryCode();
 
   const [bookingStage, setBookingStage] = useState(1);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -86,8 +88,9 @@ export default function BookingPages({ BookingData }) {
   const [BookingApiData, setBookingApiData] = useState({});
 
   const [BookingSideBar, setBookingSideBar] = useState({});
-  const newdata = typeof window !== "undefined" && localStorage.getItem("getUserData");
-  console.log(newdata,"newdata");
+  const newdata =
+    typeof window !== "undefined" && localStorage.getItem("getUserData");
+  console.log(newdata, "newdata");
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
@@ -163,7 +166,7 @@ export default function BookingPages({ BookingData }) {
           const AdultD = JSON.parse(BackAdultData);
 
           // Extract the user object
-          if (AdultD ) {
+          if (AdultD) {
             setFormValues((prevValues) => {
               const updatedValues = { ...prevValues };
 
@@ -191,7 +194,7 @@ export default function BookingPages({ BookingData }) {
                     zipcode: e.zipcode,
                   })
               );
-              
+
               AdultD?.Child?.map(
                 (e, i) =>
                   (updatedValues["Child"][i] = {
@@ -230,10 +233,7 @@ export default function BookingPages({ BookingData }) {
               return updatedValues;
             });
 
-            setUserData(() => {
-
-            })
-
+            setUserData(() => {});
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -420,30 +420,28 @@ export default function BookingPages({ BookingData }) {
 
   const handleInputChange = (type, index, e, ftype) => {
     let { name, value } = e.target;
-  
+
     if (ftype === "phone" && name === "mobile") {
       // Perform any validation or formatting here if needed
-     value = e.target.e
-
+      value = e.target.e;
     }
 
     console.log(value);
-    
-  
+
     // Update form values
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
-  
+
       // Ensure type array exists
       if (!updatedValues[type]) {
         updatedValues[type] = [];
       }
-  
+
       // Ensure object exists for the specific index
       if (!updatedValues[type][index]) {
         updatedValues[type][index] = {};
       }
-  
+
       // Store the validated value (including mobile number)
       updatedValues[type][index] = {
         ...updatedValues[type][index],
@@ -456,12 +454,11 @@ export default function BookingPages({ BookingData }) {
           [name]: value, // Update userData if necessary
         }));
       }
-  
+
       return updatedValues;
     });
+  };
 
-  };  
-  
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
 
@@ -669,29 +666,28 @@ export default function BookingPages({ BookingData }) {
     // Handle case where response.user is a single object
     if (response.user && typeof response.user === "object") {
       const userProfile = response.user;
-      if(newdata === null){
-      setUserData({
-        name: userProfile.name || "",
-        surname: userProfile.surname || "",
-        email: userProfile.email || "",
-        mobile: userProfile.mobile || "",
-        city: userProfile.city || "",
-        gender: userProfile.gender || "",
-        birthday: userProfile.birthday || "",
-        nationality: userProfile.nationality || "",
-        houseNumber: userProfile.houseNumber || "",
-        zipcode: userProfile.zipcode || "",
-        street: userProfile.street || "",
-        from: userProfile.from || "",
-        selectedService: userProfile.selectedService || "",
-        price: userProfile.price || "",
-        title: userProfile.title || "",
-        additional_order: userProfile.additional_order || "",
-        additional_price_id: userProfile.additional_price_id || "",
-        address: userProfile.address || "",
-      });
-    }
-    
+      if (newdata === null) {
+        setUserData({
+          name: userProfile.name || "",
+          surname: userProfile.surname || "",
+          email: userProfile.email || "",
+          mobile: userProfile.mobile || "",
+          city: userProfile.city || "",
+          gender: userProfile.gender || "",
+          birthday: userProfile.birthday || "",
+          nationality: userProfile.nationality || "",
+          houseNumber: userProfile.houseNumber || "",
+          zipcode: userProfile.zipcode || "",
+          street: userProfile.street || "",
+          from: userProfile.from || "",
+          selectedService: userProfile.selectedService || "",
+          price: userProfile.price || "",
+          title: userProfile.title || "",
+          additional_order: userProfile.additional_order || "",
+          additional_price_id: userProfile.additional_price_id || "",
+          address: userProfile.address || "",
+        });
+      }
     } else {
       console.error("Unexpected response structure:", response);
     }
@@ -732,25 +728,24 @@ export default function BookingPages({ BookingData }) {
   useEffect(() => {
     console.log(LoginCheck, "LoginCheck");
 
-    if (LoginCheck === true && newdata === null ) {
-        console.log("hello")
-        fetchProfile();
-      
+    if (LoginCheck === true && newdata === null) {
+      console.log("hello");
+      fetchProfile();
     } else {
-      console.log("hi")
-      console.log(formValues,"formValues")
+      console.log("hi");
+      console.log(formValues, "formValues");
       const BackAdultData = localStorage.getItem("AllAdultsData");
       // console.log(BackAdultData,"BackAdultData")
 
       if (BackAdultData && BackAdultData !== "undefined") {
         try {
           const AdultD = JSON.parse(BackAdultData);
-          console.log(AdultD,"AdultD")
+          console.log(AdultD, "AdultD");
           // Extract the user object
-          if (AdultD ) {
+          if (AdultD) {
             setFormValues((prevValues) => {
               const updatedValues = { ...prevValues };
-              console.log(updatedValues,"updatedValues")
+              console.log(updatedValues, "updatedValues");
 
               if (!updatedValues["Adult"]) {
                 updatedValues["Adult"] = [];
@@ -776,7 +771,7 @@ export default function BookingPages({ BookingData }) {
                     zipcode: e.zipcode,
                   })
               );
-              
+
               AdultD?.Child?.map(
                 (e, i) =>
                   (updatedValues["Child"][i] = {
@@ -814,9 +809,6 @@ export default function BookingPages({ BookingData }) {
 
               return updatedValues;
             });
-
-         
-
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -1010,7 +1002,10 @@ export default function BookingPages({ BookingData }) {
               <div className="my-3 row">
                 {currentFields?.map((field, index) => {
                   const fieldValue =
-                    LoginCheck === true && type === "Adult" && (newdata === null && i === 0)
+                    LoginCheck === true &&
+                    type === "Adult" &&
+                    newdata === null &&
+                    i === 0
                       ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 
@@ -1092,89 +1087,109 @@ export default function BookingPages({ BookingData }) {
                           </>
                         )} */}
                         {field.type === "select" ? (
-  <>
-    <select
-      name={field.name}
-      value={fieldValue || ""}
-      onChange={(e) => handleInputChange(type, i, e, field.type)}
-      required
-      className="form-control"
-    >
-      <option value="" disabled>
-        {field.label}
-      </option>
-      {field.options?.map((option, optIndex) => (
-        <option key={optIndex} value={option.toLowerCase()}>
-          {option}
-        </option>
-      ))}
-    </select>
+                          <>
+                            <select
+                              name={field.name}
+                              value={fieldValue || ""}
+                              onChange={(e) =>
+                                handleInputChange(type, i, e, field.type)
+                              }
+                              required
+                              className="form-control"
+                            >
+                              <option value="" disabled>
+                                {field.label}
+                              </option>
+                              {field.options?.map((option, optIndex) => (
+                                <option
+                                  key={optIndex}
+                                  value={option.toLowerCase()}
+                                >
+                                  {option}
+                                </option>
+                              ))}
+                            </select>
 
-    <label className="lh-1 text-16 text-light-1 dd_l_top10">
-      {field.label} <span className="text-red">*</span>
-    </label>
-  </>
-) : field.type === "number" ? (
-  <>
-    <PhoneInput
-      country={"in"}
-      value={fieldValue}
-      onChange={(e) => handleInputChange(type, i, { target: { name: "mobile", e } }, "phone")}
-      inputProps={{
-        name: "mobile",
-        required: true,
-        autoFocus: true,
-      }}
-      inputClass="phonenumber_input"
-      containerStyle={{
-        width: "100%",
-        marginBottom: "10px",
-        backgroundColor: "white",
-      }}
-      inputStyle={{
-        width: "100%",
-        padding: "12px 45px",
-        borderRadius: "4px",
-        border: "1px solid #E7E6E6",
-        fontSize: "16px",
-        boxSizing: "border-box",
-        backgroundColor: "white",
-      }}
-      className="form-input"
-      enableSearch={true}
-    />
-    <label className="phone_lable">
-      {translate("Phone")}
-      
-    </label>
-  </>
-) : (
-  <>
-    <input
-      type={field.type}
-      name={field.name}
-      value={fieldValue || ""}
-      onChange={(e) => handleInputChange(type, i, e, field.type)}
-      maxLength={field.type === "number" ? 15 : undefined}
-      max={field.type === "date" ? getTodayDate() : undefined}
-      required
-    />
-    <label className="lh-1 text-16 text-light-1">
-      {field.label === "Phone" ? (
-        <>
-          {field.label}
-          {ShowPhoneError && (
-            <span style={{ color: "red" }}>{ShowPhoneError}</span>
-          )}
-        </>
-      ) : (
-        field.label
-      )}{" "}
-      <span className="text-red">*</span>
-    </label>
-  </>
-)}
-
+                            <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                              {field.label} <span className="text-red">*</span>
+                            </label>
+                          </>
+                        ) : field.type === "number" ? (
+                          <>
+                            <PhoneInput
+                              country={countryCode}
+                              value={fieldValue}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  type,
+                                  i,
+                                  { target: { name: "mobile", e } },
+                                  "phone"
+                                )
+                              }
+                              inputProps={{
+                                name: "mobile",
+                                required: true,
+                                autoFocus: true,
+                              }}
+                              inputClass="phonenumber_input"
+                              containerStyle={{
+                                width: "100%",
+                                marginBottom: "10px",
+                                backgroundColor: "white",
+                              }}
+                              inputStyle={{
+                                width: "100%",
+                                padding: "12px 45px",
+                                borderRadius: "4px",
+                                border: "1px solid #E7E6E6",
+                                fontSize: "16px",
+                                boxSizing: "border-box",
+                                backgroundColor: "white",
+                              }}
+                              className="form-input"
+                              enableSearch={true}
+                            />
+                            <label className="phone_lable">
+                              {translate("Phone")}
+                            </label>
+                          </>
+                        ) : (
+                          <>
+                            <input
+                              type={field.type}
+                              name={field.name}
+                              value={fieldValue || ""}
+                              onChange={(e) =>
+                                handleInputChange(type, i, e, field.type)
+                              }
+                              maxLength={
+                                field.type === "number" ? 15 : undefined
+                              }
+                              max={
+                                field.type === "date"
+                                  ? getTodayDate()
+                                  : undefined
+                              }
+                              required
+                            />
+                            <label className="lh-1 text-16 text-light-1">
+                              {field.label === "Phone" ? (
+                                <>
+                                  {field.label}
+                                  {ShowPhoneError && (
+                                    <span style={{ color: "red" }}>
+                                      {ShowPhoneError}
+                                    </span>
+                                  )}
+                                </>
+                              ) : (
+                                field.label
+                              )}{" "}
+                              <span className="text-red">*</span>
+                            </label>
+                          </>
+                        )}
                       </div>
                     </div>
                   );
@@ -1320,7 +1335,7 @@ export default function BookingPages({ BookingData }) {
 
         // New price object to add
         const newPrice = {
-          Total : PackagePrices + adultadiPrices + adPrice ,
+          Total: PackagePrices + adultadiPrices + adPrice,
           SubTotal: totalSum,
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,
@@ -1335,7 +1350,7 @@ export default function BookingPages({ BookingData }) {
           "PackageBookingData",
           JSON.stringify(BookingSideData)
         );
-        console.log(BookingSideData)
+        console.log(BookingSideData);
         // Update state to reflect new data
         setBookingSideBar(BookingSideData);
       } catch (error) {

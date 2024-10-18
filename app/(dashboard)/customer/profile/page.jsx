@@ -12,9 +12,13 @@ import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css"; 
+import { useCountryCode } from "@/app/context/useCountryCode";
 
 
 export default function Profile() {
+
+  const { countryCode } = useCountryCode();
+
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [UserProfile, setUserProfile] = useState([]);
   // const [formData, setFormData] = useState({
@@ -402,6 +406,9 @@ export default function Profile() {
   //     setPasswordError("");
   //   }
   // };
+
+  console.log("countryCode" , countryCode);
+  
   const { translate } = useTranslation();
   return (
     <>
@@ -497,7 +504,7 @@ export default function Profile() {
                           <div className="col-md-6">
                             <div className="form-input my-1">
                               <PhoneInput
-                                country={"in"} 
+                                country={countryCode} 
                                 value={Phone}
                                 onChange={handlePhoneChange}
                                 inputProps={{
