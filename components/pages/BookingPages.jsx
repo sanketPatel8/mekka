@@ -449,9 +449,17 @@ export default function BookingPages({ BookingData }) {
         ...updatedValues[type][index],
         [name]: value, // Store the value (e.g., phone number)
       };
+
+      if (type === "Adult" && index === 0) {
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          [name]: value, // Update userData if necessary
+        }));
+      }
   
       return updatedValues;
     });
+
   };  
   
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
