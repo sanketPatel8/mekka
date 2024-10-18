@@ -420,55 +420,40 @@ export default function BookingPages({ BookingData }) {
 
   const handleInputChange = (type, index, e, ftype) => {
     let { name, value } = e.target;
+  
+    if (ftype === "phone" && name === "mobile") {
+      // Perform any validation or formatting here if needed
+     value = e.target.e
 
-    // Validate phone number: Allow only numeric values and limit to 10 characters
-    if (ftype === "number" && name === "mobile") {
-      value = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-      if (value.length > 15) {
-        value = value.slice(0, 15); // Limit to 10 characters
-      }
-
-      // Check if the mobile number is less than 10 digits and show an error
-      if (value.length !== 15) {
-        setShowPhoneError("*");
-        setPhoneValid(false);
-      } else {
-        setShowPhoneError("");
-        setPhoneValid(true);
-      }
     }
 
+    console.log(value);
+    
+  
     // Update form values
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
-
+  
+      // Ensure type array exists
       if (!updatedValues[type]) {
         updatedValues[type] = [];
       }
+  
+      // Ensure object exists for the specific index
       if (!updatedValues[type][index]) {
         updatedValues[type][index] = {};
       }
-
+  
+      // Store the validated value (including mobile number)
       updatedValues[type][index] = {
         ...updatedValues[type][index],
-        [name]: e.target.e,
+        [name]: value, // Store the value (e.g., phone number)
       };
-
-   
-      
-
-      // Optional: Update userData if type is 'Adult' and index is 0
-      if (type === "Adult" && index === 0) {
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          [name]: value, // Update userData if necessary
-        }));
-      }
-
+  
       return updatedValues;
     });
-  };
-
+  };  
+  
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
 
@@ -1128,7 +1113,7 @@ export default function BookingPages({ BookingData }) {
       value={fieldValue}
       onChange={(e) => handleInputChange(type, i, { target: { name: "mobile", e } }, "phone")}
       inputProps={{
-        name: "phone",
+        name: "mobile",
         required: true,
         autoFocus: true,
       }}
