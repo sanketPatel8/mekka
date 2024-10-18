@@ -370,7 +370,7 @@ export default function Register() {
                 
               </button>
 
-              <div className="relative line mt-50 mb-30">
+              {/* <div className="relative line mt-50 mb-30">
                 <div className="line__word fw-500">OR</div>
               </div>
 
@@ -446,12 +446,7 @@ export default function Register() {
                           {translate("Google")}
                         </LoginSocialGoogle>
                       </button>
-                      {/* <button
-                    type="button"
-                    className="button -md -outline-red-1 text-red-1 col-12"
-                  >
-                    {translate("Google")}
-                  </button> */}
+                      
                     </div>
                   </div>
                   <br />
@@ -481,7 +476,7 @@ export default function Register() {
                         </LoginSocialApple>
                       </button>
                     </div>
-                  </div>
+                  </div> */}
             </form>
           </div>
         </div>
