@@ -97,7 +97,6 @@ const CustomerDetaTable = () => {
   });
   const router = useRouter();
 
-  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     Modal.setAppElement("#modelopen");
@@ -172,7 +171,7 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Total"),
-      selector: (row) => formatPrice(row.adult_price),
+      selector: (row) => `${row.adult_price} €`,
     },
     {
       name: translate("Action"),
@@ -217,7 +216,8 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Total"),
-      selector: (row) => formatPrice(row.child_price),
+      selector: (row) => `${row.child_price} €`,
+
     },
     {
       name: translate("Action"),
@@ -256,7 +256,8 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Total"),
-      selector: (row) => formatPrice(row.baby_price),
+      selector: (row) => `${row.baby_price} €`,
+
     },
     {
       name: translate("Action"),
@@ -283,25 +284,27 @@ const CustomerDetaTable = () => {
   const Total = [
     {
       name: translate("Subtotal"),
-      selector: (row) => row.total,
-      cell: (row) => formatPrice(row.total),
+      selector: (row) => `${row.total} €`,
+      cell: (row) => `${row.total} €`,
     },
     // { name: "Tax", selector: (row) => row.Total },
     {
       name: translate("Discount"),
       selector: (row) => row.discount,
-      cell: (row) => formatPrice(row.discount),
+      cell: (row) => `${row.discount} €`,
     },
     {
       name: translate("Total"),
       selector: (row) => row.subtotal,
-      cell: (row) => formatPrice(row.subtotal),
+      cell: (row) => `${row.subtotal} €`,
     },
-    { name: "Amount Paid", selector: (row) => row.amount_paid },
+    { name: "Amount Paid", 
+      selector: (row) => `${row.amount_paid} €`,
+    },
     {
       name: translate("Amount Due"),
       selector: (row) => row.amount_due,
-      cell: (row) => formatPrice(row.amount_due),
+      cell: (row) => `${row.amount_due} €`,
     },
   ];
 
@@ -714,7 +717,7 @@ const CustomerDetaTable = () => {
     } else {
       console.log("AddpersonData", AddpersonData);
 
-      showErrorToast("All Fields are Require");
+      showErrorToast(translate, "All fields are required");
     }
     // setTimeout(() => {
     //   closeModal();
@@ -863,7 +866,7 @@ const CustomerDetaTable = () => {
       });
       if (response) {
         setIsLoading(false);
-        showSuccessToast("Person was added successfully !!");
+        showSuccessToast(translate, "Person was added successfully");
         closeModal();
         handleClose();
         setTimeout(() => {
@@ -989,14 +992,14 @@ const CustomerDetaTable = () => {
 
     if (response.Status == 1) {
       setIsLoading(false);
-      showSuccessToast("Document Uploaded Successfully");
+      showSuccessToast(translate, "Document Uploaded Successfully");
       setTimeout(() => {
         setuploadFileisOpen(false);
       }, 3000);
       setRows([{ document: "", type: null }]);
     } else {
       setIsLoading(false);
-      showErrorToast("Document Upload Failed");
+      showErrorToast(translate , "Document Upload Failed");
     }
   };
 
@@ -1028,7 +1031,7 @@ const CustomerDetaTable = () => {
         url: "cancelBooking",
       });
       if (response) {
-        showSuccessToast(response.Message);
+        showSuccessToast(translate, "Booking Cancelled Successfully");
         setTimeout(() => {
           window.location.reload();
         }, 1500);
@@ -1126,11 +1129,11 @@ const CustomerDetaTable = () => {
             </div>
 
             <div
-              className={`${
+              className={
                 BookingDetails?.reservation?.paymentType == "3"
                   ? "d-block"
                   : "d-none"
-              }`}
+              }
             >
               <button
                 className="button -sm -accent-1 bg-info-2 text-white "
@@ -1138,9 +1141,9 @@ const CustomerDetaTable = () => {
               >
                 {translate("Pay")}
               </button>
-              <span>{`(${formatPrice(
+              <span>{
                 BookingDetails?.reservation?.amount_due
-              )})`}</span>
+             } €</span>
             </div>
 
             {BookingDetails?.reservation?.capacity_empty != "0" && (
@@ -1226,7 +1229,7 @@ const CustomerDetaTable = () => {
         <div className="row bg-white mx-0">
           <div className="col-12 row">
             <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
-            <table class="table bg-light col-12">
+            <table className="table bg-light col-12">
               <thead>
                 <tr className="row">
                   <th className="col-4 pb-1">Date</th>
@@ -1240,7 +1243,7 @@ const CustomerDetaTable = () => {
                     {BookingDetails.paymentData?.payment_plan_date_1}
                   </td>
                   <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_1}
+                    {BookingDetails.paymentData?.payment_plan_1} €
                   </td>
                   <td className="col-4">
                     {BookingDetails.paymentData?.paid_date_1}
@@ -1251,7 +1254,7 @@ const CustomerDetaTable = () => {
                     {BookingDetails.paymentData?.payment_plan_date_2}
                   </td>
                   <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_2}
+                    {BookingDetails.paymentData?.payment_plan_2} €
                   </td>
                   <td className="col-4">
                     {BookingDetails.paymentData?.paid_date_2}
@@ -1262,7 +1265,7 @@ const CustomerDetaTable = () => {
                     {BookingDetails.paymentData?.payment_plan_date_3}
                   </td>
                   <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_3}
+                    {BookingDetails.paymentData?.payment_plan_3} €
                   </td>
                   <td className="col-4">
                     {BookingDetails.paymentData?.paid_date_3}
@@ -1709,7 +1712,7 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstAmount"
-                    value={formatPrice(pendingPaymentValue.firstAmount)}
+                    value={pendingPaymentValue.firstAmount}
                     onChange={handlePaymentPending}
                     disabled
                   />
@@ -1747,7 +1750,7 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstAmount"
-                    value={formatPrice(pendingPaymentValue.secondAmount)}
+                    value={pendingPaymentValue.secondAmount}
                     onChange={handlePaymentPending}
                     disabled
                   />
@@ -1787,7 +1790,7 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstAmount"
-                    value={formatPrice(pendingPaymentValue.thirdAmount)}
+                    value={pendingPaymentValue.thirdAmount}
                     onChange={handlePaymentPending}
                     disabled
                   />

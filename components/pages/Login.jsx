@@ -48,8 +48,7 @@ export default function Login({
   const [LoginChecked, setLoginChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-
+  const {translate} = useTranslation();
   const LoginUpdate = () => {
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
 
@@ -186,7 +185,6 @@ export default function Login({
     }
   };
 
-  const { translate } = useTranslation();
 
   // Save data to local storage on input change
   const HandleLogInChange = (e) => {
@@ -245,8 +243,8 @@ export default function Login({
             }, 1000);
           }
         } else {
-          showErrorToast(
-            "Invalid Credentials. If you are tour agent, please login from the partner login page."
+          showErrorToast(translate,
+            "Invalid Credentials. If you are tour agent, please login from the partner login page"
           );
           setLogInData({
             AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -256,7 +254,7 @@ export default function Login({
         }
       })
       .catch((err) => {
-        // showErrorToast("Invalid Email or Password");
+        showErrorToast(translate,"Invalid Credentials. If you are tour agent, please login from the partner login page");
         setIsLoading(false);
       });
   };

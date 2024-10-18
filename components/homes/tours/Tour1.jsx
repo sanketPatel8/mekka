@@ -14,7 +14,6 @@ export default function Tour1() {
   const [LatestPackage, setLatestPackage] = useState([]);
   const { formatPrice } = useCurrency();
 
-  console.log(formatPrice(1000), "formatPrice");
   useEffect(() => {
     const fetchData = async (id) => {
       const sendData = {

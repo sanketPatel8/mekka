@@ -15,6 +15,8 @@ import dynamic from "next/dynamic";
 import { POST } from "@/app/utils/api/post";
 
 export default function Register() {
+  const { translate } = useTranslation();
+
   const LoginSocialFacebook = dynamic(
     () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
     { ssr: false }
@@ -318,7 +320,6 @@ export default function Register() {
     }
   };
 
-  const { translate } = useTranslation();
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
       <ToastContainer />
