@@ -1726,9 +1726,9 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstDate"
-                    value={new Date(
+                    value={
                       pendingPaymentValue.firstDate
-                    ).toLocaleDateString("de-DE")}
+                    }
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
@@ -1764,9 +1764,9 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstDate"
-                    value={new Date(
+                    value={
                       pendingPaymentValue.secondDate
-                    ).toLocaleDateString("de-DE")}
+                   }
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
@@ -1804,9 +1804,9 @@ const CustomerDetaTable = () => {
                   <input
                     type="text"
                     name="firstDate"
-                    value={new Date(
+                    value={
                       pendingPaymentValue.thirdDate
-                    ).toLocaleDateString("de-DE")}
+                   }
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
