@@ -49,8 +49,7 @@ export default function Login({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const REDIRECT_GOOGLE_URI = "https://mekkabooking.vercel.app/gresponse";
-  const REDIRECT_APPLE_URI = "https://mekkabooking.vercel.app/appleresponse";
+
   const LoginUpdate = () => {
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
 

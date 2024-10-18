@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 import dynamic from "next/dynamic";
+import { POST } from "@/app/utils/api/post";
 
 export default function Register() {
   const LoginSocialFacebook = dynamic(
@@ -51,6 +52,100 @@ export default function Register() {
       setError("Passwords do not match");
     } else {
       setError("");
+    }
+  };
+
+  
+  const signinSocial = async ({ type, email, id, name, data }) => {
+    if (type === "apple") {
+      const token = data.authorization.id_token;
+      const decodedToken = jwtDecode(token);
+
+      console.log(decodedToken, "decoded token");
+
+      const appleData = {
+        email: decodedToken.email,
+        auth_provider: type,
+        provider_id: decodedToken.sub,
+        name: "",
+      };
+
+      console.log(appleData, "apple data");
+
+      const resp = await POST.request({
+        form: appleData,
+        url: "social_login",
+      });
+
+      console.log(resp, "apple response");
+
+      if (resp.status == "success") {
+
+        console.log("success",resp.status);
+        showSuccessToast("User created successfully");
+        setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+        });
+  
+        setConfirmpass("");
+  
+        setIsChecked(false);
+  
+        localStorage.setItem("emailForSignIn", RegisterData.email);
+  
+        // Redirect after successful registration
+        setTimeout(() => {
+          router.push("/verify-email");
+        }, 2000);
+       
+      }
+    } else {
+      const resp = await POST.request({
+        form: {
+          email:email,
+          auth_provider: type,
+          provider_id: id,
+          name: name,
+        },
+        url: "social_login",
+      });
+      if (resp.status == "success") {
+
+        console.log("success",resp.status);
+        showSuccessToast("User created successfully");
+        setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+        });
+  
+        setConfirmpass("");
+  
+        setIsChecked(false);
+  
+        localStorage.setItem("emailForSignIn", RegisterData.email);
+  
+        // Redirect after successful registration
+        setTimeout(() => {
+          router.push("/verify-email");
+        }, 2000);
+       
+      } else  {
+        showErrorToast("Invalid Credentials");
+        setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+        });
+      }
     }
   };
 
@@ -370,7 +465,7 @@ export default function Register() {
                 
               </button>
 
-              {/* <div className="relative line mt-50 mb-30">
+              <div className="relative line mt-50 mb-30">
                 <div className="line__word fw-500">OR</div>
               </div>
 
@@ -392,15 +487,15 @@ export default function Register() {
                           onResolve={({ provider, data }) => {
                             const { id, name, email } = data;
                             console.log(data);
-                            window.FB.getLoginStatus((response) => {
+                            typeof window !== "undefined" ? window.FB.getLoginStatus((response) => {
                               if (response.status === "connected") {
                                 signinSocial({
                                   type: "facebook",
                                   data: { id, name, email },
                                 });
                               }
-                            });
-                            window.FB.logout();
+                            }):"";
+                            typeof window !== "undefined" ? window.FB.logout() : "";
                           }}
                           onReject={(err) => {
                             console.log(err);
@@ -424,7 +519,7 @@ export default function Register() {
                           client_secret={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
                           }
-                          redirect_uri={window.location.origin + "/login"}
+                          redirect_uri={typeof window !== "undefined" ? window.location.origin + "/login" : ""}
                           onLoginStart={() => console.log("start")}
                           scope="openid profile email"
                           discoveryDocs="claims_supported"
@@ -461,7 +556,7 @@ export default function Register() {
                             process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
                           }
                           scope={"name email"}
-                          redirect_uri={window.location.origin + "/login"}
+                          redirect_uri={typeof window !== "undefined" ? window.location.origin + "/login" : ""}
                           onLoginStart={() => console.log("start apple login")}
                           onResolve={({ provider, data }) => {
                             console.log(data,"data")
@@ -476,7 +571,7 @@ export default function Register() {
                         </LoginSocialApple>
                       </button>
                     </div>
-                  </div> */}
+                  </div>
             </form>
           </div>
         </div>
