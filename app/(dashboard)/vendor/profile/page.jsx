@@ -210,18 +210,18 @@ export default function Profile() {
         image1 == "" ||
         (image2.length == 0 && uploadImage.length == 0)
       ) {
-        showErrorToast("Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
         return;
       }
     }
     else if(formType === "bank_details"){
       if (!bank_name || !owner_name || !IBAN) {
-        showErrorToast("Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
         return;
       }
     }else if(formType === "change_password"){
       if (!old_password || !password || !confirm_password) {
-        showErrorToast("Please fill all fields");
+        showErrorToast(translate,"Please fill all fields");
         return;
       }
     }
@@ -312,17 +312,17 @@ export default function Profile() {
 
       if (response) {
         setIsLoading(false);
-        showSuccessToast(response.message);
+        showSuccessToast(translate, "Profile updated successfully");
         setUploadImage([]);
         fetchProfile();
       } else {
         setIsLoading(false);
-        showErrorToast(response.message);
+        showErrorToast(translate, "Profile not updated");
       }
       // }
     } else if (formType === "bank_details") {
       if (!bank_name || !owner_name || !IBAN) {
-        showErrorToast("Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
       } else {
         const url = `update_profile`;
         setIsBankLoading(true);
@@ -334,16 +334,16 @@ export default function Profile() {
 
         if (response) {
           setIsBankLoading(false);
-          showSuccessToast(response.message);
+          showSuccessToast(translate, "Bank details updated successfully");
           fetchProfile();
         } else {
           setIsBankLoading(false);
-          showErrorToast(response.message);
+          showErrorToast(translate , "Bank details not updated");
         }
       }
     } else if (formType === "change_password") {
       if (!old_password || !password || !confirm_password) {
-        showErrorToast("Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
       } else {
         const url = `update_profile`;
         setIsPasswordLoading(true);
@@ -355,13 +355,13 @@ export default function Profile() {
 
         if (response.status === "success") {
           setIsPasswordLoading(false);
-          showSuccessToast(response.message);
+          showSuccessToast(translate, "Password updated successfully");
           fetchProfile();
           setOldPassword("");
           setPassword("");
           setConfirmPassword("");
         } else if(response.status === "error") {
-          showErrorToast(response.message);
+          showErrorToast(translate , "Password not updated");
           setIsPasswordLoading(false);
           setOldPassword("");
           setPassword("");
@@ -411,7 +411,7 @@ export default function Profile() {
         (document) => document !== companyData.company_document[index]
       );
       setCompanyData({ ...companyData, company_document: newCompanyDocument });
-      showSuccessToast("Image removed successfully");
+      showSuccessToast(translate , "Image removed successfully");
       setTimeout(() => {
         fetchProfile();
       }, 1000);

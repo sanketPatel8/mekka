@@ -549,7 +549,7 @@ export default function EditTour() {
         url: "remove_imageordocument",
       });
       if (response) {
-        showSuccessToast("Image removed successfully");
+        showSuccessToast(translate, "Image removed successfully");
         fetchTour(id);
       }
     }  else {
@@ -647,7 +647,7 @@ export default function EditTour() {
       }
     } else {
   
-        showErrorToast("Please fill in all required fields before proceeding.");
+        showErrorToast(translate, "Please fill in all required fields before proceeding");
       }
       }
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
@@ -936,12 +936,10 @@ export default function EditTour() {
     e.preventDefault();
 
     setLoading(true);
-    console.log(departureRows.length)
-    console.log(image2.length)
-    console.log(newImages.length)
+   
 
     if( !date_begin || !date_end || !name || !capacity ||  departureRows.length == 0  || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price) {
-      showErrorToast("Please fill in all required fields before proceeding.");
+      showErrorToast(translate, "Please fill in all required fields before proceeding");
       setLoading(false);
       return;
     }
@@ -949,7 +947,7 @@ export default function EditTour() {
     if (route_data.length > 0) {
       const hasEmptyDayOrDescription = route_data.some((day) => !day.dayData || !day.description);
       if (hasEmptyDayOrDescription) {
-        showErrorToast("Please fill in all day and description fields in the itinerary.");
+        showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
         setLoading(false);
         return;
       }
@@ -957,7 +955,7 @@ export default function EditTour() {
     if (mekkaRows.length > 0) {
       const hasEmptyMekka = mekkaRows.some((mekka) => !mekka.hotel_name || !mekka.hotel_price || !mekka.hotel_info);
       if (hasEmptyMekka) {
-        showErrorToast("Please fill in all fields for Mekka hotels.");
+        showErrorToast(translate, "Please fill in all fields for Mekka hotels");
         setLoading(false);
         return;
       }
@@ -967,7 +965,7 @@ export default function EditTour() {
     if (madinaRows.length > 0) {
       const hasEmptyMadina = madinaRows.some((madina) => !madina.hotel_name || !madina.hotel_price || !madina.hotel_info);
       if (hasEmptyMadina) {
-        showErrorToast("Please fill in all fields for Madina hotels.");
+        showErrorToast(translate, "Please fill in all fields for Madina hotels");
         setLoading(false);
         return;
       }
@@ -977,7 +975,7 @@ export default function EditTour() {
     if (flightRow.length > 0) {
       const hasEmptyFlight = flightRow.some((flight) => !flight.flight_id || !flight.flight_amount || !flight.no_of_stop || !flight.luggage);
       if (hasEmptyFlight) {
-        showErrorToast("Please fill in all fields for flight details.");
+        showErrorToast(translate, "Please fill in all fields for flight details");
         setLoading(false);
         return;
       }
@@ -1035,7 +1033,7 @@ export default function EditTour() {
       !flightInformation
     ) {
       setLoading(false);
-      showErrorToast("Please fill in all required fields before proceeding.");
+      showErrorToast(translate, "Please fill in all required fields before proceeding");
       return;
     }
 
@@ -1124,7 +1122,7 @@ export default function EditTour() {
       });
       setLoading(false);
       if (response) {
-        toast.success("Tour Updated Successfully");
+        showSuccessToast(translate, "Tour Updated Successfully");
         // setActiveTab("Content");
         // setActiveTabIndex(0);
         // fetchTour(id);

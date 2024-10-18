@@ -27,13 +27,13 @@ export default function ForgotPassword({ onLoginSuccess }) {
     const response = await POST.request({form: formData, url:"forgot_password"});
     if(response.status == 1 ){
 
-      showSuccessToast(response.msg);
+      showSuccessToast(translate , "Password reset link has been sent to your email");
       setEmail("")
       setTimeout(() => {
         route.push('/login')
       }, 4000);
     }else if(response.status == 0){
-      showErrorToast(response.msg);
+      showErrorToast(translate, "Email not found");
       setEmail("");
     }
  

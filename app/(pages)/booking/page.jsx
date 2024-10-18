@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import FooterOne from "@/components/layout/footers/FooterOne";
@@ -13,7 +14,7 @@ import React, { useEffect, useState } from "react";
 export default function page() {
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
-
+  const {translate} = useTranslation();
   const [BookingData, setBookingData] = useState({});
 
   const FetchBookingData = async () => {
@@ -27,7 +28,7 @@ export default function page() {
       setBookingData(response);
     } catch (error) {
       console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
+      showErrorToast(translate, "An error occurred during registration.");
     }
   };
 

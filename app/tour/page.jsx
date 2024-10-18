@@ -227,7 +227,7 @@ export default function PageData() {
       setDistance([response?.Data?.min_km , response?.Data?.max_km])
       setValue([response?.Data?.min_price , response?.Data?.max_price])
     } catch (error) {
-      showErrorToast("An error occurred during registration.");
+      showErrorToast(translate,"An error occurred during registration");
     }
   };
 
@@ -257,7 +257,7 @@ export default function PageData() {
     } catch (error) {
       console.error("Error caught:", error);
 
-      showErrorToast("An error occurred during registration.");
+      showErrorToast(translate,"An error occurred during registration");
     }
   };
 

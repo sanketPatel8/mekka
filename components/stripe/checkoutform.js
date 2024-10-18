@@ -64,7 +64,7 @@ export default function CheckoutForm({
     try {
       const response = await post("addbooking", newBooking);
       if (response) {
-        showSuccessToast("Booking successful");
+        showSuccessToast(translate, "Booking successful");
         handleClose();
         router.push("#ref");
         setBookingStage(2);
@@ -82,7 +82,7 @@ export default function CheckoutForm({
       }
     } catch (error) {
       console.error("Error caught:", error);
-      showErrorToast(error);
+      showErrorToast(translate, "Booking failed");
     }
   };
 
@@ -114,7 +114,7 @@ export default function CheckoutForm({
         url: "addperson",
       });
       if (response?.Status == "1") {
-        showSuccessToast("Person was added successfully !!");
+        showSuccessToast(translate, "Person was added successfully");
         closeModal();
         handleClose();
         setTimeout(() => {
@@ -122,7 +122,7 @@ export default function CheckoutForm({
         }, 1500);
         
       } else {
-        showErrorToast(response?.Message);
+        showErrorToast(translate , "Person was not added");
       }
     } catch (e) {
       console.error(e);
@@ -150,12 +150,12 @@ export default function CheckoutForm({
         error &&
         (error.type === "card_error" || error.type === "validation_error")
       ) {
-        showErrorToast("Payment already succeeded");
+        showErrorToast(translate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
         console.log(paymentIntent, "paymentIntent");
         console.log(paymentIntent.id, "paymentIntent.id");
         const newAmount = paymentIntent.amount / 100;
-        showSuccessToast("Payment successful");
+        showSuccessToast(translate,"Payment successful");
         addBooking(paymentIntent.id, newAmount);
       }
     }
@@ -172,12 +172,12 @@ export default function CheckoutForm({
         error &&
         (error.type === "card_error" || error.type === "validation_error")
       ) {
-        showErrorToast("Payment already succeeded");
+        showErrorToast(tarnslate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
         console.log(paymentIntent, "paymentIntent");
         console.log(paymentIntent.id, "paymentIntent.id");
         const newAmount = paymentIntent.amount / 100;
-        showSuccessToast("Payment successful");
+        showSuccessToast(translate,"Payment successful");
         FetchAddperson();
       }
     }

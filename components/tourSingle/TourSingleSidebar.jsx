@@ -540,7 +540,7 @@ export default function TourSingleSidebar({
       selectedCheckbox === false &&
       SidebarData?.tour_details?.flight_included !== "0"
     ) {
-      showErrorToast("Please Select Departure");
+      showErrorToast(translate,"Please Select Departure");
       return;
     } else {
       router.push(

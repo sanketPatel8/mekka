@@ -13,6 +13,7 @@ export default function ForgotPasswordPartner({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
 
   const route = useRouter()
+  const { translate } = useTranslation();
 
 
   const HandleLogInChange = (e) => {
@@ -27,7 +28,7 @@ export default function ForgotPasswordPartner({ onLoginSuccess }) {
       const formData = new FormData();
       formData.append("email", email);
       const response = await POST.request({form: formData, url:"forgot_password"});
-      showSuccessToast(response.msg);
+      showSuccessToast(translate, "Mail Sent Successfully");
       setEmail("")
       setTimeout(() => {
         route.push('/partner-login')
@@ -38,14 +39,13 @@ export default function ForgotPasswordPartner({ onLoginSuccess }) {
         error.response.data &&
         error.response.data.message
       ) {
-        showErrorToast("Please verify your email");
+        showErrorToast(translate,"Please verify your email");
       } else {
-        showErrorToast("An error occurred during registration.");
+        showErrorToast(translate, "An error occurred during registration");
       }
     }
   };
 
-  const { translate } = useTranslation();
   return (
     <section className="mt-header layout-pt-lg layout-pb-lg">
       <ToastContainer />

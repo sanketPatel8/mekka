@@ -639,12 +639,12 @@ export default function BookingPages({ BookingData }) {
 
       if (PromoResponse.Status !== "0") {
         setShowbtnName(true); // Show the button for removing the promo
-        showSuccessToast(PromoResponse.Message);
+        showSuccessToast(translate, "Promo code applied successfully");
         setDiscount(PromoResponse); // Apply the discount
         setHandlePromo(true); // Promo applied
       } else {
         setShowbtnName(false); // Hide the remove button
-        showErrorToast("Invalid promo code.");
+        showErrorToast(translate, "Invalid promo code");
         setHandlePromo(false); // Promo failed
         setDiscount(0); // Reset discount
       }
@@ -720,10 +720,10 @@ export default function BookingPages({ BookingData }) {
     if (HandlePromo) {
       // If a promo is applied
       setHandlePromo(false); // Remove the promo
-      showSuccessToast("Promo removed successfully.");
+      showSuccessToast(translate, "Promo removed successfully");
       setDiscount(0); // Reset the discount
     } else {
-      showErrorToast("No promo to remove.");
+      showErrorToast(translate, "No promo to remove");
     }
 
     setShowbtnName(false); // Hide the remove button after promo is removed

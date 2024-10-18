@@ -309,15 +309,15 @@ export default function Payment() {
 
       if (response.Status == "1") {
         setIsLoading(false);
-        showSuccessToast(response.Message);
+        showSuccessToast(translate , "Booking successful");
         setBookingStage((pre) => pre + 1);
         setReservationID(response.reservationNumber);
       } else {
-        showErrorToast(response.Message);
+        showErrorToast(translate, "Booking failed");
       }
     } catch (error) {
       console.error("Error caught:", error);
-      showErrorToast(error);
+      showErrorToast(translate, "Booking failed");
     }
   };
   const handleClose = () => {
@@ -329,7 +329,7 @@ export default function Payment() {
 
     if (selectedCheckbox === 0) {
       if (!agbAcceptance.checked || !item5.checked) {
-        showErrorToast("Please fill all the fields");
+        showErrorToast(translate, "Please fill all the fields");
         setIsLoading(false);
         return;
       }
@@ -358,7 +358,7 @@ export default function Payment() {
         !agbAcceptance.checked ||
         !item5.checked
       ) {
-        showErrorToast("Please fill all the fields");
+        showErrorToast(translate, "Please fill all the fields");
         setIsLoading(false);
         return;
       }
@@ -381,7 +381,7 @@ export default function Payment() {
 
     if (selectedCheckbox === 1) {
       if (!agbAcceptance.checked || !item5.checked) {
-        showErrorToast("Please fill all the fields");
+        showErrorToast(translate, "Please fill all the fields");
         return;
       }
       setShowStripeModal(true);

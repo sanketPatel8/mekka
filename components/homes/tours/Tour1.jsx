@@ -29,7 +29,7 @@ export default function Tour1() {
         }
       } catch (error) {
         console.error("Error caught:", error);
-        showErrorToast(error?.message + " " + "in Latest Package");
+        showErrorToast(translate, error?.message + " " + "in Latest Package");
       }
     };
     fetchData();

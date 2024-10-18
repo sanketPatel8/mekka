@@ -38,7 +38,7 @@ export default function FooterTwo() {
     }
 
     if(!email){
-      showErrorToast("Email is required");
+      showErrorToast(translate, "Email is required");
       return;
     }
 
@@ -49,10 +49,10 @@ export default function FooterTwo() {
     const response = await POST.request({form: formData, url: "newsemail"});
 
     if(response){
-      showSuccessToast(response.message);
+      showSuccessToast(translate, "Email successfully added");
       setEmail("");
     }else{
-      showErrorToast("Email has not been added");
+      showErrorToast(translate, "Email has not been added");
       setEmail("");
     }
     

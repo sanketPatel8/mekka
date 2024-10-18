@@ -82,7 +82,7 @@ export default function Register() {
       if (resp.status == "success") {
 
         console.log("success",resp.status);
-        showSuccessToast("User created successfully");
+        showSuccessToast(translate, "User created successfully");
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -116,7 +116,7 @@ export default function Register() {
       if (resp.status == "success") {
 
         console.log("success",resp.status);
-        showSuccessToast("User created successfully");
+        showSuccessToast(translate, "User created successfully");
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -137,7 +137,7 @@ export default function Register() {
         }, 2000);
        
       } else  {
-        showErrorToast("Invalid Credentials");
+        showErrorToast(translate, "Invalid Credentials");
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -243,28 +243,28 @@ export default function Register() {
       !confirm_pass 
       
     ) {
-      showErrorToast("Please fill all fields");
+      showErrorToast(translate, "Please fill all fields");
       return;
     }
 
     if(
       isChecked === false
     ){
-      showErrorToast("Please Accept the terms and conditions");
+      showErrorToast(translate, "Please Accept the terms and conditions");
       return;
     }
 
     // Validate the password using regex
     if (!passwordRegex.test(RegisterData.password)) {
-      showErrorToast(
-        "Please check your password. It must meet the required criteria."
+      showErrorToast(translate, 
+        "Please check your password. It must meet the required criteria"
       );
       return;
     }
 
     // Check if passwords match
     if (RegisterData.password !== confirm_pass) {
-      showErrorToast("Passwords do not match");
+      showErrorToast(translate, "Passwords do not match");
       return;
     }
 
@@ -274,7 +274,7 @@ export default function Register() {
       const response = await post("register", RegisterData);
       if(response.status === "success"){
         setIsLoading(false)
-        showSuccessToast(response.message);
+        showSuccessToast(translate, "User created successfully");
         // Clear the form and set email in local storage
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -311,9 +311,9 @@ export default function Register() {
           email: "",
           password: RegisterData.password,
         });
-        showErrorToast(error.response.data.message);
+        showErrorToast(translate, "Email already exists");
       } else {
-        showErrorToast("An error occurred during registration.");
+        showErrorToast(translate, "An error occurred during registration");
       }
     }
   };

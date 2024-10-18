@@ -56,7 +56,7 @@ function ResetPassword({params}) {
         if(response){
           setEncryptedId(response.text);
         }else{
-          showErrorToast("Invalid Id")
+          showErrorToast(translate, "Invalid Id")
         }
       }
 
@@ -67,7 +67,7 @@ function ResetPassword({params}) {
       const handleSubmit = async(e) => {
         e.preventDefault();
         if (!password || !confirmPassword) {
-            showErrorToast("Please fill all fields");
+            showErrorToast(translate,"Please fill all fields");
             return;
         }
 
@@ -82,7 +82,7 @@ function ResetPassword({params}) {
         const response = await POST.request({form:formData, url:"reset_password"})
         console.log(response, 'response')
         if(response){
-            showSuccessToast(response.message);
+            showSuccessToast(translate, "Password reset successfully");
             setPassword("");
             setConfirmPassword("");
             if(response.user_type === "vendor"){

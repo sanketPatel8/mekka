@@ -19,7 +19,7 @@ export default function Page() {
 
     const response = await POST.request({form:formData, url:"resend_email"});
     if(response){
-      showSuccessToast("Email sent successfully");
+      showSuccessToast(translate, "Email sent successfully");
 
     }
   }

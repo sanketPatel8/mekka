@@ -62,7 +62,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
         
         if (resp.status == "error") {
           setIsLoading(false);
-          showErrorToast(resp.message);
+          showErrorToast(translate, "Invalid Email or Password");
         }
 
         
@@ -70,7 +70,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
           setIsLoading(false);
           typeof window != 'undefined' ? localStorage.setItem("user", JSON.stringify(resp)) : '';
           dispatch({ type: "LOGIN", payload: resp });
-          showSuccessToast("Login successful!");
+          showSuccessToast(translate, "Login successful!");
           setTimeout(() => {
             setLoginPer(true)
             router.push('/vendor/dashboard');
@@ -78,7 +78,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
         }
         else{
           setIsLoading(false);
-          showErrorToast("Invalid Credentials. If you are a customer please login from the customer login page.");
+          showErrorToast(translate, "Invalid Credentials. If you are a customer please login from the customer login page.");
           setLogInData({
             AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
             email: "",

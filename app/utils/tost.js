@@ -2,7 +2,10 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const showSuccessToast = (message) => {
+
+export const showSuccessToast = (translate,messageKey) => {
+  const message = translate(messageKey);
+
   toast.success(message, {
     position: "top-right",
     autoClose: 2000,
@@ -16,7 +19,9 @@ export const showSuccessToast = (message) => {
   });
 };
 
-export const showErrorToast = (message) => {
+export const showErrorToast = (translate,messageKey) => {
+  const message = translate(messageKey);
+
   toast.error(message, {
     position: "top-right",
     autoClose: 2000,

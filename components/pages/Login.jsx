@@ -120,7 +120,7 @@ export default function Login({
       if (resp.status == "success") {
 
         console.log("success",resp.status);
-        showSuccessToast("Successfully logged in.");
+        showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         const redirect =
@@ -153,7 +153,7 @@ export default function Login({
         url: "social_login",
       });
       if ( resp.status == "success" ) {
-        showSuccessToast("Successfully logged in.");
+        showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         const redirect =
@@ -176,7 +176,7 @@ export default function Login({
           }, 1000);
         }
       } else  {
-        showErrorToast("Invalid Credentials");
+        showErrorToast(translate, "Invalid Credentials");
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           email: "",

@@ -12,7 +12,8 @@ export default function ContactForm() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  
+  const {translate} = useTranslation()
+
   const handleMobileChange = (e) => {
     const value = e.target.value.replace(/[^0-9.]/g, '');
     setPhone(value);
@@ -23,7 +24,7 @@ export default function ContactForm() {
     console.log("hi")
 
     if(name == "" || phone == "" || email == "" || message == ""){
-      showErrorToast("All fields are required")
+      showErrorToast(translate, "All fields are required")
       return;
     }
 
@@ -35,14 +36,14 @@ export default function ContactForm() {
 
     const response = await POST.request({form: formData, url: "save_contact"});
     if(response.Status === "1"){
-      showSuccessToast(response.Message);
+      showSuccessToast(translate, "Message sent successfully");
       setName("");
       setPhone("");
       setEmail("");
       setMessage("");
 
     }else{
-      showErrorToast(response.Message)
+      showErrorToast(translate, "Message not sent");
       setName("");
       setPhone("");
       setEmail("");
@@ -51,7 +52,6 @@ export default function ContactForm() {
     }
   }
 
-  const {translate} = useTranslation()
  
   return (
     <>

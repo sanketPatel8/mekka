@@ -49,6 +49,7 @@ const customStyles = {
 export default function DBListing() {
   const router = useRouter();
   const { user } = useAuthContext();
+  const { translate } = useTranslation();
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -78,7 +79,7 @@ export default function DBListing() {
         POST.request({ form: formData, url: "duplicatetour" })
           .then((response) => {
             if (response) {
-              showSuccessToast("Tour Duplicated Successfully");
+              showSuccessToast(translate, "Tour Duplicated Successfully");
               setTimeout(() => {
                 router.push(`/vendor/edit-tour/${response.tour_id}`);
                 setLoading(true);
@@ -151,7 +152,6 @@ export default function DBListing() {
     fetchListing(pageIndex);
   };
 
-  const { translate } = useTranslation();
 
   return (
     <>

@@ -59,9 +59,9 @@ export default function HeaderSerch({ white }) {
             error.response.data &&
             error.response.data.message
           ) {
-            showErrorToast("Please verify your email");
+            showErrorToast(translate, "Please verify your email");
           } else {
-            showErrorToast("An error occurred during registration.");
+            showErrorToast(translate, "An error occurred during registration");
           }
         }
       };

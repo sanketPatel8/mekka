@@ -592,7 +592,7 @@ const CustomerDetaTable = () => {
         form: formData,
         url: "edit_person",
       });
-      showSuccessToast(response?.Message);
+      showSuccessToast(translate, "Updated successfully");
       setLoading(false);
     } catch (e) {
       console.error(e);

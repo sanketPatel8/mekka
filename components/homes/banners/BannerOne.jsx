@@ -25,15 +25,15 @@ export default function BannerOne() {
     try {
       const response = await post("welcome_discount", sendData);
       if (response?.Status == 1 ) {
-        showSuccessToast(response.Message);
+        showSuccessToast(translate , "Check your email for the discount code");
         setDiscountMail("");
       } else if (response?.Status == 0) {
-        showErrorToast(response.Message);
+        showErrorToast(translate , "Already used");
         setDiscountMail("");
       }
     } catch (error) {
       console.error("Error caught:", error);
-      showErrorToast("An error occurred during registration.");
+      showErrorToast(translate, "An error occurred during registration");
     }
   };
 

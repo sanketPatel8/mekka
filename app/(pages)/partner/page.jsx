@@ -160,7 +160,7 @@ const page = () => {
       !company_mobile ||
       !agreeToTerms 
     ) {
-      showErrorToast("Please fill all the fields");
+      showErrorToast(translate,"Please fill all the fields");
       return;
     }
 
@@ -169,12 +169,12 @@ const page = () => {
 
     if (Object.keys(tempErrors).length > 0) {
       setErrors(tempErrors);
-      showErrorToast("Please fill all the fields");
+      showErrorToast(translate, "Please fill all the fields");
       return;
     }
 
     if(password !== confirmPassword){
-      showErrorToast("Passwords do not match");
+      showErrorToast(translate, "Passwords do not match");
       return;
     }
 
@@ -206,14 +206,13 @@ const page = () => {
       });
       if (response.status === "success") {
         setIsLoading(false);
-        console.log("success");
 
-        showSuccessToast(response.message);
+        showSuccessToast(translate, "User created successfully");
         router.push("/thank-you");
       } else if (response.status === "error") {
         console.log("error");
         setIsLoading(false);
-        showErrorToast(response.message);
+        showErrorToast(translate, "Email already exists");
       }
 
       // if(response.error){
@@ -238,7 +237,7 @@ const page = () => {
     } catch (err) {
       console.log("error5");
       setIsLoading(false);
-      showErrorToast("Something went wrong");
+      showErrorToast(translate, "Something went wrong");
     }
   };
   const handleCompanyMobileNumberChange = (e) => {

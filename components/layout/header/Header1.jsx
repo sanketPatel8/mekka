@@ -119,14 +119,12 @@ export default function Header1() {
 
           <div className="headerMobile__right">
             {LoginCheck ? (
-              // If the user is logged in, show the DashboardCustomer component
               <DashboardCustomer
                 onLocaleChange={setLocale}
                 handleLogoutClick={handleLogoutClick}
                 
               />
             ) : (
-              // If the user is not logged in, show the Register and Login/Logout buttons
               <>
                 <button
                   onClick={() => router.push("/register")}

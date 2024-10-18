@@ -386,7 +386,7 @@ if (day && month && year) {
       setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
     }
   } else {
-    showErrorToast("Please fill in all required fields before proceeding.");
+    showErrorToast(translate,"Please fill in all required fields before proceeding");
   }
   
   } 
@@ -748,7 +748,7 @@ const isCurrentTabValid = () => {
     !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
     (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false) || !flightInformation) {
       setLoading(false);
-      showErrorToast("Please fill in all required fields before proceeding.");
+      showErrorToast(translate, "Please fill in all required fields before proceeding");
       return;
     }
 
@@ -811,7 +811,7 @@ const isCurrentTabValid = () => {
       const response = await POST.request({ form:formData , url:url, headers: { "Content-Type": "multipart/form-data" } });
       setLoading(false);
       if(response){
-        showSuccessToast("Tour Added Successfully");
+        showSuccessToast(translate, "Tour Added Successfully");
         setTimeout(()=>{
 
           router.push("/vendor/listing");
