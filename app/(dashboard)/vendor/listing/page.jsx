@@ -229,7 +229,7 @@ export default function DBListing() {
                                 <div className="text-14 ">
                                   {translate("Commision")} :{" "}
                                   {elm.tour_commission}
-                                  {elm.commission_type == "1" ? " %" : " €"}
+                                  {elm.commission_type == "1" ? " €" : "%"}
                                 </div>
                               </div>
                               {/* ))} */}
