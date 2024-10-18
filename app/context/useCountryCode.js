@@ -13,7 +13,7 @@ export const CountryCodeProvider = ({ children }) => {
             try {
                 const response = await fetch('https://ipapi.co/json/'); // You can use another API if you prefer
                 const data = await response.json();
-                setCountryCode(data.country_code); // Set the country code
+                setCountryCode(data.country_code.toLowerCase()); // Set the country code
             } catch (error) {
                 console.error('Error fetching country code:', error);
             }
