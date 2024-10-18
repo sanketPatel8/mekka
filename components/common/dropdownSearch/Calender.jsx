@@ -9,7 +9,7 @@ export default function Calender() {
   const handleDateChange = (newDates) => {
     setCalender(newDates); // Update the global state with the selected dates
 
-    const formattedDates = newDates.map((date) => date.format("YYYY.MM.DD"));
+    const formattedDates = newDates.map((date) => date.format("DD.MM.YYYY"));
     setFormattedDates(formattedDates); // Store the formatted dates globally
   };
 
@@ -23,7 +23,7 @@ export default function Calender() {
       offsetY={10}
       range
       rangeHover
-      format="YYYY.MM.DD"
+      format="DD.MM.YYYY"
       inputClass="custom_input-picker"
       containerClassName="custom_container-picker"
       placeholder={translate("Please Select Your Date")}

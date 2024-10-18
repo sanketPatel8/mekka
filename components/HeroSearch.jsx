@@ -22,12 +22,12 @@ const HeroSearch = ({ CustomClass }) => {
   const { location, setLocation, calender, counts } = useGlobalState();
   
   // Handle undefined calendar values gracefully
-  const startDate = calender?.[0] ? calender[0].format("YYYY.MM.DD") : "";
-  const endDate = calender?.[1] ? calender[1].format("YYYY.MM.DD") : "";
+  const startDate = calender?.[0] ? calender[0].format("DD.MM.YYYY") : "";
+  const endDate = calender?.[1] ? calender[1].format("DD.MM.YYYY") : "";
 
   const handleDateChange = (newDates) => {
     setDates(newDates);
-    const formattedDates = newDates.map((date) => date.format("YYYY.MM.DD"));
+    const formattedDates = newDates.map((date) => date.format("DD.MM.YYYY"));
     console.log("formattedDates", formattedDates);
   };
 

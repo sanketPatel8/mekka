@@ -4,14 +4,16 @@ import Hero1 from "@/components/homes/heros/Hero1";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import TourList4 from "@/components/tours/TourList4";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { post } from "../utils/api";
 import { showErrorToast } from "../utils/tost";
 import { useRouter, useSearchParams } from "next/navigation";
 import { POST } from "../utils/api/post";
+import { useTranslation } from "../context/TranslationContext";
 
 export default function PageData() {
   const searchParams = useSearchParams();
+  const {translate} = useTranslation()
 
   const [count, setCount] = useState(0);
   const [FliterData, setFliterData] = useState([]);
