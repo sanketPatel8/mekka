@@ -26,6 +26,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 export default function Payment() {
   const router = useRouter();
   const { formatPrice } = useCurrency();
+  const { translate } = useTranslation();
 
   const [roomType, setRoomType] = useState("");
   const [bookingStage, setBookingStage] = useState(1);
@@ -285,6 +286,12 @@ export default function Payment() {
     [dateEnd]
   );
 
+  const calculateTotalWithFee = (amount) => {
+    const feePercentage = 0.03;
+    const fee = amount * feePercentage; 
+    return  fee; 
+  };
+
   const handleEndDateChange = (event) => {
     const selectedDate = event.target.value;
     setDateEnd(selectedDate);
@@ -392,7 +399,6 @@ export default function Payment() {
 
   console.log("SideBarData?.Airline?.luggage", SideBarData);
 
-  const { translate } = useTranslation();
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
@@ -1145,6 +1151,15 @@ export default function Payment() {
                       {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}
                     </div>
                   </div>
+
+                  {
+                    paidAmount && (
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500"> {translate("Stripe Fees (3%)")}</div>
+                        <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div>
+                      </div>
+                    )
+                  }
 
                   {paidAmount && (
                     <div className="d-flex items-center justify-between">

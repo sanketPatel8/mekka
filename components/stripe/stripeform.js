@@ -5,12 +5,19 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
 import { useCurrency } from '@/app/context/currencyContext';
 
-function Stripeform({RadioValue, closeModal ,showStripeModal, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
-  console.log(amount, 'amount')
+function Stripeform({RadioValue, closeModal,payableAmount ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
+
+ 
+
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
   const {currency} = useCurrency();
-  console.log(currency, 'currency')
+
+  const calculateTotalWithFee = (amount) => {
+    const feePercentage = 0.03;
+    const fee = amount * feePercentage; 
+    return amount + fee; 
+  };
   const getClientSecret = async () => {
     const api = axios.create({
       baseURL: 'https://api.stripe.com/v1/',
@@ -19,10 +26,11 @@ function Stripeform({RadioValue, closeModal ,showStripeModal, subtotal ,  handle
     if (amount) {
 
     
-        const newAmount = parseInt(amount) * 100;
-
+      const newAmount = parseInt(amount) * 100; // Convert to cents
+      const totalAmount = calculateTotalWithFee(newAmount); // Calculate total with fee
+      console.log(totalAmount, 'totalAmount')
       const data = {
-        "amount": Math.round(newAmount),
+        "amount": Math.round(totalAmount),
         "currency": 'EUR',
         "payment_method_types[0]": 'card',
       }
@@ -37,6 +45,36 @@ function Stripeform({RadioValue, closeModal ,showStripeModal, subtotal ,  handle
       if (res && res.data) {
         setClientSecret(res.data.client_secret);
       }
+    } else if(payableAmount){
+      const parseEuroAmount = (amountString) => {
+        // Remove the thousands separator and replace the decimal separator
+        const normalizedAmount = amountString.replace(/\./g, '').replace(',', '.');
+        return parseFloat(normalizedAmount); // Convert to float
+      };
+    
+      const parsedAmount = parseEuroAmount(payableAmount);
+      console.log(parsedAmount) 
+      const newAmount = parsedAmount * 100;
+
+      const totalAmount = calculateTotalWithFee(newAmount); 
+      console.log(totalAmount, 'totalAmount')
+      const data = {
+        "amount": Math.round(totalAmount),
+        "currency": 'EUR',
+        "payment_method_types[0]": 'card',
+      }
+
+      const res = await api.post('payment_intents', data, {
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`,
+        },
+      });
+
+      if (res && res.data) {
+        setClientSecret(res.data.client_secret);
+      }
+
     } else {
       setClientSecret("");
     }
@@ -64,6 +102,7 @@ function Stripeform({RadioValue, closeModal ,showStripeModal, subtotal ,  handle
         RadioValue={RadioValue}
         subtotal={subtotal}
         closeModal={closeModal}
+        paidData = {paidData}
       />
     </Elements>
   )

@@ -63,7 +63,7 @@ const CustomerDetaTable = () => {
     birthday: "",
     nationality: "",
   });
-
+const [paidData, setPaidData] = useState({});
   const [showStripeModal, setShowStripeModal] = useState(false);
   const [PersonalUserID, setPersonalUserID] = useState(0);
   const [UploadDocID, setUploadDocID] = useState({});
@@ -94,6 +94,8 @@ const CustomerDetaTable = () => {
     secondDate: "",
     thirdAmount: "",
     thirdDate: "",
+    id:"",
+    transaction_id: "",
   });
   const router = useRouter();
 
@@ -468,6 +470,8 @@ const CustomerDetaTable = () => {
             firstDate: response.Bookings.paymentData.payment_plan_date_1 || "",
             secondDate: response.Bookings.paymentData.payment_plan_date_2 || "",
             thirdDate: response.Bookings.paymentData.payment_plan_date_3 || "",
+            id: response.Bookings.paymentData.id || "",
+            transaction_id: response.Bookings.paymentData.payment_intent_id || "",
           });
         } else {
           console.warn("paymentData not found in response");
@@ -1043,7 +1047,37 @@ const CustomerDetaTable = () => {
 
   // to pay instalment payment
 
-  const HandleInstallmentPay = (e) => {
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  const HandleInstallmentPay = (payable) => {
+    setAmount(payable);
+    if(payable === pendingPaymentValue.secondAmount)
+    {
+      const data = {
+        plan_id: pendingPaymentValue.id,
+        payment_plan: 2,
+        plan_date : getTodayDate(),
+        reservation_id: BookingDetails.reservation?.id,
+        transaction_id : pendingPaymentValue.transaction_id
+      }
+      console.log(data,"data")
+      setPaidData(data);
+    }else{
+
+      const data = {
+        plan_id: pendingPaymentValue.id,
+        payment_plan: 3,
+        plan_date : getTodayDate(),
+        reservation_id: BookingDetails.reservation?.id,
+      }
+      setPaidData(data);
+      
+    }
     setShowStripeModal(true);
   };
 
@@ -2487,14 +2521,11 @@ const CustomerDetaTable = () => {
 
       {showStripeModal && (
         <Stripeform
-          amount={amount ? amount : subtotal}
-          subtotal={subtotal}
+          payableAmount={amount}
           showStripeModal={showStripeModal}
           handleClose={handleClose}
-          AddpersonData={AddpersonData}
-          reservation_id={BookingDetails.reservation?.id}
-          RadioValue={RadioValue}
           closeModal={closeModal}
+          paidData = {paidData}
         />
       )}
     </div>

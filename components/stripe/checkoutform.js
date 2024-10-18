@@ -44,6 +44,7 @@ export default function CheckoutForm({
   setReservationID,
   setPaidAmount,
   closeModal,
+  paidData
 }) {
   const { dispatch, customer } = useAuthContext();
   const stripe = useStripe();
@@ -128,6 +129,35 @@ export default function CheckoutForm({
       console.error(e);
     }
   };
+  const InstallmentPaid = async () => {
+    const formData = new FormData();
+
+    formData.append("reservation_id", paidData.reservation_id);
+    formData.append("transaction_id", paidData.transaction_id);
+    formData.append("plan_id", paidData.plan_id);
+    formData.append("payment_plan", paidData.payment_plan);
+    formData.append("plan_date", paidData.plan_date);
+
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "installment_payment",
+      });
+      if (response?.Status == "1") {
+        showSuccessToast(translate, "Payment successful");
+        closeModal();
+        handleClose();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+        
+      } else {
+        showErrorToast(translate , "Payment failed");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -181,6 +211,30 @@ export default function CheckoutForm({
         FetchAddperson();
       }
     }
+    if (paidData) {
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${process.env.NEXT_PUBLIC_URL}/`,
+        },
+        redirect: "if_required",
+      });
+      if (error) console.log(error);
+      if (
+        error &&
+        (error.type === "card_error" || error.type === "validation_error")
+      ) {
+        showErrorToast(tarnslate, "Payment already succeeded");
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        console.log(paymentIntent, "paymentIntent");
+        console.log(paymentIntent.id, "paymentIntent.id");
+        const newAmount = paymentIntent.amount / 100;
+        showSuccessToast(translate,"Payment successful");
+        InstallmentPaid();
+      }
+    }
+
+
 
     setIsProcessing(false);
   };
