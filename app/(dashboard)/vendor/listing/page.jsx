@@ -262,10 +262,10 @@ export default function DBListing() {
                               className={
                                 elm.tour_status === "Pending"
                                   ? "badge-orange"
-                                  : elm.tour_status === "Approved"
+                                  : elm.tour_status === "Active"
                                   ? "badge-green"
-                                  : elm.tour_status === "Rejected" ||
-                                    elm.tour_status === "Cancelled"
+                                  : (elm.tour_status === "Rejected" ||
+                                    elm.tour_status === "Cancelled")
                                   ? "badge-red"
                                   : ""
                               }
