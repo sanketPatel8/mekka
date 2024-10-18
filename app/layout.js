@@ -15,6 +15,7 @@ import { PeopleProvider } from "./context/PeopleContext";
 import Head from "next/head";
 import { CurrencyProvider } from "./context/currencyContext";
 import { UserProfileProvider } from "./context/ProfileContext";
+import { CountryCodeProvider } from "./context/useCountryCode";
 const dmsans = DM_Sans({
   weight: ["400", "500", "700"],
   style: ["normal", "italic"],
@@ -54,7 +55,7 @@ export default function RootLayout({ children }) {
               <GlobalStateProvider>
                 <PeopleProvider>
                   <Wrapper>
-                    <UserProfileProvider>{children}</UserProfileProvider>
+                    <UserProfileProvider><CountryCodeProvider>{children}</CountryCodeProvider></UserProfileProvider>
                   </Wrapper>
                   <ScrollToTop />
                   <ScrollTopBehaviour />
