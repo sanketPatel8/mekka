@@ -178,13 +178,13 @@ const CustomerDetaTable = () => {
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
           <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
+            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}
@@ -224,13 +224,13 @@ const CustomerDetaTable = () => {
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
           <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
+            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}
@@ -264,13 +264,13 @@ const CustomerDetaTable = () => {
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
           <button
-            className="button -sm -accent-1 bg-info-2 text-white my-2 col-5 mx-1 text-13 doc-px-5"
+            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}

@@ -328,7 +328,7 @@ export default function Payment() {
     const item5 = document.getElementById("item5");
 
     if (selectedCheckbox === 0) {
-      if (!agbAcceptance.checked || !item5.checked) {
+      if (!agbAcceptance?.checked || !item5?.checked) {
         showErrorToast(translate, "Please fill all the fields");
         setIsLoading(false);
         return;
@@ -854,27 +854,27 @@ export default function Payment() {
                       </div>
                     </div>
 
-                    <div className="border-dashed-1 py-30 px-50 rounded-12 mt-30">
-                      <div className="row y-gap-10">
+                    <div className="border-dashed-1 py-30 px-10 rounded-12 mt-30">
+                      <div className="row ">
                         <div className="col-md-4 col-6">
-                          <div>{translate("Reservation Number")}</div>
+                          <span>{translate("Reservation Number")}</span>
                           <div className="text-accent-2">{ReservationID}</div>
                         </div>
 
                         <div className="col-md-2 col-6">
-                          <div>{translate("Date")}</div>
+                          <span>{translate("Date")}</span>
                           <div className="text-accent-2">{todayDate}</div>
                         </div>
 
-                        <div className="col-md-2 col-6">
-                          <div>{translate("Total")}</div>
+                        <div className="col-md-3 col-6">
+                          <span>{translate("Total")}</span>
                           <div className="text-accent-2">
-                            {formatPrice(SideBarData?.BookingFild?.SubTotal)}
+                            {/* {formatPrice(SideBarData?.BookingFild?.SubTotal)} */}
                           </div>
                         </div>
 
-                        <div className="col-md-4 col-6">
-                          <div>{translate("Payment Method")}</div>
+                        <div className="col-md-3 col-6">
+                          <span>{translate("Payment Method")}</span>
                           <div className="text-accent-2">
                             {selectedCheckbox === 0
                               ? "Direct Bank Transfer"
