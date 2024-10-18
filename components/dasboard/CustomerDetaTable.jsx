@@ -1900,7 +1900,7 @@ const [paidData, setPaidData] = useState({});
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-1 py-2">{translate("Cancle Date")}</td>
+                    <td className="px-1 py-2">{translate("Cancel Date")}</td>
                     <td className="px-1 py-2">
                       {formattedDate}
                     </td>
