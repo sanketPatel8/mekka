@@ -396,7 +396,7 @@ export default function DbBooking({ params }) {
 
         setReservationData(reservation);
         setBookingDate(
-          formatDateToMMDDYYYY(response.Bookings.reservation.created_at)
+        response.Bookings.reservation.created_at
         );
         setBookingStatus(response.Bookings.reservation.reservation_status);
       }
