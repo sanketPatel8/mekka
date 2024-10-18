@@ -297,12 +297,12 @@ const CustomerDetaTable = () => {
       selector: (row) => row.subtotal,
       cell: (row) => formatPrice(row.subtotal),
     },
-    { name: 'Amount Paid', selector: (row) => row.amount_paid },
+    { name: "Amount Paid", selector: (row) => row.amount_paid },
     {
       name: translate("Amount Due"),
       selector: (row) => row.amount_due,
-        cell: (row) => formatPrice(row.amount_due),
-      },
+      cell: (row) => formatPrice(row.amount_due),
+    },
   ];
 
   // const AmountPaid = [
@@ -335,10 +335,6 @@ const CustomerDetaTable = () => {
 
   function closePaymentModal() {
     setPaymentModalIsOpen(false);
-  }
-
-  function openCancelPopUp() {
-    setCanclePopUp(true);
   }
 
   function closeUploadFileModal() {
@@ -563,7 +559,7 @@ const CustomerDetaTable = () => {
         setPdfData(response.pdf_url);
       }
     };
-    if(BookingDetails?.reservation?.id){
+    if (BookingDetails?.reservation?.id) {
       fetchPayments();
     }
   }, [BookingDetails]);
@@ -759,14 +755,6 @@ const CustomerDetaTable = () => {
     setDateBegin(todayString);
     setMinEndDate(todayString);
   }, [BookingDetails?.reservation?.date_begin]);
-
-  const parseDate = (dateString) => {
-    const parts = dateString.split(".");
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10);
-    const year = parseInt(parts[2], 10);
-    return new Date(year, month - 1, day);
-  };
 
   const handleCheckboxChange = (index) => {
     // setPaymentCheckbox(index);
@@ -1056,6 +1044,42 @@ const CustomerDetaTable = () => {
     setShowStripeModal(true);
   };
 
+  // for cancel booking
+
+  const [RefundData, setRefundData] = useState({});
+
+  const today = new Date();
+
+  // Format the date in German format (dd.mm.yyyy)
+  const formattedDate = today.toLocaleDateString('de-DE'); 
+
+  const fatchRefund = async () => {
+    setIsLoading(true);
+    const formData = new FormData();
+
+    formData.append("reservation_id", BookingDetails.reservation?.id);
+
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "getRefundAmount",
+      });
+      if (response) {
+        setIsLoading(false);
+        setRefundData(response);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  function openCancelPopUp() {
+    setCanclePopUp(true);
+    fatchRefund();
+  }
+
+  console.log(RefundData, "RefundData");
+
   return (
     <div>
       <ToastContainer />
@@ -1066,7 +1090,11 @@ const CustomerDetaTable = () => {
       </h3>
       <div className="row px-0 pb-10 mt-20 ">
         <div className="col-lg-6">
-          <p className="t_center"> {translate("Booked Date")} : 12.08.2024</p>
+          <p className="t_center">
+            {" "}
+            {translate("Booked Date")} :{" "}
+            {BookingDetails?.reservation?.booking_date}
+          </p>
           <p className="t_center">
             {" "}
             {translate("Booking Status")} :{" "}
@@ -1194,13 +1222,13 @@ const CustomerDetaTable = () => {
           highlightOnHover
         /> */}
 
-      {BookingDetails.reservation?.paymentType !== "1" && (
+      {BookingDetails.reservation?.paymentType !== "1" && BookingDetails.reservation?.paymentType !== "2"  && (
         <div className="row bg-white mx-0">
           <div className="col-12 row">
             <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
-            <table class="table bg-light col-12" >
+            <table class="table bg-light col-12">
               <thead>
-                <tr className="row"> 
+                <tr className="row">
                   <th className="col-4 pb-1">Date</th>
                   <th className="col-4 pb-1">Amount</th>
                   <th className="col-4 pb-1">Paid Date</th>
@@ -1208,19 +1236,37 @@ const CustomerDetaTable = () => {
               </thead>
               <tbody>
                 <tr className="row">
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_1}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_1}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.paid_date_1}</td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.payment_plan_date_1}
+                  </td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.payment_plan_1}
+                  </td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.paid_date_1}
+                  </td>
                 </tr>
                 <tr className="row">
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_2}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_2}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.paid_date_2}</td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.payment_plan_date_2}
+                  </td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.payment_plan_2}
+                  </td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.paid_date_2}
+                  </td>
                 </tr>
                 <tr className="row">
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_date_3}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.payment_plan_3}</td>
-                  <td className="col-4">{BookingDetails.paymentData?.paid_date_3}</td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.payment_plan_date_3}
+                  </td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.payment_plan_3}
+                  </td>
+                  <td className="col-4">
+                    {BookingDetails.paymentData?.paid_date_3}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -1793,38 +1839,50 @@ const CustomerDetaTable = () => {
           </div>
 
           <div className=" y-gap-30 contactForm px-10 py-10">
-            <table className="ttable table-success table-striped my-3 custom-table-bordered full_width">
-              <thead>
-                <tr>
-                  <th scope="col" className="px-1 py-2">
-                    <b>Type of fee</b>
-                  </th>
-                  <th scope="col" className="px-1 py-2">
-                    <b>Fee </b>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="px-1 py-2">{translate("refund_amount")}</td>
-                  <td className="px-1 py-2">
-                    {BookingDetails?.reservation?.refund_amount} €
-                  </td>
-                </tr>
-                {/* <tr>
-                  <td className="px-1 py-2">{translate("Mekka Fees")}</td>
-                  <td className="px-1 py-2">0.00 €</td>
-                </tr> */}
-                {/* <tr>
-                  <td className="px-1 py-2">{translate("Total Tax Amount")}</td>
-                  <td className="px-1 py-2">-13.00 €</td>
-                </tr>
-                <tr>
-                  <td className="px-1 py-2">{translate("Agent Payable")}</td>
-                  <td className="px-1 py-2">1.000,00 €</td>
-                </tr> */}
-              </tbody>
-            </table>
+            {RefundData && (
+              <table className="ttable table-success table-striped my-3 custom-table-bordered full_width">
+                <thead>
+                  <tr>
+                    <th scope="col" className="px-1 py-2">
+                      <b>Type of fee</b>
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-1 py-2"
+                      style={{ width: "40%" }}
+                    >
+                      <b>Fee </b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="px-1 py-2">{translate("Booking Date")}</td>
+                    <td className="px-1 py-2">
+                      {BookingDetails?.reservation?.booking_date}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-1 py-2">{translate("Cancle Date")}</td>
+                    <td className="px-1 py-2">
+                      {formattedDate}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-1 py-2">{translate("Tour Date")}</td>
+                    <td className="px-1 py-2">
+                      {RefundData?.tour_date}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-1 py-2">{translate("Amount Refund")} ({RefundData?.percentage}%)</td>
+                    <td className="px-1 py-2">
+                      {RefundData?.Refund_Amount} €
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
 
             <hr />
 
