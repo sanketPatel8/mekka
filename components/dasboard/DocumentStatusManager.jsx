@@ -144,7 +144,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
   return (
     <div>
       <ToastContainer/>
-       <h1 className="text-30"> {translate("Booking Number") } : {bookings.reservation.reservationNumber}</h1>
+       <h1 className="text-30"> {translate("Booking Number") } : {bookings?.reservation?.reservationNumber}</h1>
       <div className="row px-0 pb-10 mt-20">
         <div className="col-lg-6">
           <p className="t_center"> {translate("Booking Date") } : {bookingDate}</p>
