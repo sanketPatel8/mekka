@@ -578,7 +578,12 @@ const CustomerDetaTable = () => {
 
   // for edit customer data
 
-  console.log("editCustomerData.birthday" , editCustomerData.birthday);
+  const handleDateFocus = (e) => {
+    // Ensure this is a user gesture
+    if (e.target === document.activeElement) {
+        e.target.showPicker();
+    }
+};
   
   const convertGermanToISO = (germanDate) => {
     if (!germanDate) return "";
@@ -2257,6 +2262,7 @@ const CustomerDetaTable = () => {
                             birthday: convertISOToGerman(isoDate), // Convert back to German format for storing
                           });
                         }}
+                        onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
                       />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("Birthday Date")}
