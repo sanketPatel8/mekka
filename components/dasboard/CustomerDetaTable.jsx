@@ -601,7 +601,7 @@ const CustomerDetaTable = () => {
     formData.append("reservation_person_id", PersonalUserID);
     formData.append("name", editCustomerData.name);
     formData.append("surname", editCustomerData.surname);
-    formData.append("birthday", editCustomerData.birthday);
+    formData.append("birthday", convertGermanToISO(editCustomerData.birthday));
     formData.append("gender", editCustomerData.gender);
     formData.append("nationality", editCustomerData.nationality);
 
