@@ -1259,7 +1259,7 @@ const [paidData, setPaidData] = useState({});
           highlightOnHover
         /> */}
 
-      {BookingDetails.reservation?.paymentType !== "1" && BookingDetails.reservation?.paymentType !== "2"  && (
+      {BookingDetails?.reservation?.paymentType !== "1" && BookingDetails?.reservation?.paymentType !== "2"  && (
         <div className="row bg-white mx-0">
           <div className="col-12 row">
             <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
