@@ -143,6 +143,10 @@ export default function AddTour() {
   const [minDate, setMinDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(true);
+
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -174,6 +178,9 @@ export default function AddTour() {
         e.target.showPicker();
     }
 };
+
+const handleFocus = (e) => {
+}
   // const handleStartDateKeyDown = (e) => {
   //   const inputValue = e.target.value;
   //   const dateParts = inputValue.split('-');
@@ -442,41 +449,42 @@ if (day && month && year) {
   
   const handleDeleteImage2 = (index, event) => {
     event.preventDefault();
-    console.log(image2,"image2")
     const newImages = [...image2];
-    newImages.splice(index-image2.length, 1);
-    console.log(newImages,"newImages")
-    setImage2(newImages);
+    const newFiles = [...selectedFiles];
 
-  };
+    // Remove the image from the state
+    newImages.splice(index, 1);
+    newFiles.splice(index, 1); // Remove corresponding file from selectedFiles
+
+    setImage2(newImages);
+    setSelectedFiles(newFiles); // Update selected files
+};
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
 
  
   
-  const handleImageChange2 = (event) => {
+ const handleImageChange2 = (event) => {
     const files = event.target.files;
-    const promises = [];
-    const uploadedImages = [...image2];
-  
+    const uploadedImages = [...image2]; // Retain previously uploaded images
+    const newFiles = [];
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const promise = new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          uploadedImages.push(reader.result);
-          resolve();
-        };
-        reader.readAsDataURL(file);
-      });
-      promises.push(promise);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        uploadedImages.push(reader.result); // Append new image
+        newFiles.push(file); // Track the new file for submission
+        setSelectedFiles((prev) => [...prev, file]); // Update selected files
+      };
+      reader.readAsDataURL(file);
     }
-  
-    Promise.all(promises).then(() => {
-      setImage2(uploadedImages);
+
+    Promise.all(newFiles).then(() => {
+      setImage2(uploadedImages); // Update state with all images
     });
-  };
+};
 
   const handleImageChange = (event, func) => {
     const file = event.target.files[0];
@@ -778,10 +786,10 @@ const isCurrentTabValid = () => {
     ));
 
 
-    const image2File = document.querySelector('input[name="image2"]').files;
+    // const image2File = document.querySelector('input[name="image2"]').files;
 
-    const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
-    console.log(image2FileArray,"image2FileArray")
+    // const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
+    // console.log(image2FileArray,"image2FileArray")
 
     const formData = new FormData();
 
@@ -806,9 +814,13 @@ const isCurrentTabValid = () => {
     formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
-    image2FileArray.forEach((file, index) => {
+    // image2FileArray.forEach((file, index) => {
+    //   formData.append(`tour_image[${index}]`, file);
+    // });
+    console.log(selectedFiles,"selectedFiles")
+    selectedFiles.forEach((file, index) => {
       formData.append(`tour_image[${index}]`, file);
-    });
+  });
     const url = "addtour";
 
     try{
@@ -1193,7 +1205,9 @@ const isCurrentTabValid = () => {
                                           type="file"
                                           name="image2"
                                           multiple
-                                          style={{ display: "none" }}
+                                          style={{ display: "none" }}    
+                                          onClick={(e) => e.target.value = null} 
+
                                         />
                                       </div>
                                     </div>

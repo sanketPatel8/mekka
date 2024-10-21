@@ -135,6 +135,7 @@ export default function EditTour() {
   const [newImages, setNewImages] = useState([]);
   const [newImageIndex, setNewImageIndex] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
@@ -1061,10 +1062,9 @@ export default function EditTour() {
 
     const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-    const image2File = document.querySelector('input[name="image2"]').files;
-    const image2FileArray = Object.entries(image2File).map(
-      ([key, value]) => value
-    );
+    const image2FileArray = Object.entries(uploadedImage).map(([key, value]) => value);
+ 
+
 
     const departureData = departureRows.map((departure) => ({
       departure_id: departure.departure_id ? departure.departure_id : "",
