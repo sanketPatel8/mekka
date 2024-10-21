@@ -22,6 +22,7 @@ export default function Page() {
 
 
   const {customer} = useAuthContext();
+  console.log(customer , "customer")
 
   const router = useRouter();
   useEffect(()=>{
@@ -29,10 +30,10 @@ export default function Page() {
       router.push("/customer/booking")
 
       setTimeout(()=> {
-
         setLoading(false)
-      },[2000])
-    }else{
+
+      },[1000])
+    }else if(customer === null){
       router.push("/login")
       setTimeout(()=> {
 
@@ -40,7 +41,7 @@ export default function Page() {
       },[1000])
     }
     
-  },[customer,Loading])
+  },[Loading])
 
   return (
     <>

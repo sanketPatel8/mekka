@@ -164,6 +164,10 @@ export default function AddTour() {
     
   };
 
+  const handleKeyUp = (e) => {
+    setIsFocused(false)
+  }
+
   const handleDateFocus = (e) => {
     // Ensure this is a user gesture
     if (e.target === document.activeElement) {
@@ -1085,9 +1089,9 @@ const isCurrentTabValid = () => {
                                                         e.preventDefault();
                                                       }
                                                     }}
-                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onKeyUp={handleKeyUp}
 
-                                                    onFocus={() => setIsFocused(true)}
+                                                    onFocus={handleFocus}
                                                     onBlur={() => setIsFocused(false)}
                                                     />
                                                   <label className="lh-1 text-16 text-light-1">

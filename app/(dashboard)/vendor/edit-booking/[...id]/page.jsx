@@ -589,6 +589,8 @@ export default function DbBooking({ params }) {
     }else{
       setIsLoading(false);
       showErrorToast("Document Upload Failed");
+      setRows([{ document: "", type: null }]);
+
     }
  
   };

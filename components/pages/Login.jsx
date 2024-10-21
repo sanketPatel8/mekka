@@ -54,51 +54,16 @@ export default function Login({
 
     const updatedStatus = loginStatus !== undefined ? true : false;
 
-    localStorage.setItem("CustomerLoginCheck", JSON.stringify(updatedStatus));
 
-    console.log("Updated login status:", updatedStatus);
   };
 
-  // const signinSocial = async ({ type, data }) => {
-  //   console.log(data);
-  //   console.log("hi");
-  //   const formData = new FormData();
-  //   formData.append("auth_id", data?.sub);
-  //   formData.append("auth_provider", type);
-  //   formData.append("name", data?.name);
-  //   formData.append("email", data?.email);
-
-  //   const resp = await POST.request({ form: formData, url: "social_login" });
-
-  //   if (resp) {
-  //     if (resp) {
-  //       showSuccessToast("Successfully logged in.");
-  //       localStorage.setItem("customer", JSON.stringify(resp));
-  //       dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-
-  //       LoginUpdate();
-  //       setTimeout(() => {
-  //         setLoginPer(true);
-  //         router.push("/");
-  //       }, 1000);
-  //     } else {
-  //       showErrorToast("Invalid Credentials");
-
-  //       setLogInData({
-  //         AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-  //         email: "",
-  //         password: "",
-  //       });
-  //     }
-  //   }
-  // };
+ 
 
   const signinSocial = async ({ type, email, id, name, data }) => {
     if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
 
-      console.log(decodedToken, "decoded token");
 
       const appleData = {
         email: decodedToken.email,
@@ -107,18 +72,16 @@ export default function Login({
         name: "",
       };
 
-      console.log(appleData, "apple data");
 
       const resp = await POST.request({
         form: appleData,
         url: "social_login",
       });
 
-      console.log(resp, "apple response");
 
       if (resp.status == "success") {
 
-        console.log("success",resp.status);
+        
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
@@ -159,7 +122,6 @@ export default function Login({
           typeof window !== "undefined"
             ? localStorage.getItem("Redirect_Login")
             : null;
-        console.log(redirect, "redirect");
         LoginUpdate();
         if (redirect) {
           setTimeout(() => {
@@ -215,34 +177,42 @@ export default function Login({
       .then((resp) => {
         setIsLoading(false);
         if (resp.status == "error") {
-          showErrorToast(resp.message);
-        }
+          showErrorToast(translate, "Invalid Email or Password");
+        }else if(resp.status == "success") {
+
+        console.log(resp.user.user_type, "user type");
         if (resp.user.user_type == "customer") {
+          console.log("hi")
           localStorage.setItem("customer", JSON.stringify(resp));
+          localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
 
           dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-          showSuccessToast("Login successful!");
-          LoginUpdate();
-
+          // LoginUpdate();
+          showSuccessToast(translate, "Login successful!");
+          // setTimeout(() => {
+          //   setLoginPer(true)
+          //   router.push(path);
+          // }, 2000);
           const redirect =
             typeof window !== "undefined"
               ? localStorage.getItem("Redirect_Login")
               : null;
-          console.log(redirect, "redirect");
+              console.log(redirect, "redirect")
           if (redirect) {
+            console.log("yes")
             setTimeout(() => {
               window.location.reload();
               localStorage.removeItem("Redirect_Login");
-            }, 1000);
-          }
-
-          if (redirect == null) {
+            }, 2000);
+          }else if(redirect == null) {
+            console.log("no")
             setTimeout(() => {
               setLoginPer(true);
               router.push(path);
-            }, 1000);
+            }, 2000);
           }
-        } else {
+        } else if(resp.user.user_type == "vendor") {
+          console.log("hello")
           showErrorToast(translate,
             "Invalid Credentials. If you are tour agent, please login from the partner login page"
           );
@@ -252,8 +222,10 @@ export default function Login({
             password: "",
           });
         }
-      })
+      }
+  })
       .catch((err) => {
+        console.log("error")
         showErrorToast(translate,"Invalid Credentials. If you are tour agent, please login from the partner login page");
         setIsLoading(false);
       });
