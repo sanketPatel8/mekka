@@ -180,20 +180,20 @@ const [paidData, setPaidData] = useState({});
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
           <button
-            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}
           </button>
         </div>
       ),
-      width: "200px", // Set a custom width for the button column
+      width: "500px", // Set a custom width for the button column
     },
   ];
 
@@ -226,20 +226,20 @@ const [paidData, setPaidData] = useState({});
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
           <button
-            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}
           </button>
         </div>
       ),
-      width: "200px", // Set a custom width for the button column
+      width: "500px", // Set a custom width for the button column
     },
   ];
 
@@ -266,20 +266,20 @@ const [paidData, setPaidData] = useState({});
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
           >
             {translate("Edit")}
           </button>
           <button
-            className="button px-40 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openUploadFileModal(row.id, row.reservation_id)}
           >
             {translate("Document")}
           </button>
         </div>
       ),
-      width: "200px", // Set a custom width for the button column
+      width: "500px", // Set a custom width for the button column
     },
   ];
 
