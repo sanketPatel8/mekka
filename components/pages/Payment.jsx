@@ -875,7 +875,7 @@ export default function Payment() {
                         <div className="col-md-3 col-6">
                           <span>{translate("Total")}</span>
                           <div className="text-accent-2">
-                            {/* {formatPrice(SideBarData?.BookingFild?.SubTotal)} */}
+                            {formatPrice(SideBarData?.BookingFild?.SubTotal)}
                           </div>
                         </div>
 
