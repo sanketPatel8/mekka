@@ -583,12 +583,12 @@ export default function DbBooking({ params }) {
     });
     if (response.Status == 1) {
       setIsLoading(false);
-      showSuccessToast("Document Uploaded Successfully");
+      showSuccessToast(translate,"Document Uploaded Successfully");
       setuploadFileisOpen(false);
       setRows([{ document: "", type: null }]);
     }else{
       setIsLoading(false);
-      showErrorToast("Document Upload Failed");
+      showErrorToast(translate,"Document Upload Failed");
       setRows([{ document: "", type: null }]);
 
     }
