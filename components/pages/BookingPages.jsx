@@ -448,6 +448,9 @@ export default function BookingPages({ BookingData }) {
         [name]: value, // Store the value (e.g., phone number)
       };
 
+      console.log(value);
+      
+
       if (type === "Adult" && index === 0) {
         setUserData((prevUserData) => ({
           ...prevUserData,
@@ -1181,7 +1184,7 @@ export default function BookingPages({ BookingData }) {
                               onFocus={ field.type === "date"
                                 ? handleDateFocus
                                 : undefined} 
-                              onKeyDown={(e) => e.preventDefault()}
+                              onKeyDown={(e) => {field.type == "date" ? e.preventDefault() : ""}}
                               required
                             />
                             <label className="lh-1 text-16 text-light-1">
