@@ -187,7 +187,7 @@ const CustomerDetaTable = () => {
           </button>
           <button
             className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openUploadFileModal(row.id, row.reservation_id)}
+            onClick={() => openUploadFileModal(row.id, Tourid)}
           >
             {translate("Document")}
           </button>
@@ -232,7 +232,7 @@ const CustomerDetaTable = () => {
           </button>
           <button
             className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openUploadFileModal(row.id, row.reservation_id)}
+            onClick={() => openUploadFileModal(row.id, Tourid)}
           >
             {translate("Document")}
           </button>
@@ -271,7 +271,7 @@ const CustomerDetaTable = () => {
           </button>
           <button
             className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openUploadFileModal(row.id, row.reservation_id)}
+            onClick={() => openUploadFileModal(row.id, Tourid)}
           >
             {translate("Document")}
           </button>
@@ -388,22 +388,16 @@ const CustomerDetaTable = () => {
   const TourID = searchParams.get("TourID");
 
   function openUploadFileModal(personId, reservationId) {
+    console.log(personId, "personId");
     setuploadFileisOpen(true);
     setPersonId(personId);
-
-    const newObject = { personId, reservationId };
-
-    setUploadDocID(newObject);
-
-    filterData(personId, reservationId);
+    filterData(personId);
   }
-  //  Create a new object with name and id
 
-  const filterData = async (personId, reservationId) => {
+  const filterData = async (personId) => {
     const formData = new FormData();
     formData.append("user_id", CustomerID);
-    formData.append("id", reservationId);
-
+    formData.append("id", Tourid);
     const response = await POST.request({
       form: formData,
       url: "booking_details",
@@ -414,19 +408,21 @@ const CustomerDetaTable = () => {
         response.Bookings.childData,
         response.Bookings.babyData
       );
-
+      console.log(filterData, "filterData");
       const matchedData = filteredData.filter((data) => data.id === personId);
-
+      console.log(matchedData, "matchedData");
       if (matchedData.length > 0) {
         const docs = matchedData.map((doc) => {
-          if (doc.documets && doc.documets.length > 0) {
+          if (doc.documets.length > 0) {
             const docFiles = doc.documets.map((doc) => ({
               type: doc.document_type,
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));
-
+            console.log(docFiles, "docFiles");
             setViewDetails(docFiles);
+          } else {
+            setViewDetails([]);
           }
         });
 
@@ -434,6 +430,7 @@ const CustomerDetaTable = () => {
           if (doc.download_documets && doc.download_documets.length > 0) {
             const download = doc.download_documets.map((doc) => ({
               type: doc.document_type,
+
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));
@@ -444,6 +441,53 @@ const CustomerDetaTable = () => {
       }
     }
   };
+  //  Create a new object with name and id
+
+  // const filterData = async (personId, reservationId) => {
+  //   const formData = new FormData();
+  //   formData.append("user_id", CustomerID);
+  //   formData.append("id", reservationId);
+
+  //   const response = await POST.request({
+  //     form: formData,
+  //     url: "booking_details",
+  //   });
+
+  //   if (response.Bookings) {
+  //     const filteredData = response.Bookings.adultData.concat(
+  //       response.Bookings.childData,
+  //       response.Bookings.babyData
+  //     );
+
+  //     const matchedData = filteredData.filter((data) => data.id === personId);
+
+  //     if (matchedData.length > 0) {
+  //       const docs = matchedData.map((doc) => {
+  //         if (doc.documets && doc.documets.length > 0) {
+  //           const docFiles = doc.documets.map((doc) => ({
+  //             type: doc.document_type,
+  //             Name: doc.file_url_orginal_name,
+  //             fileLink: doc.full_path,
+  //           }));
+
+  //           setViewDetails(docFiles);
+  //         }
+  //       });
+
+  //       const downloads = matchedData.map((doc) => {
+  //         if (doc.download_documets && doc.download_documets.length > 0) {
+  //           const download = doc.download_documets.map((doc) => ({
+  //             type: doc.document_type,
+  //             Name: doc.file_url_orginal_name,
+  //             fileLink: doc.full_path,
+  //           }));
+
+  //           setDownloadDetails(download);
+  //         }
+  //       });
+  //     }
+  //   }
+  // };
 
   const fetchBookingDetails = async () => {
     setLoading(true)
@@ -939,7 +983,7 @@ const CustomerDetaTable = () => {
   const VandorDoc = [
     { value: "Passport", label: "Passport" },
     { value: "Photo", label: "Photo" },
-    { value: "Permanent Resident (PR)", label: "Permanent Resident (PR)" },
+    { value: "Permanent Resident", label: "Permanent Resident (PR)" },
     { value: "Vaccination Card ", label: "Vaccination Card" },
   ];
 
@@ -992,8 +1036,8 @@ const CustomerDetaTable = () => {
 
   const handleDocumentSubmit = async () => {
     const formData = new FormData();
-    formData.append("reservation_person_id", UploadDocID?.personId);
-    formData.append("reservation_id", UploadDocID?.reservationId);
+    formData.append("reservation_person_id", personId);
+    formData.append("reservation_id", BookingDetails?.reservation?.id);
     formData.append("vendor_id", CustomerID);
     const documentData = rows.map((row) => {
       return {
