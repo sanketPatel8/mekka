@@ -1127,24 +1127,7 @@ const handleSecondAmountChange = (e) => {
                   </div>
                 ) : null}
                 <div className="">
-                {
-                  paidAmount ? (
-                    <div className="d-flex items-center justify-between">
-                    <div className="fw-500"> {translate("Amount Due")}</div>
-                    <div className="">
-                      {" "}
-                      {formatPrice(0.00)}{" "}
-                    </div>
-                  </div>
-                  ) : 
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"> {translate("Amount Due")}</div>
-                    <div className="">
-                      {" "}
-                      {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}
-                    </div>
-                  </div>
-                }
+                
 
                   {
                     paidAmount && (
@@ -1161,6 +1144,26 @@ const handleSecondAmountChange = (e) => {
                       <div className=""> {formatPrice(paidAmount)} </div>
                     </div>
                   )}
+
+{
+                  (paidAmount && selectedCheckbox === 1) &&
+                    <div className="d-flex items-center justify-between">
+                    <div className="fw-500"> {translate("Amount Due")}</div>
+                    <div className="">
+                      {" "}
+                      {formatPrice(0.00)}{" "}
+                    </div>
+                  </div>
+                  } 
+                 { selectedCheckbox === 0 &&
+                  <div className="d-flex items-center justify-between">
+                    <div className="fw-500"> {translate("Amount Due")}</div>
+                    <div className="">
+                      {" "}
+                      {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}
+                    </div>
+                  </div>
+                  }
 
                   {installmentChecked === true &&
                     paidAmount &&
