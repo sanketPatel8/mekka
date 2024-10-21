@@ -2178,7 +2178,7 @@ const CustomerDetaTable = () => {
                     <div className="form-input spacing">
                       <input
                         type="text"
-                        required
+                        
                         value={editCustomerData.name}
                         onChange={(e) =>
                           setEditCustomerData({
@@ -2196,7 +2196,7 @@ const CustomerDetaTable = () => {
                     <div className="form-input spacing">
                       <input
                         type="text"
-                        required
+                        
                         value={editCustomerData.surname}
                         onChange={(e) =>
                           setEditCustomerData({
@@ -2220,7 +2220,7 @@ const CustomerDetaTable = () => {
                             gender: e.target.value,
                           })
                         }
-                        required
+                        
                         className="form-control"
                       >
                         <option value="male">{translate("Male")}</option>
@@ -2289,7 +2289,7 @@ const CustomerDetaTable = () => {
                             nationality: e.target.value,
                           })
                         }
-                        required
+                        
                         className="form-control"
                       >
                         <option value="">
