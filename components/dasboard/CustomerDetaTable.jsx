@@ -631,7 +631,7 @@ const CustomerDetaTable = () => {
     FetchEditData();
     setTimeout(() => {
       closeEditData();
-      window.location.reload();
+      fetchBookingDetails();
     }, 2000);
   };
 
@@ -891,9 +891,7 @@ const CustomerDetaTable = () => {
         showSuccessToast(translate, "Person was added successfully");
         closeModal();
         handleClose();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        fetchBookingDetails();
       }
     } catch (e) {
       console.error(e);
