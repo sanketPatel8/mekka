@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import { useCurrency } from "@/app/context/currencyContext";
+import { PiBuildingApartmentFill } from "react-icons/pi";
 
 export default function Tour1() {
   const [LatestPackage, setLatestPackage] = useState([]);
@@ -136,13 +137,24 @@ export default function Tour1() {
                             <div className="d-flex items-center x-gap-5">
                               {/* <Stars star={elm?.rating_count} font={12} /> */}
                             </div>
-                            <div className="text-14 ml-5">
-                              <span className="fw-500">{elm?.rating}</span>
-                              {/* {elm?.rating_count}) -{" "} */}
-                              {elm?.company_code == null
-                                ? "  "
-                                : elm?.company_code}{" "}
-                            </div>
+                            {elm?.company_code && (
+                              <div className="text-14 ml-5">
+                                <span className="fw-500">{elm?.rating}</span>
+                                {/* {elm?.rating_count}) -{" "} */}
+                               <div className="items-center">
+                               <PiBuildingApartmentFill
+                                  color="#dabf4f"
+                                  className=""
+                                  size={20}
+                                />{" "}
+                                <span>
+                                  {elm?.company_code == null
+                                    ? "  "
+                                    : elm?.company_code}{" "}
+                                </span>
+                               </div>
+                              </div>
+                            )}
                           </div>
                         </div>
 
