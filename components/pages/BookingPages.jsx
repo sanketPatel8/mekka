@@ -1362,6 +1362,8 @@ export default function BookingPages({ BookingData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
+
     if (typeof window !== "undefined") {
       localStorage.setItem("BookingData", JSON.stringify(bookingData));
       localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
@@ -1371,16 +1373,16 @@ export default function BookingPages({ BookingData }) {
     handleUpdateLocalStorage();
 
     // Assuming this code is inside an event handler or a function
-    setIsLoading(true); // Start loading
 
     // Use setTimeout to simulate a delay (e.g., for a loading spinner)
     setTimeout(() => {
+      setIsLoading(false);
       router.push("/payment"); // Always navigate to the payment page
     }, 2000);
 
     // If you want to handle loading state after navigation, consider removing loading state only if needed
     // For instance, you can keep setIsLoading(false) if you need it before navigating
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const handleExternalButtonClick = () => {
@@ -1446,8 +1448,21 @@ export default function BookingPages({ BookingData }) {
 
                           type="submit"
                         >
-                          {translate("Proceed to Payment")}
+                          {isLoading ? (
+                            // <div
+                            //   className="d-flex justify-content-center align-items-center"
+                            //   style={{ height: "30px", width: "100%" }}
+                            // >
+                            //   <ClipLoader color="#ffffff" size={30} />
+                            // </div>
+                            <span>Loading.....</span>
+                          ) : (
+                            translate("Proceed to Payment")
+                          )}
+
+                          {/* {translate("Proceed to Payment")} */}
                         </button>
+
                         {/* </Link> */}
                       </div>
                     </form>
