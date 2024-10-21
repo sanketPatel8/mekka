@@ -185,7 +185,6 @@ export default function CheckoutForm({
         console.log(paymentIntent, "paymentIntent");
         console.log(paymentIntent.id, "paymentIntent.id");
         const newAmount = paymentIntent.amount / 100;
-        showSuccessToast(translate,"Payment successful");
         addBooking(paymentIntent.id, newAmount);
       }
     }
@@ -207,7 +206,6 @@ export default function CheckoutForm({
         console.log(paymentIntent, "paymentIntent");
         console.log(paymentIntent.id, "paymentIntent.id");
         const newAmount = paymentIntent.amount / 100;
-        showSuccessToast(translate,"Payment successful");
         FetchAddperson();
       }
     }
@@ -229,7 +227,6 @@ export default function CheckoutForm({
         console.log(paymentIntent, "paymentIntent");
         console.log(paymentIntent.id, "paymentIntent.id");
         const newAmount = paymentIntent.amount / 100;
-        showSuccessToast(translate,"Payment successful");
         InstallmentPaid();
       }
     }

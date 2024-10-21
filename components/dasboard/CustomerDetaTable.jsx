@@ -18,6 +18,7 @@ import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 import { useCurrency } from "@/app/context/currencyContext";
 import Stripeform from "../stripe/stripeform";
+import { set } from "lodash";
 
 const customStyles = {
   overlay: {
@@ -1068,6 +1069,9 @@ const CustomerDetaTable = () => {
     const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
+  const stripeModalClose = () => {
+    setShowStripeModal(false);
+  };
   const HandleInstallmentPay = (payable) => {
     setAmount(payable);
     if (payable === pendingPaymentValue.secondAmount) {
@@ -1089,7 +1093,9 @@ const CustomerDetaTable = () => {
       };
       setPaidData(data);
     }
+ 
     setShowStripeModal(true);
+    
   };
 
   // for cancel booking
@@ -1814,12 +1820,13 @@ const CustomerDetaTable = () => {
               </div>
               <div
                 className="col-md-2"
-                onClick={() => {
-                  HandleInstallmentPay(pendingPaymentValue.secondAmount);
+                onClick={() => {BookingDetails?.paymentData?.type_payment_2 == 1 ? stripeModalClose() :
+                  HandleInstallmentPay(pendingPaymentValue.secondAmount)
                 }}
-              >
-                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
-                  {translate("PAY")}
+                disabled={BookingDetails?.paymentData?.type_payment_2 === 1}
+                  >
+                <button className={`${BookingDetails?.paymentData?.type_payment_2 == 1 ? "button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white" : "button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white"}`}>
+                        {BookingDetails?.paymentData?.type_payment_2 == 1 ? translate("PAID") : translate("PAY")}
                 </button>
               </div>
             </div>
@@ -1852,12 +1859,14 @@ const CustomerDetaTable = () => {
               </div>
               <div
                 className="col-md-2"
-                onClick={() => {
-                  HandleInstallmentPay(pendingPaymentValue.thirdAmount);
+                onClick={() => {BookingDetails?.paymentData?.type_payment_3 == 1 ? stripeModalClose() :
+                  HandleInstallmentPay(pendingPaymentValue.secondAmount)
                 }}
+                disabled={BookingDetails?.paymentData?.type_payment_3 === 1}
+
               >
-                <button className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white ">
-                  {translate("PAY")}
+                 <button className={`${BookingDetails?.paymentData?.type_payment_3 == 1 ? "button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white" : "button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white"}`}>
+                        {BookingDetails?.paymentData?.type_payment_3 == 1 ? translate("PAID") : translate("PAY")}
                 </button>
               </div>
             </div>
