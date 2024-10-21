@@ -97,7 +97,7 @@ export default function Register() {
   
         setIsChecked(false);
   
-        localStorage.setItem("emailForSignIn", RegisterData.email);
+        localStorage.setItem("emailForSignIn", email);
   
         // Redirect after successful registration
         setTimeout(() => {
@@ -131,7 +131,7 @@ export default function Register() {
   
         setIsChecked(false);
   
-        localStorage.setItem("emailForSignIn", RegisterData.email);
+        localStorage.setItem("emailForSignIn", email);
   
         // Redirect after successful registration
         setTimeout(() => {
