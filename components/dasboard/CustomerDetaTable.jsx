@@ -63,7 +63,7 @@ const CustomerDetaTable = () => {
     birthday: "",
     nationality: "",
   });
-const [paidData, setPaidData] = useState({});
+  const [paidData, setPaidData] = useState({});
   const [showStripeModal, setShowStripeModal] = useState(false);
   const [PersonalUserID, setPersonalUserID] = useState(0);
   const [UploadDocID, setUploadDocID] = useState({});
@@ -94,11 +94,10 @@ const [paidData, setPaidData] = useState({});
     secondDate: "",
     thirdAmount: "",
     thirdDate: "",
-    id:"",
+    id: "",
     transaction_id: "",
   });
   const router = useRouter();
-
 
   useEffect(() => {
     Modal.setAppElement("#modelopen");
@@ -219,7 +218,6 @@ const [paidData, setPaidData] = useState({});
     {
       name: translate("Total"),
       selector: (row) => `${row.child_price} €`,
-
     },
     {
       name: translate("Action"),
@@ -259,7 +257,6 @@ const [paidData, setPaidData] = useState({});
     {
       name: translate("Total"),
       selector: (row) => `${row.baby_price} €`,
-
     },
     {
       name: translate("Action"),
@@ -300,9 +297,7 @@ const [paidData, setPaidData] = useState({});
       selector: (row) => row.subtotal,
       cell: (row) => `${row.subtotal} €`,
     },
-    { name: "Amount Paid", 
-      selector: (row) => `${row.amount_paid} €`,
-    },
+    { name: "Amount Paid", selector: (row) => `${row.amount_paid} €` },
     {
       name: translate("Amount Due"),
       selector: (row) => row.amount_due,
@@ -348,7 +343,7 @@ const [paidData, setPaidData] = useState({});
 
   function openEditData(row) {
     setPersonalUserID(row.id);
-    console.log("row data ", row);
+    
     setEditUserData(row);
     setEditCustomerData({
       name: row.personName,
@@ -471,7 +466,8 @@ const [paidData, setPaidData] = useState({});
             secondDate: response.Bookings.paymentData.payment_plan_date_2 || "",
             thirdDate: response.Bookings.paymentData.payment_plan_date_3 || "",
             id: response.Bookings.paymentData.id || "",
-            transaction_id: response.Bookings.paymentData.payment_intent_id || "",
+            transaction_id:
+              response.Bookings.paymentData.payment_intent_id || "",
           });
         } else {
           console.warn("paymentData not found in response");
@@ -582,6 +578,21 @@ const [paidData, setPaidData] = useState({});
 
   // for edit customer data
 
+  console.log("editCustomerData.birthday" , editCustomerData.birthday);
+  
+  const convertGermanToISO = (germanDate) => {
+    if (!germanDate) return "";
+    const [day, month, year] = germanDate.split(".");
+    return `${year}-${month}-${day}`; // Return in ISO format
+  };
+
+  // Function to convert ISO date (YYYY-MM-DD) to German format (DD.MM.YYYY)
+  const convertISOToGerman = (isoDate) => {
+    if (!isoDate) return "";
+    const [year, month, day] = isoDate.split("-");
+    return `${day}.${month}.${year}`; // Return in German format
+  };
+
   const FetchEditData = async () => {
     setLoading(true);
 
@@ -661,8 +672,7 @@ const [paidData, setPaidData] = useState({});
   useEffect(() => {
     // Ensure AddpersonData, AdultPrice, and RadioValue are defined before using them
     if (AddpersonData && AddpersonData.roomType && Array.isArray(AdultPrice)) {
-      console.log("AdultPrice in function", AdultPrice);
-      console.log("AddpersonData.roomType", AddpersonData.roomType);
+      
 
       const total = AdultPrice.reduce((total, e) => {
         // Check if price_type matches the room type
@@ -671,7 +681,7 @@ const [paidData, setPaidData] = useState({});
           : total;
       }, 0);
 
-      console.log("total", total); // This will log the total price for the matching room type
+     
 
       // Safely parse RadioValue.price and conditionally add to subtotal
       const radioPrice =
@@ -719,7 +729,7 @@ const [paidData, setPaidData] = useState({});
     ) {
       handlePayment();
     } else {
-      console.log("AddpersonData", AddpersonData);
+      
 
       showErrorToast(translate, "All fields are required");
     }
@@ -737,14 +747,14 @@ const [paidData, setPaidData] = useState({});
         try {
           const startDate = new Date(startDateString);
 
-          console.log("startDate", startDate);
+         
 
           const sixDaysBefore = new Date(
             startDate.getTime() - 5 * 24 * 60 * 60 * 1000
           );
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
 
-          console.log("sixDaysBeforeString", sixDaysBeforeString);
+          
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
@@ -892,7 +902,7 @@ const [paidData, setPaidData] = useState({});
     }
 
     if (PaymentCheckbox == 2) {
-      console.log("payment checkbox ", PaymentCheckbox);
+      
       setShowStripeModal(true);
     }
   };
@@ -973,7 +983,6 @@ const [paidData, setPaidData] = useState({});
     xhr.send();
   };
 
-  console.log("rows", rows);
 
   const handleDocumentSubmit = async () => {
     const formData = new FormData();
@@ -1003,7 +1012,7 @@ const [paidData, setPaidData] = useState({});
       setRows([{ document: "", type: null }]);
     } else {
       setIsLoading(false);
-      showErrorToast(translate , "Document Upload Failed");
+      showErrorToast(translate, "Document Upload Failed");
     }
   };
 
@@ -1056,27 +1065,24 @@ const [paidData, setPaidData] = useState({});
   };
   const HandleInstallmentPay = (payable) => {
     setAmount(payable);
-    if(payable === pendingPaymentValue.secondAmount)
-    {
+    if (payable === pendingPaymentValue.secondAmount) {
       const data = {
         plan_id: pendingPaymentValue.id,
         payment_plan: 2,
-        plan_date : getTodayDate(),
+        plan_date: getTodayDate(),
         reservation_id: BookingDetails.reservation?.id,
-        transaction_id : pendingPaymentValue.transaction_id
-      }
-      console.log(data,"data")
+        transaction_id: pendingPaymentValue.transaction_id,
+      };
+     
       setPaidData(data);
-    }else{
-
+    } else {
       const data = {
         plan_id: pendingPaymentValue.id,
         payment_plan: 3,
-        plan_date : getTodayDate(),
+        plan_date: getTodayDate(),
         reservation_id: BookingDetails.reservation?.id,
-      }
+      };
       setPaidData(data);
-      
     }
     setShowStripeModal(true);
   };
@@ -1088,7 +1094,7 @@ const [paidData, setPaidData] = useState({});
   const today = new Date();
 
   // Format the date in German format (dd.mm.yyyy)
-  const formattedDate = today.toLocaleDateString('de-DE'); 
+  const formattedDate = today.toLocaleDateString("de-DE");
 
   const fatchRefund = async () => {
     setIsLoading(true);
@@ -1115,7 +1121,7 @@ const [paidData, setPaidData] = useState({});
     fatchRefund();
   }
 
-  console.log(RefundData, "RefundData");
+ 
 
   return (
     <div>
@@ -1175,9 +1181,7 @@ const [paidData, setPaidData] = useState({});
               >
                 {translate("Pay")}
               </button>
-              <span>{
-                BookingDetails?.reservation?.amount_due
-             } €</span>
+              <span>{BookingDetails?.reservation?.amount_due} €</span>
             </div>
 
             {BookingDetails?.reservation?.capacity_empty != "0" && (
@@ -1259,57 +1263,58 @@ const [paidData, setPaidData] = useState({});
           highlightOnHover
         /> */}
 
-      {BookingDetails?.reservation?.paymentType !== "1" && BookingDetails?.reservation?.paymentType !== "2"  && (
-        <div className="row bg-white mx-0">
-          <div className="col-12 row">
-            <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
-            <table className="table bg-light col-12">
-              <thead>
-                <tr className="row">
-                  <th className="col-4 pb-1">Date</th>
-                  <th className="col-4 pb-1">Amount</th>
-                  <th className="col-4 pb-1">Paid Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="row">
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_date_1}
-                  </td>
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_1} €
-                  </td>
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.paid_date_1}
-                  </td>
-                </tr>
-                <tr className="row">
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_date_2}
-                  </td>
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_2} €
-                  </td>
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.paid_date_2}
-                  </td>
-                </tr>
-                <tr className="row">
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_date_3}
-                  </td>
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.payment_plan_3} €
-                  </td>
-                  <td className="col-4">
-                    {BookingDetails.paymentData?.paid_date_3}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      {BookingDetails?.reservation?.paymentType !== "1" &&
+        BookingDetails?.reservation?.paymentType !== "2" && (
+          <div className="row bg-white mx-0">
+            <div className="col-12 row">
+              <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
+              <table className="table bg-light col-12">
+                <thead>
+                  <tr className="row">
+                    <th className="col-4 pb-1">Date</th>
+                    <th className="col-4 pb-1">Amount</th>
+                    <th className="col-4 pb-1">Paid Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="row">
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.payment_plan_date_1}
+                    </td>
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.payment_plan_1} €
+                    </td>
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.paid_date_1}
+                    </td>
+                  </tr>
+                  <tr className="row">
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.payment_plan_date_2}
+                    </td>
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.payment_plan_2} €
+                    </td>
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.paid_date_2}
+                    </td>
+                  </tr>
+                  <tr className="row">
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.payment_plan_date_3}
+                    </td>
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.payment_plan_3} €
+                    </td>
+                    <td className="col-4">
+                      {BookingDetails.paymentData?.paid_date_3}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       <br />
 
@@ -1760,9 +1765,7 @@ const [paidData, setPaidData] = useState({});
                   <input
                     type="text"
                     name="firstDate"
-                    value={
-                      pendingPaymentValue.firstDate
-                    }
+                    value={pendingPaymentValue.firstDate}
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
@@ -1798,9 +1801,7 @@ const [paidData, setPaidData] = useState({});
                   <input
                     type="text"
                     name="firstDate"
-                    value={
-                      pendingPaymentValue.secondDate
-                   }
+                    value={pendingPaymentValue.secondDate}
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
@@ -1838,9 +1839,7 @@ const [paidData, setPaidData] = useState({});
                   <input
                     type="text"
                     name="firstDate"
-                    value={
-                      pendingPaymentValue.thirdDate
-                   }
+                    value={pendingPaymentValue.thirdDate}
                     disabled
                   />
                   <label className="lh-1 text-16 text-light-1">Date</label>
@@ -1901,21 +1900,17 @@ const [paidData, setPaidData] = useState({});
                   </tr>
                   <tr>
                     <td className="px-1 py-2">{translate("Cancel Date")}</td>
-                    <td className="px-1 py-2">
-                      {formattedDate}
-                    </td>
+                    <td className="px-1 py-2">{formattedDate}</td>
                   </tr>
                   <tr>
                     <td className="px-1 py-2">{translate("Tour Date")}</td>
-                    <td className="px-1 py-2">
-                      {RefundData?.tour_date}
-                    </td>
+                    <td className="px-1 py-2">{RefundData?.tour_date}</td>
                   </tr>
                   <tr>
-                    <td className="px-1 py-2">{translate("Amount Refund")} ({RefundData?.percentage}%)</td>
                     <td className="px-1 py-2">
-                      {RefundData?.Refund_Amount} €
+                      {translate("Amount Refund")} ({RefundData?.percentage}%)
                     </td>
+                    <td className="px-1 py-2">{RefundData?.Refund_Amount} €</td>
                   </tr>
                 </tbody>
               </table>
@@ -1961,13 +1956,13 @@ const [paidData, setPaidData] = useState({});
                   );
                   if (confirmDelete) {
                     // Proceed with the delete operation
-                    console.log("Item deleted");
+                    
                     fatchCancelBooking();
                     setTimeout(() => {
                       CloseCancelPopUp();
                     }, 2000);
                   } else {
-                    console.log("Delete operation canceled");
+                  
                     setTimeout(() => {
                       CloseCancelPopUp();
                     }, 2000);
@@ -2225,65 +2220,52 @@ const [paidData, setPaidData] = useState({});
                   </div>
                   <div className="col-md-6">
                     <div className="form-input spacing">
-                      <input
+                      {/* <input
                         type="date"
                         required
                         value={editCustomerData.birthday}
-                        onChange={(e) =>
+                        // onChange={(e) =>
+                        //   setEditCustomerData({
+                        //     ...editCustomerData,
+                        //     birthday: e.target.value,
+                        //   })
+                        // }
+                        onChange={(e) => {
+                          const newValue = e.target.value.trim();
+                        
+                          // Ensure that the nationality field is not empty
+                          if (newValue !== '') {
+                            const formattedValue = newValue.charAt(0).toUpperCase() + newValue.slice(1).toLowerCase();
+                            setEditCustomerData({
+                              ...editCustomerData,
+                              birthday: formattedValue, // Set the formatted nationality
+                            });
+                          } else {
+                            console.error("Nationality cannot be empty");
+                          }
+                        }}
+                        
+                      /> */}
+                      <input
+                        type="date"
+                        required
+                        value={convertGermanToISO(editCustomerData.birthday)} // Convert German date to ISO for input
+                        onChange={(e) => {
+                          const isoDate = e.target.value; // Get the ISO format date
                           setEditCustomerData({
                             ...editCustomerData,
-                            birthday: e.target.value,
-                          })
-                        }
+                            birthday: convertISOToGerman(isoDate), // Convert back to German format for storing
+                          });
+                        }}
                       />
                       <label className="lh-1 text-16 text-light-1">
                         {translate("Birthday Date")}
                       </label>
                     </div>
                   </div>
-                  {/* <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <select
-                        value={editCustomerData.nationality}
-                        onChange={(e) =>
-                          setEditCustomerData({
-                            ...editCustomerData,
-                            nationality: e.target.value,
-                          })
-                        }
-                        required
-                        className="form-control"
-                      >
-                        {nationalities.map((e) => (
-                          <option key={e} value={e}>
-                            {translate(e)}
-                          </option>
-                        ))}
-                      </select>
-                      <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                        {translate("Nationality")}
-                      </label>
-                    </div>
-                  </div> */}
+
                   <div className="col-md-6">
                     <div className="form-input spacing">
-                      {/* <select
-                        value={editCustomerData.nationality}
-                        onChange={(e) =>
-                          setEditCustomerData({
-                            ...editCustomerData,
-                            nationality: e.target.value,
-                          })
-                        }
-                        required
-                        className="form-control"
-                      >
-                        {nationalities.map((e) => (
-                          <option key={e} value={e}>
-                            {translate(e)}
-                          </option>
-                        ))}
-                      </select> */}
                       <select
                         value={editCustomerData.nationality}
                         onChange={(e) =>
@@ -2525,7 +2507,7 @@ const [paidData, setPaidData] = useState({});
           showStripeModal={showStripeModal}
           handleClose={handleClose}
           closeModal={closeModal}
-          paidData = {paidData}
+          paidData={paidData}
         />
       )}
     </div>
