@@ -153,9 +153,8 @@ export default function EditTour() {
       setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
       setTourInclude(response.Tour_Details.details.tour_included || "");
-      const adultPrice = response.Tour_Details.adult_price.map((price) =>
-        setAdultPrice(price.price)
-      );
+       setAdultPrice(response.Tour_Details.adult_price[0].price);
+      console.log(response.Tour_Details.adult_price[0].price, "adultPrice");
       const childPrice = response.Tour_Details.child_price.map((price) =>
         setChildPrice(price.price)
       );
@@ -165,54 +164,10 @@ export default function EditTour() {
     }
   };
 
-  const numberInputRef1 = useRef(null);
-  const numberInputRef2 = useRef(null);
-  const numberInputRef3 = useRef(null);
-  const numberInputRef4 = useRef(null);
-  const numberInputRef5 = useRef(null);
-  const numberInputRef6 = useRef(null);
-  const numberInputRef7 = useRef(null);
-  const numberInputRef8 = useRef(null);
-  const numberInputRef9 = useRef(null);
-  const numberInputRef10 = useRef(null);
-  const numberInputRef11 = useRef(null);
+  
+  
 
-  // Function to disable scrolling on number inputs
-  const disableScroll = (event) => {
-    event.preventDefault(); // Prevent scrolling
-  };
-
-  useEffect(() => {
-    // Attach wheel event listeners to each input ref
-    const refs = [
-      numberInputRef1,
-      numberInputRef2,
-      numberInputRef3,
-      numberInputRef4,
-      numberInputRef5,
-      numberInputRef6,
-      numberInputRef7,
-      numberInputRef8,
-      numberInputRef9,
-      numberInputRef10,
-      numberInputRef11,
-    ];
-
-    refs.forEach((ref) => {
-      if (ref.current) {
-        ref.current.addEventListener("wheel", disableScroll);
-      }
-    });
-
-    // Cleanup event listeners on unmount
-    return () => {
-      refs.forEach((ref) => {
-        if (ref.current) {
-          ref.current.removeEventListener("wheel", disableScroll);
-        }
-      });
-    };
-  }, []);
+ 
 
   const accessdata = async () => {
     const url = "tour_data";
@@ -533,7 +488,7 @@ export default function EditTour() {
     setEditorState(newEditorState);
   };
 
-  const handleDeleteImage2 = (index, event) => {
+  const handleDeleteImage2 = async(index, event) => {
     event.preventDefault();
   
     if (index < image2.length) {
@@ -545,13 +500,17 @@ export default function EditTour() {
       formData.append("type", "tour_image");
       formData.append("tour_id", id);
   
-      const response = POST.request({
+      const response = await POST.request({
         form: formData,
         url: "remove_imageordocument",
       });
-      if (response) {
+      console.log(response)
+      if (response.Status === "1") {
         showSuccessToast(translate, "Image removed successfully");
         fetchTour(id);
+      }else{
+        showErrorToast(translate, "Something went wrong");
+
       }
     }  else {
     
@@ -1218,7 +1177,6 @@ export default function EditTour() {
                                   <div className="form-input my-1">
                                     <input
                                       type="number"
-                                      ref={numberInputRef1}
                                       min={1}
                                       required
                                       value={capacity}
@@ -1356,7 +1314,6 @@ export default function EditTour() {
                                                 <div className="form-input spacing">
                                                   <input
                                                     type="number"
-                                                    ref={numberInputRef2}
                                                     required
                                                     value={
                                                       departureRows[index].price
@@ -1540,7 +1497,6 @@ export default function EditTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    ref={numberInputRef3}
                                     required
                                     value={adult_price}
                                     onChange={handleInputChange(setAdultPrice)}
@@ -1565,7 +1521,6 @@ export default function EditTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    ref={numberInputRef4}
                                     required
                                     value={child_price}
                                     onChange={handleInputChange(setChildPrice)}
@@ -1590,7 +1545,6 @@ export default function EditTour() {
                                 <div className="form-input my-1">
                                   <input
                                     type="number"
-                                    ref={numberInputRef5}
                                     required
                                     value={baby_price}
                                     onChange={handleInputChange(setBabyPrice)}
@@ -1687,7 +1641,6 @@ export default function EditTour() {
                                       <div className="form-input my-1">
                                         <input
                                           type="number"
-                                          ref={numberInputRef6}
                                           id={`service-${service.id}`}
                                           value={service.price}
                                           onChange={(event) =>
@@ -2125,7 +2078,6 @@ export default function EditTour() {
                                             <div className="form-input spacing">
                                               <input
                                                 type="number"
-                                                ref={numberInputRef7}
                                                 required
                                                 value={
                                                   mekkaRows[index].hotel_price
@@ -2257,7 +2209,6 @@ export default function EditTour() {
                                             <div className="form-input spacing">
                                               <input
                                                 type="number"
-                                                ref={numberInputRef8}
                                                 required
                                                 value={
                                                   madinaRows[index].hotel_price
@@ -2533,7 +2484,6 @@ export default function EditTour() {
                                                 <div className="form-input spacing">
                                                   <input
                                                     type="number"
-                                                    ref={numberInputRef9}
                                                     required
                                                     value={
                                                       flightRow[index]
@@ -2575,7 +2525,6 @@ export default function EditTour() {
                                                 <div className="form-input spacing">
                                                   <input
                                                     type="number"
-                                                    ref={numberInputRef10}
                                                     required
                                                     value={
                                                       flightRow[index]
@@ -2617,7 +2566,6 @@ export default function EditTour() {
                                                 <div className="form-input spacing">
                                                   <input
                                                     type="number"
-                                                    ref={numberInputRef11}
                                                     required
                                                     value={
                                                       flightRow[index].luggage
