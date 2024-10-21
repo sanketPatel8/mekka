@@ -1033,6 +1033,8 @@ export default function Payment() {
                     </div>
                   </div>
 
+                  <div className="line mt-5 mb-5"></div>
+
                   <div
                     className={
                       SideBarData?.selectedCheckbox !== false
@@ -1042,7 +1044,7 @@ export default function Payment() {
                   >
                     {SideBarData?.Airline !== null && (
                       <div>
-                        <div className="line mt-5 mb-5"></div>
+                        {/* <div className="line mt-5 mb-5"></div> */}
                         <div className="d-flex items-center justify-content-space-arround">
                           <div className="mr-5">
                             <FaLuggageCart size={25} color="#DAC04F" />
