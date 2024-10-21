@@ -77,57 +77,39 @@ export default function Payment() {
     }
   };
   const handleFirstAmountChange = (e) => {
-    const rawAmount = e.target.value;
+    const rawAmount = parseFloat(e.target.value) || 0;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
 
-    if (rawAmount < totalAmount) {
-      setFirstAmount(rawAmount);
+    if (rawAmount + secondAmount > totalAmount) {
+        setFirstAmount("");
+        setSecondAmount("");
+        setThirdAmount(totalAmount);
     } else {
-      setFirstAmount(0);
+        setFirstAmount(rawAmount);
+        setThirdAmount(totalAmount - rawAmount - secondAmount);
     }
-  };
-  // const handleFirstAmountChange = (e) => {
-  //   const rawAmount = e.target.value;
+};
 
-  //   const numericValue = parseFloat(rawAmount.replace(/[^0-9.]/g, ''));
-  //   console.log(numericValue, 'numericValue')
-  //   if (!isNaN(numericValue)) {
-  //   const formattedAmount = formatPrice(numericValue);
-  //   setFirstAmount(formattedAmount);
-  //   } else {
-  //   setFirstAmount(rawAmount);
-  //   }
 
-  // };
-  // const handleSecondAmountChange = (e) => {
-  //   const totalAmount = SideBarData?.BookingFild?.SubTotal;
-  //   const total = totalAmount - firstAmount;
-  //   const secondAmount = e.target.value;
-  //   if (secondAmount < total) {
-  //     setSecondAmount(secondAmount);
-  //   } else {
-  //     setSecondAmount(0);
-  //     setThirdAmount(0);
-  //   }
-  // };
-  const handleSecondAmountChange = (e) => {
+const handleSecondAmountChange = (e) => {
+    const rawAmount = parseFloat(e.target.value) || 0;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
-    console.log(totalAmount, "totalAmount");
-    const total = totalAmount - firstAmount;
-    console.log(total, "total");
-    const secondAmount = e.target.value;
-    if (secondAmount <= total) {
-      setSecondAmount(secondAmount);
+
+    if (firstAmount + rawAmount > totalAmount) {
+        setFirstAmount("");
+        setSecondAmount("");
+        setThirdAmount(totalAmount);
     } else {
-      setSecondAmount(0);
-      setThirdAmount(0);
+        setSecondAmount(rawAmount);
+        setThirdAmount(totalAmount - firstAmount - rawAmount);
     }
-  };
+};
   useEffect(() => {
-    if (secondAmount) {
+    console.log(paidAmount, "paidAmount");
+    if (secondAmount && dateBegin) {
       calculateThirdAmount();
     }
-  }, [secondAmount]);
+  }, [secondAmount,dateBegin]);
   const calculateThirdAmount = () => {
     const firstAmountValue = parseFloat(firstAmount);
     const secondAmountValue = parseFloat(secondAmount);
@@ -1144,8 +1126,17 @@ export default function Payment() {
                     </div>
                   </div>
                 ) : null}
-
                 <div className="">
+                {
+                  paidAmount ? (
+                    <div className="d-flex items-center justify-between">
+                    <div className="fw-500"> {translate("Amount Due")}</div>
+                    <div className="">
+                      {" "}
+                      {formatPrice(0.00)}{" "}
+                    </div>
+                  </div>
+                  ) : 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Amount Due")}</div>
                     <div className="">
@@ -1153,6 +1144,7 @@ export default function Payment() {
                       {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}
                     </div>
                   </div>
+                }
 
                   {
                     paidAmount && (
