@@ -115,7 +115,7 @@ export default function Register() {
         },
         url: "social_login",
       });
-      if (resp.status == "success") {
+      if (resp.Status == 1) {
 
         console.log("success",resp.status);
         showSuccessToast(translate, "User created successfully");
