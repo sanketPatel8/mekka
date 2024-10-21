@@ -459,6 +459,13 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  const handleDateFocus = (e) => {
+    // Ensure this is a user gesture
+    if (e.target === document.activeElement) {
+        e.target.showPicker();
+    }
+};
+
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
 
@@ -1171,6 +1178,10 @@ export default function BookingPages({ BookingData }) {
                                   ? getTodayDate()
                                   : undefined
                               }
+                              onFocus={ field.type === "date"
+                                ? handleDateFocus
+                                : undefined} 
+                              onKeyDown={(e) => e.preventDefault()}
                               required
                             />
                             <label className="lh-1 text-16 text-light-1">
