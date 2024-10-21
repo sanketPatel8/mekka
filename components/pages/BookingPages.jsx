@@ -1589,7 +1589,7 @@ export default function BookingPages({ BookingData }) {
                       </div>
                     </div>
 
-                    {BookingSideBar?.Airline !== null && (
+                    {BookingSideBar?.Airline !== null || BookingSideBar?.Airline !== "" && (
                       <div className="d-flex items-center justify-content-space-arround">
                         <div className="mr-5">
                           <FaLuggageCart size={25} color="#DAC04F" />
