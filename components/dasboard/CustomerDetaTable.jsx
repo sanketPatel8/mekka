@@ -445,80 +445,82 @@ const CustomerDetaTable = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchBookingDetails = async () => {
-      const formData = new FormData();
+  const fetchBookingDetails = async () => {
+    setLoading(true)
+    const formData = new FormData();
 
-      formData.append("user_id", CustomerID);
-      formData.append("id", Tourid);
+    formData.append("user_id", CustomerID);
+    formData.append("id", Tourid);
 
-      try {
-        const response = await POST.request({
-          form: formData,
-          url: "booking_details",
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: "booking_details",
+      });
+      setLoading(false)
+      setBookingDetails(response?.Bookings);
+      if (response?.Bookings?.paymentData) {
+        setPendingPaymentValue({
+          firstAmount: response.Bookings.paymentData.payment_plan_1 || "", // Default to empty if null/undefined
+          secondAmount: response.Bookings.paymentData.payment_plan_2 || "",
+          thirdAmount: response.Bookings.paymentData.payment_plan_3 || "",
+          firstDate: response.Bookings.paymentData.payment_plan_date_1 || "",
+          secondDate: response.Bookings.paymentData.payment_plan_date_2 || "",
+          thirdDate: response.Bookings.paymentData.payment_plan_date_3 || "",
+          id: response.Bookings.paymentData.id || "",
+          transaction_id:
+            response.Bookings.paymentData.payment_intent_id || "",
         });
-        setBookingDetails(response?.Bookings);
-        if (response?.Bookings?.paymentData) {
-          setPendingPaymentValue({
-            firstAmount: response.Bookings.paymentData.payment_plan_1 || "", // Default to empty if null/undefined
-            secondAmount: response.Bookings.paymentData.payment_plan_2 || "",
-            thirdAmount: response.Bookings.paymentData.payment_plan_3 || "",
-            firstDate: response.Bookings.paymentData.payment_plan_date_1 || "",
-            secondDate: response.Bookings.paymentData.payment_plan_date_2 || "",
-            thirdDate: response.Bookings.paymentData.payment_plan_date_3 || "",
-            id: response.Bookings.paymentData.id || "",
-            transaction_id:
-              response.Bookings.paymentData.payment_intent_id || "",
-          });
-        } else {
-          console.warn("paymentData not found in response");
-        }
-
-        const FileDeta = [
-          { name: translate("Document Type"), selector: (row) => row.type },
-
-          { name: "Document Name", selector: (row) => row.Name },
-          {
-            name: "Action",
-            selector: (row) => (
-              <Link
-                href={row.fileLink}
-                target="_blank"
-                className="button -sm -accent-1 bg-info-2 text-white my-2"
-              >
-                {translate("View")}{" "}
-              </Link>
-            ),
-          },
-        ];
-
-        setViewData(FileDeta);
-
-        const DownloadData = [
-          { name: translate("Document Type"), selector: (row) => row.type },
-
-          { name: "Document Name", selector: (row) => row.Name },
-          {
-            name: "Action",
-            selector: (row) => (
-              <a
-                href={row.fileLink}
-                download={row.Name} // Ensure the file gets downloaded with the correct name
-                target="_blank" // Open the link in a new tab if needed
-                rel="noopener noreferrer" // Security measure for external links
-                className="button -sm -accent-1 bg-info-2 text-white my-2" // Button-like styles for the anchor tag
-              >
-                {translate("Download")}
-              </a>
-            ),
-          },
-        ];
-
-        setDownloadData(DownloadData);
-      } catch (e) {
-        console.error(e);
+      } else {
+        console.warn("paymentData not found in response");
       }
-    };
+
+      const FileDeta = [
+        { name: translate("Document Type"), selector: (row) => row.type },
+
+        { name: "Document Name", selector: (row) => row.Name },
+        {
+          name: "Action",
+          selector: (row) => (
+            <Link
+              href={row.fileLink}
+              target="_blank"
+              className="button -sm -accent-1 bg-info-2 text-white my-2"
+            >
+              {translate("View")}{" "}
+            </Link>
+          ),
+        },
+      ];
+
+      setViewData(FileDeta);
+
+      const DownloadData = [
+        { name: translate("Document Type"), selector: (row) => row.type },
+
+        { name: "Document Name", selector: (row) => row.Name },
+        {
+          name: "Action",
+          selector: (row) => (
+            <a
+              href={row.fileLink}
+              download={row.Name} // Ensure the file gets downloaded with the correct name
+              target="_blank" // Open the link in a new tab if needed
+              rel="noopener noreferrer" // Security measure for external links
+              className="button -sm -accent-1 bg-info-2 text-white my-2" // Button-like styles for the anchor tag
+            >
+              {translate("Download")}
+            </a>
+          ),
+        },
+      ];
+
+      setDownloadData(DownloadData);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
 
     fetchBookingDetails();
   }, [Tourid, CustomerID]);
@@ -600,7 +602,7 @@ const CustomerDetaTable = () => {
   };
 
   const FetchEditData = async () => {
-    setLoading(true);
+    setIsLoading(true);
 
     const formData = new FormData();
 
@@ -617,10 +619,10 @@ const CustomerDetaTable = () => {
         url: "edit_person",
       });
       showSuccessToast(translate, "Updated successfully");
-      setLoading(false);
+      setIsLoading(false);
     } catch (e) {
       console.error(e);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -1135,1396 +1137,1411 @@ const CustomerDetaTable = () => {
  
 
   return (
+    
     <div>
-      <ToastContainer />
-      <h3 className="t_center">
-        {" "}
-        {translate("Booking Number")} :{" "}
-        {BookingDetails?.reservation?.reservationNumber}
-      </h3>
-      <div className="row px-0 pb-10 mt-20 ">
-        <div className="col-lg-6">
-          <p className="t_center">
-            {" "}
-            {translate("Booked Date")} :{" "}
-            {BookingDetails?.reservation?.booking_date}
-          </p>
-          <p className="t_center">
-            {" "}
-            {translate("Booking Status")} :{" "}
-            {BookingDetails?.reservation?.reservation_status}
-          </p>
-          <p className="text-red t_center">
-            {translate("Available")}{" "}
-            {BookingDetails?.reservation?.capacity_empty} {translate("seats")}
-          </p>
-        </div>
-        {BookingDetails?.reservation?.reservation_status != "Cancelled" && (
-          <div className="col-lg-6 flex small-flex-center">
-            <div className="">
-              {/* <button
-     className="button -sm -info-2 bg-accent-1 text-white "
-   
-   > */}
-              {PdfData !== "undefined" && (
-                <a
-                  href={PdfData}
-                  target="_blank"
-                  className="button -sm -info-2 bg-accent-1 text-white"
+         {loading ? (
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ height: "200px" }}
                 >
-                  {translate("Show Invoice")}
-                </a>
-              )}
-
-              {/* </button> */}
-            </div>
-
-            <div
-              className={
-                BookingDetails?.reservation?.paymentType == "3"
-                  ? "d-block"
-                  : "d-none"
-              }
-            >
-              <button
-                className="button -sm -accent-1 bg-info-2 text-white "
-                onClick={openPaymentModal}
-              >
-                {translate("Pay")}
-              </button>
-              <span>{BookingDetails?.reservation?.amount_due} €</span>
-            </div>
-
-            {BookingDetails?.reservation?.capacity_empty != "0" && (
-              <div className="">
-                <button
-                  className="button -sm -info-2 bg-accent-1 text-white "
-                  onClick={openModal}
-                >
-                  {translate("Add Person")}
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Reservation Details Table */}
-      {BookingDetails?.reservation ? (
-        <DataTable
-          title={translate("Reservation Details")}
-          columns={ColumnReservation_details}
-          data={[BookingDetails.reservation]}
-          highlightOnHover
-        />
-      ) : (
-        <p></p>
-      )}
-
-      <br />
-
-      {/* Adult Data Table */}
-      {BookingDetails?.reservation ? (
-        <DataTable
-          title={translate("Contact Information")}
-          columns={columnAdu_1}
-          data={[BookingDetails.reservation]}
-          highlightOnHover
-        />
-      ) : (
-        <p></p>
-      )}
-
-      <br />
-
-      {/* Adult Data List */}
-      <DataTable
-        title={translate("Adult Information")}
-        columns={columnAduInfo_2}
-        data={BookingDetails?.adultData?.length ? BookingDetails.adultData : []} // Change data dynamically
-        highlightOnHover
-      />
-
-      <br />
-
-      {/* Child Data Table */}
-      <DataTable
-        title={translate("Child Information")}
-        columns={Child}
-        data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
-        highlightOnHover
-      />
-
-      <br />
-
-      {/* Baby Data Table */}
-      <DataTable
-        title={translate("Baby Information")}
-        columns={baby}
-        data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
-        highlightOnHover
-      />
-
-      <br />
-
-      {/* <DataTable
-          title={translate("AmountPaid")}
-          columns={AmountPaid}
-          data={[BookingDetails.paymentData]}
-          highlightOnHover
-        /> */}
-
-      {BookingDetails?.reservation?.paymentType !== "1" &&
-        BookingDetails?.reservation?.paymentType !== "2" && (
-          <div className="row bg-white mx-0">
-            <div className="col-12 row">
-              <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
-              <table className="table bg-light col-12">
-                <thead>
-                  <tr className="row">
-                    <th className="col-4 pb-1">Date</th>
-                    <th className="col-4 pb-1">Amount</th>
-                    <th className="col-4 pb-1">Paid Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="row">
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.payment_plan_date_1}
-                    </td>
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.payment_plan_1} €
-                    </td>
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.paid_date_1}
-                    </td>
-                  </tr>
-                  <tr className="row">
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.payment_plan_date_2}
-                    </td>
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.payment_plan_2} €
-                    </td>
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.paid_date_2}
-                    </td>
-                  </tr>
-                  <tr className="row">
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.payment_plan_date_3}
-                    </td>
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.payment_plan_3} €
-                    </td>
-                    <td className="col-4">
-                      {BookingDetails.paymentData?.paid_date_3}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-      <br />
-
-      {BookingDetails?.reservation ? (
-        <DataTable
-          title={translate("Total")}
-          columns={Total}
-          data={[BookingDetails.reservation]}
-          highlightOnHover
-        />
-      ) : (
-        <p></p>
-      )}
-
-      <br />
-      {BookingDetails?.reservation?.reservation_status != "Cancelled" && (
-        <button
-          className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
-          onClick={openCancelPopUp}
-        >
-          {translate("Cancel")}
-        </button>
-      )}
-
-      <div id="modelopen">
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <div className="d-flex justify-content-between" id="">
-            <h2 className="t_center px-20">{translate("ADD PERSON")}</h2>
-            <button onClick={closeModal}>
-              <IoClose size={25} />
-            </button>
-          </div>
-          <div className="form_2">
-            <div className="y-gap-30 contactForm px-20 py-20">
-              <div className="row my-3">
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input
-                      type="text"
-                      name="name"
-                      value={AddpersonData.name}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <label className="lh-1 text-16 text-light-1">
-                      {translate("Name")}
-                    </label>
-                  </div>
+                  <ClipLoader color="#DAC04F" size={50} />
                 </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input
-                      type="text"
-                      name="surname"
-                      value={AddpersonData.surname}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <label className="lh-1 text-16 text-light-1">
-                      {translate("Surname")}
-                    </label>
+              ) : (
+                <>
+                
+                <ToastContainer />
+                <h3 className="t_center">
+                  {" "}
+                  {translate("Booking Number")} :{" "}
+                  {BookingDetails?.reservation?.reservationNumber}
+                </h3>
+                <div className="row px-0 pb-10 mt-20 ">
+                  <div className="col-lg-6">
+                    <p className="t_center">
+                      {" "}
+                      {translate("Booked Date")} :{" "}
+                      {BookingDetails?.reservation?.booking_date}
+                    </p>
+                    <p className="t_center">
+                      {" "}
+                      {translate("Booking Status")} :{" "}
+                      {BookingDetails?.reservation?.reservation_status}
+                    </p>
+                    <p className="text-red t_center">
+                      {translate("Available")}{" "}
+                      {BookingDetails?.reservation?.capacity_empty} {translate("seats")}
+                    </p>
                   </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      name="gender"
-                      value={AddpersonData.gender}
-                      onChange={handleInputChange}
-                      required
-                      className="form-control"
-                    >
-                      {/* <option value="">{translate("Select Gender")}</option> */}
-                      <option value="male">{translate("Male")}</option>
-                      <option value="female">{translate("Female")}</option>
-                      <option value="other">{translate("Other")}</option>
-                    </select>
-                    <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                      {translate("Gender")}
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input
-                      type="date"
-                      name="birthDate"
-                      value={AddpersonData.birthDate}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <label className="lh-1 text-16 text-light-1">
-                      {translate("Birth Date")}
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      name="nationality"
-                      value={AddpersonData.nationality}
-                      onChange={handleInputChange}
-                      required
-                      className="form-control"
-                    >
-                      <option value="">
-                        {translate("Select Nationality")}
-                      </option>
-                      {nationalities.map((e) => (
-                        <option key={e} value={e}>
-                          {translate(e)}
-                        </option>
-                      ))}
-                    </select>
-
-                    <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                      {translate("Nationality ")}
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      name="roomType"
-                      value={AddpersonData.roomType}
-                      onChange={handleInputChange}
-                      required
-                      className="form-control"
-                    >
-                      {/* <option value="">{translate("Select Type")}</option> */}
-                      <option value="1">{translate("Adult")}</option>
-                      <option value="2">{translate("Child")}</option>
-                      <option value="3">{translate("Baby")}</option>
-                    </select>
-                    <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                      {translate("Adult Type")}
-                    </label>
-                  </div>
-                </div>
-              </div>
-              {AddpersonData.length !== 0 && AddpersonData.roomType !== "3" && (
-                <div className="my-3 border_b px-md-40">
-                  <h5 className="text-18 fw-500 my-2">
-                    {translate("Possible additional services per person")} :
-                  </h5>
-
-                  <div>
-                    {AddpersonDetails?.addtional_price?.map((option, idx) => (
+                  {BookingDetails?.reservation?.reservation_status != "Cancelled" && (
+                    <div className="col-lg-6 flex small-flex-center">
+                      <div className="">
+                        {/* <button
+               className="button -sm -info-2 bg-accent-1 text-white "
+             
+             > */}
+                        {PdfData !== "undefined" && (
+                          <a
+                            href={PdfData}
+                            target="_blank"
+                            className="button -sm -info-2 bg-accent-1 text-white"
+                          >
+                            {translate("Show Invoice")}
+                          </a>
+                        )}
+          
+                        {/* </button> */}
+                      </div>
+          
                       <div
-                        key={option.id}
-                        className="d-flex items-center justify-between radio_hight"
+                        className={
+                          BookingDetails?.reservation?.paymentType == "3"
+                            ? "d-block"
+                            : "d-none"
+                        }
                       >
-                        <div className="d-flex items-center">
-                          <div className="form-radio d-flex items-center">
-                            <label className="radio d-flex items-center">
+                        <button
+                          className="button -sm -accent-1 bg-info-2 text-white "
+                          onClick={openPaymentModal}
+                        >
+                          {translate("Pay")}
+                        </button>
+                        <span>{BookingDetails?.reservation?.amount_due} €</span>
+                      </div>
+          
+                      {BookingDetails?.reservation?.capacity_empty != "0" && (
+                        <div className="">
+                          <button
+                            className="button -sm -info-2 bg-accent-1 text-white "
+                            onClick={openModal}
+                          >
+                            {translate("Add Person")}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+          
+                {/* Reservation Details Table */}
+                {BookingDetails?.reservation ? (
+                  <DataTable
+                    title={translate("Reservation Details")}
+                    columns={ColumnReservation_details}
+                    data={[BookingDetails.reservation]}
+                    highlightOnHover
+                  />
+                ) : (
+                  <p></p>
+                )}
+          
+                <br />
+          
+                {/* Adult Data Table */}
+                {BookingDetails?.reservation ? (
+                  <DataTable
+                    title={translate("Contact Information")}
+                    columns={columnAdu_1}
+                    data={[BookingDetails.reservation]}
+                    highlightOnHover
+                  />
+                ) : (
+                  <p></p>
+                )}
+          
+                <br />
+          
+                {/* Adult Data List */}
+                <DataTable
+                  title={translate("Adult Information")}
+                  columns={columnAduInfo_2}
+                  data={BookingDetails?.adultData?.length ? BookingDetails.adultData : []} // Change data dynamically
+                  highlightOnHover
+                />
+          
+                <br />
+          
+                {/* Child Data Table */}
+                <DataTable
+                  title={translate("Child Information")}
+                  columns={Child}
+                  data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
+                  highlightOnHover
+                />
+          
+                <br />
+          
+                {/* Baby Data Table */}
+                <DataTable
+                  title={translate("Baby Information")}
+                  columns={baby}
+                  data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
+                  highlightOnHover
+                />
+          
+                <br />
+          
+                {/* <DataTable
+                    title={translate("AmountPaid")}
+                    columns={AmountPaid}
+                    data={[BookingDetails.paymentData]}
+                    highlightOnHover
+                  /> */}
+          
+                {BookingDetails?.reservation?.paymentType !== "1" &&
+                  BookingDetails?.reservation?.paymentType !== "2" && (
+                    <div className="row bg-white mx-0">
+                      <div className="col-12 row">
+                        <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
+                        <table className="table bg-light col-12">
+                          <thead>
+                            <tr className="row">
+                              <th className="col-4 pb-1">Date</th>
+                              <th className="col-4 pb-1">Amount</th>
+                              <th className="col-4 pb-1">Paid Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="row">
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.payment_plan_date_1}
+                              </td>
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.payment_plan_1} €
+                              </td>
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.paid_date_1}
+                              </td>
+                            </tr>
+                            <tr className="row">
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.payment_plan_date_2}
+                              </td>
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.payment_plan_2} €
+                              </td>
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.paid_date_2}
+                              </td>
+                            </tr>
+                            <tr className="row">
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.payment_plan_date_3}
+                              </td>
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.payment_plan_3} €
+                              </td>
+                              <td className="col-4">
+                                {BookingDetails.paymentData?.paid_date_3}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+          
+                <br />
+          
+                {BookingDetails?.reservation ? (
+                  <DataTable
+                    title={translate("Total")}
+                    columns={Total}
+                    data={[BookingDetails.reservation]}
+                    highlightOnHover
+                  />
+                ) : (
+                  <p></p>
+                )}
+          
+                <br />
+                {BookingDetails?.reservation?.reservation_status != "Cancelled" && (
+                  <button
+                    className="button -sm -red-2 bg-red-3 text-white col-lg-2 mx-2"
+                    onClick={openCancelPopUp}
+                  >
+                    {translate("Cancel")}
+                  </button>
+                )}
+          
+                <div id="modelopen">
+                  <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                  >
+                    <div className="d-flex justify-content-between" id="">
+                      <h2 className="t_center px-20">{translate("ADD PERSON")}</h2>
+                      <button onClick={closeModal}>
+                        <IoClose size={25} />
+                      </button>
+                    </div>
+                    <div className="form_2">
+                      <div className="y-gap-30 contactForm px-20 py-20">
+                        <div className="row my-3">
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
                               <input
-                                type="radio"
-                                name={`radioGroup-${idx}`} // Group radio by idx for unique selection within the same service
-                                value={`${idx}-ad-${option.id}-${option.title}`} // Unique value for the radio
-                                // Check if the current option matches the stored value in RadioValue
-                                checked={
-                                  RadioValue.selectedValue ===
-                                  `${idx}-ad-${option.id}-${option.title}`
-                                }
-                                onChange={(e) =>
-                                  handleRadioChange(
-                                    e,
-                                    idx,
-                                    option.price,
-                                    option.additinoal_order,
-                                    option.title,
-                                    option.id
-                                  )
-                                }
+                                type="text"
+                                name="name"
+                                value={AddpersonData.name}
+                                onChange={handleInputChange}
+                                required
                               />
-                              <span className="radio__mark">
-                                <span className="radio__icon"></span>
-                              </span>
-                              <span className="text-14 lh-1 ml-10">
-                                {option.title}
-                              </span>
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Name")}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input
+                                type="text"
+                                name="surname"
+                                value={AddpersonData.surname}
+                                onChange={handleInputChange}
+                                required
+                              />
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Surname")}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <select
+                                name="gender"
+                                value={AddpersonData.gender}
+                                onChange={handleInputChange}
+                                required
+                                className="form-control"
+                              >
+                                {/* <option value="">{translate("Select Gender")}</option> */}
+                                <option value="male">{translate("Male")}</option>
+                                <option value="female">{translate("Female")}</option>
+                                <option value="other">{translate("Other")}</option>
+                              </select>
+                              <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                                {translate("Gender")}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input
+                                type="date"
+                                name="birthDate"
+                                value={AddpersonData.birthDate}
+                                onChange={handleInputChange}
+                                required
+                              />
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Birth Date")}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <select
+                                name="nationality"
+                                value={AddpersonData.nationality}
+                                onChange={handleInputChange}
+                                required
+                                className="form-control"
+                              >
+                                <option value="">
+                                  {translate("Select Nationality")}
+                                </option>
+                                {nationalities.map((e) => (
+                                  <option key={e} value={e}>
+                                    {translate(e)}
+                                  </option>
+                                ))}
+                              </select>
+          
+                              <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                                {translate("Nationality ")}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <select
+                                name="roomType"
+                                value={AddpersonData.roomType}
+                                onChange={handleInputChange}
+                                required
+                                className="form-control"
+                              >
+                                {/* <option value="">{translate("Select Type")}</option> */}
+                                <option value="1">{translate("Adult")}</option>
+                                <option value="2">{translate("Child")}</option>
+                                <option value="3">{translate("Baby")}</option>
+                              </select>
+                              <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                                {translate("Adult Type")}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        {AddpersonData.length !== 0 && AddpersonData.roomType !== "3" && (
+                          <div className="my-3 border_b px-md-40">
+                            <h5 className="text-18 fw-500 my-2">
+                              {translate("Possible additional services per person")} :
+                            </h5>
+          
+                            <div>
+                              {AddpersonDetails?.addtional_price?.map((option, idx) => (
+                                <div
+                                  key={option.id}
+                                  className="d-flex items-center justify-between radio_hight"
+                                >
+                                  <div className="d-flex items-center">
+                                    <div className="form-radio d-flex items-center">
+                                      <label className="radio d-flex items-center">
+                                        <input
+                                          type="radio"
+                                          name={`radioGroup-${idx}`} // Group radio by idx for unique selection within the same service
+                                          value={`${idx}-ad-${option.id}-${option.title}`} // Unique value for the radio
+                                          // Check if the current option matches the stored value in RadioValue
+                                          checked={
+                                            RadioValue.selectedValue ===
+                                            `${idx}-ad-${option.id}-${option.title}`
+                                          }
+                                          onChange={(e) =>
+                                            handleRadioChange(
+                                              e,
+                                              idx,
+                                              option.price,
+                                              option.additinoal_order,
+                                              option.title,
+                                              option.id
+                                            )
+                                          }
+                                        />
+                                        <span className="radio__mark">
+                                          <span className="radio__icon"></span>
+                                        </span>
+                                        <span className="text-14 lh-1 ml-10">
+                                          {option.title}
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div className="text-14">+ {option.price}</div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+          
+                    <div className="px-20">
+                      {BookingDetails?.reservation?.paymentType && (
+                        <>
+                          {/* Payment Type 1: Payment in Advance */}
+                          {BookingDetails.reservation.paymentType === "1" && (
+                            <div>
+                              <div className="d-flex items-center pointer-check py-3">
+                                <div className="form-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    id="1"
+                                    name="1"
+                                    checked={
+                                      BookingDetails?.reservation?.paymentType === "1"
+                                    }
+                                    onChange={() => handleCheckboxChange(1)}
+                                  />
+                                  <label htmlFor="1" className="form-checkbox__mark">
+                                    <div className="form-checkbox__icon">
+                                      {/* SVG Icon */}
+                                      <svg
+                                        width="10"
+                                        height="8"
+                                        viewBox="0 0 10 8"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                          fill="white"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </label>
+                                </div>
+                                <label htmlFor="1" className="lh-16 ml-15">
+                                  {translate(
+                                    "Payment in advance. Payment installment is possible."
+                                  )}
+                                </label>
+                              </div>
+          
+                              <div className="row">
+                                <div className="col-md-6 col-12">
+                                  <div
+                                    className={`p-2 ${
+                                      selectedpaymentOption === "adPay"
+                                        ? "bg_dark"
+                                        : "bg_dark_1"
+                                    }`}
+                                  >
+                                    <p>
+                                      <span>
+                                        <b>{translate("Account holder")}:</b>
+                                      </span>{" "}
+                                      Mekka Booking GmbH
+                                    </p>
+                                    <p>
+                                      <span>
+                                        <b>IBAN:</b>
+                                      </span>{" "}
+                                      DE71 5125 0000 0002 2282 11
+                                    </p>
+                                    <p>
+                                      <span>
+                                        <b>BIC:</b>
+                                      </span>{" "}
+                                      HELADEF1TSK
+                                    </p>
+                                    <p>
+                                      <span>
+                                        <b>Bank:</b>
+                                      </span>{" "}
+                                      Taunus Sparkasse
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="col-md-6 col-12 my-md-0 my-3">
+                                  <div className="p-2 border-5 d-inline-block">
+                                    <p className="py-2">
+                                      {translate(
+                                        "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
+                                      )}
+                                    </p>
+                                    <p className="text-red">
+                                      {translate(
+                                        "Note: Please make the payment within next 7 days. Post that the order will be cancelled."
+                                      )}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+          
+                          {/* Payment Type 2: Online Payment */}
+                          {BookingDetails.reservation.paymentType === "2" && (
+                            <div>
+                              <div className="d-flex items-center pointer-check py-3">
+                                <div className="form-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    id="2"
+                                    name="2"
+                                    checked={
+                                      BookingDetails?.reservation?.paymentType === "2"
+                                    }
+                                    onChange={() => handleCheckboxChange(2)}
+                                  />
+                                  <label htmlFor="2" className="form-checkbox__mark">
+                                    <div className="form-checkbox__icon">
+                                      {/* SVG Icon */}
+                                      <svg
+                                        width="10"
+                                        height="8"
+                                        viewBox="0 0 10 8"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                          fill="white"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </label>
+                                </div>
+                                <label htmlFor="2" className="lh-16 ml-15">
+                                  {translate(
+                                    "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
+                                  )}
+                                </label>
+                              </div>
+                            </div>
+                          )}
+          
+                          {/* Payment Type 3: Installment Payment */}
+                          {BookingDetails.reservation.paymentType === "3" && (
+                            <div>
+                              <div className="d-flex items-center pointer-check py-3">
+                                <div className="form-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    id="3"
+                                    name="3"
+                                    checked={
+                                      BookingDetails?.reservation?.paymentType === "3"
+                                    }
+                                    onChange={() => handleCheckboxChange(3)}
+                                  />
+                                  <label htmlFor="3" className="form-checkbox__mark">
+                                    <div className="form-checkbox__icon">
+                                      {/* SVG Icon */}
+                                      <svg
+                                        width="10"
+                                        height="8"
+                                        viewBox="0 0 10 8"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                          fill="white"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </label>
+                                </div>
+                                <label htmlFor="3" className="lh-16 ml-15">
+                                  {translate("Click for Installment Payment")}
+                                </label>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+          
+                    <div className="col-12 px-20">
+                      <div className="row items-center">
+                        <button
+                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                          onClick={handleAddPersong}
+                        >
+                          {isLoading ? (
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: "30px", width: "100%" }}
+                            >
+                              <ClipLoader color="#ffffff" size={30} />
+                            </div>
+                          ) : (
+                            translate("ADD PERSON")
+                          )}
+                        </button>
+                        <button
+                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                          onClick={closeModal}
+                        >
+                          {translate("CANCEL")}
+                        </button>
+          
+                        <h6 className="booking-form-price col-4">
+                          {translate("Subtotal")}:<span>{subtotal}€</span>
+                        </h6>
+                      </div>
+                    </div>
+                  </Modal>
+                </div>
+          
+                <div id="pendingpayment">
+                  <Modal
+                    isOpen={paymentModalIsOpen}
+                    onRequestClose={closePaymentModal}
+                    style={customStyles}
+                    contentLabel="Pending Payment Modal"
+                  >
+                    <div className="d-flex justify-content-between p-2" id="modelopen">
+                      <h2 className="px-20">{translate("PENDING PAYMENT")}</h2>
+                      <button onClick={closePaymentModal}>
+                        <IoClose size={25} />
+                      </button>
+                    </div>
+                    <div className=" y-gap-30 contactForm px-20 py-10">
+                      <div className="col-md-12">
+                        <h5 className="mb-3 t_center mt-3">
+                          {translate("Total Amount")} :{" "}
+                          <b>{BookingDetails?.reservation?.subtotal} €</b>
+                        </h5>
+                      </div>
+          
+                      <div className="row">
+                        <div className="col-md-5 col-12">
+                          <div className="form-input spacing">
+                            <input
+                              type="text"
+                              name="firstAmount"
+                              value={pendingPaymentValue.firstAmount}
+                              onChange={handlePaymentPending}
+                              disabled
+                            />
+                            <label className="lh-1 text-16 text-light-1">
+                              1st Amount
                             </label>
                           </div>
                         </div>
-                        <div className="text-14">+ {option.price}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="px-20">
-            {BookingDetails?.reservation?.paymentType && (
-              <>
-                {/* Payment Type 1: Payment in Advance */}
-                {BookingDetails.reservation.paymentType === "1" && (
-                  <div>
-                    <div className="d-flex items-center pointer-check py-3">
-                      <div className="form-checkbox">
-                        <input
-                          type="checkbox"
-                          id="1"
-                          name="1"
-                          checked={
-                            BookingDetails?.reservation?.paymentType === "1"
-                          }
-                          onChange={() => handleCheckboxChange(1)}
-                        />
-                        <label htmlFor="1" className="form-checkbox__mark">
-                          <div className="form-checkbox__icon">
-                            {/* SVG Icon */}
-                            <svg
-                              width="10"
-                              height="8"
-                              viewBox="0 0 10 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                fill="white"
-                              />
-                            </svg>
+                        <div className="col-md-5 col-12">
+                          <div className="form-input spacing">
+                            <input
+                              type="text"
+                              name="firstDate"
+                              value={pendingPaymentValue.firstDate}
+                              disabled
+                            />
+                            <label className="lh-1 text-16 text-light-1">Date</label>
                           </div>
-                        </label>
+                        </div>
+                        <div className="col-md-2 col-12">
+                          <button
+                            className="button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white"
+                            disabled
+                          >
+                            {translate("PAID")}
+                          </button>
+                        </div>
                       </div>
-                      <label htmlFor="1" className="lh-16 ml-15">
-                        {translate(
-                          "Payment in advance. Payment installment is possible."
-                        )}
-                      </label>
-                    </div>
-
-                    <div className="row">
-                      <div className="col-md-6 col-12">
+          
+                      <div className="row">
+                        <div className="col-md-5 col-12">
+                          <div className="form-input spacing">
+                            <input
+                              type="text"
+                              name="firstAmount"
+                              value={pendingPaymentValue.secondAmount}
+                              onChange={handlePaymentPending}
+                              disabled
+                            />
+                            <label className="lh-1 text-16 text-light-1">
+                              2st Amount
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-md-5 col-12">
+                          <div className="form-input spacing">
+                            <input
+                              type="text"
+                              name="firstDate"
+                              value={pendingPaymentValue.secondDate}
+                              disabled
+                            />
+                            <label className="lh-1 text-16 text-light-1">Date</label>
+                          </div>
+                        </div>
                         <div
-                          className={`p-2 ${
-                            selectedpaymentOption === "adPay"
-                              ? "bg_dark"
-                              : "bg_dark_1"
-                          }`}
+                          className="col-md-2"
+                          onClick={() => {BookingDetails?.paymentData?.type_payment_2 == 1 ? stripeModalClose() :
+                            HandleInstallmentPay(pendingPaymentValue.secondAmount)
+                          }}
+                          disabled={BookingDetails?.paymentData?.type_payment_2 === 1}
+                            >
+                          <button className={`${BookingDetails?.paymentData?.type_payment_2 == 1 ? "button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white" : "button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white"}`}>
+                                  {BookingDetails?.paymentData?.type_payment_2 == 1 ? translate("PAID") : translate("PAY")}
+                          </button>
+                        </div>
+                      </div>
+          
+                      <div className="row">
+                        <div className="col-md-5 col-12">
+                          <div className="form-input spacing">
+                            <input
+                              type="text"
+                              name="firstAmount"
+                              value={pendingPaymentValue.thirdAmount}
+                              onChange={handlePaymentPending}
+                              disabled
+                            />
+                            <label className="lh-1 text-16 text-light-1">
+                              3st Amount
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-md-5 col-12">
+                          <div className="form-input spacing">
+                            <input
+                              type="text"
+                              name="firstDate"
+                              value={pendingPaymentValue.thirdDate}
+                              disabled
+                            />
+                            <label className="lh-1 text-16 text-light-1">Date</label>
+                          </div>
+                        </div>
+                        <div
+                          className="col-md-2"
+                          onClick={() => {BookingDetails?.paymentData?.type_payment_3 == 1 ? stripeModalClose() :
+                            HandleInstallmentPay(pendingPaymentValue.secondAmount)
+                          }}
+                          disabled={BookingDetails?.paymentData?.type_payment_3 === 1}
+          
                         >
-                          <p>
-                            <span>
-                              <b>{translate("Account holder")}:</b>
-                            </span>{" "}
-                            Mekka Booking GmbH
-                          </p>
-                          <p>
-                            <span>
-                              <b>IBAN:</b>
-                            </span>{" "}
-                            DE71 5125 0000 0002 2282 11
-                          </p>
-                          <p>
-                            <span>
-                              <b>BIC:</b>
-                            </span>{" "}
-                            HELADEF1TSK
-                          </p>
-                          <p>
-                            <span>
-                              <b>Bank:</b>
-                            </span>{" "}
-                            Taunus Sparkasse
-                          </p>
-                        </div>
-                      </div>
-                      <div className="col-md-6 col-12 my-md-0 my-3">
-                        <div className="p-2 border-5 d-inline-block">
-                          <p className="py-2">
-                            {translate(
-                              "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
-                            )}
-                          </p>
-                          <p className="text-red">
-                            {translate(
-                              "Note: Please make the payment within next 7 days. Post that the order will be cancelled."
-                            )}
-                          </p>
+                           <button className={`${BookingDetails?.paymentData?.type_payment_3 == 1 ? "button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white" : "button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white"}`}>
+                                  {BookingDetails?.paymentData?.type_payment_3 == 1 ? translate("PAID") : translate("PAY")}
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
-
-                {/* Payment Type 2: Online Payment */}
-                {BookingDetails.reservation.paymentType === "2" && (
-                  <div>
-                    <div className="d-flex items-center pointer-check py-3">
-                      <div className="form-checkbox">
-                        <input
-                          type="checkbox"
-                          id="2"
-                          name="2"
-                          checked={
-                            BookingDetails?.reservation?.paymentType === "2"
-                          }
-                          onChange={() => handleCheckboxChange(2)}
-                        />
-                        <label htmlFor="2" className="form-checkbox__mark">
-                          <div className="form-checkbox__icon">
-                            {/* SVG Icon */}
-                            <svg
-                              width="10"
-                              height="8"
-                              viewBox="0 0 10 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                fill="white"
-                              />
-                            </svg>
-                          </div>
-                        </label>
-                      </div>
-                      <label htmlFor="2" className="lh-16 ml-15">
+                  </Modal>
+                </div>
+          
+                <div id="CanclePop_up">
+                  <Modal
+                    isOpen={CanclePopUp}
+                    onRequestClose={CloseCancelPopUp}
+                    style={customStyles}
+                    contentLabel="Pending Payment Modal"
+                  >
+                    <div className="d-flex justify-content-between" id="modelopen">
+                      <h2 className="">{translate("Cancel Trip")}</h2>
+                      <button onClick={CloseCancelPopUp}>
+                        <IoClose size={25} />
+                      </button>
+                    </div>
+          
+                    <div className=" y-gap-30 contactForm px-10 py-10">
+                      {RefundData && (
+                        <table className="ttable table-success table-striped my-3 custom-table-bordered full_width">
+                          <thead>
+                            <tr>
+                              <th scope="col" className="px-1 py-2">
+                                <b>Type of fee</b>
+                              </th>
+                              <th
+                                scope="col"
+                                className="px-1 py-2"
+                                style={{ width: "40%" }}
+                              >
+                                <b>Fee </b>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="px-1 py-2">{translate("Booking Date")}</td>
+                              <td className="px-1 py-2">
+                                {BookingDetails?.reservation?.booking_date}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="px-1 py-2">{translate("Cancel Date")}</td>
+                              <td className="px-1 py-2">{formattedDate}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-1 py-2">{translate("Tour Date")}</td>
+                              <td className="px-1 py-2">{RefundData?.tour_date}</td>
+                            </tr>
+                            <tr>
+                              <td className="px-1 py-2">
+                                {translate("Amount Refund")} ({RefundData?.percentage}%)
+                              </td>
+                              <td className="px-1 py-2">{RefundData?.Refund_Amount} €</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      )}
+          
+                      <hr />
+          
+                      <p>
+                        <span className="text-red">*</span>
                         {translate(
-                          "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
+                          "Amount will be credited within 7 days in your bank account"
                         )}
-                      </label>
-                    </div>
-                  </div>
-                )}
-
-                {/* Payment Type 3: Installment Payment */}
-                {BookingDetails.reservation.paymentType === "3" && (
-                  <div>
-                    <div className="d-flex items-center pointer-check py-3">
-                      <div className="form-checkbox">
-                        <input
-                          type="checkbox"
-                          id="3"
-                          name="3"
-                          checked={
-                            BookingDetails?.reservation?.paymentType === "3"
-                          }
-                          onChange={() => handleCheckboxChange(3)}
-                        />
-                        <label htmlFor="3" className="form-checkbox__mark">
-                          <div className="form-checkbox__icon">
-                            {/* SVG Icon */}
-                            <svg
-                              width="10"
-                              height="8"
-                              viewBox="0 0 10 8"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                fill="white"
-                              />
-                            </svg>
-                          </div>
-                        </label>
+                      </p>
+          
+                      <div
+                        className="border-1 rounded-12 shadow-1 overflow-hidden mt-20 mb-20"
+                        id="ref"
+                      >
+                        <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
+                          <b> {translate("Cancellation Rules")}</b>
+                        </p>
+                        <div className="px-3">
+                          <ul className="">
+                            <li className="text-center py-1">
+                              {translate("15% if canceled before 90 days of the trip")}
+                            </li>
+                            <li className="text-center py-1">
+                              {translate("60% if canceled before 30 days of the trip")}
+                            </li>
+                            <li className="text-center py-1">
+                              {translate("100% if canceled before 7 days of the trip")}
+                            </li>
+                          </ul>
+                        </div>
                       </div>
-                      <label htmlFor="3" className="lh-16 ml-15">
-                        {translate("Click for Installment Payment")}
-                      </label>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-
-          <div className="col-12 px-20">
-            <div className="row items-center">
-              <button
-                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                onClick={handleAddPersong}
-              >
-                {isLoading ? (
-                  <div
-                    className="d-flex justify-content-center align-items-center"
-                    style={{ height: "30px", width: "100%" }}
-                  >
-                    <ClipLoader color="#ffffff" size={30} />
-                  </div>
-                ) : (
-                  translate("ADD PERSON")
-                )}
-              </button>
-              <button
-                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                onClick={closeModal}
-              >
-                {translate("CANCEL")}
-              </button>
-
-              <h6 className="booking-form-price col-4">
-                {translate("Subtotal")}:<span>{subtotal}€</span>
-              </h6>
-            </div>
-          </div>
-        </Modal>
-      </div>
-
-      <div id="pendingpayment">
-        <Modal
-          isOpen={paymentModalIsOpen}
-          onRequestClose={closePaymentModal}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between p-2" id="modelopen">
-            <h2 className="px-20">{translate("PENDING PAYMENT")}</h2>
-            <button onClick={closePaymentModal}>
-              <IoClose size={25} />
-            </button>
-          </div>
-          <div className=" y-gap-30 contactForm px-20 py-10">
-            <div className="col-md-12">
-              <h5 className="mb-3 t_center mt-3">
-                {translate("Total Amount")} :{" "}
-                <b>{BookingDetails?.reservation?.subtotal} €</b>
-              </h5>
-            </div>
-
-            <div className="row">
-              <div className="col-md-5 col-12">
-                <div className="form-input spacing">
-                  <input
-                    type="text"
-                    name="firstAmount"
-                    value={pendingPaymentValue.firstAmount}
-                    onChange={handlePaymentPending}
-                    disabled
-                  />
-                  <label className="lh-1 text-16 text-light-1">
-                    1st Amount
-                  </label>
-                </div>
-              </div>
-              <div className="col-md-5 col-12">
-                <div className="form-input spacing">
-                  <input
-                    type="text"
-                    name="firstDate"
-                    value={pendingPaymentValue.firstDate}
-                    disabled
-                  />
-                  <label className="lh-1 text-16 text-light-1">Date</label>
-                </div>
-              </div>
-              <div className="col-md-2 col-12">
-                <button
-                  className="button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white"
-                  disabled
-                >
-                  {translate("PAID")}
-                </button>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-5 col-12">
-                <div className="form-input spacing">
-                  <input
-                    type="text"
-                    name="firstAmount"
-                    value={pendingPaymentValue.secondAmount}
-                    onChange={handlePaymentPending}
-                    disabled
-                  />
-                  <label className="lh-1 text-16 text-light-1">
-                    2st Amount
-                  </label>
-                </div>
-              </div>
-              <div className="col-md-5 col-12">
-                <div className="form-input spacing">
-                  <input
-                    type="text"
-                    name="firstDate"
-                    value={pendingPaymentValue.secondDate}
-                    disabled
-                  />
-                  <label className="lh-1 text-16 text-light-1">Date</label>
-                </div>
-              </div>
-              <div
-                className="col-md-2"
-                onClick={() => {BookingDetails?.paymentData?.type_payment_2 == 1 ? stripeModalClose() :
-                  HandleInstallmentPay(pendingPaymentValue.secondAmount)
-                }}
-                disabled={BookingDetails?.paymentData?.type_payment_2 === 1}
-                  >
-                <button className={`${BookingDetails?.paymentData?.type_payment_2 == 1 ? "button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white" : "button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white"}`}>
-                        {BookingDetails?.paymentData?.type_payment_2 == 1 ? translate("PAID") : translate("PAY")}
-                </button>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-5 col-12">
-                <div className="form-input spacing">
-                  <input
-                    type="text"
-                    name="firstAmount"
-                    value={pendingPaymentValue.thirdAmount}
-                    onChange={handlePaymentPending}
-                    disabled
-                  />
-                  <label className="lh-1 text-16 text-light-1">
-                    3st Amount
-                  </label>
-                </div>
-              </div>
-              <div className="col-md-5 col-12">
-                <div className="form-input spacing">
-                  <input
-                    type="text"
-                    name="firstDate"
-                    value={pendingPaymentValue.thirdDate}
-                    disabled
-                  />
-                  <label className="lh-1 text-16 text-light-1">Date</label>
-                </div>
-              </div>
-              <div
-                className="col-md-2"
-                onClick={() => {BookingDetails?.paymentData?.type_payment_3 == 1 ? stripeModalClose() :
-                  HandleInstallmentPay(pendingPaymentValue.secondAmount)
-                }}
-                disabled={BookingDetails?.paymentData?.type_payment_3 === 1}
-
-              >
-                 <button className={`${BookingDetails?.paymentData?.type_payment_3 == 1 ? "button -sm -green-2 bg-green-3 text-dark my-4 mx-0 full_width text-white" : "button -sm -info-2 bg-accent-1 text-dark my-4 mx-0 full_width text-white"}`}>
-                        {BookingDetails?.paymentData?.type_payment_3 == 1 ? translate("PAID") : translate("PAY")}
-                </button>
-              </div>
-            </div>
-          </div>
-        </Modal>
-      </div>
-
-      <div id="CanclePop_up">
-        <Modal
-          isOpen={CanclePopUp}
-          onRequestClose={CloseCancelPopUp}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="">{translate("Cancel Trip")}</h2>
-            <button onClick={CloseCancelPopUp}>
-              <IoClose size={25} />
-            </button>
-          </div>
-
-          <div className=" y-gap-30 contactForm px-10 py-10">
-            {RefundData && (
-              <table className="ttable table-success table-striped my-3 custom-table-bordered full_width">
-                <thead>
-                  <tr>
-                    <th scope="col" className="px-1 py-2">
-                      <b>Type of fee</b>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-1 py-2"
-                      style={{ width: "40%" }}
-                    >
-                      <b>Fee </b>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="px-1 py-2">{translate("Booking Date")}</td>
-                    <td className="px-1 py-2">
-                      {BookingDetails?.reservation?.booking_date}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-1 py-2">{translate("Cancel Date")}</td>
-                    <td className="px-1 py-2">{formattedDate}</td>
-                  </tr>
-                  <tr>
-                    <td className="px-1 py-2">{translate("Tour Date")}</td>
-                    <td className="px-1 py-2">{RefundData?.tour_date}</td>
-                  </tr>
-                  <tr>
-                    <td className="px-1 py-2">
-                      {translate("Amount Refund")} ({RefundData?.percentage}%)
-                    </td>
-                    <td className="px-1 py-2">{RefundData?.Refund_Amount} €</td>
-                  </tr>
-                </tbody>
-              </table>
-            )}
-
-            <hr />
-
-            <p>
-              <span className="text-red">*</span>
-              {translate(
-                "Amount will be credited within 7 days in your bank account"
-              )}
-            </p>
-
-            <div
-              className="border-1 rounded-12 shadow-1 overflow-hidden mt-20 mb-20"
-              id="ref"
-            >
-              <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
-                <b> {translate("Cancellation Rules")}</b>
-              </p>
-              <div className="px-3">
-                <ul className="">
-                  <li className="text-center py-1">
-                    {translate("15% if canceled before 90 days of the trip")}
-                  </li>
-                  <li className="text-center py-1">
-                    {translate("60% if canceled before 30 days of the trip")}
-                  </li>
-                  <li className="text-center py-1">
-                    {translate("100% if canceled before 7 days of the trip")}
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="col-lg-12 d-flex justify-content-center">
-              <button
-                className="button -sm -red-2 bg-red-3 text-white"
-                onClick={() => {
-                  const confirmDelete = window.confirm(
-                    "Are you sure you want to Cancel this Booking ?"
-                  );
-                  if (confirmDelete) {
-                    // Proceed with the delete operation
-                    
-                    fatchCancelBooking();
-                    setTimeout(() => {
-                      CloseCancelPopUp();
-                    }, 2000);
-                  } else {
-                  
-                    setTimeout(() => {
-                      CloseCancelPopUp();
-                    }, 2000);
-                  }
-                }}
-              >
-                {translate("Cancel Booking")}
-              </button>
-            </div>
-          </div>
-        </Modal>
-      </div>
-
-      <div id="upload_file">
-        <Modal
-          isOpen={uploadFileisOpen}
-          onRequestClose={closeUploadFileModal}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="ml-20 my-3"> {translate("Document")}</h2>
-            <button onClick={closeUploadFileModal}>
-              <IoClose size={25} />
-            </button>
-          </div>
-
-          <div className="ml-lg-20 ml-0 ">
-            <Tabs>
-              <TabList>
-                <Tab> {translate("Upload")}</Tab>
-                <Tab> {translate("View")}</Tab>
-                <Tab> {translate("Download")}</Tab>
-              </TabList>
-
-              <TabPanel>
-                <div
-                  className=""
-                  style={{
-                    height: "60vh",
-                    overflowX: "hidden",
-                    overflowY: "auto",
-                  }}
-                >
-                  {rows.map((row, index) => (
-                    <div className="row item-center my-3" key={row.id}>
-                      <div className="col-md-4 px-0 mx-0 pl-lg-50">
-                        <Select
-                          options={VandorDoc}
-                          value={row.type}
-                          onChange={(selectedOption) =>
-                            handleDocumentChange(selectedOption, index)
-                          }
-                          className="dd-vendor"
-                          isClearable
-                        />
+          
+                      <div className="col-lg-12 d-flex justify-content-center">
+                        <button
+                          className="button -sm -red-2 bg-red-3 text-white"
+                          onClick={() => {
+                            const confirmDelete = window.confirm(
+                              "Are you sure you want to Cancel this Booking ?"
+                            );
+                            if (confirmDelete) {
+                              // Proceed with the delete operation
+                              
+                              fatchCancelBooking();
+                              setTimeout(() => {
+                                CloseCancelPopUp();
+                              }, 2000);
+                            } else {
+                            
+                              setTimeout(() => {
+                                CloseCancelPopUp();
+                              }, 2000);
+                            }
+                          }}
+                        >
+                          {translate("Cancel Booking")}
+                        </button>
                       </div>
-                      <div className="col-md-4 px-0 mx-2">
-                        <div className="row my-2 flex_center ">
-                          {rows.document ? (
-                            <div className="col-auto my-3">
-                              <div className="relative">
-                                <Image
-                                  width={200}
-                                  height={200}
-                                  src={rows.document}
-                                  alt="image"
-                                  className="size-200 rounded-12 object-cover my-3"
-                                />
+                    </div>
+                  </Modal>
+                </div>
+          
+                <div id="upload_file">
+                  <Modal
+                    isOpen={uploadFileisOpen}
+                    onRequestClose={closeUploadFileModal}
+                    style={customStyles}
+                    contentLabel="Pending Payment Modal"
+                  >
+                    <div className="d-flex justify-content-between" id="modelopen">
+                      <h2 className="ml-20 my-3"> {translate("Document")}</h2>
+                      <button onClick={closeUploadFileModal}>
+                        <IoClose size={25} />
+                      </button>
+                    </div>
+          
+                    <div className="ml-lg-20 ml-0 ">
+                      <Tabs>
+                        <TabList>
+                          <Tab> {translate("Upload")}</Tab>
+                          <Tab> {translate("View")}</Tab>
+                          <Tab> {translate("Download")}</Tab>
+                        </TabList>
+          
+                        <TabPanel>
+                          <div
+                            className=""
+                            style={{
+                              height: "60vh",
+                              overflowX: "hidden",
+                              overflowY: "auto",
+                            }}
+                          >
+                            {rows.map((row, index) => (
+                              <div className="row item-center my-3" key={row.id}>
+                                <div className="col-md-4 px-0 mx-0 pl-lg-50">
+                                  <Select
+                                    options={VandorDoc}
+                                    value={row.type}
+                                    onChange={(selectedOption) =>
+                                      handleDocumentChange(selectedOption, index)
+                                    }
+                                    className="dd-vendor"
+                                    isClearable
+                                  />
+                                </div>
+                                <div className="col-md-4 px-0 mx-2">
+                                  <div className="row my-2 flex_center ">
+                                    {rows.document ? (
+                                      <div className="col-auto my-3">
+                                        <div className="relative">
+                                          <Image
+                                            width={200}
+                                            height={200}
+                                            src={rows.document}
+                                            alt="image"
+                                            className="size-200 rounded-12 object-cover my-3"
+                                          />
+                                          <button
+                                            onClick={() => {
+                                              const newRows = [...rows];
+                                              newRows[index].document = "";
+                                              setRows(newRows);
+                                            }}
+                                            className="absoluteIcon1 button -dark-1"
+                                          >
+                                            <i className="icon-delete text-18"></i>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div className="col-auto  pl-20-doc-img">
+                                        <label
+                                          htmlFor={`imageInp-${index}`}
+                                          className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
+                                        >
+                                          <div className="text-16 fw-500 text-accent-1">
+                                            {translate("Upload Document")}
+                                          </div>
+                                        </label>
+                                        <input
+                                          onChange={(e) => handleImageChange(e, index)}
+                                          accept="image/*, application/pdf"
+                                          id={`imageInp-${index}`}
+                                          type="file"
+                                          name="image2"
+                                          style={{ display: "none" }}
+                                        />
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="col-md-2 px-0 mx-0">
+                                  <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
+                                    <div className="mx-1">
+                                      <button
+                                        type="button"
+                                        className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                                        onClick={addRow}
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                    {index > 0 && (
+                                      <div className="mx-1">
+                                        <button
+                                          type="button"
+                                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
+                                          onClick={() => removeRow(index)}
+                                        >
+                                          -
+                                        </button>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+          
+                            <div className="row ">
+                              <div className="col-12 d-flex justify-content-center gap-md-2">
                                 <button
-                                  onClick={() => {
-                                    const newRows = [...rows];
-                                    newRows[index].document = "";
-                                    setRows(newRows);
-                                  }}
-                                  className="absoluteIcon1 button -dark-1"
+                                  className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
+                                  type="submit"
+                                  onClick={handleDocumentSubmit}
                                 >
-                                  <i className="icon-delete text-18"></i>
+                                  {isLoading ? (
+                                    <div
+                                      className="d-flex justify-content-center align-items-center"
+                                      style={{ height: "30px", width: "100%" }}
+                                    >
+                                      <ClipLoader color="#ffffff" size={30} />
+                                    </div>
+                                  ) : (
+                                    translate("SUBMIT")
+                                  )}
+                                </button>
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
+                                  onClick={closeUploadFileModal}
+                                >
+                                  {translate("CANCEL")}
                                 </button>
                               </div>
                             </div>
-                          ) : (
-                            <div className="col-auto  pl-20-doc-img">
-                              <label
-                                htmlFor={`imageInp-${index}`}
-                                className="size_50 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column item-center"
-                              >
-                                <div className="text-16 fw-500 text-accent-1">
-                                  {translate("Upload Document")}
-                                </div>
-                              </label>
-                              <input
-                                onChange={(e) => handleImageChange(e, index)}
-                                accept="image/*, application/pdf"
-                                id={`imageInp-${index}`}
-                                type="file"
-                                name="image2"
-                                style={{ display: "none" }}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-md-2 px-0 mx-0">
-                        <div className="px-0 py-0 d-flex justify-content-center justify-content-lg-start">
-                          <div className="mx-1">
-                            <button
-                              type="button"
-                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                              onClick={addRow}
-                            >
-                              +
-                            </button>
                           </div>
-                          {index > 0 && (
-                            <div className="mx-1">
+                        </TabPanel>
+                        <TabPanel>
+                          <DataTable
+                            title={translate("Documents")}
+                            columns={viewData}
+                            data={viewDetails}
+                            highlightOnHover
+                          />
+                        </TabPanel>
+                        <TabPanel>
+                          <DataTable
+                            title={translate("Download Your Tickets and Visa")}
+                            columns={downloadData}
+                            data={downloadDetails}
+                            highlightOnHover
+                          />
+                        </TabPanel>
+                      </Tabs>
+                    </div>
+                  </Modal>
+                </div>
+          
+                <div id="editData">
+                  <Modal
+                    isOpen={EditData}
+                    onRequestClose={closeEditData}
+                    style={customStyles}
+                    contentLabel="Pending Payment Modal"
+                  >
+                    <div className="d-flex justify-content-between" id="modelopen">
+                      <h2 className="px-20"> {translate("Edit Your Details")}</h2>
+                      <button onClick={closeEditData}>
+                        <IoClose size={25} />
+                      </button>
+                    </div>
+          
+                    <div className="form_2">
+                      <div className="y-gap-30 contactForm px-20 py-20">
+                        <form onSubmit={HandleEditData}>
+                          <div className="row my-3">
+                            <div className="col-md-6">
+                              <div className="form-input spacing">
+                                <input
+                                  type="text"
+                                  
+                                  value={editCustomerData.name}
+                                  onChange={(e) =>
+                                    setEditCustomerData({
+                                      ...editCustomerData,
+                                      name: e.target.value,
+                                    })
+                                  }
+                                />
+                                <label className="lh-1 text-16 text-light-1">
+                                  {translate("Name")}
+                                </label>
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-input spacing">
+                                <input
+                                  type="text"
+                                  
+                                  value={editCustomerData.surname}
+                                  onChange={(e) =>
+                                    setEditCustomerData({
+                                      ...editCustomerData,
+                                      surname: e.target.value,
+                                    })
+                                  }
+                                />
+                                <label className="lh-1 text-16 text-light-1">
+                                  {translate("Surname")}
+                                </label>
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-input spacing">
+                                <select
+                                  value={editCustomerData.gender}
+                                  onChange={(e) =>
+                                    setEditCustomerData({
+                                      ...editCustomerData,
+                                      gender: e.target.value,
+                                    })
+                                  }
+                                  
+                                  className="form-control"
+                                >
+                                  <option value="male">{translate("Male")}</option>
+                                  <option value="female">{translate("Female")}</option>
+                                  <option value="other">{translate("Other")}</option>
+                                </select>
+                                <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                                  {translate("Gender")}
+                                </label>
+                              </div>
+                            </div>
+                            <div className="col-md-6">
+                              <div className="form-input spacing">
+                                {/* <input
+                                  type="date"
+                                  required
+                                  value={editCustomerData.birthday}
+                                  // onChange={(e) =>
+                                  //   setEditCustomerData({
+                                  //     ...editCustomerData,
+                                  //     birthday: e.target.value,
+                                  //   })
+                                  // }
+                                  onChange={(e) => {
+                                    const newValue = e.target.value.trim();
+                                  
+                                    // Ensure that the nationality field is not empty
+                                    if (newValue !== '') {
+                                      const formattedValue = newValue.charAt(0).toUpperCase() + newValue.slice(1).toLowerCase();
+                                      setEditCustomerData({
+                                        ...editCustomerData,
+                                        birthday: formattedValue, // Set the formatted nationality
+                                      });
+                                    } else {
+                                      console.error("Nationality cannot be empty");
+                                    }
+                                  }}
+                                  
+                                /> */}
+                                <input
+                                  type="date"
+                                  required
+                                  value={convertGermanToISO(editCustomerData.birthday)} // Convert German date to ISO for input
+                                  onChange={(e) => {
+                                    const isoDate = e.target.value; // Get the ISO format date
+                                    setEditCustomerData({
+                                      ...editCustomerData,
+                                      birthday: convertISOToGerman(isoDate), // Convert back to German format for storing
+                                    });
+                                  }}
+                                  onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
+                                />
+                                <label className="lh-1 text-16 text-light-1">
+                                  {translate("Birthday Date")}
+                                </label>
+                              </div>
+                            </div>
+          
+                            <div className="col-md-6">
+                              <div className="form-input spacing">
+                                <select
+                                  value={editCustomerData.nationality}
+                                  onChange={(e) =>
+                                    setEditCustomerData({
+                                      ...editCustomerData,
+                                      nationality: e.target.value,
+                                    })
+                                  }
+                                  
+                                  className="form-control"
+                                >
+                                  <option value="">
+                                    {/* {translate("Select Nationality")} */}
+                                    {editCustomerData.nationality}
+                                  </option>
+                                  {nationalities.map((e) => (
+                                    <option key={e} value={e}>
+                                      {translate(e)}
+                                    </option>
+                                  ))}
+                                </select>
+          
+                                <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                                  {translate("Nationality")}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+          
+                          <div className="col-12">
+                            <div className="row">
                               <button
-                                type="button"
-                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40"
-                                onClick={() => removeRow(index)}
+                                type="submit" // Ensure this is a submit button
+                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
                               >
-                                -
+                                {isLoading ? (
+                                  <div
+                                    className="d-flex justify-content-center align-items-center"
+                                    style={{ height: "30px", width: "100%" }}
+                                  >
+                                    <ClipLoader color="#ffffff" size={30} />
+                                  </div>
+                                ) : (
+                                  translate("UPDATE")
+                                )}
                               </button>
                             </div>
-                          )}
-                        </div>
+                          </div>
+                        </form>
                       </div>
                     </div>
-                  ))}
-
-                  <div className="row ">
-                    <div className="col-12 d-flex justify-content-center gap-md-2">
-                      <button
-                        className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                        type="submit"
-                        onClick={handleDocumentSubmit}
-                      >
-                        {isLoading ? (
-                          <div
-                            className="d-flex justify-content-center align-items-center"
-                            style={{ height: "30px", width: "100%" }}
-                          >
-                            <ClipLoader color="#ffffff" size={30} />
+                  </Modal>
+                </div>
+          
+                <div id="Adult1Data">
+                  <Modal
+                    isOpen={Adult1Deta}
+                    onRequestClose={closeAdult1Deta}
+                    style={customStyles}
+                    contentLabel="Pending Payment Modal"
+                  >
+                    <div className="d-flex justify-content-between" id="modelopen">
+                      <h2 className="px-20"> {translate("Edit Your Details")}</h2>
+                      <button onClick={closeAdult1Deta}>
+                        <IoClose size={25} />
+                      </button>
+                    </div>
+          
+                    <div className="form_1">
+                      <div className=" y-gap-30 contactForm px-20 py-20 ">
+                        <div className="my-3 row">
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {" "}
+                                {translate("Name")}
+                              </label>
+                            </div>
                           </div>
-                        ) : (
-                          translate("SUBMIT")
-                        )}
-                      </button>
-                      <button
-                        className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
-                        onClick={closeUploadFileModal}
-                      >
-                        {translate("CANCEL")}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  title={translate("Documents")}
-                  columns={viewData}
-                  data={viewDetails}
-                  highlightOnHover
-                />
-              </TabPanel>
-              <TabPanel>
-                <DataTable
-                  title={translate("Download Your Tickets and Visa")}
-                  columns={downloadData}
-                  data={downloadDetails}
-                  highlightOnHover
-                />
-              </TabPanel>
-            </Tabs>
-          </div>
-        </Modal>
-      </div>
-
-      <div id="editData">
-        <Modal
-          isOpen={EditData}
-          onRequestClose={closeEditData}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="px-20"> {translate("Edit Your Details")}</h2>
-            <button onClick={closeEditData}>
-              <IoClose size={25} />
-            </button>
-          </div>
-
-          <div className="form_2">
-            <div className="y-gap-30 contactForm px-20 py-20">
-              <form onSubmit={HandleEditData}>
-                <div className="row my-3">
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input
-                        type="text"
-                        
-                        value={editCustomerData.name}
-                        onChange={(e) =>
-                          setEditCustomerData({
-                            ...editCustomerData,
-                            name: e.target.value,
-                          })
-                        }
-                      />
-                      <label className="lh-1 text-16 text-light-1">
-                        {translate("Name")}
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <input
-                        type="text"
-                        
-                        value={editCustomerData.surname}
-                        onChange={(e) =>
-                          setEditCustomerData({
-                            ...editCustomerData,
-                            surname: e.target.value,
-                          })
-                        }
-                      />
-                      <label className="lh-1 text-16 text-light-1">
-                        {translate("Surname")}
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <select
-                        value={editCustomerData.gender}
-                        onChange={(e) =>
-                          setEditCustomerData({
-                            ...editCustomerData,
-                            gender: e.target.value,
-                          })
-                        }
-                        
-                        className="form-control"
-                      >
-                        <option value="male">{translate("Male")}</option>
-                        <option value="female">{translate("Female")}</option>
-                        <option value="other">{translate("Other")}</option>
-                      </select>
-                      <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                        {translate("Gender")}
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      {/* <input
-                        type="date"
-                        required
-                        value={editCustomerData.birthday}
-                        // onChange={(e) =>
-                        //   setEditCustomerData({
-                        //     ...editCustomerData,
-                        //     birthday: e.target.value,
-                        //   })
-                        // }
-                        onChange={(e) => {
-                          const newValue = e.target.value.trim();
-                        
-                          // Ensure that the nationality field is not empty
-                          if (newValue !== '') {
-                            const formattedValue = newValue.charAt(0).toUpperCase() + newValue.slice(1).toLowerCase();
-                            setEditCustomerData({
-                              ...editCustomerData,
-                              birthday: formattedValue, // Set the formatted nationality
-                            });
-                          } else {
-                            console.error("Nationality cannot be empty");
-                          }
-                        }}
-                        
-                      /> */}
-                      <input
-                        type="date"
-                        required
-                        value={convertGermanToISO(editCustomerData.birthday)} // Convert German date to ISO for input
-                        onChange={(e) => {
-                          const isoDate = e.target.value; // Get the ISO format date
-                          setEditCustomerData({
-                            ...editCustomerData,
-                            birthday: convertISOToGerman(isoDate), // Convert back to German format for storing
-                          });
-                        }}
-                        onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
-                      />
-                      <label className="lh-1 text-16 text-light-1">
-                        {translate("Birthday Date")}
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-input spacing">
-                      <select
-                        value={editCustomerData.nationality}
-                        onChange={(e) =>
-                          setEditCustomerData({
-                            ...editCustomerData,
-                            nationality: e.target.value,
-                          })
-                        }
-                        
-                        className="form-control"
-                      >
-                        <option value="">
-                          {/* {translate("Select Nationality")} */}
-                          {editCustomerData.nationality}
-                        </option>
-                        {nationalities.map((e) => (
-                          <option key={e} value={e}>
-                            {translate(e)}
-                          </option>
-                        ))}
-                      </select>
-
-                      <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                        {translate("Nationality")}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <div className="row">
-                    <button
-                      type="submit" // Ensure this is a submit button
-                      className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                    >
-                      {loading ? (
-                        <div
-                          className="d-flex justify-content-center align-items-center"
-                          style={{ height: "30px", width: "100%" }}
-                        >
-                          <ClipLoader color="#ffffff" size={30} />
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {" "}
+                                {translate("Surname")}{" "}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {" "}
+                                {translate("Email")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {" "}
+                                {translate("Email")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {" "}
+                                {translate("City")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <select
+                                value={gender}
+                                onChange={(e) => {
+                                  setGender(e.target.value);
+                                }}
+                                required
+                                className="form-control"
+                              >
+                                {/* <option value="" disabled>Select Gender</option> */}
+                                <option value="male"> {translate("Male")}</option>
+                                <option value="female"> {translate("Female")}</option>
+                                <option value="other"> {translate("Other")}</option>
+                              </select>
+                              <label className="lh-1 text-16 text-light-1 dd_l_top10">
+                                {translate("Gender")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <input type="date" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {/* Birthday */}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <select
+                                value={Nationality}
+                                onChange={(e) => {
+                                  setNationality(e.target.value);
+                                }}
+                                required
+                                className="form-control"
+                              >
+                                {/* <option value="" disabled>Nationality</option> */}
+                                <option value="indian"> {translate("Indian")}</option>
+                                <option value="german"> {translate("German")}</option>
+                                <option value="canadian"> {translate("Canadian")}</option>
+                              </select>
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("Nationality")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-lg-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("House No")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-lg-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {translate("ZIP code")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-lg-6">
+                            <div className="form-input spacing">
+                              <input type="text" required />
+                              <label className="lh-1 text-16 text-light-1">
+                                {" "}
+                                {translate("Street")}
+                              </label>
+                            </div>
+                          </div>
+          
+                          <div className="col-md-6">
+                            <div className="form-input spacing">
+                              <select
+                                value={From}
+                                onChange={(e) => {
+                                  setFrom(e.target.value);
+                                }}
+                                required
+                                className="form-control"
+                              >
+                                {/* <option value="" disabled>Nationality</option> */}
+                                <option value="Frankfurt">
+                                  Frankfurt(FRA) {translate("Email")}
+                                </option>
+                              </select>
+                              <label className="lh-1 text-16 text-light-1">{From}</label>
+                            </div>
+                          </div>
                         </div>
-                      ) : (
-                        translate("UPDATE")
-                      )}
-                    </button>
-                  </div>
+                        <button
+                          className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
+                          onClick={() => {
+                            alert("Edit successfully !!");
+                            setTimeout(() => {
+                              closeAdult1Deta();
+                            }, 2000);
+                          }}
+                        >
+                          {translate("SAVE")}
+                        </button>
+                      </div>
+                    </div>
+                  </Modal>
                 </div>
-              </form>
-            </div>
-          </div>
-        </Modal>
-      </div>
-
-      <div id="Adult1Data">
-        <Modal
-          isOpen={Adult1Deta}
-          onRequestClose={closeAdult1Deta}
-          style={customStyles}
-          contentLabel="Pending Payment Modal"
-        >
-          <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="px-20"> {translate("Edit Your Details")}</h2>
-            <button onClick={closeAdult1Deta}>
-              <IoClose size={25} />
-            </button>
-          </div>
-
-          <div className="form_1">
-            <div className=" y-gap-30 contactForm px-20 py-20 ">
-              <div className="my-3 row">
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Name")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Surname")}{" "}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Email")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Email")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("City")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      value={gender}
-                      onChange={(e) => {
-                        setGender(e.target.value);
-                      }}
-                      required
-                      className="form-control"
-                    >
-                      {/* <option value="" disabled>Select Gender</option> */}
-                      <option value="male"> {translate("Male")}</option>
-                      <option value="female"> {translate("Female")}</option>
-                      <option value="other"> {translate("Other")}</option>
-                    </select>
-                    <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                      {translate("Gender")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <input type="date" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {/* Birthday */}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      value={Nationality}
-                      onChange={(e) => {
-                        setNationality(e.target.value);
-                      }}
-                      required
-                      className="form-control"
-                    >
-                      {/* <option value="" disabled>Nationality</option> */}
-                      <option value="indian"> {translate("Indian")}</option>
-                      <option value="german"> {translate("German")}</option>
-                      <option value="canadian"> {translate("Canadian")}</option>
-                    </select>
-                    <label className="lh-1 text-16 text-light-1">
-                      {translate("Nationality")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-lg-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {translate("House No")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-lg-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {translate("ZIP code")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-lg-6">
-                  <div className="form-input spacing">
-                    <input type="text" required />
-                    <label className="lh-1 text-16 text-light-1">
-                      {" "}
-                      {translate("Street")}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-input spacing">
-                    <select
-                      value={From}
-                      onChange={(e) => {
-                        setFrom(e.target.value);
-                      }}
-                      required
-                      className="form-control"
-                    >
-                      {/* <option value="" disabled>Nationality</option> */}
-                      <option value="Frankfurt">
-                        Frankfurt(FRA) {translate("Email")}
-                      </option>
-                    </select>
-                    <label className="lh-1 text-16 text-light-1">{From}</label>
-                  </div>
-                </div>
-              </div>
-              <button
-                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 col-sm-6 mx-10 mx-md-3"
-                onClick={() => {
-                  alert("Edit successfully !!");
-                  setTimeout(() => {
-                    closeAdult1Deta();
-                  }, 2000);
-                }}
-              >
-                {translate("SAVE")}
-              </button>
-            </div>
-          </div>
-        </Modal>
-      </div>
-
-      {showStripeModal && (
-        <Stripeform
-          payableAmount={amount}
-          showStripeModal={showStripeModal}
-          handleClose={handleClose}
-          closeModal={closeModal}
-          paidData={paidData}
-        />
-      )}
+          
+                {showStripeModal && (
+                  <Stripeform
+                    payableAmount={amount}
+                    showStripeModal={showStripeModal}
+                    handleClose={handleClose}
+                    closeModal={closeModal}
+                    paidData={paidData}
+                    fetchBookingDetails={fetchBookingDetails}
+                    closePaymentModal = {closePaymentModal}
+                  />
+                )}
+                </>
+)}
     </div>
   );
 };

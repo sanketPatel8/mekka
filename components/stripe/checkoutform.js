@@ -44,7 +44,9 @@ export default function CheckoutForm({
   setReservationID,
   setPaidAmount,
   closeModal,
-  paidData
+  paidData,
+  fetchBookingDetails,
+  closePaymentModal
 }) {
   const { dispatch, customer } = useAuthContext();
   const stripe = useStripe();
@@ -147,9 +149,8 @@ export default function CheckoutForm({
         showSuccessToast(translate, "Payment successful");
         closeModal();
         handleClose();
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+        closePaymentModal();
+        fetchBookingDetails();
         
       } else {
         showErrorToast(translate , "Payment failed");

@@ -939,7 +939,7 @@ export default function EditTour() {
     setLoading(true);
    
 
-    if( !date_begin || !date_end || !name || !capacity ||  departureRows.length == 0  || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price) {
+    if( !date_begin || !date_end || !name || !capacity ||  departureRows.length == 0  || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price ) {
       showErrorToast(translate, "Please fill in all required fields before proceeding");
       setLoading(false);
       return;
@@ -953,34 +953,10 @@ export default function EditTour() {
         return;
       }
     }
-    if (mekkaRows.length > 0) {
-      const hasEmptyMekka = mekkaRows.some((mekka) => !mekka.hotel_name || !mekka.hotel_price || !mekka.hotel_info);
-      if (hasEmptyMekka) {
-        showErrorToast(translate, "Please fill in all fields for Mekka hotels");
-        setLoading(false);
-        return;
-      }
-    }
+
+    
   
-    // Validate madinaRows
-    if (madinaRows.length > 0) {
-      const hasEmptyMadina = madinaRows.some((madina) => !madina.hotel_name || !madina.hotel_price || !madina.hotel_info);
-      if (hasEmptyMadina) {
-        showErrorToast(translate, "Please fill in all fields for Madina hotels");
-        setLoading(false);
-        return;
-      }
-    }
   
-    // Validate flightRow
-    if (flightRow.length > 0) {
-      const hasEmptyFlight = flightRow.some((flight) => !flight.flight_id || !flight.flight_amount || !flight.no_of_stop || !flight.luggage);
-      if (hasEmptyFlight) {
-        showErrorToast(translate, "Please fill in all fields for flight details");
-        setLoading(false);
-        return;
-      }
-    }
 
     const end_date = formatDateToMMDDYYYY(date_end);
     const start_date = formatDateToMMDDYYYY(date_begin);
@@ -1037,6 +1013,7 @@ export default function EditTour() {
       showErrorToast(translate, "Please fill in all required fields before proceeding");
       return;
     }
+  
 
     const hotel_data = [...mekkaData, ...madinaData];
 
