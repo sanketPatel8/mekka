@@ -57,7 +57,11 @@ export default function Profile() {
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [Commision, setCommision] = useState('')
   const {handleRedirect} = Useauthredirect();
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "My Profile - MekkaBooking";
+    }
+  }, []);
   useEffect(() => {
     handleRedirect();
     setLoading(false);

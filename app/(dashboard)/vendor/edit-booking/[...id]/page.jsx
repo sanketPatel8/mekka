@@ -557,7 +557,7 @@ export default function DbBooking({ params }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      document.title = "Booking Deatils - MekkaBooking";
+      document.title = "Booking Details - MekkaBooking";
     }
   }, []);
 

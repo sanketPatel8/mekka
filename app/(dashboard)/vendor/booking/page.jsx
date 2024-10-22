@@ -27,7 +27,11 @@ export default function DbBooking() {
   const [loading, setLoading] = useState(false);
 
   const { user } = useAuthContext();
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Bookings - MekkaBooking";
+    }
+  }, []);
   useEffect(() => {
     const tabContent = [
       translate("All"),

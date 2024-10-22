@@ -146,7 +146,11 @@ export default function AddTour() {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
 
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Add Tour - MekkaBooking";
+    }
+  }, []);
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();

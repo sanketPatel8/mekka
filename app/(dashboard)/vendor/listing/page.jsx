@@ -66,6 +66,12 @@ export default function DBListing() {
     Modal.setAppElement("#invoice");
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "My Listings - MekkaBooking";
+    }
+  }, []);
+
   const handleClick = (id) => {
     if (id) {
       const confirmResult = window.confirm(

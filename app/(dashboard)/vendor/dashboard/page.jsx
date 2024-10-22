@@ -3,7 +3,7 @@ import AgentDb from "@/components/dasboard/main/Agent";
 import React from "react";
 
 export const metadata = {
-  title: "Dashboard-main || mekkaBooking - Travel & Tour React NextJS Template",
+  title: "Dashboard || mekkaBooking - Travel & Tour React NextJS Template",
   description: "mekkaBooking - Travel & Tour React NextJS Template",
 };
 

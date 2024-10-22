@@ -22,7 +22,11 @@ export default function DBListing() {
   const [VendorBookings, setVendorBookings] = useState([]);
   const { user } = useAuthContext();
   const { translate } = useTranslation();
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Payment History - MekkaBooking";
+    }
+  }, []);
   useEffect(() => {
     const BookingsData = [
       {

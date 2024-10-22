@@ -137,6 +137,11 @@ export default function EditTour() {
   const [isFocused, setIsFocused] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Edit Tour - MekkaBooking";
+    }
+  }, []);
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
