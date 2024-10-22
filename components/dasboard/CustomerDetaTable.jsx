@@ -1136,6 +1136,7 @@ const CustomerDetaTable = () => {
         reservation_id: BookingDetails.reservation?.id,
       };
       setPaidData(data);
+      console.log(paidData, "paidData");
     }
  
     setShowStripeModal(true);
@@ -1915,7 +1916,7 @@ const CustomerDetaTable = () => {
                         <div
                           className="col-md-2"
                           onClick={() => {BookingDetails?.paymentData?.type_payment_3 == 1 ? stripeModalClose() :
-                            HandleInstallmentPay(pendingPaymentValue.secondAmount)
+                            HandleInstallmentPay(pendingPaymentValue.thirdAmount)
                           }}
                           disabled={BookingDetails?.paymentData?.type_payment_3 === 1}
           
