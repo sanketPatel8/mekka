@@ -1123,24 +1123,48 @@ const handleSecondAmountChange = (e) => {
                         )}{" "}
                       </div>
                     </div>
+              
                   </div>
                 ) : null}
                 {
-                  (selectedCheckbox === 1 || selectedCheckbox === 2) && (
-                    <div>
+                  (selectedCheckbox === 1 || selectedCheckbox === 2) ?( SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
+                    <div className="">
+                      <div className={`d-flex items-center justify-between`}>
+                        <div className="fw-500"> {translate("Amount Due")}</div>
+                        <div className="">
+                          
+                          {formatPrice(
+                            SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount 
+                          )}{" "}
+                        </div>
+                      </div>
 
-                      <div className="d-flex items-center justify-between">
-                        <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
-                      </div>
-                      
-                      <div className="d-flex items-center justify-between">
-                        <div className="fw-500"> {translate("Amount Payable")}</div>
-                        <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
-                      </div>
+                        <div className="d-flex items-center justify-between">
+                          <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
+                          <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
+                        </div>
+
+                        <div className="d-flex items-center justify-between">
+                          <div className="fw-500"> {translate("Amount Payable")}</div>
+                          <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
+                        </div>
 
                     </div>
-                  )
+                  ) : <div>
+
+                  <div className="d-flex items-center justify-between">
+                    <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
+                    <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
+                  </div>
+                  
+                  <div className="d-flex items-center justify-between">
+                    <div className="fw-500"> {translate("Amount Payable")}</div>
+                    <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
+                  </div>
+
+                </div>) : ""
+                    
+  
                 }
                 <div className="">
                 
