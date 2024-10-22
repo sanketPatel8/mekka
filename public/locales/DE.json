@@ -693,5 +693,6 @@
 "Document Upload Failed" : "Dokumentenupload fehlgeschlagen",
 "Booking Cancelled Successfully" :"Buchung erfolgreich storniert",
 "Invalid Credentials. If you are tour agent, please login from the partner login page" : "Ungültige Anmeldedaten. Wenn Sie ein Reiseveranstalter sind, melden Sie sich bitte über die Partner-Anmeldeseite an",
-"Please fill all the fields" : "Bitte füllen Sie alle Felder aus"
+"Please fill all the fields" : "Bitte füllen Sie alle Felder aus",
+"Grand Total" : "Gesamtsumme"
 }

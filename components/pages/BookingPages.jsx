@@ -1354,6 +1354,7 @@ export default function BookingPages({ BookingData }) {
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,
           Discount: Discount,
+          Promo : Promo
         };
 
         // Add new data to existing storage object
@@ -1649,7 +1650,7 @@ export default function BookingPages({ BookingData }) {
 
                     <div className={discountClass}>
                       <div className={`d-flex items-center justify-between `}>
-                        <div className="fw-500">{translate("Discount")}</div>
+                        <div className="fw-500">{translate("Discount")}{" "}{`(${promo})`}</div>
                         <div className="">
                           {" "}
                           - {formatPrice(Discount.Discount)}{" "}
@@ -1663,7 +1664,7 @@ export default function BookingPages({ BookingData }) {
                     </div> */}
 
                     <div className="d-flex items-center justify-between">
-                      <div className="fw-500">{translate("Amount Due")} </div>
+                      <div className="fw-500">{translate("Grand Total")} </div>
                       <div className=""> {formatPrice(TotalPaidAmount)} </div>
                     </div>
                   </div>
