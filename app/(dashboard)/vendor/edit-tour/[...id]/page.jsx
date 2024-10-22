@@ -146,6 +146,23 @@ export default function EditTour() {
     formData.append("id", id);
     const response = await POST.request({ form: formData, url: "tourdetails" });
     if (response) {
+      const updatedServices = services.map((service) => {
+        const foundService = response.Tour_Details.addition_service.find(
+            (additionalService) => additionalService.additinoal_order === service.id.toString()
+        );
+
+        console.log(foundService, "foundService");
+        if (foundService) {
+            return {
+                ...service,
+                price: foundService.price,
+                checked: true, // Mark as checked if found
+            };
+        }
+        return service;
+    });
+
+    setServices(updatedServices);
       setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
       setAdditionalServices(response.Tour_Details.addition_service || "");
@@ -153,14 +170,12 @@ export default function EditTour() {
       setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
       setTourInclude(response.Tour_Details.details.tour_included || "");
-       setAdultPrice(response.Tour_Details.adult_price[0].price);
-      console.log(response.Tour_Details.adult_price[0].price, "adultPrice");
-      const childPrice = response.Tour_Details.child_price.map((price) =>
-        setChildPrice(price.price)
-      );
-      const babyPrice = response.Tour_Details.baby_price.map((price) =>
-        setBabyPrice(price.price)
-      );
+       setAdultPrice(JSON.parse(response.Tour_Details.adult_price[0].price));
+       setChildPrice(JSON.parse(response.Tour_Details.child_price[0].price));
+       setBabyPrice(JSON.parse(response.Tour_Details.baby_price[0].price));
+  
+
+            
     }
   };
 

@@ -300,11 +300,11 @@ export default function DBListing() {
                           </div>
 
                           <label className="badge bg-secondary"></label>
-                          <button className="button -sm -outline-accent-1 text-accent-1">
-                            <Link href={`/vendor/edit-tour/${elm.id}`}>
+                            <Link href={`/vendor/edit-tour/${elm.id}`} >
+                          <button className="button -sm -outline-accent-1 w-100 text-accent-1">
                               <div>{translate("EDIT TOUR")}</div>
-                            </Link>
                           </button>
+                            </Link>
 
                           <button
                             onClick={(id) => handleClick(`${elm?.id}`)}
