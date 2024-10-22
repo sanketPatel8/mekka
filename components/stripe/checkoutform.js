@@ -48,7 +48,8 @@ export default function CheckoutForm({
   paidData,
   fetchBookingDetails,
   closePaymentModal,
-  amount
+  amount = 0,
+  payableAmount = 0
 }) {
   const { dispatch, customer } = useAuthContext();
   const {formatPrice} = useCurrency();
@@ -243,6 +244,7 @@ export default function CheckoutForm({
     setIsProcessing(false);
   };
   const calculateTotalWithFee = (amount) => {
+    console.log(amount)
     const feePercentage = 0.03;
     const fee = amount * feePercentage; 
     return  fee; 
@@ -254,8 +256,11 @@ export default function CheckoutForm({
     }).format(amount); // Convert to euros (assuming amount is in cents)
   };
     
-  const totalAmount = calculateTotalWithFee(amount);
-  const payableAmount = amount + totalAmount;
+  const totalAmount = calculateTotalWithFee(amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount);
+  console.log(totalAmount, 'totalAmount')
+  console.log(amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount, 'amount')
+  const payable = ((amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount)/100) + (totalAmount/100);
+  console.log(payableAmount, 'payableAmount')
 
   const { translate } = useTranslation();
 
@@ -269,9 +274,9 @@ export default function CheckoutForm({
       <button onClick={handleClose}>
         <IoClose size={20} />
       </button>
-      <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {formatCurrency(amount)}</span></h5>
+      <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {formatCurrency(amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount)}</span></h5>
       <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(totalAmount)}</span></h5>
-      <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(payableAmount)}</span></h5>
+      <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(payable*100)}</span></h5>
       <hr/>
       <form
         className="position-relative"

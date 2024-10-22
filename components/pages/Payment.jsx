@@ -1141,12 +1141,12 @@ const handleSecondAmountChange = (e) => {
 
                         <div className="d-flex items-center justify-between">
                           <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                          <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
+                          <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount ))} </div>
                         </div>
 
                         <div className="d-flex items-center justify-between">
                           <div className="fw-500"> {translate("Amount Payable")}</div>
-                          <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
+                          <div className=""> {formatPrice((calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount)) + (SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount))} </div>
                         </div>
 
                     </div>
