@@ -1234,12 +1234,12 @@ const CustomerDetaTable = () => {
           
                         {/* </button> */}
                       </div>
-          
+                      
                       <div
                         className={
-                          BookingDetails?.reservation?.paymentType == "3"
-                            ? "d-block"
-                            : "d-none"
+                          BookingDetails?.reservation?.reservation_status == "Payment Completed"
+                            ? "d-none"
+                            : "d-block"
                         }
                       >
                         <button
