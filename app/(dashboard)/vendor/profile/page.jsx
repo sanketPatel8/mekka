@@ -212,7 +212,7 @@ export default function Profile() {
         !name ||
         !companyName ||
         image1 == "" ||
-        (image2.length == 0 && uploadImage.length == 0)
+        (companyData.company_document == "" && uploadImage.length == 0) 
       ) {
         showErrorToast(translate, "Please fill all fields");
         return;
@@ -414,7 +414,13 @@ export default function Profile() {
       const newCompanyDocument = companyData.company_document.filter(
         (document) => document !== companyData.company_document[index]
       );
+      console.log(newCompanyDocument, "newCompanyDocument");
       setCompanyData({ ...companyData, company_document: newCompanyDocument });
+      console.log(companyData.company_document, "companyData.company_document");
+      if(companyData.company_document.length == 0){
+        setImage2([]);
+      }
+      console.log(image2, "image2");
       showSuccessToast(translate , "Image removed successfully");
       setTimeout(() => {
         fetchProfile();

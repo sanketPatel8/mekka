@@ -670,7 +670,7 @@ export default function DbBooking({ params }) {
                     <div
                       className=""
                       style={{
-                        height: "60vh",
+                        height: "40vh",
                         overflowX: "hidden",
                         overflowY: "auto",
                       }}
