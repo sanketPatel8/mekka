@@ -334,6 +334,7 @@ const handleSecondAmountChange = (e) => {
           localStorage.removeItem("AllAdultsData");
           localStorage.removeItem("AdditionalServices");
           localStorage.removeItem("getUserData");
+          localStorage.removeItem("Redirect_Login");
         }, 10000);
       }, 3000);
     }
@@ -908,7 +909,6 @@ const handleSecondAmountChange = (e) => {
                       </div>
                     </div> */}
 
-                    <div className="line mt-30 mb-30"></div>
                   </div>
                 </div>
               )}

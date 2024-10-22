@@ -10,6 +10,7 @@ import { post } from "@/app/utils/api";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { POST } from "@/app/utils/api/post";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { useCurrency } from "@/app/context/currencyContext";
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -46,9 +47,11 @@ export default function CheckoutForm({
   closeModal,
   paidData,
   fetchBookingDetails,
-  closePaymentModal
+  closePaymentModal,
+  amount
 }) {
   const { dispatch, customer } = useAuthContext();
+  const {formatPrice} = useCurrency();
   const stripe = useStripe();
 
   const elements = useElements();
@@ -81,6 +84,7 @@ export default function CheckoutForm({
           localStorage.removeItem("AllAdultsData");
           localStorage.removeItem("AdditionalServices");
           localStorage.removeItem("getUserData");
+          localStorage.removeItem("Redirect_Login");
         }, 10000);
       }
     } catch (error) {
@@ -123,6 +127,7 @@ export default function CheckoutForm({
         setTimeout(() => {
           window.location.reload();
         }, 1500);
+       
         
       } else {
         showErrorToast(translate , "Person was not added");
@@ -151,6 +156,7 @@ export default function CheckoutForm({
         handleClose();
         closePaymentModal();
         fetchBookingDetails();
+       
         
       } else {
         showErrorToast(translate , "Payment failed");
@@ -236,6 +242,20 @@ export default function CheckoutForm({
 
     setIsProcessing(false);
   };
+  const calculateTotalWithFee = (amount) => {
+    const feePercentage = 0.03;
+    const fee = amount * feePercentage; 
+    return  fee; 
+  };
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(amount); // Convert to euros (assuming amount is in cents)
+  };
+    
+  const totalAmount = calculateTotalWithFee(amount);
+  const payableAmount = amount + totalAmount;
 
   const { translate } = useTranslation();
 
@@ -249,7 +269,10 @@ export default function CheckoutForm({
       <button onClick={handleClose}>
         <IoClose size={20} />
       </button>
-
+      <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {formatCurrency(amount)}</span></h5>
+      <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(totalAmount)}</span></h5>
+      <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(payableAmount)}</span></h5>
+      <hr/>
       <form
         className="position-relative"
         id="payment-form"

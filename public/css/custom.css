@@ -380,3 +380,9 @@ opacity: 1;
   height: 60vh!important;
   overflow-x: hidden!important;
 }
+
+#signInModal{
+  height: fit-content!important;
+  overflow-x: hidden!important;
+}
+

@@ -1743,11 +1743,10 @@ export default function BookingPages({ BookingData }) {
           onRequestClose={closeModal}
           style={customStyles}
           contentLabel="Example Modal"
+          id="signInModal"
         >
-          <section className="">
-            <div className="d-flex justify-content-between my-1 px-2" id="">
-              <h2 className=""></h2>
-            </div>
+          <section className="pb-20">
+          
 
             {/* <form
               onSubmit={HandleLoginSubmite}

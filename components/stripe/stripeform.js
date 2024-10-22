@@ -105,6 +105,7 @@ function Stripeform({RadioValue, closeModal,payableAmount,fetchBookingDetails,cl
         paidData = {paidData}
         closePaymentModal = {closePaymentModal}
         fetchBookingDetails={fetchBookingDetails}
+        amount = {amount}
       />
     </Elements>
   )

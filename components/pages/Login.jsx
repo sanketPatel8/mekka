@@ -241,12 +241,12 @@ export default function Login({
           <ClipLoader color="#DAC04F" size={50} />
         </div>
       ) : (
-        <section className={`${sectionClass}  layout-pb-lg`}>
+        <section className={`${sectionClass}  `}>
           <div className={hide === false ? "d-none" : "d-block"}></div>
           <div className="container">
             <div className="row justify-center">
               <div className={classfor}>
-                <div className="text-center mb-60 md:mb-30">
+                <div className="text-center mb-30 md:mb-30">
                   <h1 className="text-30"> {translate("Log In")}</h1>
                   <div className={hide === false ? "d-none" : "d-block"}>
                     <div className="text-18 fw-500 mt-20 md:mt-15">
