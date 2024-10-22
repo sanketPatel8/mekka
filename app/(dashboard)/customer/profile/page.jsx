@@ -37,6 +37,7 @@ export default function Profile() {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [Phone, setPhone] = useState("");
+  const [DPhone, setDPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [fileBlob, setFileBlob] = useState({});
@@ -50,18 +51,6 @@ export default function Profile() {
   const [old_password, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
-  const [PhoneError, setPhoneError] = useState("");
-
-  // const handlePhoneChange = (e) => {
-  //   const value = e.target.value;
-  //   const regex = /^[0-9]{0,10}$/; // Adjust the regex as needed
-  //   if (regex.test(value)) {
-  //     setPhone(value); // Update phone only if it's valid
-  //     setPhoneError("*");
-  //   } else {
-  //     setPhoneError("");
-  //   }
-  // };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -70,32 +59,14 @@ export default function Profile() {
   }, []);
 
   const handlePhoneChange = (value) => {
-    setPhone(value);
-
-    // Validation: Check if phone number is too short or too long
-    if (value.length < 15 || value.length > 20) {
-      setPhoneError(translate("Phone number must be between 10 and 15 digits"));
-    }
-    // Validation to ensure only numbers
-    else if (!/^\d+$/.test(value.replace(/[^0-9]/g, ""))) {
-      setPhoneError(translate("Phone number can only contain digits"));
-    }
-    // Validation to ensure country code is present
-    else if (!value.includes("+")) {
-      setPhoneError(translate("Please include country code"));
-    } else {
-      setPhoneError(""); // Clear error if the phone number is valid
-    }
-    
+    setPhone(value); 
   };
-
-  console.log("Phone", Phone);
 
   // console.log("formData", formData?.image1);
 
   const { user, customer } = useAuthContext();
 
-  console.log("customer", customer);
+  // console.log("customer", customer);
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -414,6 +385,8 @@ export default function Profile() {
   // };
 
   console.log("countryCode" , countryCode);
+  console.log("Phone" , Phone);
+  
   
   const { translate } = useTranslation();
   return (
@@ -510,7 +483,7 @@ export default function Profile() {
                           <div className="col-md-6">
                             <div className="form-input my-1">
                               <PhoneInput
-                                country={countryCode} 
+                                country={Phone !== "" ? "" : countryCode} 
                                 value={Phone}
                                 onChange={handlePhoneChange}
                                 inputProps={{
