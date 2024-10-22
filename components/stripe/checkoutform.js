@@ -243,6 +243,27 @@ export default function CheckoutForm({
 
     setIsProcessing(false);
   };
+  const calculateFeeFromPayableAmount = (payableAmount) => {
+    // Ensure payableAmount is a string
+    const amountString = typeof payableAmount === 'string' ? payableAmount : payableAmount.toString();
+    console.log(amountString, 'amountString')
+    
+    // Check if the amountString contains a period
+    let numericAmount;
+    if (amountString.includes('.')) {
+      // Format: "40.000,00"
+      numericAmount = parseFloat(amountString.replace('.', '').replace(',', '.'));
+    } else {
+      // Format: "500,00"
+      numericAmount = parseFloat(amountString.replace(',', '.'));
+    }
+  
+    // Calculate the fee (3%)
+    const feePercentage = 0.03;
+    const fee = numericAmount * feePercentage;
+  
+    return fee; // Return the calculated fee
+  };
   const calculateTotalWithFee = (amount) => {
     console.log(amount)
     const feePercentage = 0.03;
@@ -255,12 +276,22 @@ export default function CheckoutForm({
       currency: 'EUR',
     }).format(amount); // Convert to euros (assuming amount is in cents)
   };
-    
-  const totalAmount = calculateTotalWithFee(amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount);
+  const parseAmount = (amountString) => {
+    // Ensure amountString is a string
+    const str = typeof amountString === 'string' ? amountString : amountString.toString();
+  
+    // Check if the amountString contains a period
+    if (str.includes('.')) {
+      // Format: "40.000,00"
+      return parseFloat(str.replace('.', '').replace(',', '.'));
+    } else {
+      // Format: "500,00"
+      return parseFloat(str.replace(',', '.'));
+    }
+  };
+  const totalAmount = (amount === 0 ? calculateFeeFromPayableAmount(payableAmount) : calculateTotalWithFee(amount));
   console.log(totalAmount, 'totalAmount')
-  console.log(amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount, 'amount')
-  const payable = ((amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount)/100) + (totalAmount/100);
-  console.log(payableAmount, 'payableAmount')
+  const payable = ((amount === 0 ? parseAmount(payableAmount) : amount) / 100) + (totalAmount / 100);
 
   const { translate } = useTranslation();
 
@@ -274,7 +305,7 @@ export default function CheckoutForm({
       <button onClick={handleClose}>
         <IoClose size={20} />
       </button>
-      <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {formatCurrency(amount === 0 ?  parseFloat(payableAmount.replace(',', '.')) : amount)}</span></h5>
+      <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {amount === 0 ? payableAmount : formatCurrency(amount)}</span></h5>
       <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(totalAmount)}</span></h5>
       <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(payable*100)}</span></h5>
       <hr/>

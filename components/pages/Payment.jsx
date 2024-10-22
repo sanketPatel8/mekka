@@ -1132,7 +1132,7 @@ const handleSecondAmountChange = (e) => {
                   </div>
                 ) : null}
                 {
-                  (selectedCheckbox === 1 || selectedCheckbox === 2) ?( SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
+                  ((selectedCheckbox === 1 || selectedCheckbox === 2) && !paidAmount) ?( SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
                     <div className="">
                       <div className={`d-flex items-center justify-between`}>
                         <div className="fw-500"> {translate("Amount Due")}</div>
