@@ -20,10 +20,8 @@ export default function TourSlider({ PAckageData }) {
   useEffect(() => {
     setslibleTourSlider(PAckageData?.Tour_List);
   }, [PAckageData]);
-  
-  console.log(slibleTourSlider, "slibleTourSlider");
-  
 
+  console.log(slibleTourSlider, "slibleTourSlider");
 
   return (
     <section className="">
@@ -31,7 +29,10 @@ export default function TourSlider({ PAckageData }) {
         <div className="row">
           <div className="col-auto">
             {slibleTourSlider?.length !== 0 && slibleTourSlider && (
-              <h2 className="text-30"> {translate("You might also like...")}</h2>
+              <h2 className="text-30">
+                {" "}
+                {translate("You might also like...")}
+              </h2>
             )}
           </div>
         </div>
@@ -98,7 +99,7 @@ export default function TourSlider({ PAckageData }) {
                             elm.direct_flight == "0" ? "d-none" : "d-block"
                           }`}
                         >
-                          {translate('Direct Flight')}
+                          {translate("Direct Flight")}
                         </button>
                       </div>
 
@@ -109,7 +110,7 @@ export default function TourSlider({ PAckageData }) {
                           }`}
                         >
                           <FaPersonWalking color="white" size={18} />
-                          Zu Kaaba {elm.distance_to_hotel} 
+                          Zu Kaaba {elm.distance_to_hotel}
                         </div>
 
                         <h3
@@ -156,7 +157,7 @@ export default function TourSlider({ PAckageData }) {
                               elm.tour_price == "0" ? "d-none" : "d-block"
                             }`}
                           >
-                            {translate('From')}{" "}
+                            {translate("From")}{" "}
                             <span className="text-16 fw-500">
                               {formatPrice(elm.tour_price)}
                             </span>
@@ -169,16 +170,17 @@ export default function TourSlider({ PAckageData }) {
               </Swiper>
             </div>
           </div>
+          {slibleTourSlider?.length !== 0 && (
+            <div className="navAbsolute dis_none">
+              <button className="navAbsolute__button bg-white js-slider10-prev">
+                <i className="icon-arrow-left text-14"></i>
+              </button>
 
-          <div className="navAbsolute dis_none">
-            <button className="navAbsolute__button bg-white js-slider10-prev">
-              <i className="icon-arrow-left text-14"></i>
-            </button>
-
-            <button className="navAbsolute__button bg-white js-slider10-next">
-              <i className="icon-arrow-right text-14"></i>
-            </button>
-          </div>
+              <button className="navAbsolute__button bg-white js-slider10-next">
+                <i className="icon-arrow-right text-14"></i>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
