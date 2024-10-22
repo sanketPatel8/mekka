@@ -375,3 +375,8 @@ opacity: 1;
 .footer.-type-1 .footer__newsletter input{
   border:0px!important;
 }
+
+.ReactModal__Content.ReactModal__Content--after-open{
+  height: 60vh!important;
+  overflow-x: hidden!important;
+}
