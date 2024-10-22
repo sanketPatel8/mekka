@@ -536,7 +536,7 @@ const handleSecondAmountChange = (e) => {
                               </div>
                               <label htmlFor="item4" className="lh-16 ml-15">
                                 {translate(
-                                  "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
+                                  "Full Payment using (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
                                 )}
                               </label>
                             </div>
@@ -605,7 +605,7 @@ const handleSecondAmountChange = (e) => {
                                 <label className="lh-1 text-16 text-light-1">
                                   1st Amount<span className="text-red"> *</span>
                                 </label>
-                                <span>
+                                <span className="text-mekka ml-10">
                                   This amount will be done using credit card
                                   (Stripe)
                                 </span>
