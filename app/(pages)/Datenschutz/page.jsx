@@ -3,10 +3,18 @@ import { useTranslation } from '@/app/context/TranslationContext'
 import FooterOne from '@/components/layout/footers/FooterOne'
 import FooterTwo from '@/components/layout/footers/FooterTwo'
 import Header1 from '@/components/layout/header/Header1'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Datenschutz = () => {
     const {translate} = useTranslation();
+    
+      // page title 
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Datenschutz - MekkaBooking";
+    }
+  }, []);
 
   return (
     <>

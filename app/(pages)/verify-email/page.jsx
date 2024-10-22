@@ -23,6 +23,12 @@ export default function Page() {
 
     }
   }
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = " Verify-Email - MekkaBooking";
+    }
+  }, []);
   return (
     <>
       <ToastContainer/>

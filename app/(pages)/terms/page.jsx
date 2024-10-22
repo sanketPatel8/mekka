@@ -1,16 +1,19 @@
-import FooterOne from "@/components/layout/footers/FooterOne";
+"use client"
+
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Content from "@/components/pages/terms/Content";
 import PageHeader from "@/components/pages/terms/PageHeader";
-import React from "react";
+import React, { useEffect } from "react";
 
-export const metadata = {
-  title: "Terms || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "mekkaBooking - Travel & Tour React NextJS Template",
-};
+
 
 export default function page() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Terms - MekkaBooking";
+    }
+  }, []);
   return (
     <>
       <main>

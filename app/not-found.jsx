@@ -3,12 +3,13 @@ import Header1 from "@/components/layout/header/Header1";
 import Image from "next/image";
 import React from "react";
 
-export const metadata = {
-  title: "Not found || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "mekkaBooking - Travel & Tour React NextJS Template",
-};
 
 export default function NotFound() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "404 - MekkaBooking";
+    }
+  }, []);
   return (
     <>
       <main>

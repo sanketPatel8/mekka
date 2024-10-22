@@ -1,15 +1,21 @@
 
 "use client" ;
 import { useTranslation } from '@/app/context/TranslationContext'
-import FooterOne from '@/components/layout/footers/FooterOne'
 import FooterTwo from '@/components/layout/footers/FooterTwo'
 import Header1 from '@/components/layout/header/Header1'
 import Link from 'next/link'
+import { useEffect } from 'react';
 
 
 const TermsofUse = () => {
 
   const {translate} = useTranslation();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Terms of Use - MekkaBooking";
+    }
+  }, []);
    
   return (
     <>

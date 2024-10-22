@@ -15,6 +15,14 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 export default function ArticlesThree() {
   const [ArticalDAta, setArticalDAta] = useState([]);
 
+    // page title 
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        document.title = "Blog List - MekkaBooking";
+      }
+    }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       const sendData = {

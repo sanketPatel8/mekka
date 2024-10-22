@@ -1,15 +1,16 @@
-import FooterOne from "@/components/layout/footers/FooterOne";
+"use client"
+
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import Register from "@/components/pages/Register";
-import React from "react";
-
-export const metadata = {
-  title: "Register || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "mekkaBooking - Travel & Tour React NextJS Template",
-};
+import React, { useEffect } from "react";
 
 export default function page() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Registration - MekkaBooking";
+    }
+  }, []);
   return (
     <>
       <main>

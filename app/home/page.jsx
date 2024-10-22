@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header1 from "@/components/layout/header/Header1";
 import Hero7 from "@/components/homes/heros/Hero7";
 import Tour1 from "@/components/homes/tours/Tour1";
@@ -15,11 +15,16 @@ import Head from "next/head";
 // import Language from "@/components/Langauge"; // Import Language component for locale changes
 
 export default function Home() {
+    // page title 
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        document.title = "Home - MekkaBooking";
+      }
+    }, []);
   return (
     <>
-      <Head>
-        <meta property="og:title" content="Title Here" />
-      </Head>
+      
       <main>
         <Hero7 />
         <Header1 />

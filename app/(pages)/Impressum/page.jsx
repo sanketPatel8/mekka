@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaRegClipboard } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
@@ -13,6 +13,11 @@ import { useTranslation } from '@/app/context/TranslationContext';
 
 const Impressum = () => {
   const { translate } = useTranslation();
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Impressum - MekkaBooking";
+    }
+  }, []);
   return (
     <>
       <Header1 />
