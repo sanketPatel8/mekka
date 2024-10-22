@@ -31,9 +31,6 @@ export default function RangeSlider({ value, setValue , FliterData }) {
   };
 
   const {translate} = useTranslation()
-
-  console.log("value 0" , value[0]);
-  console.log("value 1" , value[1]);
   
   return (
     <>

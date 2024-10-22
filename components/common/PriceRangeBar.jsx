@@ -22,7 +22,6 @@ export default function PriceRangeBar({ Distance, setDistance , FliterData }) {
   // const {Distance, setDistance} = useGlobalState()
 
   const handleChange = (event, newValue) => {
-    console.log("newValue" , newValue); 
     
     setDistance(newValue);
 
