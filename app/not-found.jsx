@@ -1,7 +1,10 @@
-import FooterOne from "@/components/layout/footers/FooterOne";
+
+"use Client"
+
 import Header1 from "@/components/layout/header/Header1";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
+import FooterTwo from "@/components/layout/footers/FooterTwo";
 
 
 export default function NotFound() {
@@ -48,7 +51,7 @@ export default function NotFound() {
             </div>
           </div>
         </section>
-        <FooterOne />
+        <FooterTwo />
       </main>
     </>
   );
