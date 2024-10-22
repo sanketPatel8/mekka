@@ -1354,7 +1354,7 @@ export default function BookingPages({ BookingData }) {
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,
           Discount: Discount,
-          Promo : Promo
+          Promo : promo
         };
 
         // Add new data to existing storage object

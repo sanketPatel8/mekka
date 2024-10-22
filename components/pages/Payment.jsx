@@ -1115,7 +1115,7 @@ const handleSecondAmountChange = (e) => {
                 SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
                   <div className="">
                     <div className={`d-flex items-center justify-between`}>
-                      <div className="fw-500"> {translate("Discount")}</div>
+                      <div className="fw-500"> {translate("Discount")} {" "} {`(${SideBarData?.BookingFild?.promo})`}</div>
                       <div className="">
                         -
                         {formatPrice(
