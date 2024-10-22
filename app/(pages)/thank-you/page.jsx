@@ -9,6 +9,12 @@ import React, { useState, useEffect, useContext } from "react";
 export default function Page() {
   const { translate } = useTranslation();
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Thank You - MekkaBooking";
+    }
+  }, []);
+
   return (
     <>
       <main>

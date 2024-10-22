@@ -14,6 +14,12 @@ export default function Page() {
     setIsLoggedIn(true);
   };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Login - MekkaBooking";
+    }
+  }, []);
+
   const handleLogout = () => {
     setIsLoggedIn(false);
   };

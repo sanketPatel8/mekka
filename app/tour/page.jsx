@@ -39,6 +39,14 @@ export default function PageData() {
 
   const route = useRouter();
 
+  // page title 
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Tour List - MekkaBooking";
+    }
+  }, []);
+
   const handleSelectionChange = (key, value) => {
     setFilterSidebar((prevState) => {
       if (key === "selectedTourTypes") {

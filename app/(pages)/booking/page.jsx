@@ -17,6 +17,14 @@ export default function page() {
   const {translate} = useTranslation();
   const [BookingData, setBookingData] = useState({});
 
+    // page title 
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        document.title = "New Booking - MekkaBooking";
+      }
+    }, []);
+
   const FetchBookingData = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,

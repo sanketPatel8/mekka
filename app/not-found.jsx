@@ -1,14 +1,18 @@
-import FooterOne from "@/components/layout/footers/FooterOne";
+
+"use client"
+
 import Header1 from "@/components/layout/header/Header1";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
+import FooterTwo from "@/components/layout/footers/FooterTwo";
 
-export const metadata = {
-  title: "Not found || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "mekkaBooking - Travel & Tour React NextJS Template",
-};
 
 export default function NotFound() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "404 - MekkaBooking";
+    }
+  }, []);
   return (
     <>
       <main>
@@ -47,7 +51,7 @@ export default function NotFound() {
             </div>
           </div>
         </section>
-        <FooterOne />
+        <FooterTwo />
       </main>
     </>
   );

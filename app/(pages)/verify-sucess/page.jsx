@@ -18,6 +18,12 @@ export default function Page() {
     }, 10000);
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = " Verify-Sucess - MekkaBooking";
+    }
+  }, []);
+
   return (
     <>
       <main>

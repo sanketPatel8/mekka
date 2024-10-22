@@ -10,6 +10,12 @@ import { ClipLoader } from "react-spinners";
 
 export default function Page() {
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Partner Login - MekkaBooking";
+    }
+  }, []);
+
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);

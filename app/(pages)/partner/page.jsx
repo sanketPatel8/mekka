@@ -51,6 +51,12 @@ const page = () => {
   ];
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Partner Registration - MekkaBooking";
+    }
+  }, []);
+
   // useEffect(() => {
   //   if (typeof window !== "undefined") {
   //     // Import Select2 only on the client-side

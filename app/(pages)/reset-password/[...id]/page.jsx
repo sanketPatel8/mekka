@@ -15,6 +15,12 @@ function ResetPassword({params}) {
 
     const id = params.id[0];
 
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        document.title = "Reset Password - MekkaBooking";
+      }
+    }, []);
+
 
     const {translate} = useTranslation();
     const [password, setPassword] = useState('');

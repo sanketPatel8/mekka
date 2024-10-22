@@ -55,8 +55,7 @@ export default function SingleFour({ PAckageData }) {
                 <div className="col-12">
                   <div
                     className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("Included") ? "is-active" : ""
-                    }`}
+                      activeAcorditions.includes("Included") ? "" : "" }`}
                   >
                     <div
                       onClick={() =>
@@ -95,7 +94,7 @@ export default function SingleFour({ PAckageData }) {
                   <div
                     className={`accordion__item py-30 border-1-top ${
                       activeAcorditions.includes("f_Included")
-                        ? "is-active"
+                        ? ""
                         : ""
                     }`}
                   >
@@ -135,7 +134,7 @@ export default function SingleFour({ PAckageData }) {
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("roadmap") ? "is-active" : ""
+                      activeAcorditions.includes("roadmap") ? "" : ""
                     }`}
                   >
                     <div
@@ -174,7 +173,7 @@ export default function SingleFour({ PAckageData }) {
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("HotelInfo") ? "is-active" : ""
+                      activeAcorditions.includes("HotelInfo") ? "" : ""
                     }`}
                   >
                     <div
@@ -218,7 +217,7 @@ export default function SingleFour({ PAckageData }) {
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("faq") ? "is-active" : ""
+                      activeAcorditions.includes("faq") ? "" : ""
                     }`}
                   >
                     <div

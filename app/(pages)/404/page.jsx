@@ -1,13 +1,18 @@
+"use client"
+
 import FooterOne from "@/components/layout/footers/FooterOne";
 import Header1 from "@/components/layout/header/Header1";
 import Image from "next/image";
-
-export const metadata = {
-  title: "Not found || mekkaBooking - Travel & Tour React NextJS Template",
-  description: "mekkaBooking - Travel & Tour React NextJS Template",
-};
+import { useEffect } from "react";
 
 export default function NotFound() {
+    // page title 
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        document.title = "404 - MekkaBooking";
+      }
+    }, []);
   return (
     <>
       <main>

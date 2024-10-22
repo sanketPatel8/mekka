@@ -24,6 +24,12 @@ export default function DbBooking() {
   const [BookingsCustomer, setBookingsCustomer] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Bookings - MekkaBooking";
+    }
+  }, []);
+
   const fetchListing = async (id) => {
     const formData = new FormData();
 

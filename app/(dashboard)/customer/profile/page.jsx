@@ -63,6 +63,12 @@ export default function Profile() {
   //   }
   // };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Profile - MekkaBooking";
+    }
+  }, []);
+
   const handlePhoneChange = (value) => {
     setPhone(value);
 
