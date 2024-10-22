@@ -1,5 +1,5 @@
 
-"use Client"
+"use client"
 
 import Header1 from "@/components/layout/header/Header1";
 import Image from "next/image";
