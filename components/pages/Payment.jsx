@@ -338,7 +338,19 @@ const handleSecondAmountChange = (e) => {
       }, 3000);
     }
 
-    if (selectedCheckbox === 2) {
+    if (selectedCheckbox === 1) {
+      console.log("hello")
+      if (!agbAcceptance.checked || !item5.checked) {
+        showErrorToast(translate, "Please fill all the fields");
+        return;
+      }
+      setShowStripeModal(true);
+      const newBooking = { ...Booking, paymentType: 2 };
+      setBooking(newBooking);
+      setAmount(SideBarData?.BookingFild?.SubTotal);
+    }
+
+     if (selectedCheckbox === 2 ) {
       if (
         !firstAmount ||
         !secondAmount ||
@@ -351,6 +363,7 @@ const handleSecondAmountChange = (e) => {
         setIsLoading(false);
         return;
       }
+ 
 
       setShowStripeModal(true);
 
@@ -368,15 +381,7 @@ const handleSecondAmountChange = (e) => {
       setAmount(firstAmount);
     }
 
-    if (selectedCheckbox === 1) {
-      if (!agbAcceptance.checked || !item5.checked) {
-        showErrorToast(translate, "Please fill all the fields");
-        return;
-      }
-      setShowStripeModal(true);
-      const newBooking = { ...Booking, paymentType: 2 };
-      setBooking(newBooking);
-    }
+   
   };
 
   console.log("SideBarData?.Airline?.luggage", SideBarData);
@@ -1247,7 +1252,7 @@ const handleSecondAmountChange = (e) => {
       </div>
       {showStripeModal && (
         <Stripeform
-          amount={amount ? amount : SideBarData?.BookingFild?.SubTotal}
+          amount={amount ? amount : (SideBarData?.BookingFild?.SubTotal)}
           setPaidAmount={setPaidAmount}
           Booking={Booking}
           setReservationID={setReservationID}
