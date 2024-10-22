@@ -90,7 +90,6 @@ export default function Payment() {
     }
 };
 
-
 const handleSecondAmountChange = (e) => {
     const rawAmount = parseFloat(e.target.value) || 0;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
@@ -1126,13 +1125,30 @@ const handleSecondAmountChange = (e) => {
                     </div>
                   </div>
                 ) : null}
+                {
+                  (selectedCheckbox === 1 || selectedCheckbox === 2) && (
+                    <div>
+
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
+                        <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
+                      </div>
+                      
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500"> {translate("Amount Payable")}</div>
+                        <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
+                      </div>
+
+                    </div>
+                  )
+                }
                 <div className="">
                 
 
                   {
                     paidAmount && (
                       <div className="d-flex items-center justify-between">
-                        <div className="fw-500"> {translate("Stripe Fees (3%)")}</div>
+                        <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
                         <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div>
                       </div>
                     )

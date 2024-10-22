@@ -983,7 +983,7 @@ const CustomerDetaTable = () => {
   const VandorDoc = [
     { value: "Passport", label: "Passport" },
     { value: "Photo", label: "Photo" },
-    { value: "Permanent Resident", label: "Permanent Resident (PR)" },
+    { value: "Permanent Resident(PR)", label: "Permanent Resident (PR)" },
     { value: "Vaccination Card ", label: "Vaccination Card" },
   ];
 
