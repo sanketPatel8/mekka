@@ -989,7 +989,7 @@ const CustomerDetaTable = () => {
     { value: "Passport", label: "Passport" },
     { value: "Photo", label: "Photo" },
     { value: "Permanent Resident(PR)", label: "Permanent Resident (PR)" },
-    { value: "Vaccination Card ", label: "Vaccination Card" },
+    { value: "Vaccination Card", label: "Vaccination Card" },
   ];
 
   const handleImageChange = (e, index) => {
@@ -2059,6 +2059,7 @@ const CustomerDetaTable = () => {
                     onRequestClose={closeUploadFileModal}
                     style={customStyles}
                     contentLabel="Pending Payment Modal"
+                    id="DocumentModal"
                   >
                     <div className="d-flex justify-content-between" id="modelopen">
                       <h2 className="ml-20 my-3"> {translate("Document")}</h2>
@@ -2079,7 +2080,7 @@ const CustomerDetaTable = () => {
                           <div
                             className=""
                             style={{
-                              height: "60vh",
+                              height: "40vh",
                               overflowX: "hidden",
                               overflowY: "auto",
                             }}

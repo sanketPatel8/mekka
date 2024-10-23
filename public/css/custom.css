@@ -376,8 +376,8 @@ opacity: 1;
   border:0px!important;
 }
 
-.ReactModal__Content.ReactModal__Content--after-open{
-  height: 60vh!important;
+#DocumentModal{
+  height: fit-content!important;
   overflow-x: hidden!important;
 }
 

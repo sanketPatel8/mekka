@@ -42,12 +42,12 @@ export default function DbBooking() {
     setTabs(tabContent);
 
     const BookingsData = [
-      {
-        name: translate("Id"),
-        selector: (row) => row.BookingId,
-        sortable: true,
-        width:"5%",
-      },
+      // {
+      //   name: translate("Id"),
+      //   selector: (row) => row.BookingId,
+      //   sortable: true,
+      //   width:"5%",
+      // },
       {
         name: translate("Booking No."),
         selector: (row) => row.BookingNo,
@@ -67,7 +67,7 @@ export default function DbBooking() {
         name: translate("Full Name"),
         selector: (row) => row.Full_Name,
         sortable: true,
-        width:"10%",
+        width:"12%",
 
       },
       {
@@ -88,7 +88,7 @@ export default function DbBooking() {
         name: translate("Pending (€)"),
         selector: (row) => row.Pending_Payment,
         sortable: true,
-        width:"8%",
+        width:"10%",
 
       },
    
@@ -96,7 +96,7 @@ export default function DbBooking() {
         name: translate("Method"),
         selector: (row) => row.Payment_Method,
         sortable: true,
-        width:"8%",
+        width:"7%",
 
       },
       {
@@ -117,7 +117,7 @@ export default function DbBooking() {
         name: translate("Initiated By"),
         selector: (row) => row.Initiated_By_Admin,
         sortable: true,
-        width:"8%",
+        width:"9%",
 
       },
       {
@@ -132,7 +132,7 @@ export default function DbBooking() {
             </button>
           </Link>
         ),
-        width:"9%"
+        width:"10%"
       },
     ];
 
@@ -150,7 +150,7 @@ export default function DbBooking() {
     if (tab === "All") {
       setLoading(false);
       const bookingsData = response.Bookings.map((booking) => ({
-        BookingId: booking.reservation_id,
+        // BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
         Status: booking.reservation_status,
         Full_Name: booking.name,

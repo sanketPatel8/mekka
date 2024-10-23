@@ -20,6 +20,9 @@ export default function DBListing() {
   const [Total_Pending, setTotalPending] = useState("0");
   const [StatusPaymentHistry, setPaymentHistory] = useState([]);
   const [VendorBookings, setVendorBookings] = useState([]);
+  const [filterText, setFilterText] = useState("");
+  const [paymentData,setPaymentData] =  useState([]);
+
   const { user } = useAuthContext();
   const { translate } = useTranslation();
   useEffect(() => {
@@ -27,6 +30,29 @@ export default function DBListing() {
       document.title = "Payment History - MekkaBooking";
     }
   }, []);
+
+  const handleFilterChange = (e) => {
+    setFilterText(e.target.value || "");
+    const filteredItems = paymentData.filter((item) => {
+      return Object.keys(item).some((key) => {
+        const value = item[key];
+        // Check if value is not null or undefined before calling toString
+        return value && value.toString().toLowerCase().includes(filterText.toLowerCase());
+      });
+    });
+    setPayment(filteredItems);
+  }
+
+  // useEffect(() => {
+   
+  // }, [filterText, paymentData]);
+
+  const handleClear = () => {
+    setFilterText(""); // Clear the filter text
+    setPayment(paymentData); // Reset payment data to original
+  };
+
+  
   useEffect(() => {
     const BookingsData = [
       // {
@@ -37,13 +63,13 @@ export default function DBListing() {
       // },
       {
         name: translate("Booking No."),
-        selector: (row) => row.BookingNo,
+        selector: (row) => row.reservationNumber,
         width: "12%",
         sortable: true,
       },
       {
         name: translate("Customer Name"),
-        selector: (row) => row.Full_Name,
+        selector: (row) => row.name,
         width: "13%",
         sortable: true,
       },
@@ -56,7 +82,7 @@ export default function DBListing() {
       {
         name: translate("Total (€) "),
         width: "8%",
-        selector: (row) => row.Total_Payment,
+        selector: (row) => row.total,
         sortable: true,
       },
       {
@@ -73,13 +99,13 @@ export default function DBListing() {
       },
       {
         name: translate("Date "),
-        selector: (row) => row.Booking_date,
+        selector: (row) => row.date,
         sortable: true,
         width: "10%",
       },
       {
         name: translate("Transaction ID "),
-        selector: (row) => row.Transation_id,
+        selector: (row) => row.transaction_id,
         sortable: true,
         width: "25%",
       },
@@ -119,17 +145,17 @@ export default function DBListing() {
       setTotalPending(response.Total_Pending);
       const bookingData = response.Payment_Data.map((payment) => ({
         // BookingId: payment.reservation_id,
-        BookingNo: payment.reservationNumber,
-        Full_Name: payment.name,
+        reservationNumber: payment.reservationNumber,
+        name: payment.name,
         tour_name: payment.tour_name,
-        Total_Payment: payment.total,
-        Booking_date: payment.date,
-        Transation_id: payment.transaction_id,
+        total: payment.total,
+        date: payment.date,
+        transaction_id: payment.transaction_id,
         pending_payment:payment.pending_payment,
         paid_amount:payment.paid_amount
       }));
       setPayment(bookingData);
-
+      setPaymentData(response.Payment_Data);
       setLoading(false);
     } else {
       setLoading(false);
@@ -224,6 +250,22 @@ export default function DBListing() {
                   data={payment}
                   highlightOnHover
                   pagination
+                  subHeader
+                  subHeaderComponent={
+                    <div className="d-flex items-center border-1 px-3 py-2 rounded">
+                      <input
+                        type="text"
+                        placeholder="Search all columns"
+                        value={filterText}
+                        className="ml-10 "
+                        onChange={handleFilterChange}
+                      />
+                      <span className="form-input m-0 ">
+                        <input type="text" required />
+                      </span>
+                      <button onClick={handleClear}>Clear</button>
+                    </div>
+                  }                  
                 />
               </div>
             </>
