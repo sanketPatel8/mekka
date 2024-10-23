@@ -51,23 +51,75 @@ export default function CheckoutForm({
   amount = 0,
   payableAmount = 0
 }) {
+  console.log(payableAmount, "payableAmount")
+  console.log(amount, "amount")
   const { dispatch, customer } = useAuthContext();
   const {formatPrice} = useCurrency();
   const stripe = useStripe();
+  const { translate } = useTranslation();
 
   const elements = useElements();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [saveCard, setSaveCard] = useState(false);
   const [cardDetails, setCardDetails] = useState({});
+  const calculateFeeFromPayableAmount = (payableAmount) => {
+    // Ensure payableAmount is a string
+    const amountString = typeof payableAmount === 'string' ? payableAmount : payableAmount.toString();
+    console.log(amountString, 'amountString')
+    
+    // Check if the amountString contains a period
+    let numericAmount;
+    if (amountString.includes('.')) {
+      // Format: "40.000,00"
+      numericAmount = parseFloat(amountString.replace('.', '').replace(',', '.'));
+    } else {
+      // Format: "500,00"
+      numericAmount = parseFloat(amountString.replace(',', '.'));
+    }
+  
+    // Calculate the fee (3%)
+    const feePercentage = 0.03;
+    const fee = numericAmount * feePercentage;
+  
+    return fee; // Return the calculated fee
+  };
+  const calculateTotalWithFee = (amount) => {
+    console.log(amount)
+    const feePercentage = 0.03;
+    const fee = amount * feePercentage; 
+    return  fee; 
+  };
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(amount); // Convert to euros (assuming amount is in cents)
+  };
+  const parseAmount = (amountString) => {
+    // Ensure amountString is a string
+    const str = typeof amountString === 'string' ? amountString : amountString.toString();
+  
+    // Check if the amountString contains a period
+    if (str.includes('.')) {
+      // Format: "40.000,00"
+      return parseFloat(str.replace('.', '').replace(',', '.'));
+    } else {
+      // Format: "500,00"
+      return parseFloat(str.replace(',', '.'));
+    }
+  };
+  const totalAmount = (amount === 0 ? calculateFeeFromPayableAmount(payableAmount) : calculateTotalWithFee(amount));
+  const payable = ((amount === 0 ? parseAmount(payableAmount) : amount) / 100) + (totalAmount / 100);
 
   const addBooking = async (transactionId, amount) => {
     const newBooking = {
       ...Booking,
       transaction_id: transactionId,
-      amount_paid: amount,
+      amount_paid: (amount- totalAmount),
+      stripe_fees : totalAmount
     };
-
+    console.log(newBooking, "newBooking");
     try {
       const response = await post("addbooking", newBooking);
       if (response) {
@@ -145,6 +197,7 @@ export default function CheckoutForm({
     formData.append("plan_id", paidData.plan_id);
     formData.append("payment_plan", paidData.payment_plan);
     formData.append("plan_date", paidData.plan_date);
+    formData.append("stripe_fees", totalAmount);
 
     try {
       const response = await POST.request({
@@ -175,7 +228,8 @@ export default function CheckoutForm({
 
     setIsProcessing(true);
 
-    if (Booking) {
+    if (amount) {
+      console.log("hi")
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -217,7 +271,8 @@ export default function CheckoutForm({
         FetchAddperson();
       }
     }
-    if (paidData) {
+    if (payableAmount) {
+      console.log("hello")
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -243,57 +298,7 @@ export default function CheckoutForm({
 
     setIsProcessing(false);
   };
-  const calculateFeeFromPayableAmount = (payableAmount) => {
-    // Ensure payableAmount is a string
-    const amountString = typeof payableAmount === 'string' ? payableAmount : payableAmount.toString();
-    console.log(amountString, 'amountString')
-    
-    // Check if the amountString contains a period
-    let numericAmount;
-    if (amountString.includes('.')) {
-      // Format: "40.000,00"
-      numericAmount = parseFloat(amountString.replace('.', '').replace(',', '.'));
-    } else {
-      // Format: "500,00"
-      numericAmount = parseFloat(amountString.replace(',', '.'));
-    }
-  
-    // Calculate the fee (3%)
-    const feePercentage = 0.03;
-    const fee = numericAmount * feePercentage;
-  
-    return fee; // Return the calculated fee
-  };
-  const calculateTotalWithFee = (amount) => {
-    console.log(amount)
-    const feePercentage = 0.03;
-    const fee = amount * feePercentage; 
-    return  fee; 
-  };
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(amount); // Convert to euros (assuming amount is in cents)
-  };
-  const parseAmount = (amountString) => {
-    // Ensure amountString is a string
-    const str = typeof amountString === 'string' ? amountString : amountString.toString();
-  
-    // Check if the amountString contains a period
-    if (str.includes('.')) {
-      // Format: "40.000,00"
-      return parseFloat(str.replace('.', '').replace(',', '.'));
-    } else {
-      // Format: "500,00"
-      return parseFloat(str.replace(',', '.'));
-    }
-  };
-  const totalAmount = (amount === 0 ? calculateFeeFromPayableAmount(payableAmount) : calculateTotalWithFee(amount));
-  console.log(totalAmount, 'totalAmount')
-  const payable = ((amount === 0 ? parseAmount(payableAmount) : amount) / 100) + (totalAmount / 100);
 
-  const { translate } = useTranslation();
 
   return (
     <Modal

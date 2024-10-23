@@ -99,7 +99,7 @@ const CustomerDetaTable = () => {
     transaction_id: "",
   });
   const router = useRouter();
-
+  
   useEffect(() => {
     Modal.setAppElement("#modelopen");
     Modal.setAppElement("#pendingpayment");
@@ -1483,6 +1483,7 @@ const CustomerDetaTable = () => {
                                 value={AddpersonData.birthDate}
                                 onChange={handleInputChange}
                                 onFocus={handleDateFocus}
+                                max={getTodayDate()}
                                 required
                               />
                               <label className="lh-1 text-16 text-light-1">
@@ -2333,6 +2334,7 @@ const CustomerDetaTable = () => {
                                       birthday: convertISOToGerman(isoDate), // Convert back to German format for storing
                                     });
                                   }}
+                                  max={getTodayDate()}
                                   onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
                                 />
                                 <label className="lh-1 text-16 text-light-1">
