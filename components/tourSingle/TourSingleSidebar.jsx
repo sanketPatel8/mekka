@@ -211,6 +211,8 @@ export default function TourSingleSidebar({
     }
   };
 
+  console.log("selectedCheckbox" , selectedCheckbox)
+
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
     if (

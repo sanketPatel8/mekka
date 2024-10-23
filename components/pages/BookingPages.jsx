@@ -179,61 +179,61 @@ export default function BookingPages({ BookingData }) {
 
               AdultD?.Adult?.map(
                 (e, i) =>
-                  (updatedValues["Adult"][i] = {
-                    ...updatedValues["Adult"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
+                (updatedValues["Adult"][i] = {
+                  ...updatedValues["Adult"][i],
+                  name: e.name,
+                  surname: e.surname,
+                  birthday: e.birthday,
+                  city: e.city,
+                  email: e.email,
+                  gender: e.gender,
+                  houseNumber: e.houseNumber,
+                  mobile: e.mobile,
+                  nationality: e.nationality,
+                  street: e.street,
+                  zipcode: e.zipcode,
+                })
               );
 
               AdultD?.Child?.map(
                 (e, i) =>
-                  (updatedValues["Child"][i] = {
-                    ...updatedValues["Child"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
+                (updatedValues["Child"][i] = {
+                  ...updatedValues["Child"][i],
+                  name: e.name,
+                  surname: e.surname,
+                  birthday: e.birthday,
+                  city: e.city,
+                  email: e.email,
+                  gender: e.gender,
+                  houseNumber: e.houseNumber,
+                  mobile: e.mobile,
+                  nationality: e.nationality,
+                  street: e.street,
+                  zipcode: e.zipcode,
+                })
               );
               AdultD?.Baby?.map(
                 (e, i) =>
-                  (updatedValues["Baby"][i] = {
-                    ...updatedValues["Baby"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
+                (updatedValues["Baby"][i] = {
+                  ...updatedValues["Baby"][i],
+                  name: e.name,
+                  surname: e.surname,
+                  birthday: e.birthday,
+                  city: e.city,
+                  email: e.email,
+                  gender: e.gender,
+                  houseNumber: e.houseNumber,
+                  mobile: e.mobile,
+                  nationality: e.nationality,
+                  street: e.street,
+                  zipcode: e.zipcode,
+                })
               );
 
               return updatedValues;
             });
 
-            setUserData(() => {});
+            setUserData(() => { });
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -297,7 +297,7 @@ export default function BookingPages({ BookingData }) {
     localStorage.setItem("setIsOpen", JSON.stringify(true));
   }
 
-  function afterOpenModal() {}
+  function afterOpenModal() { }
 
   function closeModal() {
     setIsOpen(false);
@@ -449,7 +449,7 @@ export default function BookingPages({ BookingData }) {
       };
 
       console.log(value);
-      
+
 
       if (type === "Adult" && index === 0) {
         setUserData((prevUserData) => ({
@@ -465,9 +465,9 @@ export default function BookingPages({ BookingData }) {
   const handleDateFocus = (e) => {
     // Ensure this is a user gesture
     if (e.target === document.activeElement) {
-        e.target.showPicker();
+      e.target.showPicker();
     }
-};
+  };
 
   const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
     const selectedValue = e.target.value;
@@ -628,8 +628,8 @@ export default function BookingPages({ BookingData }) {
     HandlePromo === false
       ? PackagePrices + adultadiPrices + adPrice
       : PromoData.total_amount !== undefined
-      ? PromoData.total_amount
-      : PackagePrices + adultadiPrices;
+        ? PromoData.total_amount
+        : PackagePrices + adultadiPrices;
 
   // calling api
 
@@ -766,55 +766,55 @@ export default function BookingPages({ BookingData }) {
 
               AdultD?.Adult?.map(
                 (e, i) =>
-                  (updatedValues["Adult"][i] = {
-                    ...updatedValues["Adult"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
+                (updatedValues["Adult"][i] = {
+                  ...updatedValues["Adult"][i],
+                  name: e.name,
+                  surname: e.surname,
+                  birthday: e.birthday,
+                  city: e.city,
+                  email: e.email,
+                  gender: e.gender,
+                  houseNumber: e.houseNumber,
+                  mobile: e.mobile,
+                  nationality: e.nationality,
+                  street: e.street,
+                  zipcode: e.zipcode,
+                })
               );
 
               AdultD?.Child?.map(
                 (e, i) =>
-                  (updatedValues["Child"][i] = {
-                    ...updatedValues["Child"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
+                (updatedValues["Child"][i] = {
+                  ...updatedValues["Child"][i],
+                  name: e.name,
+                  surname: e.surname,
+                  birthday: e.birthday,
+                  city: e.city,
+                  email: e.email,
+                  gender: e.gender,
+                  houseNumber: e.houseNumber,
+                  mobile: e.mobile,
+                  nationality: e.nationality,
+                  street: e.street,
+                  zipcode: e.zipcode,
+                })
               );
               AdultD?.Baby?.map(
                 (e, i) =>
-                  (updatedValues["Baby"][i] = {
-                    ...updatedValues["Baby"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
+                (updatedValues["Baby"][i] = {
+                  ...updatedValues["Baby"][i],
+                  name: e.name,
+                  surname: e.surname,
+                  birthday: e.birthday,
+                  city: e.city,
+                  email: e.email,
+                  gender: e.gender,
+                  houseNumber: e.houseNumber,
+                  mobile: e.mobile,
+                  nationality: e.nationality,
+                  street: e.street,
+                  zipcode: e.zipcode,
+                })
               );
 
               return updatedValues;
@@ -1013,9 +1013,9 @@ export default function BookingPages({ BookingData }) {
                 {currentFields?.map((field, index) => {
                   const fieldValue =
                     LoginCheck === true &&
-                    type === "Adult" &&
-                    newdata === null &&
-                    i === 0
+                      type === "Adult" &&
+                      newdata === null &&
+                      i === 0
                       ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 
@@ -1181,10 +1181,10 @@ export default function BookingPages({ BookingData }) {
                                   ? getTodayDate()
                                   : undefined
                               }
-                              onFocus={ field.type === "date"
+                              onFocus={field.type === "date"
                                 ? handleDateFocus
-                                : undefined} 
-                              onKeyDown={(e) => {field.type == "date" ? e.preventDefault() : ""}}
+                                : undefined}
+                              onKeyDown={(e) => { field.type == "date" ? e.preventDefault() : "" }}
                               required
                             />
                             <label className="lh-1 text-16 text-light-1">
@@ -1223,9 +1223,8 @@ export default function BookingPages({ BookingData }) {
                 </div>
 
                 <div
-                  className={`my-3 border_b px-md-40 ${
-                    shouldShowAdditionalServices ? "d-block" : "d-none"
-                  }`}
+                  className={`my-3 border_b px-md-40 ${shouldShowAdditionalServices ? "d-block" : "d-none"
+                    }`}
                 >
                   <h5 className="text-18 fw-500 my-2">
                     {translate("Possible Additional Services Per Person:")}
@@ -1354,7 +1353,7 @@ export default function BookingPages({ BookingData }) {
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,
           Discount: Discount,
-          Promo : promo
+          Promo: promo
         };
 
         // Add new data to existing storage object
@@ -1410,6 +1409,9 @@ export default function BookingPages({ BookingData }) {
 
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
+
+    console.log(BookingSideBar?.selectedCheckbox , "BookingSideBar");
+    
 
   return (
     <>
@@ -1510,15 +1512,14 @@ export default function BookingPages({ BookingData }) {
 
                   <div className="px-1">
                     <div
-                      className={`${
-                        (selectedCheckbox &&
+                      className={`${(selectedCheckbox &&
                           BookingSideBar?.Airline === null) ||
-                        BookingSideBar.selectedCheckbox !== false ||
-                        BookingData?.Tour_Details?.tour_details
-                          ?.flight_included == "0"
+                          BookingSideBar.selectedCheckbox !== false ||
+                          BookingData?.Tour_Details?.tour_details
+                            ?.flight_included == "0"
                           ? "d-none"
                           : "d-block"
-                      }`}
+                        }`}
                     >
                       <div
                         className={`d-flex items-center justify-content-space-arround  `}
@@ -1543,19 +1544,18 @@ export default function BookingPages({ BookingData }) {
                           ? "MED"
                           : BookingSideBar?.type == "Hajj" ||
                             BookingSideBar?.type == "Hadsch"
-                          ? "JED"
-                          : "MED & JED"}
+                            ? "JED"
+                            : "MED & JED"}
                       </div>
                     </div>
 
                     <div
-                      className={`${
-                        BookingSideBar.selectedCheckbox !== false ||
-                        BookingData?.Tour_Details?.tour_details
-                          ?.flight_included == "0"
+                      className={`${BookingSideBar.selectedCheckbox !== false ||
+                          BookingData?.Tour_Details?.tour_details
+                            ?.flight_included == "0"
                           ? "d-none"
                           : "d-block"
-                      }`}
+                        }`}
                     >
                       <div
                         className={`d-flex items-center justify-content-space-arround `}
@@ -1593,7 +1593,8 @@ export default function BookingPages({ BookingData }) {
                       </div>
                     </div>
 
-                    {BookingSideBar?.Airline !== null || BookingSideBar?.Airline !== "" && (
+                    {/* {BookingSideBar?.Airline !== null || BookingSideBar?.Airline !== "" && ( */}
+                    <div className={BookingSideBar?.selectedCheckbox !== true ? 'd-block' : 'd-none'}>
                       <div className="d-flex items-center justify-content-space-arround">
                         <div className="mr-5">
                           <FaLuggageCart size={25} color="#DAC04F" />
@@ -1606,7 +1607,8 @@ export default function BookingPages({ BookingData }) {
                           kg
                         </div>
                       </div>
-                    )}
+                    </div>
+                    {/* )} */}
 
                     <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
@@ -1696,7 +1698,7 @@ export default function BookingPages({ BookingData }) {
                             type="button"
                             className="button px-40 py-10 -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
                             onClick={handlePromoSubmit}
-                            // style={{ whiteSpace: "nowrap" }}
+                          // style={{ whiteSpace: "nowrap" }}
                           >
                             {translate("Apply")}
                           </button>
@@ -1747,7 +1749,7 @@ export default function BookingPages({ BookingData }) {
           id="signInModal"
         >
           <section className="pb-20">
-          
+
 
             {/* <form
               onSubmit={HandleLoginSubmite}
