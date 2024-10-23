@@ -1161,7 +1161,7 @@ export default function BookingPages({ BookingData }) {
                               enableSearch={true}
                             />
                             <label className="phone_lable">
-                              {translate("Phone")}
+                              {translate("Phone")}<span className="text-red"> *</span>
                             </label>
                           </>
                         ) : (
