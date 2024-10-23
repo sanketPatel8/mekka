@@ -9,7 +9,7 @@ import { MdFlightLand } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import { FaLuggageCart } from "react-icons/fa";
 import { IoIosBed } from "react-icons/io";
-import { FaHotel } from "react-icons/fa6";
+import { FaHotel, FaStar } from "react-icons/fa6";
 import "@/public/css/index.css";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "@/app/context/TranslationContext";
@@ -1057,7 +1057,7 @@ const handleSecondAmountChange = (e) => {
                     <div className="text-start">
                       {" "}
                       {translate("Makka")} :{" "}
-                      {SideBarData?.MakkaHotel?.hotel_name}
+                      ({SideBarData?.MakkaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.mekkaHotelStar})</span> 
                     </div>
                   </div>
 
@@ -1070,7 +1070,7 @@ const handleSecondAmountChange = (e) => {
                     <div className="text-start">
                       {" "}
                       {translate("Madina")} :{" "}
-                      {SideBarData?.MadinaHotel?.hotel_name}
+                      ({SideBarData?.MadinaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.MadinaHotlStar})</span> 
                     </div>
                   </div>
 

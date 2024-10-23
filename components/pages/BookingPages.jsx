@@ -1616,7 +1616,7 @@ export default function BookingPages({ BookingData }) {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Mekka : {BookingSideBar?.MakkaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.mekkaHotelStar})</span> 
+                        Mekka : ({BookingSideBar?.MakkaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.mekkaHotelStar})</span>
                       </div>
                     </div>
 
@@ -1625,7 +1625,7 @@ export default function BookingPages({ BookingData }) {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Madina : {BookingSideBar?.MadinaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.MadinaHotlStar})</span> 
+                        Madina : ({BookingSideBar?.MadinaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.MadinaHotlStar})</span> 
                       </div>
                     </div>
 

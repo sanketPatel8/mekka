@@ -74,6 +74,7 @@ export default function TourSingleSidebar({
         mekkaId: firstMekkaHotel.id,
       }));
       setselectedmekkaHotelPrice(firstMekkaHotel.hotel_price);
+      setMekkaStars(firstMekkaHotel.hotel_stars)
     }
     if (SidebarData?.tour_hotels?.medina_hotels?.length > 0) {
       const firstMadinaHotel = SidebarData.tour_hotels.medina_hotels[0];
@@ -88,6 +89,7 @@ export default function TourSingleSidebar({
         madinaId: firstMadinaHotel.id,
       }));
       setselectedMadinaHotelPrice(firstMadinaHotel.hotel_price);
+      setMadinaStars(firstMadinaHotel.hotel_stars)
     }
 
     if (SidebarData?.tour_details?.airlines?.length > 0) {
@@ -175,7 +177,6 @@ console.log(selectedHotel);
       setmekkaId(selectedHotel.hotel_id);
       
       
-      setMekkaStars()
 
       // Update Mekka hotel price in selectedmekkaHotelPrice state
       setselectedmekkaHotelPrice(mekkaPrice);
@@ -203,7 +204,7 @@ console.log(selectedHotel);
       }));
       setmadinaId(selectedHotel.hotel_id);
 
-
+      setMadinaStars(madinaStar)
       setselectedMadinaHotelPrice(madinaPrice);
       fetchHotelData(madinaStar);
     }
@@ -517,7 +518,8 @@ console.log(selectedHotel);
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
-
+console.log(MekkaStars)
+console.log(MadinaStars)
   const PackageBookingData = {
     name: SidebarData?.tour_details?.name,
     type: SidebarData?.tour_details?.type,
