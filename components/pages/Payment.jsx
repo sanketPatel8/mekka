@@ -384,6 +384,7 @@ const handleSecondAmountChange = (e) => {
    
   };
 
+  console.log("SideBarData?.MadinaHotel" , SideBarData?.MadinaHotel);
   
 
 

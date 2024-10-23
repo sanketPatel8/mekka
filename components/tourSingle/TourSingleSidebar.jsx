@@ -118,8 +118,6 @@ export default function TourSingleSidebar({
 
     if (response) {
       setisLoading(false)
-      console.log("response.hotel_data" , response.hotel_data);
-      
       setHotelData(response.hotel_data);
     }
   };
@@ -212,6 +210,8 @@ export default function TourSingleSidebar({
   };
 
   console.log("selectedCheckbox" , selectedCheckbox)
+  console.log("HotelSelect" , HotelSelect);
+  
 
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
@@ -508,7 +508,9 @@ export default function TourSingleSidebar({
     OfferedLanguages: SidebarData?.en_language,
     MaxLuggagePerPerson: 0,
     MakkaHotel: mekkaHotel,
+    mekkaHotelStar : 2,
     MadinaHotel: madinaHotel,
+    MadinaHotlStar : 3,
     FlightAndHotel: FlightAndHotelPrice,
     duration: SidebarData?.tour_details?.travel_duration,
     startDate: SidebarData?.tour_details?.date_begin,
