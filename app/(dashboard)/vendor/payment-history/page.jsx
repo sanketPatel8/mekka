@@ -29,33 +29,33 @@ export default function DBListing() {
   }, []);
   useEffect(() => {
     const BookingsData = [
-      {
-        name: translate("Booking Id"),
-        selector: (row) => row.BookingId,
-        width: "8%",
-        sortable: true,
-      },
+      // {
+      //   name: translate("Booking Id"),
+      //   selector: (row) => row.BookingId,
+      //   width: "8%",
+      //   sortable: true,
+      // },
       {
         name: translate("Booking No."),
         selector: (row) => row.BookingNo,
-        width: "10%",
+        width: "12%",
         sortable: true,
       },
       {
         name: translate("Customer Name"),
         selector: (row) => row.Full_Name,
-        width: "20%",
+        width: "13%",
         sortable: true,
       },
       {
         name: translate("Tour Name"),
         selector: (row) => row.tour_name,
-        width: "20%",
+        width: "12%",
         sortable: true,
       },
       {
         name: translate("Total (€) "),
-        width: "10%",
+        width: "8%",
         selector: (row) => row.Total_Payment,
         sortable: true,
       },
@@ -81,7 +81,7 @@ export default function DBListing() {
         name: translate("Transaction ID "),
         selector: (row) => row.Transation_id,
         sortable: true,
-        width: "12%",
+        width: "25%",
       },
     ];
 
@@ -118,7 +118,7 @@ export default function DBListing() {
       setTotalEarnings(response.Total_Earnings);
       setTotalPending(response.Total_Pending);
       const bookingData = response.Payment_Data.map((payment) => ({
-        BookingId: payment.reservation_id,
+        // BookingId: payment.reservation_id,
         BookingNo: payment.reservationNumber,
         Full_Name: payment.name,
         tour_name: payment.tour_name,
