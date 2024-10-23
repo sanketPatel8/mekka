@@ -36,6 +36,11 @@ export default function PageData() {
 
   const [range, setRange] = useState(1);
   const [SearchData, setSearchData] = useState({});
+  const [maxDistance , setMaxDistanse]  = useState(0);
+  const [minDistance , setMinDistanse]  = useState(0);
+  const [maxValue , setMaxValue]  = useState(0);
+  const [minValue , setMinValue]  = useState(0);
+
 
   const route = useRouter();
 
@@ -191,40 +196,27 @@ export default function PageData() {
     }
   };
 
+  let max = value[1] == maxValue ? maxValue : value[1];
+  let min = value[0] == minValue ? minValue : value[0];
   useEffect(() => {
-    if (isMounted.current) {
+    console.log(maxValue,minValue,maxDistance,minDistance)
+
       if (
         FilterSidebar.selectedTourTypes !== " " ||
         FilterSidebar.selectedLanguages.length !== 0 ||
         FilterSidebar.selectedCities.length !== 0 ||
         FilterSidebar.selectedFeatures.length !== 0 ||
         FilterSidebar.selectedDurations.length !== 0 ||
-        value[0] == value[0] ||
-        Distance[0] == Distance[0]
+        (value[1] !== maxValue && value[0] !== minValue) ||
+        (Distance[1] !== maxDistance && Distance[0] !== minDistance)
         // FilterSidebar.selectedRatings.length !== 0
       ) {
         FetchFilterData();
-      } else if (
-        SearchData.tourType !== null ||
-        (SearchData.tourType == " " &&
-          SearchData.startDate !== null &&
-          SearchData.endDate !== null &&
-          SearchData.person !== null)
-      ) {
-        // fetchSearch1Data(
-        //   SearchData.tourType,
-        //   SearchData.startDate,
-        //   SearchData.endDate,
-        //   SearchData.person
-        // );
-        fetchListing();
-      } else {
+      }else {
         fetchListing();
       }
-    } else {
-      isMounted.current = true;
-    }
-  }, [FilterSidebar, Distance, value]);
+
+  }, [FilterSidebar, value, Distance,maxValue,minValue,maxDistance,minDistance]);
 
   const FetchTourDataAPi = async () => {
     const sendData = {
@@ -236,6 +228,11 @@ export default function PageData() {
       setFliterData(response.Data);
       setDistance([response?.Data?.min_km , response?.Data?.max_km])
       setValue([response?.Data?.min_price , response?.Data?.max_price])
+      setMaxDistanse(response?.Data?.max_km)
+      setMaxValue(response?.Data?.max_price)
+      setMinDistanse(response?.Data?.min_km)
+      setMinValue(response?.Data?.min_price)
+      
     } catch (error) {
       showErrorToast(translate,"An error occurred during registration");
     }
