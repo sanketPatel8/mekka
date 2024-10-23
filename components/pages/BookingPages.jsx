@@ -8,7 +8,7 @@ import { MdFlightTakeoff } from "react-icons/md";
 import { MdFlightLand } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import { FaLuggageCart } from "react-icons/fa";
-import { FaHotel } from "react-icons/fa6";
+import { FaHotel, FaStar } from "react-icons/fa6";
 import "@/public/css/index.css";
 import Modal from "react-modal";
 import { FaFacebookF } from "react-icons/fa";
@@ -32,6 +32,7 @@ import { update } from "lodash";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useCountryCode } from "@/app/context/useCountryCode";
+import Stars from "../common/Stars";
 
 const customStyles = {
   overlay: {
@@ -1410,7 +1411,7 @@ export default function BookingPages({ BookingData }) {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
-    console.log(BookingSideBar?.selectedCheckbox , "BookingSideBar");
+    console.log(BookingSideBar , "BookingSideBar");
     
 
   return (
@@ -1615,7 +1616,7 @@ export default function BookingPages({ BookingData }) {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Mekka : {BookingSideBar?.MakkaHotel?.hotel_name}
+                        Mekka : {BookingSideBar?.MakkaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.mekkaHotelStar})</span> 
                       </div>
                     </div>
 
@@ -1624,7 +1625,7 @@ export default function BookingPages({ BookingData }) {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Madina : {BookingSideBar?.MadinaHotel?.hotel_name}
+                        Madina : {BookingSideBar?.MadinaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.MadinaHotlStar})</span> 
                       </div>
                     </div>
 

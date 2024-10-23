@@ -57,6 +57,8 @@ export default function TourSingleSidebar({
   });
 
   const [LocalData, setLocalData] = useState([]);
+  const [MekkaStars, setMekkaStars] = useState('')
+  const [MadinaStars, setMadinaStars] = useState('')
 
   useEffect(() => {
     if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
@@ -146,6 +148,10 @@ export default function TourSingleSidebar({
       return; // Exit if value isn't valid JSON
     }
 
+    console.log("SidebarData?.tour_hotels?.mekka_hotels",SidebarData?.tour_hotels?.mekka_hotels);
+    
+console.log(selectedHotel);
+    
     if (name === "mekka") {
       // Find the price of the selected Mekka hotel
       const mekkaPrice =
@@ -153,17 +159,27 @@ export default function TourSingleSidebar({
           (hotel) => hotel.id === selectedHotel.hotel_id
         )?.hotel_price || 0;
 
+      const mekkaStar =
+        SidebarData?.tour_hotels?.mekka_hotels.find(
+          (hotel) => hotel.id === selectedHotel.hotel_id
+        )?.hotel_stars || 0;
+      
       // Update the HotelSelect state with the selected Mekka hotel details
       setHotelSelect((prevSelect) => ({
         ...prevSelect,
         mekka: value,
         mekkaPrice,
         mekkaId: selectedHotel.hotel_id,
+        hotelStart : selectedHotel?.hotel_stars
       }));
       setmekkaId(selectedHotel.hotel_id);
+      
+      
+      setMekkaStars()
 
       // Update Mekka hotel price in selectedmekkaHotelPrice state
       setselectedmekkaHotelPrice(mekkaPrice);
+      setMekkaStars(mekkaStar)
 
       fetchHotelData();
     } else if (name === "madina") {
@@ -172,6 +188,11 @@ export default function TourSingleSidebar({
         SidebarData?.tour_hotels?.medina_hotels.find(
           (hotel) => hotel.id === selectedHotel.hotel_id
         )?.hotel_price || 0;
+
+        const madinaStar =
+        SidebarData?.tour_hotels?.medina_hotels.find(
+          (hotel) => hotel.id === selectedHotel.hotel_id
+        )?.hotel_stars || 0;
 
       // Update the HotelSelect state with the selected Madina hotel details
       setHotelSelect((prevSelect) => ({
@@ -182,8 +203,9 @@ export default function TourSingleSidebar({
       }));
       setmadinaId(selectedHotel.hotel_id);
 
+
       setselectedMadinaHotelPrice(madinaPrice);
-      fetchHotelData();
+      fetchHotelData(madinaStar);
     }
   };
 
@@ -210,7 +232,6 @@ export default function TourSingleSidebar({
   };
 
   console.log("selectedCheckbox" , selectedCheckbox)
-  console.log("HotelSelect" , HotelSelect);
   
 
   useEffect(() => {
@@ -508,9 +529,9 @@ export default function TourSingleSidebar({
     OfferedLanguages: SidebarData?.en_language,
     MaxLuggagePerPerson: 0,
     MakkaHotel: mekkaHotel,
-    mekkaHotelStar : 2,
+    mekkaHotelStar : MekkaStars,
     MadinaHotel: madinaHotel,
-    MadinaHotlStar : 3,
+    MadinaHotlStar : MadinaStars,
     FlightAndHotel: FlightAndHotelPrice,
     duration: SidebarData?.tour_details?.travel_duration,
     startDate: SidebarData?.tour_details?.date_begin,
