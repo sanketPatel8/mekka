@@ -220,12 +220,12 @@ export default function Profile() {
 
     if (formType === "profile") {
       if (!name || !surname || !email || !image1) {
-        showErrorToast("Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
         return;
       }
     } else if (formType === "change_password") {
       if (!old_password || !password || !confirm_password) {
-        showErrorToast("Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
         return;
       }
     }
@@ -261,10 +261,10 @@ export default function Profile() {
 
       setIsLoading(false);
       if (response.status === "success") {
-        showSuccessToast(response?.message);
+        showSuccessToast(translate, "Profile updated successfully");
         fetchProfile();
       } else if (response.status === "error") {
-        showErrorToast(response?.message);
+        showErrorToast(translate, "Profile not updated");
       }
     } else if (formType === "change_password") {
       setIsPasswordLoading(true);
@@ -278,14 +278,14 @@ export default function Profile() {
         setPassword("");
         setConfirmPassword("");
         if (response.status === "success") {
-          showSuccessToast(response?.message);
+          showSuccessToast(translate, "Password updated successfully");
           fetchProfile();
         } else {
-          showErrorToast(response?.message);
+          showErrorToast(translate, "Password not updated");
         }
       } else {
         setIsPasswordLoading(false);
-        showErrorToast("please fill proper details");
+        showErrorToast(translate,"Please fill all fields");
       }
     }
     // fetchUpdateProfile();
