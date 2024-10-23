@@ -199,89 +199,89 @@ const CustomerDetaTable = () => {
     },
   ];
 
-  const Child = [
-    {
-      name: translate("Name"),
-      selector: (row) => row.personName,
-      width: "100px",
-    },
-    { name: translate("Surname"), selector: (row) => row.personSurName },
-    { name: translate("Gender"), selector: (row) => row.gender },
-    { name: translate("DOB"), selector: (row) => row.personBirthDay },
-    {
-      name: translate("Nationality"),
-      selector: (row) => row.personNationality,
-    },
-    {
-      name: translate("Additional Services"),
-      selector: (row) =>
-        row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
-      width: "150px",
-    },
-    {
-      name: translate("Total"),
-      selector: (row) => `${row.child_price} €`,
-    },
-    {
-      name: translate("Action"),
-      selector: (row) => (
-        <div className="flex_center">
-          <button
-            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openEditData(row)} // Pass the current row
-          >
-            {translate("Edit")}
-          </button>
-          <button
-            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openUploadFileModal(row.id, Tourid)}
-          >
-            {translate("Document")}
-          </button>
-        </div>
-      ),
-      width: "500px", // Set a custom width for the button column
-    },
-  ];
+  // const Child = [
+  //   {
+  //     name: translate("Name"),
+  //     selector: (row) => row.personName,
+  //     width: "100px",
+  //   },
+  //   { name: translate("Surname"), selector: (row) => row.personSurName },
+  //   { name: translate("Gender"), selector: (row) => row.gender },
+  //   { name: translate("DOB"), selector: (row) => row.personBirthDay },
+  //   {
+  //     name: translate("Nationality"),
+  //     selector: (row) => row.personNationality,
+  //   },
+  //   {
+  //     name: translate("Additional Services"),
+  //     selector: (row) =>
+  //       row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
+  //     width: "150px",
+  //   },
+  //   {
+  //     name: translate("Total"),
+  //     selector: (row) => `${row.child_price} €`,
+  //   },
+  //   {
+  //     name: translate("Action"),
+  //     selector: (row) => (
+  //       <div className="flex_center">
+  //         <button
+  //           className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+  //           onClick={() => openEditData(row)} // Pass the current row
+  //         >
+  //           {translate("Edit")}
+  //         </button>
+  //         <button
+  //           className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+  //           onClick={() => openUploadFileModal(row.id, Tourid)}
+  //         >
+  //           {translate("Document")}
+  //         </button>
+  //       </div>
+  //     ),
+  //     width: "500px", // Set a custom width for the button column
+  //   },
+  // ];
 
-  const baby = [
-    {
-      name: translate("Name"),
-      selector: (row) => row.personName,
-      width: "100px",
-    },
-    { name: translate("Surname"), selector: (row) => row.personSurName },
-    { name: translate("Gender"), selector: (row) => row.gender },
-    { name: translate("DOB"), selector: (row) => row.personBirthDay },
-    {
-      name: translate("Nationality"),
-      selector: (row) => row.personNationality,
-    },
-    {
-      name: translate("Total"),
-      selector: (row) => `${row.baby_price} €`,
-    },
-    {
-      name: translate("Action"),
-      selector: (row) => (
-        <div className="flex_center">
-          <button
-            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openEditData(row)} // Pass the current row
-          >
-            {translate("Edit")}
-          </button>
-          <button
-            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openUploadFileModal(row.id, Tourid)}
-          >
-            {translate("Document")}
-          </button>
-        </div>
-      ),
-      width: "500px", // Set a custom width for the button column
-    },
-  ];
+  // const baby = [
+  //   {
+  //     name: translate("Name"),
+  //     selector: (row) => row.personName,
+  //     width: "100px",
+  //   },
+  //   { name: translate("Surname"), selector: (row) => row.personSurName },
+  //   { name: translate("Gender"), selector: (row) => row.gender },
+  //   { name: translate("DOB"), selector: (row) => row.personBirthDay },
+  //   {
+  //     name: translate("Nationality"),
+  //     selector: (row) => row.personNationality,
+  //   },
+  //   {
+  //     name: translate("Total"),
+  //     selector: (row) => `${row.baby_price} €`,
+  //   },
+  //   {
+  //     name: translate("Action"),
+  //     selector: (row) => (
+  //       <div className="flex_center">
+  //         <button
+  //           className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+  //           onClick={() => openEditData(row)} // Pass the current row
+  //         >
+  //           {translate("Edit")}
+  //         </button>
+  //         <button
+  //           className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+  //           onClick={() => openUploadFileModal(row.id, Tourid)}
+  //         >
+  //           {translate("Document")}
+  //         </button>
+  //       </div>
+  //     ),
+  //     width: "500px", // Set a custom width for the button column
+  //   },
+  // ];
 
   const Total = [
     {
@@ -1308,7 +1308,7 @@ const CustomerDetaTable = () => {
                 {/* Child Data Table */}
                 <DataTable
                   title={translate("Child Information")}
-                  columns={Child}
+                  columns={columnAduInfo_2}
                   data={BookingDetails?.childData?.length ? BookingDetails.childData : []} // Change data dynamically
                   highlightOnHover
                 />
@@ -1318,7 +1318,7 @@ const CustomerDetaTable = () => {
                 {/* Baby Data Table */}
                 <DataTable
                   title={translate("Baby Information")}
-                  columns={baby}
+                  columns={columnAduInfo_2}
                   data={BookingDetails?.babyData?.length ? BookingDetails.babyData : []} // Change data dynamically
                   highlightOnHover
                 />
