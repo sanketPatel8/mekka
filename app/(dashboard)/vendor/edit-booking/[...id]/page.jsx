@@ -207,7 +207,7 @@ export default function DbBooking({ params }) {
       // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
       {
         name: translate("Discount"),
-        selector: (row) => row.Discount > 0 ? -(row.Discount) : 0,
+        selector: (row) => row.Discount ,
       },
       { name: translate("Total"), selector: (row) => row.Total },
       {
@@ -432,7 +432,7 @@ export default function DbBooking({ params }) {
       if (response.Bookings.reservation) {
         const total = {
           Subtotal: `${response.Bookings.reservation.total} €`,
-          Discount: response.Bookings.reservation.discount,
+          Discount: `${response.Bookings.reservation.discount}`,
           Amount_Paid: `${response.Bookings.reservation.amount_paid} €`,
           Total: `${response.Bookings.reservation.subtotal} €`,
           Amount_Due: `${response.Bookings.reservation.amount_due} €`,

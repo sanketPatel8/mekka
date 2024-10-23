@@ -47,6 +47,7 @@ export default function DbBooking() {
       //   selector: (row) => row.BookingId,
       //   sortable: true,
       //   width:"5%",
+        
       // },
       {
         name: translate("Booking No."),
@@ -150,7 +151,7 @@ export default function DbBooking() {
     if (tab === "All") {
       setLoading(false);
       const bookingsData = response.Bookings.map((booking) => ({
-        // BookingId: booking.reservation_id,
+        BookingId: booking.reservation_id,
         BookingNo: booking.reservationNumber,
         Status: booking.reservation_status,
         Full_Name: booking.name,
