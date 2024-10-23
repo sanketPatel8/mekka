@@ -156,24 +156,26 @@ const CustomerDetaTable = () => {
     {
       name: translate("Name"),
       selector: (row) => row.personName,
-      width: "100px",
+      width: "12%",
     },
-    { name: translate("Surname"), selector: (row) => row.personSurName },
-    { name: translate("Gender"), selector: (row) => row.gender },
-    { name: translate("DOB"), selector: (row) => row.personBirthDay },
+    { name: translate("Surname"), selector: (row) => row.personSurName,width: "12%" },
+    { name: translate("Gender"), selector: (row) => row.gender,width: "8%" },
+    { name: translate("DOB"), selector: (row) => row.personBirthDay,width: "8%" },
     {
       name: translate("Nationality"),
       selector: (row) => row.personNationality,
+      width: "10%"
     },
     {
       name: translate("Additional Services"),
       selector: (row) =>
         row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
-      width: "150px",
+      width: "10%",
     },
     {
       name: translate("Total"),
       selector: (row) => `${row.adult_price} €`,
+      width: "15%"
     },
     {
       name: translate("Action"),
@@ -193,7 +195,7 @@ const CustomerDetaTable = () => {
           </button>
         </div>
       ),
-      width: "500px", // Set a custom width for the button column
+      width: "20%", // Set a custom width for the button column
     },
   ];
 
