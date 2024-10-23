@@ -1482,6 +1482,7 @@ const CustomerDetaTable = () => {
                                 name="birthDate"
                                 value={AddpersonData.birthDate}
                                 onChange={handleInputChange}
+                                onFocus={handleDateFocus}
                                 required
                               />
                               <label className="lh-1 text-16 text-light-1">
