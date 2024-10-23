@@ -184,6 +184,7 @@ export default function AddTour() {
 };
 
 const handleFocus = (e) => {
+  
 }
   // const handleStartDateKeyDown = (e) => {
   //   const inputValue = e.target.value;

@@ -109,6 +109,9 @@ const CustomerDetaTable = () => {
     Modal.setAppElement("#Adult1Data");
   }, []);
 
+
+  
+
   const ColumnReservation_details = [
     {
       name: translate("Airline"),
