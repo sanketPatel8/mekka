@@ -384,7 +384,7 @@ const handleSecondAmountChange = (e) => {
    
   };
 
-  console.log("SideBarData?.Airline?.luggage", SideBarData);
+  
 
 
   return (
@@ -1120,7 +1120,7 @@ const handleSecondAmountChange = (e) => {
                 SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
                   <div className="">
                     <div className={`d-flex items-center justify-between`}>
-                      <div className="fw-500"> {translate("Discount")} {" "} {`(${SideBarData?.BookingFild?.promo})`}</div>
+                      <div className="fw-500"> {translate("Discount")} {" "} {`(${SideBarData?.BookingFild?.Discount?.coupon_name})`}</div>
                       <div className="">
                         -
                         {formatPrice(
