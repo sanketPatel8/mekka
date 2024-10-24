@@ -728,7 +728,7 @@ export default function EditTour() {
   const handleAddDepartureRow = () => {
     setDepartureRows([
       ...departureRows,
-      { departure_id: "", price: "", id: "" },
+      { departure_id: "", price: "", id: "0" },
     ]);
   };
 
