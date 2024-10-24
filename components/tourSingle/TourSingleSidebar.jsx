@@ -614,7 +614,7 @@ console.log(MadinaStars)
   return (
     <>
       <div className="tourSingleSidebar">
-        <h5 className="text-18 fw-500 mb-20 mt-20">{translate("Tickets")}</h5>
+        <h5 className="text-18 fw-500 mb-20 ">{translate("Tickets")}</h5>
 
         {totalSelected > SidebarData?.tour_details?.capacity_empty && (
           <div className="error-message text-red-500">

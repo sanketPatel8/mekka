@@ -32,7 +32,7 @@ export default function SingleFour({ PAckageData }) {
 
   return (
     <>
-      <section className="py-30 mt-80">
+      <section className=" mt-80">
         
         <div className="container">
           <MainInformation PAckageData={PAckageData} />

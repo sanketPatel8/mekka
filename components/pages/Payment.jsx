@@ -1078,7 +1078,7 @@ const handleSecondAmountChange = (e) => {
                     <>
                       <div className="line mt-5 mb-5"></div>
 
-                      <p className="my-1 fs-6 my-2">
+                      <p className="my-1 text-14 my-2">
                         (
                         {translate(
                           "The Standard Offer May Include a Multi-Bed Room"

@@ -177,7 +177,7 @@ export default function TourSlderOne() {
                                 <div className="d-flex items-center x-gap-5">
                                   {/* <Stars star={elm?.rating_count} font={12} /> */}
                                 </div>
-                                {elm?.company_code && (
+                                {elm?.company_name && (
                               <div className="text-14 ml-5">
                                 <span className="fw-500">{elm?.rating}</span>
                                 {/* {elm?.rating_count}) -{" "} */}
@@ -188,9 +188,9 @@ export default function TourSlderOne() {
                                   size={20}
                                 />{" "}
                                 <span>
-                                  {elm?.company_code == null
+                                  {elm?.company_name == null
                                     ? "  "
-                                    : elm?.company_code}{" "}
+                                    : elm?.company_name}{" "}
                                 </span>
                                </div>
                               </div>
