@@ -80,7 +80,7 @@ export default function FooterTwo() {
                   </div>
 
                   <div className="col-auto">
-                    <div className="text-20 fw-500">
+                    <div className="text-20 text_16 fw-500">
                       {translate("Speak to our expert at")}
                       <span className="text-accent-1"> +49 (0)6196 204 72 40</span>
                    

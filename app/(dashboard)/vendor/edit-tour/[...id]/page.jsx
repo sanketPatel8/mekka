@@ -2325,7 +2325,7 @@ export default function EditTour() {
                                 ))}
                               </ul>
                             </div>
-                            <div className="d-flex item-center justify-content-between">
+                            <div className="d-flex flex-wrap item-center justify-content-between">
                               <h6>
                                 {translate("Allow Exclude Flight Details")}
                               </h6>
@@ -2407,7 +2407,7 @@ export default function EditTour() {
                                 </div>
                               </div>
                             </div>
-                            <div className="d-flex item-center justify-content-between">
+                            <div className="d-flex flex-wrap item-center justify-content-between">
                               <h6>{translate("Enter Flight Details")}</h6>
                               <div className="flex_start visaYESNOFLEx my-3">
                                 <div className="d-flex items-center mx-2">

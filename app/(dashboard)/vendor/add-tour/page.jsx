@@ -1883,7 +1883,7 @@ const isCurrentTabValid = () => {
                                     ))}
                                   </ul>
                                 </div>
-                                <div className="d-flex item-center justify-content-between">
+                                <div className="d-flex flex-wrap item-center justify-content-between">
                                   <h6>
                                   {translate("Allow Exclude Flight Details") }
                                   </h6>

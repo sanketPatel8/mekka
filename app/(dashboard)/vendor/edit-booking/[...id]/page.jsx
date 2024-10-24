@@ -101,31 +101,31 @@ export default function DbBooking({ params }) {
 
     const columnAdu_1 = [
       // { name: translate("id"), selector: (row) => row.id, width: "10%" },
-      { name: translate("Name"), selector: (row) => row.name, width: "20%" },
+      { name: translate("Name"), selector: (row) => row.name, width: "10%" },
       {
         name: translate("Surname"),
         selector: (row) => row.surname,
-        width: "20%",
+        width: "12%",
       },
 
  
-      { name: translate("DOB"), selector: (row) => row.DOB, width: "10%" },
+      { name: translate("DOB"), selector: (row) => row.DOB, width: "15%" },
       {
         name: translate("Nationality"),
         selector: (row) => row.Nationality,
-        width: "10%",
+        width: "15%",
       },
       {
         name: translate("Additional Services"),
         selector: (row) =>
           row?.extra_data,
-        width: "150px",
+        width: "16%",
       },
 
       {
         name: translate("Total"),
         selector: (row) => formatTotal(row.price),
-        width: "10%",
+        width: "16%",
       },
       {
         name: translate("Action"),
@@ -139,7 +139,7 @@ export default function DbBooking({ params }) {
             </button>
           </div>
         ),
-        width: "10%",
+        width: "15%",
       },
     ];
 
@@ -203,20 +203,24 @@ export default function DbBooking({ params }) {
       {
         name: translate("Subtotal"),
         selector: (row) => row.Subtotal,
+        width:"20%"
       },
       // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
       {
         name: translate("Discount"),
         selector: (row) => row.Discount ,
+        width:"16%"
       },
-      { name: translate("Total"), selector: (row) => row.Total },
+      { name: translate("Total"), selector: (row) => row.Total, width:"20%" },
       {
         name: translate("Amount Paid"),
         selector: (row) => row.Amount_Paid,
+        width:"22%"
       },
       {
         name: translate("Amount Due"),
         selector: (row) => row.Amount_Due,
+        width:"22%"
       },
     ];
 

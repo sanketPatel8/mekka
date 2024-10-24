@@ -145,14 +145,13 @@ export default function TourSingleSidebar({
     // Parse the selected hotel details
     let selectedHotel;
     try {
-      selectedHotel = JSON.parse(value); // Ensure it's valid JSON
+      selectedHotel = JSON.parse(value);
+      console.log(selectedHotel)
     } catch (error) {
       return; // Exit if value isn't valid JSON
     }
 
-    console.log("SidebarData?.tour_hotels?.mekka_hotels",SidebarData?.tour_hotels?.mekka_hotels);
     
-console.log(selectedHotel);
     
     if (name === "mekka") {
       // Find the price of the selected Mekka hotel
@@ -232,7 +231,6 @@ console.log(selectedHotel);
     }
   };
 
-  console.log("selectedCheckbox" , selectedCheckbox)
   
 
   useEffect(() => {
@@ -518,8 +516,7 @@ console.log(selectedHotel);
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
-console.log(MekkaStars)
-console.log(MadinaStars)
+
   const PackageBookingData = {
     name: SidebarData?.tour_details?.name,
     type: SidebarData?.tour_details?.type,

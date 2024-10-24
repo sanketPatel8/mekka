@@ -298,7 +298,7 @@ opacity: 1;
 .closeSidebar{
   color: black;
   position: absolute;
-  top: 0;
+  top: -20px;
   right: 20px;
   font-size: 40px;
   cursor: pointer;
@@ -386,3 +386,11 @@ opacity: 1;
   overflow-x: hidden!important;
 }
 
+/* .eFEHrh div:first-child{
+  overflow: visible!important;
+} */
+
+
+.css-1nmdiq5-menu{
+  margin-top:0!important;
+}

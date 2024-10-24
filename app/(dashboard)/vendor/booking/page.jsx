@@ -54,21 +54,21 @@ export default function DbBooking() {
         selector: (row) => row.BookingNo,
 
         sortable: true,
-        width:"10%",
+        width:"12%",
 
       },
       {
         name: translate("Status"),
         selector: (row) => row.Status,
         sortable: true,
-        width:"12%",
+        width:"11%",
 
       },
       {
         name: translate("Full Name"),
         selector: (row) => row.Full_Name,
         sortable: true,
-        width:"12%",
+        width:"11%",
 
       },
       {
@@ -340,7 +340,7 @@ export default function DbBooking() {
                   pagination
                   subHeader
                   subHeaderComponent={
-                    <div className="d-flex items-center border-1 px-3 py-2 rounded">
+                    <div className="d-flex items-center border-1 px-lg-3 py-lg-2 rounded">
                       <input
                         type="text"
                         placeholder="Search all columns"

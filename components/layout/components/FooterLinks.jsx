@@ -45,7 +45,7 @@ export default function FooterLinks() {
   return (
     <>
       {sections.map((elm, i) => (
-        <div key={i} className="col-lg-auto col-6">
+        <div key={i} className="col-lg-auto col-12">
           <h4 className="text-20 fw-500">{elm.title}</h4>
 
           <div className="y-gap-10 mt-20">

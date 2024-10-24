@@ -77,7 +77,7 @@ export default function Statistics({data}) {
       <div className="rounded-12 bg-white shadow-2 h-full">
         <div className="pt-20 px-30">
           <div className="tabs -underline-2 js-tabs">
-            <div className="d-flex items-center justify-between">
+            <div className="d-flex flex-wrap items-center justify-between">
               <div className="text-18 fw-500"> {translate("Earning Statistics") }</div>
 
               <div className="tabs__controls row x-gap-20 y-gap-10 lg:x-gap-20 js-tabs-controls">
