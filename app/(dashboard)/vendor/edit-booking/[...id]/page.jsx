@@ -650,6 +650,7 @@ export default function DbBooking({ params }) {
               onRequestClose={closeUploadFileModal}
               style={customStyles}
               contentLabel="Pending Payment Modal"
+              id="DocumentModal"
             >
               <div className="d-flex justify-content-between" id="modelopen">
                 <h2 className="ml-20 my-3"> {translate("Document")}</h2>

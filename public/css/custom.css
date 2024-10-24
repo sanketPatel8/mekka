@@ -377,7 +377,7 @@ opacity: 1;
 }
 
 #DocumentModal{
-  height: fit-content!important;
+  height:fit-content!important;
   overflow-x: hidden!important;
 }
 
