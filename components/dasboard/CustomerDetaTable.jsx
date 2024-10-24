@@ -159,33 +159,39 @@ const CustomerDetaTable = () => {
     {
       name: translate("Name"),
       selector: (row) => row.personName,
-      width: "10%",
+      // width: "10%",
     },
-    { name: translate("Surname"), selector: (row) => row.personSurName,width: "10%" },
-    { name: translate("Gender"), selector: (row) => row.gender,width: "8%" },
-    { name: translate("DOB"), selector: (row) => row.personBirthDay,width: "8%" },
+    { name: translate("Surname"), selector: (row) => row.personSurName,
+      // width: "10%"
+     },
+    { name: translate("Gender"), selector: (row) => row.gender,
+      // width: "8%" 
+    },
+    { name: translate("DOB"), selector: (row) => row.personBirthDay,
+      // width: "8%"
+     },
     {
       name: translate("Nationality"),
       selector: (row) => row.personNationality,
-      width: "10%"
+      // width: "10%"
     },
     {
       name: translate("Additional Services"),
       selector: (row) =>
         row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
-      width: "10%",
+      // width: "10%",
     },
     {
       name: translate("Total"),
       selector: (row) => `${row.adult_price} €`,
-      width: "15%"
+      // width: "15%"
     },
     {
       name: translate("Action"),
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button py-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button py-10 px-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)}
             style={{width: "fit-content"}}
 
@@ -193,7 +199,7 @@ const CustomerDetaTable = () => {
             {translate("Edit")}
           </button>
           <button
-            className="button  py-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 ms-2 text-end"
+            className="button  py-10 px-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 ms-2 text-end"
             onClick={() => openUploadFileModal(row.id, Tourid)}
             style={{width: "fit-content"}}
           >
@@ -201,7 +207,7 @@ const CustomerDetaTable = () => {
           </button>
         </div>
       ),
-      width: "28%", // Set a custom width for the button column
+      width: "26%", // Set a custom width for the button column
     },
   ];
 
