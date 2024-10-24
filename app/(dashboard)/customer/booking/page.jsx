@@ -183,19 +183,20 @@ export default function DbBooking() {
                           className="px-1 text-accent-1"
                         />
                         {elm?.mekkahotel?.hotel_name}&nbsp; <span> (
-                        {elm?.mekkahotel?.hotel_stars}{" "}
-                        <FaStar color="#dabf4f" className="mx-1" />)</span>
+                        {elm?.mekkahotel?.hotel_stars}{" "}Star
+                        )</span>
                       </p>
-                      <p className="tourCard__text mt-5 items-center d-flex ">
+                      <p className="tourCard__text mt-5 items-center d-flex text-wrap">
                         <FontAwesomeIcon
                           icon={faHotel}
                           className="px-1 text-accent-1"
                         />
-                        {elm?.madinahotel?.hotel_name} (5{" "}
-                        <FaStar
+                        {elm?.madinahotel?.hotel_name} ({elm?.madinahotel?.hotel_stars}{" "}
+                        {/* <FaStar
                           color="#dabf4f"
-                          className="mx-1 text-accent-1"
-                        />
+                          className="mx-1  mb-1"
+                        /> */}
+                        Star
                         )
                       </p>
                       <p className="tourCard__text mt-5">
@@ -230,7 +231,7 @@ export default function DbBooking() {
                         <span>{translate('Departure')} : {elm?.tour_details?.departures}</span>
                       </div>
 
-                      <div className="row x-gap-20 y-gap-5 pt-30">
+                      <div className="row x-gap-20 y-gap-5 ">
                         <div className="text-14 ">
                           {elm?.tour_details?.date_begin} -{" "}
                           {elm?.tour_details?.date_end}

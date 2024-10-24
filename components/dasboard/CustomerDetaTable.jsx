@@ -159,9 +159,9 @@ const CustomerDetaTable = () => {
     {
       name: translate("Name"),
       selector: (row) => row.personName,
-      width: "12%",
+      width: "10%",
     },
-    { name: translate("Surname"), selector: (row) => row.personSurName,width: "12%" },
+    { name: translate("Surname"), selector: (row) => row.personSurName,width: "10%" },
     { name: translate("Gender"), selector: (row) => row.gender,width: "8%" },
     { name: translate("DOB"), selector: (row) => row.personBirthDay,width: "8%" },
     {
@@ -185,20 +185,23 @@ const CustomerDetaTable = () => {
       selector: (row) => (
         <div className="flex_center">
           <button
-            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
-            onClick={() => openEditData(row)} // Pass the current row
+            className="button py-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            onClick={() => openEditData(row)}
+            style={{width: "fit-content"}}
+
           >
             {translate("Edit")}
           </button>
           <button
-            className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+            className="button  py-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 ms-2 text-end"
             onClick={() => openUploadFileModal(row.id, Tourid)}
+            style={{width: "fit-content"}}
           >
             {translate("Document")}
           </button>
         </div>
       ),
-      width: "20%", // Set a custom width for the button column
+      width: "28%", // Set a custom width for the button column
     },
   ];
 
@@ -1790,7 +1793,7 @@ const CustomerDetaTable = () => {
                           {translate("CANCEL")}
                         </button>
           
-                        <h6 className="booking-form-price col-4">
+                        <h6 className="booking-form-price col-4 mx-4">
                           {translate("Subtotal")}:<span>{subtotal}€</span>
                         </h6>
                       </div>

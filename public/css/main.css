@@ -611,6 +611,10 @@ button:focus {
   padding: 16px 35px;
 }
 
+.mdButton {
+  padding: 16px;
+}
+
 .button.-h-50 {
   height: 50px;
 }

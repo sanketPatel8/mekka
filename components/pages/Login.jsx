@@ -359,7 +359,7 @@ export default function Login({
                     <div className="col">
                       <button
                         type="button"
-                        className="button -md -outline-blue-1 text-blue-1 col-12"
+                        className="button mdButton -outline-blue-1 text-blue-1 col-12"
                       >
                         <LoginSocialFacebook
                           appId={

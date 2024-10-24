@@ -24,6 +24,8 @@ const HeroSearch = ({ CustomClass }) => {
   // Handle undefined calendar values gracefully
   const startDate = calender?.[0] ? calender[0].format("DD.MM.YYYY") : "";
   const endDate = calender?.[1] ? calender[1].format("DD.MM.YYYY") : "";
+  const [startDateFormat, setStartDateFormat] = useState("")
+  const [endDateFormat, setEndDateFormat] = useState("")
 
   const handleDateChange = (newDates) => {
     setDates(newDates);
@@ -79,11 +81,15 @@ const HeroSearch = ({ CustomClass }) => {
 
   const handleSearch = () => {
     // Constructing query parameters
+
+    const formattedStartDate = calender?.[0] ? calender[0].format("YYYY-MM-DD") : "";
+    const formattedEndDate = calender?.[1] ? calender[1].format("YYYY-MM-DD") : "";
+  
     const queryParams = [];
     if (location) queryParams.push(`TourType=${location}`);
-    if (startDate) queryParams.push(`StartDate=${startDate}`);
-    if (endDate) queryParams.push(`EndDate=${endDate}`);
-    if (person) queryParams.push(`person=${person}`);
+    if (formattedStartDate) queryParams.push(`StartDate=${formattedStartDate}`);
+    if (formattedEndDate) queryParams.push(`EndDate=${formattedEndDate}`);
+      if (person) queryParams.push(`person=${person}`);
 
     const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
 
