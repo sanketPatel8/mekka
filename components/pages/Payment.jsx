@@ -300,6 +300,9 @@ const handleSecondAmountChange = (e) => {
     };
   }, [handleDateChange]);
 
+  console.log("Booking" , Booking);
+  
+
   const FatchallBooking = async (data) => {
     setIsLoading(true);
     try {

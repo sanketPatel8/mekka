@@ -719,7 +719,7 @@ const CustomerDetaTable = () => {
   const [AddpersonData, setAddpersonData] = useState({
     name: "",
     surname: "",
-    gender: "",
+    gender: "male",
     birthDate: "",
     nationality: "",
     roomType: "1",

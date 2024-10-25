@@ -11,9 +11,6 @@ import { FaLuggageCart } from "react-icons/fa";
 import { FaHotel, FaStar } from "react-icons/fa6";
 import "@/public/css/index.css";
 import Modal from "react-modal";
-import { FaFacebookF } from "react-icons/fa";
-import { FaGoogle } from "react-icons/fa";
-import { FaApple } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
@@ -27,12 +24,10 @@ import { nationalities } from "@/data/nationalities";
 import Login from "./Login";
 import { useCurrency } from "@/app/context/currencyContext";
 import { ClipLoader } from "react-spinners";
-import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
-import { update } from "lodash";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useCountryCode } from "@/app/context/useCountryCode";
-import Stars from "../common/Stars";
+
 
 const customStyles = {
   overlay: {
@@ -455,7 +450,7 @@ export default function BookingPages({ BookingData }) {
       if (type === "Adult" && index === 0) {
         setUserData((prevUserData) => ({
           ...prevUserData,
-          [name]: value, // Update userData if necessary
+          [name]: value,
         }));
       }
 
@@ -1296,6 +1291,9 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+
+
+
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
@@ -1411,8 +1409,11 @@ export default function BookingPages({ BookingData }) {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
-    console.log(BookingSideBar , "BookingSideBar");
-    
+  console.log("formValues", formValues);
+
+  console.log("userData", userData);
+
+
 
   return (
     <>
@@ -1514,12 +1515,12 @@ export default function BookingPages({ BookingData }) {
                   <div className="px-1">
                     <div
                       className={`${(selectedCheckbox &&
-                          BookingSideBar?.Airline === null) ||
-                          BookingSideBar.selectedCheckbox !== false ||
-                          BookingData?.Tour_Details?.tour_details
-                            ?.flight_included == "0"
-                          ? "d-none"
-                          : "d-block"
+                        BookingSideBar?.Airline === null) ||
+                        BookingSideBar.selectedCheckbox !== false ||
+                        BookingData?.Tour_Details?.tour_details
+                          ?.flight_included == "0"
+                        ? "d-none"
+                        : "d-block"
                         }`}
                     >
                       <div
@@ -1552,10 +1553,10 @@ export default function BookingPages({ BookingData }) {
 
                     <div
                       className={`${BookingSideBar.selectedCheckbox !== false ||
-                          BookingData?.Tour_Details?.tour_details
-                            ?.flight_included == "0"
-                          ? "d-none"
-                          : "d-block"
+                        BookingData?.Tour_Details?.tour_details
+                          ?.flight_included == "0"
+                        ? "d-none"
+                        : "d-block"
                         }`}
                     >
                       <div
@@ -1625,7 +1626,7 @@ export default function BookingPages({ BookingData }) {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Madina : ({BookingSideBar?.MadinaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.MadinaHotlStar})</span> 
+                        Madina : ({BookingSideBar?.MadinaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.MadinaHotlStar})</span>
                       </div>
                     </div>
 
