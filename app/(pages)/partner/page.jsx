@@ -15,6 +15,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { countries } from "@/data/nationalities";
 import { ClipLoader } from "react-spinners";
 import { set } from "lodash";
+import Link from "next/link";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -646,11 +647,10 @@ const page = () => {
                             </div>
                           </div>
                           <span className="text-14 lh-12 ml-10">
-                            <span className="text-red font_11">*</span>{" "}
-                            {translate(
-                              "I have read the data protection and I accept the conditions."
-                            )}
-                          </span>
+                    {translate(
+                      "I have read the" )} <Link href={"/Datenschutz"}>{translate("data protection")}</Link>  {translate("and I accept the")} <Link href={"/Terms-of-Use"}>{translate("conditions.")}</Link>
+                    
+                  </span>
                         </label>
                       </div>
                     </div>

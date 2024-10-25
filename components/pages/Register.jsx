@@ -443,8 +443,8 @@ export default function Register() {
                   </div>
                   <span className="text-14 lh-12 ml-10">
                     {translate(
-                      "I have read the data protection and I accept the conditions."
-                    )}
+                      "I have read the" )} <Link href={"/Datenschutz"}>{translate("data protection")}</Link>  {translate("and I accept the")} <Link href={"/Terms-of-Use"}>{translate("conditions.")}</Link>
+                    
                   </span>
                 </label>
               </div>
