@@ -555,9 +555,9 @@ const CustomerDetaTable = () => {
       setViewData(FileDeta);
 
       const DownloadData = [
-        { name: translate("Document Type"), selector: (row) => row.type },
+        { name: translate("Document Type"), selector: (row) => row.type,width:"20%" },
 
-        { name: "Document Name", selector: (row) => row.Name },
+        { name: "Document Name", selector: (row) => row.Name, width:"40%" },
         {
           name: "Action",
           selector: (row) => (
@@ -571,6 +571,7 @@ const CustomerDetaTable = () => {
               {translate("Download")}
             </a>
           ),
+          width:"20%"
         },
       ];
 
