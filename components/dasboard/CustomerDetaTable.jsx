@@ -1262,9 +1262,9 @@ const CustomerDetaTable = () => {
                       
                       <div
                         className={
-                          BookingDetails?.reservation?.reservation_status == "Payment Completed"
-                            ? "d-none"
-                            : "d-block"
+                          BookingDetails?.reservation?.paymentType !== "2"
+                            ? "d-block"
+                            : "d-none"
                         }
                       >
                         <button
