@@ -34,6 +34,7 @@ const customStyles = {
 };
 
 export default function CheckoutForm({
+  
   reservation_id,
   subtotal,
   AddpersonData,
@@ -49,10 +50,10 @@ export default function CheckoutForm({
   fetchBookingDetails,
   closePaymentModal,
   amount = 0,
-  payableAmount = 0
+  payableAmount = 0,
+  AddPersonAmount = 0,
 }) {
-  console.log(payableAmount, "payableAmount")
-  console.log(amount, "amount")
+  console.log(AddpersonData,"AddPersonData")
   const { dispatch, customer } = useAuthContext();
   const {formatPrice} = useCurrency();
   const stripe = useStripe();
@@ -111,6 +112,9 @@ export default function CheckoutForm({
   };
   const totalAmount = (amount === 0 ? calculateFeeFromPayableAmount(payableAmount) : calculateTotalWithFee(amount));
   const payable = ((amount === 0 ? parseAmount(payableAmount) : amount) / 100) + (totalAmount / 100);
+
+  const AddPersonTotal = calculateTotalWithFee(AddPersonAmount);
+  const PayablePersonAmount = AddPersonAmount + AddPersonTotal
 
   const addBooking = async (transactionId, amount) => {
     const newBooking = {
@@ -250,7 +254,7 @@ export default function CheckoutForm({
         addBooking(paymentIntent.id, newAmount);
       }
     }
-    if (AddpersonData) {
+    if (AddPersonAmount) {
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -310,9 +314,22 @@ export default function CheckoutForm({
       <button onClick={handleClose}>
         <IoClose size={20} />
       </button>
-      <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {amount === 0 ? payableAmount : formatCurrency(amount)}</span></h5>
-      <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(totalAmount)}</span></h5>
-      <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(payable*100)}</span></h5>
+      {
+        AddPersonAmount !== 0 ?
+          <>
+          <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {formatCurrency(AddPersonAmount)}</span></h5>
+          <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(AddPersonTotal)}</span></h5>
+          <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(PayablePersonAmount)}</span></h5>
+          
+          </>
+        :
+        <>
+        
+        <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {amount === 0 ? payableAmount : formatCurrency(amount)}</span></h5>
+        <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(totalAmount)}</span></h5>
+        <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(payable*100)}</span></h5>
+        </>
+      }
       <hr/>
       <form
         className="position-relative"

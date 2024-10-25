@@ -2611,6 +2611,10 @@ const CustomerDetaTable = () => {
                     fetchBookingDetails={fetchBookingDetails}
                     closePaymentModal = {closePaymentModal}
                     AddPersonAmount={AddPersonAmount}
+                    AddpersonData={AddpersonData}
+                    RadioValue={RadioValue}
+                    reservation_id={BookingDetails.reservation?.id}
+                    subtotal={subtotal}
                   />
                 )}
                 </>
