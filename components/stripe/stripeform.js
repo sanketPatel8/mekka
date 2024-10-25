@@ -5,7 +5,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
 import { useCurrency } from '@/app/context/currencyContext';
 
-function Stripeform({RadioValue, closeModal,payableAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
+function Stripeform({RadioValue, closeModal,payableAmount,AddPersonAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
 
   console.log(payableAmount, 'amount')
 
@@ -75,7 +75,29 @@ function Stripeform({RadioValue, closeModal,payableAmount,fetchBookingDetails,cl
         setClientSecret(res.data.client_secret);
       }
 
-    } else {
+    } else if(AddPersonAmount){
+      const newAmount = parseInt(AddPersonAmount) * 100; // Convert to cents
+      const totalAmount = calculateTotalWithFee(newAmount); // Calculate total with fee
+      console.log(totalAmount, 'totalAmount')
+      const data = {
+        "amount": Math.round(totalAmount),
+        "currency": 'EUR',
+        "payment_method_types[0]": 'card',
+      }
+
+      const res = await api.post('payment_intents', data, {
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`,
+        },
+      });
+
+      if (res && res.data) {
+        setClientSecret(res.data.client_secret);
+      }
+
+      
+    }else{
       setClientSecret("");
     }
   }
@@ -107,6 +129,7 @@ function Stripeform({RadioValue, closeModal,payableAmount,fetchBookingDetails,cl
         fetchBookingDetails={fetchBookingDetails}
         amount = {amount}
         payableAmount = {payableAmount}
+        AddPersonAmount = {AddPersonAmount}
       />
     </Elements>
   )
