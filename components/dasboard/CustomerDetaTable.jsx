@@ -958,14 +958,20 @@ const CustomerDetaTable = () => {
 
   const handlePayment = () => {
     if (PaymentCheckbox == 1) {
+      console.log("payment type 1");
+      
       FetchAddperson();
     }
 
     if (PaymentCheckbox == 3) {
+        console.log("payment type 3");
+        
       FetchAddperson();
     }
 
     if (PaymentCheckbox == 2) {
+      console.log("payment type 2");
+      
       
       setShowStripeModal(true);
     }
