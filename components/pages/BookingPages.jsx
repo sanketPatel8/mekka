@@ -161,6 +161,8 @@ export default function BookingPages({ BookingData }) {
         try {
           const AdultD = JSON.parse(BackAdultData);
 
+          console.log("AdultD" , AdultD);
+          
           // Extract the user object
           if (AdultD) {
             setFormValues((prevValues) => {
@@ -281,6 +283,7 @@ export default function BookingPages({ BookingData }) {
           console.error("Error parsing savedData:", error);
         }
       }
+
     }
   }, []);
 
