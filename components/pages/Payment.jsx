@@ -85,6 +85,7 @@ export default function Payment() {
         setFirstAmount("");
         setSecondAmount("");
         setThirdAmount(totalAmount);
+        setPayableAmount("")
         
     } else {
         setFirstAmount(rawAmount);
@@ -105,6 +106,8 @@ const handleSecondAmountChange = (e) => {
         setFirstAmount("");
         setSecondAmount("");
         setThirdAmount(totalAmount);
+        setPayableAmount("")
+
     } else {
         setSecondAmount(rawAmount);
         setThirdAmount(totalAmount - firstAmount - rawAmount);
