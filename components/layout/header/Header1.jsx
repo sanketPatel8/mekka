@@ -16,13 +16,15 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 
 
-export default function Header1() {
+export default function Header1(payment) {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [addClass, setAddClass] = useState(false);
   const [LoginCheck, setLoginCheck] = useState(false);
-  const {dispatch} = useAuthContext();
-  
+  const { dispatch } = useAuthContext();
+
+  console.log("payment" , payment.payment)
+
   const handleLogoutClick = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
@@ -86,17 +88,17 @@ export default function Header1() {
           </div>
 
           <Link href="/" className="header__logo mx-2">
-              <Image
-                width="167"
-                height="80"
-                src="/img/general/logo-1.png"
-                alt="logo icon"
-                priority
-              />
-            </Link>
+            <Image
+              width="167"
+              height="80"
+              src="/img/general/logo-1.png"
+              alt="logo icon"
+              priority
+            />
+          </Link>
 
           <div className="header__logo">
-           
+
             <div className="media">
               <Link href="/" className="mx-3">
                 {translate("Home")}
@@ -122,7 +124,7 @@ export default function Header1() {
               <DashboardCustomer
                 onLocaleChange={setLocale}
                 handleLogoutClick={handleLogoutClick}
-                
+
               />
             ) : (
               <>
@@ -150,9 +152,12 @@ export default function Header1() {
             </div>
 
             <div className="row items-center">
+
               <div className={`${!LoginCheck ? "col-2" : "col-3"}`}>
-                <div className="d-flex justify-content-center">
-                  <Currency currenyLocale={currenyLocale} />
+                <div className= {`${payment.payment === true ? 'd-none' : 'd-block'}`} >
+                  <div className="d-flex justify-content-center">
+                    <Currency currenyLocale={currenyLocale} />
+                  </div>
                 </div>
               </div>
 

@@ -16,7 +16,7 @@ export default function payment() {
   return (
     <>
       <main>
-        <Header1 />
+        <Header1 payment={true}/>
         {/* <BookingPages /> */}
         <Payment />
         <FooterTwo />
