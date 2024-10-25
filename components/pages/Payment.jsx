@@ -82,10 +82,9 @@ export default function Payment() {
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
 
     if (rawAmount + secondAmount > totalAmount) {
-        setFirstAmount("");
-        setSecondAmount("");
-        setThirdAmount(totalAmount);
-        setPayableAmount("")
+        // setFirstAmount("");
+        // setSecondAmount("");
+        showErrorToast(translate,"Your amount is higher than total amount")
         
     } else {
         setFirstAmount(rawAmount);
@@ -103,10 +102,8 @@ const handleSecondAmountChange = (e) => {
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
 
     if (firstAmount + rawAmount > totalAmount) {
-        setFirstAmount("");
-        setSecondAmount("");
-        setThirdAmount(totalAmount);
-        setPayableAmount("")
+      showErrorToast(translate,"Your amount is higher than total amount")
+
 
     } else {
         setSecondAmount(rawAmount);

@@ -554,9 +554,9 @@ const CustomerDetaTable = () => {
       setViewData(FileDeta);
 
       const DownloadData = [
-        { name: translate("Document Type"), selector: (row) => row.type },
+        { name: translate("Document Type"), selector: (row) => row.type,width:"20%" },
 
-        { name: "Document Name", selector: (row) => row.Name },
+        { name: "Document Name", selector: (row) => row.Name, width:"40%" },
         {
           name: "Action",
           selector: (row) => (
@@ -570,6 +570,7 @@ const CustomerDetaTable = () => {
               {translate("Download")}
             </a>
           ),
+          width:"20%"
         },
       ];
 
@@ -719,7 +720,7 @@ const CustomerDetaTable = () => {
   const [AddpersonData, setAddpersonData] = useState({
     name: "",
     surname: "",
-    gender: "",
+    gender: "Male",
     birthDate: "",
     nationality: "",
     roomType: "1",
