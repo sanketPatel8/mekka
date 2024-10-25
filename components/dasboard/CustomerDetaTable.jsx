@@ -87,6 +87,7 @@ const CustomerDetaTable = () => {
   const [paidAmount, setPaidAmount] = useState("");
   const [EditUserData, setEditUserData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [AddPersonAmount, setAddPersonAmount] = useState('')
 
   const [pendingPaymentValue, setPendingPaymentValue] = useState({
     firstAmount: "",
@@ -972,7 +973,7 @@ const CustomerDetaTable = () => {
     if (PaymentCheckbox == 2) {
       console.log("payment type 2");
       
-      
+      setAddPersonAmount(subtotal)
       setShowStripeModal(true);
     }
   };
@@ -1196,6 +1197,9 @@ const CustomerDetaTable = () => {
     setCanclePopUp(true);
     fatchRefund();
   }
+
+  console.log("amount dt" , amount);
+  
 
  
 
@@ -2605,6 +2609,7 @@ const CustomerDetaTable = () => {
                     paidData={paidData}
                     fetchBookingDetails={fetchBookingDetails}
                     closePaymentModal = {closePaymentModal}
+                    AddPersonAmount={AddPersonAmount}
                   />
                 )}
                 </>
