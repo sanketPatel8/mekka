@@ -48,6 +48,7 @@ export default function Payment() {
   const [maxEndDate, setMaxEndDate] = useState("");
   const [paymentType, setPaymentType] = useState("");
   const [firstAmount, setFirstAmount] = useState("");
+  const [minFirstAmount, setMinFirstAmount] = useState("");
   const [secondAmount, setSecondAmount] = useState("");
   const [thirdAmount, setThirdAmount] = useState("");
   const [disabled, setDisabled] = useState(true);
@@ -78,10 +79,13 @@ export default function Payment() {
     }
   };
   const handleFirstAmountChange = (e) => {
-    const rawAmount = parseFloat(e.target.value) || 0;
+    console.log(e.target.value,"firstamount")
+    const rawAmount = parseFloat(e.target.value) ;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
+    console.log(rawAmount ,"raw")
+    console.log(secondAmount ,"second")
 
-    if (rawAmount + secondAmount > totalAmount) {
+    if (rawAmount > totalAmount) {
         // setFirstAmount("");
         // setSecondAmount("");
         showErrorToast(translate,"Your amount is higher than total amount")
@@ -98,7 +102,7 @@ export default function Payment() {
 };
 
 const handleSecondAmountChange = (e) => {
-    const rawAmount = parseFloat(e.target.value) || 0;
+    const rawAmount = parseFloat(e.target.value) ;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
 
     if (firstAmount + rawAmount > totalAmount) {
@@ -611,7 +615,7 @@ const handleSecondAmountChange = (e) => {
                             <div className="col-md-6">
                               <div className="form-input spacing">
                                 <input
-                                  type="text"
+                                  type="number"
                                   required
                                   value={firstAmount}
                                   onChange={handleFirstAmountChange}

@@ -231,7 +231,7 @@ export default function BookingPages({ BookingData }) {
               return updatedValues;
             });
 
-            setUserData(() => { });
+          
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -424,6 +424,8 @@ export default function BookingPages({ BookingData }) {
       // Perform any validation or formatting here if needed
       value = e.target.e;
     }
+
+    
 
     console.log(value);
 
@@ -737,7 +739,7 @@ export default function BookingPages({ BookingData }) {
   useEffect(() => {
     console.log(LoginCheck, "LoginCheck");
 
-    if (LoginCheck === true && newdata === null) {
+    if (LoginCheck === true && newdata === null ) {
       console.log("hello");
       fetchProfile();
     } else {

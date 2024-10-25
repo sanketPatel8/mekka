@@ -53,7 +53,8 @@ export default function CheckoutForm({
   payableAmount = 0,
   AddPersonAmount = 0,
 }) {
-  console.log(AddpersonData,"AddPersonData")
+  console.log(payableAmount,"payable")
+  console.log(amount,"amount")
   const { dispatch, customer } = useAuthContext();
   const {formatPrice} = useCurrency();
   const stripe = useStripe();
