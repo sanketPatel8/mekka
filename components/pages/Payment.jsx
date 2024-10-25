@@ -331,7 +331,7 @@ const handleSecondAmountChange = (e) => {
 
     if (selectedCheckbox === 0) {
       if (!agbAcceptance?.checked || !item5?.checked) {
-        showErrorToast(translate, "Please fill all the fields");
+        showErrorToast(translate, "Please accept terms and conditions");
         setIsLoading(false);
         return;
       }
@@ -353,9 +353,8 @@ const handleSecondAmountChange = (e) => {
     }
 
     if (selectedCheckbox === 1) {
-      console.log("hello")
       if (!agbAcceptance.checked || !item5.checked) {
-        showErrorToast(translate, "Please fill all the fields");
+        showErrorToast(translate, "Please accept terms and conditions");
         return;
       }
       setShowStripeModal(true);
@@ -369,15 +368,19 @@ const handleSecondAmountChange = (e) => {
         !firstAmount ||
         !secondAmount ||
         !seconddate ||
-        !thirdAmount ||
-        !agbAcceptance.checked ||
-        !item5.checked
+        !thirdAmount 
+      
       ) {
         showErrorToast(translate, "Please fill all the fields");
         setIsLoading(false);
         return;
       }
- 
+
+      if (!agbAcceptance?.checked || !item5?.checked) {
+        showErrorToast(translate, "Please accept terms and conditions");
+        setIsLoading(false);
+        return;
+      } 
 
       setShowStripeModal(true);
 

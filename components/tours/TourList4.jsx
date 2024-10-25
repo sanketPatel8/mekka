@@ -268,10 +268,10 @@ export default function TourList4({
                             )}
                           </div>
 
-                          <p className="tourCard__text mt-5">
+                          <p className="tourCard__text mt-5 ">
                             <FontAwesomeIcon
                               icon={faQuoteRight}
-                              className="px-1 text-accent-1"
+                              className="px-1 text-accent-1 "
                             />
                             {translate("Destination")} : {elm.type == "Hajj"
                               ? "JED"
@@ -290,7 +290,7 @@ export default function TourList4({
                                 size={25}
                               />
                             </div>
-                            <div className="text-14 ml-10">
+                            <div className="text-14 ml-5">
                               {/* <span className="fw-500">{elm?.rating}</span> ( */}
                               {/* {elm?.rating_count}) - */}
                               {elm?.company_name}
