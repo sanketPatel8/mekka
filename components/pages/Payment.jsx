@@ -25,7 +25,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function Payment() {
   const router = useRouter();
-  const { formatPrice } = useCurrency();
+
   const { translate } = useTranslation();
 
   const [roomType, setRoomType] = useState("");
@@ -394,7 +394,12 @@ const handleSecondAmountChange = (e) => {
    
   };
 
-  console.log("SideBarData?.MadinaHotel" , SideBarData?.MadinaHotel);
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(amount); // Convert to euros (assuming amount is in cents)
+  };
   
 
 
@@ -600,7 +605,7 @@ const handleSecondAmountChange = (e) => {
                             <h5 className="text-center">
                               {translate("Total Amount")} :{" "}
                               <b>
-                                {formatPrice(
+                                {formatCurrency(
                                   SideBarData?.BookingFild?.SubTotal
                                 )}
                               </b>
@@ -686,7 +691,7 @@ const handleSecondAmountChange = (e) => {
                                 <input
                                   type="text"
                                   required
-                                  value={formatPrice(thirdAmount)}
+                                  value={formatCurrency(thirdAmount)}
                                   disabled={true}
                                   placeholder=""
                                 />
@@ -873,7 +878,7 @@ const handleSecondAmountChange = (e) => {
                         <div className="col-md-3 col-6">
                           <span>{translate("Total")}</span>
                           <div className="text-accent-2">
-                            {formatPrice(SideBarData?.BookingFild?.SubTotal)}
+                            {formatCurrency(SideBarData?.BookingFild?.SubTotal)}
                           </div>
                         </div>
 
@@ -1109,7 +1114,7 @@ const handleSecondAmountChange = (e) => {
                               <IoIosBed size={20} color="#DAC04F" />
                             </div>
                             <div className="col-6">{e.title}</div>
-                            <div className="col-4">{formatPrice(e.price)} </div>
+                            <div className="col-4">{formatCurrency(e.price)} </div>
                           </div>
                         ))}
                       </div>
@@ -1123,7 +1128,7 @@ const handleSecondAmountChange = (e) => {
                   <div className="fw-500"> {translate("Subtotal")}</div>
                   <div className="">
                     {" "}
-                    {formatPrice(SideBarData?.BookingFild?.Total)}{" "}
+                    {formatCurrency(SideBarData?.BookingFild?.Total)}{" "}
                   </div>
                 </div>
 
@@ -1134,7 +1139,7 @@ const handleSecondAmountChange = (e) => {
                       <div className="fw-500"> {translate("Discount")} {" "} {`(${SideBarData?.BookingFild?.Discount?.coupon_name})`}</div>
                       <div className="">
                         -
-                        {formatPrice(
+                        {formatCurrency(
                           SideBarData?.BookingFild?.Discount?.Discount || 0
                         )}{" "}
                       </div>
@@ -1150,7 +1155,7 @@ const handleSecondAmountChange = (e) => {
                         <div className="fw-500"> {translate("Amount Due")}</div>
                         <div className="">
                           
-                          {formatPrice(
+                          {formatCurrency(
                             SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount 
                           )}{" "}
                         </div>
@@ -1158,17 +1163,17 @@ const handleSecondAmountChange = (e) => {
 
                         <div className="d-flex items-center justify-between">
                           <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                          {/* <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount ))} </div> */}
+                          {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount ))} </div> */}
                           <div className=""> 
                           {firstAmount > 0 
-            ? formatPrice(calculateTotalWithFee(firstAmount)) 
-            : formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
+            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
                              </div>
                         </div>
 
                         <div className="d-flex items-center justify-between">
                           <div className="fw-500"> {translate("Amount Payable")}</div>
-                          <div className=""> {formatPrice((calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount)) + (SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount))} </div>
+                          <div className=""> {formatCurrency((calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount)) + (SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount))} </div>
                         </div>
 
                     </div>
@@ -1176,12 +1181,12 @@ const handleSecondAmountChange = (e) => {
 
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                    <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
+                    <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
                   </div>
                   
                   <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Amount Payable")}</div>
-                    <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
+                    <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
                   </div>
 
                 </div>) : ""
@@ -1195,11 +1200,11 @@ const handleSecondAmountChange = (e) => {
                       <>
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        {/* <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
+                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
                         <div className="">
                         {firstAmount > 0 
-            ? formatPrice(calculateTotalWithFee(firstAmount)) 
-            : formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
+            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
                         </div>
                       </div>
 
@@ -1207,7 +1212,7 @@ const handleSecondAmountChange = (e) => {
                         <div className="fw-500"> {translate("Amount Payable")}</div>
                         <div className="">
                           {" "}
-                          {formatPrice(firstAmount+calculateTotalWithFee(firstAmount))}{" "}
+                          {formatCurrency(firstAmount+calculateTotalWithFee(firstAmount))}{" "}
                         </div>
                         </div>
                       
@@ -1219,11 +1224,11 @@ const handleSecondAmountChange = (e) => {
                     paidAmount && (
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        <div className=""> {formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div>
+                        <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div>
                         {/* <div className="">
                         {firstAmount > 0 
-            ? formatPrice(calculateTotalWithFee(firstAmount)) 
-            : formatPrice(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
+            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
                         </div> */}
                       </div>
                     )
@@ -1232,7 +1237,7 @@ const handleSecondAmountChange = (e) => {
                   {paidAmount && (
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500"> {translate("Amount Paid")}</div>
-                      <div className=""> {formatPrice(paidAmount)} </div>
+                      <div className=""> {formatCurrency(paidAmount)} </div>
                     </div>
                   )}
 
@@ -1242,7 +1247,7 @@ const handleSecondAmountChange = (e) => {
                     <div className="fw-500"> {translate("Amount Due")}</div>
                     <div className="">
                       {" "}
-                      {formatPrice(0.00)}{" "}
+                      {formatCurrency(0.00)}{" "}
                     </div>
                   </div>
                   } 
@@ -1251,7 +1256,7 @@ const handleSecondAmountChange = (e) => {
                     <div className="fw-500"> {translate("Amount Due")}</div>
                     <div className="">
                       {" "}
-                      {formatPrice(SideBarData?.BookingFild?.SubTotal)}{" "}
+                      {formatCurrency(SideBarData?.BookingFild?.SubTotal)}{" "}
                     </div>
                   </div>
                   }
@@ -1263,7 +1268,7 @@ const handleSecondAmountChange = (e) => {
                         <div className="fw-500"> {translate("Amount Due")}</div>
                         <div className="">
                           {" "}
-                          {formatPrice(
+                          {formatCurrency(
                             SideBarData?.BookingFild?.SubTotal - paidAmount
                           )}{" "}
                         </div>
