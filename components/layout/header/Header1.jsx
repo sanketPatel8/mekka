@@ -23,7 +23,7 @@ export default function Header1(payment) {
   const [LoginCheck, setLoginCheck] = useState(false);
   const { dispatch } = useAuthContext();
 
-  console.log("payment" , payment.payment)
+  
 
   const handleLogoutClick = () => {
     if (typeof window !== "undefined") {

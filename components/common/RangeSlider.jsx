@@ -1,9 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import Slider from "@mui/material/Slider";
-import { ThemeProvider } from "@mui/material/styles";
-
-import { createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useGlobalState } from "@/app/context/GlobalStateContext";
 import { useCurrency } from "@/app/context/currencyContext";
 import { useTranslation } from "@/app/context/TranslationContext";
@@ -19,19 +17,36 @@ const theme = createTheme({
   },
 });
 
-export default function RangeSlider({ value, setValue , FliterData }) {
-  const {formatPrice} = useCurrency();
+export default function RangeSlider({ value, setValue, FliterData, FilterPrice, setFilterPrice }) {
+  const { formatPrice } = useCurrency();
+  const maxPrice = Number(FliterData.max_price);
+  const minPrice = Number(FliterData.min_price);
+  const [displayValue, setDisplayValue] = useState([0 , 0]);
 
-   // Convert min_price and max_price to numbers
-   const maxPrice = Number(FliterData.max_price);
-   const minPrice = Number(FliterData.min_price);
+  
 
-  const handleChange = (event, newValue) => { 
-    setValue(newValue);
+
+  useEffect(() => {
+    // Update the displayValue if maxPrice or minPrice changes
+    setDisplayValue([minPrice, maxPrice]);
+  }, [maxPrice, minPrice]);
+
+  const handleChange = (event, newValue) => {
+    setDisplayValue(newValue);
   };
 
-  const {translate} = useTranslation()
+  const handleChangeCommitted = (event, newValue) => {
+    setFilterPrice(newValue);
+  };
+
   
+  
+
+  const { translate } = useTranslation();
+
+
+  
+
   return (
     <>
       <div className="js-price-rangeSlider" style={{ padding: "40px 15px" }}>
@@ -39,22 +54,23 @@ export default function RangeSlider({ value, setValue , FliterData }) {
           <ThemeProvider theme={theme}>
             <Slider
               getAriaLabel={() => "Minimum distance"}
-              value={value}
+              value={displayValue}
               onChange={handleChange}
+              onChangeCommitted={handleChangeCommitted}
               valueLabelDisplay="auto"
-             max={maxPrice}  
-              min={minPrice} 
+              max={maxPrice}
+              min={minPrice}
               disableSwap
             />
           </ThemeProvider>
         </div>
 
-        <div className="d-flex justify-between mt-20">  
+        <div className="d-flex justify-between mt-20">
           <div className="">
-            <span className="">{translate('Price')}: </span>
-            <span className="fw-500 js-lower">{formatPrice(value[0])}</span>
+            <span className="">{translate("Price")}: </span>
+            <span className="fw-500 js-lower">{formatPrice(displayValue[0])}</span>
             <span> - </span>
-            <span className="fw-500 js-upper">{formatPrice(value[1])}</span>
+            <span className="fw-500 js-upper">{formatPrice(displayValue[1])}</span>
           </div>
         </div>
       </div>

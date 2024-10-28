@@ -17,6 +17,10 @@ export default function Sidebar2({
   handleSelectionChange,
   Distance,
   setDistance,
+  FilterPrice,
+  setFilterPrice,
+  setFilterDistance,
+  FilterDistance
 }) {
   // console.log(handleSelectionChange,"handleSelectionChange")
   const [ddActives, setDdActives] = useState(["tourtype"]);
@@ -435,7 +439,7 @@ export default function Sidebar2({
                   ddActives.includes("Distance") ? { maxHeight: "300px" } : {}
                 }
               >
-                <PriceRangeBar Distance={Distance} setDistance={setDistance} FliterData={FliterData} />
+                <PriceRangeBar FilterDistance={FilterDistance} Distance={Distance} setDistance={setDistance} FliterData={FliterData} setFilterDistance={setFilterDistance} />
               </div>
             </div>
           </div>
@@ -479,6 +483,8 @@ export default function Sidebar2({
                   value={value}
                   setValue={setValue}
                   FliterData={FliterData}
+                  FilterPrice={FilterPrice}
+                  setFilterPrice={setFilterPrice}
                 />
               </div>
             </div>

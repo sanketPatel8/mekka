@@ -28,11 +28,15 @@ export default function PageData() {
     selectedFeatures: [],
     selectedDurations: [],
   });
+  
   const [TourList, setTourList] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [value, setValue] = useState([0, 0]);
   const [Distance, setDistance] = useState([0 , 0 ]);
+
+  const [FilterPrice, setFilterPrice] = useState([0 , 0])
+  const [FilterDistance, setFilterDistance] = useState([0 , 0])
 
   const [range, setRange] = useState(1);
   const [SearchData, setSearchData] = useState({});
@@ -130,14 +134,14 @@ export default function PageData() {
       FilterSidebar.selectedLanguages.length !== 0 ||
       FilterSidebar.selectedCities.length !== 0 ||
       FilterSidebar.selectedFeatures.length !== 0 ||
-      FilterSidebar.selectedDurations.length !== 0 
-      // value[0] == value[0] ||
-      // Distance[0] == Distance[0] 
-      // FilterSidebar.selectedRatings.length !== 0
+      FilterSidebar.selectedDurations.length !== 0 ||
+      (FilterPrice[1] !== 0 || FilterPrice[0] !== 0) ||
+      (FilterDistance[1] !== 0 || FilterDistance[0] !== 0)
     ) {
-      await FetchFilterData(pageIndex);
+      console.log("run effect 1");
     } else {
-      await fetchListing(pageIndex);
+      
+      await  fetchListing(pageIndex);
     }
   };
 
@@ -168,11 +172,11 @@ export default function PageData() {
     formData.append("start", pageIndex || 0);
     formData.append("type", FilterSidebar?.selectedTourTypes);
     formData.append("language", FilterSidebar.selectedLanguages?.join(","));
-    formData.append("departure", FilterSidebar.selectedCities?.join(", "));
-    formData.append("min_price", value[0]);
-    formData.append("max_price", value[1]);
-    formData.append("min_distance", Distance[0]);
-    formData.append("max_distance", Distance[1]);
+    formData.append("departure", FilterSidebar.selectedCities?.join(", "));``
+    formData.append("min_price", FilterPrice[0]);
+    formData.append("max_price", FilterPrice[1]);
+    formData.append("min_distance", FilterDistance[0]);
+    formData.append("max_distance", FilterDistance[1]);
 
     formData.append("hotel_star", FilterSidebar?.selectedDurations.join(", "));
     // formData.append("agent_rating", FilterSidebar?.selectedRatings.join(", "));
@@ -196,10 +200,9 @@ export default function PageData() {
     }
   };
 
-  let max = value[1] == maxValue ? maxValue : value[1];
-  let min = value[0] == minValue ? minValue : value[0];
+ 
   useEffect(() => {
-    console.log(maxValue,minValue,maxDistance,minDistance)
+    console.log(FilterPrice,FilterDistance)
 
       if (
         FilterSidebar.selectedTourTypes !== " " ||
@@ -207,16 +210,19 @@ export default function PageData() {
         FilterSidebar.selectedCities.length !== 0 ||
         FilterSidebar.selectedFeatures.length !== 0 ||
         FilterSidebar.selectedDurations.length !== 0 ||
-        (value[1] !== maxValue && value[0] !== minValue) ||
-        (Distance[1] !== maxDistance && Distance[0] !== minDistance)
-        // FilterSidebar.selectedRatings.length !== 0
+        (FilterPrice[1] !== 0 || FilterPrice[0] !== 0 ) ||
+        (FilterDistance[1] !== 0 || FilterDistance[0] !== 0 )
+        
       ) {
+        console.log("run effect 1");
+        
         FetchFilterData();
       }else {
+       
         fetchListing();
       }
 
-  }, [FilterSidebar, value, Distance,maxValue,minValue,maxDistance,minDistance]);
+  }, [FilterSidebar, FilterPrice, FilterDistance ]);
 
   const FetchTourDataAPi = async () => {
     const sendData = {
@@ -319,6 +325,10 @@ export default function PageData() {
             handleSelectionChange={handleSelectionChange}
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
+            FilterPrice={FilterPrice}
+            setFilterPrice={setFilterPrice}
+            setFilterDistance={setFilterDistance}
+            FilterDistance={FilterDistance}
           />
         </div>
         <FooterTwo />
