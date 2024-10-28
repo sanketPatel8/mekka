@@ -851,22 +851,6 @@ const CustomerDetaTable = () => {
     }
   };
 
-  const handleFirstAmountChange = (e) => {
-    setFirstAmount(e.target.value);
-  };
-
-  const handleSecondAmountChange = (e) => {
-    const totalAmount = subtotal;
-    const total = totalAmount - firstAmount;
-    const secondAmount = e.target.value;
-    if (secondAmount < total) {
-      setSecondAmount(secondAmount);
-    } else {
-      setSecondAmount(0);
-      setThirdAmount(0);
-    }
-  };
-
   useEffect(() => {
     if (secondAmount) {
       calculateThirdAmount();
@@ -1035,27 +1019,6 @@ const CustomerDetaTable = () => {
     setRows(newRows);
   };
 
-  const downloadFile = (fileLink, fileName) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", fileLink, true);
-    xhr.responseType = "blob";
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        const blob = xhr.response;
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      } else {
-        console.error("Error downloading file:", xhr.statusText);
-      }
-    };
-    xhr.send();
-  };
-
-
   const handleDocumentSubmit = async () => {
     const formData = new FormData();
     formData.append("reservation_person_id", personId);
@@ -1199,11 +1162,6 @@ const CustomerDetaTable = () => {
     fatchRefund();
   }
 
-  console.log("amount dt" , amount);
-  
-
- 
-
   return (
     
     <div>
@@ -1262,7 +1220,7 @@ const CustomerDetaTable = () => {
                       
                       <div
                         className={
-                          BookingDetails?.reservation?.paymentType !== "2"
+                          BookingDetails?.reservation?.paymentType === "3"
                             ? "d-block"
                             : "d-none"
                         }
@@ -1615,37 +1573,10 @@ const CustomerDetaTable = () => {
                           {BookingDetails.reservation.paymentType === "1" && (
                             <div>
                               <div className="d-flex items-center pointer-check py-3">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id="1"
-                                    name="1"
-                                    checked={
-                                      BookingDetails?.reservation?.paymentType === "1"
-                                    }
-                                    onChange={() => handleCheckboxChange(1)}
-                                  />
-                                  <label htmlFor="1" className="form-checkbox__mark">
-                                    <div className="form-checkbox__icon">
-                                      {/* SVG Icon */}
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label htmlFor="1" className="lh-16 ml-15">
+                                
+                                <label htmlFor="1" className="lh-16 ">
                                   {translate(
-                                    "Payment in advance. Payment installment is possible."
+                                    "Please make payment on following bank detail."
                                   )}
                                 </label>
                               </div>
@@ -1700,6 +1631,7 @@ const CustomerDetaTable = () => {
                                   </div>
                                 </div>
                               </div>
+
                             </div>
                           )}
           
@@ -1707,35 +1639,8 @@ const CustomerDetaTable = () => {
                           {BookingDetails.reservation.paymentType === "2" && (
                             <div>
                               <div className="d-flex items-center pointer-check py-3">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id="2"
-                                    name="2"
-                                    checked={
-                                      BookingDetails?.reservation?.paymentType === "2"
-                                    }
-                                    onChange={() => handleCheckboxChange(2)}
-                                  />
-                                  <label htmlFor="2" className="form-checkbox__mark">
-                                    <div className="form-checkbox__icon">
-                                      {/* SVG Icon */}
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label htmlFor="2" className="lh-16 ml-15">
+                               
+                                <label htmlFor="2" className="lh-16 ">
                                   {translate(
                                     "Online Payment (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
                                   )}
@@ -1748,36 +1653,9 @@ const CustomerDetaTable = () => {
                           {BookingDetails.reservation.paymentType === "3" && (
                             <div>
                               <div className="d-flex items-center pointer-check py-3">
-                                <div className="form-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    id="3"
-                                    name="3"
-                                    checked={
-                                      BookingDetails?.reservation?.paymentType === "3"
-                                    }
-                                    onChange={() => handleCheckboxChange(3)}
-                                  />
-                                  <label htmlFor="3" className="form-checkbox__mark">
-                                    <div className="form-checkbox__icon">
-                                      {/* SVG Icon */}
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                </div>
-                                <label htmlFor="3" className="lh-16 ml-15">
-                                  {translate("Click for Installment Payment")}
+                                
+                                <label htmlFor="3" className="lh-16">
+                                  {translate("Your amount will be added to the last installment amount.")}
                                 </label>
                               </div>
                             </div>
@@ -1815,6 +1693,7 @@ const CustomerDetaTable = () => {
                         </h6>
                       </div>
                     </div>
+
                   </Modal>
                 </div>
           
