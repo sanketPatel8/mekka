@@ -20,6 +20,8 @@ import { useCurrency } from "@/app/context/currencyContext";
 import Stripeform from "../stripe/stripeform";
 import { set } from "lodash";
 
+
+
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -101,6 +103,7 @@ const CustomerDetaTable = () => {
     transaction_id: "",
   });
   const router = useRouter();
+  const { formatPrice } = useCurrency();
   
   useEffect(() => {
     Modal.setAppElement("#modelopen");
@@ -1569,7 +1572,7 @@ const CustomerDetaTable = () => {
                                       </label>
                                     </div>
                                   </div>
-                                  <div className="text-14">+ {option.price}</div>
+                                  <div className="text-14">+ {formatPrice(option.price)}</div>
                                 </div>
                               ))}
                             </div>
@@ -1701,7 +1704,7 @@ const CustomerDetaTable = () => {
                         </button>
           
                         <h6 className="booking-form-price col-4 mx-4">
-                          {translate("Subtotal")}:<span>{subtotal}€</span>
+                          {translate("Subtotal")}:<span>{formatPrice(subtotal)}</span>
                         </h6>
                       </div>
                     </div>
