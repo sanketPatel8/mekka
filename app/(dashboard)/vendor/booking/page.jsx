@@ -54,7 +54,7 @@ export default function DbBooking() {
         selector: (row) => row.BookingNo,
 
         sortable: true,
-        width:"12%",
+        width:"13%",
 
       },
       {
@@ -75,21 +75,21 @@ export default function DbBooking() {
         name: translate("Tour Name"),
         selector: (row) => row.Tour_name,
         sortable: true,
-        width:"10%",
+        width:"8%",
 
       },
       {
         name: translate("Total (€)"),
         selector: (row) => row.Total_Payment,
         sortable: true,
-        width:"8%",
+        width:"7%",
 
       },
       {
         name: translate("Pending (€)"),
         selector: (row) => row.Pending_Payment,
         sortable: true,
-        width:"10%",
+        width:"9%",
 
       },
    
@@ -97,7 +97,7 @@ export default function DbBooking() {
         name: translate("Method"),
         selector: (row) => row.Payment_Method,
         sortable: true,
-        width:"7%",
+        width:"10%",
 
       },
       {

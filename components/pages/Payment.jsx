@@ -328,7 +328,7 @@ const handleSecondAmountChange = (e) => {
   const handlePayment = () => {
     const agbAcceptance = document.getElementById("agbAcceptance");
     const item5 = document.getElementById("item5");
-
+    setIsLoading(true)
     if (selectedCheckbox === 0) {
       if (!agbAcceptance?.checked || !item5?.checked) {
         showErrorToast(translate, "Please accept terms and conditions");
