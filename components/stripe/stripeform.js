@@ -5,7 +5,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import CheckoutForm from './checkoutform';
 import { useCurrency } from '@/app/context/currencyContext';
 
-function Stripeform({RadioValue, closeModal,payableAmount,AddPersonAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
+function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPersonAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
 
   console.log(AddpersonData, 'Addperson')
 
@@ -130,6 +130,7 @@ function Stripeform({RadioValue, closeModal,payableAmount,AddPersonAmount,fetchB
         amount = {amount}
         payableAmount = {payableAmount}
         AddPersonAmount = {AddPersonAmount}
+        PandingAmount={PandingAmount}
       />
     </Elements>
   )

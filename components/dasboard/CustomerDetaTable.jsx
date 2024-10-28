@@ -88,6 +88,7 @@ const CustomerDetaTable = () => {
   const [EditUserData, setEditUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [AddPersonAmount, setAddPersonAmount] = useState('')
+  const [PandingAmount, setPandingAmount] = useState('')
 
   const [pendingPaymentValue, setPendingPaymentValue] = useState({
     firstAmount: "",
@@ -1103,6 +1104,9 @@ const CustomerDetaTable = () => {
   };
   const HandleInstallmentPay = (payable) => {
     setAmount(payable);
+
+    setPandingAmount(payable)
+   
     if (payable === pendingPaymentValue.secondAmount) {
       const data = {
         plan_id: pendingPaymentValue.id,
@@ -2494,6 +2498,7 @@ const CustomerDetaTable = () => {
                     RadioValue={RadioValue}
                     reservation_id={BookingDetails.reservation?.id}
                     subtotal={subtotal}
+                    PandingAmount={PandingAmount}
                   />
                 )}
                 </>

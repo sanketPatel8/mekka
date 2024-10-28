@@ -52,6 +52,7 @@ export default function CheckoutForm({
   amount = 0,
   payableAmount = 0,
   AddPersonAmount = 0,
+  PandingAmount = 0
 }) {
   console.log(payableAmount,"payable")
   console.log(amount,"amount")
@@ -315,22 +316,44 @@ export default function CheckoutForm({
       <button onClick={handleClose}>
         <IoClose size={20} />
       </button>
-      {
-        AddPersonAmount !== 0 ?
-          <>
-          <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {formatCurrency(AddPersonAmount)}</span></h5>
-          <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(AddPersonTotal)}</span></h5>
-          <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(PayablePersonAmount)}</span></h5>
-          
-          </>
-        :
-        <>
-        
-        <h5 className="mt-2">{translate("Total Amount")}: <span className="fw_400"> {amount === 0 ? payableAmount : formatCurrency(amount)}</span></h5>
-        <h5 className="">{translate("Payment Gateway Fees (3%)")}: <span className="fw_400"> {formatCurrency(totalAmount)}</span></h5>
-        <h5 className="">{translate("Amount Payable")}: <span className="fw_400"> {formatCurrency(payable*100)}</span></h5>
-        </>
-      }
+      {AddPersonAmount !== 0 ? (
+  <>
+    <h5 className="mt-2">
+      {translate("Total Amount")}: <span className="fw_400">{formatCurrency(AddPersonAmount)}</span>
+    </h5>
+    <h5>
+      {translate("Payment Gateway Fees (3%)")}: <span className="fw_400">{formatCurrency(AddPersonTotal)}</span>
+    </h5>
+    <h5>
+      {translate("Amount Payable")}: <span className="fw_400">{formatCurrency(PayablePersonAmount)}</span>
+    </h5>
+  </>
+) : PandingAmount !== 0 ? (
+  <>
+    <h5 className="mt-2">
+      {translate("Total Amount")}: <span className="fw_400">{formatCurrency(PandingAmount)}</span>
+    </h5>
+    <h5>
+      {translate("Payment Gateway Fees (3%)")}: <span className="fw_400">{formatCurrency(AddPersonTotal)}</span>
+    </h5>
+    <h5>
+      {translate("Amount Payable")}: <span className="fw_400">{formatCurrency(PayablePersonAmount)}</span>
+    </h5>
+  </>
+) : (
+  <>
+    <h5 className="mt-2">
+      {translate("Total Amount")}: <span className="fw_400">{amount === 0 ? formatCurrency(payableAmount) : formatCurrency(amount)}</span>
+    </h5>
+    <h5>
+      {translate("Payment Gateway Fees (3%)")}: <span className="fw_400">{formatCurrency(totalAmount)}</span>
+    </h5>
+    <h5>
+      {translate("Amount Payable")}: <span className="fw_400">{formatCurrency(payable * 100)}</span>
+    </h5>
+  </>
+)}
+
       <hr/>
       <form
         className="position-relative"

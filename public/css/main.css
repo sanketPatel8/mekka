@@ -13560,6 +13560,7 @@ table.table-4.-border-bottom tbody>tr {
   border: 1px solid var(--border, #E7E6E6);
   box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
   background-color: white;
+
 }
 
 @media (max-width: 767px) {
