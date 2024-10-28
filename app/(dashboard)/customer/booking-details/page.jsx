@@ -20,6 +20,7 @@ export default function CustomerDb() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
 
   const {translate} = useTranslation()
+ 
 
   useEffect(() => {
     if (typeof window !== "undefined") {

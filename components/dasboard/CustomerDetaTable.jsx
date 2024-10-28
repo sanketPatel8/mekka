@@ -20,6 +20,8 @@ import { useCurrency } from "@/app/context/currencyContext";
 import Stripeform from "../stripe/stripeform";
 import { set } from "lodash";
 
+
+
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -101,6 +103,7 @@ const CustomerDetaTable = () => {
     transaction_id: "",
   });
   const router = useRouter();
+  const { formatPrice } = useCurrency();
   
   useEffect(() => {
     Modal.setAppElement("#modelopen");
@@ -361,15 +364,21 @@ const CustomerDetaTable = () => {
   }
 
   function openEditData(row) {
+    
+    console.log("BookingDetails?.adultData" , BookingDetails?.adultData);
+    console.log("row.id" , row.id);
+
     setPersonalUserID(row.id);
     
     setEditUserData(row);
+    
     setEditCustomerData({
       name: row.personName,
       surname: row.personSurName,
       gender: row.gender, // Default value
       birthday: row.personBirthDay,
       nationality: row.personNationality, // Default value
+      id: row.id
     });
 
     setEditData(true);
@@ -1563,7 +1572,7 @@ const CustomerDetaTable = () => {
                                       </label>
                                     </div>
                                   </div>
-                                  <div className="text-14">+ {option.price}</div>
+                                  <div className="text-14">+ {formatPrice(option.price)}</div>
                                 </div>
                               ))}
                             </div>
@@ -1695,7 +1704,7 @@ const CustomerDetaTable = () => {
                         </button>
           
                         <h6 className="booking-form-price col-4 mx-4">
-                          {translate("Subtotal")}:<span>{subtotal}€</span>
+                          {translate("Subtotal")}:<span>{formatPrice(subtotal)}</span>
                         </h6>
                       </div>
                     </div>
