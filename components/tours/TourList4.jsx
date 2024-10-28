@@ -35,6 +35,10 @@ export default function TourList4({
   setActiveIndex,
   Distance,
   setDistance,
+  FilterPrice,
+  setFilterPrice,
+  setFilterDistance,
+  FilterDistance
 }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
@@ -120,6 +124,10 @@ export default function TourList4({
                         handleSelectionChange={handleSelectionChange}
                         Distance={Distance}
                         setDistance={setDistance}
+                        FilterPrice={FilterPrice}
+                        setFilterPrice={setFilterPrice}
+                        setFilterDistance={setFilterDistance}
+                        FilterDistance={FilterDistance}
                       />
                     </div>
                   </div>
@@ -137,6 +145,10 @@ export default function TourList4({
                   handleSelectionChange={handleSelectionChange}
                   Distance={Distance}
                   setDistance={setDistance}
+                  FilterPrice={FilterPrice}
+                  setFilterPrice={setFilterPrice}
+                  setFilterDistance={setFilterDistance}
+                  FilterDistance={FilterDistance}
                 />
               </div>
             )}

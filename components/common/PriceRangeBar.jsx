@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -18,21 +18,30 @@ const theme = createTheme({
   },
 });
 
-export default function PriceRangeBar({ Distance, setDistance , FliterData }) {
+export default function PriceRangeBar({ Distance, FilterDistance , setDistance , FliterData , setFilterDistance }) {
   // const {Distance, setDistance} = useGlobalState()
+
+  const max_dist = Number(FliterData.max_km);
+  const min_dist = Number(FliterData.min_km);
 
   const handleChange = (event, newValue) => {
     
-    setDistance(newValue);
+    setFilterDistance(newValue);
+    setDisplayValue(newValue)
 
   };
 
-  // useEffect(() => {
-  //   setDistance()
-  // }, [FliterData])
+  const [displayValue, setDisplayValue] = useState([0 , 0]);
+
+  useEffect(() => {
+    setDisplayValue([min_dist , max_dist ])
+  }, [max_dist , min_dist])
   
 
   const {translate} = useTranslation();
+
+  console.log(displayValue , "displayValue");
+  
 
   return (
     <>
@@ -41,11 +50,11 @@ export default function PriceRangeBar({ Distance, setDistance , FliterData }) {
           <ThemeProvider theme={theme}>
             <Slider
               getAriaLabel={() => "Minimum distance"}
-              value={Distance}
+              value={displayValue}
               onChange={handleChange}
               valueLabelDisplay="auto"
-              max={FliterData?.max_km}
-              min={FliterData?.min_km}
+              max={max_dist}
+              min={min_dist}
               disableSwap
             />
           </ThemeProvider>
@@ -54,9 +63,9 @@ export default function PriceRangeBar({ Distance, setDistance , FliterData }) {
         <div className="d-flex justify-between mt-20">
           <div className="">
             <span className="">{translate('Range')}: </span>
-            <span className="fw-500 js-lower">{Distance[0]} m</span>
+            <span className="fw-500 js-lower">{displayValue[0]} m</span>
             <span> - </span>
-            <span className="fw-500 js-upper">{Distance[1]} m</span>
+            <span className="fw-500 js-upper">{displayValue[1]} m</span>
           </div>
         </div>
       </div>
