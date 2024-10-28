@@ -75,7 +75,7 @@ export default function Header1(payment) {
   return (
     <>
       <header
-        className={`header -type-1 js-header ${addClass ? "-is-sticky" : ""}`}
+        className={`header -type-1 border_bottom js-header ${addClass ? "-is-sticky" : ""}`}
       >
         <div className="header__container container px-0">
           <div className="headerMobile__left">

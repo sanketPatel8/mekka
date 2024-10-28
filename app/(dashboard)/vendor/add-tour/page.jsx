@@ -1106,9 +1106,8 @@ const isCurrentTabValid = () => {
                                                         e.preventDefault();
                                                       }
                                                     }}
-                                                    onKeyUp={handleKeyUp}
-
-                                                    onFocus={handleFocus}
+                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onFocus={() => setIsFocused(true)}
                                                     onBlur={() => setIsFocused(false)}
                                                     />
                                                   <label className="lh-1 text-16 text-light-1">

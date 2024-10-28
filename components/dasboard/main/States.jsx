@@ -15,7 +15,7 @@ export default function States({data,loading}) {
     const newStateItems = [
       {
         id: 1,
-        title: translate("Total Earnings"),
+        title: translate("Total Received"),
         amount: `${data?.Total_Earnings} €`,
         today: "50 €",
         iconClass: "icon-wallet text-accent-1",
@@ -51,10 +51,10 @@ export default function States({data,loading}) {
       :
         <div className="row y-gap-30 pt-30 md:pt-30 pt-30">
           {states.map((elm, i) => (
-            <div key={i} className="col-xl-3 col-sm-6 py-3 py-lg-1">
+            <div key={i} className="col-xl-4 col-sm-6 py-3 py-lg-1">
               <div className="rounded-12 bg-white shadow-2 px-20 py-30 h-full">
                 <div className="row y-gap-20 items-center justify-between">
-                  <div className="col-7">
+                  <div className="col-9">
                     <div>{elm.title}</div>
                     <div className="text-20 fw-700">{elm.amount}</div>
 
@@ -63,7 +63,7 @@ export default function States({data,loading}) {
                     </div>
                   </div>
 
-                  <div className="col-5">
+                  <div className="col-3 d-flex justify-content-end">
                     <div className="size-80 flex-center bg-accent-1-05 rounded-full">
                       <i className={`text-30 ${elm.iconClass}`}></i>
                     </div>

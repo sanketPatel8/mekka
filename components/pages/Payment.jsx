@@ -56,6 +56,16 @@ export default function Payment() {
   const [paidAmount, setPaidAmount] = useState("");
   const [payableAmount, setPayableAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(true);
+  const [rawAmount,setRawAmout] = useState("")
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      console.log("scroll")
+      e.preventDefault();
+      setIsFocused(false)
+    });
+  }, [isFocused])
+  
   const companyCode =
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
@@ -79,33 +89,76 @@ export default function Payment() {
     }
   };
   const handleFirstAmountChange = (e) => {
-    console.log(e.target.value,"firstamount")
-    const rawAmount = parseFloat(e.target.value) ;
+    setIsFocused(true);
+    console.log(e.target.value, "firstamount");
+  
+    // Get the input value
+    const inputValue = e.target.value;
+  
+    // Check if the input is empty or not a number
+    if (inputValue === '' || isNaN(inputValue)) {
+      setRawAmout(""); // Reset rawAmount to an empty string
+      setFirstAmount("");
+      setThirdAmount(secondAmount ? secondAmount : 0)
+      setPayableAmount("")
+      return; // Exit the function early
+    }
+  
+    const rawAmount = parseFloat(inputValue);
+    console.log(rawAmount,"raw1")
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
-    console.log(rawAmount ,"raw")
-    console.log(secondAmount ,"second")
+    const second  = secondAmount ? secondAmount : 0;  
+    // if (secondAmount === "") {
+    //   setRawAmout(inputValue || 0);
+    // } else {
+    //   setRawAmout(inputValue + secondAmount || 0);
+    // }
+    // console.log(rawAmount,"raw2")
+    console.log(parseFloat(rawAmount + second) , "second")
+    console.log(totalAmount , "totalAmount")
 
-    if (rawAmount > totalAmount) {
-        // setFirstAmount("");
-        // setSecondAmount("");
-        showErrorToast(translate,"Your amount is higher than total amount")
-        
+    if ((rawAmount + second) > totalAmount) {
+      showErrorToast(translate, "Your amount is higher than total amount");
     } else {
-        setFirstAmount(rawAmount);
-        setThirdAmount(totalAmount - rawAmount - secondAmount);
-        if (rawAmount > 0) {
-          const fees = calculateTotalWithFee(rawAmount);
-          const amountPayable = rawAmount + fees;
-          setPayableAmount(amountPayable); // Assuming you want to store the amount payable in paidAmount
+      console.log(rawAmount, "raw");
+      setFirstAmount(rawAmount);
+      setThirdAmount(totalAmount - (rawAmount - secondAmount));
+      if (rawAmount > 0) {
+        const fees = calculateTotalWithFee(rawAmount);
+        const amountPayable = rawAmount + fees;
+        setPayableAmount(amountPayable);
       }
     }
-};
+  };
+
+
+
+
 
 const handleSecondAmountChange = (e) => {
+  
+    const inputValue = e.target.value;
+  
+    // Check if the input is empty or not a number
+    if (inputValue === '' || isNaN(inputValue)) {
+      setRawAmout(""); // Reset rawAmount to an empty string
+      setSecondAmount(""); // Reset firstAmount as 
+      setThirdAmount(firstAmount ? firstAmount : 0) // Reset firstAmount as well
+
+      return; // Exit the function early
+    }
+    
+    const first = firstAmount? firstAmount : 0;
+    // if (firstAmount === "") {
+    //   setRawAmout(inputValue || 0);
+    // } else {
+    //   setRawAmout(inputValue + firstAmount || 0);
+    // }
     const rawAmount = parseFloat(e.target.value) ;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
-
-    if (firstAmount + rawAmount > totalAmount) {
+  
+  console.log(rawAmount,"raw2")
+    if ((rawAmount + first) > totalAmount) {
       showErrorToast(translate,"Your amount is higher than total amount")
 
 
@@ -337,6 +390,7 @@ const handleSecondAmountChange = (e) => {
       }
       const newBooking = { ...Booking, paymentType: 1 };
       FatchallBooking(newBooking);
+      setIsLoading(false)
       setTimeout(() => {
         router.push("#ref");
 
@@ -355,9 +409,11 @@ const handleSecondAmountChange = (e) => {
     if (selectedCheckbox === 1) {
       if (!agbAcceptance.checked || !item5.checked) {
         showErrorToast(translate, "Please accept terms and conditions");
+        setIsLoading(false)
         return;
       }
       setShowStripeModal(true);
+      setIsLoading(false)
       const newBooking = { ...Booking, paymentType: 2 };
       setBooking(newBooking);
       setAmount(SideBarData?.BookingFild?.SubTotal);
@@ -381,6 +437,7 @@ const handleSecondAmountChange = (e) => {
         setIsLoading(false);
         return;
       } 
+      setIsLoading(false)
 
       setShowStripeModal(true);
 
@@ -629,6 +686,18 @@ const handleSecondAmountChange = (e) => {
                                   onChange={handleFirstAmountChange}
                                   placeholder=""
                                   className="mb-0"
+                                  onKeyDown={(e) => {
+                                    if (!isFocused) return;
+
+                                    if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                      e.preventDefault();
+                                    }
+                                  }}
+                                  onKeyUp={()=>setIsFocused(false)}
+
+                                          onFocus={() => setIsFocused(true)}
+                                          onBlur={() => setIsFocused(false)}
+                                 
                                 />
                                 <label className="lh-1 text-16 text-light-1">
                                   1st Amount<span className="text-red"> *</span>
@@ -1172,9 +1241,7 @@ const handleSecondAmountChange = (e) => {
                           <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
                           {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount ))} </div> */}
                           <div className=""> 
-                          {firstAmount > 0 
-            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
-            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+                          { formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
                              </div>
                         </div>
 
@@ -1201,10 +1268,31 @@ const handleSecondAmountChange = (e) => {
   
                 }
                 <div className="">
+
+
+                {
+                       ( selectedCheckbox == 2 && !paidAmount ) &&
+                        (
+                          SideBarData?.BookingFild?.Discount?.Discount &&
+
+                           <div className={`d-flex items-center justify-between`}>
+                        <div className="fw-500"> {translate("Amount Due")}</div>
+                        <div className="">
+                          
+                          {formatCurrency(
+                            SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount 
+                          )}{" "}
+                        </div>
+                      </div>
+                        )
+
+                   
+                      }
                 
                   {
                     (payableAmount && selectedCheckbox == 2 && !paidAmount ) && (
                       <>
+                     
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
                         {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
@@ -1231,12 +1319,12 @@ const handleSecondAmountChange = (e) => {
                     paidAmount && (
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div>
-                        {/* <div className="">
+                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
+                        <div className="">
                         {firstAmount > 0 
             ? formatCurrency(calculateTotalWithFee(firstAmount)) 
             : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
-                        </div> */}
+                        </div>
                       </div>
                     )
                   }

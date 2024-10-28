@@ -62,7 +62,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
         
         if (resp.status == "error") {
           setIsLoading(false);
-          showErrorToast(translate, "Invalid Email or Password");
+          showErrorToast(translate, resp.message);
         }
 
         

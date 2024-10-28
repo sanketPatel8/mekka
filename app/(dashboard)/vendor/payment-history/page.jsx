@@ -64,24 +64,24 @@ export default function DBListing() {
       {
         name: translate("Booking No."),
         selector: (row) => row.reservationNumber,
-        width: "12%",
+        // width: "12%",
         sortable: true,
       },
       {
         name: translate("Customer Name"),
         selector: (row) => row.name,
-        width: "13%",
+        // width: "13%",
         sortable: true,
       },
       {
         name: translate("Tour Name"),
         selector: (row) => row.tour_name,
-        width: "12%",
+        // width: "12%",
         sortable: true,
       },
       {
         name: translate("Total (€) "),
-        width: "8%",
+        // width: "8%",
         selector: (row) => row.total,
         sortable: true,
       },
@@ -89,26 +89,26 @@ export default function DBListing() {
         name: translate("Paid (€) "),
         selector: (row) => row.paid_amount,
         sortable: true,
-        width: "10%",
+        // width: "10%",
       },
       {
         name: translate("Due (€) "),
         selector: (row) => row.pending_payment,
         sortable: true,
-        width: "10%",
+        // width: "10%",
       },
       {
         name: translate("Date "),
         selector: (row) => row.date,
         sortable: true,
-        width: "10%",
+        // width: "10%",
       },
-      {
-        name: translate("Transaction ID "),
-        selector: (row) => row.transaction_id,
-        sortable: true,
-        width: "25%",
-      },
+      // {
+      //   name: translate("Transaction ID "),
+      //   selector: (row) => row.transaction_id,
+      //   sortable: true,
+      //   width: "25%",
+      // },
     ];
 
     setVendorBookings(BookingsData);
@@ -150,7 +150,7 @@ export default function DBListing() {
         tour_name: payment.tour_name,
         total: payment.total,
         date: payment.date,
-        transaction_id: payment.transaction_id,
+        // transaction_id: payment.transaction_id,
         pending_payment:payment.pending_payment,
         paid_amount:payment.paid_amount
       }));
