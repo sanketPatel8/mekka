@@ -65,6 +65,7 @@ const CustomerDetaTable = () => {
     gender: "",
     birthday: "",
     nationality: "",
+    id : ''
   });
   const [paidData, setPaidData] = useState({});
   const [showStripeModal, setShowStripeModal] = useState(false);
@@ -366,8 +367,7 @@ const CustomerDetaTable = () => {
   function openEditData(row) {
     
     console.log("BookingDetails?.adultData" , BookingDetails?.adultData);
-    console.log("row.id" , row.id);
-
+    console.log("row.id" , row.main_person);
     setPersonalUserID(row.id);
     
     setEditUserData(row);
@@ -378,7 +378,7 @@ const CustomerDetaTable = () => {
       gender: row.gender, // Default value
       birthday: row.personBirthDay,
       nationality: row.personNationality, // Default value
-      id: row.id
+      id: row.main_person
     });
 
     setEditData(true);
@@ -684,6 +684,8 @@ const CustomerDetaTable = () => {
     formData.append("birthday", convertGermanToISO(editCustomerData.birthday));
     formData.append("gender", editCustomerData.gender);
     formData.append("nationality", editCustomerData.nationality);
+    formData.append("main_person", editCustomerData.id);
+
 
     try {
       const response = await POST.request({
