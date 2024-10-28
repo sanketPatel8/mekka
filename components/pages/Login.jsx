@@ -23,7 +23,10 @@ export default function Login({
   hide,
   path,
   Loading,
+  bookingPage
 }) {
+
+  console.log(bookingPage,"bookingPage")
   const LoginSocialFacebook = dynamic(
     () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
     { ssr: false }
@@ -57,6 +60,9 @@ export default function Login({
 
   };
 
+  const [socialLoginLoading, setSocialLoginLoading] = useState({ google: true, facebook: true,apple :true });
+
+
  
 
   const signinSocial = async ({ type, email, id, name, data }) => {
@@ -85,6 +91,8 @@ export default function Login({
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        setSocialLoginLoading({ google: false, facebook: false,apple:false });
+
         const redirect =
           typeof window !== "undefined"
             ? localStorage.getItem("Redirect_Login")
@@ -129,6 +137,7 @@ export default function Login({
             localStorage.removeItem("Redirect_Login");
           }, 1000);
         }
+        setSocialLoginLoading({ google: false, facebook: false ,apple:false});
 
         if (redirect == null) {
           setTimeout(() => {
@@ -143,6 +152,8 @@ export default function Login({
           email: "",
           password: "",
         });
+        setSocialLoginLoading({ google: false, facebook: false,apple:false });
+
       }
     }
   };
@@ -263,7 +274,7 @@ export default function Login({
 
                 <form
                   onSubmit={handleLoginSubmit}
-                  className="contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30"
+                  className={`${bookingPage === true ? " contactForm  rounded-12 px-60 py-60 md:px-25 md:py-30" :  " mb-30 contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30 "}`}
                 >
                   <div className="form-input my-1">
                     <input
@@ -398,6 +409,7 @@ export default function Login({
                         type="button"
                         className="button -md -outline-red-1 text-red-1 col-12"
                       >
+                        {socialLoginLoading?.google && 
                         <LoginSocialGoogle
                           client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
@@ -406,7 +418,7 @@ export default function Login({
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
                           }
                           redirect_uri={window.location.origin + "/login"}
-                          onLoginStart={() => console.log("start")}
+                          onLoginStart={() => setSocialLoginLoading({ google: true, facebook: false, apple:false })}
                           scope="openid profile email"
                           discoveryDocs="claims_supported"
                           access_type="online"
@@ -420,12 +432,21 @@ export default function Login({
                             });
                           }}
                           onReject={(err) => {
-                            console.log(err);
+                            setSocialLoginLoading({ google: true, facebook: false, apple:false })
                           }}
                         >
                           <FaGoogle size={15} className="mx-1" />
                           {translate("Google")}
                         </LoginSocialGoogle>
+
+                        || 
+                        <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: "30px", width: "100%" }}
+                          >
+                            <ClipLoader color="#D93025" size={30} />
+                          </div>
+}
                       </button>
                       {/* <button
                     type="button"

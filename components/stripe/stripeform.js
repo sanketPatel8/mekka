@@ -7,7 +7,7 @@ import { useCurrency } from '@/app/context/currencyContext';
 
 function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPersonAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
 
-  console.log(AddpersonData, 'Addperson')
+  console.log(AddPersonAmount, 'Addperson')
 
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");

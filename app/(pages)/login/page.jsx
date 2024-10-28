@@ -74,6 +74,7 @@ export default function Page() {
          hide={true}
          path={`/customer/booking`}
          Loading = {Loading}
+         
        />
        </>
   

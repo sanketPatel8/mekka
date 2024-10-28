@@ -427,7 +427,6 @@ export default function BookingPages({ BookingData }) {
 
     
 
-    console.log(value);
 
     // Update form values
     setFormValues((prevValues) => {
@@ -449,7 +448,6 @@ export default function BookingPages({ BookingData }) {
         [name]: value, // Store the value (e.g., phone number)
       };
 
-      console.log(value);
 
 
       if (type === "Adult" && index === 0) {
@@ -460,6 +458,8 @@ export default function BookingPages({ BookingData }) {
       }
 
       return updatedValues;
+
+      console.log(updatedValues,"updatedValues")
     });
   };
 
@@ -1296,6 +1296,9 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+
+
+
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
@@ -1411,23 +1414,9 @@ export default function BookingPages({ BookingData }) {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
-    const [scrolled, setScrolled] = useState(false);
+  console.log("formValues", formValues);
 
-    useEffect(() => {
-      const handleScroll = () => {
-        if (window.scrollY > 100) {
-          setScrolled(true);
-        } else {
-          setScrolled(false);
-        }
-      };
-  
-      window.addEventListener('scroll', handleScroll);
-  
-      // Cleanup event listener
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-  
+  console.log("userData", userData);
 
 
 
@@ -1507,7 +1496,7 @@ export default function BookingPages({ BookingData }) {
             </div>
 
             <div className="col-lg-4 ">
-              <div className={scrolled ? 'posi-fix' : ''}>
+              <div className="">
                 <div className="bg-white border-1 rounded-12 shadow-2 py-20 px-20 md:py-20 md:px-20 tourSingleSidebar">
                   <h2 className="text-20 fw-500">
                     {translate("Reservation Details")}
@@ -1895,6 +1884,7 @@ export default function BookingPages({ BookingData }) {
               sectionClass={` `}
               hide={false}
               path={`/tour`}
+              bookingPage = {true}
             />
           </section>
         </Modal>
