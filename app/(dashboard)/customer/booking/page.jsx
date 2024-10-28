@@ -111,9 +111,8 @@ export default function DbBooking() {
 
   return (
     <div
-      className={`dashboard ${
-        sideBarOpen ? "-is-sidebar-visible" : ""
-      } js-dashboard`}
+      className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
+        } js-dashboard`}
     >
       <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 
@@ -155,11 +154,10 @@ export default function DbBooking() {
                         alt="image"
                       />
                       <button
-                        className={`tourCard__favorite ${
-                          elm?.tour_details?.flight_included == "0"
+                        className={`tourCard__favorite ${elm?.tour_details?.flight_included == "0"
                             ? "d-none"
                             : "d-block"
-                        }`}
+                          }`}
                       >
                         {translate('Direct Flight')}
                       </button>
@@ -183,8 +181,8 @@ export default function DbBooking() {
                           className="px-1 text-accent-1"
                         />
                         {elm?.mekkahotel?.hotel_name}&nbsp; <span> (
-                        {elm?.mekkahotel?.hotel_stars}{" "}Star
-                        )</span>
+                          {elm?.mekkahotel?.hotel_stars}{" "}Star
+                          )</span>
                       </p>
                       <p className="tourCard__text mt-5 items-center d-flex text-wrap">
                         <FontAwesomeIcon
@@ -227,9 +225,12 @@ export default function DbBooking() {
                         </div>
                       )}
 
-                      <div className="Location">
-                        <span>{translate('Departure')} : {elm?.tour_details?.departures}</span>
-                      </div>
+                      {elm?.tour_details?.departures !== ""  && (
+                        <div className="Location">
+                          <span>{translate('Departure')} : {elm?.tour_details?.departures}</span>
+                        </div>
+                      )}
+
 
                       <div className="row x-gap-20 y-gap-5 ">
                         <div className="text-14 ">
@@ -246,8 +247,8 @@ export default function DbBooking() {
                             elm.reservation_status === "In Progress"
                               ? "text-orange"
                               : elm.reservation_status === "Cancelled"
-                              ? "text-red"
-                              : "text-green"
+                                ? "text-red"
+                                : "text-green"
                           }
                         >
                           <b>{elm.reservation_status}</b>
@@ -265,7 +266,7 @@ export default function DbBooking() {
                         </p>
                         <p className="text-center">{translate('Due')} : {elm.due_payment} € </p>
                       </div>
- 
+
                       <label className="badge bg-secondary"></label>
 
                       <button className="button -sm -outline-accent-1 text-accent-1">
