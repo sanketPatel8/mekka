@@ -361,15 +361,21 @@ const CustomerDetaTable = () => {
   }
 
   function openEditData(row) {
+    
+    console.log("BookingDetails?.adultData" , BookingDetails?.adultData);
+    console.log("row.id" , row.id);
+
     setPersonalUserID(row.id);
     
     setEditUserData(row);
+    
     setEditCustomerData({
       name: row.personName,
       surname: row.personSurName,
       gender: row.gender, // Default value
       birthday: row.personBirthDay,
       nationality: row.personNationality, // Default value
+      id: row.id
     });
 
     setEditData(true);
