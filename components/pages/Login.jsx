@@ -60,7 +60,7 @@ export default function Login({
 
   };
 
-  const [socialLoginLoading, setSocialLoginLoading] = useState({ google: true, facebook: true,apple :true });
+  const [socialLoginLoading, setSocialLoginLoading] = useState({ google: false, facebook: false,apple :false });
 
 
  
@@ -166,6 +166,7 @@ export default function Login({
       ...prevState,
       [name]: value,
     }));
+    setSocialLoginLoading({ google: false, facebook: false,apple:false });
   };
 
   const handleLoginCheckboxChange = (e) => {
@@ -371,7 +372,13 @@ export default function Login({
                       <button
                         type="button"
                         className="button mdButton -outline-blue-1 text-blue-1 col-12"
+                        style={{height:"60px"}}
+
                       >
+                         {/* <FaFacebookF size={15} className="mx-1" />
+                         {translate("Facebook")} */}
+
+
                         <LoginSocialFacebook
                           appId={
                             process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
@@ -405,11 +412,14 @@ export default function Login({
                     </div>
 
                     <div className="col">
-                      <button
-                        type="button"
+                      <div
                         className="button -md -outline-red-1 text-red-1 col-12"
+                        style={{height:"60px"}}
+
                       >
-                        {socialLoginLoading?.google && 
+                          {/* <FaGoogle size={15} className="mx-1" />
+                          {translate("Google")} */}
+                        {!socialLoginLoading?.google && 
                         <LoginSocialGoogle
                           client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
@@ -447,7 +457,7 @@ export default function Login({
                             <ClipLoader color="#D93025" size={30} />
                           </div>
 }
-                      </button>
+                      </div>
                       {/* <button
                     type="button"
                     className="button -md -outline-red-1 text-red-1 col-12"
@@ -462,7 +472,11 @@ export default function Login({
                       <button
                         type="button"
                         className="button -md -outline-dark-1 text-dark-1 col-12"
+                        style={{height:"60px"}}
+
                       >
+                          {/* <FaApple size={15} className="mx-1" />
+                          {translate("Sign in With Apple")} */}
                         <LoginSocialApple
                           client_id={
                             process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
