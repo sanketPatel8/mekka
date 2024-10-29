@@ -40,6 +40,9 @@ export default function DBListing() {
         return value && value.toString().toLowerCase().includes(filterText.toLowerCase());
       });
     });
+
+    console.log(filteredItems , "filteredItems");
+    
     setPayment(filteredItems);
   }
 
