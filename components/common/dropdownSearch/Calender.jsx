@@ -23,7 +23,7 @@ export default function Calender() {
       offsetY={10}
       range
       rangeHover
-      format="DDDD.MM.DD"
+      format="YYYY.MM.DD"
       inputClass="custom_input-picker"
       containerClassName="custom_container-picker"
       placeholder={translate("Please Select Your Date")}
