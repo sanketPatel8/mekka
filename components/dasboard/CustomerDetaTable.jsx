@@ -1179,6 +1179,23 @@ const CustomerDetaTable = () => {
     fatchRefund();
   }
 
+  const [CancelStripCommision, setCancelStripCommision] = useState(0);
+  const [TotalRefundinCancel, setTotalRefundinCancel] = useState(0);
+  
+  useEffect(() => {
+    if (RefundData?.Refund_Amount) {
+      const commission = RefundData?.Refund_Amount * 0.05;
+      setCancelStripCommision(commission);
+      setTotalRefundinCancel(RefundData?.Refund_Amount - commission );
+    }
+  }, [RefundData]);
+
+  console.log(CancelStripCommision , "CancelStripCommision");
+  console.log(TotalRefundinCancel , "TotalRefundinCancel");
+  
+  
+  
+
   return (
     
     <div>
@@ -1900,10 +1917,14 @@ const CustomerDetaTable = () => {
                               <td className="px-1 py-2">{RefundData?.tour_date}</td>
                             </tr>
                             <tr>
+                              <td className="px-1 py-2">{translate("Add Strip Commision 5%")}</td>
+                              <td className="px-1 py-2">{CancelStripCommision} €</td>
+                            </tr>
+                            <tr>
                               <td className="px-1 py-2">
-                                {translate("Amount Refund")} ({RefundData?.percentage}%)
+                                {translate("Amount Refund + add strip commision")} ({RefundData?.percentage}%)
                               </td>
-                              <td className="px-1 py-2">{RefundData?.Refund_Amount} €</td>
+                              <td className="px-1 py-2">{TotalRefundinCancel} €</td>
                             </tr>
                           </tbody>
                         </table>
