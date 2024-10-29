@@ -116,7 +116,7 @@ export default function DBListing() {
     setPaymentHistory([
       {
         id: 1,
-        title: `${translate("Total Earnings")}`,
+        title: `${translate("Total Received")}`,
         amount: `${Total_Earnings} €`,
         today: "50 €",
         iconClass: "icon-wallet text-accent-1",

@@ -50,7 +50,7 @@ export default function FooterLinks() {
 
           <div className="y-gap-10 mt-20">
             {elm.links.map((elm2, i2) => (
-              <Link key={i2} className="d-block fw-500" href={elm2.href}>
+              <Link key={i2} className="d-block fw-500" href={elm2.href} target={`${elm2.text == 'Terms of Use' ? "_blank" : ''}`} >
                 {elm2.text}
               </Link>
             ))}
