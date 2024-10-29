@@ -133,7 +133,7 @@ export default function DbBooking() {
             </button>
           </Link>
         ),
-        width:"10%"
+        width:"200px"
       },
     ];
 
