@@ -607,6 +607,9 @@ export default function TourSingleSidebar({
 
   const totalSelected = adultNumber + youthNumber + childrenNumber;
 
+  console.log("SidebarData?.tour_price" , SidebarData?.tour_price);
+  
+
 
   return (
     <>
@@ -620,6 +623,9 @@ export default function TourSingleSidebar({
         )}
 
         {SidebarData?.tour_price?.map((group, index) => {
+
+          console.log("group" , group);
+          
           let count, typeLabel;
 
           if (group.price_type === "1") {
@@ -639,9 +645,9 @@ export default function TourSingleSidebar({
             <div key={index} className="mt-15">
               <div className="d-flex items-center justify-between">
                 <div className="text-14 col-8">
-                  {group.price_type === "1"
+                  {group.price_type == "1"
                     ? `${translate("Adult")} 18+ ${translate("Years")}`
-                    : group.price_type === "2"
+                    : group.price_type == "2"
                     ? `${translate("Child")} 13-17 ${translate("Years")}`
                     : `${translate("Baby")} 0-12 ${translate("Years")}` }
                   <span className="fw-500">
