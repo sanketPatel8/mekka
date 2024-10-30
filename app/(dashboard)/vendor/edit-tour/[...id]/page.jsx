@@ -562,8 +562,17 @@ export default function EditTour() {
       setActiveTab(tabs[prevTabIndex]);
     }
   };
-
+  
+  const calculateDaysBetweenDates = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const timeDiff = end - start; // Difference in milliseconds
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert to days
+    return daysDiff + 1; // Include the start day
+  };
   const isCurrentTabValid = () => {
+    const totalDays = calculateDaysBetweenDates(date_begin, date_end); 
+
     if (activeTab === "Content") {
       return (
         SelectedTour &&
@@ -587,7 +596,11 @@ export default function EditTour() {
     } else if (activeTab === "Overview") {
       return editorState !== EditorState.createEmpty();
     } else if (activeTab === "Itinerary") {
-      return route_data.every((day) => day.dayData && day.description);
+      const isValidItinerary = route_data.length === totalDays && route_data.every(route => 
+        route.dayData && route.description && route.day
+      );
+  
+      return isValidItinerary;
     } else if (activeTab === "Flight Hotel And Visa") {
       return (
         mekkaRows.every(

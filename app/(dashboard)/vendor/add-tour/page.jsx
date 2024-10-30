@@ -699,8 +699,16 @@ const formatDateToMMDDYYYY = (date) => {
     const [day, month, year] = date.split('-');
     return `${year}-${month}-${day}`;
 };
-
+const calculateDaysBetweenDates = (startDate, endDate) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const timeDiff = end - start; // Difference in milliseconds
+  const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert to days
+  return daysDiff + 1; // Include the start day
+};
 const isCurrentTabValid = () => {
+  const totalDays = calculateDaysBetweenDates(date_begin, date_end); 
+  
   if (activeTab === "Content") {
     return (SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value  && image2.length > 0 && departureRows.length > 0 &&
     departureRows.every((departure) => departure.departure_id && departure.price));
@@ -712,7 +720,11 @@ const isCurrentTabValid = () => {
     return editorState !== EditorState.createEmpty();
   } else if (activeTab === "Itinerary") {
     
-    return route_data.every((day) => day.dayData && day.description);
+    const isValidItinerary = route_data.length === totalDays && route_data.every(route => 
+      route.dayData && route.description && route.day
+    );
+
+    return isValidItinerary; // Return the result of the validity check
   } else if (activeTab === "Flight Hotel And Visa") {
 
     return mekkaRows.every((mekka) => mekka.hotel_name,mekka.hotel_price,mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name,madina.hotel_price,madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) && flightInformation &&  radioValueVisa && radioValueExcludeFlight;

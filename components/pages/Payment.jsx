@@ -20,7 +20,7 @@ import Stripeform from "../stripe/stripeform";
 import { useCurrency } from "@/app/context/currencyContext";
 import { type } from "jquery";
 import { ClipLoader } from "react-spinners";
-import { set } from "lodash";
+import { first, set } from "lodash";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function Payment() {
@@ -58,13 +58,13 @@ export default function Payment() {
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(true);
   const [rawAmount,setRawAmout] = useState("")
-  useEffect(() => {
-    window.addEventListener('scroll', (e) => {
-      console.log("scroll")
-      e.preventDefault();
-      setIsFocused(false)
-    });
-  }, [isFocused])
+  // useEffect(() => {
+  //   window.addEventListener('scroll', (e) => {
+  //     console.log("scroll")
+  //     e.preventDefault();
+  //     setIsFocused(false)
+  //   });
+  // }, [isFocused])
   
   const companyCode =
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
@@ -390,9 +390,9 @@ const handleSecondAmountChange = (e) => {
       }
       const newBooking = { ...Booking, paymentType: 1 };
       FatchallBooking(newBooking);
-      setIsLoading(false)
       setTimeout(() => {
         router.push("#ref");
+        setIsLoading(false)
 
         setTimeout(() => {
           localStorage.removeItem("AdultPrice&count");
@@ -1364,7 +1364,7 @@ const handleSecondAmountChange = (e) => {
                         <div className="">
                           {" "}
                           {formatCurrency(
-                            SideBarData?.BookingFild?.SubTotal - paidAmount
+                            SideBarData?.BookingFild?.SubTotal - firstAmount
                           )}{" "}
                         </div>
                       </div>
