@@ -5,7 +5,9 @@ import Header from "@/components/dasboard/Header";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { tourDataTwoOne } from "@/data/tours";
+import { FaCalendar } from "react-icons/fa";
 import { FaPersonWalking } from "react-icons/fa6";
+import { MdFlightTakeoff } from 'react-icons/md';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaStar } from "react-icons/fa";
 import { faHotel, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
@@ -227,15 +229,17 @@ export default function DbBooking() {
 
                       {elm?.tour_details?.departures !== ""  && (
                         <div className="Location">
-                          <span>{translate('Departure')} : {elm?.tour_details?.departures}</span>
+                          <span><MdFlightTakeoff color="dabf4f" size={17} /> {translate('Departure')} : {elm?.tour_details?.departures}</span>
                         </div>
                       )}
 
 
                       <div className="row x-gap-20 y-gap-5 ">
-                        <div className="text-14 ">
-                          {elm?.tour_details?.date_begin} -{" "}
-                          {elm?.tour_details?.date_end}
+                      
+                        <div className="text-14 items-center">
+                        <FaCalendar color="dabf4f" size={17} />
+                         <span> {elm?.tour_details?.date_begin} -{" "}
+                         {elm?.tour_details?.date_end}</span>
                         </div>
                       </div>
                     </div>
