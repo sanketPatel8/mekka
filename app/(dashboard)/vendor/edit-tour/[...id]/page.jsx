@@ -562,7 +562,7 @@ export default function EditTour() {
       setActiveTab(tabs[prevTabIndex]);
     }
   };
-  
+
   const calculateDaysBetweenDates = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -570,65 +570,7 @@ export default function EditTour() {
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert to days
     return daysDiff + 1; // Include the start day
   };
-  const isCurrentTabValid = () => {
-    const totalDays = calculateDaysBetweenDates(date_begin, date_end); 
-
-    if (activeTab === "Content") {
-      return (
-        SelectedTour &&
-        name &&
-        capacity &&
-        date_begin &&
-        date_end &&
-        selectRef.current.value &&
-        departureRows.length > 0 &&
-        departureRows.every(
-          (departure) => departure.departure_id && departure.price
-        ) &&
-        (image2.length > 0 || Object.keys(uploadedImage).some((key) => uploadedImage[key]))
  
-
-      )
-    } else if (activeTab === "Pricing") {
-      return adult_price && child_price && baby_price;
-    } else if (activeTab === "Included") {
-      return true;
-    } else if (activeTab === "Overview") {
-      return editorState !== EditorState.createEmpty();
-    } else if (activeTab === "Itinerary") {
-      const isValidItinerary = route_data.length === totalDays && route_data.every(route => 
-        route.dayData && route.description && route.day
-      );
-  
-      return isValidItinerary;
-    } else if (activeTab === "Flight Hotel And Visa") {
-      return (
-        mekkaRows.every(
-          (mekka) => mekka.hotel_id,
-          mekka.hotel_name,
-          mekka.hotel_price,
-          mekka.hotel_info
-        ) &&
-        madinaRows.every(
-          (madina) => madina.hotel_id,
-          madina.hotel_name,
-          madina.hotel_price,
-          madina.hotel_info
-        ) &&
-        flightRow.every(
-          (flight) =>
-            flight.flight_id &&
-            flight.flight_amount &&
-            flight.no_of_stop &&
-            flight.luggage &&
-            flightInformation &&
-            radioValueVisa &&
-            radioValueExcludeFlight
-        )
-      );
-    }
-    return false;
-  };
 
   const handleNextTab = () => {
     if (isCurrentTabValid()) {
@@ -925,26 +867,92 @@ export default function EditTour() {
     }
   };
 
+  const isCurrentTabValid = () => {
+    const totalDays = calculateDaysBetweenDates(date_begin, date_end); 
+
+    if (activeTab === "Content") {
+      return (
+        SelectedTour &&
+        name &&
+        capacity &&
+        date_begin &&
+        date_end &&
+        selectRef.current.value &&
+        departureRows.length > 0 &&
+        departureRows.every(
+          (departure) => departure.departure_id && departure.price
+        ) &&
+        (image2.length > 0 || Object.keys(uploadedImage).some((key) => uploadedImage[key]))
+ 
+
+      )
+    } else if (activeTab === "Pricing") {
+      return adult_price && child_price && baby_price;
+    } else if (activeTab === "Included") {
+      return true;
+    } else if (activeTab === "Overview") {
+      return editorState !== EditorState.createEmpty();
+    } else if (activeTab === "Itinerary") {
+      const isValidItinerary = route_data.length === totalDays && route_data.every(route => 
+        route.dayData && route.description && route.day
+      );
+  
+      return isValidItinerary;
+    } else if (activeTab === "Flight Hotel And Visa") {
+      return (
+        mekkaRows.every(
+          (mekka) => mekka.hotel_id,
+          mekka.hotel_name,
+          mekka.hotel_price,
+          mekka.hotel_info
+        ) &&
+        madinaRows.every(
+          (madina) => madina.hotel_id,
+          madina.hotel_name,
+          madina.hotel_price,
+          madina.hotel_info
+        ) &&
+        flightRow.every(
+          (flight) =>
+            flight.flight_id &&
+            flight.flight_amount &&
+            flight.no_of_stop &&
+            flight.luggage &&
+            flightInformation &&
+            radioValueVisa &&
+            radioValueExcludeFlight
+        )
+      );
+    }
+    return false;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
-   
+    const totalDays = calculateDaysBetweenDates(date_begin, date_end); 
 
-    if( !date_begin || !date_end || !name || !capacity ||  departureRows.length == 0  || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price ) {
+
+    if(  !date_begin || !date_end || !name || !capacity ||  departureRows.length == 0  || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price ) {
       showErrorToast(translate, "Please fill in all required fields before proceeding");
       setLoading(false);
       return;
     }
 
-    if (route_data.length > 0) {
-      const hasEmptyDayOrDescription = route_data.some((day) => !day.dayData || !day.description);
-      if (hasEmptyDayOrDescription) {
-        showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
-        setLoading(false);
-        return;
-      }
+    if (route_data.length !== totalDays) {
+      showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
+      setLoading(false);
+      return;
     }
+  
+    const hasEmptyDayOrDescription = route_data.some((day) => !day.dayData || !day.description);
+    if (hasEmptyDayOrDescription) {
+      showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
+      setLoading(false);
+      return;
+    }
+  
 
     
   
