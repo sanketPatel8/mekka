@@ -107,7 +107,7 @@ export default function PartnerLogin({ onLoginSuccess }) {
                 {translate("We're Glad To See You Again!")}
               </div>
               <div className="mt-5">
-                {translate("Don't Have An Account?")}
+                {translate("Don't Have An Account?")}{" "}
                 <Link href="/partner" className="text-accent-1">
                   {translate("Sign Up!")}
                 </Link>

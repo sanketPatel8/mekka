@@ -59,7 +59,7 @@ export default function Payment() {
   const [isFocused, setIsFocused] = useState(true);
   const [rawAmount,setRawAmout] = useState("")
   useEffect(() => {
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', (e) => {
       console.log("scroll")
       e.preventDefault();
       setIsFocused(false)
