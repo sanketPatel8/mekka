@@ -65,7 +65,8 @@ const CustomerDetaTable = () => {
     gender: "",
     birthday: "",
     nationality: "",
-    id : ''
+    id : '',
+    res_id : ""
   });
   const [paidData, setPaidData] = useState({});
   const [showStripeModal, setShowStripeModal] = useState(false);
@@ -379,7 +380,8 @@ const CustomerDetaTable = () => {
       gender: row.gender, // Default value
       birthday: row.personBirthDay,
       nationality: row.personNationality, // Default value
-      id: row.main_person
+      id: row.main_person ,
+      res_id :row.reservation_id
     });
 
     setEditData(true);
@@ -686,6 +688,8 @@ const CustomerDetaTable = () => {
     formData.append("gender", editCustomerData.gender);
     formData.append("nationality", editCustomerData.nationality);
     formData.append("main_person", editCustomerData.id);
+    formData.append("reservation_id", editCustomerData.res_id);
+    
 
 
     try {
@@ -1087,6 +1091,7 @@ const CustomerDetaTable = () => {
   const fatchCancelBooking = async () => {
     const formData = new FormData();
     formData.append("reservation_id", BookingDetails?.reservation?.id);
+    formData.append("refund_amount", TotalRefundinCancel );
 
     try {
       const response = await POST.request({
