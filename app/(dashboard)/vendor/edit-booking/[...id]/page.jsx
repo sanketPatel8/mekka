@@ -146,8 +146,10 @@ export default function DbBooking({ params }) {
     setAdultHeaders(columnAdu_1);
 
     const ColumnReservation_details = [
-      { name: translate("Airline"), selector: (row) => row.Airline },
-      // { name: translate("From"), selector: (row) => row.From },
+      ...(bookings?.reservation?.airlines ? [{
+        name: translate("Airline"),
+        selector: (row) => (row?.airlines),
+      }] : []),      // { name: translate("From"), selector: (row) => row.From },
       // { name: translate("To"), selector: (row) => row.To },
       { name: translate("Departure"), selector: (row) => row.date_begin },
       { name: translate("Return"), selector: (row) => row.date_end },

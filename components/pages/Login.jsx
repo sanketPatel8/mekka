@@ -189,7 +189,7 @@ export default function Login({
       .then((resp) => {
         setIsLoading(false);
         if (resp.status == "error") {
-          showErrorToast(translate, "Invalid Email or Password");
+          showErrorToast(translate, resp.message);
         }else if(resp.status == "success") {
 
         console.log(resp.user.user_type, "user type");

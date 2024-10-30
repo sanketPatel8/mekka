@@ -27,7 +27,7 @@ const customStyles = {
     // borderRadius: '10px',
     width: "100%", // Adjust width as needed
     maxWidth: "600px", // Adjust max-width as needed
-    height: "75vh", 
+    height: "fit-content", 
     overflowY: "auto",
     backgroundColor: "#fff",
   },
