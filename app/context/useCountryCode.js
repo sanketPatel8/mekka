@@ -9,6 +9,9 @@ export const CountryCodeProvider = ({ children }) => {
 
     useEffect(() => {
         // Fetch the country code based on user's IP
+
+        console.log("hellow country code");
+        
         const fetchCountryCode = async () => {
             try {
                 const response = await fetch('https://ipapi.co/json/'); // You can use another API if you prefer
@@ -20,6 +23,7 @@ export const CountryCodeProvider = ({ children }) => {
         };
 
         fetchCountryCode();
+        
     }, []); // Empty dependency array means this runs once when the component mounts
 
     return (

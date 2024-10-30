@@ -16,6 +16,9 @@ import { countries } from "@/data/nationalities";
 import { ClipLoader } from "react-spinners";
 import { set } from "lodash";
 import Link from "next/link";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css"; 
+import { useCountryCode } from "@/app/context/useCountryCode";
 
 const page = () => {
   const [From, setFrom] = useState("Frankfurt(FRA)");
@@ -57,6 +60,8 @@ const page = () => {
       document.title = "Partner Registration - MekkaBooking";
     }
   }, []);
+
+  const { countryCode } = useCountryCode();
 
   // useEffect(() => {
   //   if (typeof window !== "undefined") {
@@ -248,13 +253,16 @@ const page = () => {
     }
   };
   const handleCompanyMobileNumberChange = (e) => {
-    const value = e.target.value.replace(/[^0-9.]/g, "");
-    setCompanyMobile(value);
+    
+    setCompanyMobile(e);
   };
   const handleMobileNumberChange = (e) => {
-    const value = e.target.value.replace(/[^0-9.]/g, "");
-    setMobile(value);
+    
+    setMobile(e);
   };
+
+  console.log("country code " , countryCode);
+  
   return (
     <>
       <ToastContainer />
@@ -463,7 +471,7 @@ const page = () => {
                       </div>
                       <div className="col-md-6">
                         <div className="form-input spacing">
-                          <input
+                          {/* <input
                             type="text"
                             min={0}
                             max={10}
@@ -472,11 +480,43 @@ const page = () => {
                             required
                             value={company_mobile}
                             onChange={handleCompanyMobileNumberChange}
-                          />
-                          <label className="lh-1 text-16 text-light-1">
+                          /> */}
+                           <PhoneInput
+                                country={company_mobile !== "" ? "" : countryCode} 
+                                value={company_mobile}
+                                onChange={handleCompanyMobileNumberChange}
+                                inputProps={{
+                                  name: "phone",
+                                  required: true,
+                                  autoFocus: true,
+                                }}
+                                inputClass='phonenumber_input'
+                                containerStyle={{
+                                  width: "100%", 
+                                  marginBottom: "10px",
+                                  backgroundColor : "white"
+                                }}
+                                inputStyle={{
+                                  width: "100%",
+                                  padding: "12px 45px", 
+                                  borderRadius: "4px",
+                                  border: "1px solid #E7E6E6",
+                                  fontSize: "16px",
+                                  boxSizing: "border-box",
+                                  borderRadius : "12px",
+                                  backgroundColor : "white"
+                                }}
+                                className = "form-input  "
+                                enableSearch = {true}
+                              />
+                          {/* <label className="lh-1 text-16 text-light-1">
                             {translate("Phone Number")}{" "}
                             <span className="text-red font_11">*</span>
-                          </label>
+                          </label> */}
+                           <label className="phone_lable">
+                                {translate("Phone Number")}<span className="text-red font_11">*</span>
+                                {/* <span className="text_red">{PhoneError}</span> */}
+                              </label>
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -562,7 +602,7 @@ const page = () => {
                         </div>
                       </div>
                       <div className="col-md-6">
-                        <div className="form-input spacing">
+                        {/* <div className="form-input spacing">
                           <input
                             type="text"
                             required
@@ -574,6 +614,54 @@ const page = () => {
                             {translate("Phone Number")}{" "}
                             <span className="text-red font_11">*</span>
                           </label>
+                        </div> */}
+                         <div className="form-input spacing">
+                          {/* <input
+                            type="text"
+                            min={0}
+                            max={10}
+                            pattern="[0-9]{10}"
+                            maxLength={10}
+                            required
+                            value={company_mobile}
+                            onChange={handleCompanyMobileNumberChange}
+                          /> */}
+                           <PhoneInput
+                                country={mobile !== "" ? "" : countryCode} 
+                                value={mobile}
+                                onChange={handleMobileNumberChange}
+                                inputProps={{
+                                  name: "phone",
+                                  required: true,
+                                  autoFocus: true,
+                                }}
+                                inputClass='phonenumber_input'
+                                containerStyle={{
+                                  width: "100%", 
+                                  marginBottom: "10px",
+                                  backgroundColor : "white"
+                                }}
+                                inputStyle={{
+                                  width: "100%",
+                                  padding: "12px 45px", 
+                                  borderRadius: "4px",
+                                  border: "1px solid #E7E6E6",
+                                  fontSize: "16px",
+                                  boxSizing: "border-box",
+                                  borderRadius : "12px",
+                                  backgroundColor : "white"
+                                }}
+                                className = "form-input  "
+                                enableSearch = {true}
+                              />
+                          {/* <label className="lh-1 text-16 text-light-1">
+                            {translate("Phone Number")}{" "}
+                            <span className="text-red font_11">*</span>
+                          </label> */}
+                           <label className="phone_lable">
+                                {translate("Phone Number")}<span className="text-red font_11">*</span>
+                                {/* <span className="text_red">{PhoneError}</span> */}
+                              </label>
                         </div>
                       </div>
                       <div className="col-md-12">
