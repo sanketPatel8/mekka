@@ -1923,12 +1923,12 @@ const CustomerDetaTable = () => {
                               <td className="px-1 py-2">{RefundData?.tour_date}</td>
                             </tr>
                             <tr>
-                              <td className="px-1 py-2">{translate("Add Strip Commision 5%")}</td>
+                              <td className="px-1 py-2">{translate("Strip Commision 5%")}</td>
                               <td className="px-1 py-2">{CancelStripCommision} €</td>
                             </tr>
                             <tr>
                               <td className="px-1 py-2">
-                                {translate("Amount Refund + add strip commision")} ({RefundData?.percentage}%)
+                                {translate("Amount Refund - add strip commision")} ({RefundData?.percentage}%)
                               </td>
                               <td className="px-1 py-2">{TotalRefundinCancel} €</td>
                             </tr>
