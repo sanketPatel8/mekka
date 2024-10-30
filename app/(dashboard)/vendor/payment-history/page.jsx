@@ -31,20 +31,36 @@ export default function DBListing() {
     }
   }, []);
 
+  // const handleFilterChange = (e) => {
+  //   setFilterText(e.target.value || "");
+  //   const filteredItems = paymentData.filter((item) => {
+  //     return Object.keys(item).some((key) => {
+  //       const value = item[key];
+  //       // Check if value is not null or undefined before calling toString
+  //       return value && value.toString().toLowerCase().includes(filterText.toLowerCase());
+  //     });
+  //   });
+
+//   setPayment(filteredItems);
+// }
+
   const handleFilterChange = (e) => {
-    setFilterText(e.target.value || "");
+    const value = e.target.value || "";
+    setFilterText(value);
+  
+    // Filter the payment data based on the input
     const filteredItems = paymentData.filter((item) => {
       return Object.keys(item).some((key) => {
-        const value = item[key];
-        // Check if value is not null or undefined before calling toString
-        return value && value.toString().toLowerCase().includes(filterText.toLowerCase());
+        const itemValue = item[key];
+        return itemValue && itemValue.toString().toLowerCase().includes(value.toLowerCase());
       });
     });
-
-    console.log(filteredItems , "filteredItems");
-    
+  
     setPayment(filteredItems);
-  }
+  };
+
+    
+   
 
   // useEffect(() => {
    
