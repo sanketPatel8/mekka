@@ -702,6 +702,14 @@
 "conditions." : "Bedingungen.",
 "Please accept terms and conditions" : "Bitte akzeptieren Sie die Allgemeinen Geschäftsbedingungen",
 "Your account is not approved by the admin." : "Ihr Konto wurde vom Administrator nicht genehmigt.",
-"Total Received" : "Gesamt erhalten"
-
+"Total Received" : "Gesamt erhalten",
+"Thank you for verifying you email" : "Danke, dass Sie Ihre E-Mail verifiziert haben",
+"You can now login and book the tour, manage your account etc.." : "Sie können sich jetzt anmelden und die Tour buchen, Ihr Konto verwalten usw.",
+"Continue Login" : "Weiter zur Anmeldung",
+"Thank you for registering with MekkaBooking.com" : "Danke, dass Sie sich bei MekkaBooking.com registriert haben",
+"Resend Email" : "E-Mail erneut senden",
+"We have sent an email to your registered email id. Please verify your email address before login your account. Please check your spam/junk folder incase you did not see the email." : "Wir haben eine E-Mail an Ihre registrierte E-Mail-Adresse gesendet. Bitte verifizieren Sie Ihre E-Mail-Adresse, bevor Sie sich in Ihrem Konto anmelden. Überprüfen Sie bitte auch Ihren Spam-/Junk-Ordner, falls Sie die E-Mail nicht sehen",
+"Thank you for registration!" : "Vielen Dank für Ihre Registrierung!",
+"We have sent your profile for verification and will notify you once it is approved." : "Wir haben Ihr Profil zur Verifizierung gesendet und werden Sie benachrichtigen, sobald es genehmigt wurde." ,
+"Login to continue" : "Melden Sie sich an, um fortzufahren"
 }

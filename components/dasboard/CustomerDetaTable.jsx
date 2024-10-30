@@ -1102,8 +1102,8 @@ const CustomerDetaTable = () => {
         showSuccessToast(translate, "Booking Cancelled Successfully");
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
-      }
+        }, 5000);
+      } 
     } catch (e) {
       console.error(e);
     }

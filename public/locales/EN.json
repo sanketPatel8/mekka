@@ -583,7 +583,16 @@
   "Copyright MekkaBooking.com" : "Copyright MekkaBooking.com", 
   "Amount will be credited within 7 days in your bank account" : "Amount will be credited within 7 days in your bank account",
   "Grand Total" : "Grand Total",
-  "Total Received" : "Total Received"
+  "Total Received" : "Total Received",
+  "Thank you for verifying you email" : "Thank you for verifying you email",
+  "You can now login and book the tour, manage your account etc.." : "You can now login and book the tour, manage your account etc..",
+  "Continue Login" : "Continue Login",
+  "Thank you for registering with MekkaBooking.com" : "Thank you for registering with MekkaBooking.com",
+  "Resend Email" : "Resend Email",
+  "We have sent an email to your registered email id. Please verify your email address before login your account. Please check your spam/junk folder incase you did not see the email." : "We have sent an email to your registered email id. Please verify your email address before login your account. Please check your spam/junk folder incase you did not see the email.",
+  "Thank you for registration!" : "Thank you for registration!",
+  "We have sent your profile for verification and will notify you once it is approved." : "We have sent your profile for verification and will notify you once it is approved.",
+  "Login to continue" : "Login to continue"
   
   
   
