@@ -54,35 +54,35 @@ export default function DbBooking() {
         selector: (row) => row.BookingNo,
 
         sortable: true,
-        width:"13%",
+        width:"12%",
 
       },
       {
         name: translate("Status"),
         selector: (row) => row.Status,
         sortable: true,
-        width:"11%",
+        width:"12%",
 
       },
       {
         name: translate("Full Name"),
         selector: (row) => row.Full_Name,
         sortable: true,
-        width:"11%",
+        width:"12%",
 
       },
       {
         name: translate("Tour Name"),
         selector: (row) => row.Tour_name,
         sortable: true,
-        width:"8%",
+        width:"10%",
 
       },
       {
         name: translate("Total (€)"),
         selector: (row) => row.Total_Payment,
         sortable: true,
-        width:"7%",
+        width:"8%",
 
       },
       {
@@ -97,28 +97,28 @@ export default function DbBooking() {
         name: translate("Method"),
         selector: (row) => row.Payment_Method,
         sortable: true,
-        width:"10%",
+        // width:"10%",
 
       },
       {
         name: translate("Visas"),
         selector: (row) => row.Visas,
         sortable: true,
-        width:"6%",
+        // width:"6%",
 
       },
       {
         name: translate("Flight"),
         selector: (row) => row.Flight,
         sortable: true,
-        width:"6%",
+        // width:"6%",
 
       },
       {
         name: translate("Initiated By"),
         selector: (row) => row.Initiated_By_Admin,
         sortable: true,
-        width:"9%",
+        // width:"9%",
 
       },
       {
@@ -133,7 +133,7 @@ export default function DbBooking() {
             </button>
           </Link>
         ),
-        width:"200px"
+        width:"10%"
       },
     ];
 
