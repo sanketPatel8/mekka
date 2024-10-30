@@ -648,7 +648,7 @@ const page = () => {
                           </div>
                           <span className="text-14 lh-12 ml-10">
                     {translate(
-                      "I have read the" )} <Link href={"/Datenschutz"}>{translate("data protection")}</Link>  {translate("and I accept the")} <Link href={"/Terms-of-Use"}>{translate("conditions.")}</Link>
+                      "I have read the" )} <Link href={"/Datenschutz"} className="text-blue" target="_blank">{translate("data protection")}</Link>  {translate("and I accept the")} <Link href={"/Terms-of-Use"} className="text-blue" target="_blank">{translate("conditions.")}</Link>
                     
                   </span>
                         </label>
