@@ -308,8 +308,8 @@ const CustomerDetaTable = () => {
   const Total = [
     {
       name: translate("Subtotal"),
-      selector: (row) => `${row.total} €`,
-      cell: (row) => `${row.total} €`,
+      selector: (row) => `${row.subtotal} €`,
+      cell: (row) => `${row.subtotal} €`,
     },
     // { name: "Tax", selector: (row) => row.Total },
     {
@@ -319,8 +319,8 @@ const CustomerDetaTable = () => {
     },
     {
       name: translate("Total"),
-      selector: (row) => row.subtotal,
-      cell: (row) => `${row.subtotal} €`,
+      selector: (row) => row.total,
+      cell: (row) => `${row.total} €`,
     },
     { name: "Amount Paid", selector: (row) => `${row.amount_paid} €` },
     {
