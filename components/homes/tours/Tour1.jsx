@@ -73,7 +73,7 @@ export default function Tour1() {
             {LatestPackage?.Tours?.length > 0 && (
               <div
                 className={`${
-                  LatestPackage.Tours.length <= 2 ? "d-flex flex-wrap" : "row"
+                  LatestPackage.Tours.length <= 2 ? "d-flex flex-wrap" : "row mx-auto"
                 }`}
               >
                 {LatestPackage?.Tours?.slice(0, 8)?.map((elm, i) => (
