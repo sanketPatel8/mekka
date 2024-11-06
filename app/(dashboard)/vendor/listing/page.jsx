@@ -185,12 +185,12 @@ export default function DBListing() {
                 </div>
               ) : (
                 <>
-                  {tourList.length === 0 && (
+                  {tourList?.length === 0 && (
                     <div className="text-center">
                       <h3>{translate("No Tours Found")}</h3>
                     </div>
                   )}
-                  {tourList.map((elm, i) => (
+                  {tourList?.map((elm, i) => (
                     <div className="col-lg-12 mb-15" key={i}>
                       <div className="tourCard -type-2 bg-white">
                         <div className="tourCard__image">
