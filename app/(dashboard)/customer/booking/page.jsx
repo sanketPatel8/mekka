@@ -152,7 +152,12 @@ export default function DbBooking() {
                       <Image
                         width={420}
                         height={390}
-                        src={elm?.tour_details?.tour_image}
+                        
+                        src={
+                          elm?.tour_details?.tour_image
+                            ? elm?.tour_details?.tour_image
+                            : "/img/404/imgnotFound.png"
+                        }
                         alt="image"
                       />
                       <button

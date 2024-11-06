@@ -197,7 +197,12 @@ export default function DBListing() {
                           <Image
                             width={420}
                             height={390}
-                            src={elm.tour_image}
+                            
+                            src={
+                              elm.tour_image
+                                ? elm.tour_image
+                                : "/img/404/imgnotFound.png"
+                            }
                             alt="image"
                             style={{ aspectRatio: "1" }}
                           />
