@@ -153,7 +153,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
         </div>
 
         <div className="col-lg-6 flex small-flex-center items-center">
-          <div className="">
+          {/* <div className="">
             <button 
               className="button -sm -info-2 bg-accent-1 text-white "
               onClick={openInvoice}
@@ -173,7 +173,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
                 placeholder={translate("Select Status")}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* {
