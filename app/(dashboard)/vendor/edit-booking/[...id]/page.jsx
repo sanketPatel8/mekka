@@ -149,7 +149,8 @@ export default function DbBooking({ params }) {
       ...(bookings?.reservation?.airlines ? [{
         name: translate("Airline"),
         selector: (row) => (row?.airlines),
-      }] : []),      // { name: translate("From"), selector: (row) => row.From },
+      }] : []),
+          // { name: translate("From"), selector: (row) => row.From },
       // { name: translate("To"), selector: (row) => row.To },
       { name: translate("Departure"), selector: (row) => row.date_begin },
       { name: translate("Return"), selector: (row) => row.date_end },
@@ -160,6 +161,7 @@ export default function DbBooking({ params }) {
       { name: translate("Baby"), selector: (row) => row.baby },
       { name: translate("Total"), selector: (row) => row.total },
     ];
+    console.log(bookings,"booking");
 
     setReservationHeader(ColumnReservation_details);
 
@@ -227,7 +229,7 @@ export default function DbBooking({ params }) {
     ];
 
     setTotalHeaders(Total);
-  }, [translate]);
+  }, [translate,bookings]);
 
   const [rows, setRows] = useState([{ document: "", type: null }]); 
 
@@ -383,7 +385,7 @@ export default function DbBooking({ params }) {
 
       if (response.Bookings.reservation) {
         const reservation = {
-          Airline: response.Bookings.reservation.airlines,
+          airlines: response.Bookings.reservation.airlines,
           // From: response.Bookings.reservation.from,
           // To: response.Bookings.reservation.to,
           date_begin: 

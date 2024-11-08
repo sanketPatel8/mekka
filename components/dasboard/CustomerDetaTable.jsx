@@ -136,9 +136,7 @@ const CustomerDetaTable = () => {
     {
       name: translate("Departure"),
       selector: (row) =>
-        row?.departures
-          ?.map((departureItem) => departureItem?.departure)
-          .join(", ") || "N/A",
+        row?.date_begin,
       width: "100px",
     },
     { name: translate("Return"), selector: (row) => row.date_end },
