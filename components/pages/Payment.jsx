@@ -6,6 +6,7 @@ import { FaUser } from "react-icons/fa";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdFlightLand } from "react-icons/md";
+import { MdDateRange } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import { FaLuggageCart } from "react-icons/fa";
 import { IoIosBed } from "react-icons/io";
@@ -69,7 +70,7 @@ export default function Payment() {
   const companyCode =
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
-  
+
   const handleDateFocus = (e) => {
     e.target.showPicker(); // This will open the date picker
   };
@@ -1098,7 +1099,7 @@ const handleSecondAmountChange = (e) => {
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5">
-                      <MdFlightLand size={25} color="#DAC04F" />
+                      <MdDateRange size={25} color="#DAC04F" />
                     </div>
                     <div className="text-start">
                       {" "}
