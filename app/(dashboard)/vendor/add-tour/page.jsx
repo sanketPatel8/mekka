@@ -124,7 +124,7 @@ export default function AddTour() {
   ]);
 
   const [arrivalrow, setArrivalrow] = useState([
-    { arrival_id: "", name: "" },
+    { arrival_id: "" },
   ]);
 
   const [flightRow, setFlightRow] = useState([
@@ -543,8 +543,8 @@ export default function AddTour() {
   }));
 
   const ArrivalOption = Arrival?.map((arr) => ({
-    value : arr.id,
-    label : `${arr.arrival}`
+    value: arr.id,
+    label: `${arr.arrival}`
   }))
 
   const ChooseFlight = flightDetails.map((flight) => ({
@@ -596,7 +596,7 @@ export default function AddTour() {
   const handleAddArrivalRow = () => {
     setArrivalrow([
       ...arrivalrow,
-      { arrival_id: "", name: "" },
+      { arrival_id: "" },
     ]);
   };
 
@@ -617,7 +617,7 @@ export default function AddTour() {
     newRows.splice(index, 1);
     setArrivalrow(newRows);
   };
-  
+
   const handleMekkaChange = (value, index) => {
     if (!value) return;
     const selectedOption = mekkaHotel.find((option) => option.id === value.value);
@@ -649,7 +649,7 @@ export default function AddTour() {
 
   const handleDepartureChange = (value, index) => {
     console.log(value);
-    
+
     if (!value) return;
     const selectedOption = departures.find((option) => option.id === value.value);
 
@@ -659,8 +659,8 @@ export default function AddTour() {
 
     };
 
-    console.log(departureData , "departureData");
-    
+    console.log(departureData, "departureData");
+
     const newRows = [...departureRows];
     newRows[index] = departureData;
     setDepartureRows(newRows);
@@ -668,13 +668,13 @@ export default function AddTour() {
   };
 
   const handleArrivalchange = (value, index) => {
-    console.log(value , "value");
-    
+    console.log(value, "value");
+
     if (!value) return;
     const selectedOption = Arrival.find((option) => option.id === value.value);
 
-    console.log("selectedOption" , selectedOption);
-    
+    console.log("selectedOption", selectedOption);
+
 
     const ArrivalData = {
       ...arrivalrow[index],
@@ -682,22 +682,19 @@ export default function AddTour() {
 
     };
 
-    console.log("ArrivalData" , ArrivalData);
-    
+    console.log("ArrivalData", ArrivalData);
 
-    const newRows = [...ArrivalData];
-    console.log("newRows" , newRows);
-    
+
+    const newRows = [...arrivalrow];
     newRows[index] = ArrivalData;
-    // console.log("newRows" , newRows);
+    console.log("newRows", newRows);
 
-    
+
     setArrivalrow(newRows);
 
   };
 
-  
-  
+  const allArivalJoin = arrivalrow.map((item) => item.arrival_id).join(", ")
 
   const selectRef = useRef(null);
 
@@ -898,6 +895,7 @@ export default function AddTour() {
     formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
+    formData.append("arrival" , allArivalJoin)
     // image2FileArray.forEach((file, index) => {
     //   formData.append(`tour_image[${index}]`, file);
     // });
@@ -957,11 +955,6 @@ export default function AddTour() {
       console.error(error);
     }
   }
-
-
-  console.log(arrivalrow , "arrivalrow");
-  
-  
 
   return (
     <>
@@ -1780,8 +1773,8 @@ export default function AddTour() {
 
                         <div
                           className={`tabs__pane  ${activeTab == "Flight Hotel And Visa"
-                              ? "is-tab-el-active"
-                              : ""
+                            ? "is-tab-el-active"
+                            : ""
                             }`}
                         >
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
