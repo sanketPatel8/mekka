@@ -1049,7 +1049,7 @@ const handleSecondAmountChange = (e) => {
                         <FaTelegramPlane size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {translate("Airline")} : {SideBarData?.Airline?.name}
+                        {translate("Airline")} : {SideBarData?.Airline}
                       </div>
                     </div>
                     <div className="line mt-5 mb-5"></div>

@@ -1538,7 +1538,7 @@ export default function BookingPages({ BookingData }) {
                         </div>
                         <div className="text-start">
                           {translate("Airline")}:{" "}
-                          {BookingSideBar?.Airline?.name}
+                          {BookingSideBar?.Airline}
                         </div>
                       </div>
                     </div>

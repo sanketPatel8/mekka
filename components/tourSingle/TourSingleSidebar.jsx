@@ -525,7 +525,7 @@ export default function TourSingleSidebar({
     name: SidebarData?.tour_details?.name,
     type: SidebarData?.tour_details?.type,
     TourThumbnail: SidebarData?.tour_details?.tour_image[0],
-    Airline: selectedFlights,
+    Airline: SidebarData?.tour_details?.airlines?.airline_name,
     To: SidebarData?.tour_details?.travel,
     Departure: selectDeparture,
     Arrival : selectarrival ,
