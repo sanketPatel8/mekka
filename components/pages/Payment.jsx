@@ -69,6 +69,7 @@ export default function Payment() {
   const companyCode =
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
   const dateInputRef = useRef(null);
+  
   const handleDateFocus = (e) => {
     e.target.showPicker(); // This will open the date picker
   };
@@ -88,6 +89,7 @@ export default function Payment() {
       return "";
     }
   };
+
   const handleFirstAmountChange = (e) => {
     setIsFocused(true);
     console.log(e.target.value, "firstamount");
@@ -131,10 +133,6 @@ export default function Payment() {
     }
   };
 
-
-
-
-
 const handleSecondAmountChange = (e) => {
   
     const inputValue = e.target.value;
@@ -167,12 +165,14 @@ const handleSecondAmountChange = (e) => {
         setThirdAmount(totalAmount - firstAmount - rawAmount);
     }
 };
+
   useEffect(() => {
     console.log(paidAmount, "paidAmount");
     if (secondAmount && dateBegin) {
       calculateThirdAmount();
     }
   }, [secondAmount,dateBegin]);
+
   const calculateThirdAmount = () => {
     const firstAmountValue = parseFloat(firstAmount);
     const secondAmountValue = parseFloat(secondAmount);
@@ -353,8 +353,6 @@ const handleSecondAmountChange = (e) => {
       }
     };
   }, [handleDateChange]);
-
-  console.log("Booking" , Booking);
   
 
   const FatchallBooking = async (data) => {
@@ -1086,6 +1084,17 @@ const handleSecondAmountChange = (e) => {
                   </div>
 
                   <div className="line mt-5 mb-5"></div>
+
+                  <div className="d-flex items-center justify-content-space-arround">
+                      <div className="mr-5">
+                        <MdFlightLand size={25} color="#DAC04F" />
+                      </div>
+                      <div className="text-start">
+                        {translate("Arrival")}: {SideBarData?.Arrival?.name}
+                      </div>
+                    </div>
+
+                    <div className="line mt-5 mb-5"></div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5">

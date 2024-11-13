@@ -6,6 +6,7 @@ import { MdError } from "react-icons/md";
 import { FaTelegramPlane } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
 import { MdFlightLand } from "react-icons/md";
+import { MdDateRange } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import { FaLuggageCart } from "react-icons/fa";
 import { FaHotel, FaStar } from "react-icons/fa6";
@@ -1322,6 +1323,7 @@ export default function BookingPages({ BookingData }) {
         ? 0
         : BookingSideBar?.Departure?.value
     ),
+    arrival : BookingSideBar?.Arrival?.value, 
     adult_price: JSON.parse(adultData.length === 0 ? 0 : adultData[0]?.default),
     child_price: JSON.parse(
       Childrendata.length === 0 ? 0 : Childrendata[0]?.default
@@ -1581,6 +1583,15 @@ export default function BookingPages({ BookingData }) {
                     <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
                         <MdFlightLand size={25} color="#DAC04F" />
+                      </div>
+                      <div className="text-start">
+                        {translate("Arrival")}: {BookingSideBar?.Arrival?.name}
+                      </div>
+                    </div>
+
+                    <div className="d-flex items-center justify-content-space-arround">
+                      <div className="mr-5">
+                        <MdDateRange size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
                         {translate("Return")}: {BookingSideBar?.Return}

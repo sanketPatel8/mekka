@@ -55,7 +55,9 @@ export default function TourSingleSidebar({
   const [selectDeparture, setselectDeparture] = useState({
     name: "",
   });
-
+  const [selectarrival, setselectarrival] = useState({
+    name: "",
+  });
   const [LocalData, setLocalData] = useState([]);
   const [MekkaStars, setMekkaStars] = useState('')
   const [MadinaStars, setMadinaStars] = useState('')
@@ -151,8 +153,8 @@ export default function TourSingleSidebar({
       return; // Exit if value isn't valid JSON
     }
 
-    
-    
+
+
     if (name === "mekka") {
       // Find the price of the selected Mekka hotel
       const mekkaPrice =
@@ -164,18 +166,18 @@ export default function TourSingleSidebar({
         SidebarData?.tour_hotels?.mekka_hotels.find(
           (hotel) => hotel.id === selectedHotel.hotel_id
         )?.hotel_stars || 0;
-      
+
       // Update the HotelSelect state with the selected Mekka hotel details
       setHotelSelect((prevSelect) => ({
         ...prevSelect,
         mekka: value,
         mekkaPrice,
         mekkaId: selectedHotel.hotel_id,
-        hotelStart : selectedHotel?.hotel_stars
+        hotelStart: selectedHotel?.hotel_stars
       }));
       setmekkaId(selectedHotel.hotel_id);
-      
-      
+
+
 
       // Update Mekka hotel price in selectedmekkaHotelPrice state
       setselectedmekkaHotelPrice(mekkaPrice);
@@ -189,7 +191,7 @@ export default function TourSingleSidebar({
           (hotel) => hotel.id === selectedHotel.hotel_id
         )?.hotel_price || 0;
 
-        const madinaStar =
+      const madinaStar =
         SidebarData?.tour_hotels?.medina_hotels.find(
           (hotel) => hotel.id === selectedHotel.hotel_id
         )?.hotel_stars || 0;
@@ -231,7 +233,7 @@ export default function TourSingleSidebar({
     }
   };
 
-  
+
 
   useEffect(() => {
     // Ensure SidebarData and tour_price are defined and have at least 3 elements
@@ -244,7 +246,7 @@ export default function TourSingleSidebar({
         (Number(SidebarData.tour_price[0]?.price) || 0) * Number(adultNumber) +
         (Number(SidebarData.tour_price[1]?.price) || 0) * Number(youthNumber) +
         (Number(SidebarData.tour_price[2]?.price) || 0) *
-          Number(childrenNumber) +
+        Number(childrenNumber) +
         (Number(extraCharge) || 0);
 
       if (!isNaN(calculatedTotal)) {
@@ -255,7 +257,7 @@ export default function TourSingleSidebar({
       }
     } else {
       console.warn("SidebarData or tour_price is not defined correctly.");
-      setTotal("0.00"); 
+      setTotal("0.00");
     }
   }, [
     SidebarData,
@@ -279,6 +281,7 @@ export default function TourSingleSidebar({
   }, [extraService, isServicePerPerson, setExtraCharge]);
 
   const [activeTimeDD, setActiveTimeDD] = useState(false);
+  const [activeTimeDD1, setActiveTimeDD1] = useState(false);
 
   const { translate } = useTranslation();
 
@@ -459,9 +462,9 @@ export default function TourSingleSidebar({
     type: item.price_type,  // Storing price_type as type
     price: item.price       // Storing price
   }));
-  
 
-  
+
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -494,7 +497,7 @@ export default function TourSingleSidebar({
         : 0
     );
 
- 
+
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
@@ -524,13 +527,14 @@ export default function TourSingleSidebar({
     Airline: selectedFlights,
     To: SidebarData?.tour_details?.travel,
     Departure: selectDeparture,
+    Arrival : selectarrival ,
     Return: SidebarData?.tour_details?.date_end,
     OfferedLanguages: SidebarData?.en_language,
     MaxLuggagePerPerson: 0,
     MakkaHotel: mekkaHotel,
-    mekkaHotelStar : MekkaStars,
+    mekkaHotelStar: MekkaStars,
     MadinaHotel: madinaHotel,
-    MadinaHotlStar : MadinaStars,
+    MadinaHotlStar: MadinaStars,
     FlightAndHotel: FlightAndHotelPrice,
     duration: SidebarData?.tour_details?.travel_duration,
     startDate: SidebarData?.tour_details?.date_begin,
@@ -564,24 +568,20 @@ export default function TourSingleSidebar({
       selectedCheckbox === false &&
       SidebarData?.tour_details?.flight_included !== "0"
     ) {
-      showErrorToast(translate,"Please Select Departure");
+      showErrorToast(translate, "Please Select Departure");
       return;
     } else {
       router.push(
-        `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
-          SidebarData?.tour_details?.type
-        }&selectedflight=${
-          selectedFlights?.name === undefined ? "" : selectedFlights?.name
+        `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${SidebarData?.tour_details?.type
+        }&selectedflight=${selectedFlights?.name === undefined ? "" : selectedFlights?.name
         }`
       );
-      localStorage.setItem("Redirect_Login",`/booking?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${
-          SidebarData?.tour_details?.type
-        }&selectedflight=${
-          selectedFlights?.name === undefined ? "" : selectedFlights?.name
+      localStorage.setItem("Redirect_Login", `/booking?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${SidebarData?.tour_details?.type
+        }&selectedflight=${selectedFlights?.name === undefined ? "" : selectedFlights?.name
         }`);
-        localStorage.removeItem("AllAdultsData")
-        localStorage.removeItem("BookingData")
-        localStorage.removeItem("getUserData")
+      localStorage.removeItem("AllAdultsData")
+      localStorage.removeItem("BookingData")
+      localStorage.removeItem("getUserData")
     }
   };
 
@@ -607,8 +607,8 @@ export default function TourSingleSidebar({
 
   const totalSelected = adultNumber + youthNumber + childrenNumber;
 
-  console.log("SidebarData?.tour_price" , SidebarData?.tour_price);
-  
+  console.log("SidebarData?.tour_price", SidebarData?.tour_price);
+
 
 
   return (
@@ -624,8 +624,8 @@ export default function TourSingleSidebar({
 
         {SidebarData?.tour_price?.map((group, index) => {
 
-          console.log("group" , group);
-          
+          console.log("group", group);
+
           let count, typeLabel;
 
           if (group.price_type === "1") {
@@ -648,8 +648,8 @@ export default function TourSingleSidebar({
                   {group.price_type == "1"
                     ? `${translate("Adult")} 18+ ${translate("Years")}`
                     : group.price_type == "2"
-                    ? `${translate("Child")} 13-17 ${translate("Years")}`
-                    : `${translate("Baby")} 0-12 ${translate("Years")}` }
+                      ? `${translate("Child")} 13-17 ${translate("Years")}`
+                      : `${translate("Baby")} 0-12 ${translate("Years")}`}
                   <span className="fw-500">
                     {""} {formatPrice((group.price * count).toFixed(2))}
                   </span>
@@ -758,7 +758,7 @@ export default function TourSingleSidebar({
                         checked={
                           HotelSelect.mekka &&
                           JSON.parse(HotelSelect.mekka).hotel_name ===
-                            elm.hotel_name
+                          elm.hotel_name
                         }
                         onChange={handleRadioChange}
                         required
@@ -800,7 +800,7 @@ export default function TourSingleSidebar({
                         checked={
                           HotelSelect.madina &&
                           JSON.parse(HotelSelect.madina).hotel_name ===
-                            elm.hotel_name
+                          elm.hotel_name
                         }
                         onChange={handleRadioChange}
                       />
@@ -821,18 +821,16 @@ export default function TourSingleSidebar({
         </div>
 
         <div
-          className={`${
-            SidebarData?.tour_details?.flight_included == "0"
+          className={`${SidebarData?.tour_details?.flight_included == "0"
               ? "d-none"
               : "d-block"
-          }`}
+            }`}
         >
           <div
-            className={`${
-              SidebarData?.tour_details?.flight_exclude == "0"
+            className={`${SidebarData?.tour_details?.flight_exclude == "0"
                 ? "d-none"
                 : "d-block"
-            }`}
+              }`}
           >
             <h5 className="text-18 fw-500 mb-20 mt-20">
               {translate("Flight Booking")}
@@ -938,7 +936,7 @@ export default function TourSingleSidebar({
                       <div className={`js-select-control-chosen `}>
                         {selectDeparture?.name
                           ? selectDeparture?.name
-                          : translate('Departure') }
+                          : translate('Departure')}
                       </div>
                     </div>
                     <div className="searchFormItem__icon_chevron">
@@ -948,9 +946,8 @@ export default function TourSingleSidebar({
 
                   {/* Dropdown List */}
                   <div
-                    className={`searchFormItemDropdown -tour-type ${
-                      activeTimeDD ? "is-active" : ""
-                    }`}
+                    className={`searchFormItemDropdown -tour-type ${activeTimeDD ? "is-active" : ""
+                      }`}
                     data-x="time"
                     data-x-toggle="is-active"
                   >
@@ -966,10 +963,10 @@ export default function TourSingleSidebar({
                                   pre?.name === elm.departure
                                     ? {}
                                     : {
-                                        name: elm.departure,
-                                        value: elm.id,
-                                        price: elm.price,
-                                      }
+                                      name: elm.departure,
+                                      value: elm.id,
+                                      price: elm.price,
+                                    }
                                 );
                                 setActiveTimeDD(false); // Close dropdown after selection
                               }}
@@ -978,7 +975,7 @@ export default function TourSingleSidebar({
                               <button className="js-select-control-button">
                                 <span className="js-select-control-choice">
                                   {elm.departure == "" &&
-                                  elm.departure == undefined
+                                    elm.departure == undefined
                                     ? "No Departure"
                                     : elm.departure}
                                 </span>
@@ -996,6 +993,77 @@ export default function TourSingleSidebar({
           </div>
         </div>
 
+        <hr />
+
+        <div className="searchForm -type-1 -sidebar mt-20">
+          <div className="searchForm__form">
+            <div className="searchFormItem js-select-control js-form-dd">
+              {/* Dropdown Button */}
+              <div
+                className="searchFormItem__button"
+                onClick={() => setActiveTimeDD1((pre) => !pre)}
+                data-x-click="time"
+              >
+                <div className="searchFormItem__content">
+                  <h5>{translate('Arrival')}</h5>
+                  <div className={`js-select-control-chosen `}>
+                    {selectarrival?.name
+                      ? selectarrival?.name
+                      : translate('Arrival')}
+                  </div>
+                </div>
+                <div className="searchFormItem__icon_chevron">
+                  <i className="icon-chevron-down d-flex text-18"></i>
+                </div>
+              </div>
+
+              {/* Dropdown List */}
+              <div
+                className={`searchFormItemDropdown -tour-type ${activeTimeDD1 ? "is-active" : ""
+                  }`}
+                data-x="time"
+                data-x-toggle="is-active"
+              >
+                <div className="searchFormItemDropdown__container">
+                  <div className="searchFormItemDropdown__list sroll-bar-1">
+                    {SidebarData?.tour_details?.arrival?.map(
+                      (elm, i) => (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            // Handle selection of departure
+                            setselectarrival((pre) =>
+                              pre?.name === elm.arrival
+                                ? {}
+                                : {
+                                  name: elm.arrival,
+                                  value: elm.arrival_id,
+                                  tour_id : elm.tour_id
+                                }
+                            );
+                            setActiveTimeDD1(false); // Close dropdown after selection
+                          }}
+                          className="searchFormItemDropdown__item"
+                        >
+                          <button className="js-select-control-button">
+                            <span className="js-select-control-choice">
+                              {elm.arrival == "" &&
+                                elm.arrival == undefined
+                                ? "No Departure"
+                                : elm.arrival}
+                            </span>
+                            {/* <span>{formatPrice(elm.arrival)}</span> */}
+                          </button>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="d-flex items-center justify-between pt-1">
           <div className="text-18 fw-500">{translate('Total')}:</div>
           <div>
@@ -1004,6 +1072,8 @@ export default function TourSingleSidebar({
             </div>
           </div>
         </div>
+
+
 
         {SidebarData?.tour_details?.capacity_empty > 0 ? (
           <button
