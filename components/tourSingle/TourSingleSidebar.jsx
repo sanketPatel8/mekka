@@ -773,7 +773,7 @@ export default function TourSingleSidebar({
                     </label>
                   </div>
                 </div>
-                <div className="text-14">{formatPrice(elm.hotel_price)}</div>
+                <div className="text-14">{elm.hotel_price == "0.00" ? "Inclusive Price"  :  formatPrice(elm.hotel_price) }</div>
               </div>
             </div>
           ))}
@@ -814,7 +814,7 @@ export default function TourSingleSidebar({
                     </label>
                   </div>
                 </div>
-                <div className="text-14">{formatPrice(elm.hotel_price)}</div>
+                <div className="text-14">{elm.hotel_price == "0.00" ? " Inclusive Price"  :  formatPrice(elm.hotel_price) }</div>
               </div>
             </div>
           ))}
@@ -832,10 +832,10 @@ export default function TourSingleSidebar({
                 : "d-block"
               }`}
           >
-            <h5 className="text-18 fw-500 mb-20 mt-20">
+            {/* <h5 className="text-18 fw-500 mb-20 mt-20">
               {translate("Flight Booking")}
-            </h5>
-            <div className="d-flex items-center justify-between pt-1">
+            </h5> */}
+            {/* <div className="d-flex items-center justify-between pt-1">
               <div className="d-flex items-center justify-between">
                 <div className="row ">
                   <div className="col-12">
@@ -876,8 +876,8 @@ export default function TourSingleSidebar({
                   </div>
                 </div>
               </div>
-            </div>
-            <hr />
+            </div> */}
+            {/* <hr /> */}
           </div>
 
           <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
@@ -885,39 +885,33 @@ export default function TourSingleSidebar({
               <h5 className="text-18 fw-500 mb-20 mt-20">
                 {translate("Select Flight")}
               </h5>
-              {SidebarData?.tour_details?.airlines?.map((elm, i) => (
+             
                 <div
                   className="d-flex items-center justify-between my-1"
-                  key={i}
+                  
                 >
                   <div className="d-flex items-center">
                     <div className="form-radio d-flex items-center">
                       <label className="radio d-flex items-center">
-                        <input
-                          type="radio"
-                          name={`${elm.id} ( No Stop )`}
-                          value={elm.id}
-                          checked={selectedFlights?.id === elm.id} // Check if the flight is selected
-                          onChange={(e) => handleHotelChange(e, elm)} // Pass elm to the function
-                        />
+                       
                         <span className="radio__mark">
                           <span className="radio__icon"></span>
                         </span>
                         <span className="text-14 lh-1 ml-10">
-                          {elm.airline_name != null
-                            ? elm.airline_name
+                          {SidebarData?.tour_details?.airlines?.airline_name != null
+                            ? SidebarData?.tour_details?.airlines?.airline_name
                             : "not found"}{" "}
-                          ( {elm.no_of_stop} Stop )
+                          ( {SidebarData?.tour_details?.airlines?.no_of_stop} Stop )
                         </span>
                       </label>
                     </div>
                   </div>
 
                   <div className="text-14">
-                    {formatPrice(elm?.flight_amount)}
+                    {formatPrice(SidebarData?.tour_details?.airlines?.flight_amount)}
                   </div>
                 </div>
-              ))}
+           
             </div>
 
             <hr />
