@@ -51,7 +51,7 @@ export default function EditTour() {
   const params = useParams();
   const id = params.id[0];
   const [tourDetails, setTourDetails] = useState({});
-
+  const [Arrival, setArrival] = useState([])
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [SelectedTour, setSelectedTour] = useState({ value: "", label: "" });
   const [name, setName] = useState("");
@@ -77,6 +77,9 @@ export default function EditTour() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [departureRows, setDepartureRows] = useState([
     { departure_id: "", price: "", id: "" },
+  ]);
+  const [arrivalrow, setArrivalrow] = useState([
+    { arrival_id: "" },
   ]);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -131,7 +134,7 @@ export default function EditTour() {
   const [radioValueFlight, setRadioValueFlight] = useState("No");
   const [minEndDate, setMinEndDate] = useState("");
   const [minDate, setMinDate] = useState("");
-  const [uploadedImage , setUploadedImage] = useState({});
+  const [uploadedImage, setUploadedImage] = useState({});
   const [newImages, setNewImages] = useState([]);
   const [newImageIndex, setNewImageIndex] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
@@ -153,21 +156,21 @@ export default function EditTour() {
     if (response) {
       const updatedServices = services.map((service) => {
         const foundService = response.Tour_Details.addition_service.find(
-            (additionalService) => additionalService.additinoal_order === service.id.toString()
+          (additionalService) => additionalService.additinoal_order === service.id.toString()
         );
 
         console.log(foundService, "foundService");
         if (foundService) {
-            return {
-                ...service,
-                price: foundService.price,
-                checked: true, // Mark as checked if found
-            };
+          return {
+            ...service,
+            price: foundService.price,
+            checked: true, // Mark as checked if found
+          };
         }
         return service;
-    });
+      });
 
-    setServices(updatedServices);
+      setServices(updatedServices);
       setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
       setAdditionalServices(response.Tour_Details.addition_service || "");
@@ -175,19 +178,19 @@ export default function EditTour() {
       setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
       setTourInclude(response.Tour_Details.details.tour_included || "");
-       setAdultPrice(JSON.parse(response.Tour_Details.adult_price[0].price));
-       setChildPrice(JSON.parse(response.Tour_Details.child_price[0].price));
-       setBabyPrice(JSON.parse(response.Tour_Details.baby_price[0].price));
-  
+      setAdultPrice(JSON.parse(response.Tour_Details.adult_price[0].price));
+      setChildPrice(JSON.parse(response.Tour_Details.child_price[0].price));
+      setBabyPrice(JSON.parse(response.Tour_Details.baby_price[0].price));
 
-            
+
+
     }
   };
 
-  
-  
 
- 
+
+
+
 
   const accessdata = async () => {
     const url = "tour_data";
@@ -202,6 +205,7 @@ export default function EditTour() {
         setlanguagesData(response.Data.languages);
         setIncludedData(response.Data.amenities);
         setDepartures(response.Data.departure);
+        setArrival(response.Data.arrival)
       }
     } catch (error) {
       console.error(error);
@@ -228,7 +232,7 @@ export default function EditTour() {
     };
   }, []);
 
-  
+
 
   const handleStartDateChange = (e) => {
     const [day, month, year] = e.target.value.split("-");
@@ -237,8 +241,8 @@ export default function EditTour() {
       const selectedDate = new Date(e.target.value);
       const today = new Date();
 
-    const min_date = new Date(today.toISOString().split("T")[0]);
- 
+      const min_date = new Date(today.toISOString().split("T")[0]);
+
 
       if (selectedDate < min_date) {
         setDateBegin(min_date);
@@ -256,9 +260,9 @@ export default function EditTour() {
   const handleDateFocus = (e) => {
     // Ensure this is a user gesture
     if (e.target === document.activeElement) {
-        e.target.showPicker();
+      e.target.showPicker();
     }
-};
+  };
 
   const handleEndDateChange = (e) => {
     const [day, month, year] = e.target.value.split("-");
@@ -367,13 +371,13 @@ export default function EditTour() {
       setIsFocused(false);
     });
   }, [isFocused])
-  
+
 
   useEffect(() => {
     if (tourDetails) {
       setSelectedTour({ value: tourDetails.type, label: tourDetails.type });
- 
-     
+
+
       if (tourDetails.tour_image) {
         setImage2(tourDetails.tour_image || []);
       }
@@ -415,7 +419,7 @@ export default function EditTour() {
     }
   }, [tourDetails]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (tourDetails && tourDetails.date_begin) {
       setSelectedTour({ value: tourDetails.type, label: tourDetails.type });
       setDateBegin(tourDetails.date_begin);
@@ -425,9 +429,9 @@ export default function EditTour() {
       nextDay.setDate(nextDay.getDate() + 1);
       setMinDate(nextDay.toISOString().split("T")[0]);
     }
-  
 
-  },[tourDetails])
+
+  }, [tourDetails])
 
   useEffect(() => {
     if (flightData) {
@@ -508,18 +512,18 @@ export default function EditTour() {
     setEditorState(newEditorState);
   };
 
-  const handleDeleteImage2 = async(index, event) => {
+  const handleDeleteImage2 = async (index, event) => {
     event.preventDefault();
-  
+
     if (index < image2.length) {
       const url = new URL(image2[index]);
       const fileName = url.pathname.split("/").pop();
-  
+
       const formData = new FormData();
       formData.append("image", fileName);
       formData.append("type", "tour_image");
       formData.append("tour_id", id);
-  
+
       const response = await POST.request({
         form: formData,
         url: "remove_imageordocument",
@@ -528,12 +532,12 @@ export default function EditTour() {
       if (response.Status === "1") {
         showSuccessToast(translate, "Image removed successfully");
         fetchTour(id);
-      }else{
+      } else {
         showErrorToast(translate, "Something went wrong");
 
       }
-    }  else {
-    
+    } else {
+
       const newImagesCopy = [...newImages];
       newImagesCopy.splice(index - image2.length, 1);
       setNewImages(newImagesCopy);
@@ -570,7 +574,7 @@ export default function EditTour() {
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert to days
     return daysDiff + 1; // Include the start day
   };
- 
+
 
   const handleNextTab = () => {
     if (isCurrentTabValid()) {
@@ -581,10 +585,10 @@ export default function EditTour() {
         setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
       }
     } else {
-  
-        showErrorToast(translate, "Please fill in all required fields before proceeding");
-      }
-      }
+
+      showErrorToast(translate, "Please fill in all required fields before proceeding");
+    }
+  }
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
       const newData = [...prevData];
@@ -638,7 +642,7 @@ export default function EditTour() {
     const files = event.target.files;
     const promises = [];
     const uploadedImagesCopy = [...newImages];
-  
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const promise = new Promise((resolve) => {
@@ -655,7 +659,7 @@ export default function EditTour() {
       });
       promises.push(promise);
     }
-  
+
     Promise.all(promises).then(() => {
       setNewImages(uploadedImagesCopy);
       setNewImageIndex(newImageIndex + files.length);
@@ -680,10 +684,22 @@ export default function EditTour() {
     label: `${departure.departure}`,
   }));
 
+  const ArrivalOption = Arrival?.map((arr) => ({
+    value: arr.id,
+    label: `${arr.arrival}`
+  }))
+
   const handleAddDepartureRow = () => {
     setDepartureRows([
       ...departureRows,
       { departure_id: "", price: "", id: "0" },
+    ]);
+  };
+
+  const handleAddArrivalRow = () => {
+    setArrivalrow([
+      ...arrivalrow,
+      { arrival_id: "" },
     ]);
   };
 
@@ -694,6 +710,15 @@ export default function EditTour() {
     const newRows = [...departureRows];
     newRows.splice(index, 1);
     setDepartureRows(newRows);
+  };
+
+  const handleRemoveArrivalRow = (index) => {
+    if (arrivalrow.length === 1) {
+      return;
+    }
+    const newRows = [...arrivalrow];
+    newRows.splice(index, 1);
+    setArrivalrow(newRows);
   };
 
   const Madina = madinaHotel.map((hotel) => ({
@@ -780,6 +805,38 @@ export default function EditTour() {
       setDepartureRows(newRows);
     }
   };
+
+  const handleArrivalchange = (value, index) => {
+    console.log(value, "value");
+
+    if (!value) return;
+    const selectedOption = Arrival.find((option) => option.id === value.value);
+
+    console.log("selectedOption", selectedOption);
+
+
+    const ArrivalData = {
+      ...arrivalrow[index],
+      arrival_id: selectedOption?.id || "",
+
+    };
+
+    console.log("ArrivalData", ArrivalData);
+
+
+    const newRows = [...arrivalrow];
+    newRows[index] = ArrivalData;
+    console.log("newRows", newRows);
+
+
+    setArrivalrow(newRows);
+
+  };
+
+  const allArivalJoin = arrivalrow.map((item) => item.arrival_id).join(", ")
+
+  console.log("allArivalJoin" , allArivalJoin);
+  
 
   const handleMadinaChange = (value, index) => {
     if (!value) return;
@@ -868,7 +925,7 @@ export default function EditTour() {
   };
 
   const isCurrentTabValid = () => {
-    const totalDays = calculateDaysBetweenDates(date_begin, date_end); 
+    const totalDays = calculateDaysBetweenDates(date_begin, date_end);
 
     if (activeTab === "Content") {
       return (
@@ -883,7 +940,7 @@ export default function EditTour() {
           (departure) => departure.departure_id && departure.price
         ) &&
         (image2.length > 0 || Object.keys(uploadedImage).some((key) => uploadedImage[key]))
- 
+
 
       )
     } else if (activeTab === "Pricing") {
@@ -893,10 +950,10 @@ export default function EditTour() {
     } else if (activeTab === "Overview") {
       return editorState !== EditorState.createEmpty();
     } else if (activeTab === "Itinerary") {
-      const isValidItinerary = route_data.length === totalDays && route_data.every(route => 
+      const isValidItinerary = route_data.length === totalDays && route_data.every(route =>
         route.dayData && route.description && route.day
       );
-  
+
       return isValidItinerary;
     } else if (activeTab === "Flight Hotel And Visa") {
       return (
@@ -931,10 +988,10 @@ export default function EditTour() {
     e.preventDefault();
 
     setLoading(true);
-    const totalDays = calculateDaysBetweenDates(date_begin, date_end); 
+    const totalDays = calculateDaysBetweenDates(date_begin, date_end);
 
 
-    if(  !date_begin || !date_end || !name || !capacity ||  departureRows.length == 0  || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price ) {
+    if (!date_begin || !date_end || !name || !capacity || departureRows.length == 0 || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price) {
       showErrorToast(translate, "Please fill in all required fields before proceeding");
       setLoading(false);
       return;
@@ -945,18 +1002,18 @@ export default function EditTour() {
       setLoading(false);
       return;
     }
-  
+
     const hasEmptyDayOrDescription = route_data.some((day) => !day.dayData || !day.description);
     if (hasEmptyDayOrDescription) {
       showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
       setLoading(false);
       return;
     }
-  
 
-    
-  
-  
+
+
+
+
 
     const end_date = formatDateToMMDDYYYY(date_end);
     const start_date = formatDateToMMDDYYYY(date_begin);
@@ -1000,12 +1057,12 @@ export default function EditTour() {
       ) &&
       (radioValueFlight === "Yes"
         ? !flightData.some(
-            (flight) =>
-              flight.flight_id &&
-              flight.flight_amount &&
-              flight.no_of_stop &&
-              flight.luggage
-          )
+          (flight) =>
+            flight.flight_id &&
+            flight.flight_amount &&
+            flight.no_of_stop &&
+            flight.luggage
+        )
         : false) &&
       !flightInformation
     ) {
@@ -1013,7 +1070,7 @@ export default function EditTour() {
       showErrorToast(translate, "Please fill in all required fields before proceeding");
       return;
     }
-  
+
 
     const hotel_data = [...mekkaData, ...madinaData];
 
@@ -1040,7 +1097,7 @@ export default function EditTour() {
     const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
     const image2FileArray = Object.entries(uploadedImage).map(([key, value]) => value);
- 
+
 
 
     const departureData = departureRows.map((departure) => ({
@@ -1124,9 +1181,8 @@ export default function EditTour() {
     <>
       <ToastContainer />
       <div
-        className={`dashboard overflow-hidden ${
-          sideBarOpen ? "-is-sidebar-visible" : ""
-        } js-dashboard `}
+        className={`dashboard overflow-hidden ${sideBarOpen ? "-is-sidebar-visible" : ""
+          } js-dashboard `}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
 
@@ -1142,9 +1198,8 @@ export default function EditTour() {
                   {tabs.map((elm, i) => (
                     <div key={elm} className="col-auto">
                       <button
-                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
-                          activeTab == elm ? "is-tab-el-active" : ""
-                        }`}
+                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${activeTab == elm ? "is-tab-el-active" : ""
+                          }`}
                         onClick={() => isNextClicked && handleTabClick(elm, i)}
                         disabled={
                           i > activeTabIndex && !enabledTabs.includes(i)
@@ -1161,9 +1216,8 @@ export default function EditTour() {
                     <div className="col-xl-12 col-lg-12">
                       <div className="tabs__content js-tabs-content">
                         <div
-                          className={`tabs__pane  ${
-                            activeTab == "Content" ? "is-tab-el-active" : ""
-                          }`}
+                          className={`tabs__pane  ${activeTab == "Content" ? "is-tab-el-active" : ""
+                            }`}
                         >
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
@@ -1228,7 +1282,7 @@ export default function EditTour() {
                                           e.preventDefault();
                                         }
                                       }}
-                                      onKeyUp={()=>setIsFocused(false)}
+                                      onKeyUp={() => setIsFocused(false)}
                                       onFocus={() => setIsFocused(true)}
                                       onBlur={() => setIsFocused(false)}
                                     />
@@ -1352,7 +1406,7 @@ export default function EditTour() {
                                               </div>
 
                                               <div className="col-md-6">
-                                                <div className="form-input spacing">
+                                                {/* <div className="form-input spacing">
                                                   <input
                                                     type="number"
                                                     required
@@ -1389,42 +1443,134 @@ export default function EditTour() {
                                                       *
                                                     </span>
                                                   </label>
+                                                </div> */}
+                                                <div className="col-2 d-flex">
+                                                  <button
+                                                    type="button"
+                                                    className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                                    onClick={handleAddDepartureRow}
+                                                    style={{ height: "fit-content" }}
+                                                  >
+                                                    +
+                                                  </button>
+                                                  {index > 0 && (
+                                                    <button
+                                                      type="button"
+                                                      className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                                      style={{
+                                                        height: "fit-content",
+                                                      }}
+                                                      onClick={() =>
+                                                        handleRemoveDepartureRow(
+                                                          index
+                                                        )
+                                                      }
+                                                    >
+                                                      -
+                                                    </button>
+                                                  )}
                                                 </div>
                                               </div>
                                             </div>
                                           </div>
+                                          <hr />
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6>
+                                    {" "}
+                                    {translate("Arrival")}
+                                  </h6>
+                                  <ul className="">
 
-                                          <div className="col-2 d-flex">
-                                            <button
-                                              type="button"
-                                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                              onClick={handleAddDepartureRow}
-                                              style={{ height: "fit-content" }}
-                                            >
-                                              +
-                                            </button>
-                                            {index > 0 && (
-                                              <button
-                                                type="button"
-                                                className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                                style={{
-                                                  height: "fit-content",
-                                                }}
-                                                onClick={() =>
-                                                  handleRemoveDepartureRow(
-                                                    index
-                                                  )
-                                                }
-                                              >
-                                                -
-                                              </button>
-                                            )}
+                                    {arrivalrow.map((row, index) => (
+                                      <li key={index}>
+                                        <div className=" row">
+                                          <div className="col-lg-8">
+                                            <div className="row">
+                                              <div className="col-md-8 form-input spacing d-flex flex-column align-items-center">
+                                                <CreatableSelect
+                                                  value={row.id}
+                                                  onChange={(value) =>
+                                                    handleArrivalchange(value, index)
+                                                  }
+                                                  options={ArrivalOption}
+                                                  className="custom-select Hotel-Madina-dd"
+                                                  placeholder={`${translate("Select Arrival (Required)")}`}
+                                                  classNamePrefix="react-select"
+                                                  isClearable
+                                                  formatCreateLabel={(inputValue) =>
+                                                    `Not Found: "${inputValue}"`
+                                                  }
+                                                />
+                                              </div>
+
+                                              <div className="col-md-3">
+                                                {/* <div className="form-input spacing">
+                                                  <input type="number" required ref={numberInputRef2}
+                                                    value={departureRows[index].hotel_price}
+                                                    onChange={(e) => setDepartureRows(prevRows => {
+                                                      const newRows = [...prevRows];
+                                                      newRows[index].price = e.target.value;
+                                                      return newRows;
+                                                    })}
+                                                    onKeyDown={(e) => {
+                                                      if (!isFocused) return;
+          
+                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
+                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onFocus={() => setIsFocused(true)}
+                                                    onBlur={() => setIsFocused(false)}
+                                                    />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {" "}
+                                                    {translate("Price") ||
+                                                      "Find Latest Packages"} <span className="text-red">*</span>
+                                                  </label>
+                                                </div> */}
+                                                <div className="col-2 d-flex">
+                                                  <button
+                                                    type="button"
+                                                    className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                                    onClick={handleAddArrivalRow}
+                                                    style={{ height: "fit-content" }}
+
+                                                  >
+                                                    +
+                                                  </button>
+                                                  {index > 0 && (
+                                                    <button
+                                                      type="button"
+                                                      className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                                      style={{ height: "fit-content" }}
+
+                                                      onClick={() =>
+                                                        handleRemoveArrivalRow(index)
+                                                      }
+                                                    >
+                                                      -
+                                                    </button>
+                                                  )}
+                                                </div>
+                                              </div>
+
+                                            </div>
                                           </div>
+
+
+
 
                                           <hr />
                                         </div>
                                       </li>
                                     ))}
+
                                   </ul>
                                 </div>
                               </div>
@@ -1499,38 +1645,37 @@ export default function EditTour() {
                           {activeTabIndex < tabs.length - 1 && (
                             <div className="d-flex">
 
-                            <button
-                              className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2"
-                              onClick={handleNextTab}
-                              type="button"
-                            >
-                              {translate("Next")}
-                            </button>
-                            <button
-                              type="submit"
-                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                            >
-                              {loading ? (
-                                <div
-                                  className="d-flex justify-content-center align-items-center"
-                                  style={{ height: "30px", width: "100%" }}
-                                >
-                                  <ClipLoader color="#ffffff" size={30} />
-                                </div>
-                              ) : (
-                                translate("Save Details")
-                              )}
-                            </button>
+                              <button
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2"
+                                onClick={handleNextTab}
+                                type="button"
+                              >
+                                {translate("Next")}
+                              </button>
+                              <button
+                                type="submit"
+                                className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                              >
+                                {loading ? (
+                                  <div
+                                    className="d-flex justify-content-center align-items-center"
+                                    style={{ height: "30px", width: "100%" }}
+                                  >
+                                    <ClipLoader color="#ffffff" size={30} />
+                                  </div>
+                                ) : (
+                                  translate("Save Details")
+                                )}
+                              </button>
                             </div>
 
-                            
+
                           )}
                         </div>
 
                         <div
-                          className={`tabs__pane  ${
-                            activeTab === "Pricing" ? "is-tab-el-active" : ""
-                          }`}
+                          className={`tabs__pane  ${activeTab === "Pricing" ? "is-tab-el-active" : ""
+                            }`}
                         >
                           <div className="y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="contactForm row y-gap-30 items-center ">
@@ -1547,7 +1692,7 @@ export default function EditTour() {
                                         e.preventDefault();
                                       }
                                     }}
-                                    onKeyUp={()=>setIsFocused(false)}
+                                    onKeyUp={() => setIsFocused(false)}
                                     onFocus={() => setIsFocused(true)}
                                     onBlur={() => setIsFocused(false)}
                                   />
@@ -1571,7 +1716,7 @@ export default function EditTour() {
                                         e.preventDefault();
                                       }
                                     }}
-                                    onKeyUp={()=>setIsFocused(false)}
+                                    onKeyUp={() => setIsFocused(false)}
                                     onFocus={() => setIsFocused(true)}
                                     onBlur={() => setIsFocused(false)}
                                   />
@@ -1595,7 +1740,7 @@ export default function EditTour() {
                                         e.preventDefault();
                                       }
                                     }}
-                                    onKeyUp={()=>setIsFocused(false)}
+                                    onKeyUp={() => setIsFocused(false)}
                                     onFocus={() => setIsFocused(true)}
                                     onBlur={() => setIsFocused(false)}
                                   />
@@ -1693,7 +1838,7 @@ export default function EditTour() {
                                               e.preventDefault();
                                             }
                                           }}
-                                          onKeyUp={()=>setIsFocused(false)}
+                                          onKeyUp={() => setIsFocused(false)}
                                           onFocus={() => setIsFocused(true)}
                                           onBlur={() => setIsFocused(false)}
                                           required
@@ -1720,37 +1865,36 @@ export default function EditTour() {
                             )}
                             {activeTabIndex > 0 && (
                               <div className="d-flex">
-                              <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
-                                onClick={handlePrevTab}
-                                type="button"
-                              >
-                                {translate("Previous")}
-                              </button>
-                              <button
-                              type="submit"
-                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                            >
-                              {loading ? (
-                                <div
-                                  className="d-flex justify-content-center align-items-center"
-                                  style={{ height: "30px", width: "100%" }}
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
+                                  onClick={handlePrevTab}
+                                  type="button"
                                 >
-                                  <ClipLoader color="#ffffff" size={30} />
-                                </div>
-                              ) : (
-                                translate("Save Details")
-                              )}
-                            </button>
+                                  {translate("Previous")}
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                >
+                                  {loading ? (
+                                    <div
+                                      className="d-flex justify-content-center align-items-center"
+                                      style={{ height: "30px", width: "100%" }}
+                                    >
+                                      <ClipLoader color="#ffffff" size={30} />
+                                    </div>
+                                  ) : (
+                                    translate("Save Details")
+                                  )}
+                                </button>
                               </div>
                             )}
                           </div>
                         </div>
 
                         <div
-                          className={`tabs__pane ${
-                            activeTab == "Included" ? "is-tab-el-active" : ""
-                          }`}
+                          className={`tabs__pane ${activeTab == "Included" ? "is-tab-el-active" : ""
+                            }`}
                         >
                           <div className="row  y-gap-30 contactForm px-lg-20 px-0">
                             {included.map((item, index) => (
@@ -1769,9 +1913,9 @@ export default function EditTour() {
                                               included.map((includedItem) =>
                                                 includedItem.id === item.id
                                                   ? {
-                                                      ...includedItem,
-                                                      checked: e.target.checked,
-                                                    }
+                                                    ...includedItem,
+                                                    checked: e.target.checked,
+                                                  }
                                                   : includedItem
                                               );
                                             setIncluded(updatedIncluded);
@@ -1822,37 +1966,36 @@ export default function EditTour() {
                             )}
                             {activeTabIndex > 0 && (
                               <div className="d-flex">
-                              <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
-                                onClick={handlePrevTab}
-                                type="button"
-                              >
-                                {translate("Previous")}
-                              </button>
-                              <button
-                              type="submit"
-                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                            >
-                              {loading ? (
-                                <div
-                                  className="d-flex justify-content-center align-items-center"
-                                  style={{ height: "30px", width: "100%" }}
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
+                                  onClick={handlePrevTab}
+                                  type="button"
                                 >
-                                  <ClipLoader color="#ffffff" size={30} />
-                                </div>
-                              ) : (
-                                translate("Save Details")
-                              )}
-                            </button>
+                                  {translate("Previous")}
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                >
+                                  {loading ? (
+                                    <div
+                                      className="d-flex justify-content-center align-items-center"
+                                      style={{ height: "30px", width: "100%" }}
+                                    >
+                                      <ClipLoader color="#ffffff" size={30} />
+                                    </div>
+                                  ) : (
+                                    translate("Save Details")
+                                  )}
+                                </button>
                               </div>
                             )}
                           </div>
                         </div>
 
                         <div
-                          className={`tabs__pane  ${
-                            activeTab == "Overview" ? "is-tab-el-active" : ""
-                          }`}
+                          className={`tabs__pane  ${activeTab == "Overview" ? "is-tab-el-active" : ""
+                            }`}
                         >
                           <div className="y-gap-30 contactForm px-lg-20 px-0 ">
                             {typeof window != "undefined" && (
@@ -1888,37 +2031,36 @@ export default function EditTour() {
                             )}
                             {activeTabIndex > 0 && (
                               <div className="d-flex">
-                              <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
-                                onClick={handlePrevTab}
-                                type="button"
-                              >
-                                {translate("Previous")}
-                              </button>
-                              <button
-                              type="submit"
-                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                            >
-                              {loading ? (
-                                <div
-                                  className="d-flex justify-content-center align-items-center"
-                                  style={{ height: "30px", width: "100%" }}
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2 "
+                                  onClick={handlePrevTab}
+                                  type="button"
                                 >
-                                  <ClipLoader color="#ffffff" size={30} />
-                                </div>
-                              ) : (
-                                translate("Save Details")
-                              )}
-                            </button>
+                                  {translate("Previous")}
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                >
+                                  {loading ? (
+                                    <div
+                                      className="d-flex justify-content-center align-items-center"
+                                      style={{ height: "30px", width: "100%" }}
+                                    >
+                                      <ClipLoader color="#ffffff" size={30} />
+                                    </div>
+                                  ) : (
+                                    translate("Save Details")
+                                  )}
+                                </button>
                               </div>
                             )}
                           </div>
                         </div>
 
                         <div
-                          className={`tabs__pane  ${
-                            activeTab == "Itinerary" ? "is-tab-el-active" : ""
-                          }`}
+                          className={`tabs__pane  ${activeTab == "Itinerary" ? "is-tab-el-active" : ""
+                            }`}
                         >
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
@@ -1998,39 +2140,38 @@ export default function EditTour() {
                             )}
                             {activeTabIndex > 0 && (
                               <div className="d-flex">
-                              <button
-                                className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2"
-                                onClick={handlePrevTab}
-                                type="button"
-                              >
-                                {translate("Previous")}
-                              </button>
-                              <button
-                              type="submit"
-                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
-                            >
-                              {loading ? (
-                                <div
-                                  className="d-flex justify-content-center align-items-center"
-                                  style={{ height: "30px", width: "100%" }}
+                                <button
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2"
+                                  onClick={handlePrevTab}
+                                  type="button"
                                 >
-                                  <ClipLoader color="#ffffff" size={30} />
-                                </div>
-                              ) : (
-                                translate("Save Details")
-                              )}
-                            </button>
+                                  {translate("Previous")}
+                                </button>
+                                <button
+                                  type="submit"
+                                  className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                                >
+                                  {loading ? (
+                                    <div
+                                      className="d-flex justify-content-center align-items-center"
+                                      style={{ height: "30px", width: "100%" }}
+                                    >
+                                      <ClipLoader color="#ffffff" size={30} />
+                                    </div>
+                                  ) : (
+                                    translate("Save Details")
+                                  )}
+                                </button>
                               </div>
                             )}
                           </div>
                         </div>
 
                         <div
-                          className={`tabs__pane  ${
-                            activeTab == "Flight Hotel And Visa"
+                          className={`tabs__pane  ${activeTab == "Flight Hotel And Visa"
                               ? "is-tab-el-active"
                               : ""
-                          }`}
+                            }`}
                         >
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="d-flex item-center justify-content-between">
@@ -2139,7 +2280,7 @@ export default function EditTour() {
                                                     e.preventDefault();
                                                   }
                                                 }}
-                                                onKeyUp={()=>setIsFocused(false)}
+                                                onKeyUp={() => setIsFocused(false)}
                                                 onFocus={() => setIsFocused(true)}
                                                 onBlur={() => setIsFocused(false)}
                                               />
@@ -2270,7 +2411,7 @@ export default function EditTour() {
                                                     e.preventDefault();
                                                   }
                                                 }}
-                                                onKeyUp={()=>setIsFocused(false)}
+                                                onKeyUp={() => setIsFocused(false)}
                                                 onFocus={() => setIsFocused(true)}
                                                 onBlur={() => setIsFocused(false)}
                                               />
@@ -2550,7 +2691,7 @@ export default function EditTour() {
                                                         e.preventDefault();
                                                       }
                                                     }}
-                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onKeyUp={() => setIsFocused(false)}
                                                     onFocus={() => setIsFocused(true)}
                                                     onBlur={() => setIsFocused(false)}
                                                   />
@@ -2591,7 +2732,7 @@ export default function EditTour() {
                                                         e.preventDefault();
                                                       }
                                                     }}
-                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onKeyUp={() => setIsFocused(false)}
                                                     onFocus={() => setIsFocused(true)}
                                                     onBlur={() => setIsFocused(false)}
                                                   />
@@ -2631,7 +2772,7 @@ export default function EditTour() {
                                                         e.preventDefault();
                                                       }
                                                     }}
-                                                    onKeyUp={()=>setIsFocused(false)}
+                                                    onKeyUp={() => setIsFocused(false)}
                                                     onFocus={() => setIsFocused(true)}
                                                     onBlur={() => setIsFocused(false)}
                                                   />
@@ -2677,7 +2818,7 @@ export default function EditTour() {
                             )}
                           </div>
                           <div className=" flex_start">
-                          {activeTabIndex > 0 && (
+                            {activeTabIndex > 0 && (
                               <button
                                 className="button -sm -info-2 bg-accent-1 text-white  mt-4 "
                                 onClick={handlePrevTab}
@@ -2701,7 +2842,7 @@ export default function EditTour() {
                                 translate("Save Details")
                               )}
                             </button>
-                         
+
                           </div>
                         </div>
                       </div>
