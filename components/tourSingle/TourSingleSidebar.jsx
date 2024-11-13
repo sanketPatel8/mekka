@@ -12,6 +12,7 @@ import { post } from "@/app/utils/api";
 import { POST } from "@/app/utils/api/post";
 import { useCurrency } from "@/app/context/currencyContext";
 import { ToastContainer } from "react-toastify";
+import { MdFlight } from "react-icons/md";
 
 export default function TourSingleSidebar({
   PAckageData,
@@ -883,7 +884,7 @@ export default function TourSingleSidebar({
           <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
             <div>
               <h5 className="text-18 fw-500 mb-20 mt-20">
-                {translate("Select Flight")}
+                {translate("Flight Information")}
               </h5>
              
                 <div
@@ -892,11 +893,10 @@ export default function TourSingleSidebar({
                 >
                   <div className="d-flex items-center">
                     <div className="form-radio d-flex items-center">
-                      <label className="radio d-flex items-center">
+                      <label className=" d-flex items-center">
                        
-                        <span className="radio__mark">
-                          <span className="radio__icon"></span>
-                        </span>
+                      <MdFlight size={20} color="#DAC04F"/>
+
                         <span className="text-14 lh-1 ml-10">
                           {SidebarData?.tour_details?.airlines?.airline_name != null
                             ? SidebarData?.tour_details?.airlines?.airline_name
@@ -915,7 +915,9 @@ export default function TourSingleSidebar({
             </div>
 
             <hr />
-
+            <h5 className="text-18 fw-500 mb-10 mt-10">
+                {translate("Departure Information")}
+              </h5>
             <div className="searchForm -type-1 -sidebar mt-20">
               <div className="searchForm__form">
                 <div className="searchFormItem js-select-control js-form-dd">
@@ -989,6 +991,9 @@ export default function TourSingleSidebar({
 
         <hr />
 
+        <h5 className="text-18 fw-500 mb-20 mt-10">
+                {translate("Arrival Information")}
+              </h5>
         <div className="searchForm -type-1 -sidebar mt-20">
           <div className="searchForm__form">
             <div className="searchFormItem js-select-control js-form-dd">
@@ -1058,7 +1063,7 @@ export default function TourSingleSidebar({
           </div>
         </div>
 
-        <div className="d-flex items-center justify-between pt-1">
+        <div className="d-flex items-center justify-between pt-10">
           <div className="text-18 fw-500">{translate('Total')}:</div>
           <div>
             <div className="text-18 fw-500">
