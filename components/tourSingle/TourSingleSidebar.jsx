@@ -908,7 +908,7 @@ export default function TourSingleSidebar({
                   </div>
 
                   <div className="text-14">
-                    {formatPrice(SidebarData?.tour_details?.airlines?.flight_amount)}
+                    {SidebarData?.tour_details?.airlines?.flight_amount === "0.00" ? "Inclusive Package" : formatPrice(SidebarData?.tour_details?.airlines?.flight_amount)}
                   </div>
                 </div>
            
@@ -975,7 +975,7 @@ export default function TourSingleSidebar({
                                     ? "No Departure"
                                     : elm.departure}
                                 </span>
-                                <span>{formatPrice(elm.price)}</span>
+                                {/* <span>{formatPrice(elm.price)}</span> */}
                               </button>
                             </div>
                           )
