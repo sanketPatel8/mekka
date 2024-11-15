@@ -248,8 +248,8 @@ export default function TourSingleSidebar({
       price: elm.flight_amount,
       luggage: elm.luggage,
     };
-
-    setSelectedFlights(selectedFlight); // Replace with the selected flight object
+    console.log(selectedFlight)
+    setSelectedFlights(selectedFlight); 
     setSelectedAirlinePrice(selectedFlight.price);
   };
 
@@ -560,7 +560,7 @@ export default function TourSingleSidebar({
     Arrival : selectarrival ,
     Return: SidebarData?.tour_details?.date_end,
     OfferedLanguages: SidebarData?.en_language,
-    MaxLuggagePerPerson: 0,
+    MaxLuggagePerPerson: SidebarData?.tour_flights?.luggage,
     MakkaHotel: mekkaHotel,
     mekkaHotelStar: MekkaStars,
     MadinaHotel: madinaHotel,

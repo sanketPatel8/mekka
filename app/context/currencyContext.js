@@ -29,12 +29,10 @@ export const CurrencyProvider = ({ children }) => {
     // console.log("price" , price);
 
     if (currency === "EURO") {
-      console.log("price", price);
-      console.log("currencyEUR", currencyEUR);
+    
 
       const eurAmount = price / currencyEUR;
 
-      console.log("eurAmount", eurAmount);
 
       return new Intl.NumberFormat('de-DE', {
         style: 'currency',
