@@ -36,6 +36,7 @@ export default function TourSlider({ PAckageData }) {
             )}
           </div>
         </div>
+        {slibleTourSlider?.length !== 0 && slibleTourSlider && (
 
         <div className="relative pt-40 sm:pt-20">
           <div
@@ -182,6 +183,7 @@ export default function TourSlider({ PAckageData }) {
             </div>
           )}
         </div>
+        )}
       </div>
     </section>
   );
