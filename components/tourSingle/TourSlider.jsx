@@ -19,8 +19,8 @@ export default function TourSlider({ PAckageData }) {
 
   useEffect(() => {
     setslibleTourSlider(PAckageData?.Tour_List);
+    console.log(slibleTourSlider, "slibleTourSlider");
   }, [PAckageData]);
-
 
   return (
     <section className="">
@@ -37,7 +37,7 @@ export default function TourSlider({ PAckageData }) {
         </div>
         {slibleTourSlider?.length !== 0 && slibleTourSlider && (
 
-        <div className="relative pt-40 sm:pt-20">
+        <div className="relative py-40 sm:pt-20">
           <div
             className="overflow-hidden pb-5 js-section-slider"
             data-gap="30"
@@ -170,7 +170,7 @@ export default function TourSlider({ PAckageData }) {
               </Swiper>
             </div>
           </div>
-          {slibleTourSlider?.length !== 0 && (
+          {slibleTourSlider?.length > 4 && (
             <div className="navAbsolute dis_none">
               <button className="navAbsolute__button bg-white js-slider10-prev">
                 <i className="icon-arrow-left text-14"></i>

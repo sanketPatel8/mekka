@@ -1012,7 +1012,7 @@ export default function EditTour() {
 
 
 
-
+    console.log(arrivalrow, "arrivalrow")
 
 
     const end_date = formatDateToMMDDYYYY(date_end);
@@ -1107,66 +1107,66 @@ export default function EditTour() {
     }));
 
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    formData.append("type", SelectedTour.value);
-    formData.append("name", name);
-    formData.append("capacity", capacity);
-    formData.append("date_begin", formatDateToMMDDYYYY(start_date));
-    formData.append("date_end", formatDateToDDMMYYYY(end_date));
-    formData.append("tour_languages", languageString);
-    formData.append("adult_price", adult_price);
-    formData.append("child_price", child_price);
-    formData.append("baby_price", baby_price);
-    formData.append("addition_service", JSON.stringify(servicesData));
-    formData.append("tour_included", includedData);
-    formData.append("tour_info", tourInfo);
-    formData.append("flight_info", flightInformation);
-    formData.append("route_data", JSON.stringify(newRouteData));
-    formData.append("hotel_data", JSON.stringify(hotel_data));
-    formData.append(
-      "flight_data",
-      radioValueFlight === "Yes" ? JSON.stringify(flight_data) : ""
-    );
-    formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    formData.append(
-      "flight_exclude",
-      radioValueExcludeFlight === "Yes" ? 1 : 0
-    );
-    formData.append("user_id", user?.user.id);
-    formData.append("company_id", user?.user.company_id);
-    formData.append("tour_id", id);
+    // formData.append("type", SelectedTour.value);
+    // formData.append("name", name);
+    // formData.append("capacity", capacity);
+    // formData.append("date_begin", formatDateToMMDDYYYY(start_date));
+    // formData.append("date_end", formatDateToDDMMYYYY(end_date));
+    // formData.append("tour_languages", languageString);
+    // formData.append("adult_price", adult_price);
+    // formData.append("child_price", child_price);
+    // formData.append("baby_price", baby_price);
+    // formData.append("addition_service", JSON.stringify(servicesData));
+    // formData.append("tour_included", includedData);
+    // formData.append("tour_info", tourInfo);
+    // formData.append("flight_info", flightInformation);
+    // formData.append("route_data", JSON.stringify(newRouteData));
+    // formData.append("hotel_data", JSON.stringify(hotel_data));
+    // formData.append(
+    //   "flight_data",
+    //   radioValueFlight === "Yes" ? JSON.stringify(flight_data) : ""
+    // );
+    // formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
+    // formData.append(
+    //   "flight_exclude",
+    //   radioValueExcludeFlight === "Yes" ? 1 : 0
+    // );
+    // formData.append("user_id", user?.user.id);
+    // formData.append("company_id", user?.user.company_id);
+    // formData.append("tour_id", id);
 
-    if (image2FileArray.length === 0) {
-      formData.append("tour_image", "");
-    } else {
-      image2FileArray.forEach((file, index) => {
-        formData.append(`tour_image[${index}]`, file);
-      });
-    }
-    formData.append("departures", JSON.stringify(departureData));
+    // if (image2FileArray.length === 0) {
+    //   formData.append("tour_image", "");
+    // } else {
+    //   image2FileArray.forEach((file, index) => {
+    //     formData.append(`tour_image[${index}]`, file);
+    //   });
+    // }
+    // formData.append("departures", JSON.stringify(departureData));
 
-    const url = "updatetour";
+    // const url = "updatetour";
 
-    try {
-      const response = await POST.request({
-        form: formData,
-        url: url,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setLoading(false);
-      if (response) {
-        showSuccessToast(translate, "Tour Updated Successfully");
-        // setActiveTab("Content");
-        // setActiveTabIndex(0);
-        // fetchTour(id);
-        setTimeout(() => {
-          router.push("/vendor/listing");
-        }, 1000);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   const response = await POST.request({
+    //     form: formData,
+    //     url: url,
+    //     headers: { "Content-Type": "multipart/form-data" },
+    //   });
+    //   setLoading(false);
+    //   if (response) {
+    //     showSuccessToast(translate, "Tour Updated Successfully");
+    //     // setActiveTab("Content");
+    //     // setActiveTabIndex(0);
+    //     // fetchTour(id);
+    //     setTimeout(() => {
+    //       router.push("/vendor/listing");
+    //     }, 1000);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   const formatDateToDDMMYYYY = (date) => {
     const [year, month, day] = date.split("-");
