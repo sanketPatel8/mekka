@@ -1543,7 +1543,7 @@ export default function BookingPages({ BookingData }) {
                       </div>
                     </div>
 
-                    <div className="d-flex items-center justify-content-space-arround">
+                    {/* <div className="d-flex items-center justify-content-space-arround">
                       <div className="mr-5">
                         <MdFlightLand htTakeoff size={25} color="#DAC04F" />
                       </div>
@@ -1556,7 +1556,7 @@ export default function BookingPages({ BookingData }) {
                             ? "JED"
                             : "MED & JED"}
                       </div>
-                    </div>
+                    </div> */}
 
                     <div
                       className={`${BookingSideBar.selectedCheckbox !== false ||
@@ -1619,9 +1619,9 @@ export default function BookingPages({ BookingData }) {
                         </div>
                         <div className="text-start">
                           {translate("Max Luggage Per Person")} :{" "}
-                          {BookingSideBar?.Airline?.luggage === null
-                            ? " null aa raha hei ! "
-                            : BookingSideBar?.Airline?.luggage}{" "}
+                          {BookingSideBar?.MaxLuggagePerPerson === 0
+                            ? "  "
+                            : BookingSideBar?.MaxLuggagePerPerson}{" "}
                           kg
                         </div>
                       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { State } from "@/data/tourSingleContent";
 import "@/public/css/index.css";
 import Link from "next/link";
@@ -62,7 +62,36 @@ export default function TourSingleSidebar({
   const [LocalData, setLocalData] = useState([]);
   const [MekkaStars, setMekkaStars] = useState('')
   const [MadinaStars, setMadinaStars] = useState('')
+  const [dropdownActive, setDropdownActive] = useState(false);
+  const [dropdownArrivalActive, setDropdownArrivalActive] = useState(false);
 
+  // Create refs for dropdowns
+  const departureDropdownRef = useRef(null);
+  const arrivalDropdownRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (departureDropdownRef.current && !departureDropdownRef.current.contains(event.target)) {
+      setDropdownActive(false);
+    }
+    if (arrivalDropdownRef.current && !arrivalDropdownRef.current.contains(event.target)) {
+      setDropdownArrivalActive(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Function to toggle the dropdown
+  const toggleDepartureDropdown = () => {
+    setDropdownActive((prev) => !prev);
+  };
+
+  const toggleArrivalDropdown = () => {
+    setDropdownArrivalActive((prev) => !prev);
+  };
   useEffect(() => {
     if (SidebarData?.tour_hotels?.mekka_hotels?.length > 0) {
       const firstMekkaHotel = SidebarData.tour_hotels.mekka_hotels[0];
@@ -571,7 +600,14 @@ export default function TourSingleSidebar({
     ) {
       showErrorToast(translate, "Please Select Departure");
       return;
-    } else {
+    } else if(selectarrival.name === "" &&
+    selectedCheckbox === false &&
+    SidebarData?.tour_details?.flight_included !== "0"
+    ){
+      showErrorToast(translate, "Please Select Arrival");
+      return;
+    }
+    else {
       router.push(
         `/booking/?id=${Tourid}&name=${SidebarData?.tour_details?.name}&type=${SidebarData?.tour_details?.type
         }&selectedflight=${selectedFlights?.name === undefined ? "" : selectedFlights?.name
@@ -920,70 +956,47 @@ export default function TourSingleSidebar({
               </h5>
             <div className="searchForm -type-1 -sidebar mt-20">
               <div className="searchForm__form">
-                <div className="searchFormItem js-select-control js-form-dd">
-                  {/* Dropdown Button */}
-                  <div
-                    className="searchFormItem__button"
-                    onClick={() => setActiveTimeDD((pre) => !pre)}
-                    data-x-click="time"
-                  >
-                    <div className="searchFormItem__content">
-                      <h5>{translate('Departure')}</h5>
-                      <div className={`js-select-control-chosen `}>
-                        {selectDeparture?.name
-                          ? selectDeparture?.name
-                          : translate('Departure')}
-                      </div>
-                    </div>
-                    <div className="searchFormItem__icon_chevron">
-                      <i className="icon-chevron-down d-flex text-18"></i>
-                    </div>
+              <div className="searchFormItem js-select-control js-form-dd" ref={departureDropdownRef}>
+        <div className="searchFormItem__button" onClick={toggleDepartureDropdown}>
+          <div className="searchFormItem__content">
+            <h5>{translate('Departure')}</h5>
+            <div className={`js-select-control-chosen`}>
+              {selectDeparture?.name ? selectDeparture?.name : translate('Departure')}
+            </div>
+          </div>
+          <div className="searchFormItem__icon_chevron">
+            <i className="icon-chevron-down d-flex text-18"></i>
+          </div>
+        </div>
+        {dropdownActive && (
+          <div className={`searchFormItemDropdown -tour-type is-active`}>
+            <div className="searchFormItemDropdown__container">
+              <div className="searchFormItemDropdown__list sroll-bar-1">
+                {SidebarData?.tour_details?.departures?.map((elm, i) => (
+                  <div key={i} onClick={() => {
+                    setselectDeparture((pre) =>
+                      pre?.name === elm.departure
+                        ? {}
+                        : {
+                            name: elm.departure,
+                            value: elm.id,
+                            price: elm.price,
+                          }
+                    );
+                    setDropdownActive(false); // Close dropdown after selection
+                  }} className="searchFormItemDropdown__item">
+                    <button className="js-select-control-button">
+                      <span className="js-select-control-choice">
+                        {elm.departure || "No Departure"}
+                      </span>
+                    </button>
                   </div>
-
-                  {/* Dropdown List */}
-                  <div
-                    className={`searchFormItemDropdown -tour-type ${activeTimeDD ? "is-active" : ""
-                      }`}
-                    data-x="time"
-                    data-x-toggle="is-active"
-                  >
-                    <div className="searchFormItemDropdown__container">
-                      <div className="searchFormItemDropdown__list sroll-bar-1">
-                        {SidebarData?.tour_details?.departures?.map(
-                          (elm, i) => (
-                            <div
-                              key={i}
-                              onClick={() => {
-                                // Handle selection of departure
-                                setselectDeparture((pre) =>
-                                  pre?.name === elm.departure
-                                    ? {}
-                                    : {
-                                      name: elm.departure,
-                                      value: elm.id,
-                                      price: elm.price,
-                                    }
-                                );
-                                setActiveTimeDD(false); // Close dropdown after selection
-                              }}
-                              className="searchFormItemDropdown__item"
-                            >
-                              <button className="js-select-control-button">
-                                <span className="js-select-control-choice">
-                                  {elm.departure == "" &&
-                                    elm.departure == undefined
-                                    ? "No Departure"
-                                    : elm.departure}
-                                </span>
-                                {/* <span>{formatPrice(elm.price)}</span> */}
-                              </button>
-                            </div>
-                          )
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
               </div>
             </div>
           </div>
@@ -996,70 +1009,48 @@ export default function TourSingleSidebar({
               </h5>
         <div className="searchForm -type-1 -sidebar mt-20">
           <div className="searchForm__form">
-            <div className="searchFormItem js-select-control js-form-dd">
-              {/* Dropdown Button */}
-              <div
-                className="searchFormItem__button"
-                onClick={() => setActiveTimeDD1((pre) => !pre)}
-                data-x-click="time"
-              >
-                <div className="searchFormItem__content">
-                  <h5>{translate('Arrival')}</h5>
-                  <div className={`js-select-control-chosen `}>
-                    {selectarrival?.name
-                      ? selectarrival?.name
-                      : translate('Arrival')}
+          <div className="searchFormItem js-select-control js-form-dd" ref={arrivalDropdownRef}>
+        <div className="searchFormItem__button" onClick={toggleArrivalDropdown}>
+          <div className="searchFormItem__content">
+            <h5>{translate('Arrival')}</h5>
+            <div className={`js-select-control-chosen`}>
+              {selectarrival?.name ? selectarrival?.name : translate('Arrival')}
+            </div>
+          </div>
+          <div className="searchFormItem__icon_chevron">
+            <i className="icon-chevron-down d-flex text-18"></i>
+          </div>
+        </div>
+        {dropdownArrivalActive && (
+          <div className={`searchFormItemDropdown -tour-type is-active`}>
+            <div className="searchFormItemDropdown__container">
+ <div className="searchFormItemDropdown__list sroll-bar-1">
+                {SidebarData?.tour_details?.arrival?.map((elm, i) => (
+                  <div key={i} onClick={() => {
+                    setselectarrival((pre) =>
+                      pre?.name === elm.arrival
+                        ? {}
+                        : {
+                            name: elm.arrival,
+                            value: elm.arrival_id,
+                            tour_id: elm.tour_id,
+                          }
+                    );
+                    setDropdownArrivalActive(false); // Close dropdown after selection
+                  }} className="searchFormItemDropdown__item">
+                    <button className="js-select-control-button">
+                      <span className="js-select-control-choice">
+                        {elm.arrival || "No Arrival"}
+                      </span>
+                    </button>
                   </div>
-                </div>
-                <div className="searchFormItem__icon_chevron">
-                  <i className="icon-chevron-down d-flex text-18"></i>
-                </div>
-              </div>
-
-              {/* Dropdown List */}
-              <div
-                className={`searchFormItemDropdown -tour-type ${activeTimeDD1 ? "is-active" : ""
-                  }`}
-                data-x="time"
-                data-x-toggle="is-active"
-              >
-                <div className="searchFormItemDropdown__container">
-                  <div className="searchFormItemDropdown__list sroll-bar-1">
-                    {SidebarData?.tour_details?.arrival?.map(
-                      (elm, i) => (
-                        <div
-                          key={i}
-                          onClick={() => {
-                            // Handle selection of departure
-                            setselectarrival((pre) =>
-                              pre?.name === elm.arrival
-                                ? {}
-                                : {
-                                  name: elm.arrival,
-                                  value: elm.arrival_id,
-                                  tour_id : elm.tour_id
-                                }
-                            );
-                            setActiveTimeDD1(false); // Close dropdown after selection
-                          }}
-                          className="searchFormItemDropdown__item"
-                        >
-                          <button className="js-select-control-button">
-                            <span className="js-select-control-choice">
-                              {elm.arrival == "" &&
-                                elm.arrival == undefined
-                                ? "No Departure"
-                                : elm.arrival}
-                            </span>
-                            {/* <span>{formatPrice(elm.arrival)}</span> */}
-                          </button>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
+          </div>
+        )}
+      </div>
+
           </div>
         </div>
 

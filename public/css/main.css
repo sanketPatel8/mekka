@@ -4811,7 +4811,7 @@ h6 {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 120px;
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__item button {

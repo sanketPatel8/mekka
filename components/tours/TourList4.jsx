@@ -280,7 +280,7 @@ export default function TourList4({
                             )}
                           </div>
 
-                          <p className="tourCard__text mt-5 ">
+                          {/* <p className="tourCard__text mt-5 ">
                             <FontAwesomeIcon
                               icon={faQuoteRight}
                               className="px-1 text-accent-1 "
@@ -290,7 +290,7 @@ export default function TourList4({
                               : elm.type == "Umrah"
                               ? "MAD"
                               : "ALL"}
-                          </p>
+                          </p> */}
                         </div>
                         {elm?.company_name !== " " && elm?.company_name !== null && (
                           <div className="d-flex items-center mt-5">

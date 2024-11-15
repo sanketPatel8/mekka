@@ -204,13 +204,13 @@ export default function DbBooking() {
                         Star
                         )
                       </p>
-                      <p className="tourCard__text mt-5">
+                      {/* <p className="tourCard__text mt-5">
                         <FontAwesomeIcon
                           icon={faQuoteRight}
                           className="px-1 text-accent-1"
                         />
                         {elm?.tour_details?.type}
-                      </p>
+                      </p> */}
 
                       {elm?.tour_details?.company_code !== null || elm?.tour_details?.company_code !== " " && (
                         <div className="d-flex items-center mt-5">

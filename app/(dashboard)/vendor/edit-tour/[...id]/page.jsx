@@ -1066,7 +1066,11 @@ export default function EditTour() {
       id: flight.id ? flight.id : 0,
     }));
 
-    const arrivalData = arrivalrow.map((item) => item.arrival_id).join(", ")
+    const arrivalData = arrivalrow.map((arrival) => ({
+      arrival_id: arrival.arrival_id ? arrival.arrival_id : '',
+      name: arrival.name ? arrival.name : '',
+
+    }))
 
     console.log(arrivalData, "arrivalData")
     if (
@@ -1157,7 +1161,7 @@ export default function EditTour() {
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_id", id);
-    formData.append("arrival", arrivalData);
+    formData.append("arrival", JSON.stringify(arrivalData));
 
     if (image2FileArray.length === 0) {
       formData.append("tour_image", "");
@@ -1515,7 +1519,7 @@ export default function EditTour() {
                                             <div className="row">
                                               <div className="col-md-8 form-input spacing d-flex flex-column align-items-center">
                                                 <CreatableSelect
-                                                  value={row.name}
+                                                  value={arrivalrow[index]?.name ? { value: arrivalrow[index].arrival_id, label: arrivalrow[index].name } : null}
                                                   onChange={(value) =>
                                                     handleArrivalchange(value, index)
                                                   }
