@@ -130,16 +130,20 @@ const CustomerDetaTable = () => {
     //   selector: (row) => "aa column rakhva ni che k nai",
     // },
     {
-      name: translate("To"),
-      selector: (row) => (row?.type == "Umrah" ? "Madina" : "Hajj"),
+      name: translate("Departure"),
+      selector: (row) => (row?.departure_names),
     },
     {
-      name: translate("Departure"),
+      name: translate("Arrival"),
+      selector: (row) => (row?.arrival),
+    },
+    {
+      name: translate("Departure Date"),
       selector: (row) =>
         row?.date_begin,
-      width: "100px",
+      // width: "100px",
     },
-    { name: translate("Return"), selector: (row) => row.date_end },
+    { name: translate("Return Date"), selector: (row) => row.date_end },
     { name: translate("Mekka"), selector: (row) => row.mekka_hotel },
     { name: translate("Madina"), selector: (row) => row.madina_hotel },
     { name: translate("Adult"), selector: (row) => row.adults },

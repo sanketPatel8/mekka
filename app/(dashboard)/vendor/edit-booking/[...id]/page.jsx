@@ -150,10 +150,18 @@ export default function DbBooking({ params }) {
         name: translate("Airline"),
         selector: (row) => (row?.airlines),
       }] : []),
-          // { name: translate("From"), selector: (row) => row.From },
-      // { name: translate("To"), selector: (row) => row.To },
-      { name: translate("Departure"), selector: (row) => row.date_begin },
-      { name: translate("Return"), selector: (row) => row.date_end },
+      ...(bookings?.reservation?.departure ? [{
+        name: translate("Departure"),
+        selector: (row) => (row?.departure),
+      }] : []),
+      ...(bookings?.reservation?.arrival ? [{
+        name: translate("Arrival"),
+        selector: (row) => (row?.arrival),
+      }] : []),
+          
+      // { name: translate("Arrival"), selector: (row) => row.arrival },
+      { name: translate("Departure Date"), selector: (row) => row.date_begin },
+      { name: translate("Return Date"), selector: (row) => row.date_end },
       { name: translate("Mekka"), selector: (row) => row.Mekka_hotel },
       { name: translate("Madina"), selector: (row) => row.Madina_hotel },
       { name: translate("Adult"), selector: (row) => row.adult },
