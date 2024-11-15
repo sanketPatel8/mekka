@@ -129,14 +129,14 @@ const CustomerDetaTable = () => {
     //   name: translate("From"),
     //   selector: (row) => "aa column rakhva ni che k nai",
     // },
-    {
+    ...(BookingDetails?.reservation?.departure_names ? [{
       name: translate("Departure"),
-      selector: (row) => (row?.departure_names),
-    },
-    {
+      selector: (row) => (BookingDetails?.reservation?.departure_names),
+    }] : []),
+    ...(BookingDetails?.reservation?.arrival ? [{
       name: translate("Arrival"),
-      selector: (row) => (row?.arrival),
-    },
+      selector: (row) => (BookingDetails?.reservation?.arrival),
+    }] : []),
     {
       name: translate("Departure Date"),
       selector: (row) =>

@@ -150,9 +150,9 @@ export default function DbBooking({ params }) {
         name: translate("Airline"),
         selector: (row) => (row?.airlines),
       }] : []),
-      ...(bookings?.reservation?.departure ? [{
+      ...(bookings?.reservation?.departure_names ? [{
         name: translate("Departure"),
-        selector: (row) => (row?.departure),
+        selector: (row) => (bookings?.reservation?.departure_names),
       }] : []),
       ...(bookings?.reservation?.arrival ? [{
         name: translate("Arrival"),
