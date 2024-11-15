@@ -21,7 +21,6 @@ export default function TourSlider({ PAckageData }) {
     setslibleTourSlider(PAckageData?.Tour_List);
   }, [PAckageData]);
 
-  console.log(slibleTourSlider, "slibleTourSlider");
 
   return (
     <section className="">

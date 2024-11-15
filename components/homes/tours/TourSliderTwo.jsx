@@ -20,6 +20,8 @@ export default function TourSliderTwo({ setLength }) {
   const [showSwiper, setShowSwiper] = useState(false);
   const [BestSellerData, setBestSellerData] = useState([]);
   const [ShowSlide, setShowSlide] = useState(0);
+
+
   useEffect(() => {
     setShowSwiper(true);
     HandleLoginSubmite();
@@ -49,6 +51,8 @@ export default function TourSliderTwo({ setLength }) {
       }
     }
   };
+
+  console.log(ShowSlide,"ShowSlide");
 
   const { translate } = useTranslation();
   const {formatPrice} = useCurrency()
@@ -204,7 +208,7 @@ export default function TourSliderTwo({ setLength }) {
             </div>
           </div>
 
-          { ShowSlide !== 0 || (
+          { ShowSlide !== 0 && (
             <div className="navAbsolute">
               <button className="navAbsolute__button bg-white js-slider1-prev prev">
                 <i className="icon-arrow-left text-14"></i>
