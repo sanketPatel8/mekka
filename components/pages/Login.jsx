@@ -26,7 +26,6 @@ export default function Login({
   bookingPage
 }) {
 
-  console.log(bookingPage,"bookingPage")
   const LoginSocialFacebook = dynamic(
     () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
     { ssr: false }
@@ -192,9 +191,7 @@ export default function Login({
           showErrorToast(translate, resp.message);
         }else if(resp.status == "success") {
 
-        console.log(resp.user.user_type, "user type");
         if (resp.user.user_type == "customer") {
-          console.log("hi")
           localStorage.setItem("customer", JSON.stringify(resp));
           localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
 
@@ -209,22 +206,18 @@ export default function Login({
             typeof window !== "undefined"
               ? localStorage.getItem("Redirect_Login")
               : null;
-              console.log(redirect, "redirect")
           if (redirect) {
-            console.log("yes")
             setTimeout(() => {
               window.location.reload();
               localStorage.removeItem("Redirect_Login");
             }, 2000);
           }else if(redirect == null) {
-            console.log("no")
             setTimeout(() => {
               setLoginPer(true);
               router.push(path);
             }, 2000);
           }
         } else if(resp.user.user_type == "vendor") {
-          console.log("hello")
           showErrorToast(translate,
             "Invalid Credentials. If you are tour agent, please login from the partner login page"
           );
@@ -237,7 +230,6 @@ export default function Login({
       }
   })
       .catch((err) => {
-        console.log("error")
         showErrorToast(translate,"Invalid Credentials. If you are tour agent, please login from the partner login page");
         setIsLoading(false);
       });
@@ -390,7 +382,6 @@ export default function Login({
                           onLoginStart={() => console.log("start")}
                           onResolve={({ provider, data }) => {
                             const { id, name, email } = data;
-                            console.log(data);
                             window.FB.getLoginStatus((response) => {
                               if (response.status === "connected") {
                                 signinSocial({
@@ -485,7 +476,6 @@ export default function Login({
                           redirect_uri={window.location.origin + "/login"}
                           onLoginStart={() => console.log("start apple login")}
                           onResolve={({ provider, data }) => {
-                            console.log(data,"data")
                             signinSocial({ type: "apple", data: data });
                           }}
                           onReject={(err) => {

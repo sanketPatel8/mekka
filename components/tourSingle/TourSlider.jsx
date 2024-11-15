@@ -19,7 +19,6 @@ export default function TourSlider({ PAckageData }) {
 
   useEffect(() => {
     setslibleTourSlider(PAckageData?.Tour_List);
-    console.log(slibleTourSlider, "slibleTourSlider");
   }, [PAckageData]);
 
   return (

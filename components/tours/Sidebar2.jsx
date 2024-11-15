@@ -22,7 +22,6 @@ export default function Sidebar2({
   setFilterDistance,
   FilterDistance
 }) {
-  // console.log(handleSelectionChange,"handleSelectionChange")
   const [ddActives, setDdActives] = useState(["tourtype"]);
   const handleChange = (key, value) => {
     handleSelectionChange(key, value);

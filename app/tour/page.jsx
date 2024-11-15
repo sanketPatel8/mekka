@@ -120,7 +120,6 @@ export default function PageData() {
       searchParams.get("type") === undefined ? "" : searchParams.get("type");
 
     if (tourType || startDate || endDate || person) {
-      console.log("run search tour ");
 
       await fetchSearch1Data({
         pageIndex,
@@ -138,7 +137,6 @@ export default function PageData() {
       (FilterPrice[1] !== 0 || FilterPrice[0] !== 0) ||
       (FilterDistance[1] !== 0 || FilterDistance[0] !== 0)
     ) {
-      console.log("run effect 1");
     } else {
       
       await  fetchListing(pageIndex);
@@ -202,7 +200,6 @@ export default function PageData() {
 
  
   useEffect(() => {
-    console.log(FilterPrice,FilterDistance)
 
       if (
         FilterSidebar.selectedTourTypes !== " " ||
@@ -214,7 +211,6 @@ export default function PageData() {
         (FilterDistance[1] !== 0 || FilterDistance[0] !== 0 )
         
       ) {
-        console.log("run effect 1");
         
         FetchFilterData();
       }else {
