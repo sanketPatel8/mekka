@@ -33,6 +33,8 @@ export default function TourSlderOne() {
       const response = await post("top_trending", sendData);
       if (response) {
         setTopTranding(response.Tours);
+
+        console.log(TopTranding.length, "TopTranding");
       } else {
         console.error("Tours data is undefined in the response.");
       }
@@ -227,6 +229,7 @@ export default function TourSlderOne() {
                 )}
               </div>
             </div>
+            { TopTranding.length > 4 && (
 
             <div className="navAbsolute">
               <button className="navAbsolute__button bg-white js-slider1-prev prev1">
@@ -237,6 +240,7 @@ export default function TourSlderOne() {
                 <i className="icon-arrow-right text-14"></i>
               </button>
             </div>
+            )}
           </div>
         </div>
       )}

@@ -124,7 +124,7 @@ export default function AddTour() {
   ]);
 
   const [arrivalrow, setArrivalrow] = useState([
-    { arrival_id: "" },
+    { arrival_id: "", name:"" },
   ]);
 
   const [flightRow, setFlightRow] = useState([
@@ -679,6 +679,7 @@ export default function AddTour() {
     const ArrivalData = {
       ...arrivalrow[index],
       arrival_id: selectedOption?.id || "",
+      name: selectedOption?.arrival || ""
 
     };
 
@@ -694,7 +695,6 @@ export default function AddTour() {
 
   };
 
-  const allArivalJoin = arrivalrow.map((item) => item.arrival_id).join(", ")
 
   const selectRef = useRef(null);
 
@@ -816,6 +816,12 @@ export default function AddTour() {
       hotel_info: mekka.hotel_info,
 
     }))
+    
+    const arrivalData = arrivalrow.map((arrival) => ({
+      arrival_id: arrival.arrival_id ? arrival.arrival_id : '',
+      name: arrival.name ? arrival.name : '',
+
+    }))
 
     const madinaData = madinaRows.map((madina) => ({
       hotel_type: 2,
@@ -895,7 +901,7 @@ export default function AddTour() {
     formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
-    formData.append("arrival" , allArivalJoin)
+    formData.append("arrival" , JSON.stringify(arrivalData));
     // image2FileArray.forEach((file, index) => {
     //   formData.append(`tour_image[${index}]`, file);
     // });

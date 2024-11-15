@@ -29,6 +29,7 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
+import { update } from "lodash";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -70,6 +71,7 @@ export default function EditTour() {
   const [image2, setImage2] = useState([]);
   const [route_data, setRouteData] = useState([]);
   const [hotel_data, setHotelData] = useState([]);
+  const [arrival_data, setArrivalData] = useState([]);
   const [tour_included, setTourIncluded] = useState(0);
   const [tour_info, setTourInfo] = useState("");
   const [tourInformation, setTourInformation] = useState("");
@@ -181,9 +183,7 @@ export default function EditTour() {
       setAdultPrice(JSON.parse(response.Tour_Details.adult_price[0].price));
       setChildPrice(JSON.parse(response.Tour_Details.child_price[0].price));
       setBabyPrice(JSON.parse(response.Tour_Details.baby_price[0].price));
-
-
-
+      setArrivalData(JSON.parse(response.Tour_Details.details.arrival));
     }
   };
 
@@ -502,7 +502,24 @@ export default function EditTour() {
       );
       setDaysCount(daysDifference + 1);
     }
+
+      
+
   }, []);
+  useEffect(() => {
+    if (arrival_data.length>0) {
+      console.log(arrival_data, "arrival_data");
+      const updatedArrival = arrival_data.map((arrival) => {
+        return {
+          arrival_id: arrival.arrival_id,
+          name: arrival.name,
+        };
+      });
+      console.log(updatedArrival, "updatedArrival");
+      setArrivalrow(updatedArrival);
+    }    
+     
+  }, [arrival_data]);
 
   const onEditorStateChange = (newEditorState) => {
     const editorContent = newEditorState.getCurrentContent();
@@ -686,7 +703,7 @@ export default function EditTour() {
 
   const ArrivalOption = Arrival?.map((arr) => ({
     value: arr.id,
-    label: `${arr.arrival}`
+    label: `${arr.arrival}`,
   }))
 
   const handleAddDepartureRow = () => {
@@ -818,7 +835,7 @@ export default function EditTour() {
     const ArrivalData = {
       ...arrivalrow[index],
       arrival_id: selectedOption?.id || "",
-
+      name: selectedOption?.arrival || "",
     };
 
     console.log("ArrivalData", ArrivalData);
@@ -833,9 +850,7 @@ export default function EditTour() {
 
   };
 
-  const allArivalJoin = arrivalrow.map((item) => item.arrival_id).join(", ")
-
-  console.log("allArivalJoin" , allArivalJoin);
+  
   
 
   const handleMadinaChange = (value, index) => {
@@ -1030,6 +1045,9 @@ export default function EditTour() {
       hotel_info: mekka.hotel_info,
       id: mekka.id ? mekka.id : 0,
     }));
+    // const arrivalData = arrivalrow.map((arrival) => ({
+    //   arrival: arrival.arrival_id ? arrival.arrival_id : "",
+    // }));
 
     const madinaData = madinaRows.map((madina) => ({
       hotel_type: 2,
@@ -1048,6 +1066,9 @@ export default function EditTour() {
       id: flight.id ? flight.id : 0,
     }));
 
+    const arrivalData = arrivalrow.map((item) => item.arrival_id).join(", ")
+
+    console.log(arrivalData, "arrivalData")
     if (
       !mekkaData.some(
         (mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info
@@ -1107,66 +1128,67 @@ export default function EditTour() {
     }));
 
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // formData.append("type", SelectedTour.value);
-    // formData.append("name", name);
-    // formData.append("capacity", capacity);
-    // formData.append("date_begin", formatDateToMMDDYYYY(start_date));
-    // formData.append("date_end", formatDateToDDMMYYYY(end_date));
-    // formData.append("tour_languages", languageString);
-    // formData.append("adult_price", adult_price);
-    // formData.append("child_price", child_price);
-    // formData.append("baby_price", baby_price);
-    // formData.append("addition_service", JSON.stringify(servicesData));
-    // formData.append("tour_included", includedData);
-    // formData.append("tour_info", tourInfo);
-    // formData.append("flight_info", flightInformation);
-    // formData.append("route_data", JSON.stringify(newRouteData));
-    // formData.append("hotel_data", JSON.stringify(hotel_data));
-    // formData.append(
-    //   "flight_data",
-    //   radioValueFlight === "Yes" ? JSON.stringify(flight_data) : ""
-    // );
-    // formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    // formData.append(
-    //   "flight_exclude",
-    //   radioValueExcludeFlight === "Yes" ? 1 : 0
-    // );
-    // formData.append("user_id", user?.user.id);
-    // formData.append("company_id", user?.user.company_id);
-    // formData.append("tour_id", id);
+    formData.append("type", SelectedTour.value);
+    formData.append("name", name);
+    formData.append("capacity", capacity);
+    formData.append("date_begin", formatDateToMMDDYYYY(start_date));
+    formData.append("date_end", formatDateToDDMMYYYY(end_date));
+    formData.append("tour_languages", languageString);
+    formData.append("adult_price", adult_price);
+    formData.append("child_price", child_price);
+    formData.append("baby_price", baby_price);
+    formData.append("addition_service", JSON.stringify(servicesData));
+    formData.append("tour_included", includedData);
+    formData.append("tour_info", tourInfo);
+    formData.append("flight_info", flightInformation);
+    formData.append("route_data", JSON.stringify(newRouteData));
+    formData.append("hotel_data", JSON.stringify(hotel_data));
+    formData.append(
+      "flight_data",
+      radioValueFlight === "Yes" ? JSON.stringify(flight_data) : ""
+    );
+    formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
+    formData.append(
+      "flight_exclude",
+      radioValueExcludeFlight === "Yes" ? 1 : 0
+    );
+    formData.append("user_id", user?.user.id);
+    formData.append("company_id", user?.user.company_id);
+    formData.append("tour_id", id);
+    formData.append("arrival", arrivalData);
 
-    // if (image2FileArray.length === 0) {
-    //   formData.append("tour_image", "");
-    // } else {
-    //   image2FileArray.forEach((file, index) => {
-    //     formData.append(`tour_image[${index}]`, file);
-    //   });
-    // }
-    // formData.append("departures", JSON.stringify(departureData));
+    if (image2FileArray.length === 0) {
+      formData.append("tour_image", "");
+    } else {
+      image2FileArray.forEach((file, index) => {
+        formData.append(`tour_image[${index}]`, file);
+      });
+    }
+    formData.append("departures", JSON.stringify(departureData));
 
-    // const url = "updatetour";
+    const url = "updatetour";
 
-    // try {
-    //   const response = await POST.request({
-    //     form: formData,
-    //     url: url,
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   });
-    //   setLoading(false);
-    //   if (response) {
-    //     showSuccessToast(translate, "Tour Updated Successfully");
-    //     // setActiveTab("Content");
-    //     // setActiveTabIndex(0);
-    //     // fetchTour(id);
-    //     setTimeout(() => {
-    //       router.push("/vendor/listing");
-    //     }, 1000);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const response = await POST.request({
+        form: formData,
+        url: url,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setLoading(false);
+      if (response) {
+        showSuccessToast(translate, "Tour Updated Successfully");
+        // setActiveTab("Content");
+        // setActiveTabIndex(0);
+        // fetchTour(id);
+        setTimeout(() => {
+          router.push("/vendor/listing");
+        }, 1000);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   const formatDateToDDMMYYYY = (date) => {
     const [year, month, day] = date.split("-");
@@ -1493,7 +1515,7 @@ export default function EditTour() {
                                             <div className="row">
                                               <div className="col-md-8 form-input spacing d-flex flex-column align-items-center">
                                                 <CreatableSelect
-                                                  value={row.id}
+                                                  value={row.name}
                                                   onChange={(value) =>
                                                     handleArrivalchange(value, index)
                                                   }

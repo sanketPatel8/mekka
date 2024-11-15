@@ -208,7 +208,7 @@ export default function TourSliderTwo({ setLength }) {
             </div>
           </div>
 
-          { ShowSlide !== 2 && (
+          { ShowSlide > 2 && (
             <div className="navAbsolute">
               <button className="navAbsolute__button bg-white js-slider1-prev prev">
                 <i className="icon-arrow-left text-14"></i>
