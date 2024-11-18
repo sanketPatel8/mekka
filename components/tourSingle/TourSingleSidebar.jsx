@@ -570,6 +570,7 @@ export default function TourSingleSidebar({
     startDate: SidebarData?.tour_details?.date_begin,
     endDate: SidebarData?.tour_details?.date_end,
     selectedCheckbox: selectedCheckbox,
+    laterPayment : SidebarData?.tour_details?.later_payment,
   };
 
   const handleBooking = () => {
