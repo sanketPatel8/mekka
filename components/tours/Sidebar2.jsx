@@ -67,7 +67,7 @@ export default function Sidebar2({
               >
                 <div className="pt-15">
                   <div className="d-flex flex-column y-gap-15">
-                    {toursTypes.map((elm, i) => (
+                    {FliterData?.tour_type?.map((elm, i) => (
                       <div key={i}>
                         <div className="d-flex items-center justify-between">
                           <div className="row">
