@@ -69,7 +69,11 @@ export default function ArticlesThree() {
                   <Image
                     width={616}
                     height={451}
-                    src="/_next/image?url=%2Fimg%2FblogCards%2F1%2Fsimple.jpg&w=1920&q=75"
+                    src={
+                      elm?.imageOne
+                        ? elm?.imageOne
+                        : "/img/404/imgnotFound.png"
+                    }
                     alt="image"
                     className="img-ratio rounded-12"
                   />

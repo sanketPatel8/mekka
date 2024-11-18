@@ -3245,7 +3245,7 @@ h6 {
 }
 
 .footer.-type-1 .footer__info {
-  padding-top: 80px;
+  padding-top: 30px;
   padding-bottom: 48px;
   border-bottom: 1px solid rgba(235, 102, 43, 0.15);
 }
@@ -3262,13 +3262,13 @@ h6 {
 }
 
 .footer.-type-1 .footer__content {
-  padding-top: 60px;
+  /* padding-top: 60px; */
   padding-bottom: 60px;
 }
 
 @media (max-width: 767px) {
   .footer.-type-1 .footer__content {
-    padding-top: 40px;
+    /* padding-top: 40px; */
     padding-bottom: 40px;
   }
 }
