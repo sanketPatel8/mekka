@@ -26,6 +26,7 @@ export default function Sidebar2({
   const handleChange = (key, value) => {
     handleSelectionChange(key, value);
   };
+  console.log(FliterData, "FliterData");
 
   useEffect(() => {
    
