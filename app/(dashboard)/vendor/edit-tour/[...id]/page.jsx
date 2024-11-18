@@ -81,7 +81,7 @@ export default function EditTour() {
     { departure_id: "", price: "", id: "" },
   ]);
   const [arrivalrow, setArrivalrow] = useState([
-    { arrival_id: "" },
+    { arrival_id: "",name:"" },
   ]);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -716,7 +716,7 @@ export default function EditTour() {
   const handleAddArrivalRow = () => {
     setArrivalrow([
       ...arrivalrow,
-      { arrival_id: "" },
+      { arrival_id: "",name:"" },
     ]);
   };
 
