@@ -712,5 +712,10 @@
 "Thank you for registration!" : "Vielen Dank für Ihre Registrierung!",
 "We have sent your profile for verification and will notify you once it is approved." : "Wir haben Ihr Profil zur Verifizierung gesendet und werden Sie benachrichtigen, sobald es genehmigt wurde." ,
 "Login to continue" : "Melden Sie sich an, um fortzufahren",
-"Lost Your Password" : "Passwort vergessen"
+"Lost Your Password" : "Passwort vergessen",
+"Departure Information" : "Abreise informationen",
+"Arrival Information" : "Ankunfts informationen",
+"Arrival" : "Ankunft",
+"Payment Information" : "Zahlungs informationen",
+"Organization Name": "Name der Organisation"
 }

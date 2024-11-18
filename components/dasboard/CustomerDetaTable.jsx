@@ -324,7 +324,7 @@ const CustomerDetaTable = () => {
       selector: (row) => row.total,
       cell: (row) => `${row.total} €`,
     },
-    { name: "Amount Paid", selector: (row) => `${row.amount_paid} €` },
+    { name: translate("Amount Paid"), selector: (row) => `${row.amount_paid} €` },
     {
       name: translate("Amount Due"),
       selector: (row) => row.amount_due,
@@ -1359,13 +1359,13 @@ const CustomerDetaTable = () => {
                   BookingDetails?.reservation?.paymentType !== "2" && (
                     <div className="row bg-white mx-0">
                       <div className="col-12 row">
-                        <p className="pt-10 pb-0 table-font-20 ">Payment Information</p>
+                        <p className="pt-10 pb-0 table-font-20 ">{translate(translate , "Payment Information")}</p>
                         <table className="table bg-light col-12">
                           <thead>
                             <tr className="row">
-                              <th className="col-4 pb-1">Date</th>
-                              <th className="col-4 pb-1">Amount</th>
-                              <th className="col-4 pb-1">Paid Date</th>
+                              <th className="col-4 pb-1">{translate(translate , "Date")}</th>
+                              <th className="col-4 pb-1">{translate(translate , "Amount")}</th>
+                              <th className="col-4 pb-1">{translate(translate , "Paid Date")}</th>
                             </tr>
                           </thead>
                           <tbody>

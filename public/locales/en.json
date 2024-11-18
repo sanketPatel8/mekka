@@ -593,7 +593,12 @@
   "Thank you for registration!" : "Thank you for registration!",
   "We have sent your profile for verification and will notify you once it is approved." : "We have sent your profile for verification and will notify you once it is approved.",
   "Login to continue" : "Login to continue",
-  "Lost Your Password" : "Lost Your Password"
+  "Lost Your Password" : "Lost Your Password",
+  "Departure Information" : "Departure Information",
+  "Arrival Information" : "Arrival Information",
+  "Payment Information" : "Payment Information",
+  "Organization Name" : "Organization Name"
+
  
   
   
