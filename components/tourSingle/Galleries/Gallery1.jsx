@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import ImageLightBox from "./ImageLightBox";
 import Image from "next/image";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 export default function Gallery1({ PAckageData }) {
   const [activeLightBox, setActiveLightBox] = useState(false);
@@ -26,6 +27,8 @@ export default function Gallery1({ PAckageData }) {
     console.log("Button clicked, setting lightbox active.");
     setActiveLightBox(true); // This should update state
   };
+
+  const {translate} = useTranslation()
 
   return (
     <>
@@ -63,7 +66,7 @@ export default function Gallery1({ PAckageData }) {
               onClick={openLightBox}
               className="button -accent-1 py-10 px-20 rounded-200 bg-dark-1 lh-16 text-white"
             >
-              See all photos
+              {translate("See All Photos")}
             </span>
           </div>
         </div>

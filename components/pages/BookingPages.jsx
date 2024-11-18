@@ -1337,7 +1337,7 @@ console.log("BookingSideBar" , BookingSideBar);
     coupon_percentage: Discount?.percentage || 0,
     mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
-    flight_id:  BookingSideBar.Airline?.flight_id,
+    flight_id:  BookingSideBar.Airline?.id,
     exclude_flight: JSON.parse(ExcludeFlight),
     total_person: adultData.length + Childrendata.length + babyData.length,
     // tax: JSON.parse(formattedTaxAmount),

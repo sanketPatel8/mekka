@@ -212,20 +212,22 @@ export default function DbBooking({ params }) {
     setDownloadData(DownloadData);
 
     const Total = [
-      {
-        name: translate("Subtotal"),
-        selector: (row) => row.Subtotal,
-      },
-      // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
+      { name: translate("Total"), selector: (row) => row.Total, width:"20%" },
       {
         name: translate("Mekka fees"),
         selector: (row) => row.Discount ,
       },
       {
-        name: translate("Discount"),
-        selector: (row) => row.Discount ,
+        name: translate("Subtotal"),
+        selector: (row) => row.Subtotal,
       },
-      { name: translate("Total"), selector: (row) => row.Total, width:"20%" },
+      // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
+     
+      // {
+      //   name: translate("Discount"),
+      //   selector: (row) => row.Discount ,
+      // },
+      
       {
         name: translate("Amount Paid"),
         selector: (row) => row.Amount_Paid,
