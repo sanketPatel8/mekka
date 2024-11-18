@@ -16,11 +16,11 @@ import { showErrorToast } from "@/app/utils/tost";
 import { useCurrency } from "@/app/context/currencyContext";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 
-export default function TourSliderTwo() {
+export default function TourSliderTwo({setLength}) {
   const [showSwiper, setShowSwiper] = useState(false);
   const [BestSellerData, setBestSellerData] = useState([]);
   const [ShowSlide, setShowSlide] = useState(0);
-  const [Length, setLength] = useState(0);
+  const [sliderLength, setSliderLength] = useState(0);
 
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function TourSliderTwo() {
       const maxSlide = response?.Tours?.length >= 2 ? 2 : 1;
       setShowSlide(maxSlide);
       setBestSellerData(response?.Tours);
-      setLength(response?.Tours?.length);
+      setSliderLength(response?.Tours?.length);
     } catch (error) {
       console.error("Error:", error); // Log the full error for debugging
       if (
@@ -210,7 +210,7 @@ export default function TourSliderTwo() {
             </div>
           </div>
 
-          { Length > 2 && (
+          { sliderLength > 2 && (
             <div className="navAbsolute">
               <button className="navAbsolute__button bg-white js-slider1-prev prev">
                 <i className="icon-arrow-left text-14"></i>

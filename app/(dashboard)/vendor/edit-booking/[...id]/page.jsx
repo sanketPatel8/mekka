@@ -215,24 +215,24 @@ export default function DbBooking({ params }) {
       {
         name: translate("Subtotal"),
         selector: (row) => row.Subtotal,
-        width:"20%"
       },
       // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
       {
+        name: translate("Mekka fees"),
+        selector: (row) => row.Discount ,
+      },
+      {
         name: translate("Discount"),
         selector: (row) => row.Discount ,
-        width:"16%"
       },
       { name: translate("Total"), selector: (row) => row.Total, width:"20%" },
       {
         name: translate("Amount Paid"),
         selector: (row) => row.Amount_Paid,
-        width:"22%"
       },
       {
         name: translate("Amount Due"),
         selector: (row) => row.Amount_Due,
-        width:"22%"
       },
     ];
 
