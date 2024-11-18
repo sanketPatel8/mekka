@@ -955,7 +955,7 @@ const handleSecondAmountChange = (e) => {
                             </div> */}
                             <div className="lh-16 ml-15">
                               {translate(
-                                "Payment in advance. Payment installment is possible. Full Payment (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover) "
+                                "Pay Later (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover) "
                               )}
                             </div>
                           </div>
@@ -1355,9 +1355,9 @@ const handleSecondAmountChange = (e) => {
                           </div>
                           <div className="text-start">
                             {translate("Max Luggage Per Person")} :{" "}
-                            {SideBarData?.Airline?.luggage === null
+                            {SideBarData?.MaxLuggagePerPerson === null
                               ? " null aa raha hei ! "
-                              : SideBarData?.Airline?.luggage}{" "}
+                              : SideBarData?.MaxLuggagePerPerson}{" "}
                             kg
                           </div>
                         </div>

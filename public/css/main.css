@@ -531,6 +531,7 @@ body {
   color: var(--color-dark-1);
   font-size: 15px;
   line-height: 1.875;
+  overflow-x: hidden;
 }
 
 select,
