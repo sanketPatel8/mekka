@@ -1156,7 +1156,7 @@ export default function EditTour() {
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
     formData.append(
       "flight_exclude",
-      radioValueExcludeFlight === "Yes" ? 1 : 0
+      0
     );
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
@@ -2513,7 +2513,7 @@ export default function EditTour() {
                                 ))}
                               </ul>
                             </div>
-                            <div className="d-flex flex-wrap item-center justify-content-between">
+                            {/* <div className="d-flex flex-wrap item-center justify-content-between">
                               <h6>
                                 {translate("Allow Exclude Flight Details")}
                               </h6>
@@ -2571,7 +2571,7 @@ export default function EditTour() {
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> */}
                             <div className=" ">
                               <h6 className="mb-1">
                                 {translate("Add Flight Information")}
