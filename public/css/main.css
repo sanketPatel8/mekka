@@ -2055,6 +2055,8 @@ h6 {
   font-weight: 700;
 }
 
+
+
 .header.-type-1 {
   position: fixed;
   top: 0;
@@ -3377,7 +3379,7 @@ h6 {
   position: relative;
   padding-top: 220px;
   padding-bottom: 220px;
-  margin-top: 88px;
+  margin-top: 120px;
   z-index: 99;
 }
 

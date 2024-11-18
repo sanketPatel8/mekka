@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Hero1({ blog, BlogData }) {
   return (
-    <section className="hero -type-1 -min-2">
+    <section className="hero -type-1 -min-2 ">
       <div className="hero__bg">
         <Image
           width={1800}

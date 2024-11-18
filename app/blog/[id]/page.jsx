@@ -57,8 +57,10 @@ export default function page({ params }) {
    
       <main>
         <Header1 />
+     
         <Hero1 blog={blog} BlogData={BlogData}  />
         <BlogSingle BlogData={BlogData} />
+   
         <FooterTwo />
       </main>
     </>
