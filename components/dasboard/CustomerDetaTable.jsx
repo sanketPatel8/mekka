@@ -122,7 +122,7 @@ const CustomerDetaTable = () => {
   const ColumnReservation_details = [
     ...(BookingDetails?.reservation?.airlines ? [{
       name: translate("Airline"),
-      selector: (row) => (row?.airlines),
+      selector: (row) => (BookingDetails?.reservation?.airlines),
     }] : []),
   
     // {

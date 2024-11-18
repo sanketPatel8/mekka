@@ -148,7 +148,7 @@ export default function DbBooking({ params }) {
     const ColumnReservation_details = [
       ...(bookings?.reservation?.airlines ? [{
         name: translate("Airline"),
-        selector: (row) => (row?.airlines),
+        selector: (row) => (bookings?.reservation?.airlines),
       }] : []),
       ...(bookings?.reservation?.departure_names ? [{
         name: translate("Departure"),

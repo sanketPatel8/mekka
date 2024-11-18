@@ -16,10 +16,11 @@ import { showErrorToast } from "@/app/utils/tost";
 import { useCurrency } from "@/app/context/currencyContext";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 
-export default function TourSliderTwo({ setLength }) {
+export default function TourSliderTwo() {
   const [showSwiper, setShowSwiper] = useState(false);
   const [BestSellerData, setBestSellerData] = useState([]);
   const [ShowSlide, setShowSlide] = useState(0);
+  const [Length, setLength] = useState(0);
 
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export default function TourSliderTwo({ setLength }) {
       const maxSlide = response?.Tours?.length >= 2 ? 2 : 1;
       setShowSlide(maxSlide);
       setBestSellerData(response?.Tours);
+      setLength(response?.Tours?.length);
     } catch (error) {
       console.error("Error:", error); // Log the full error for debugging
       if (
@@ -62,9 +64,9 @@ export default function TourSliderTwo({ setLength }) {
       <div className="sectionBg -w-1530 rounded-12 "></div>
 
       <div className="container">
-        <div className="row justify-between items-end y-gap-10"></div>
+        <div className="row justify-between items-end "></div>
 
-        <div className="relative pt-40 sm:pt-20">
+        <div className="relative pt-50 sm:pt-20">
           <div className="overflow-hidden pb-30 js-section-slider">
             <div
               data-aos="fade-up"
@@ -208,7 +210,7 @@ export default function TourSliderTwo({ setLength }) {
             </div>
           </div>
 
-          { ShowSlide > 2 && (
+          { Length > 2 && (
             <div className="navAbsolute">
               <button className="navAbsolute__button bg-white js-slider1-prev prev">
                 <i className="icon-arrow-left text-14"></i>
