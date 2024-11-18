@@ -2811,7 +2811,7 @@ export default function EditTour() {
                                               </div>
                                             </div>
                                           </div>
-                                          <div className="col-md-2 col-lg-auto col-12 d-flex">
+                                          {/* <div className="col-md-2 col-lg-auto col-12 d-flex">
                                             <button
                                               type="button"
                                               className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
@@ -2834,7 +2834,7 @@ export default function EditTour() {
                                                 -
                                               </button>
                                             )}
-                                          </div>
+                                          </div> */}
                                         </div>
                                       );
                                     })}
