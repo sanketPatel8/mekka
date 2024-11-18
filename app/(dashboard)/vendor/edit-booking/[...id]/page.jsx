@@ -156,7 +156,7 @@ export default function DbBooking({ params }) {
       }] : []),
       ...(bookings?.reservation?.arrival ? [{
         name: translate("Arrival"),
-        selector: (row) => (row?.arrival),
+        selector: (row) => (bookings?.reservation?.arrival),
       }] : []),
           
       // { name: translate("Arrival"), selector: (row) => row.arrival },
