@@ -12,8 +12,8 @@ export default function Hero1({}) {
   const { translate } = useTranslation();
 
   return (
-    <section className="hero -type-1">
-      <div className="hero__bg">
+    <section className="hero -type-2">
+      <div className="hero__bg mt-30">
         <Image
           width={1800}
           height={560}
@@ -36,7 +36,7 @@ export default function Hero1({}) {
               <h1
                 data-aos={"fade-up"}
                 data-aos-delay="100"
-                className="hero__title"
+                className="hero__title text-center"
               >
                 {translate("Your world of joy")}
               </h1>
@@ -44,7 +44,7 @@ export default function Hero1({}) {
               <p
                 data-aos={"fade-up"}
                 data-aos-delay="300"
-                className="hero__text"
+                className="hero__text text-center"
               >
                 {translate(
                   "From local escapes to far-flung adventures, find what makes you happy anytime, anywhere"

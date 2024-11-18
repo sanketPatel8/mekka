@@ -57,8 +57,9 @@ export default function page({ params }) {
    
       <main>
         <Header1 />
-     
+     {BlogData?.imageOne && (
         <Hero1 blog={blog} BlogData={BlogData}  />
+     )}
         <BlogSingle BlogData={BlogData} />
    
         <FooterTwo />

@@ -3501,7 +3501,7 @@ h6 {
   bottom: 0;
   right: 0;
   left: 0;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   z-index: -1;
 }
 
@@ -3533,9 +3533,13 @@ h6 {
   }
 }
 
+.mt-50{
+  margin-top: 50px;
+}
+
 .hero.-type-2 .hero__content {
   padding: 110px 0;
-  padding-left: 150px;
+  /* padding-left: 150px; */
 }
 
 @media (max-width: 1199px) {

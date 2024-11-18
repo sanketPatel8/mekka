@@ -8,7 +8,7 @@ export default function BlogSingle({ BlogData }) {
     <>
       <section className="layout-pt-md layout-pb-xl">
         <div className="container">
-          <div className="row y-gap-30 justify-center">
+          <div className="row mt-50 justify-center">
             <div className="col-lg-12">
               <h2 className="text-30 md:text-24">{BlogData?.headOne}</h2>
               <p className="mt-20" dangerouslySetInnerHTML={{ __html: BlogData?.headOneText }} />
