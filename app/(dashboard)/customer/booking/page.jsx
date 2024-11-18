@@ -234,7 +234,7 @@ export default function DbBooking() {
 
                       {elm?.tour_details?.departures !== ""  && (
                         <div className="Location">
-                          <span><MdFlightTakeoff color="dabf4f" size={17} /> {translate('Arrival')} : {elm?.tour_details?.arrival}</span>
+                          <span><MdFlightTakeoff color="dabf4f" size={17} /> {translate('Arrival')} : {elm?.arrival}</span>
                         </div>
                       )}
                       {elm?.tour_details?.departures !== ""  && (
