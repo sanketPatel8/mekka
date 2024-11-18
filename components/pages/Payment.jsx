@@ -1255,7 +1255,7 @@ const handleSecondAmountChange = (e) => {
                   <div
                     className={
                       SideBarData?.selectedCheckbox !== false ||
-                      SideBarData?.Airline == null
+                      SideBarData?.Airline?.flight_name == null
                         ? "d-none"
                         : "d-block"
                     }
@@ -1265,7 +1265,7 @@ const handleSecondAmountChange = (e) => {
                         <FaTelegramPlane size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {translate("Airline")} : {SideBarData?.Airline}
+                        {translate("Airline")} : {SideBarData?.Airline?.flight_name}
                       </div>
                     </div>
                     <div className="line mt-5 mb-5"></div>

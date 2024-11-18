@@ -3,7 +3,7 @@ import React from "react";
 import { locations } from "@/data/searchDDLocations";
 import { useTranslation } from "@/app/context/TranslationContext";
 
-export default function Demo1({ active, setLocation }) {
+export default function Demo1({ active, setLocation , Tours }) {
 
   const { translate } = useTranslation();
   return (
@@ -16,17 +16,17 @@ export default function Demo1({ active, setLocation }) {
     >
       <div className="searchFormItemDropdown__container">
         <div className="searchFormItemDropdown__list sroll-bar-1">
-          {locations.map((elm, i) => (
+          {Tours.map((elm, i) => (
             <div
               onClick={() =>
-                setLocation((pre) => (pre == elm.choice ? "" : elm.choice))
+                setLocation((pre) => (pre == elm ? "" : elm))
               }
               key={i}
               className="searchFormItemDropdown__item"
             >
               <button className="js-select-control-button">
-                <span className="js-select-control-choice">{translate(elm.choice)}</span>
-                <span>{elm.type}</span>
+                <span className="js-select-control-choice">{translate(elm)}</span>
+                {/* <span>{elm}</span> */}
               </button>
             </div>
           ))}

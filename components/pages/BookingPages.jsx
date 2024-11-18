@@ -1298,6 +1298,7 @@ export default function BookingPages({ BookingData }) {
   };
 
 
+console.log("BookingSideBar" , BookingSideBar);
 
 
   const bookingData = {
@@ -1336,7 +1337,7 @@ export default function BookingPages({ BookingData }) {
     coupon_percentage: Discount?.percentage || 0,
     mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
-    flight_id: selectedCheckbox !== false ? 0 : BookingSideBar.Airline?.id,
+    flight_id:  BookingSideBar.Airline?.flight_id,
     exclude_flight: JSON.parse(ExcludeFlight),
     total_person: adultData.length + Childrendata.length + babyData.length,
     // tax: JSON.parse(formattedTaxAmount),
@@ -1538,7 +1539,7 @@ export default function BookingPages({ BookingData }) {
                         </div>
                         <div className="text-start">
                           {translate("Airline")}:{" "}
-                          {BookingSideBar?.Airline}
+                          {BookingSideBar?.Airline?.airline_name}
                         </div>
                       </div>
                     </div>

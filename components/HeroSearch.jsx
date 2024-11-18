@@ -7,6 +7,7 @@ import NumberOfTravellers from "./common/dropdownSearch/NumberOfTravellers";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { POST } from "@/app/utils/api/post";
 
 const HeroSearch = ({ CustomClass }) => {
   const { translate } = useTranslation();
@@ -16,6 +17,7 @@ const HeroSearch = ({ CustomClass }) => {
     new DateObject().setDay(14).add(1, "month"),
   ]);
   const [tourMambar, setTourMambar] = useState("");
+  const [Tours, setTours] = useState([])
   const router = useRouter();
   const dropDownContainer = useRef(null);
 
@@ -50,6 +52,28 @@ const HeroSearch = ({ CustomClass }) => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const accessdata = async () => {
+    // setIsLoading(true);
+    const url = "tour_data"
+
+    try {
+      const response = await POST.request({ url: url })
+      // setIsLoading(false);
+      if (response.Data) {
+       
+        setTours(response.Data.tour_type)
+        
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    accessdata()
+  }, [])
+  
 
   const handleLocationChange = () => {
     setCurrentActiveDD((prev) => (prev === "location" ? "" : "location"));
@@ -114,6 +138,7 @@ const HeroSearch = ({ CustomClass }) => {
           <Location
             setLocation={handleLocationSelection}
             active={currentActiveDD === "location"}
+            Tours={Tours}
           />
         </div>
 

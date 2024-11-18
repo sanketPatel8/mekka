@@ -527,6 +527,7 @@ export default function TourSingleSidebar({
         : 0
     );
 
+console.log("SidebarData" , SidebarData);
 
 
   const FlightAndHotelPrice =
@@ -554,7 +555,7 @@ export default function TourSingleSidebar({
     name: SidebarData?.tour_details?.name,
     type: SidebarData?.tour_details?.type,
     TourThumbnail: SidebarData?.tour_details?.tour_image[0],
-    Airline: SidebarData?.tour_details?.airlines?.airline_name,
+    Airline: SidebarData?.tour_details?.airlines,
     To: SidebarData?.tour_details?.travel,
     Departure: selectDeparture,
     Arrival : selectarrival ,
