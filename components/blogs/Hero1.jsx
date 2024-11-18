@@ -22,29 +22,7 @@ export default function Hero1({ blog, BlogData }) {
         />
       </div>
 
-      <div className="container">
-        <div className="row justify-center">
-          <div className="col-xl-12">
-            <div className="hero__content">
-              <h1 className="hero__title">
-                {BlogData?.headOne
-                  ? BlogData?.headOne
-                  : "Your guide to everywhere"}
-              </h1>
-
-              <p
-                className="hero__text"
-                dangerouslySetInnerHTML={{ __html: BlogData?.headOneText }}
-              >
-                {/* {BlogData?.headOneText
-                  ? BlogData?.headOneText
-                  : `Find inspiration, guides and stories for wherever you're going
-                Select a destination`} */}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </section>
   );
 }
