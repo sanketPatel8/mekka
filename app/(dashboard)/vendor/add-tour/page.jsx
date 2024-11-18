@@ -695,6 +695,10 @@ export default function AddTour() {
 
   };
 
+  const ArrivalidArray = arrivalrow.map(item => item?.arrival_id);
+
+  console.log("idArray" , ArrivalidArray.join(", "));
+  
 
   const selectRef = useRef(null);
 
@@ -817,12 +821,6 @@ export default function AddTour() {
 
     }))
     
-    const arrivalData = arrivalrow.map((arrival) => ({
-      arrival_id: arrival.arrival_id ? arrival.arrival_id : '',
-      name: arrival.name ? arrival.name : '',
-
-    }))
-
     const madinaData = madinaRows.map((madina) => ({
       hotel_type: 2,
       hotel_name: madina.hotel_name ? madina.hotel_name : '',
@@ -830,6 +828,7 @@ export default function AddTour() {
       hotel_price: madina.hotel_price,
       hotel_info: madina.hotel_info
     }))
+    
     const departureData = departureRows.map((departure) => ({
       departure_id: departure.departure_id ? departure.departure_id : '',
       price: departure.price ? departure.price : '',
@@ -901,7 +900,7 @@ export default function AddTour() {
     formData.append("flight_exclude", 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
-    formData.append("arrival" , JSON.stringify(arrivalData));
+    formData.append("arrival" , ArrivalidArray);
     // image2FileArray.forEach((file, index) => {
     //   formData.append(`tour_image[${index}]`, file);
     // });
