@@ -898,7 +898,7 @@ export default function AddTour() {
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData) : "");
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    formData.append("flight_exclude", radioValueExcludeFlight === "Yes" ? 1 : 0);
+    formData.append("flight_exclude", 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
     formData.append("arrival" , JSON.stringify(arrivalData));
@@ -2050,7 +2050,7 @@ export default function AddTour() {
                                 ))}
                               </ul>
                             </div>
-                            <div className="d-flex flex-wrap item-center justify-content-between">
+                            {/* <div className="d-flex flex-wrap item-center justify-content-between">
                               <h6>
                                 {translate("Allow Exclude Flight Details")}
                               </h6>
@@ -2096,7 +2096,7 @@ export default function AddTour() {
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> */}
                             <div className=" ">
                               <h6 className="mb-1">
                                 {translate("Add Flight Information")}
