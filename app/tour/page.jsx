@@ -198,8 +198,56 @@ export default function PageData() {
     }
   };
 
- 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     // Extract search parameters
+  //     const tourTypeFromParam = searchParams.get("TourType") || "";
+  //     const typeFromParam = searchParams.get("type") || "";
+  //     const startDate = searchParams.get("StartDate") || "";
+  //     const endDate = searchParams.get("EndDate") || "";
+  //     const person = searchParams.get("person") || "";
+  
+  //     // Set the search data state
+  //     const searchData = {
+  //       tourType: tourTypeFromParam || typeFromParam || "",
+  //       startDate,
+  //       endDate,
+  //       person,
+  //     };
+  
+  //     setSearchData(searchData);
+  
+  //     // Check if there are search parameters
+  //     const hasSearchParams = Object.values(searchData).some(value => value);
+      
+  //     // Check if there are filter selections
+  //     const hasFilters = 
+  //       FilterSidebar.selectedTourTypes !== " " ||
+  //       FilterSidebar.selectedLanguages.length > 0 ||
+  //       FilterSidebar.selectedCities.length > 0 ||
+  //       FilterSidebar.selectedFeatures.length > 0 ||
+  //       FilterSidebar.selectedDurations.length > 0 ||
+  //       (FilterPrice[1] !== 0 || FilterPrice[0] !== 0) ||
+  //       (FilterDistance[1] !== 0 || FilterDistance[0] !== 0);
+  
+  //     try {
+  //       if (hasFilters) {
+  //         await FetchFilterData();
+  //       } else if (hasSearchParams) {
+  //         await fetchSearch1Data(searchData);
+  //       } else {
+  //         await fetchListing();
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       // Handle error appropriately
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, [FilterSidebar, FilterPrice, FilterDistance, searchParams]); 
   useEffect(() => {
+
 
       if (
         FilterSidebar.selectedTourTypes !== " " ||
@@ -213,9 +261,6 @@ export default function PageData() {
       ) {
         
         FetchFilterData();
-      }else {
-       
-        fetchListing();
       }
 
   }, [FilterSidebar, FilterPrice, FilterDistance ]);
@@ -226,7 +271,9 @@ export default function PageData() {
     };
 
     try {
+
       const response = await post("tour_data", sendData);
+      console.log(response, "response");
       setFliterData(response.Data);
       setDistance([response?.Data?.min_km , response?.Data?.max_km])
       setValue([response?.Data?.min_price , response?.Data?.max_price])
@@ -271,6 +318,30 @@ export default function PageData() {
   };
 
   useEffect(() => {
+
+    const tourTypeFromParam = searchParams.get("TourType") || "";
+    const typeFromParam = searchParams.get("type") || "";
+
+    // Choose the appropriate value for tourType
+    const tourType = tourTypeFromParam || typeFromParam || "";
+
+    const startDate = searchParams.get("StartDate") || "";
+    const endDate = searchParams.get("EndDate") || "";
+    const person = searchParams.get("person") || "";
+  
+    if(
+      (FilterSidebar.selectedTourTypes == " " &&
+      FilterSidebar.selectedLanguages.length == 0 &&
+      FilterSidebar.selectedCities.length == 0 &&
+      FilterSidebar.selectedFeatures.length == 0 &&
+      FilterSidebar.selectedDurations.length == 0 ) &&
+      (tourType == "" && startDate == "" && endDate == "" && person == "")
+    ){
+      fetchListing();
+    }
+  },[FilterSidebar,searchParams]);
+
+  useEffect(() => {
     // Get both parameters (TourType and Type)
     const tourTypeFromParam = searchParams.get("TourType") || "";
     const typeFromParam = searchParams.get("type") || "";
@@ -290,13 +361,10 @@ export default function PageData() {
       person,
     });
 
-    // Check if any of the search parameters are non-empty and call the appropriate functions
     if (tourType || startDate || endDate || person) {
       fetchSearch1Data({ tourType, startDate, endDate, person });
       route.push("#redirect");
-    } else {
-      fetchListing();
-    }
+    } 
   }, [searchParams]);
 
   return (
