@@ -253,6 +253,12 @@ export default function EditTour() {
         nextDay.setDate(nextDay.getDate() + 1);
         setMinDate(nextDay.toISOString().split("T")[0]);
       }
+
+      const newTotalDays = calculateDaysBetweenDates(e.target.value, date_end);
+      if (newTotalDays < route_data.length) {
+          setRouteData(route_data.slice(0, newTotalDays));
+      }
+
     }
   };
 
@@ -272,6 +278,11 @@ export default function EditTour() {
         setDateEnd(dateBegin);
       } else {
         setDateEnd(e.target.value);
+
+        const newTotalDays = calculateDaysBetweenDates(date_begin, e.target.value);
+        if (newTotalDays < route_data.length) {
+            setRouteData(route_data.slice(0, newTotalDays));
+        }
       }
     }
   };
@@ -1017,8 +1028,13 @@ export default function EditTour() {
       return;
     }
 
-    const hasEmptyDayOrDescription = route_data.some((day) => !day.dayData || !day.description);
-    if (hasEmptyDayOrDescription) {
+    const hasEmptyDayOrDescription = route_data.some((day) => {
+      const { dayData, description } = day;
+      return !dayData || !description;
+    });
+        console.log(hasEmptyDayOrDescription, "hasEmptyDayOrDescription");
+    console.log(route_data, "route_data");
+    if (hasEmptyDayOrDescription || route_data.length !== totalDays) {
       showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
       setLoading(false);
       return;
