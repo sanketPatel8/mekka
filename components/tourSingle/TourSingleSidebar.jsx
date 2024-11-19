@@ -178,7 +178,7 @@ export default function TourSingleSidebar({
     let selectedHotel;
     try {
       selectedHotel = JSON.parse(value);
-      console.log(selectedHotel)
+  
     } catch (error) {
       return; // Exit if value isn't valid JSON
     }
@@ -248,7 +248,7 @@ export default function TourSingleSidebar({
       price: elm.flight_amount,
       luggage: elm.luggage,
     };
-    console.log(selectedFlight)
+   
     setSelectedFlights(selectedFlight); 
     setSelectedAirlinePrice(selectedFlight.price);
   };
@@ -512,41 +512,12 @@ export default function TourSingleSidebar({
     JSON.parse(total) +
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    JSON.parse(
-      SidebarData?.tour_details?.flight_included !== "0" &&
-        selectedCheckbox == false
-        ? SelectedAirlinePrice
-        : 0
-    ) +
-    JSON.parse(
-      SidebarData?.tour_details?.flight_included !== "0" &&
-        selectedCheckbox == false
-        ? selectDeparture.price === undefined
-          ? 0
-          : selectDeparture.price
-        : 0
-    );
-
-console.log("SidebarData" , SidebarData);
-
+    Number(SidebarData?.tour_details?.airlines?.flight_amount)
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    JSON.parse(
-      SidebarData?.tour_details?.flight_included !== "0" &&
-        selectedCheckbox == false
-        ? SelectedAirlinePrice
-        : 0
-    ) +
-    JSON.parse(
-      SidebarData?.tour_details?.flight_included !== "0" &&
-        selectedCheckbox == false
-        ? selectDeparture.price === undefined
-          ? 0
-          : selectDeparture.price
-        : 0
-    );
+    Number(SidebarData?.tour_details?.airlines?.flight_amount);
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
@@ -646,7 +617,7 @@ console.log("SidebarData" , SidebarData);
 
   const totalSelected = adultNumber + youthNumber + childrenNumber;
 
-  console.log("SidebarData?.tour_price", SidebarData?.tour_price);
+  
 
 
 
@@ -663,7 +634,7 @@ console.log("SidebarData" , SidebarData);
 
         {SidebarData?.tour_price?.map((group, index) => {
 
-          console.log("group", group);
+  
 
           let count, typeLabel;
 
