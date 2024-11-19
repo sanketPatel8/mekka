@@ -1022,7 +1022,12 @@ export default function EditTour() {
       return;
     }
 
-    if (route_data.length !== totalDays) {
+    console.log(totalDays, "totalDays")
+
+    console.log(route_data.length, "route_data.length")
+
+    console.log(calculateDaysBetweenDates(date_begin, date_end), "calculateDaysBetweenDates(date_begin, date_end)")
+    if (calculateDaysBetweenDates(date_begin, date_end) !== totalDays) {
       showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
       setLoading(false);
       return;
