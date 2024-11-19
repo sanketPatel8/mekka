@@ -954,12 +954,16 @@ export default function EditTour() {
         departureRows.every(
           (departure) => departure.departure_id && departure.price
         ) &&
-        (image2.length > 0 || Object.keys(uploadedImage).some((key) => uploadedImage[key]))
+        (image2.length > 0 || Object.keys(uploadedImage).some((key) => uploadedImage[key])) &&
+        arrivalrow.length > 0 &&
+        arrivalrow.every(
+          (arrival) => arrival.arrival_id && arrival.name
+        )
 
 
       )
     } else if (activeTab === "Pricing") {
-      return adult_price && child_price && baby_price;
+      return adult_price >= 0 && child_price >= 0 && baby_price >= 0;
     } else if (activeTab === "Included") {
       return true;
     } else if (activeTab === "Overview") {
@@ -1006,7 +1010,13 @@ export default function EditTour() {
     const totalDays = calculateDaysBetweenDates(date_begin, date_end);
 
 
-    if (!date_begin || !date_end || !name || !capacity || departureRows.length == 0 || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || !baby_price || !adult_price || !child_price) {
+    if (!date_begin || !date_end || !name || !capacity || departureRows.length == 0 || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || baby_price <= 0 || adult_price <= 0 || child_price <= 0 || !baby_price || !adult_price || !child_price) {
+      showErrorToast(translate, "Please fill in all required fields before proceeding");
+      setLoading(false);
+      return;
+    }
+
+    if(arrivalrow.length == 0 || arrivalrow.some((arrival) => !arrival.arrival_id || !arrival.name)){
       showErrorToast(translate, "Please fill in all required fields before proceeding");
       setLoading(false);
       return;
