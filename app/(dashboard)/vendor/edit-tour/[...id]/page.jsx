@@ -161,7 +161,6 @@ export default function EditTour() {
           (additionalService) => additionalService.additinoal_order === service.id.toString()
         );
 
-        console.log(foundService, "foundService");
         if (foundService) {
           return {
             ...service,
@@ -508,14 +507,12 @@ export default function EditTour() {
   }, []);
   useEffect(() => {
     if (arrival_data.length>0) {
-      console.log(arrival_data, "arrival_data");
       const updatedArrival = arrival_data.map((arrival) => {
         return {
           arrival_id: arrival.arrival_id,
           name: arrival.arrival,
         };
       });
-      console.log(updatedArrival, "updatedArrival");
       setArrivalrow(updatedArrival);
     }    
      
@@ -545,7 +542,6 @@ export default function EditTour() {
         form: formData,
         url: "remove_imageordocument",
       });
-      console.log(response)
       if (response.Status === "1") {
         showSuccessToast(translate, "Image removed successfully");
         fetchTour(id);
@@ -824,13 +820,9 @@ export default function EditTour() {
   };
 
   const handleArrivalchange = (value, index) => {
-    console.log(value, "value");
 
     if (!value) return;
     const selectedOption = Arrival.find((option) => option.id === value.value);
-
-    console.log("selectedOption", selectedOption);
-
 
     const ArrivalData = {
       ...arrivalrow[index],
@@ -838,13 +830,9 @@ export default function EditTour() {
       name: selectedOption?.arrival || "",
     };
 
-    console.log("ArrivalData", ArrivalData);
-
 
     const newRows = [...arrivalrow];
     newRows[index] = ArrivalData;
-    console.log("newRows", newRows);
-
 
     setArrivalrow(newRows);
 
@@ -1022,11 +1010,8 @@ export default function EditTour() {
       return;
     }
 
-    console.log(totalDays, "totalDays")
 
-    console.log(route_data.length, "route_data.length")
 
-    console.log(calculateDaysBetweenDates(date_begin, date_end), "calculateDaysBetweenDates(date_begin, date_end)")
     if (calculateDaysBetweenDates(date_begin, date_end) !== totalDays) {
       showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
       setLoading(false);
@@ -1039,10 +1024,6 @@ export default function EditTour() {
       setLoading(false);
       return;
     }
-
-
-
-    console.log(arrivalrow, "arrivalrow")
 
 
     const end_date = formatDateToMMDDYYYY(date_end);
@@ -1089,9 +1070,7 @@ export default function EditTour() {
 
     const ArrivalidArray = arrivalrow.map(item => item?.arrival_id);
 
-    console.log("idArray" , ArrivalidArray.join(", "));
 
-    console.log(arrivalData, "arrivalData")
 
     if (
       !mekkaData.some(
