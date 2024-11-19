@@ -1355,17 +1355,16 @@ const CustomerDetaTable = () => {
                     highlightOnHover
                   /> */}
           
-                {BookingDetails?.reservation?.paymentType !== "1" &&
-                  BookingDetails?.reservation?.paymentType !== "2" && (
+                {BookingDetails?.reservation?.paymentType === "3" && (
                     <div className="row bg-white mx-0">
                       <div className="col-12 row">
-                        <p className="pt-10 pb-0 table-font-20 ">{translate(translate , "Payment Information")}</p>
+                        <p className="pt-10 pb-0 table-font-20 ">{translate("Payment Information")}</p>
                         <table className="table bg-light col-12">
                           <thead>
                             <tr className="row">
-                              <th className="col-4 pb-1">{translate(translate , "Date")}</th>
-                              <th className="col-4 pb-1">{translate(translate , "Amount")}</th>
-                              <th className="col-4 pb-1">{translate(translate , "Paid Date")}</th>
+                              <th className="col-4 pb-1">{translate("Date")}</th>
+                              <th className="col-4 pb-1">{translate("Amount")}</th>
+                              <th className="col-4 pb-1">{translate("Paid Date")}</th>
                             </tr>
                           </thead>
                           <tbody>
