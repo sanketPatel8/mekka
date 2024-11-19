@@ -512,7 +512,7 @@ export default function EditTour() {
       const updatedArrival = arrival_data.map((arrival) => {
         return {
           arrival_id: arrival.arrival_id,
-          name: arrival.name,
+          name: arrival.arrival,
         };
       });
       console.log(updatedArrival, "updatedArrival");
@@ -1072,7 +1072,12 @@ export default function EditTour() {
 
     }))
 
+    const ArrivalidArray = arrivalrow.map(item => item?.arrival_id);
+
+    console.log("idArray" , ArrivalidArray.join(", "));
+
     console.log(arrivalData, "arrivalData")
+
     if (
       !mekkaData.some(
         (mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info
@@ -1161,7 +1166,7 @@ export default function EditTour() {
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_id", id);
-    formData.append("arrival", JSON.stringify(arrivalData));
+    formData.append("arrival", ArrivalidArray);
 
     if (image2FileArray.length === 0) {
       formData.append("tour_image", "");
