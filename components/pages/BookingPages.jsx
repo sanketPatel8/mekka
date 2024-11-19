@@ -1330,7 +1330,7 @@ console.log("BookingSideBar" , BookingSideBar);
       Childrendata.length === 0 ? 0 : Childrendata[0]?.default
     ),
     baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
-    total: JSON.parse(TotalPaidAmount), // old value :- totalSum
+    total: JSON.parse(PackagePrices + adultadiPrices + adPrice), // old value :- totalSum
     amount_paid: 0, // OLD VALUE :- JSON.parse(TotalPaidAmount)
     coupon_name: Discount?.coupon_name || "",
     coupon_amount: Discount?.Discount || 0,
