@@ -997,18 +997,17 @@ export default function EditTour() {
     setLoading(true);
     const totalDays = calculateDaysBetweenDates(date_begin, date_end);
 
-
-    if (!date_begin || !date_end || !name || !capacity || departureRows.length == 0 || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || baby_price <= 0 || adult_price <= 0 || child_price <= 0 || !baby_price || !adult_price || !child_price) {
+    if (!date_begin || !date_end || !name || !capacity || departureRows.length == 0 || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || baby_price < 0 || adult_price < 0 || child_price < 0 || arrivalrow.length == 0 || arrivalrow.some((arrival) => !arrival.arrival_id || !arrival.name)) {
       showErrorToast(translate, "Please fill in all required fields before proceeding");
       setLoading(false);
       return;
     }
 
-    if(arrivalrow.length == 0 || arrivalrow.some((arrival) => !arrival.arrival_id || !arrival.name)){
-      showErrorToast(translate, "Please fill in all required fields before proceeding");
-      setLoading(false);
-      return;
-    }
+    // if(arrivalrow.length == 0 || arrivalrow.some((arrival) => !arrival.arrival_id || !arrival.name)){
+    //   showErrorToast(translate, "Please fill in all required fields before proceeding");
+    //   setLoading(false);
+    //   return;
+    // }
 
 
 
