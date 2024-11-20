@@ -1232,7 +1232,7 @@ export default function EditTour() {
           <div className="dashboard__content_content ">
             <h1 className="text-30">{translate("Edit Tour")}</h1>
 
-            <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
+            <div className="rounded-12 bg-white shadow-2 px-40 py-60 mt-20">
               <div className="tabs -underline-2 js-tabs">
                 <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                   {tabs.map((elm, i) => (

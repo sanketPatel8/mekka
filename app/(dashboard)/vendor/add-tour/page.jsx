@@ -980,7 +980,7 @@ export default function AddTour() {
               {translate("Add Tour")}
             </h1>
 
-            <div className="rounded-12 bg-white shadow-2 px-40 py-40 mt-20">
+            <div className="rounded-12 bg-white shadow-2 px-40 py-60 mt-20">
               <div className="tabs -underline-2 js-tabs">
                 <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                   {tabs.map((elm, i) => (
@@ -2233,7 +2233,7 @@ export default function AddTour() {
                                                     handleFlightSelectChange(value, index)
                                                   }
                                                   options={ChooseFlight}
-                                                  className="custom-select Flight-selected-dd"
+                                                  className="custom-select flight_select Flight-selected-dd"
                                                   placeholder={`${translate("Select Flight")}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
