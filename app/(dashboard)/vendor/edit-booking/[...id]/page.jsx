@@ -215,7 +215,7 @@ export default function DbBooking({ params }) {
       { name: translate("Total"), selector: (row) => row.Total, width:"20%" },
       {
         name: translate("Mekka fees"),
-        selector: (row) => row.Discount ,
+        selector: (row) => row.Mekka_fees ,
       },
       {
         name: translate("Subtotal"),
@@ -454,6 +454,7 @@ export default function DbBooking({ params }) {
           Amount_Paid: `${response.Bookings.reservation.amount_paid} €`,
           Total: `${response.Bookings.reservation.subtotal} €`,
           Amount_Due: `${response.Bookings.reservation.amount_due} €`,
+          Mekka_fees : `${response.Bookings.reservation.commission_amount}`
         };
 
         setTotalData(total);
