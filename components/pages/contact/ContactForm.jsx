@@ -29,12 +29,12 @@ export default function ContactForm() {
     }
 
       const formData = new FormData();
-    formData.append("Name", name);
-    formData.append("Phone", phone);
-    formData.append("Email", email);
-    formData.append("Message", message);
+    formData.append("name", name);
+    formData.append("phone", phone);
+    formData.append("email", email);
+    formData.append("message", message);
 
-    const response = await POST.request({form: formData, url: "save_contact"});
+    const response = await POST.request({form: formData, url: "contact_mail"});
     if(response.Status === "1"){
       showSuccessToast(translate, "Message sent successfully");
       setName("");
