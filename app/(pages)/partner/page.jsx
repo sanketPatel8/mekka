@@ -319,7 +319,7 @@ const page = () => {
                           </label>
                         </div>
                         <div className="ml-10">
-                          {translate("Travel Agency")}
+                          {translate("Agency")}
                         </div>
                       </div>
                     </div>
