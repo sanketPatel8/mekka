@@ -9,7 +9,9 @@ import { FaCalendar } from "react-icons/fa";
 import { FaPersonWalking } from "react-icons/fa6";
 import { MdFlightTakeoff } from 'react-icons/md';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GiAirplaneArrival } from "react-icons/gi";
 import { FaStar } from "react-icons/fa";
+import { MdFlightLand } from "react-icons/md";
 import { faHotel, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import Stars from "@/components/common/Stars";
 import Link from "next/link";
@@ -234,7 +236,7 @@ export default function DbBooking() {
 
                       {elm?.tour_details?.departures !== ""  && (
                         <div className="Location">
-                          <span><MdFlightTakeoff color="dabf4f" size={17} /> {translate('Arrival')} : {elm?.arrival}</span>
+                          <span><MdFlightLand color="dabf4f" size={17} /> {translate('Arrival')} : {elm?.arrival}</span>
                         </div>
                       )}
                       {elm?.tour_details?.departures !== ""  && (
