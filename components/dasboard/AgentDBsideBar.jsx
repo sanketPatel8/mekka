@@ -100,7 +100,7 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
               } `}
             >
               {elm.label === "Logout" ? (
-                <a onClick={handleLogout}>
+                <a onClick={handleLogout} className="cursor-pointer" >
                   <i className={elm.iconClass}></i>
                   <span className="ml-10">{elm.label}</span>
                 </a>
