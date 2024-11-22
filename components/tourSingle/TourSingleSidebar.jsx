@@ -832,13 +832,13 @@ export default function TourSingleSidebar({
 
         <div
           className={`${SidebarData?.tour_details?.flight_included == "0"
-              ? "d-none"
+              ? ""
               : "d-block"
             }`}
         >
           <div
             className={`${SidebarData?.tour_details?.flight_exclude == "0"
-                ? "d-none"
+                ? ""
                 : "d-block"
               }`}
           >
@@ -924,6 +924,7 @@ export default function TourSingleSidebar({
             </div>
 
             <hr />
+            
             <h5 className="text-18 fw-500 mb-10 mt-10">
                 {translate("Departure Information")}
               </h5>
