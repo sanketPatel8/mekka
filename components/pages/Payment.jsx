@@ -955,7 +955,7 @@ const handleSecondAmountChange = (e) => {
                             </div> */}
                             <div className="lh-16 ml-15">
                               {translate(
-                                "Pay Later (Using Bank Transfer Or Clicking On Strip Link)"
+                                "Pay Later (Using Bank Transfer Or Clicking On Stripe Link)"
                               )}
                             </div>
                           </div>
