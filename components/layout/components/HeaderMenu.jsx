@@ -30,7 +30,7 @@ const HeaderMenu = ({translate}) => {
               </div>
               <div>
                 <Link href="/tour?type=Kultur Reisen" className="">
-                  {translate("Kultur Reisen")}
+                  {translate("Culture Trip")}
                 </Link>
               </div>
               <div>

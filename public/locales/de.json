@@ -599,7 +599,7 @@
 "Send Message" : "Nachricht senden",
 "Message" : "Nachricht",
 "North America" : "Nordamerika",
-"Send" : "Schicken",
+"Send" : "senden",
 "Your email address" : "Deine E-Mail Adresse",
 "Follow Us" : "Folgen Sie uns",
 "Stars" : "Sterne",
@@ -719,5 +719,8 @@
 "Payment Information" : "Zahlungs informationen",
 "Organization Name": "Name der Organisation",
 "See All Photos" : "Alle Fotos anzeigen",
-"Pay Later (using Bank Transfer or clicking on Strip link)" : "Später bezahlen (per Banküberweisung oder durch Klicken auf den Strip-Link)"
+"Pay Later (using Bank Transfer or clicking on Strip link)" : "Später bezahlen (per Banküberweisung oder durch Klicken auf den Strip-Link)",
+"Culture Trip" : "Kultur Reisen",
+"Call us!" : "Ruf uns an!",
+"Write to us" : "Schreib uns auf"
 }

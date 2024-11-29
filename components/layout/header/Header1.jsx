@@ -128,7 +128,7 @@ export default function Header1(payment) {
           </div>
 
           <div className="header__right">
-            <div className="xl:d-none mr-10">
+            <div className="xl:d-none mr-3">
               <HeaderSerch />
             </div>
 
