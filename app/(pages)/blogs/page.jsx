@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -11,17 +10,18 @@ import { showErrorToast } from "@/app/utils/tost";
 import Header1 from "@/components/layout/header/Header1";
 
 import FooterTwo from "@/components/layout/footers/FooterTwo";
+import Pagination from "@/components/common/Pagination";
 
 export default function ArticlesThree() {
   const [ArticalDAta, setArticalDAta] = useState([]);
 
-    // page title 
+  // page title
 
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        document.title = "Blog List - MekkaBooking";
-      }
-    }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Blog List - MekkaBooking";
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,11 +50,19 @@ export default function ArticlesThree() {
   }, []);
 
   const { translate } = useTranslation();
+
+  const [range, setRange] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const onPageChange = (pageIndex) => {
+    console.log(pageIndex);
+  };
+  const startParam = "start";
+
   return (
     <section className="layout-pt-xl">
-        <Header1 />
+      <Header1 />
       <div className="container">
-      <div
+        <div
           data-aos="fade-up"
           data-aos-delay=""
           className="row justify-content-center mb-10 mt-30"
@@ -70,9 +78,7 @@ export default function ArticlesThree() {
                     width={616}
                     height={451}
                     src={
-                      elm?.imageOne
-                        ? elm?.imageOne
-                        : "/img/404/imgnotFound.png"
+                      elm?.imageOne ? elm?.imageOne : "/img/404/imgnotFound.png"
                     }
                     alt="image"
                     className="img-ratio rounded-12"
@@ -103,9 +109,22 @@ export default function ArticlesThree() {
               </Link>
             </div>
           ))}
-        </div>
+          <div className={`${ArticalDAta?.length === 0 ? "d-none" : "d-block"}`}>
+            <div className="d-flex justify-center flex-column mt-60">
+              <Pagination
+                range={12}
+                activeIndex={2}
+                setActiveIndex={setActiveIndex}
+                startParam={startParam}
+                onPageChange={onPageChange}
+              />
 
-       
+              <div className="text-14 text-center mt-20">
+                {translate("Showing results")} 1 - {ArticalDAta?.length} of 
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <FooterTwo />
     </section>

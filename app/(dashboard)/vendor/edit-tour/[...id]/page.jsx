@@ -111,7 +111,7 @@ export default function EditTour() {
   const [flightRow, setFlightRow] = useState([
     {
       flight_id: " ",
-      flight_amount: " ",
+      flight_amount: "0",
       no_of_stop: " ",
       luggage: "",
       id: "",

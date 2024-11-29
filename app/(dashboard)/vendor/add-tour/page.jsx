@@ -128,7 +128,7 @@ export default function AddTour() {
   ]);
 
   const [flightRow, setFlightRow] = useState([
-    { flight_id: " ", flight_amount: " ", no_of_stop: " ", luggage: "" },
+    { flight_id: " ", flight_amount: "0", no_of_stop: " ", luggage: "" },
   ]);
 
   const [mekkaHotel, setMekkaHotel] = useState([]);
