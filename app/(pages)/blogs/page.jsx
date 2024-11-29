@@ -62,7 +62,7 @@ export default function ArticlesThree() {
           {ArticalDAta.map((elm, i) => (
             <div
               key={i}
-              className="col-lg-3 col-md-5 my-lg-2  my-2 border-1 -hover-shadow rounded-12 mx-2 py-10 px-10 shadow"
+              className="col-lg-3 col-md-4 my-lg-2  my-2 border-1 -hover-shadow rounded-12 mx-2 py-10 px-10 shadow"
             >
               <Link href={`/blog/${elm.id}`} className="blogCard -type-1">
                 <div className="blogCard__image ratio ratio-41:30">

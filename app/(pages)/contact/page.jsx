@@ -21,8 +21,8 @@ export default function page() {
     <>
       <main>
         <Header1 />
-        <Map />
-        <Locations />
+        {/* <Map /> */}
+        {/* <Locations /> */}
         <ContactForm />
         <FooterTwo />
       </main>

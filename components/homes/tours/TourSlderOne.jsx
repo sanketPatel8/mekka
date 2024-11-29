@@ -59,7 +59,6 @@ export default function TourSlderOne() {
       <div className="sectionBg -w-1530 rounded-12 bg-light-1"> </div>
 
       {TopTranding.length !== 0 && (
-
         <div className="container">
           <div className="row justify-between items-end y-gap-10">
             <div className="col-auto">
@@ -163,6 +162,12 @@ export default function TourSlderOne() {
                               Zu Kaaba {elm.distance_to_hotel}
                             </div>
 
+                            <div
+                              className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
+                            >
+                              {elm.date_begin} - {elm.date_end}
+                            </div>
+
                             <h3
                               className={`tourCard__title text-16 fw-500 mt-5 ${
                                 elm.type & elm.name ? "d-none" : "d-block"
@@ -180,23 +185,25 @@ export default function TourSlderOne() {
                                   {/* <Stars star={elm?.rating_count} font={12} /> */}
                                 </div>
                                 {elm?.company_name && (
-                              <div className="text-14 ml-5">
-                                <span className="fw-500">{elm?.rating}</span>
-                                {/* {elm?.rating_count}) -{" "} */}
-                               <div className="items-center">
-                               <PiBuildingApartmentFill
-                                  color="#dabf4f"
-                                  className=""
-                                  size={20}
-                                />{" "}
-                                <span>
-                                  {elm?.company_name == null
-                                    ? "  "
-                                    : elm?.company_name}{" "}
-                                </span>
-                               </div>
-                              </div>
-                            )}
+                                  <div className="text-14 ml-5">
+                                    <span className="fw-500">
+                                      {elm?.rating}
+                                    </span>
+                                    {/* {elm?.rating_count}) -{" "} */}
+                                    <div className="items-center">
+                                      <PiBuildingApartmentFill
+                                        color="#dabf4f"
+                                        className=""
+                                        size={20}
+                                      />{" "}
+                                      <span>
+                                        {elm?.company_name == null
+                                          ? "  "
+                                          : elm?.company_name}{" "}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             </div>
 
@@ -215,7 +222,7 @@ export default function TourSlderOne() {
                                   elm.tour_price == "0" ? "d-none" : "d-block"
                                 }`}
                               >
-                                {translate("From")}{" "}
+                           
                                 <span className="text-16 fw-500">
                                   {formatPrice(elm.tour_price)}
                                 </span>
@@ -229,17 +236,16 @@ export default function TourSlderOne() {
                 )}
               </div>
             </div>
-            { TopTranding.length > 4 && (
+            {TopTranding.length > 4 && (
+              <div className="navAbsolute">
+                <button className="navAbsolute__button bg-white js-slider1-prev prev1">
+                  <i className="icon-arrow-left text-14"></i>
+                </button>
 
-            <div className="navAbsolute">
-              <button className="navAbsolute__button bg-white js-slider1-prev prev1">
-                <i className="icon-arrow-left text-14"></i>
-              </button>
-
-              <button className="navAbsolute__button bg-white js-slider1-next next1">
-                <i className="icon-arrow-right text-14"></i>
-              </button>
-            </div>
+                <button className="navAbsolute__button bg-white js-slider1-next next1">
+                  <i className="icon-arrow-right text-14"></i>
+                </button>
+              </div>
             )}
           </div>
         </div>

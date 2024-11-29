@@ -13,8 +13,7 @@ import { FaUserPlus, FaUser } from "react-icons/fa";
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 import DashboardCustomer from "../components/DashboardCustomer";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
-
-
+import HeaderMenu from "../components/HeaderMenu";
 
 export default function Header1(payment) {
   const router = useRouter();
@@ -22,8 +21,6 @@ export default function Header1(payment) {
   const [addClass, setAddClass] = useState(false);
   const [LoginCheck, setLoginCheck] = useState(false);
   const { dispatch } = useAuthContext();
-
-  
 
   const handleLogoutClick = () => {
     if (typeof window !== "undefined") {
@@ -75,7 +72,9 @@ export default function Header1(payment) {
   return (
     <>
       <header
-        className={`header -type-1 border_bottom js-header ${addClass ? "-is-sticky" : ""}`}
+        className={`header -type-1 border_bottom js-header ${
+          addClass ? "-is-sticky" : ""
+        }`}
       >
         <div className="header__container container px-0">
           <div className="headerMobile__left">
@@ -91,32 +90,15 @@ export default function Header1(payment) {
             <Image
               width="167"
               height="80"
-              src="/img/general/logo-1.png"
+              src="/img/logo/mekkabooking FINAL.png"
               alt="logo icon"
               priority
             />
           </Link>
 
           <div className="header__logo">
-
-            <div className="media">
-              <Link href="/" className="mx-3">
-                {translate("Home")}
-              </Link>
-              <Link href="/tour" className="mx-3">
-                {translate("Tour")}
-              </Link>
-              <Link href="/tour?type=Hajj" className="mx-3">
-                {translate("Hajj")}
-              </Link>
-              <Link href="/tour?type=Umrah" className="mx-3">
-                {translate("Umrah")}
-              </Link>
-
-              <Link href="/contact" className="mx-3">
-                {translate("Contact")}
-              </Link>
-            </div>
+            
+            <HeaderMenu translate={translate}/>
           </div>
 
           <div className="headerMobile__right">
@@ -124,7 +106,6 @@ export default function Header1(payment) {
               <DashboardCustomer
                 onLocaleChange={setLocale}
                 handleLogoutClick={handleLogoutClick}
-
               />
             ) : (
               <>
@@ -147,21 +128,24 @@ export default function Header1(payment) {
           </div>
 
           <div className="header__right">
-            <div className="xl:d-none ml-10">
+            <div className="xl:d-none mr-10">
               <HeaderSerch />
             </div>
 
             <div className="row items-center">
-
               <div className={`${!LoginCheck ? "col-2" : "col-3"}`}>
-                <div className= {`${payment.payment === true ? 'd-none' : 'd-block'}`} >
+                <div
+                  className={`${
+                    payment.payment === true ? "d-none" : "d-block"
+                  }`}
+                >
                   <div className="d-flex justify-content-center">
                     <Currency currenyLocale={currenyLocale} />
                   </div>
                 </div>
               </div>
 
-              <div className={`${!LoginCheck ? "col-2 ml-10" : "col-3 ml-20"}`}>
+              <div className={`${!LoginCheck ? "col-2 ml-10" : "col-3 ml-10"}`}>
                 <div className="d-flex justify-content-center">
                   <Language
                     parentClass="headerDropdown"

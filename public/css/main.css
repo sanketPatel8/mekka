@@ -2358,12 +2358,13 @@ h6 {
 }
 
 .header__search input {
-  width: 350px;
+  width: 150px;
   border-radius: 200px;
   padding: 7px 12px;
   padding-left: 46px;
   border: 1px solid transparent;
   transition: 0.2s;
+  margin-right: 10px;
 }
 
 .header__search .headerSearchRecent {

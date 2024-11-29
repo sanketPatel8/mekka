@@ -144,6 +144,12 @@ export default function TourSliderTwo({setLength}) {
                             Zu Kaaba {elm.distance_to_hotel}
                           </div>
 
+                          <div
+                          className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
+                        >
+                          {elm.date_begin} - {elm.date_end}
+                        </div>
+
                           <h3
                             className={`tourCard__title text-16 fw-500 mt-5 ${
                               elm.type & elm.name ? "d-none" : "d-block"
@@ -195,7 +201,7 @@ export default function TourSliderTwo({setLength}) {
                                 elm.tour_price == "0" ? "d-none" : "d-block"
                               }`}
                             >
-                              {translate("From")}{" "}
+                             
                               <span className="text-16 fw-500">
                                 {formatPrice(elm.tour_price)} 
                               </span>

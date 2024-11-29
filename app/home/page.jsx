@@ -32,7 +32,7 @@ export default function Home() {
         <Tour1 />
         <Banner />
         <TourSlderOne />
-        <TestimonialOne />
+        {/* <TestimonialOne /> */}
         <BannerOne />
         <ArticlesThree />
         <FooterTwo />

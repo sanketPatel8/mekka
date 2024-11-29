@@ -13,13 +13,15 @@ export default function Hero1({}) {
 
   return (
     <section className="hero -type-2">
-      <div className="hero__bg mt-30">
-        <Image
+      <div className="hero__bg ">
+       <div className="flex-center"> 
+       <Image
           width={1800}
           height={560}
           src="/img/hero/1/mekkabookingBg.png"
           alt="image"
         />
+       </div>
         <Image
           width="1800"
           height="40"

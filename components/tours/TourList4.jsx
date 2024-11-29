@@ -38,7 +38,7 @@ export default function TourList4({
   FilterPrice,
   setFilterPrice,
   setFilterDistance,
-  FilterDistance
+  FilterDistance,
 }) {
   const [sortOption, setSortOption] = useState("");
   const [ddActives, setDdActives] = useState(false);
@@ -158,7 +158,8 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData?.length == 0 ? 0 : TourData?.length} {translate('results')}
+                  {TourData?.length == 0 ? 0 : TourData?.length}{" "}
+                  {translate("results")}
                 </div>
               </div>
 
@@ -189,27 +190,25 @@ export default function TourList4({
             </div>
 
             {isLoading ? (
-
               <div
                 className="d-flex justify-content-center align-items-center"
                 style={{ height: "200px" }}
               >
                 <ClipLoader color="#DAC04F" size={50} />
               </div>
-
             ) : Array.isArray(TourData) && TourData.length == 0 ? (
-
               <div className="d-flex justify-content-center align-items-center">
-                <p>{translate('No Tours Available')}</p>
+                <p>{translate("No Tours Available")}</p>
               </div>
-
             ) : (
-
               Array.isArray(TourData) &&
               TourData.map((elm, ind) => (
                 <div className="row mt-20" key={ind}>
                   <div className="col-12 my-0">
-                    <div className="tourCard -type-2">
+                    <Link
+                      href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
+                      className="tourCard -type-2"
+                    >
                       <div className="tourCard__image">
                         <Image
                           width={420}
@@ -230,9 +229,18 @@ export default function TourList4({
                         </button>
                       </div>
                       <div className="tourCard__content">
-                        <div className="tourCard__location border_yellow">
-                          <FaPersonWalking color="white" size={18} />
-                          zu Kaaba {elm?.distance_to_hotel}
+                        <div className="d-flex gap-2 items-center">
+                          <div className="tourCard__location border_yellow mx-2">
+                            <FaPersonWalking color="white" size={18} />
+                            zu Kaaba {elm?.distance_to_hotel}
+                          </div>
+                          <div
+                            className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
+                          >
+                                {/* <FaCalendar color="dabf4f" size={17} /> */}
+
+                            {elm.date_begin} - {elm.date_end}
+                          </div>
                         </div>
                         <h3 className="tourCard__title mt-5">
                           <span>
@@ -292,25 +300,26 @@ export default function TourList4({
                               : "ALL"}
                           </p> */}
                         </div>
-                        {elm?.company_name !== " " && elm?.company_name !== null && (
-                          <div className="d-flex items-center mt-5">
-                            <div className="d-flex items-center x-gap-5">
-                              {/* <Stars star={elm?.rating_count} font={12} /> */}
-                              <PiBuildingApartmentFill
-                                color="#dabf4f"
-                                className=""
-                                size={25}
-                              />
+                        {elm?.company_name !== " " &&
+                          elm?.company_name !== null && (
+                            <div className="d-flex items-center mt-5">
+                              <div className="d-flex items-center x-gap-5">
+                                {/* <Stars star={elm?.rating_count} font={12} /> */}
+                                <PiBuildingApartmentFill
+                                  color="#dabf4f"
+                                  className=""
+                                  size={25}
+                                />
+                              </div>
+                              <div className="text-14 ml-5">
+                                {/* <span className="fw-500">{elm?.rating}</span> ( */}
+                                {/* {elm?.rating_count}) - */}
+                                {elm?.company_name}
+                              </div>
                             </div>
-                            <div className="text-14 ml-5">
-                              {/* <span className="fw-500">{elm?.rating}</span> ( */}
-                              {/* {elm?.rating_count}) - */}
-                              {elm?.company_name}
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        <div className="row x-gap-20 y-gap-5 ">
+                        {/* <div className="row x-gap-20 y-gap-5 ">
                           <div className="col-auto">
                             <div className="d-flex text-14 items-center">
                               <FaCalendar color="dabf4f" size={17} />
@@ -319,7 +328,7 @@ export default function TourList4({
                               </p>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="tourCard__info">
                         <div className="h-60">
@@ -350,7 +359,7 @@ export default function TourList4({
                               </p>
                             </div>
                             <p className="text-left text-md-center text-lg-center text-xl-center">
-                              {translate('including taxes and fee')}
+                              {translate("including taxes and fee")}
                             </p>
                           </div>
                         </div>
@@ -362,11 +371,10 @@ export default function TourList4({
                           </Link>
                         </button>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               ))
-              
             )}
 
             <div className={`${TourData?.length === 0 ? "d-none" : "d-block"}`}>
@@ -380,7 +388,8 @@ export default function TourList4({
                 />
 
                 <div className="text-14 text-center mt-20">
-                  {translate('Showing results')} 1 - {TourData?.length} of {count}
+                  {translate("Showing results")} 1 - {TourData?.length} of{" "}
+                  {count}
                 </div>
               </div>
             </div>

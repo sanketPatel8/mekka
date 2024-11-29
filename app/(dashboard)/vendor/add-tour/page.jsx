@@ -837,7 +837,7 @@ export default function AddTour() {
 
     const flightData = flightRow.map((flight) => ({
       flight_id: flight.flight_id ? flight.flight_id.value : '',
-      flight_amount: flight.flight_amount,
+      flight_amount: flight.flight_amount || 0,
       no_of_stop: flight.no_of_stop,
       luggage: flight.luggage
     }))

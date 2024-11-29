@@ -44,7 +44,7 @@ const CustomerDBsideBar = ({ setSideBarOpen }) => {
           <Image
             width="167"
             height="32"
-            src="/img/general/logo-1.png"
+            src="/img/logo/mekkabooking FINAL.png"
             alt="logo icon"
             priority
           />

@@ -97,7 +97,7 @@ export default function Hero7() {
             <Swiper
               className="w-100"
               modules={[Navigation, Autoplay]}
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              autoplay={{ delay: 6000, disableOnInteraction: false }}
               navigation={{
                 prevEl: ".js-sliderHero-prev",
                 nextEl: ".js-sliderHero-next",

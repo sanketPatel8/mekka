@@ -57,7 +57,7 @@ export default function ContactForm() {
     <>
       <ToastContainer/>
       <section className="layout-pt-lg layout-pb-lg">
-        <div className="container">
+        <div className="container mt-10">
           <div className="row justify-center">
             <div className="col-lg-8">
               <h2 className="text-30 fw-700 text-center mb-30">

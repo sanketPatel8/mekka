@@ -10,6 +10,8 @@ import Image from "next/image";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { POST } from "@/app/utils/api/post";
 import { useTranslation } from "@/app/context/TranslationContext";
+import Link from "next/link";
+import { IoLogoWhatsapp } from "react-icons/io";
 
 export default function FooterTwo() {
   const {translate} = useTranslation();
@@ -80,10 +82,9 @@ export default function FooterTwo() {
                   </div>
 
                   <div className="col-auto">
-                    <div className="text-20 text_16 fw-500">
-                      {translate("Speak to our expert at")}
-                      <span className="text-accent-1"> +49 (0)6196 204 72 40</span>
-                   
+                    <div className="text-20 text_16 fw-500 d-flex item-center">
+                      <span>{translate("Speak to our expert at")}</span>
+                      <span className=" " > <Link href='tel:+4961962047240' className="text-accent-1">+49 (0)6196 204 72 40</Link> <span className="cursor-pointer"><Link href='https://api.whatsapp.com/send/?phone=4961962047240&text&type=phone_number&app_absent=0' target="_blank"><IoLogoWhatsapp  size={30} color="white"/></Link></span></span>
                     </div>
                   </div>
                 </div>
@@ -110,14 +111,14 @@ export default function FooterTwo() {
                   
                  <div className="footer-flex">
                  <FaPhoneFlip color="white" className="mx-2"/>
-                 <a className="d-block" href="#">
+                 <a className="d-block" href="tel:+4961962047240" >
                   +49 (0)6196 204 72 40
                   </a>
                  </div>
 
                  <div className="footer-flex">
                  <MdEmail color="white" className="mx-2"/>
-                 <a className="d-block" href="#">
+                 <a className="d-block" href="https://outlook.live.com/owa/?path=/mail/action/compose&to=info@mekkabooking.com">
                  info@mekkabooking.com
                   </a>
                  </div>
@@ -125,7 +126,7 @@ export default function FooterTwo() {
                  <div className="footer-flex-item-top ">
                  <FaLocationDot color="white" className="mx-2 "/>
                  <p className="d-block" href="#">
-                  Mekka Booking GmbH <br /> Frankfurter Str. 92 <br /> 65760 Eschborn
+                  Mekka Booking GmbH <br /> Frankfurter Str. 92 <br /> Helfmann-Park 8 
                   </p>
                  </div>
                   
@@ -138,7 +139,7 @@ export default function FooterTwo() {
               <div className="col-lg-3 col-md-6">
                 <h4 className="text-20 fw-500">{translate('Newsletter')}</h4>
                 <p className="mt-20">
-                  {translate("Subscribe to the free newsletter and stay up to date")}
+                  {translate("Subscribe to our newsletter and don't miss any promotions!")}
                 </p>
 
                 <div className="footer__newsletter" style={{background:"white",borderRadius:"16px"}}>
@@ -158,7 +159,7 @@ export default function FooterTwo() {
         <div className="footer__bottom">
           <div className="row y-gap-5 justify-between items-center">
             <div className="col-auto">
-              <div>© {translate('Copyright MekkaBookings')} {new Date().getFullYear()}</div>
+              <div>© {new Date().getFullYear()} <Link href="/">mekkabooking.com</Link> </div>
             </div>
 
             <div className="col-auto">
