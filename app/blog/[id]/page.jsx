@@ -21,6 +21,7 @@ export default function page({ params }) {
   const blog = blogs.find((item) => item.id == id) || blogs[0];
 
   const [BlogData, setBlogData] = useState({})
+  const [Lang, setLang] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +50,11 @@ export default function page({ params }) {
     fetchData();
   }, []);
 
-  console.log("BlogData" , BlogData);
+  useEffect(() => {
+    const Lang = typeof window !== "undefined" ? localStorage.getItem("locale") : "";
+    setLang(Lang)
+  }, [])
+  
   
 
   return (
