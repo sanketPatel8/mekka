@@ -9,8 +9,9 @@ export default function Hero1({ blog, BlogData }) {
           width={1800}
           height={500}
           src={
-            BlogData?.imageOne ? BlogData?.imageOne : "/img/404/imgnotFound.png"
+            BlogData?.imageOne === '' ? "/img/404/imgnotFound.png" : BlogData.imageOne 
           }
+        
           alt="image"
         />
         <Image
