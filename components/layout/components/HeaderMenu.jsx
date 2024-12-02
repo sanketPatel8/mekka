@@ -12,12 +12,12 @@ const HeaderMenu = ({translate}) => {
                   {translate("Home")}
                 </Link>
               </div>
-              <div>
+              {/* <div>
                 {" "}
                 <Link href="/tour" className="">
                   {translate("Tour")}
                 </Link>
-              </div>
+              </div> */}
               <div>
                 <Link href="/tour?type=Hajj" className="">
                   {translate("Hajj")}

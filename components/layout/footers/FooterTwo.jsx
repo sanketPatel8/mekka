@@ -92,7 +92,7 @@ export default function FooterTwo() {
                         </Link>
                       </span>
                       <span>
-                        {translate("Write to us")}{" "}
+                        {translate("Write to us WhatsApp")}{" "}
                         <Link
                           href="https://api.whatsapp.com/send/?phone=4961962047240&text&type=phone_number&app_absent=0"
                           target="_blank"
@@ -147,13 +147,13 @@ export default function FooterTwo() {
                     </a>
                   </div>
 
-                  <div className="footer-flex-item-top ">
+                  {/* <div className="footer-flex-item-top ">
                     <FaLocationDot color="white" className="mx-2 " />
                     <p className="d-block" href="#">
                       Mekka Booking GmbH <br /> Frankfurter Str. 92 <br />{" "}
                       Helfmann-Park 8
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
