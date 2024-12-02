@@ -56,6 +56,16 @@ export default function ArticlesThree() {
   const onPageChange = (pageIndex) => {
     console.log(pageIndex);
   };
+
+  const [Lang, setLang] = useState('')
+
+
+
+  useEffect(() => {
+    const Lang = typeof window !== "undefined" ? localStorage.getItem("locale") : "";
+    setLang(Lang)
+  })
+
   const startParam = "start";
 
   return (
@@ -103,7 +113,7 @@ export default function ArticlesThree() {
 
                   <h3
                     className="blogCard__title text-18 fw-500 mt-10"
-                    dangerouslySetInnerHTML={{ __html: elm.headOneEn }}
+                    dangerouslySetInnerHTML={{ __html: Lang === "EN" ? elm.headOneEn : elm.headOneTr }}
                   />
                 </div>
               </Link>

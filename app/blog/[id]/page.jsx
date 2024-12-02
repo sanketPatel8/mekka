@@ -48,24 +48,26 @@ export default function page({ params }) {
     };
 
     fetchData();
-  }, []);
+  }, [Lang]);
 
   useEffect(() => {
     const Lang = typeof window !== "undefined" ? localStorage.getItem("locale") : "";
     setLang(Lang)
-  }, [])
-  
-  
+  })
 
+ useEffect(() => {
+  console.log("Lang" , Lang);
+ }, [Lang])
+ 
   return (
     <>
    
       <main>
         <Header1 />
      {BlogData?.imageOne && (
-        <Hero1 blog={blog} BlogData={BlogData}  />
+        <Hero1 blog={blog} BlogData={BlogData}   />
      )}
-        <BlogSingle BlogData={BlogData} />
+        <BlogSingle BlogData={BlogData} Lang={Lang} />
    
         <FooterTwo />
       </main>

@@ -9,6 +9,7 @@ import { showErrorToast } from "@/app/utils/tost";
 
 export default function ArticlesThree() {
   const [ArticalDAta, setArticalDAta] = useState([]);
+  const [Lang, setLang] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +37,13 @@ export default function ArticlesThree() {
     };
 
     fetchData();
+
   }, []);
+  
+  useEffect(() => {
+    const Lang = typeof window !== "undefined" ? localStorage.getItem("locale") : "";
+    setLang(Lang)
+  })
 
   const { translate } = useTranslation();
   return (
@@ -71,6 +78,7 @@ export default function ArticlesThree() {
           data-aos-delay=""
           className="row justify-content-center mb-10 flex-nowrap"
         >
+          
           {ArticalDAta.slice(0, 4).map((elm, i) => (
             <div
               key={i}
@@ -109,7 +117,7 @@ export default function ArticlesThree() {
 
                   <h3
                     className="blogCard__title text-18 fw-500 mt-10"
-                    dangerouslySetInnerHTML={{ __html: elm.headOneEn }}
+                    dangerouslySetInnerHTML={{ __html: Lang === "EN" ? elm.headOneEn : elm.headOneTr }}
                   />
                 </div>
               </Link>
