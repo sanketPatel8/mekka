@@ -8,7 +8,6 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast } from "@/app/utils/tost";
 import Header1 from "@/components/layout/header/Header1";
-
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Pagination from "@/components/common/Pagination";
 
@@ -75,9 +74,8 @@ export default function ArticlesThree() {
         <div
           data-aos="fade-up"
           data-aos-delay=""
-          className="row justify-content-center mb-10 mt-30"
-        >
-          {ArticalDAta.map((elm, i) => (
+          className="row justify-content-center mb-10 mt-30">
+          {ArticalDAta.slice(0 , 9).map((elm, i) => (
             <div
               key={i}
               className="col-lg-3 col-md-4 my-lg-2  my-2 border-1 -hover-shadow rounded-12 mx-2 py-10 px-10 shadow"
@@ -122,8 +120,8 @@ export default function ArticlesThree() {
           <div className={`${ArticalDAta?.length === 0 ? "d-none" : "d-block"}`}>
             <div className="d-flex justify-center flex-column mt-60">
               <Pagination
-                range={12}
-                activeIndex={2}
+                range={5}
+                activeIndex={activeIndex}
                 setActiveIndex={setActiveIndex}
                 startParam={startParam}
                 onPageChange={onPageChange}
