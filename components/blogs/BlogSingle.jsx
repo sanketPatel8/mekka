@@ -11,25 +11,46 @@ export default function BlogSingle({ BlogData, Lang }) {
 
   return (
     <>
+
+    {Lang === "EN" ? (
       <section className="layout-pt-md layout-pb-xl">
         <div className="container">
           <div className="row mt-50 justify-center">
             <div className="col-lg-12">
               <h2 className="text-30 md:text-24">
-                {Lang === "EN" ? BlogData?.headOneEn : BlogData?.headOne}
+                { BlogData?.headOneEn }
               </h2>
               <p
                 className="mt-20"
                 dangerouslySetInnerHTML={{
-                  __html: Lang === "EN"
-                    ? BlogData?.headOneTextEn
-                    : BlogData?.headOneText,
+                  __html: 
+                     BlogData?.headOneTextEn
+                   
                 }}
               />
             </div>
           </div>
         </div>
       </section>
+    ) : (
+      <section className="layout-pt-md layout-pb-xl">
+        <div className="container">
+          <div className="row mt-50 justify-center">
+            <div className="col-lg-12">
+              <h2 className="text-30 md:text-24">
+                 { BlogData?.headOne}
+              </h2>
+              <p
+                className="mt-20"
+                dangerouslySetInnerHTML={{
+                  __html:BlogData?.headOneText,}}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+      
     </>
   );
 }

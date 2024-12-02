@@ -22,6 +22,8 @@ export default function page({ params }) {
 
   const [BlogData, setBlogData] = useState({})
   const [Lang, setLang] = useState('')
+  const [Refrash, setRefrash] = useState(false)
+  const [LangChange, setLangChange] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,22 +50,19 @@ export default function page({ params }) {
     };
 
     fetchData();
+
   }, [Lang]);
 
   useEffect(() => {
-    const Lang = typeof window !== "undefined" ? localStorage.getItem("locale") : "";
-    setLang(Lang)
-  })
-
- useEffect(() => {
-  console.log("Lang" , Lang);
- }, [Lang])
+    const storedLang = typeof window !== "undefined" ? localStorage.getItem("locale") : "";
+    setLang(storedLang);
+  });
  
   return (
     <>
    
       <main>
-        <Header1 />
+        <Header1 setRefrash={setRefrash} />
      {BlogData?.imageOne && (
         <Hero1 blog={blog} BlogData={BlogData}   />
      )}
