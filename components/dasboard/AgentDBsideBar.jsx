@@ -80,7 +80,7 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
           <span onClick={() => setSideBarOpen(false)} className="closeSidebar">
             &times;
           </span>
-          <Link href={"/"}>
+          <Link href={"/vendor/dashboard"}>
             <Image
               width="167"
               height="32"
