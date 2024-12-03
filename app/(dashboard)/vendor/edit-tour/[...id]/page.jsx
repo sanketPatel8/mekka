@@ -133,7 +133,7 @@ export default function EditTour() {
   const [additionalServices, setAdditionalServices] = useState([]);
   const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState("No");
   const [loading, setLoading] = useState(false);
-  const [radioValueFlight, setRadioValueFlight] = useState("No");
+  // const [radioValueFlight, setRadioValueFlight] = useState("No");
   const [minEndDate, setMinEndDate] = useState("");
   const [minDate, setMinDate] = useState("");
   const [uploadedImage, setUploadedImage] = useState({});
@@ -445,11 +445,7 @@ export default function EditTour() {
 
   useEffect(() => {
     if (flightData) {
-      {
-        flightData.length > 0
-          ? setRadioValueFlight("Yes")
-          : setRadioValueFlight("No");
-      }
+     
       if (flightData.length > 0) {
         const updatedFlight = flightData.map((flight) => {
           const foundFlight = flightDetails.find(
@@ -1094,15 +1090,14 @@ export default function EditTour() {
       !madinaData.some(
         (madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info
       ) &&
-      (radioValueFlight === "Yes"
-        ? !flightData.some(
+       !flightData.some(
           (flight) =>
             flight.flight_id &&
             flight.flight_amount &&
             flight.no_of_stop &&
             flight.luggage
         )
-        : false) &&
+         &&
       !flightInformation
     ) {
       setLoading(false);
@@ -1165,7 +1160,7 @@ export default function EditTour() {
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append(
       "flight_data",
-      radioValueFlight === "Yes" ? JSON.stringify(flight_data) : ""
+       JSON.stringify(flight_data)
     );
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
     formData.append(
@@ -2214,8 +2209,8 @@ export default function EditTour() {
                             }`}
                         >
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
-                            <div className="d-flex item-center justify-content-between">
-                              <h6> {translate("Visa Processing")}</h6>
+                            <div className="d-flex item-center  border-1 px-3 mb-4 justify-content-between">
+                              <h5> {translate("Visa Processing")}</h5>
                               <div className="flex_start visaYESNOFLEx my-3">
                                 <div className="d-flex items-center mx-2">
                                   <div className="form-radio d-flex items-center">
@@ -2609,7 +2604,7 @@ export default function EditTour() {
                                 </div>
                               </div>
                             </div>
-                            <div className="d-flex flex-wrap item-center justify-content-between">
+                            {/* <div className="d-flex flex-wrap item-center justify-content-between">
                               <h6>{translate("Enter Flight Details")}</h6>
                               <div className="flex_start visaYESNOFLEx my-3">
                                 <div className="d-flex items-center mx-2">
@@ -2661,9 +2656,8 @@ export default function EditTour() {
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            {radioValueFlight === "Yes" && (
-                              <>
+                            </div> */}
+                           
                                 <div className="d-flex item-center justify-content-between pt-10">
                                   <h6> {translate("Add Flight Details")}</h6>
                                 </div>
@@ -2854,8 +2848,7 @@ export default function EditTour() {
                                     })}
                                   </div>
                                 </div>
-                              </>
-                            )}
+                              
                           </div>
                           <div className=" flex_start">
                             {activeTabIndex > 0 && (

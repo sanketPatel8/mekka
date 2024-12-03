@@ -25,7 +25,6 @@ import { useRouter } from "next/navigation";
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
 import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
 
-
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
   { ssr: false }
@@ -45,7 +44,7 @@ const handleHotelPriceChange = (e, index) => {
     // Display an error message
     console.error("Invalid hotel price");
   } else {
-    setMekkaRows(prevRows => {
+    setMekkaRows((prevRows) => {
       const newRows = [...prevRows];
       newRows[index].hotel_price = value;
       return newRows;
@@ -123,9 +122,7 @@ export default function AddTour() {
     { departure_id: "", price: "" },
   ]);
 
-  const [arrivalrow, setArrivalrow] = useState([
-    { arrival_id: "", name:"" },
-  ]);
+  const [arrivalrow, setArrivalrow] = useState([{ arrival_id: "", name: "" }]);
 
   const [flightRow, setFlightRow] = useState([
     { flight_id: " ", flight_amount: "0", no_of_stop: " ", luggage: "" },
@@ -134,14 +131,14 @@ export default function AddTour() {
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
   const [departures, setDepartures] = useState([]);
-  const [Arrival, setArrival] = useState([])
+  const [Arrival, setArrival] = useState([]);
   const [flightDetails, setFlightDetails] = useState([]);
   const [tourType, setTourType] = useState([]);
   const [amenities, setAmenities] = useState([]);
   const [languagesData, setlanguagesData] = useState([]);
-  const [radioValueVisa, setRadioValueVisa] = useState('No');
-  const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState('No');
-  const [radioValueFlight, setRadioValueFlight] = useState('No');
+  const [radioValueVisa, setRadioValueVisa] = useState("No");
+  const [radioValueExcludeFlight, setRadioValueExcludeFlight] = useState("No");
+  // const [radioValueFlight, setRadioValueFlight] = useState('No');
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -174,13 +171,11 @@ export default function AddTour() {
     const nextDay = new Date(inputValue);
     nextDay.setDate(nextDay.getDate() + 1);
     setMinDate(nextDay.toISOString().split("T")[0]);
-
-
   };
 
   const handleKeyUp = (e) => {
-    setIsFocused(false)
-  }
+    setIsFocused(false);
+  };
 
   const handleDateFocus = (e) => {
     // Ensure this is a user gesture
@@ -189,9 +184,7 @@ export default function AddTour() {
     }
   };
 
-  const handleFocus = (e) => {
-
-  }
+  const handleFocus = (e) => {};
   // const handleStartDateKeyDown = (e) => {
   //   const inputValue = e.target.value;
   //   const dateParts = inputValue.split('-');
@@ -232,9 +225,8 @@ export default function AddTour() {
   // //           } else {
 
   // //           }
-  // //         } 
+  // //         }
   // //     }
-
 
   // };
   // const handleEndDateKeyDown = (e) => {
@@ -244,14 +236,11 @@ export default function AddTour() {
 
   //   setDateEnd(inputValue);
 
-
-
   // };
 
   const handleEndDateChange = (e) => {
     const inputValue = e.target.value;
     setDateEnd(inputValue);
-
 
     // if (dateParts.length === 3) {
     //   const day = dateParts[0];
@@ -271,26 +260,26 @@ export default function AddTour() {
     // }
   };
 
-
   const handleStartDateBlur = () => {
-    const [day, month, year] = date_begin.split('-');
+    const [day, month, year] = date_begin.split("-");
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
-      console.log(formattedDate, "formattedDate")
+      console.log(formattedDate, "formattedDate");
       setStartDate(formattedDate);
-
     }
   };
 
   const handleEndDateBlur = () => {
-    const [day, month, year] = date_end.split('-');
+    const [day, month, year] = date_end.split("-");
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
       setDateEnd(formattedDate);
       const start_Date = new Date(date_begin);
       const endDate = new Date(date_end);
-      const daysDifference = Math.round((endDate - start_Date) / (1000 * 3600 * 24));
-      setDaysCount(daysDifference + 1)
+      const daysDifference = Math.round(
+        (endDate - start_Date) / (1000 * 3600 * 24)
+      );
+      setDaysCount(daysDifference + 1);
     }
   };
 
@@ -299,7 +288,7 @@ export default function AddTour() {
   useEffect(() => {
     handleRedirect();
     // setIsLoading(false);
-    accessdata()
+    accessdata();
   }, []);
 
   useEffect(() => {
@@ -320,7 +309,7 @@ export default function AddTour() {
 
     refs.forEach((ref) => {
       if (ref.current) {
-        ref.current.addEventListener('wheel', disableScroll);
+        ref.current.addEventListener("wheel", disableScroll);
       }
     });
 
@@ -328,57 +317,45 @@ export default function AddTour() {
     return () => {
       refs.forEach((ref) => {
         if (ref.current) {
-          ref.current.removeEventListener('wheel', disableScroll);
+          ref.current.removeEventListener("wheel", disableScroll);
         }
       });
     };
-
-
   }, []);
 
-
   useEffect(() => {
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       setIsFocused(false);
     });
-  }, [isFocused])
+  }, [isFocused]);
 
   const { translate } = useTranslation();
 
-
-
   useEffect(() => {
-
-
     setMinEndDate(getTodayDate());
   }, []);
 
-
-
-
-
   const accessdata = async () => {
     // setIsLoading(true);
-    const url = "tour_data"
+    const url = "tour_data";
 
     try {
-      const response = await POST.request({ url: url })
+      const response = await POST.request({ url: url });
       // setIsLoading(false);
       if (response.Data) {
-        setMekkaHotel(response.Data.mekka_hotels)
-        setMadinaHotel(response.Data.medina_hotels)
-        setFlightDetails(response.Data.airline)
-        setTourType(response.Data.tour_type)
-        setlanguagesData(response.Data.languages)
-        setIncluded(response.Data.amenities)
-        setDepartures(response.Data.departure)
-        setArrival(response.Data.arrival)
+        setMekkaHotel(response.Data.mekka_hotels);
+        setMadinaHotel(response.Data.medina_hotels);
+        setFlightDetails(response.Data.airline);
+        setTourType(response.Data.tour_type);
+        setlanguagesData(response.Data.languages);
+        setIncluded(response.Data.amenities);
+        setDepartures(response.Data.departure);
+        setArrival(response.Data.arrival);
       }
     } catch (error) {
       console.error(error);
     }
-  }
-
+  };
 
   const handleTabClick = (tab, index) => {
     if (index < activeTabIndex) {
@@ -389,7 +366,6 @@ export default function AddTour() {
 
     setActiveTab(tab);
     setActiveTabIndex(index);
-
   };
 
   const handlePrevTab = () => {
@@ -409,11 +385,12 @@ export default function AddTour() {
         setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
       }
     } else {
-
-      showErrorToast(translate, "Please fill in all required fields before proceeding");
+      showErrorToast(
+        translate,
+        "Please fill in all required fields before proceeding"
+      );
     }
-
-  }
+  };
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
       const updatedData = [...prevData];
@@ -446,7 +423,9 @@ export default function AddTour() {
   }, [activeTabIndex]);
   const handleCheckboxChange = (event, id) => {
     const updatedServices = services.map((service) =>
-      service.id === id ? { ...service, checked: event.target.checked } : service
+      service.id === id
+        ? { ...service, checked: event.target.checked }
+        : service
     );
     setServices(updatedServices);
   };
@@ -457,8 +436,6 @@ export default function AddTour() {
     );
     setServices(updatedServices);
   };
-
-
 
   const handleDeleteImage2 = (index, event) => {
     event.preventDefault();
@@ -475,8 +452,6 @@ export default function AddTour() {
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
-
-
 
   const handleImageChange2 = (event) => {
     const files = event.target.files;
@@ -513,7 +488,6 @@ export default function AddTour() {
     }
   };
 
-
   const HandleTourChange = (newValue, actionMeta) => {
     setSelectedTour(newValue);
   };
@@ -544,15 +518,13 @@ export default function AddTour() {
 
   const ArrivalOption = Arrival?.map((arr) => ({
     value: arr.id,
-    label: `${arr.arrival}`
-  }))
+    label: `${arr.arrival}`,
+  }));
 
   const ChooseFlight = flightDetails.map((flight) => ({
     value: flight.id,
     label: `${flight.airline_name}`,
   }));
-
-
 
   const handleAddMekkaRow = () => {
     setMekkaRows([
@@ -587,17 +559,11 @@ export default function AddTour() {
   };
 
   const handleAddDepartureRow = () => {
-    setDepartureRows([
-      ...departureRows,
-      { departure_id: "", price: "" },
-    ]);
+    setDepartureRows([...departureRows, { departure_id: "", price: "" }]);
   };
 
   const handleAddArrivalRow = () => {
-    setArrivalrow([
-      ...arrivalrow,
-      { arrival_id: "" },
-    ]);
+    setArrivalrow([...arrivalrow, { arrival_id: "" }]);
   };
 
   const handleRemoveDepartureRow = (index) => {
@@ -620,7 +586,9 @@ export default function AddTour() {
 
   const handleMekkaChange = (value, index) => {
     if (!value) return;
-    const selectedOption = mekkaHotel.find((option) => option.id === value.value);
+    const selectedOption = mekkaHotel.find(
+      (option) => option.id === value.value
+    );
 
     const mekkaData = {
       ...mekkaRows[index],
@@ -634,7 +602,9 @@ export default function AddTour() {
 
   const handleMadinaChange = (value, index) => {
     if (!value) return;
-    const selectedOption = madinaHotel.find((option) => option.id === value.value);
+    const selectedOption = madinaHotel.find(
+      (option) => option.id === value.value
+    );
 
     const madinaData = {
       ...madinaRows[index],
@@ -644,19 +614,19 @@ export default function AddTour() {
     const newRows = [...madinaRows];
     newRows[index] = madinaData;
     setMadinaRows(newRows);
-
   };
 
   const handleDepartureChange = (value, index) => {
     console.log(value);
 
     if (!value) return;
-    const selectedOption = departures.find((option) => option.id === value.value);
+    const selectedOption = departures.find(
+      (option) => option.id === value.value
+    );
 
     const departureData = {
       ...departureRows[index],
       departure_id: selectedOption?.id || "",
-
     };
 
     console.log(departureData, "departureData");
@@ -664,7 +634,6 @@ export default function AddTour() {
     const newRows = [...departureRows];
     newRows[index] = departureData;
     setDepartureRows(newRows);
-
   };
 
   const handleArrivalchange = (value, index) => {
@@ -675,33 +644,26 @@ export default function AddTour() {
 
     console.log("selectedOption", selectedOption);
 
-
     const ArrivalData = {
       ...arrivalrow[index],
       arrival_id: selectedOption?.id || "",
-      name: selectedOption?.arrival || ""
-
+      name: selectedOption?.arrival || "",
     };
 
     console.log("ArrivalData", ArrivalData);
-
 
     const newRows = [...arrivalrow];
     newRows[index] = ArrivalData;
     console.log("newRows", newRows);
 
-
     setArrivalrow(newRows);
-
   };
 
-  const ArrivalidArray = arrivalrow.map(item => item?.arrival_id);
+  const ArrivalidArray = arrivalrow.map((item) => item?.arrival_id);
 
-  console.log("idArray" , ArrivalidArray.join(", "));
-  
+  console.log("idArray", ArrivalidArray.join(", "));
 
   const selectRef = useRef(null);
-
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -713,8 +675,6 @@ export default function AddTour() {
         };
       });
     }
-
-
   }, []);
 
   const handleFlightChange = (e, index, field) => {
@@ -725,7 +685,9 @@ export default function AddTour() {
   };
 
   const HandleAddFlightRow = () => {
-    setFlightRow([...flightRow, { flight_id: " ", flight_amount: " ", no_of_stop: " ", luggage: "" },
+    setFlightRow([
+      ...flightRow,
+      { flight_id: " ", flight_amount: " ", no_of_stop: " ", luggage: "" },
     ]);
   };
 
@@ -738,33 +700,29 @@ export default function AddTour() {
     setFlightRow(newRows);
   };
 
-
-
   const handleFlightSelectChange = (value, index) => {
     const newRows = [...flightRow];
     newRows[index].flight_id = value;
     setFlightRow(newRows);
   };
 
-
   const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
-    if (e.target.type === 'date') {
+    if (e.target.type === "date") {
       const formattedDate = formatDateToDDMMYYYY(value);
       setter(formattedDate);
     } else {
       setter(value);
     }
-
   };
 
   const formatDateToDDMMYYYY = (date) => {
-    const [year, month, day] = date.split('-');
+    const [year, month, day] = date.split("-");
     return `${day}-${month}-${year}`;
   };
 
   const formatDateToMMDDYYYY = (date) => {
-    const [day, month, year] = date.split('-');
+    const [day, month, year] = date.split("-");
     return `${year}-${month}-${day}`;
   };
   const calculateDaysBetweenDates = (startDate, endDate) => {
@@ -778,24 +736,53 @@ export default function AddTour() {
     const totalDays = calculateDaysBetweenDates(date_begin, date_end);
 
     if (activeTab === "Content") {
-      return (SelectedTour && name && capacity && date_begin && date_end && selectRef.current.value && image2.length > 0 && departureRows.length > 0 &&
-        departureRows.every((departure) => departure.departure_id));
+      return (
+        SelectedTour &&
+        name &&
+        capacity &&
+        date_begin &&
+        date_end &&
+        selectRef.current.value &&
+        image2.length > 0 &&
+        departureRows.length > 0 &&
+        departureRows.every((departure) => departure.departure_id)
+      );
     } else if (activeTab === "Pricing") {
       return adult_price && child_price && baby_price;
     } else if (activeTab === "Included") {
-      return true
+      return true;
     } else if (activeTab === "Overview") {
       return editorState !== EditorState.createEmpty();
     } else if (activeTab === "Itinerary") {
-
-      const isValidItinerary = route_data.length === totalDays && route_data.every(route =>
-        route.dayData && route.description && route.day
-      );
+      const isValidItinerary =
+        route_data.length === totalDays &&
+        route_data.every(
+          (route) => route.dayData && route.description && route.day
+        );
 
       return isValidItinerary; // Return the result of the validity check
     } else if (activeTab === "Flight Hotel And Visa") {
-
-      return mekkaRows.every((mekka) => mekka.hotel_name, mekka.hotel_price, mekka.hotel_info) && madinaRows.every((madina) => madina.hotel_name, madina.hotel_price, madina.hotel_info) && flightRow.every((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) && flightInformation && radioValueVisa && radioValueExcludeFlight;
+      return (
+        mekkaRows.every(
+          (mekka) => mekka.hotel_name,
+          mekka.hotel_price,
+          mekka.hotel_info
+        ) &&
+        madinaRows.every(
+          (madina) => madina.hotel_name,
+          madina.hotel_price,
+          madina.hotel_info
+        ) &&
+        flightRow.every(
+          (flight) =>
+            flight.flight_id &&
+            flight.flight_amount &&
+            flight.no_of_stop &&
+            flight.luggage
+        ) &&
+        flightInformation &&
+        radioValueVisa
+      );
     }
     return false;
   };
@@ -805,51 +792,61 @@ export default function AddTour() {
 
     setLoading(true);
 
-
-
-
     const languageValues = $(selectRef.current).val();
 
-    const languageString = languageValues.join(',');
+    const languageString = languageValues.join(",");
 
     const mekkaData = mekkaRows.map((mekka) => ({
       hotel_type: 1,
-      hotel_name: mekka.hotel_name ? mekka.hotel_name : '',
-      hotel_id: mekka.hotel_id ? mekka.hotel_id : '',
+      hotel_name: mekka.hotel_name ? mekka.hotel_name : "",
+      hotel_id: mekka.hotel_id ? mekka.hotel_id : "",
       hotel_price: mekka.hotel_price,
       hotel_info: mekka.hotel_info,
+    }));
 
-    }))
-    
     const madinaData = madinaRows.map((madina) => ({
       hotel_type: 2,
-      hotel_name: madina.hotel_name ? madina.hotel_name : '',
-      hotel_id: madina.hotel_id ? madina.hotel_id : '',
+      hotel_name: madina.hotel_name ? madina.hotel_name : "",
+      hotel_id: madina.hotel_id ? madina.hotel_id : "",
       hotel_price: madina.hotel_price,
-      hotel_info: madina.hotel_info
-    }))
-    
-    const departureData = departureRows.map((departure) => ({
-      departure_id: departure.departure_id ? departure.departure_id : '',
-      price: departure.price ? departure.price : '',
-    }))
+      hotel_info: madina.hotel_info,
+    }));
 
+    const departureData = departureRows.map((departure) => ({
+      departure_id: departure.departure_id ? departure.departure_id : "",
+      price: departure.price ? departure.price : "",
+    }));
 
     const flightData = flightRow.map((flight) => ({
-      flight_id: flight.flight_id ? flight.flight_id.value : '',
+      flight_id: flight.flight_id ? flight.flight_id.value : "",
       flight_amount: flight.flight_amount || 0,
       no_of_stop: flight.no_of_stop,
-      luggage: flight.luggage
-    }))
+      luggage: flight.luggage,
+    }));
 
-    if (!mekkaData.some((mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info) ||
-      !madinaData.some((madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info) ||
-      (radioValueFlight === "Yes" ? !flightData.some((flight) => flight.flight_id && flight.flight_amount && flight.no_of_stop && flight.luggage) : false) || !flightInformation) {
+    if (
+      !mekkaData.some(
+        (mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info
+      ) ||
+      !madinaData.some(
+        (madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info
+      ) ||
+      !flightData.some(
+        (flight) =>
+          flight.flight_id &&
+          flight.flight_amount &&
+          flight.no_of_stop &&
+          flight.luggage
+      ) ||
+      !flightInformation
+    ) {
       setLoading(false);
-      showErrorToast(translate, "Please fill in all required fields before proceeding");
+      showErrorToast(
+        translate,
+        "Please fill in all required fields before proceeding"
+      );
       return;
     }
-
 
     const hotel_data = [...mekkaData, ...madinaData];
 
@@ -864,13 +861,10 @@ export default function AddTour() {
     const checkedIncluded = included.filter((item) => item.checked);
     const includedData = checkedIncluded.map((item) => item.id).join(",");
     const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    const newRouteData = route_data.map((day, index) => (
-      {
-        day: day.dayData,
-        description: day.description
-      }
-    ));
-
+    const newRouteData = route_data.map((day, index) => ({
+      day: day.dayData,
+      description: day.description,
+    }));
 
     // const image2File = document.querySelector('input[name="image2"]').files;
 
@@ -895,33 +889,36 @@ export default function AddTour() {
     formData.append("tour_info", tourInfo);
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
-    formData.append("flight_data", radioValueFlight === "Yes" ? JSON.stringify(flightData) : "");
+    formData.append("flight_data", JSON.stringify(flightData));
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
     formData.append("flight_exclude", 0);
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
-    formData.append("arrival" , ArrivalidArray);
+    formData.append("arrival", ArrivalidArray);
     // image2FileArray.forEach((file, index) => {
     //   formData.append(`tour_image[${index}]`, file);
     // });
-    console.log(selectedFiles, "selectedFiles")
+    console.log(selectedFiles, "selectedFiles");
     selectedFiles.forEach((file, index) => {
       formData.append(`tour_image[${index}]`, file);
     });
     const url = "addtour";
 
     try {
-      const response = await POST.request({ form: formData, url: url, headers: { "Content-Type": "multipart/form-data" } });
+      const response = await POST.request({
+        form: formData,
+        url: url,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       setLoading(false);
       if (response) {
         showSuccessToast(translate, "Tour Added Successfully");
         setTimeout(() => {
-
           router.push("/vendor/listing");
-        }, 1000)
+        }, 1000);
         // setActiveTab("Content");
         // setActiveTabIndex(0);
-        // setSelectedTour("");  
+        // setSelectedTour("");
         // setName("");
         // setCapacity("");
         // setDateBegin("");
@@ -959,16 +956,16 @@ export default function AddTour() {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <>
-
       <ToastContainer />
 
       <div
-        className={`dashboard overflow-hidden ${sideBarOpen ? "-is-sidebar-visible" : ""
-          } js-dashboard `}
+        className={`dashboard overflow-hidden ${
+          sideBarOpen ? "-is-sidebar-visible" : ""
+        } js-dashboard `}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
 
@@ -976,25 +973,21 @@ export default function AddTour() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content ">
-            <h1 className="text-30">
-              {translate("Add Tour")}
-            </h1>
+            <h1 className="text-30">{translate("Add Tour")}</h1>
 
             <div className="rounded-12 bg-white shadow-2 px-40 py-60 mt-20">
               <div className="tabs -underline-2 js-tabs">
                 <div className="tabs__controls row x-gap-40 y-gap-10 lg:x-gap-20 js-tabs-controls">
                   {tabs.map((elm, i) => (
-                    <div
-                      key={elm}
-                      className="col-auto"
-                    >
+                    <div key={elm} className="col-auto">
                       <button
-                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${activeTab == elm ? "is-tab-el-active" : ""
-                          }`}
-
+                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
+                          activeTab == elm ? "is-tab-el-active" : ""
+                        }`}
                         onClick={() => isNextClicked && handleTabClick(elm, i)}
-                        disabled={i > activeTabIndex && !enabledTabs.includes(i)}
-
+                        disabled={
+                          i > activeTabIndex && !enabledTabs.includes(i)
+                        }
                       >
                         {i + 1}. {translate(elm)}
                       </button>
@@ -1002,16 +995,14 @@ export default function AddTour() {
                   ))}
                 </div>
 
-                <form
-                  noValidate
-                  onSubmit={handleSubmit}
-                >
+                <form noValidate onSubmit={handleSubmit}>
                   <div className="row pt-40">
                     <div className="col-xl-12 col-lg-12">
                       <div className="tabs__content js-tabs-content">
                         <div
-                          className={`tabs__pane  ${activeTab == "Content" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab == "Content" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
@@ -1023,7 +1014,9 @@ export default function AddTour() {
                                       onChange={HandleTourChange}
                                       options={options}
                                       className="custom-select"
-                                      placeholder={`${translate("Select Tour Type (Required)")}`}
+                                      placeholder={`${translate(
+                                        "Select Tour Type (Required)"
+                                      )}`}
                                       classNamePrefix="react-select"
                                       isClearable
                                       formatCreateLabel={(inputValue) =>
@@ -1046,53 +1039,91 @@ export default function AddTour() {
 
                                 <div className="col-md-6">
                                   <div className="form-input my-1">
-                                    <input type="text" required value={name} onChange={handleInputChange(setName)} />
+                                    <input
+                                      type="text"
+                                      required
+                                      value={name}
+                                      onChange={handleInputChange(setName)}
+                                    />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Tour Name") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
 
                                 <div className="col-md-6">
                                   <div className="form-input my-1">
-                                    <input type="number" min={1} ref={numberInputRef1} required value={capacity} onChange={handleInputChange(setCapacity)}
+                                    <input
+                                      type="number"
+                                      min={1}
+                                      ref={numberInputRef1}
+                                      required
+                                      value={capacity}
+                                      onChange={handleInputChange(setCapacity)}
                                       onKeyDown={(e) => {
                                         if (!isFocused) return;
 
-                                        if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                        if (
+                                          !/^[0-9]+$/.test(e.key) &&
+                                          e.key !== "Backspace" &&
+                                          e.key !== "Tab"
+                                        ) {
                                           e.preventDefault();
                                         }
                                       }}
                                       onKeyUp={() => setIsFocused(false)}
-
                                       onFocus={() => setIsFocused(true)}
                                       onBlur={() => setIsFocused(false)}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Seat Availibility") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
 
                                 <div className="col-md-6">
                                   <div className="form-input my-1">
-                                    <input type="date" required value={date_begin || ''} pattern="\d{2}-\d{2}-\d{4}" onBlur={handleStartDateBlur} onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()} onChange={handleStartDateChange} min={minEndDate} />
+                                    <input
+                                      type="date"
+                                      required
+                                      value={date_begin || ""}
+                                      pattern="\d{2}-\d{2}-\d{4}"
+                                      onBlur={handleStartDateBlur}
+                                      onFocus={handleDateFocus}
+                                      onKeyDown={(e) => e.preventDefault()}
+                                      onChange={handleStartDateChange}
+                                      min={minEndDate}
+                                    />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Start Date of Tour") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
 
                                 <div className="col-md-6">
                                   <div className="form-input my-1">
-                                    <input type="date" required value={date_end || ''} pattern="\d{2}-\d{2}-\d{4}" onBlur={handleEndDateBlur} disabled={isFocused} onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()} onChange={handleEndDateChange} min={minDate}
+                                    <input
+                                      type="date"
+                                      required
+                                      value={date_end || ""}
+                                      pattern="\d{2}-\d{2}-\d{4}"
+                                      onBlur={handleEndDateBlur}
+                                      disabled={isFocused}
+                                      onFocus={handleDateFocus}
+                                      onKeyDown={(e) => e.preventDefault()}
+                                      onChange={handleEndDateChange}
+                                      min={minDate}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("End Date of Tour") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
@@ -1107,7 +1138,10 @@ export default function AddTour() {
                                       placeholder="Langauge"
                                     >
                                       {languagesData.map((language) => (
-                                        <option key={language.id} value={language.id}>
+                                        <option
+                                          key={language.id}
+                                          value={language.id}
+                                        >
                                           {translate(language.languages_en) ||
                                             "Find Latest Packages"}
                                         </option>
@@ -1135,17 +1169,14 @@ export default function AddTour() {
                                     </select>
                                     <label className="multi-lan-select">
                                       {translate("Language") ||
-                                        "Find Latest Packages"} <span className="text-red">*</span>
+                                        "Find Latest Packages"}{" "}
+                                      <span className="text-red">*</span>
                                     </label>
                                   </div>
                                 </div>
                                 <div className="col-md-12">
-                                  <h6>
-                                    {" "}
-                                    {translate("Departure")}
-                                  </h6>
+                                  <h6> {translate("Departure")}</h6>
                                   <ul className="">
-
                                     {departureRows.map((row, index) => (
                                       <li key={index}>
                                         <div className=" row">
@@ -1155,14 +1186,21 @@ export default function AddTour() {
                                                 <CreatableSelect
                                                   value={row.id}
                                                   onChange={(value) =>
-                                                    handleDepartureChange(value, index)
+                                                    handleDepartureChange(
+                                                      value,
+                                                      index
+                                                    )
                                                   }
                                                   options={departureOption}
                                                   className="custom-select Hotel-Madina-dd"
-                                                  placeholder={`${translate("Select Departure (Required)")}`}
+                                                  placeholder={`${translate(
+                                                    "Select Departure (Required)"
+                                                  )}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
-                                                  formatCreateLabel={(inputValue) =>
+                                                  formatCreateLabel={(
+                                                    inputValue
+                                                  ) =>
                                                     `Not Found: "${inputValue}"`
                                                   }
                                                 />
@@ -1198,9 +1236,12 @@ export default function AddTour() {
                                                   <button
                                                     type="button"
                                                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                                    onClick={handleAddDepartureRow}
-                                                    style={{ height: "fit-content" }}
-
+                                                    onClick={
+                                                      handleAddDepartureRow
+                                                    }
+                                                    style={{
+                                                      height: "fit-content",
+                                                    }}
                                                   >
                                                     +
                                                   </button>
@@ -1208,10 +1249,13 @@ export default function AddTour() {
                                                     <button
                                                       type="button"
                                                       className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                                      style={{ height: "fit-content" }}
-
+                                                      style={{
+                                                        height: "fit-content",
+                                                      }}
                                                       onClick={() =>
-                                                        handleRemoveDepartureRow(index)
+                                                        handleRemoveDepartureRow(
+                                                          index
+                                                        )
                                                       }
                                                     >
                                                       -
@@ -1219,27 +1263,18 @@ export default function AddTour() {
                                                   )}
                                                 </div>
                                               </div>
-
                                             </div>
                                           </div>
-
-
-
 
                                           <hr />
                                         </div>
                                       </li>
                                     ))}
-
                                   </ul>
                                 </div>
                                 <div className="col-md-12">
-                                  <h6>
-                                    {" "}
-                                    {translate("Arrival")}
-                                  </h6>
+                                  <h6> {translate("Arrival")}</h6>
                                   <ul className="">
-
                                     {arrivalrow.map((row, index) => (
                                       <li key={index}>
                                         <div className=" row">
@@ -1249,14 +1284,21 @@ export default function AddTour() {
                                                 <CreatableSelect
                                                   value={row.id}
                                                   onChange={(value) =>
-                                                    handleArrivalchange(value, index)
+                                                    handleArrivalchange(
+                                                      value,
+                                                      index
+                                                    )
                                                   }
                                                   options={ArrivalOption}
                                                   className="custom-select Hotel-Madina-dd"
-                                                  placeholder={`${translate("Select Arrival (Required)")}`}
+                                                  placeholder={`${translate(
+                                                    "Select Arrival (Required)"
+                                                  )}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
-                                                  formatCreateLabel={(inputValue) =>
+                                                  formatCreateLabel={(
+                                                    inputValue
+                                                  ) =>
                                                     `Not Found: "${inputValue}"`
                                                   }
                                                 />
@@ -1292,9 +1334,12 @@ export default function AddTour() {
                                                   <button
                                                     type="button"
                                                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                                    onClick={handleAddArrivalRow}
-                                                    style={{ height: "fit-content" }}
-
+                                                    onClick={
+                                                      handleAddArrivalRow
+                                                    }
+                                                    style={{
+                                                      height: "fit-content",
+                                                    }}
                                                   >
                                                     +
                                                   </button>
@@ -1302,10 +1347,13 @@ export default function AddTour() {
                                                     <button
                                                       type="button"
                                                       className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                                      style={{ height: "fit-content" }}
-
+                                                      style={{
+                                                        height: "fit-content",
+                                                      }}
                                                       onClick={() =>
-                                                        handleRemoveArrivalRow(index)
+                                                        handleRemoveArrivalRow(
+                                                          index
+                                                        )
                                                       }
                                                     >
                                                       -
@@ -1313,18 +1361,13 @@ export default function AddTour() {
                                                   )}
                                                 </div>
                                               </div>
-
                                             </div>
                                           </div>
-
-
-
 
                                           <hr />
                                         </div>
                                       </li>
                                     ))}
-
                                   </ul>
                                 </div>
                               </div>
@@ -1332,7 +1375,8 @@ export default function AddTour() {
                               <div className="col-12">
                                 <h4 className="text-18 fw-500 mb-20">
                                   {" "}
-                                  {translate("Gallery")} <span className="text-red">*</span>
+                                  {translate("Gallery")}{" "}
+                                  <span className="text-red">*</span>
                                 </h4>
 
                                 <div className="row x-gap-20 y-gap-20">
@@ -1347,13 +1391,13 @@ export default function AddTour() {
                                           className="size-200 rounded-12 object-cover"
                                         />
                                         <button
-                                          onClick={(e) => handleDeleteImage2(index, e)}
+                                          onClick={(e) =>
+                                            handleDeleteImage2(index, e)
+                                          }
                                           className="absoluteIcon1 button -dark-1"
                                         >
                                           <i className="icon-delete text-18"></i>
                                         </button>
-
-
                                       </div>
                                     </div>
                                   ))}
@@ -1382,18 +1426,17 @@ export default function AddTour() {
                                       name="image2"
                                       multiple
                                       style={{ display: "none" }}
-                                      onClick={(e) => e.target.value = null}
-
+                                      onClick={(e) => (e.target.value = null)}
                                     />
                                   </div>
                                 </div>
 
                                 <div className="text-14 mt-20">
-                                  {translate("PNG or JPG no Bigger Than 800px Wide And Tall.")}
+                                  {translate(
+                                    "PNG or JPG no Bigger Than 800px Wide And Tall."
+                                  )}
                                 </div>
                               </div>
-
-
                             </div>
                           </div>
                           {activeTabIndex < tabs.length - 1 && (
@@ -1405,21 +1448,30 @@ export default function AddTour() {
                               {translate("Next")}
                             </button>
                           )}
-
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab === "Pricing" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab === "Pricing" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="contactForm row y-gap-30 items-center ">
                               <div className="col-lg-4">
                                 <div className="form-input my-1">
-                                  <input type="number" ref={numberInputRef3} required value={adult_price} onChange={handleInputChange(setAdultPrice)}
+                                  <input
+                                    type="number"
+                                    ref={numberInputRef3}
+                                    required
+                                    value={adult_price}
+                                    onChange={handleInputChange(setAdultPrice)}
                                     onKeyDown={(e) => {
                                       setIsFocused(true);
-                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                      if (
+                                        !/^[0-9]+$/.test(e.key) &&
+                                        e.key !== "Backspace" &&
+                                        e.key !== "Tab"
+                                      ) {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1429,16 +1481,26 @@ export default function AddTour() {
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Adult") ||
-                                      "Find Latest Packages"} <span className="text-red">*</span>
+                                      "Find Latest Packages"}{" "}
+                                    <span className="text-red">*</span>
                                   </label>
                                 </div>
                               </div>
                               <div className="col-lg-4">
                                 <div className="form-input my-1">
-                                  <input type="number" ref={numberInputRef4} required value={child_price} onChange={handleInputChange(setChildPrice)}
+                                  <input
+                                    type="number"
+                                    ref={numberInputRef4}
+                                    required
+                                    value={child_price}
+                                    onChange={handleInputChange(setChildPrice)}
                                     onKeyDown={(e) => {
                                       setIsFocused(true);
-                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                      if (
+                                        !/^[0-9]+$/.test(e.key) &&
+                                        e.key !== "Backspace" &&
+                                        e.key !== "Tab"
+                                      ) {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1448,25 +1510,37 @@ export default function AddTour() {
                                   />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Child") ||
-                                      "Find Latest Packages"} <span className="text-red">*</span>
+                                      "Find Latest Packages"}{" "}
+                                    <span className="text-red">*</span>
                                   </label>
                                 </div>
                               </div>
                               <div className="col-lg-4">
                                 <div className="form-input my-1">
-                                  <input type="number" ref={numberInputRef5} required value={baby_price} onChange={handleInputChange(setBabyPrice)}
+                                  <input
+                                    type="number"
+                                    ref={numberInputRef5}
+                                    required
+                                    value={baby_price}
+                                    onChange={handleInputChange(setBabyPrice)}
                                     onKeyDown={(e) => {
                                       setIsFocused(true);
-                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                      if (
+                                        !/^[0-9]+$/.test(e.key) &&
+                                        e.key !== "Backspace" &&
+                                        e.key !== "Tab"
+                                      ) {
                                         e.preventDefault();
                                       }
                                     }}
                                     onKeyUp={() => setIsFocused(false)}
                                     onFocus={() => setIsFocused(true)}
-                                    onBlur={() => setIsFocused(false)} />
+                                    onBlur={() => setIsFocused(false)}
+                                  />
                                   <label className="lh-1 text-16 text-light-1">
                                     {translate("Price (€) Per Baby") ||
-                                      "Find Latest Packages"} <span className="text-red">*</span>
+                                      "Find Latest Packages"}{" "}
+                                    <span className="text-red">*</span>
                                   </label>
                                 </div>
                               </div>
@@ -1506,7 +1580,12 @@ export default function AddTour() {
                                           type="checkbox"
                                           id={`service-${service.id}`}
                                           checked={service.checked}
-                                          onChange={(event) => handleCheckboxChange(event, service.id)}
+                                          onChange={(event) =>
+                                            handleCheckboxChange(
+                                              event,
+                                              service.id
+                                            )
+                                          }
                                         />
                                         <label
                                           htmlFor={`service-${service.id}`}
@@ -1544,9 +1623,10 @@ export default function AddTour() {
                                           ref={numberInputRef6}
                                           id={`service-${service.id}`}
                                           value={service.price}
-                                          onChange={(event) => handlePriceChange(event, service.id)}
+                                          onChange={(event) =>
+                                            handlePriceChange(event, service.id)
+                                          }
                                           required
-
                                         />
                                         <label className="lh-1 text-16 text-light-1">
                                           {translate("Price")}
@@ -1556,12 +1636,9 @@ export default function AddTour() {
                                   )}
                                 </div>
                               ))}
-
-
                             </div>
                           </div>
                           <div className=" flex_start">
-
                             {activeTabIndex < tabs.length - 1 && (
                               <button
                                 className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
@@ -1581,36 +1658,37 @@ export default function AddTour() {
                               </button>
                             )}
                           </div>
-
                         </div>
 
                         <div
-                          className={`tabs__pane ${activeTab == "Included" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane ${
+                            activeTab == "Included" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="row  y-gap-30 contactForm px-lg-20 px-0">
                             {included.map((item, index) => (
                               <div className="col-md-4">
                                 <div className="row y-gap-20">
                                   <div className="col-12 px-0 my-1">
-
                                     <div className="d-flex items-center pointer-check">
-                                      <div className="form-checkbox" >
-
+                                      <div className="form-checkbox">
                                         <input
                                           type="checkbox"
                                           id={`item-${item.id}`}
                                           name={`item-${item.id}`}
                                           checked={item.checked}
                                           onChange={(e) => {
-                                            const updatedIncluded = included.map((includedItem) =>
-                                              includedItem.id === item.id
-                                                ? { ...includedItem, checked: e.target.checked }
-                                                : includedItem
-                                            );
+                                            const updatedIncluded =
+                                              included.map((includedItem) =>
+                                                includedItem.id === item.id
+                                                  ? {
+                                                      ...includedItem,
+                                                      checked: e.target.checked,
+                                                    }
+                                                  : includedItem
+                                              );
                                             setIncluded(updatedIncluded);
                                           }}
-
                                         />
                                         <label
                                           htmlFor={`item-${item.id}`}
@@ -1636,20 +1714,16 @@ export default function AddTour() {
                                         htmlFor={`item-${item.id}`}
                                         className="lh-16 ml-15"
                                       >
-                                        {translate(item.option) || "Find Latest Packages"}
+                                        {translate(item.option) ||
+                                          "Find Latest Packages"}
                                       </label>
                                     </div>
                                   </div>
-
-
                                 </div>
                               </div>
                             ))}
-
-
                           </div>
                           <div className=" flex_start">
-
                             {activeTabIndex < tabs.length - 1 && (
                               <button
                                 className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
@@ -1669,12 +1743,12 @@ export default function AddTour() {
                               </button>
                             )}
                           </div>
-
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab == "Overview" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab == "Overview" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="y-gap-30 contactForm px-lg-20 px-0 ">
                             {/* <Editor
@@ -1685,12 +1759,28 @@ export default function AddTour() {
                                   onEditorStateChange={onEditorStateChange}
                                 /> */}
 
-                            {typeof window != "undefined" && <Editor editorState={editorState} toolbarClassName="border" wrapperClassName="" editorClassName="border px-2" onEditorStateChange={(e) => setEditorState(e)} />}
-                            <input type="hidden" name="Title" id="Title" value={editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
-
+                            {typeof window != "undefined" && (
+                              <Editor
+                                editorState={editorState}
+                                toolbarClassName="border"
+                                wrapperClassName=""
+                                editorClassName="border px-2"
+                                onEditorStateChange={(e) => setEditorState(e)}
+                              />
+                            )}
+                            <input
+                              type="hidden"
+                              name="Title"
+                              id="Title"
+                              value={
+                                editorState &&
+                                draftToHtml(
+                                  convertToRaw(editorState.getCurrentContent())
+                                )
+                              }
+                            />
                           </div>
                           <div className=" flex_start">
-
                             {activeTabIndex < tabs.length - 1 && (
                               <button
                                 className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
@@ -1713,12 +1803,16 @@ export default function AddTour() {
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab == "Itinerary" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab == "Itinerary" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
-                              {Array.from({ length: daysCount }, (_, i) => i + 1).map((dayNumber) => (
+                              {Array.from(
+                                { length: daysCount },
+                                (_, i) => i + 1
+                              ).map((dayNumber) => (
                                 // <ItineraryDayInput key={dayNumber} dayNumber={dayNumber} />
 
                                 <div className="row">
@@ -1727,11 +1821,26 @@ export default function AddTour() {
                                       <input
                                         type="text"
                                         required
-                                        value={route_data.find((day) => day.day === dayNumber)?.dayData || ""}
-                                        onChange={(e) => handleDayDescriptionChange(dayNumber, e.target.value, route_data.find((day) => day.day === dayNumber)?.description || "")}
+                                        value={
+                                          route_data.find(
+                                            (day) => day.day === dayNumber
+                                          )?.dayData || ""
+                                        }
+                                        onChange={(e) =>
+                                          handleDayDescriptionChange(
+                                            dayNumber,
+                                            e.target.value,
+                                            route_data.find(
+                                              (day) => day.day === dayNumber
+                                            )?.description || ""
+                                          )
+                                        }
                                         className=""
                                       />
-                                      <label className="lh-1 text-16 text-light-1">{translate("Day")} {dayNumber} <span className="text-red">*</span></label>
+                                      <label className="lh-1 text-16 text-light-1">
+                                        {translate("Day")} {dayNumber}{" "}
+                                        <span className="text-red">*</span>
+                                      </label>
                                     </div>
                                   </div>
                                   <div className="col-md-6">
@@ -1741,20 +1850,32 @@ export default function AddTour() {
                                         required
                                         rows="2"
                                         cols="80"
-                                        value={route_data.find((day) => day.day === dayNumber)?.description || ""}
-                                        onChange={(e) => handleDayDescriptionChange(dayNumber, route_data.find((day) => day.day === dayNumber)?.dayData, e.target.value)}
+                                        value={
+                                          route_data.find(
+                                            (day) => day.day === dayNumber
+                                          )?.description || ""
+                                        }
+                                        onChange={(e) =>
+                                          handleDayDescriptionChange(
+                                            dayNumber,
+                                            route_data.find(
+                                              (day) => day.day === dayNumber
+                                            )?.dayData,
+                                            e.target.value
+                                          )
+                                        }
                                       />
-                                      <label className="lh-1 text-16 text-light-1">{translate("Description")} <span className="text-red">*</span></label>
+                                      <label className="lh-1 text-16 text-light-1">
+                                        {translate("Description")}{" "}
+                                        <span className="text-red">*</span>
+                                      </label>
                                     </div>
                                   </div>
                                 </div>
                               ))}
-
-
                             </div>
                           </div>
                           <div className=" flex_start">
-
                             {activeTabIndex < tabs.length - 1 && (
                               <button
                                 className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
@@ -1777,17 +1898,15 @@ export default function AddTour() {
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab == "Flight Hotel And Visa"
-                            ? "is-tab-el-active"
-                            : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab == "Flight Hotel And Visa"
+                              ? "is-tab-el-active"
+                              : ""
+                          }`}
                         >
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="d-flex item-center justify-content-between">
-                              <h6>
-                                {" "}
-                                {translate("Visa Processing")}
-                              </h6>
+                              <h6> {translate("Visa Processing")}</h6>
                               <div className="flex_start visaYESNOFLEx my-3">
                                 <div className="d-flex items-center mx-2">
                                   <div className="form-radio d-flex items-center">
@@ -1797,7 +1916,9 @@ export default function AddTour() {
                                         name="radioGroupVisa"
                                         value="Yes"
                                         checked={radioValueVisa === "Yes"}
-                                        onChange={(event) => setRadioValueVisa(event.target.value)}
+                                        onChange={(event) =>
+                                          setRadioValueVisa(event.target.value)
+                                        }
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1817,7 +1938,9 @@ export default function AddTour() {
                                         name="radioGroupVisa"
                                         value="No"
                                         checked={radioValueVisa === "No"}
-                                        onChange={(event) => setRadioValueVisa(event.target.value)}
+                                        onChange={(event) =>
+                                          setRadioValueVisa(event.target.value)
+                                        }
                                       />
                                       <span className="radio__mark">
                                         <span className="radio__icon"></span>
@@ -1832,10 +1955,7 @@ export default function AddTour() {
                               </div>
                             </div>
                             <div className="">
-                              <h6>
-                                {" "}
-                                {translate("Mekka Hotel")}
-                              </h6>
+                              <h6> {translate("Mekka Hotel")}</h6>
 
                               <ul className="">
                                 {mekkaRows.map((row, index) => (
@@ -1843,7 +1963,6 @@ export default function AddTour() {
                                     <div className=" row">
                                       <div className="col-lg-8">
                                         <div className="row">
-
                                           <div className="col-lg-6 col-md-auto col-12 form-input spacing d-flex flex-column align-items-center hotel-mekka">
                                             <CreatableSelect
                                               value={row.id}
@@ -1852,7 +1971,9 @@ export default function AddTour() {
                                               }
                                               options={options2}
                                               className="custom-select Hotel-Mekka-dd"
-                                              placeholder={`${translate("Select Hotel For Mekka (Required)")}`}
+                                              placeholder={`${translate(
+                                                "Select Hotel For Mekka (Required)"
+                                              )}`}
                                               classNamePrefix="react-select"
                                               isClearable
                                               formatCreateLabel={(inputValue) =>
@@ -1863,57 +1984,94 @@ export default function AddTour() {
 
                                           <div className="col-lg-6 col-md-auto col-12">
                                             <div className="form-input spacing">
-                                              <input type="number" ref={numberInputRef7} required
-                                                value={mekkaRows[index].hotel_price}
-                                                onChange={(e) => setMekkaRows(prevRows => {
-                                                  const newRows = [...prevRows];
-                                                  newRows[index].hotel_price = e.target.value;
-                                                  return newRows;
-                                                })}
+                                              <input
+                                                type="number"
+                                                ref={numberInputRef7}
+                                                required
+                                                value={
+                                                  mekkaRows[index].hotel_price
+                                                }
+                                                onChange={(e) =>
+                                                  setMekkaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_price =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
                                                 onKeyDown={(e) => {
                                                   setIsFocused(true);
-                                                  if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
                                                     e.preventDefault();
                                                   }
                                                 }}
-                                                onKeyUp={() => setIsFocused(false)}
-                                                onFocus={() => setIsFocused(true)}
-                                                onBlur={() => setIsFocused(false)}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Hotel Price") ||
-                                                  "Find Latest Packages"} <span className="text-red">*</span>
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
                                               </label>
                                             </div>
                                           </div>
 
                                           <div className="col-lg-12 col-md-auto col-12">
                                             <div className="form-input m-0">
-                                              <textarea required rows="1"
-                                                value={mekkaRows[index].hotel_info}
-                                                onChange={(e) => setMekkaRows(prevRows => {
-                                                  const newRows = [...prevRows];
-                                                  newRows[index].hotel_info = e.target.value;
-                                                  return newRows;
-                                                })}
+                                              <textarea
+                                                required
+                                                rows="1"
+                                                value={
+                                                  mekkaRows[index].hotel_info
+                                                }
+                                                onChange={(e) =>
+                                                  setMekkaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_info =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
                                               ></textarea>
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Description") ||
-                                                  "Find Latest Packages"} <span className="text-red">*</span>
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
                                               </label>
                                             </div>
                                           </div>
                                         </div>
-
                                       </div>
 
                                       <div className="col-2 d-flex">
                                         <button
                                           type="button"
                                           className="button -sm -info-2 bg-accent-1 text-white  my-4 text-40 mx-1 mx-md-3 "
-                                          style={{ height: "fit-content", width: "fit-content" }}
+                                          style={{
+                                            height: "fit-content",
+                                            width: "fit-content",
+                                          }}
                                           onClick={handleAddMekkaRow}
                                         >
                                           +
@@ -1922,8 +2080,10 @@ export default function AddTour() {
                                           <button
                                             type="button"
                                             className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-md-3 mx-1`}
-                                            style={{ height: "fit-content", width: "fit-content" }}
-
+                                            style={{
+                                              height: "fit-content",
+                                              width: "fit-content",
+                                            }}
                                             onClick={() =>
                                               handleRemoveMekkaRow(index)
                                             }
@@ -1939,12 +2099,8 @@ export default function AddTour() {
                                 ))}
                               </ul>
 
-                              <h6>
-                                {" "}
-                                {translate("Madina Hotel ")}
-                              </h6>
+                              <h6> {translate("Madina Hotel ")}</h6>
                               <ul className="">
-
                                 {madinaRows.map((row, index) => (
                                   <li key={index}>
                                     <div className=" row">
@@ -1958,7 +2114,9 @@ export default function AddTour() {
                                               }
                                               options={Madina}
                                               className="custom-select Hotel-Madina-dd"
-                                              placeholder={`${translate("Select Hotel For Madina (Required)")}`}
+                                              placeholder={`${translate(
+                                                "Select Hotel For Madina (Required)"
+                                              )}`}
                                               classNamePrefix="react-select"
                                               isClearable
                                               formatCreateLabel={(inputValue) =>
@@ -1972,45 +2130,76 @@ export default function AddTour() {
                                               <input
                                                 type="text"
                                                 required
-                                                value={madinaRows[index].hotel_price}
-                                                onChange={(e) => setMadinaRows(prevRows => {
-                                                  const newRows = [...prevRows];
-                                                  newRows[index].hotel_price = e.target.value;
-                                                  return newRows;
-                                                })}
+                                                value={
+                                                  madinaRows[index].hotel_price
+                                                }
+                                                onChange={(e) =>
+                                                  setMadinaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_price =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
                                                 onKeyDown={(e) => {
                                                   setIsFocused(true);
-                                                  if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
                                                     e.preventDefault();
                                                   }
                                                 }}
-                                                onKeyUp={() => setIsFocused(false)}
-                                                onFocus={() => setIsFocused(true)}
-                                                onBlur={() => setIsFocused(false)}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Hotel Price") ||
-                                                  "Find Latest Packages"} <span className="text-red">*</span>
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
                                               </label>
                                             </div>
                                           </div>
 
-
                                           <div className="col-md-12">
                                             <div className="form-input m-0">
-                                              <textarea required rows="1"
-                                                value={madinaRows[index].hotel_info}
-                                                onChange={(e) => setMadinaRows(prevRows => {
-                                                  const newRows = [...prevRows];
-                                                  newRows[index].hotel_info = e.target.value;
-                                                  return newRows;
-                                                })}
+                                              <textarea
+                                                required
+                                                rows="1"
+                                                value={
+                                                  madinaRows[index].hotel_info
+                                                }
+                                                onChange={(e) =>
+                                                  setMadinaRows((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].hotel_info =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
                                               ></textarea>
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
                                                 {translate("Description") ||
-                                                  "Find Latest Packages"} <span className="text-red">*</span>
+                                                  "Find Latest Packages"}{" "}
+                                                <span className="text-red">
+                                                  *
+                                                </span>
                                               </label>
                                             </div>
                                           </div>
@@ -2022,8 +2211,10 @@ export default function AddTour() {
                                           type="button"
                                           className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
                                           onClick={handleAddMadinaRow}
-                                          style={{ height: "fit-content", width: "fit-content" }}
-
+                                          style={{
+                                            height: "fit-content",
+                                            width: "fit-content",
+                                          }}
                                         >
                                           +
                                         </button>
@@ -2031,8 +2222,10 @@ export default function AddTour() {
                                           <button
                                             type="button"
                                             className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                            style={{ height: "fit-content", width: "fit-content" }}
-
+                                            style={{
+                                              height: "fit-content",
+                                              width: "fit-content",
+                                            }}
                                             onClick={() =>
                                               handleRemoveMadinaRow(index)
                                             }
@@ -2041,7 +2234,6 @@ export default function AddTour() {
                                           </button>
                                         )}
                                       </div>
-
 
                                       <hr />
                                     </div>
@@ -2108,13 +2300,16 @@ export default function AddTour() {
                                     required
                                     rows="3"
                                     value={flightInformation}
-
-                                    onChange={(e) => setFlightInformation(e.target.value)}
+                                    onChange={(e) =>
+                                      setFlightInformation(e.target.value)
+                                    }
                                   />
-                                  <label className="lh-1 text-16 text-light-1">{translate("Flight Information")} <span className="text-red">*</span></label>
+                                  <label className="lh-1 text-16 text-light-1">
+                                    {translate("Flight Information")}{" "}
+                                    <span className="text-red">*</span>
+                                  </label>
                                 </div>
                               </div>
-
                             </div>
                             {/* <div className="d-flex item-center justify-content-between">
                                   <h6>
@@ -2163,7 +2358,7 @@ export default function AddTour() {
                                     </div>
                                   </div>
                                 </div> */}
-                            <div className="d-flex item-center justify-content-between">
+                            {/* <div className="d-flex item-center justify-content-between">
                               <h6>
                                 {translate("Enter Flight Details")}
                               </h6>
@@ -2209,157 +2404,164 @@ export default function AddTour() {
                                   </div>
                                 </div>
                               </div>
+                            </div> */}
+
+                            <div className="d-flex item-center justify-content-between pt-10">
+                              <h6> {translate("Add Flight Details")}</h6>
                             </div>
-                            {radioValueFlight === "Yes" && (
-                              <>
-                                <div className="d-flex item-center justify-content-between pt-10">
-                                  <h6>
-                                    {" "}
-                                    {translate("Add Flight Details")}
-                                  </h6>
-                                </div>
-                                <div className="form_2">
-                                  <div className=" y-gap-30 contactForm py-20 ">
-                                    {flightRow.map((row, index) => {
-                                      return (
+                            <div className="form_2">
+                              <div className=" y-gap-30 contactForm py-20 ">
+                                {flightRow.map((row, index) => {
+                                  return (
+                                    <div className="row">
+                                      <div className="col-md-9">
                                         <div className="row">
-                                          <div className="col-md-9">
-                                            <div className="row">
-
-                                              <div className="col-md-6">
-                                                <CreatableSelect
-                                                  value={row.flight_id}
-                                                  onChange={(value) =>
-                                                    handleFlightSelectChange(value, index)
-                                                  }
-                                                  options={ChooseFlight}
-                                                  className="custom-select flight_select Flight-selected-dd"
-                                                  placeholder={`${translate("Select Flight")}`}
-                                                  classNamePrefix="react-select"
-                                                  isClearable
-                                                  formatCreateLabel={(inputValue) =>
-                                                    `Not Found: "${inputValue}"`
-                                                  }
-                                                />
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input
-                                                    type="number"
-                                                    ref={numberInputRef9}
-                                                    required
-                                                    value={flightRow[index].flight_amount}
-                                                    onChange={(e) => setFlightRow(prevRows => {
-                                                      const newRows = [...prevRows];
-                                                      newRows[index].flight_amount = e.target.value;
-                                                      return newRows;
-                                                    })}
-                                                    onKeyDown={(e) => {
-                                                      setIsFocused(true);
-                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                                        e.preventDefault();
-                                                      }
-                                                    }}
-                                                    onKeyUp={() => setIsFocused(false)}
-                                                    onFocus={() => setIsFocused(true)}
-                                                    onBlur={() => setIsFocused(false)}
-                                                  />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {" "}
-                                                    {translate("Flight Amount") ||
-                                                      "Find Latest Packages"}
-                                                  </label>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input
-                                                    type="number"
-                                                    ref={numberInputRef10}
-                                                    required
-                                                    value={flightRow[index].no_of_stop}
-                                                    onChange={(e) => setFlightRow(prevRows => {
-                                                      const newRows = [...prevRows];
-                                                      newRows[index].no_of_stop = e.target.value;
-                                                      return newRows;
-                                                    })}
-                                                  />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {" "}
-                                                    {translate("No of Flight Stops") ||
-                                                      "Find Latest Packages"}
-                                                  </label>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input
-                                                    type="number"
-                                                    ref={numberInputRef11}
-                                                    required
-                                                    value={flightRow[index].luggage}
-                                                    onChange={(e) => setFlightRow(prevRows => {
-                                                      const newRows = [...prevRows];
-                                                      newRows[index].luggage = e.target.value;
-                                                      return newRows;
-                                                    })}
-                                                  />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {" "}
-                                                    {translate("Luggage") ||
-                                                      "Find Latest Packages"}
-                                                  </label>
-                                                </div>
-                                              </div>
-                                            </div>
-
+                                          <div className="col-md-6">
+                                            <CreatableSelect
+                                              value={row.flight_id}
+                                              onChange={(value) =>
+                                                handleFlightSelectChange(
+                                                  value,
+                                                  index
+                                                )
+                                              }
+                                              options={ChooseFlight}
+                                              className="custom-select flight_select Flight-selected-dd"
+                                              placeholder={`${translate(
+                                                "Select Flight"
+                                              )}`}
+                                              classNamePrefix="react-select"
+                                              isClearable
+                                              formatCreateLabel={(inputValue) =>
+                                                `Not Found: "${inputValue}"`
+                                              }
+                                            />
                                           </div>
-                                          {/* <div className="col-md-2 col-lg-auto col-12 d-flex">
-                                            <button
-                                              type="button"
-                                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                              onClick={HandleAddFlightRow}
-                                              style={{height:"fit-content"}}
-
-                                            >
-                                              +
-                                            </button>
-                                            {index > 0 && (
-                                              <button
-                                                type="button"
-                                                className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                                onClick={() =>
-                                                  HandleRemoveFlightRow(index)
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                ref={numberInputRef9}
+                                                required
+                                                value={
+                                                  flightRow[index].flight_amount
                                                 }
-                                                style={{height:"fit-content"}}
-
-                                              >
-                                                -
-                                              </button>
-                                            )}
-                                          </div> */}
+                                                onChange={(e) =>
+                                                  setFlightRow((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[
+                                                      index
+                                                    ].flight_amount =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                                onKeyDown={(e) => {
+                                                  setIsFocused(true);
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
+                                                    e.preventDefault();
+                                                  }
+                                                }}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Flight Amount") ||
+                                                  "Find Latest Packages"}
+                                              </label>
+                                            </div>
+                                          </div>
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                ref={numberInputRef10}
+                                                required
+                                                value={
+                                                  flightRow[index].no_of_stop
+                                                }
+                                                onChange={(e) =>
+                                                  setFlightRow((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].no_of_stop =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate(
+                                                  "No of Flight Stops"
+                                                ) || "Find Latest Packages"}
+                                              </label>
+                                            </div>
+                                          </div>
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                ref={numberInputRef11}
+                                                required
+                                                value={flightRow[index].luggage}
+                                                onChange={(e) =>
+                                                  setFlightRow((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].luggage =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Luggage") ||
+                                                  "Find Latest Packages"}
+                                              </label>
+                                            </div>
+                                          </div>
                                         </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              </>
-                            )}
-
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
                           </div>
 
                           <div className=" flex_start">
-
-                            <button type="submit" className="button -sm -info-2 bg-accent-1 text-white  mt-4  ">
-                              {loading ? <div
-                                className="d-flex justify-content-center align-items-center"
-                                style={{ height: "30px", width: "100%" }}
-                              >
-                                <ClipLoader color="#ffffff" size={30} />
-                              </div>
-                                :
+                            <button
+                              type="submit"
+                              className="button -sm -info-2 bg-accent-1 text-white  mt-4  "
+                            >
+                              {loading ? (
+                                <div
+                                  className="d-flex justify-content-center align-items-center"
+                                  style={{ height: "30px", width: "100%" }}
+                                >
+                                  <ClipLoader color="#ffffff" size={30} />
+                                </div>
+                              ) : (
                                 translate("Save Details")
-                              }
+                              )}
                             </button>
                             {activeTabIndex > 0 && (
                               <button
@@ -2371,10 +2573,8 @@ export default function AddTour() {
                               </button>
                             )}
                           </div>
-
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </form>
@@ -2385,7 +2585,7 @@ export default function AddTour() {
           </div>
         </div>
       </div>
-
+      
     </>
   );
 }
