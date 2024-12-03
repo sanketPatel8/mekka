@@ -14,6 +14,8 @@ export const UserProfileProvider = ({ children }) => {
 
   const { customer } = useAuthContext();
 
+  console.log("Customer:", customer); // Log customer
+
   useEffect(() => {
     const fetchProfile = async () => {
       const url = "my_profile";
@@ -26,6 +28,8 @@ export const UserProfileProvider = ({ children }) => {
       // Handle case where response.user is a single object
       if (response.user && typeof response.user === "object") {
         const userProfile = response.user;
+
+        console.log(userProfile, "userProfile"); // Log user profile
         setProfileImage(response?.user?.profile_image);
 
         console.log("Fetched profile image:", userProfile.profile_image); // Log profile image
@@ -36,7 +40,14 @@ export const UserProfileProvider = ({ children }) => {
       return response.user ? [response.user] : [];
     };
 
-    fetchProfile();
+    if(customer){
+
+      fetchProfile();
+    } 
+    else{
+      setProfileImage("");
+      console.log("No customer found");
+    }
   }, [customer]);
 
 
