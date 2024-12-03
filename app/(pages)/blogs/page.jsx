@@ -19,6 +19,7 @@ export default function ArticlesThree() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [Lang, setLang] = useState('')
 
   // page title
 
@@ -61,7 +62,7 @@ export default function ArticlesThree() {
 
   useEffect(() => {
     fetchData(); 
-  }, []);
+  }, [Lang]);
 
 
   const { translate } = useTranslation();
@@ -72,7 +73,6 @@ export default function ArticlesThree() {
   };
 
 
-  const [Lang, setLang] = useState('')
 
 
 
@@ -137,7 +137,7 @@ export default function ArticlesThree() {
 
                     <h3
                       className="blogCard__title text-18 fw-500 mt-10"
-                      dangerouslySetInnerHTML={{ __html: Lang === "EN" ? elm.headOneEn : elm.headOneTr }}
+                      dangerouslySetInnerHTML={{ __html: Lang === "EN" ? elm.headOneEn : elm.headOne }}
                     />
                   </div>
                 </Link>
