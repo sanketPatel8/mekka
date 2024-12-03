@@ -62,7 +62,7 @@ export default function ArticlesThree() {
 
   useEffect(() => {
     fetchData(); 
-  }, [Lang]);
+  }, []);
 
 
   const { translate } = useTranslation();
