@@ -5,8 +5,8 @@ import { speedFeatures } from "@/data/tourFilteringOptions";
 import { FaPersonWalking, FaStar } from "react-icons/fa6";
 import { FaHotel } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
-import { IoTimeOutline } from "react-icons/io5";
-import { MdBed } from "react-icons/md";
+import { IoPeopleSharp, IoTimeOutline } from "react-icons/io5";
+import { MdBed, MdFlightLand, MdFlightTakeoff } from "react-icons/md";
 import Stars from "@/components/common/Stars";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 import Pagination from "@/components/common/Pagination";
@@ -230,10 +230,10 @@ export default function TourList4({
                       </div>
                       <div className="tourCard__content">
                         <div className="d-flex gap-2 items-center">
-                          <div className="tourCard__location border_yellow mx-2">
+                          {/* <div className="tourCard__location border_yellow mx-2">
                             <FaPersonWalking color="white" size={18} />
                             zu Kaaba {elm?.distance_to_hotel}
-                          </div>
+                          </div> */}
                           <div
                             className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
                           >
@@ -242,21 +242,23 @@ export default function TourList4({
                             {elm.date_begin} - {elm.date_end}
                           </div>
                         </div>
-                        <h3 className="tourCard__title mt-5">
+                        <h3 className="tourCard__title fw-700 mt-5">
                           <span>
                             {elm?.type}-{elm?.name}
                           </span>
                         </h3>
                         <div>
-                          <div>
+                          <div className="mt-5">
                             {elm?.tour_hotels?.mekka_hotels?.[0] && (
                               <p className="tourCard__text mt-5 items-center d-flex">
                                 <FaHotel
-                                  className="px-1"
+                                  className="pe-2"
                                   color="#dabf4f"
-                                  size={25}
+                                  size={30}
                                 />
-                                Mekka :{" "}
+                                <div className=" flex-column " style={{display:"flex"}}>
+                                  <div className="text-12" >
+                                  <span style={{fontWeight:"700"}}>Hotel Mekka : </span>{" "}
                                 {truncateHotelName(
                                   elm?.tour_hotels?.mekka_hotels[0]?.hotel_name
                                 )}
@@ -265,17 +267,11 @@ export default function TourList4({
                                   elm.tour_hotels?.mekka_hotels[0]?.hotel_stars
                                 }{" "}
                                 <FaStar color="#dabf4f" className="" /> )
-                              </p>
-                            )}
+                                  </div>
 
-                            {elm?.tour_hotels?.medina_hotels?.[0] && (
-                              <p className="tourCard__text mt-5 items-center d-flex">
-                                <FaHotel
-                                  className="px-1"
-                                  color="#dabf4f"
-                                  size={25}
-                                />
-                                Madina :{" "}
+                                  <div className="text-12" >
+                                  <span style={{fontWeight:"700"}}>Hotel Madina : </span>{" "}
+
                                 {truncateHotelName(
                                   elm?.tour_hotels?.medina_hotels[0]?.hotel_name
                                 )}
@@ -283,9 +279,14 @@ export default function TourList4({
                                 {
                                   elm.tour_hotels?.medina_hotels[0]?.hotel_stars
                                 }{" "}
-                                <FaStar color="#dabf4f" className="" /> )
+                                <FaStar color="#dabf4f" className="" style={{fontSize:"10px"}} /> )
+                                  </div>
+                                </div>
+                                
                               </p>
                             )}
+
+                            
                           </div>
 
                           {/* <p className="tourCard__text mt-5 ">
@@ -300,24 +301,50 @@ export default function TourList4({
                               : "ALL"}
                           </p> */}
                         </div>
+
+                        <p className="mt-5">
+                        <div className="  d-flex items-center">
+
+                        <MdFlightTakeoff size={22} color="#DAC04F" />
+                          <span className="text-12 ms-2" style={{fontWeight:"700"}}>{translate("Departure")} : </span>
+                          <span className="text-13 ms-2">{elm?.departure}</span>
+                        </div>
+                        <div className="d-flex items-center">
+
+                        <MdFlightLand size={22} color="#DAC04F" />
+                          <span className="text-13 ms-2" style={{fontWeight:"700"}}>{translate("Arrival")} : </span>
+                          <span className="text-13 ms-2">{elm?.departure}</span>
+                        </div>
+
+                        </p>
+
+
+
                         {elm?.company_name !== " " &&
                           elm?.company_name !== null && (
-                            <div className="d-flex items-center mt-5">
+                            <p className="d-flex items-center mt-5">
                               <div className="d-flex items-center x-gap-5">
                                 {/* <Stars star={elm?.rating_count} font={12} /> */}
-                                <PiBuildingApartmentFill
+                                <IoPeopleSharp
                                   color="#dabf4f"
-                                  className=""
-                                  size={25}
+                                  className="pe-2"
+                                  size={30}
                                 />
                               </div>
-                              <div className="text-14 ml-5">
-                                {/* <span className="fw-500">{elm?.rating}</span> ( */}
+                              <div className="text-13 ml-5">
+                                <span className="fw-700">{translate("Organizer")} : </span> 
                                 {/* {elm?.rating_count}) - */}
                                 {elm?.company_name}
                               </div>
-                            </div>
+                            </p>
                           )}
+
+                          <div className=" mt-5 ">
+                            <FaPersonWalking color="#3f97ca" size={23}  />
+                            <span className="text-13 ms-2 " style={{color:"#3f97ca",fontWeight:"700"}}>{translate("Distance to the Kaaba")} : </span>
+                            <span className="text-13 ms-2" style={{color:"#3f97ca"}}>{elm?.distance_to_hotel} </span>
+                            
+                          </div>
 
                         {/* <div className="row x-gap-20 y-gap-5 ">
                           <div className="col-auto">
@@ -354,11 +381,11 @@ export default function TourList4({
                           <div className="tourCard__price">
                             <div></div>
                             <div className="d-flex items-center justify-content-center">
-                              <p className="text-20 fw-500 ml-5 text-center">
+                              <p className="text-26 fw-700 ml-5 text-center">
                                 {formatPrice(elm?.tour_price)}
                               </p>
                             </div>
-                            <p className="text-left text-md-center text-lg-center text-xl-center">
+                            <p className="text-center ">
                               {translate("including taxes and fee")}
                             </p>
                           </div>
@@ -367,7 +394,7 @@ export default function TourList4({
                           <Link
                             href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
                           >
-                            {translate("SHOW AVAILABILITY")}
+                            {translate("Details & Booking")}
                           </Link>
                         </button>
                       </div>
