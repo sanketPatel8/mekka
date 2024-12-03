@@ -101,6 +101,10 @@ export default function AddTour() {
     { id: 2, title: "2-bed room", price: "", checked: false },
     { id: 3, title: "3-bed room", price: "", checked: false },
     { id: 4, title: "4-bed room", price: "", checked: false },
+    { id: 5, title: "Breakfast", price: "", checked: false },
+    { id: 6, title: "Dinner", price: "", checked: false },
+    { id: 7, title: "Sahour", price: "", checked: false },
+    { id: 8, title: "Iftar", price: "", checked: false },
   ]);
   const [isNextClicked, setIsNextClicked] = useState(false);
   const [enabledTabs, setEnabledTabs] = useState([0]);
@@ -1611,7 +1615,7 @@ export default function AddTour() {
                                         htmlFor={`service-${service.id}`}
                                         className="lh-16 ml-15 my-2"
                                       >
-                                        {index + 1} {translate("Bed-Room")}
+                                        {translate(service.title) }
                                       </label>
                                     </div>
                                   </div>

@@ -19,13 +19,13 @@ const HeaderMenu = ({translate}) => {
                 </Link>
               </div> */}
               <div>
-                <Link href="/tour?type=Hajj" className="">
-                  {translate("Hajj")}
+                <Link href="/tour?type=Umrah" className="">
+                  {translate("Umrah")}
                 </Link>
               </div>
               <div>
-                <Link href="/tour?type=Umrah" className="">
-                  {translate("Umrah")}
+                <Link href="/tour?type=Hajj" className="">
+                  {translate("Hajj")}
                 </Link>
               </div>
               <div>
