@@ -41,8 +41,8 @@ export default function ArticlesThree() {
         url: "travel_articles",
       });
       setArticalDAta(response.Travel_Articles);
-      setCount(response.Total);
-      setRange(response.perPage);
+      setCount(response.Count);
+      setRange(response.Total_Page);
     } catch (error) {
       console.error("Error caught:", error);
       if (
