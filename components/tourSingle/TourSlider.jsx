@@ -84,8 +84,8 @@ export default function TourSlider({ PAckageData }) {
                             width={421}
                             height={301}
                             src={
-                              elm.tour_image
-                                ? elm.tour_image
+                              elm?.tour_image
+                                ? elm?.tour_image
                                 : "/img/404/imgnotFound.png"
                             }
                             alt="image"
@@ -95,7 +95,10 @@ export default function TourSlider({ PAckageData }) {
 
                         <button
                           className={`tourCard__favorite ${
-                            elm.direct_flight == "0" ? "d-none" : "d-block"
+                            elm.direct_flight == "0" ||
+                            elm.direct_flight == null
+                              ? "d-none"
+                              : "d-block"
                           }`}
                         >
                           {translate("Direct Flight")}
@@ -112,33 +115,42 @@ export default function TourSlider({ PAckageData }) {
                           Zu Kaaba {elm.distance_to_hotel}
                         </div>
 
-                        <h3
-                          className={`tourCard__title text-16 fw-500 mt-5 ${
-                            elm.type & elm.name ? "d-none" : "d-block"
-                          }`}
+                        <div
+                          className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
                         >
+                          {elm.date_begin} - {elm.date_end}
+                        </div>
+
+                        <h3 className="tourCard__title text-16 fw-500 mt-5">
                           <span>
-                            {" "}
-                            {elm.type} - {elm.name}{" "}
+                            {elm.type} - {elm.name}
                           </span>
                         </h3>
 
                         <div className="tourCard__rating d-flex items-center text-13 mt-5">
-                          <div
-                            className={`d-flex x-gap-5 ${
-                              elm.rating ? "d-block" : "d-none"
-                            }`}
-                          >
-                            <Stars star={elm.rating} />
+                          <div className="d-flex items-center mt-5">
+                            <div className="d-flex items-center x-gap-5">
+                              {/* <Stars star={elm?.rating_count} font={12} /> */}
+                            </div>
+                            {elm?.company_name && (
+                              <div className="text-14 ml-5">
+                                <span className="fw-500">{elm?.rating}</span>
+                                {/* {elm?.rating_count}) -{" "} */}
+                               <div className="items-center">
+                               <PiBuildingApartmentFill
+                                  color="#dabf4f"
+                                  className=""
+                                  size={20}
+                                />{" "}
+                                <span>
+                                  {elm?.company_name == null
+                                    ? "  "
+                                    : elm?.company_name}{" "}
+                                </span>
+                               </div>
+                              </div>
+                            )}
                           </div>
-                          <p
-                            className={`text-dark-1 ml-10 ${
-                              elm.rating ? "d-block" : "d-none"
-                            }`}
-                          >
-                            {elm.rating} ({elm.rating}) -
-                          </p>{" "}
-                          {elm.company_code}
                         </div>
 
                         <div
@@ -156,13 +168,14 @@ export default function TourSlider({ PAckageData }) {
                               elm.tour_price == "0" ? "d-none" : "d-block"
                             }`}
                           >
-                            {translate("From")}{" "}
+                     
                             <span className="text-16 fw-500">
                               {formatPrice(elm.tour_price)}
                             </span>
                           </div>
                         </div>
                       </div>
+
                     </Link>
                   </SwiperSlide>
                 ))}
