@@ -117,7 +117,7 @@ export default function ArticlesThree() {
 
                   <h3
                     className="blogCard__title text-18 fw-500 mt-10"
-                    dangerouslySetInnerHTML={{ __html: Lang === "EN" ? elm.headOneEn : elm.headOneTr }}
+                    dangerouslySetInnerHTML={{ __html: Lang === "EN" ? elm.headOneEn : elm.headOne }}
                   />
                 </div>
               </Link>
