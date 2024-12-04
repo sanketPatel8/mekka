@@ -17,7 +17,11 @@ import Useauthredirect from "@/app/hooks/useAuthRedirect";
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const { user } = useAuthContext();
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = "Dashboard - MekkaBooking";
+    }
+  }, []);
 
   const company_id = user === null ? 0 : user?.user.company_id;
 
