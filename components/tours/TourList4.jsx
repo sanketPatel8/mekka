@@ -262,7 +262,7 @@ export default function TourList4({
                                 {truncateHotelName(
                                   elm?.tour_hotels?.mekka_hotels[0]?.hotel_name
                                 )}
-                                -(
+                                 {" "}(
                                 {
                                   elm.tour_hotels?.mekka_hotels[0]?.hotel_stars
                                 }{" "}
@@ -275,7 +275,7 @@ export default function TourList4({
                                 {truncateHotelName(
                                   elm?.tour_hotels?.medina_hotels[0]?.hotel_name
                                 )}
-                                -(
+                                 {" "}(
                                 {
                                   elm.tour_hotels?.medina_hotels[0]?.hotel_stars
                                 }{" "}
@@ -307,13 +307,13 @@ export default function TourList4({
 
                         <MdFlightTakeoff size={22} color="#DAC04F" />
                           <span className="text-12 ms-2" style={{fontWeight:"700"}}>{translate("Departure")} : </span>
-                          <span className="text-13 ms-2">{elm?.departures}</span>
+                          {/* <span className="text-13 ms-2">{elm?.departures}</span> */}
                         </div>
                         <div className="d-flex items-center">
 
                         <MdFlightLand size={22} color="#DAC04F" />
                           <span className="text-13 ms-2" style={{fontWeight:"700"}}>{translate("Arrival")} : </span>
-                          <span className="text-13 ms-2">{elm?.arrival}</span>
+                          {/* <span className="text-13 ms-2">{elm?.arrival}</span> */}
                         </div>
 
                         </p>
