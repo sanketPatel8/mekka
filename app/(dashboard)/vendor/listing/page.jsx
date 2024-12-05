@@ -158,6 +158,27 @@ export default function DBListing() {
     fetchListing(pageIndex);
   };
 
+  const FetchDeleteTour = async (id) => {
+    const formData = new FormData();
+
+    formData.append("id", id );
+
+    try {
+      setLoading(true);
+      const response = await POST.request({
+        form: formData,
+        url: "delete_tour",
+      });
+      setLoading(false);
+      console.log(response);
+      
+    } catch (e) {}
+  };
+
+  const HandleDelete = (id) => {
+    FetchDeleteTour(id)
+  }
+
   return (
     <>
       <ToastContainer />
@@ -310,7 +331,7 @@ export default function DBListing() {
 
                           <label className="badge bg-secondary"></label>
                           {elm?.capacity_empty === elm.capacity ? (
-                            <button className="button -sm -outline-red-3 w-100 -red-3 mb-10">
+                            <button className="button -sm -outline-red-3 w-100 -red-3 mb-10"  onClick={(id) => HandleDelete(`${elm?.id}`)} >
                               <div>{translate("DELETE TOUR")}</div>
                             </button>
                           ) : null}
