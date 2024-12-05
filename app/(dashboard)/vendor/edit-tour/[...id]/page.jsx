@@ -176,11 +176,6 @@ export default function EditTour() {
     }
   };
 
-
-
-
-
-
   const accessdata = async () => {
     const url = "tour_data";
 
@@ -220,8 +215,6 @@ export default function EditTour() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-
 
   const handleStartDateChange = (e) => {
     const [day, month, year] = e.target.value.split("-");
@@ -498,9 +491,6 @@ export default function EditTour() {
       );
       setDaysCount(daysDifference + 1);
     }
-
-      
-
   }, []);
   useEffect(() => {
     if (arrival_data.length>0) {
@@ -1071,8 +1061,6 @@ export default function EditTour() {
 
     const ArrivalidArray = arrivalrow.map(item => item?.arrival_id);
 
-
-
     if (
       !mekkaData.some(
         (mekka) => mekka.hotel_name && mekka.hotel_price && mekka.hotel_info
@@ -1161,6 +1149,7 @@ export default function EditTour() {
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_id", id);
     formData.append("arrival", ArrivalidArray);
+    formData.append("deleted_services", ArrivalidArray);
 
     if (image2FileArray.length === 0) {
       formData.append("tour_image", "");
