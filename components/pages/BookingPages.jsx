@@ -554,31 +554,34 @@ export default function BookingPages({ BookingData }) {
         updatedValues[type][i] = {
           selectedServices: [], // Initialize selectedServices array
           selectedPrices: [], 
-          selectedAdditional: [],
+          services: [],
         };
       }
   
-      // Check if selectedServices and selectedPrices are initialized properly
+     
       if (!updatedValues[type][i].selectedServices) {
-        updatedValues[type][i].selectedServices = []; // Ensure it's an array
+        updatedValues[type][i].selectedServices = []; 
       }
       if (!updatedValues[type][i].selectedPrices) {
-        updatedValues[type][i].selectedPrices = []; // Ensure it's an array
+        updatedValues[type][i].selectedPrices = []; 
       }
-      if (!updatedValues[type][i].selectedAdditional) {
-        updatedValues[type][i].selectedAdditional = []; // Ensure it's an array
+      if (!updatedValues[type][i].services) {
+        updatedValues[type][i].services = []; 
       }
   
       // Update the selected services and prices based on checkbox state
+      const Services = {
+        price: price,
+        title: title,
+        additional_order: order,
+        additional_price_id: optid,
+      }
+
+
       if (isChecked) {
-        updatedValues[type][i].selectedServices.push(value); // Add to selectedServices
+        updatedValues[type][i].selectedServices.push(value); 
         updatedValues[type][i].selectedPrices.push(price);
-        updatedValues[type][i].selectedAdditional.push({
-          price: price,
-          title: title,
-          additional_order: order,
-          additional_price_id: optid,
-        });
+        updatedValues[type][i].services.push(JSON.stringify(Services));
         // updatedValues[type][i] = {
         //   ...updatedValues[type][i],
         //   price: price,
@@ -589,7 +592,7 @@ export default function BookingPages({ BookingData }) {
       } else {
         updatedValues[type][i].selectedServices = updatedValues[type][i].selectedServices.filter(item => item !== value); // Remove from selectedServices
         updatedValues[type][i].selectedPrices = updatedValues[type][i].selectedPrices.filter(item => item !== price); 
-        updatedValues[type][i].selectedAdditional = updatedValues[type][i].selectedAdditional.filter(item => item.price !== price);
+        updatedValues[type][i].services = updatedValues[type][i].services.filter(item => item.price !== price);
       }
 
 
@@ -600,9 +603,9 @@ export default function BookingPages({ BookingData }) {
           ...prevUserData,
           selectedService: updatedValues[type][i].selectedServices,
           price: updatedValues[type][i].selectedPrices,
-          title: updatedValues[type][i].selectedAdditional.map(item => item.title).join(", "), // Join titles for display
-          additional_order: updatedValues[type][i].selectedAdditional.map(item => item.order).join(", "), 
-          additional_price_id: updatedValues[type][i].selectedAdditional.map(item => item.id).join(", "), 
+          title: updatedValues[type][i].services.map(item => item.title).join(", "), // Join titles for display
+          additional_order: updatedValues[type][i].services.map(item => item.order).join(", "), 
+          additional_price_id: updatedValues[type][i].services.map(item => item.id).join(", "), 
 
          
         }));
@@ -900,14 +903,14 @@ const SubtotalPriceWithAdditional = (type, i) => {
                     nationality: e.nationality,
                     street: e.street,
                     zipcode: e.zipcode,
-                    selectedAdditional: e.selectedAdditional || [], // Ensure selectedAdditional is set
+                    services: e.services || [], // Ensure services is set
                     selectedPrices: e.selectedPrices || [], // Ensure selectedPrices is set
                     selectedServices: e.selectedServices || [], // Ensure selectedServices is set
                 };
     
                 // Update the selectedServices to reflect the checkbox state
-                if (e.selectedAdditional && e.selectedAdditional.length > 0) {
-                    e.selectedAdditional.forEach((additional) => {
+                if (e.services && e.services.length > 0) {
+                    e.services.forEach((additional) => {
                         const serviceValue = `Adult-${i}-${additional.additional_order}-ad-${additional.additional_price_id}-${additional.title}`;
                         updatedValues["Adult"][i].selectedServices.push(serviceValue);
                         updatedValues["Adult"][i].selectedPrices.push(additional.price);

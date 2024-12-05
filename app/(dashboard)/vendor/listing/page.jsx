@@ -325,7 +325,7 @@ export default function DBListing() {
                             onClick={(id) => handleClick(`${elm?.id}`)}
                             className="mt-5 text-center"
                           >
-                            <span>{translate("Duplicate Tour")}</span>
+                            {/* <span>{translate("Duplicate Tour")}</span> */}
                           </button>
                         </div>
                       </div>
