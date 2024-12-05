@@ -158,7 +158,6 @@ export default function DBListing() {
     fetchListing(pageIndex);
   };
 
-
   return (
     <>
       <ToastContainer />
@@ -197,7 +196,6 @@ export default function DBListing() {
                           <Image
                             width={420}
                             height={390}
-                            
                             src={
                               elm.tour_image
                                 ? elm.tour_image
@@ -275,8 +273,8 @@ export default function DBListing() {
                                   ? "badge-orange"
                                   : elm.tour_status === "Active"
                                   ? "badge-green"
-                                  : (elm.tour_status === "Rejected" ||
-                                    elm.tour_status === "Cancelled")
+                                  : elm.tour_status === "Rejected" ||
+                                    elm.tour_status === "Cancelled"
                                   ? "badge-red"
                                   : ""
                               }
@@ -311,11 +309,17 @@ export default function DBListing() {
                           </div>
 
                           <label className="badge bg-secondary"></label>
-                            <Link href={`/vendor/edit-tour/${elm.id}`} >
-                          <button className="button -sm -outline-accent-1 w-100 text-accent-1">
+                          {elm?.capacity_empty === elm.capacity ? (
+                            <button className="button -sm -outline-red-3 w-100 -red-3 mb-10">
+                              <div>{translate("DELETE TOUR")}</div>
+                            </button>
+                          ) : null}
+
+                          <Link href={`/vendor/edit-tour/${elm.id}`}>
+                            <button className="button -sm -outline-accent-1 w-100 text-accent-1">
                               <div>{translate("EDIT TOUR")}</div>
-                          </button>
-                            </Link>
+                            </button>
+                          </Link>
 
                           <button
                             onClick={(id) => handleClick(`${elm?.id}`)}

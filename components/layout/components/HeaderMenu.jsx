@@ -35,7 +35,7 @@ const HeaderMenu = ({translate}) => {
               </div>
               <div>
                 <Link href="/blogs" className="">
-                  {translate("Blogs")}
+                  {translate("Blog")}
                 </Link>
               </div>
               <div>
