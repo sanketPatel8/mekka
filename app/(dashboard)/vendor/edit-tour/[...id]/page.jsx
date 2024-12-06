@@ -636,29 +636,29 @@ export default function EditTour() {
   // };
 
   const handleCheckboxChange = (event, id) => {
-
-    console.log(id,"checkbox id")
     const isChecked = event.target.checked;
   
     const updatedServices = services.map((service) =>
-      service.service_id === id
-        ? { ...service, checked: isChecked, service_id: isChecked ? service.service_id : 0 }
-        : service
-    );
-
-    console.log(updatedServices, "updatedServices");
+      service.id === id
+        ? { ...service, checked: isChecked }
+        : { ...service, checked: service.checked } 
+      );
   
+      const serviceId = services.find((service) => service.id === id).service_id;
+    
     // Update services state
     setServices(updatedServices);
   
     // Update unchecked IDs state
     if (!isChecked) {
-      setUncheckedIds((prev) => [...prev, id]); 
+      setUncheckedIds((prev) => [...prev, serviceId]); 
     } else {
-      setUncheckedIds((prev) => prev.filter((uncheckedId) => uncheckedId !== id)); // Remove from unchecked array
+      setUncheckedIds((prev) => prev.filter((uncheckedId) => uncheckedId !== serviceId)); // Remove from unchecked array
     }
 
     console.log(uncheckedIds, "uncheckedIds");
+
+    console.log(services, "services");
   };
 
   const handlePriceChange = (event, id) => {
@@ -1836,82 +1836,48 @@ export default function EditTour() {
                                 </div>
                               </div>
 
-                              {services.map((service, index) => (
-                                <div
-                                  key={service.id}
-                                  className="contactForm row y-gap-30 items-center pt-lg-0 pt-10"
-                                >
-                                  <div className="col-lg-4">
-                                    <div className="d-flex items-center pointer-check">
-                                      <div className="form-checkbox">
-                                        <input
-                                          type="checkbox"
-                                          id={`service-${service.service_id}`}
-                                          checked={service.checked}
-                                          onChange={(event) =>
-                                            handleCheckboxChange(
-                                              event,
-                                              service.service_id
-                                            )
-                                          }
-                                        />
-                                        <label
-                                          htmlFor={`service-${service.service_id}`}
-                                          className="form-checkbox__mark"
-                                        >
-                                          <div className="form-checkbox__icon">
-                                            <svg
-                                              width="10"
-                                              height="8"
-                                              viewBox="0 0 10 8"
-                                              fill="none"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                              <path
-                                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                                fill="white"
-                                              />
-                                            </svg>
-                                          </div>
+                              {services.map((service) => (
+                                  <div key={service.id} className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
+                                    <div className="col-lg-4">
+                                      <div className="d-flex items-center pointer-check">
+                                        <div className="form-checkbox">
+                                          <input
+                                            type="checkbox"
+                                            id={`service-${service.id}`}
+                                            checked={service.checked || false}
+                                            onChange={(event) => handleCheckboxChange(event, service.id)}
+                                          />
+                                          <label htmlFor={`service-${service.id}`} className="form-checkbox__mark">
+                                            <div className="form-checkbox__icon">
+                                              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z" fill="white" />
+                                              </svg>
+                                            </div>
+                                          </label>
+                                        </div>
+                                        <label htmlFor={`service-${service.id}`} className="lh-16 ml-15 my-2">
+                                          {translate(service.title)}
                                         </label>
                                       </div>
-                                      <label
-                                        htmlFor={`service-${service.service_id}`}
-                                        className="lh-16 ml-15 my-2"
-                                      >
-                                        {translate(service.title)}
-                                      </label>
                                     </div>
+                                    {service.checked && (
+                                      <div className="col-lg-6">
+                                        <div className="form-input my-1">
+                                          <input
+                                            type="number"
+                                            id={`service-${service.id}`}
+                                            value={service.price}
+                                            onChange={(event) => handlePriceChange(event, service.id)}
+                                            required
+                                          />
+                                          <label className="lh-1 text-16 text-light-1">
+                                            {translate("Price")}
+                                          </label>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                  {service.checked && (
-                                    <div className="col-lg-6">
-                                      <div className="form-input my-1">
-                                        <input
-                                          type="number"
-                                          id={`service-${service.service_id}`}
-                                          value={service.price}
-                                          onChange={(event) =>
-                                            handlePriceChange(event, service.service_id)
-                                          }
-                                          onKeyDown={(e) => {
-                                            setIsFocused(true);
-                                            if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                              e.preventDefault();
-                                            }
-                                          }}
-                                          onKeyUp={() => setIsFocused(false)}
-                                          onFocus={() => setIsFocused(true)}
-                                          onBlur={() => setIsFocused(false)}
-                                          required
-                                        />
-                                        <label className="lh-1 text-16 text-light-1">
-                                          {translate("Price")}
-                                        </label>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
+                                ))}
                               
                             </div>
                           </div>
