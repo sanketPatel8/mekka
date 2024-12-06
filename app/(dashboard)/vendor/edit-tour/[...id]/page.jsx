@@ -145,6 +145,8 @@ export default function EditTour() {
   const [newImageIndex, setNewImageIndex] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [uncheckedIds, setUncheckedIds] = useState([]);
+  const [DeletedDeparture , setDeletedDeparture] = useState([])
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -197,6 +199,7 @@ export default function EditTour() {
   };
 
   const { handleRedirect } = Useauthredirect();
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1000) {
@@ -622,13 +625,33 @@ export default function EditTour() {
   useEffect(() => {
     setActiveTab(tabs[activeTabIndex]);
   }, [activeTabIndex]);
+  // const handleCheckboxChange = (event, id) => {
+  //   const updatedServices = services.map((service) =>
+  //     service.id === id
+  //       ? { ...service, checked: event.target.checked, service_id: 0 }
+  //       : service
+  //   );
+  //   setServices(updatedServices);
+  // };
+
   const handleCheckboxChange = (event, id) => {
+    const isChecked = event.target.checked;
+  
     const updatedServices = services.map((service) =>
       service.id === id
-        ? { ...service, checked: event.target.checked, service_id: 0 }
+        ? { ...service, checked: isChecked, service_id: isChecked ? service.service_id : 0 }
         : service
     );
+  
+    // Update services state
     setServices(updatedServices);
+  
+    // Update unchecked IDs state
+    if (!isChecked) {
+      setUncheckedIds((prev) => [...prev, id]); // Add to unchecked array
+    } else {
+      setUncheckedIds((prev) => prev.filter((uncheckedId) => uncheckedId !== id)); // Remove from unchecked array
+    }
   };
 
   const handlePriceChange = (event, id) => {
@@ -710,6 +733,7 @@ export default function EditTour() {
     const newRows = [...departureRows];
     newRows.splice(index, 1);
     setDepartureRows(newRows);
+    // setDeletedDeparture()
   };
 
   const handleRemoveArrivalRow = (index) => {
@@ -1141,15 +1165,14 @@ export default function EditTour() {
        JSON.stringify(flight_data)
     );
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    formData.append(
-      "flight_exclude",
-      0
-    );
+    // formData.append(
+    //   0
+    // );
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_id", id);
     formData.append("arrival", ArrivalidArray);
-    formData.append("deleted_services", ArrivalidArray);
+    formData.append("deleted_services", ArrivalidArray.join(','));
 
     if (image2FileArray.length === 0) {
       formData.append("tour_image", "");
@@ -1191,6 +1214,8 @@ export default function EditTour() {
     const [day, month, year] = date.split("-");
     return `${year}-${month}-${day}`;
   };
+  
+  console.log(uncheckedIds);
   return (
     <>
       <ToastContainer />
@@ -1865,6 +1890,7 @@ export default function EditTour() {
                                   )}
                                 </div>
                               ))}
+                              
                             </div>
                           </div>
                           <div className=" flex_start">
