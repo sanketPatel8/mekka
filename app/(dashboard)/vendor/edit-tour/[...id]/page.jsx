@@ -147,6 +147,7 @@ export default function EditTour() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uncheckedIds, setUncheckedIds] = useState([]);
   const [DeletedDeparture , setDeletedDeparture] = useState([])
+  const [DeletedArrival , setDeletedArrival] = useState([])
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -635,23 +636,29 @@ export default function EditTour() {
   // };
 
   const handleCheckboxChange = (event, id) => {
+
+    console.log(id,"checkbox id")
     const isChecked = event.target.checked;
   
     const updatedServices = services.map((service) =>
-      service.id === id
+      service.service_id === id
         ? { ...service, checked: isChecked, service_id: isChecked ? service.service_id : 0 }
         : service
     );
+
+    console.log(updatedServices, "updatedServices");
   
     // Update services state
     setServices(updatedServices);
   
     // Update unchecked IDs state
     if (!isChecked) {
-      setUncheckedIds((prev) => [...prev, id]); // Add to unchecked array
+      setUncheckedIds((prev) => [...prev, id]); 
     } else {
       setUncheckedIds((prev) => prev.filter((uncheckedId) => uncheckedId !== id)); // Remove from unchecked array
     }
+
+    console.log(uncheckedIds, "uncheckedIds");
   };
 
   const handlePriceChange = (event, id) => {
@@ -727,22 +734,33 @@ export default function EditTour() {
   };
 
   const handleRemoveDepartureRow = (index) => {
+    const id = departureRows[index].id;
+    console.log(id, "id");
     if (departureRows.length === 1) {
       return;
     }
     const newRows = [...departureRows];
     newRows.splice(index, 1);
     setDepartureRows(newRows);
+    const newDeletedDeparture = [...DeletedDeparture];
+    newDeletedDeparture.push(id);
+    setDeletedDeparture(newDeletedDeparture);
     // setDeletedDeparture()
   };
 
   const handleRemoveArrivalRow = (index) => {
+    const id = arrivalrow[index].arrival_id;
+    console.log(id, "id");
+
     if (arrivalrow.length === 1) {
       return;
     }
     const newRows = [...arrivalrow];
     newRows.splice(index, 1);
     setArrivalrow(newRows);
+    const newDeletedArrival = [...DeletedArrival];
+    newDeletedArrival.push(id);
+    setDeletedArrival(newDeletedArrival);
   };
 
   const Madina = madinaHotel.map((hotel) => ({
@@ -1116,7 +1134,7 @@ export default function EditTour() {
         acc.push({
           title: service.title,
           price: service.price,
-          service_id: service.service_id,
+          service_id: service.service_id || 0,
         });
       }
       return acc;
@@ -1141,6 +1159,8 @@ export default function EditTour() {
       price: departure.price ? departure.price : "",
       id: departure.id ? departure.id : "",
     }));
+
+    console.log(uncheckedIds, "uncheckedIds");
 
 
     const formData = new FormData();
@@ -1172,7 +1192,9 @@ export default function EditTour() {
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_id", id);
     formData.append("arrival", ArrivalidArray);
-    formData.append("deleted_services", ArrivalidArray.join(','));
+    formData.append("deleted_services", uncheckedIds.join(',') || "");
+    formData.append("deleted_departure", DeletedDeparture.join(',') || "");
+    formData.append("deleted_arrival", DeletedArrival.join(',') || "");
 
     if (image2FileArray.length === 0) {
       formData.append("tour_image", "");
@@ -1824,17 +1846,17 @@ export default function EditTour() {
                                       <div className="form-checkbox">
                                         <input
                                           type="checkbox"
-                                          id={`service-${service.id}`}
+                                          id={`service-${service.service_id}`}
                                           checked={service.checked}
                                           onChange={(event) =>
                                             handleCheckboxChange(
                                               event,
-                                              service.id
+                                              service.service_id
                                             )
                                           }
                                         />
                                         <label
-                                          htmlFor={`service-${service.id}`}
+                                          htmlFor={`service-${service.service_id}`}
                                           className="form-checkbox__mark"
                                         >
                                           <div className="form-checkbox__icon">
@@ -1854,7 +1876,7 @@ export default function EditTour() {
                                         </label>
                                       </div>
                                       <label
-                                        htmlFor={`service-${service.id}`}
+                                        htmlFor={`service-${service.service_id}`}
                                         className="lh-16 ml-15 my-2"
                                       >
                                         {translate(service.title)}
@@ -1866,10 +1888,10 @@ export default function EditTour() {
                                       <div className="form-input my-1">
                                         <input
                                           type="number"
-                                          id={`service-${service.id}`}
+                                          id={`service-${service.service_id}`}
                                           value={service.price}
                                           onChange={(event) =>
-                                            handlePriceChange(event, service.id)
+                                            handlePriceChange(event, service.service_id)
                                           }
                                           onKeyDown={(e) => {
                                             setIsFocused(true);
