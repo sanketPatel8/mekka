@@ -30,7 +30,7 @@ export default function Home() {
         <Header1 />
         <FeaturesOne />
         <Tour1 />
-        {/* <Banner /> */}
+        <Banner />
         <TourSlderOne />
         {/* <TestimonialOne /> */}
         {/* <BannerOne /> */}
