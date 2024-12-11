@@ -21,7 +21,12 @@ export default function Header1(payment) {
   const [addClass, setAddClass] = useState(false);
   const [LoginCheck, setLoginCheck] = useState(false);
   const { dispatch } = useAuthContext();
+  const [activeLink, setActiveLink] = useState(""); 
+  const pathName = typeof window !== "undefined" ? localStorage.getItem("pathRedirect") : "/" ;
 
+  useEffect(()=>{
+    setActiveLink(pathName)
+  },[])
   const handleLogoutClick = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
@@ -98,7 +103,7 @@ export default function Header1(payment) {
 
           <div className="header__logo">
             
-            <HeaderMenu translate={translate}/>
+          <HeaderMenu translate={translate} activeLink={activeLink} setActiveLink={setActiveLink} />
           </div>
 
           <div className="headerMobile__right">

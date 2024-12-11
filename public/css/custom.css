@@ -205,6 +205,10 @@ opacity: 1;
   .rmdp-arrow{
     border-color: var(--color-accent-1) !important;
   }
+
+  .header__logo .active{
+    color: #dac04f;
+  }
  
   @media (max-width:1150px) {
     
