@@ -39,6 +39,8 @@ export default function DbBooking() {
       translate("In Progress"),
       translate("Completed"),
       translate("Cancelled"),
+      translate("Open Bookings"),
+
     ];
     setTabs(tabContent);
 
@@ -218,6 +220,25 @@ export default function DbBooking() {
       setBookings(bookingsData);
     } 
     
+    else if(tab === "Open Bookings") {
+      setLoading(false);
+      
+      const bookingsData = response.Open_Bookings.map((booking) => ({
+        BookingId: booking.reservation_id,
+        BookingNo: booking.reservationNumber,
+        Status: booking.reservation_status,
+        Full_Name: booking.name,
+        Tour_name: booking.tour_name,
+        Total_Payment: booking.total,
+        Pending_Payment: booking.pending_payment,
+        Payment_Terms: booking.payment_terms,
+        Payment_Method: booking.payment_method,
+        Visas: booking.visa_confirm,
+        Flight: booking.plane_confirm,
+        Initiated_By_Admin: booking.initiated_by_admin,
+      }));
+      setBookings(bookingsData);
+    }
     // else if(tab === "Upcoming Bookings") {
     //   setLoading(false);
       
