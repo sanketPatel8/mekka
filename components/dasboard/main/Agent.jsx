@@ -25,6 +25,7 @@ export default function Sidebar() {
   }, []);
 
   const company_id = user === null ? 0 : user?.user.company_id;
+  console.log(company_id, "company_id");
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -52,15 +53,16 @@ export default function Sidebar() {
       localStorage.setItem("user",JSON.stringify(response));    
       dispatch({ type: "LOGIN", payload: response });
       setLoading(false);
-    }
+      fetchDetails();
+    }   
   }
 
   const { handleRedirect } = Useauthredirect();
-  useEffect(() => {
-    handleRedirect();
-    setLoading(false);
-    fetchDetails();
-  }, [company_id]);
+  // useEffect(() => {
+  //   handleRedirect();
+  //   setLoading(false);
+  //   fetchDetails();
+  // }, [company_id]);
 
   const fetchDetails = async () => {
     const formData = new FormData();
