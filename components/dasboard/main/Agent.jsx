@@ -53,7 +53,7 @@ export default function Sidebar() {
       dispatch({ type: "LOGIN", payload: response });
       setLoading(false);
     }else{
-      setLoading(false);
+      router.push("/partner-login");
     }
   }
 
