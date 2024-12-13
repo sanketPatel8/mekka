@@ -13,6 +13,7 @@ import { useAuthContext } from "@/app/hooks/useAuthContext";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -27,6 +28,32 @@ export default function Sidebar() {
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const searchParams = useSearchParams(); // Use useSearchParams to get query parameters
+
+  useEffect(() => {
+    const key = searchParams.get("key"); // Get the 'key' parameter from the URL
+    console.log(key,"key")
+    if (key) {
+      fetchUser(key); // Pass key to fetchUser 
+    }
+  }, [searchParams]); // Depend on searchParams
+
+
+  const fetchUser = async (key) => {
+    const formData = new FormData();
+    formData.append("key", key);
+    setLoading(true);
+    const response = await POST.request({
+      form: formData,
+      url: "agent_login",
+    });
+    if (response) {
+      localStorage.setItem("user",JSON.stringify(response));    
+      dispatch({ type: "LOGIN", payload: resp });
+      setLoading(false);
+    }
+  }
 
   const { handleRedirect } = Useauthredirect();
   useEffect(() => {
