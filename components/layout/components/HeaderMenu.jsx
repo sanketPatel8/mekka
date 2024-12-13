@@ -1,45 +1,42 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useTranslation } from '@/app/context/TranslationContext';
-import { useRouter } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-const HeaderMenu = ({ translate, activeLink, setActiveLink }) => {
-
-  
-  const handleLinkClick = (link) => {
-    localStorage.setItem("pathRedirect",link)
-  };
+const HeaderMenu = ({ translate }) => {
+  const pathname = usePathname(); // Get the current pathname
+  const searchParams = useSearchParams(); // Get the current search parameters
 
   return (
     <div>
       <div className="d-flex" style={{ gap: "15px" }}>
         <div>
-          <Link href="/" className={activeLink === "/" ? "active" : ""} onClick={() => handleLinkClick("/")}>
+          <Link href="/" className={pathname === "/" ? "active" : ""}>
             {translate("Home")}
           </Link>
         </div>
         <div>
-          <Link href="/tour?type=Umrah" className={activeLink === "/tour?type=Umrah" ? "active" : ""} onClick={() => handleLinkClick("/tour?type=Umrah")}>
+          <Link href="/tour?type=Umrah" className={pathname === "/tour" && searchParams.get("type") === "Umrah" ? "active" : ""}>
             {translate("Umrah")}
           </Link>
         </div>
         <div>
-          <Link href="/tour?type=Hajj" className={activeLink === "/tour?type=Hajj" ? "active" : ""} onClick={() => handleLinkClick("/tour?type=Hajj")}>
+          <Link href="/tour?type=Hajj" className={pathname === "/tour" && searchParams.get("type") === "Hajj" ? "active" : ""}>
             {translate("Hajj")}
           </Link>
         </div>
         <div>
-          <Link href="/tour?type=Kultur Reisen" className={activeLink === "/tour?type=Kultur Reisen" ? "active" : ""} onClick={() => handleLinkClick("/tour?type=Kultur Reisen")}>
+          <Link href="/tour?type=Kultur Reisen" className={pathname === "/tour" && searchParams.get("type") === "Kultur Reisen" ? "active" : ""}>
             {translate("Culture Trip")}
           </Link>
         </div>
         <div>
-          <Link href="/blogs" className={activeLink === "/blogs" ? "active" : ""} onClick={() => handleLinkClick("/blogs")}>
+          <Link href="/blogs" className={pathname === "/blogs" ? "active" : ""}>
             {translate("Blog")}
           </Link>
         </div>
         <div>
-          <Link href="/contact" className={activeLink === "/contact" ? "active" : ""} onClick={() => handleLinkClick("/contact")}>
+          <Link href="/contact" className={pathname === "/contact" ? "active" : ""}>
             {translate("Contact")}
           </Link>
         </div>
