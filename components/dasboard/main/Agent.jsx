@@ -52,8 +52,6 @@ export default function Sidebar() {
       localStorage.setItem("user",JSON.stringify(response));    
       dispatch({ type: "LOGIN", payload: response });
       setLoading(false);
-    }else{
-      router.push("/partner-login");
     }
   }
 
