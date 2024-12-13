@@ -17,7 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Sidebar() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
   useEffect(() => {
     if (typeof window !== "undefined") {
       document.title = "Dashboard - MekkaBooking";
