@@ -50,7 +50,9 @@ export default function Sidebar() {
     });
     if (response) {
       localStorage.setItem("user",JSON.stringify(response));    
-      dispatch({ type: "LOGIN", payload: resp });
+      dispatch({ type: "LOGIN", payload: response });
+      setLoading(false);
+    }else{
       setLoading(false);
     }
   }
