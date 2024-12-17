@@ -126,6 +126,7 @@ export default function DBListing() {
       setLoading(false);
       setTourList(response.Tours);
       setRange(response.Total_Page);
+    
     } catch (e) {}
   };
 
@@ -159,20 +160,37 @@ export default function DBListing() {
   };
 
   const FetchDeleteTour = async (id) => {
-    const formData = new FormData();
+    
 
-    formData.append("id", id );
+    if (id) {
+      const confirmResult = window.confirm(
+        "Are you sure you want to delete this tour?"
+      );
+      if (confirmResult) {
+        const formData = new FormData();
 
-    try {
-      setLoading(true);
-      const response = await POST.request({
-        form: formData,
-        url: "delete_tour",
-      });
-      setLoading(false);
-      console.log(response);
-      
-    } catch (e) {}
+        formData.append("id", id );
+        formData.append("vendor_id", user?.user.id);
+        setLoading(true);
+        POST.request({ form: formData, url: "delete_tour" })
+          .then((response) => {
+            if (response) {
+              showSuccessToast(translate, "Tour Deleted Successfully");
+              fetchListing();
+            } else {
+              setLoading(false);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            setLoading(false);
+          });
+      } else {
+        return;
+      }
+    }
+
+
   };
 
   const HandleDelete = (id) => {
@@ -330,7 +348,7 @@ export default function DBListing() {
                           </div>
 
                           <label className="badge bg-secondary"></label>
-                          {elm?.capacity_empty === elm.capacity ? (
+                          {elm?.Bookings == 0 ? (
                             <button className="button -sm -outline-red-3 w-100 -red-3 mb-10"  onClick={(id) => HandleDelete(`${elm?.id}`)} >
                               <div>{translate("DELETE TOUR")}</div>
                             </button>
