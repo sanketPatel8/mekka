@@ -36,10 +36,10 @@ export default function DbBooking() {
     const tabContent = [
       translate("All"),
       // translate("Upcoming Bookings"),
+      translate("Upcoming Bookings"),
       translate("In Progress"),
       translate("Completed"),
       translate("Cancelled"),
-      translate("Open Bookings"),
 
     ];
     setTabs(tabContent);
@@ -220,7 +220,7 @@ export default function DbBooking() {
       setBookings(bookingsData);
     } 
     
-    else if(tab === "Open Bookings") {
+    else if(tab === "Upcoming Bookings") {
       setLoading(false);
       
       const bookingsData = response.Open_Bookings.map((booking) => ({

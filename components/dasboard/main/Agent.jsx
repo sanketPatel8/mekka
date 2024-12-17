@@ -37,6 +37,8 @@ export default function Sidebar() {
     console.log(key,"key")
     if (key) {
       fetchUser(key); // Pass key to fetchUser 
+    }else{
+      fetchDetails();
     }
   }, [searchParams]); // Depend on searchParams
 
