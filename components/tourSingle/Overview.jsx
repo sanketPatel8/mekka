@@ -14,7 +14,7 @@ export default function Overview({ PAckageData }) {
         <div
           dangerouslySetInnerHTML={{
             __html: PAckageData?.Tour_Details?.tour_details?.tour_info,
-          }}
+          }} 
         />
       </div>
 
