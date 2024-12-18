@@ -12,6 +12,8 @@ import ArticlesThree from "@/components/homes/articles/ArticlesThree";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import FeaturesOne from "@/components/homes/features/FeaturesOne";
 import Head from "next/head";
+import { ToastContainer } from "react-toastify";
+
 // import Language from "@/components/Langauge"; // Import Language component for locale changes
 
 export default function Home() {
@@ -24,7 +26,7 @@ export default function Home() {
     }, []);
   return (
     <>
-      
+      <ToastContainer/>
       <main>
         <Hero7 />
         <Header1 />
