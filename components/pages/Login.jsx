@@ -61,9 +61,25 @@ export default function Login({
   };
 
   const [socialLoginLoading, setSocialLoginLoading] = useState({ google: false, facebook: false,apple :false });
+  const [redirectUri, setRedirectUri] = useState("");
+  const [redirectpath, setRedirectPath] = useState("");
 
 
- 
+  useEffect(() => {
+    // Set redirect URI only in the browser
+    if (typeof window !== "undefined") {
+      setRedirectUri(`${window.location.origin}/login`);
+    }
+  }, []);
+
+  useEffect(() => {
+
+    const redirect = localStorage.getItem("Redirect_Login");
+    console.log(redirect)
+    setRedirectPath(redirect);
+    
+   
+  },[]);
 
   const signinSocial = async ({ type, email, id, name, data }) => {
     if (type === "apple") {
@@ -93,21 +109,14 @@ export default function Login({
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         setSocialLoginLoading({ google: false, facebook: false,apple:false });
 
-        const redirect = localStorage.getItem("Redirect_Login");
-        LoginUpdate();
-        if (redirect) {
-          setTimeout(() => {
-            window.location.reload();
-            localStorage.removeItem("Redirect_Login");
-          }, 1000);
-        }
+        
 
-        if (redirect == null) {
-          setTimeout(() => {
-            setLoginPer(true);
-            router.push(path);
-          }, 1000);
-        }
+        // if (redirectpath == null) {
+        //   setTimeout(() => {
+        //     setLoginPer(true);
+        //     router.push(path);
+        //   }, 1000);
+        // }
       }
     } else {
       const resp = await POST.request({
@@ -123,14 +132,7 @@ export default function Login({
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-        const redirect = localStorage.getItem("Redirect_Login");
         LoginUpdate();
-        if (redirect) {
-          setTimeout(() => {
-            window.location.reload();
-            localStorage.removeItem("Redirect_Login");
-          }, 1000);
-        }
         setSocialLoginLoading({ google: false, facebook: false ,apple:false});
 
         if (redirect == null) {
@@ -169,6 +171,46 @@ export default function Login({
 
   };
 
+  useEffect(() => {
+    // Load the Facebook SDK
+    const loadFBSDK = () => {
+      if (typeof window !== "undefined" && !window.FB) {
+        window.fbAsyncInit = function () {
+          window.FB.init({
+            appId: process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID,
+            cookie: true,
+            xfbml: true,
+            version: "v10.0", // Use the latest version
+          });
+        };
+
+        const script = document.createElement("script");
+        script.src = "https://connect.facebook.net/en_US/sdk.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    };
+
+    loadFBSDK();
+  }, []);
+
+  const handleFacebookLogin = (data) => {
+    const { id, name, email } = data;
+    if (typeof window !== "undefined") {
+      window.FB.getLoginStatus((response) => {
+        if (response.status === "connected") {
+          signinSocial({
+            type: "facebook",
+            data: { id, name, email },
+          });
+        }
+      });
+      // Avoid calling window.FB.logout() directly if not needed
+    }
+  };
+
+
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     Auth.handleForm({ form: e, url: "login", type: "Add User", post: post });
@@ -192,6 +234,7 @@ export default function Login({
 
           dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
           // LoginUpdate();
+          
           showSuccessToast(translate, "Login successful!");
           // setTimeout(() => {
           //   setLoginPer(true)
@@ -364,37 +407,19 @@ export default function Login({
 
                     {!socialLoginLoading?.facebook && 
 
-                        <LoginSocialFacebook
-                          appId={
-                            process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
-                          }
-                          fieldsProfile={
-                            "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
-                          }
-                          scope="email,public_profile"
-                          onLoginStart={() => setSocialLoginLoading({ google: false, facebook: true, apple:false })}
-                          onResolve={({ provider, data }) => {
-                            const { id, name, email } = data;
-                            window.FB.getLoginStatus((response) => {
-                              if (response.status === "connected") {
-                                signinSocial({
-                                  type: "facebook",
-                                  data: { id, name, email },
-                                });
-                              }
-                            });
-                            window.FB.logout();
-                          }}
-                          onLoginSuccess={() => {
-                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
-                          }}
-                          onReject={(err) => {
-                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
-                          }}
-                        >
-                          <FaFacebookF size={15} className="mx-1" />
-                          {translate("Facebook")}
-                        </LoginSocialFacebook>
+<LoginSocialFacebook
+appId={process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""}
+fieldsProfile="id,name,email"
+scope="email"
+onLoginStart={() => setSocialLoginLoading({ google: false, facebook: true, apple: false })}
+onResolve={({ provider, data }) => handleFacebookLogin(data)}
+onLoginSuccess={() => setSocialLoginLoading({ google: false, facebook: false, apple: false })}
+onReject={(err) => setSocialLoginLoading({ google: false, facebook: false, apple: false })}
+>
+<FaFacebookF size={15} className="mx-1" />
+{translate("Facebook")}
+</LoginSocialFacebook>
+
                         || 
                         <div
                             className="d-flex justify-content-center align-items-center"
@@ -419,10 +444,11 @@ export default function Login({
                           client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
                           }
+                          redirect_uri={redirectUri}
                           client_secret={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
                           }
-                          redirect_uri={window.location.origin + "/login"}
+                          // redirect_uri={window.location.origin + "/login"}
                           onLoginStart={() => setSocialLoginLoading({ google: true, facebook: false, apple:false })}
                           scope="openid profile email"
                           discoveryDocs="claims_supported"
@@ -482,7 +508,7 @@ export default function Login({
                             process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
                           }
                           scope={"name email"}
-                          redirect_uri={window.location.origin + "/login"}
+                          // redirect_uri={window.location.origin + "/login"}
                           onLoginStart={() => setSocialLoginLoading({ google: false, facebook: false, apple:true })}
                           onResolve={({ provider, data }) => {
                             signinSocial({ type: "apple", data: data });
