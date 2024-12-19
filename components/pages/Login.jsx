@@ -3,7 +3,7 @@
 import { useTranslation } from "@/app/context/TranslationContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { FaFacebookF, FaGoogle, FaApple } from "react-icons/fa";
 import { post } from "@/app/utils/api";
 import { showSuccessToast, showErrorToast } from "@/app/utils/tost";
@@ -15,6 +15,7 @@ import dynamic from "next/dynamic";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
 import { jwtDecode } from "jwt-decode";
+import { LoginSocialFacebook, LoginSocialGoogle, LoginSocialApple } from "reactjs-social-login"; 
 
 export default function Login({
   onLoginSuccess,
@@ -26,18 +27,18 @@ export default function Login({
   bookingPage
 }) {
 
-  const LoginSocialFacebook = dynamic(
-    () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
-    { ssr: false }
-  );
-  const LoginSocialGoogle = dynamic(
-    () => import("reactjs-social-login").then((mod) => mod.LoginSocialGoogle),
-    { ssr: false }
-  );
-  const LoginSocialApple = dynamic(
-    () => import("reactjs-social-login").then((mod) => mod.LoginSocialApple),
-    { ssr: false }
-  );
+  // const LoginSocialFacebook = dynamic(
+  //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
+  //   { ssr: false }
+  // );
+  // const LoginSocialGoogle = dynamic(
+  //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialGoogle),
+  //   { ssr: false }
+  // );
+  // const LoginSocialApple = dynamic(
+  //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialApple),
+  //   { ssr: false }
+  // );
 
   const [LogInData, setLogInData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -158,20 +159,20 @@ export default function Login({
   };
 
 
-  // Save data to local storage on input change
-  const HandleLogInChange = (e) => {
+  const HandleLogInChange = useCallback((e) => {
     const { name, value } = e.target;
     setLogInData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-    setSocialLoginLoading({ google: false, facebook: false,apple:false });
-  };
+  }, []);
 
   const handleLoginCheckboxChange = (e) => {
     const isChecked = e.target.checked;
     setLoginISChacked(isChecked);
     localStorage.setItem("LoginISChacked", isChecked);
+    
+
   };
 
   const handleLoginSubmit = async (e) => {
@@ -370,6 +371,7 @@ export default function Login({
                          {/* <FaFacebookF size={15} className="mx-1" />
                          {translate("Facebook")} */}
 
+                    {!socialLoginLoading?.facebook && 
 
                         <LoginSocialFacebook
                           appId={
@@ -379,7 +381,7 @@ export default function Login({
                             "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                           }
                           scope="email,public_profile"
-                          onLoginStart={() => console.log("start")}
+                          onLoginStart={() => setSocialLoginLoading({ google: false, facebook: true, apple:false })}
                           onResolve={({ provider, data }) => {
                             const { id, name, email } = data;
                             window.FB.getLoginStatus((response) => {
@@ -392,13 +394,24 @@ export default function Login({
                             });
                             window.FB.logout();
                           }}
+                          onLoginSuccess={() => {
+                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
+                          }}
                           onReject={(err) => {
-                            console.log(err);
+                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
                           }}
                         >
                           <FaFacebookF size={15} className="mx-1" />
                           {translate("Facebook")}
                         </LoginSocialFacebook>
+                        || 
+                        <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: "30px", width: "100%" }}
+                          >
+                            <ClipLoader color="#1967D2" size={30} />
+                          </div>
+                      }
                       </button>
                     </div>
 
@@ -432,8 +445,11 @@ export default function Login({
                               data,
                             });
                           }}
+                          onLoginSuccess={() => {
+                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
+                          }}
                           onReject={(err) => {
-                            setSocialLoginLoading({ google: true, facebook: false, apple:false })
+                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
                           }}
                         >
                           <FaGoogle size={15} className="mx-1" />
@@ -468,23 +484,36 @@ export default function Login({
                       >
                           {/* <FaApple size={15} className="mx-1" />
                           {translate("Sign in With Apple")} */}
+                                                  {!socialLoginLoading?.apple && 
+
                         <LoginSocialApple
                           client_id={
                             process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
                           }
                           scope={"name email"}
                           redirect_uri={window.location.origin + "/login"}
-                          onLoginStart={() => console.log("start apple login")}
+                          onLoginStart={() => setSocialLoginLoading({ google: false, facebook: false, apple:true })}
                           onResolve={({ provider, data }) => {
                             signinSocial({ type: "apple", data: data });
                           }}
+                          onLoginSuccess={() => {
+                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
+                          }}
                           onReject={(err) => {
-                            console.log(err);
+                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
                           }}
                         >
                           <FaApple size={15} className="mx-1" />
                           {translate("Sign in With Apple")}
                         </LoginSocialApple>
+                        || 
+                        <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: "30px", width: "100%" }}
+                          >
+                            <ClipLoader color="#000000" size={30} />
+                          </div>
+                        }
                       </button>
                     </div>
                   </div>
