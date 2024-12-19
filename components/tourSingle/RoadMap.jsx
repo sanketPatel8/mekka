@@ -6,7 +6,6 @@ import { MdVerified } from "react-icons/md";
 import HotelGallary from "./Galleries/HotelGallary";
 
 
-
 const RoadMap = ({ PAckageData }) => {
   const [mainHotelData, setMainHotelData] = useState({});
 
