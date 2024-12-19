@@ -59,7 +59,8 @@ export default function Payment() {
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(true);
   const [rawAmount,setRawAmout] = useState("")
-  const [laterPayment,setLaterPayment] = useState("")
+  const [laterPayment,setLaterPayment] = useState("");
+  const [companyCode,setCompanyCode] = useState("");
   // useEffect(() => {
   //   window.addEventListener('scroll', (e) => {
   //     console.log("scroll")
@@ -67,9 +68,10 @@ export default function Payment() {
   //     setIsFocused(false)
   //   });
   // }, [isFocused])
-
-  const companyCode =
-    typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
+useEffect(() => {
+  setCompanyCode(localStorage.getItem("company_code"))
+});
+  
   
   const dateInputRef = useRef(null);
 
@@ -1080,7 +1082,7 @@ const handleSecondAmountChange = (e) => {
                               <span className="text-red">* </span>
                               <span>
                                 {translate(
-                                  "I have read the AGB (mekkabooking) and I accept the conditions"
+                                  "I have read the AGB (mekkabooking) and I accept the conditions."
                                 )}
                               </span>
                               {/* {companyCode && translate(`. This trip is operated by ${companyCode}.`)} */}
