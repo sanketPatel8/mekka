@@ -61,13 +61,7 @@ export default function Payment() {
   const [rawAmount,setRawAmout] = useState("")
   const [laterPayment,setLaterPayment] = useState("");
   const [companyCode,setCompanyCode] = useState("");
-  // useEffect(() => {
-  //   window.addEventListener('scroll', (e) => {
-  //     console.log("scroll")
-  //     e.preventDefault();
-  //     setIsFocused(false)
-  //   });
-  // }, [isFocused])
+ 
 useEffect(() => {
   setCompanyCode(localStorage.getItem("company_code"))
 });

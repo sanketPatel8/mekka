@@ -9,9 +9,9 @@ import React, { useEffect } from "react";
 
 export default function payment() {
   useEffect(() => {
-    if (typeof window !== "undefined") {
+  
       document.title = "Payment - MekkaBooking";
-    }
+
   }, []);
   return (
     <>

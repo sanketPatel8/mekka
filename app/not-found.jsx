@@ -9,9 +9,9 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 
 export default function NotFound() {
   useEffect(() => {
-    if (typeof window !== "undefined") {
+   
       document.title = "404 - MekkaBooking";
-    }
+    
   }, []);
   return (
     <>

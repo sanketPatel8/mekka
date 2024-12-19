@@ -86,8 +86,7 @@ export default function BookingPages({ BookingData }) {
   const [BookingApiData, setBookingApiData] = useState({});
 
   const [BookingSideBar, setBookingSideBar] = useState({});
-  const newdata =
-    typeof window !== "undefined" && localStorage.getItem("getUserData");
+  const newdata = localStorage.getItem("getUserData");
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
@@ -104,7 +103,7 @@ export default function BookingPages({ BookingData }) {
     Modal.setAppElement("#openSignIn");
 
     // Only execute in browser environment
-    if (typeof window !== "undefined") {
+   
       // Retrieve and parse the priceObject data from localStorage
       const savedData = localStorage.getItem("AdultPrice&count");
 
@@ -284,7 +283,7 @@ export default function BookingPages({ BookingData }) {
         }
       }
 
-    }
+    
   }, []);
 
   // for adult prices array
@@ -1578,11 +1577,11 @@ const SubtotalPriceWithAdditional = (type, i) => {
 
     setIsLoading(true);
 
-    if (typeof window !== "undefined") {
+  
       localStorage.setItem("BookingData", JSON.stringify(bookingData));
       localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
       localStorage.setItem("AllAdultsData", JSON.stringify(formValues));
-    }
+    
 
     handleUpdateLocalStorage();
 

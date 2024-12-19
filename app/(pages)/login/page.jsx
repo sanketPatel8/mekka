@@ -15,9 +15,9 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+ 
       document.title = "Login - MekkaBooking";
-    }
+    
   }, []);
 
   const handleLogout = () => {
@@ -53,8 +53,6 @@ export default function Page() {
     <>
       <ToastContainer/>
       <main>
-      
-    
     {
       Loading ?
       <div

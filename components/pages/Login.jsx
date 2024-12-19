@@ -93,10 +93,7 @@ export default function Login({
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         setSocialLoginLoading({ google: false, facebook: false,apple:false });
 
-        const redirect =
-          typeof window !== "undefined"
-            ? localStorage.getItem("Redirect_Login")
-            : null;
+        const redirect = localStorage.getItem("Redirect_Login");
         LoginUpdate();
         if (redirect) {
           setTimeout(() => {
@@ -126,10 +123,7 @@ export default function Login({
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-        const redirect =
-          typeof window !== "undefined"
-            ? localStorage.getItem("Redirect_Login")
-            : null;
+        const redirect = localStorage.getItem("Redirect_Login");
         LoginUpdate();
         if (redirect) {
           setTimeout(() => {
@@ -203,10 +197,7 @@ export default function Login({
           //   setLoginPer(true)
           //   router.push(path);
           // }, 2000);
-          const redirect =
-            typeof window !== "undefined"
-              ? localStorage.getItem("Redirect_Login")
-              : null;
+          const redirect = localStorage.getItem("Redirect_Login");
           if (redirect) {
             setTimeout(() => {
               window.location.reload();

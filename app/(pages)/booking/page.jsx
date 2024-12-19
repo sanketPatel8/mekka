@@ -20,9 +20,9 @@ export default function page() {
     // page title 
 
     useEffect(() => {
-      if (typeof window !== "undefined") {
+     
         document.title = "New Booking - MekkaBooking";
-      }
+    
     }, []);
 
   const FetchBookingData = async () => {

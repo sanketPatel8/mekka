@@ -23,11 +23,11 @@ export default function Header1(payment) {
   const { dispatch } = useAuthContext();
  
   const handleLogoutClick = () => {
-    if (typeof window !== "undefined") {
+  
       localStorage.removeItem("token");
       localStorage.removeItem("customer");
       localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
-    }
+    
     dispatch({ type: "LOGOUT_CUSTOMER" });
 
     setLoginCheck(false);
@@ -54,7 +54,7 @@ export default function Header1(payment) {
     }
 
     // Get the login status from localStorage
-    if (typeof window !== "undefined") {
+ 
       const loginStatus = localStorage.getItem("CustomerLoginCheck");
 
       if (loginStatus !== null && loginStatus !== "undefined") {
@@ -64,7 +64,7 @@ export default function Header1(payment) {
           console.error("Error parsing login status:", error);
         }
       }
-    }
+    
   }, []);
 
   const { translate } = useTranslation(locale);
