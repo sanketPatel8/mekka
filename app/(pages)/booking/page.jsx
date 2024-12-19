@@ -6,7 +6,10 @@ import { showErrorToast } from "@/app/utils/tost";
 import FooterOne from "@/components/layout/footers/FooterOne";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
-import BookingPages from "@/components/pages/BookingPages";
+// import BookingPages from "@/components/pages/BookingPages";
+const BookingPage = dynamic(() => import('@/components/pages/BookingPages'), {
+  ssr: false 
+});
 import Head from "next/head";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -50,7 +53,7 @@ export default function page() {
     <>
       <main>
         <Header1 />
-        <BookingPages BookingData={BookingData} />
+        <BookingPage BookingData={BookingData} />
         <FooterTwo />
       </main>
     </>

@@ -8,16 +8,16 @@ import BookingPages from "@/components/pages/BookingPages";
 import React, { useEffect } from "react";
 import dynamic from 'next/dynamic';
 
-const Payment = dynamic(() => import('@/components/pages/Payment'), {
+const PaymentPage = dynamic(() => import('@/components/pages/Payment'), {
   ssr: false 
 });
 
 export default function payment() {
   useEffect(() => {
-      if (typeof window !== "undefined"){
+      
 
         document.title = "Payment - MekkaBooking";
-      }
+      
 
   }, []);
   return (
@@ -25,7 +25,7 @@ export default function payment() {
       <main>
         <Header1 payment={true}/>
         {/* <BookingPages /> */}
-        <Payment />
+        <PaymentPage />
         <FooterTwo />
       </main>
     </>
