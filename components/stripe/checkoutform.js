@@ -1,3 +1,4 @@
+"use client";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
@@ -53,9 +54,7 @@ export default function CheckoutForm({
   payableAmount = 0,
   AddPersonAmount = 0,
 }) {
-  console.log(AddPersonAmount,"addpersonamount")
-  console.log(amount,"amount")
-  console.log(payableAmount,"payableAmount")
+
   const { dispatch, customer } = useAuthContext();
   const {formatPrice} = useCurrency();
   const stripe = useStripe();
