@@ -2,9 +2,11 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import CheckoutForm from './checkoutform';
+// import CheckoutForm from './checkoutform';
 import { useCurrency } from '@/app/context/currencyContext';
-
+const CheckoutFormPage = dynamic(() => import('./checkoutform'), {
+  ssr: false 
+});
 function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPersonAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
 
   console.log(AddPersonAmount, 'Addperson')
@@ -112,7 +114,7 @@ function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPerso
   }, [])
   return (
     clientSecret && <Elements stripe={stripePromise || newStripePromise} options={{ clientSecret }}>
-      <CheckoutForm
+      <CheckoutFormPage
         handleClose={handleClose}
         showStripeModal={showStripeModal}
         Booking={Booking}
