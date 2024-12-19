@@ -30,7 +30,7 @@ const StripeformPage = dynamic(() => import('../stripe/stripeform'), {
 
 export default function Payment() {
   const router = useRouter();
-
+ 
   const { translate } = useTranslation();
 
   const [roomType, setRoomType] = useState("");

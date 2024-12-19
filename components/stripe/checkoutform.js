@@ -195,7 +195,7 @@ export default function CheckoutForm({
         closeModal();
         handleClose();
         setTimeout(() => {
-          window.location.reload();
+          // window.location.reload();
         }, 1500);
        
         

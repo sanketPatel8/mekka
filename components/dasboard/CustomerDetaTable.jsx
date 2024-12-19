@@ -909,6 +909,9 @@ const CustomerDetaTable = () => {
 
   const handleClose = () => {
     setShowStripeModal(false);
+    setTimeout(() => {
+      fetchBookingDetails();
+    }, 2000);
   };
 
   useEffect(() => {

@@ -65,8 +65,7 @@ export default function Page() {
       <ClipLoader color="#DAC04F" size={50} />
     </div>
        :
-       <>
-       
+       <>       
        <Header1 />
        <LoginPage
          onLoginSuccess={handleLoginSuccess}
