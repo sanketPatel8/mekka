@@ -6,6 +6,7 @@ import { showErrorToast } from "@/app/utils/tost";
 import FooterOne from "@/components/layout/footers/FooterOne";
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
+import dynamic from "next/dynamic";
 // import BookingPages from "@/components/pages/BookingPages";
 const BookingPage = dynamic(() => import('@/components/pages/BookingPages'), {
   ssr: false 
