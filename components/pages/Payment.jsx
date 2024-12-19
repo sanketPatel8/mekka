@@ -23,6 +23,9 @@ import { type } from "jquery";
 import { ClipLoader } from "react-spinners";
 import { first, set } from "lodash";
 import { IoMdArrowRoundBack } from "react-icons/io";
+const StripeformPage = dynamic(() => import('../stripe/stripeform'), {
+  ssr: false 
+});
 
 export default function Payment() {
   const router = useRouter();
@@ -1619,7 +1622,7 @@ const handleSecondAmountChange = (e) => {
         </div>
       </div>
       {showStripeModal && (
-        <Stripeform
+        <StripeformPage
           amount={amount ? amount : (SideBarData?.BookingFild?.SubTotal)}
           setPaidAmount={setPaidAmount}
           Booking={Booking}
