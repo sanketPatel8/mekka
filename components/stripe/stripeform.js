@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 // import CheckoutForm from './checkoutform';
 import { useCurrency } from '@/app/context/currencyContext';
+import dynamic from 'next/dynamic';
 const CheckoutFormPage = dynamic(() => import('./checkoutform'), {
   ssr: false 
 });

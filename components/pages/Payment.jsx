@@ -17,12 +17,13 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { post } from "@/app/utils/api";
 import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
-import Stripeform from "../stripe/stripeform";
+// import Stripeform from "../stripe/stripeform";
 import { useCurrency } from "@/app/context/currencyContext";
 import { type } from "jquery";
 import { ClipLoader } from "react-spinners";
 import { first, set } from "lodash";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import dynamic from "next/dynamic";
 const StripeformPage = dynamic(() => import('../stripe/stripeform'), {
   ssr: false 
 });
