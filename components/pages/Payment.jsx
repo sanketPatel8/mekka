@@ -213,7 +213,6 @@ const handleSecondAmountChange = (e) => {
 
     setTodayDate(formattedDate);
 
-    if (typeof window !== "undefined") {
       const sidebardata = localStorage.getItem("PackageBookingData");
 
       try {
@@ -259,7 +258,7 @@ const handleSecondAmountChange = (e) => {
         } catch (error) {
           console.error("error");
         }
-      }
+      
     }
   }, []);
 
