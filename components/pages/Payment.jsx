@@ -67,9 +67,14 @@ export default function Payment() {
   //     setIsFocused(false)
   //   });
   // }, [isFocused])
+
+  useEffect(() => {
+
   
   const companyCode =
     typeof window !== "undefined" ? localStorage.getItem("company_code") : "";
+
+  });
   const dateInputRef = useRef(null);
 
   const handleDateFocus = (e) => {
