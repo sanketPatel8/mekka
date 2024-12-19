@@ -642,6 +642,10 @@ input[type="number"]::-webkit-inner-spin-button {
   .f12{
     font-size: 12px!important;
   }
+
+  .header-none{
+    display: none !important;
+  }
 }
 
 .text-blue{

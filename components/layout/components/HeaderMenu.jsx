@@ -8,7 +8,7 @@ const HeaderMenu = ({ translate }) => {
   const searchParams = useSearchParams(); // Get the current search parameters
 
   return (
-    <div>
+    <div className='header-none'>
       <div className="d-flex" style={{ gap: "15px" }}>
         <div>
           <Link href="/" className={pathname === "/" ? "active" : ""}>
