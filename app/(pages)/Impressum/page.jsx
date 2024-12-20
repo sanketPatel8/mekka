@@ -78,7 +78,7 @@ const Impressum = () => {
               </div>
             </div>
           </div>
-          <div className='width_responsive'>
+          <div>
             <div
               className="d-flex flex-row gap-4 align-items-center p-3 m-3"
               style={{ border: "2px solid black" }}

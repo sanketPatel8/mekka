@@ -92,7 +92,7 @@ export default function Tour1() {
                       <div className="tourCard__header">
                         <div className="tourCard__image ratio ratio-28:20">
                           <Image
-                            width={421}
+                            width={401}
                             height={301}
                             src={
                               elm?.tour_image
@@ -169,8 +169,8 @@ export default function Tour1() {
                             elm.days_of_stay ? "d-none" : "d-block"
                           }`}
                         >
-                          <div className="d-flex items-center">
-                            <i className="icon-clock text-16 mr-5"></i>
+                          <div className="d-flex items-center ">
+                            <i className="icon-clock text-16 mr-5 "></i>
                             {elm.days_of_stay}
                           </div>
 

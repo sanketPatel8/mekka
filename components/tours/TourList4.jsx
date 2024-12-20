@@ -359,7 +359,7 @@ export default function TourList4({
                       </div>
                       <div className="tourCard__info">
                         <div className="h-60">
-                          <p className="d-flex items-center text-14 p-2 border-info my-2 m_width">
+                          <p className="d-flex items-center text-14 p-2 border-info my-2 m_width tab-font-12">
                             <IoTimeOutline
                               className="mx-2"
                               color="#DAC04F"
@@ -368,7 +368,7 @@ export default function TourList4({
                             {elm?.days_of_stay}
                           </p>
                           {elm?.tour_with_service && (
-                            <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width">
+                            <p className="d-flex items-center text-14 bedrooms p-2 border-info my-2 m_width ">
                               <MdBed
                                 className="mx-2"
                                 color="#DAC04F"
