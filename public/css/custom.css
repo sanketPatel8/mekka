@@ -406,3 +406,7 @@ opacity: 1;
 .headerDropdown .headerDropdown{
   transform: translateX(-65%);
 }
+
+select{
+  font-family: __DM_Sans_99eb74,__DM_Sans_Fallback_99eb74!important;
+}
