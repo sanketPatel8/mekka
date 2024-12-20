@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GiAirplaneArrival } from "react-icons/gi";
 import { FaStar } from "react-icons/fa";
 import { MdFlightLand } from "react-icons/md";
-import { faHotel, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faHotel, faPlaneArrival, faPlaneDeparture, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import Stars from "@/components/common/Stars";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
@@ -194,7 +194,7 @@ export default function DbBooking() {
                           )</span>
                       </p>
                       <p className="tourCard__text mt-5 items-center d-flex text-wrap">
-                        <FontAwesomeIcon
+                      <FontAwesomeIcon
                           icon={faHotel}
                           className="px-1 text-accent-1"
                         />
@@ -236,12 +236,20 @@ export default function DbBooking() {
 
                       {elm?.tour_details?.departures !== ""  && (
                         <div className="Location">
-                          <span><MdFlightLand color="dabf4f" size={17} /> {translate('Arrival')} : {elm?.arrival}</span>
+                          <FontAwesomeIcon icon={faPlaneArrival}
+                          className=" text-accent-1"
+                          style={{fontSize: "14px"}}
+                        />
+                          <span> {translate('Arrival')} : {elm?.arrival}</span>
                         </div>
                       )}
                       {elm?.tour_details?.departures !== ""  && (
                         <div className="Location">
-                          <span><MdFlightTakeoff color="dabf4f" size={17} /> {translate('Departure')} : {elm?.tour_details?.departures}</span>
+                          <FontAwesomeIcon icon={faPlaneDeparture}
+                          className=" text-accent-1"
+                          style={{fontSize: "14px"}}
+                        />
+                          <span> {translate('Departure')} : {elm?.tour_details?.departures}</span>
                         </div>
                       )}
 
@@ -249,7 +257,10 @@ export default function DbBooking() {
                       <div className="row x-gap-20 y-gap-5 ">
                       
                         <div className="text-14 items-center">
-                        <FaCalendar color="dabf4f" size={17} />
+                        <FontAwesomeIcon icon={faCalendar}
+                          className="me-1  text-accent-1"
+                          style={{fontSize: "18px"}}
+                        />
                          <span> {elm?.tour_details?.date_begin} -{" "}
                          {elm?.tour_details?.date_end}</span>
                         </div>
