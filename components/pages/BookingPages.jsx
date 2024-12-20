@@ -1910,8 +1910,8 @@ const SubtotalPriceWithAdditional = (type, i) => {
 
                   <hr />
 
-                  <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-10 ">
-                    <h2 className="text-20 fw-500 ">
+                  <div className="bg-white rounded-12 shadow-2 py-0 px-0 md:py-10 md:px-20 mt-10 promo ">
+                    <h2 className="text-20 fw-500 min-prom ">
                       {translate("Do you have a promo code?")}
                     </h2>
 
