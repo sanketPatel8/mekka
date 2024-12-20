@@ -402,3 +402,7 @@ opacity: 1;
 .border_bottom{
   border-bottom:1px solid #E2E2E2;
 }
+
+.headerDropdown .headerDropdown{
+  transform: translateX(-65%);
+}
