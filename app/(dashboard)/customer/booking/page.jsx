@@ -189,8 +189,8 @@ export default function DbBooking() {
                           icon={faHotel}
                           className="px-1 text-accent-1"
                         />
-                        {elm?.mekkahotel?.hotel_name}&nbsp; <span> (
-                          {elm?.mekkahotel?.hotel_stars}{" "}Star
+                        &nbsp; <span> 
+                          {elm?.mekkahotel?.hotel_name}  ({elm?.mekkahotel?.hotel_stars}{" "}Star
                           )</span>
                       </p>
                       <p className="tourCard__text mt-5 items-center d-flex text-wrap">
