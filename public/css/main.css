@@ -14952,6 +14952,12 @@ button.gm-ui-hover-effect::after {
     font-size: 12px !important;
     margin: 0px -10px;
   }
+  .tourCard.-type-2 .tourCard__info{
+    width: 200px ;
+  }
+  .flex-tab-wrap{
+    flex-wrap: wrap !important;
+  }
 }
 
 @media (max-width: 1080px){
