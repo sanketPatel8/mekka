@@ -15,7 +15,11 @@ import dynamic from "next/dynamic";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
 import { jwtDecode } from "jwt-decode";
-import { LoginSocialFacebook, LoginSocialGoogle, LoginSocialApple } from "reactjs-social-login"; 
+import {
+  LoginSocialFacebook,
+  LoginSocialGoogle,
+  LoginSocialApple,
+} from "reactjs-social-login";
 
 export default function Login({
   onLoginSuccess,
@@ -24,9 +28,8 @@ export default function Login({
   hide,
   path,
   Loading,
-  bookingPage
+  bookingPage,
 }) {
-
   // const LoginSocialFacebook = dynamic(
   //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
   //   { ssr: false }
@@ -51,19 +54,20 @@ export default function Login({
   const [LoginChecked, setLoginChecked] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const {translate} = useTranslation();
+  const { translate } = useTranslation();
   const LoginUpdate = () => {
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
 
     const updatedStatus = loginStatus !== undefined ? true : false;
-
-
   };
 
-  const [socialLoginLoading, setSocialLoginLoading] = useState({ google: false, facebook: false,apple :false });
+  const [socialLoginLoading, setSocialLoginLoading] = useState({
+    google: false,
+    facebook: false,
+    apple: false,
+  });
   const [redirectUri, setRedirectUri] = useState("");
   const [redirectpath, setRedirectPath] = useState("");
-
 
   useEffect(() => {
     // Set redirect URI only in the browser
@@ -73,19 +77,15 @@ export default function Login({
   }, []);
 
   useEffect(() => {
-
     const redirect = localStorage.getItem("Redirect_Login");
-    console.log(redirect)
+    console.log(redirect);
     setRedirectPath(redirect);
-    
-   
-  },[]);
+  }, []);
 
   const signinSocial = async ({ type, email, id, name, data }) => {
     if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
-
 
       const appleData = {
         email: decodedToken.email,
@@ -94,22 +94,16 @@ export default function Login({
         name: "",
       };
 
-
       const resp = await POST.request({
         form: appleData,
         url: "social_login",
       });
 
-
       if (resp.status == "success") {
-
-        
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-        setSocialLoginLoading({ google: false, facebook: false,apple:false });
-
-        
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
 
         // if (redirectpath == null) {
         //   setTimeout(() => {
@@ -121,19 +115,19 @@ export default function Login({
     } else {
       const resp = await POST.request({
         form: {
-          email:email,
+          email: email,
           auth_provider: type,
           provider_id: id,
           name: name,
         },
         url: "social_login",
       });
-      if ( resp.status == "success" ) {
+      if (resp.status == "success") {
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         LoginUpdate();
-        setSocialLoginLoading({ google: false, facebook: false ,apple:false});
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
 
         if (redirect == null) {
           setTimeout(() => {
@@ -141,19 +135,17 @@ export default function Login({
             router.push(path);
           }, 1000);
         }
-      } else  {
+      } else {
         showErrorToast(translate, "Invalid Credentials");
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           email: "",
           password: "",
         });
-        setSocialLoginLoading({ google: false, facebook: false,apple:false });
-
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
       }
     }
   };
-
 
   const HandleLogInChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -167,8 +159,6 @@ export default function Login({
     const isChecked = e.target.checked;
     setLoginISChacked(isChecked);
     localStorage.setItem("LoginISChacked", isChecked);
-    
-
   };
 
   useEffect(() => {
@@ -209,8 +199,6 @@ export default function Login({
     }
   };
 
-
-
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     Auth.handleForm({ form: e, url: "login", type: "Add User", post: post });
@@ -226,46 +214,49 @@ export default function Login({
         setIsLoading(false);
         if (resp.status == "error") {
           showErrorToast(translate, resp.message);
-        }else if(resp.status == "success") {
+        } else if (resp.status == "success") {
+          if (resp.user.user_type == "customer") {
+            localStorage.setItem("customer", JSON.stringify(resp));
+            localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
 
-        if (resp.user.user_type == "customer") {
-          localStorage.setItem("customer", JSON.stringify(resp));
-          localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
+            dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+            // LoginUpdate();
 
-          dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-          // LoginUpdate();
-          
-          showSuccessToast(translate, "Login successful!");
-          // setTimeout(() => {
-          //   setLoginPer(true)
-          //   router.push(path);
-          // }, 2000);
-          const redirect = localStorage.getItem("Redirect_Login");
-          if (redirect) {
-            setTimeout(() => {
-              window.location.reload();
-              localStorage.removeItem("Redirect_Login");
-            }, 2000);
-          }else if(redirect == null) {
-            setTimeout(() => {
-              setLoginPer(true);
-              router.push(path);
-            }, 2000);
+            showSuccessToast(translate, "Login successful!");
+            // setTimeout(() => {
+            //   setLoginPer(true)
+            //   router.push(path);
+            // }, 2000);
+            const redirect = localStorage.getItem("Redirect_Login");
+            if (redirect) {
+              setTimeout(() => {
+                window.location.reload();
+                localStorage.removeItem("Redirect_Login");
+              }, 2000);
+            } else if (redirect == null) {
+              setTimeout(() => {
+                setLoginPer(true);
+                router.push(path);
+              }, 2000);
+            }
+          } else if (resp.user.user_type == "vendor") {
+            showErrorToast(
+              translate,
+              "Invalid Credentials. If you are tour agent, please login from the partner login page"
+            );
+            setLogInData({
+              AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+              email: "",
+              password: "",
+            });
           }
-        } else if(resp.user.user_type == "vendor") {
-          showErrorToast(translate,
-            "Invalid Credentials. If you are tour agent, please login from the partner login page"
-          );
-          setLogInData({
-            AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
-            email: "",
-            password: "",
-          });
         }
-      }
-  })
+      })
       .catch((err) => {
-        showErrorToast(translate,"Invalid Credentials. If you are tour agent, please login from the partner login page");
+        showErrorToast(
+          translate,
+          "Invalid Credentials. If you are tour agent, please login from the partner login page"
+        );
         setIsLoading(false);
       });
   };
@@ -294,7 +285,8 @@ export default function Login({
                     <div className="mt-5">
                       {translate("Don't Have An Account?")}
                       <Link href="/register" className="text-accent-1">
-                        {" "}{translate("Sign Up")}!
+                        {" "}
+                        {translate("Sign Up")}!
                       </Link>
                     </div>
                   </div>
@@ -302,7 +294,11 @@ export default function Login({
 
                 <form
                   onSubmit={handleLoginSubmit}
-                  className={`${bookingPage === true ? " contactForm  rounded-12 px-60 py-60 md:px-25 md:py-30" :  " mb-30 contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30 "}`}
+                  className={`${
+                    bookingPage === true
+                      ? `contactForm  rounded-12 px-60 ${hide === false ? 'py-0' : 'py-60'} md:px-25 md:py-30`
+                      : " mb-30 contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30 "
+                  }`}
                 >
                   <div className="form-input my-1">
                     <input
@@ -399,88 +395,119 @@ export default function Login({
                       <button
                         type="button"
                         className="button mdButton -outline-blue-1 text-blue-1 col-12"
-                        style={{height:"60px"}}
-
+                        style={{ height: "60px" }}
                       >
-                         {/* <FaFacebookF size={15} className="mx-1" />
+                        {/* <FaFacebookF size={15} className="mx-1" />
                          {translate("Facebook")} */}
 
-                    {!socialLoginLoading?.facebook && 
-
-<LoginSocialFacebook
-appId={process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""}
-fieldsProfile="id,name,email"
-scope="email"
-onLoginStart={() => setSocialLoginLoading({ google: false, facebook: true, apple: false })}
-onResolve={({ provider, data }) => handleFacebookLogin(data)}
-onLoginSuccess={() => setSocialLoginLoading({ google: false, facebook: false, apple: false })}
-onReject={(err) => setSocialLoginLoading({ google: false, facebook: false, apple: false })}
->
-<FaFacebookF size={15} className="mx-1" />
-{translate("Facebook")}
-</LoginSocialFacebook>
-
-                        || 
-                        <div
+                        {(!socialLoginLoading?.facebook && (
+                          <LoginSocialFacebook
+                            appId={
+                              process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
+                            }
+                            fieldsProfile="id,name,email"
+                            scope="email"
+                            onLoginStart={() =>
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: true,
+                                apple: false,
+                              })
+                            }
+                            onResolve={({ provider, data }) =>
+                              handleFacebookLogin(data)
+                            }
+                            onLoginSuccess={() =>
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              })
+                            }
+                            onReject={(err) =>
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              })
+                            }
+                          >
+                            <FaFacebookF size={15} className="mx-1" />
+                            {translate("Facebook")}
+                          </LoginSocialFacebook>
+                        )) || (
+                          <div
                             className="d-flex justify-content-center align-items-center"
                             style={{ height: "30px", width: "100%" }}
                           >
                             <ClipLoader color="#1967D2" size={30} />
                           </div>
-                      }
+                        )}
                       </button>
                     </div>
 
                     <div className="col">
                       <div
                         className="button -md -outline-red-1 text-red-1 col-12"
-                        style={{height:"60px"}}
-
+                        style={{ height: "60px" }}
                       >
-                          {/* <FaGoogle size={15} className="mx-1" />
+                        {/* <FaGoogle size={15} className="mx-1" />
                           {translate("Google")} */}
-                        {!socialLoginLoading?.google && 
-                        <LoginSocialGoogle
-                          client_id={
-                            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
-                          }
-                          redirect_uri={redirectUri}
-                          client_secret={
-                            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
-                          }
-                          // redirect_uri={window.location.origin + "/login"}
-                          onLoginStart={() => setSocialLoginLoading({ google: true, facebook: false, apple:false })}
-                          scope="openid profile email"
-                          discoveryDocs="claims_supported"
-                          access_type="online"
-                          onResolve={({ provider, data }) => {
-                            signinSocial({
-                              type: "google",
-                              email: data?.email || "",
-                              id: data.sub || "",
-                              name: data?.given_name,
-                              data,
-                            });
-                          }}
-                          onLoginSuccess={() => {
-                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
-                          }}
-                          onReject={(err) => {
-                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
-                          }}
-                        >
-                          <FaGoogle size={15} className="mx-1" />
-                          {translate("Google")}
-                        </LoginSocialGoogle>
-
-                        || 
-                        <div
+                        {(!socialLoginLoading?.google && (
+                          <LoginSocialGoogle
+                            client_id={
+                              process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
+                            }
+                            redirect_uri={redirectUri}
+                            client_secret={
+                              process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
+                            }
+                            // redirect_uri={window.location.origin + "/login"}
+                            onLoginStart={() =>
+                              setSocialLoginLoading({
+                                google: true,
+                                facebook: false,
+                                apple: false,
+                              })
+                            }
+                            scope="openid profile email"
+                            discoveryDocs="claims_supported"
+                            access_type="online"
+                            onResolve={({ provider, data }) => {
+                              signinSocial({
+                                type: "google",
+                                email: data?.email || "",
+                                id: data.sub || "",
+                                name: data?.given_name,
+                                data,
+                              });
+                            }}
+                            onLoginSuccess={() => {
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              });
+                            }}
+                            onReject={(err) => {
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              });
+                            }}
+                          >
+                            <FaGoogle size={15} className="mx-1" />
+                            {translate("Google")}
+                          </LoginSocialGoogle>
+                        )) || (
+                          <div
                             className="d-flex justify-content-center align-items-center"
                             style={{ height: "30px", width: "100%" }}
                           >
                             <ClipLoader color="#D93025" size={30} />
                           </div>
-}
+                        )}
                       </div>
                       {/* <button
                     type="button"
@@ -496,41 +523,53 @@ onReject={(err) => setSocialLoginLoading({ google: false, facebook: false, apple
                       <button
                         type="button"
                         className="button -md -outline-dark-1 text-dark-1 col-12"
-                        style={{height:"60px"}}
-
+                        style={{ height: "60px" }}
                       >
-                          {/* <FaApple size={15} className="mx-1" />
+                        {/* <FaApple size={15} className="mx-1" />
                           {translate("Sign in With Apple")} */}
-                                                  {!socialLoginLoading?.apple && 
-
-                        <LoginSocialApple
-                          client_id={
-                            process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
-                          }
-                          scope={"name email"}
-                          // redirect_uri={window.location.origin + "/login"}
-                          onLoginStart={() => setSocialLoginLoading({ google: false, facebook: false, apple:true })}
-                          onResolve={({ provider, data }) => {
-                            signinSocial({ type: "apple", data: data });
-                          }}
-                          onLoginSuccess={() => {
-                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
-                          }}
-                          onReject={(err) => {
-                            setSocialLoginLoading({ google: false, facebook: false, apple:false })
-                          }}
-                        >
-                          <FaApple size={15} className="mx-1" />
-                          {translate("Sign in With Apple")}
-                        </LoginSocialApple>
-                        || 
-                        <div
+                        {(!socialLoginLoading?.apple && (
+                          <LoginSocialApple
+                            client_id={
+                              process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
+                            }
+                            scope={"name email"}
+                            // redirect_uri={window.location.origin + "/login"}
+                            onLoginStart={() =>
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: true,
+                              })
+                            }
+                            onResolve={({ provider, data }) => {
+                              signinSocial({ type: "apple", data: data });
+                            }}
+                            onLoginSuccess={() => {
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              });
+                            }}
+                            onReject={(err) => {
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              });
+                            }}
+                          >
+                            <FaApple size={15} className="mx-1" />
+                            {translate("Sign in With Apple")}
+                          </LoginSocialApple>
+                        )) || (
+                          <div
                             className="d-flex justify-content-center align-items-center"
                             style={{ height: "30px", width: "100%" }}
                           >
                             <ClipLoader color="#000000" size={30} />
                           </div>
-                        }
+                        )}
                       </button>
                     </div>
                   </div>
