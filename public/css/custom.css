@@ -413,3 +413,9 @@ select{
   font-family: "dm-sans", sans-serif!important;
   font-weight: 500!important;
 }
+
+@media (max-width: 991px) {
+  .width_responsive{
+    width: 100%!important;
+  }
+}
