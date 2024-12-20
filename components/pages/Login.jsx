@@ -541,6 +541,7 @@ export default function Login({
                                 apple: true,
                               })
                             }
+                            redirect_uri={window.location.origin + "/login"}
                             onResolve={({ provider, data }) => {
                               signinSocial({ type: "apple", data: data });
                             }}
