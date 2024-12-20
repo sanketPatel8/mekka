@@ -46,8 +46,8 @@ const customStyles = {
     padding: "5px",
     width: "100%",
     maxWidth: "700px",
-    height: "90vh",
-    overflowY: "auto",
+    height: "10vh",
+    overflowY: "scroll",
     backgroundColor: "#fff",
   },
 };
@@ -2110,7 +2110,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
             </button>
 
             <Login
-              classfor={`col-12`}
+              classfor={`col-12 model-height-90`}
               sectionClass={` `}
               hide={false}
               path={`/tour`}
