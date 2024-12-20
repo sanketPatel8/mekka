@@ -62,7 +62,7 @@ export default function ContactForm() {
             <div className="col-lg-8">
               <h2 className="text-30 fw-700 text-center mb-30 mt-30">
                 {translate('Leave us your info')}
-              </h2>
+              </h2> 
 
               <div className="contactForm">
                 <form
