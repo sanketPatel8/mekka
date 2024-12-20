@@ -30,8 +30,8 @@ const Impressum = () => {
 
         <p className="text-center">{translate("Liability and data protection information")}</p>
 
-        <div className="d-flex flex-row justify-content-center ">
-          <div>
+        <div className="row justify-content-center ">
+          <div className='col-12 col-lg-6' >
             <div
               className="d-flex gap-4 align-items-center  py-3 m-3 "
               style={{ border: "2px solid black" }}
@@ -78,7 +78,7 @@ const Impressum = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className='col-12 col-lg-6'>
             <div
               className="d-flex flex-row gap-4 align-items-center p-3 m-3"
               style={{ border: "2px solid black" }}
