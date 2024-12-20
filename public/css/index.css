@@ -646,9 +646,7 @@ input[type="number"]::-webkit-inner-spin-button {
   .header-none{
     display: none !important;
   }
-  .headerDropdown .headerDropdown{
-    transform: translateX(-65%);
-  }
+  
 }
 
 .text-blue{
