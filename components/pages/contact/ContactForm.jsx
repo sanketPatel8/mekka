@@ -60,7 +60,7 @@ export default function ContactForm() {
         <div className="container mt-10">
           <div className="row justify-center">
             <div className="col-lg-8">
-              <h2 className="text-30 fw-700 text-center mb-30">
+              <h2 className="text-30 fw-700 text-center mb-30 mt-30">
                 {translate('Leave us your info')}
               </h2>
 
