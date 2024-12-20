@@ -23,6 +23,7 @@ const dmsans = DM_Sans({
   display: "swap",
 });
 
+
 // Only import 'select2' JS on the client-side
 if (typeof window !== "undefined") {
   import("bootstrap");
