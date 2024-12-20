@@ -94,7 +94,7 @@ export default function HeaderSerch({ white }) {
           ref={inputRef}
           type="text"
           placeholder={translate("Search Packages")}
-          className={`js-search ${white ? "text-white" : ""}`}
+          className={`js-search tab-font-12 ${white ? "text-white" : ""}`}
         />
 
         <div

@@ -111,7 +111,7 @@ export default function Header1(payment) {
               <>
                 <button
                   onClick={() => router.push("/register")}
-                  className="d-flex items-center"
+                  className="d-flex items-center "
                 >
                   <span>{translate("Register")}</span>
                   {/* <MdOutlinePersonAddAlt size={25} /> */}
