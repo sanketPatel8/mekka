@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
-
+/* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap'); */
+@import url('https://use.typekit.net/oza5wtb.css');
+/* <link rel="stylesheet" href="https://use.typekit.net/oza5wtb.css"> */
 
 .swiperPagination1 .swiper-pagination-bullet {
     width: 6px !important;
@@ -409,5 +410,6 @@ opacity: 1;
 }
 
 select{
-  font-family: "DM Sans", serif!important;
+  font-family: "dm-sans", sans-serif!important;
+  font-weight: 500!important;
 }
