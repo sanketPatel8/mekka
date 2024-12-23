@@ -402,39 +402,34 @@ export default function Login({
 
                         {(!socialLoginLoading?.facebook && (
                           <LoginSocialFacebook
-                            appId={
-                              process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
-                            }
-                            fieldsProfile="id,name,email"
-                            scope="email"
-                            onLoginStart={() =>
-                              setSocialLoginLoading({
-                                google: false,
-                                facebook: true,
-                                apple: false,
-                              })
-                            }
-                            onResolve={({ provider, data }) =>
-                              handleFacebookLogin(data)
-                            }
-                            onLoginSuccess={() =>
-                              setSocialLoginLoading({
-                                google: false,
-                                facebook: false,
-                                apple: false,
-                              })
-                            }
-                            onReject={(err) =>
-                              setSocialLoginLoading({
-                                google: false,
-                                facebook: false,
-                                apple: false,
-                              })
-                            }
-                          >
-                            <FaFacebookF size={15} className="mx-1" />
-                            {translate("Facebook")}
-                          </LoginSocialFacebook>
+                              appId={
+                                process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
+                              }
+                              fieldsProfile={
+                                "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
+                              }
+                              scope="email,public_profile"
+                              onLoginStart={() => console.log("start")}
+                              onResolve={({ provider, data }) => {
+                                const { id, name, email } = data;
+                                console.log(data);
+                                typeof window !== "undefined" ? window.FB.getLoginStatus((response) => {
+                                  if (response.status === "connected") {
+                                    signinSocial({
+                                      type: "facebook",
+                                      data: { id, name, email },
+                                    });
+                                  }
+                                }):"";
+                                typeof window !== "undefined" ? window.FB.logout() : "";
+                              }}
+                              onReject={(err) => {
+                                console.log(err);
+                              }}
+                            >
+                              <FaFacebookF size={15} className="mx-1" />
+                              {translate("Facebook")}
+                            </LoginSocialFacebook>
                         )) || (
                           <div
                             className="d-flex justify-content-center align-items-center"
