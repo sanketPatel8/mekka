@@ -161,43 +161,43 @@ export default function Login({
     localStorage.setItem("LoginISChacked", isChecked);
   };
 
-  useEffect(() => {
-    // Load the Facebook SDK
-    const loadFBSDK = () => {
-      if (typeof window !== "undefined" && !window.FB) {
-        window.fbAsyncInit = function () {
-          window.FB.init({
-            appId: process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID,
-            cookie: true,
-            xfbml: true,
-            version: "v10.0", // Use the latest version
-          });
-        };
+  // useEffect(() => {
+  //   // Load the Facebook SDK
+  //   const loadFBSDK = () => {
+  //     if (typeof window !== "undefined" && !window.FB) {
+  //       window.fbAsyncInit = function () {
+  //         window.FB.init({
+  //           appId: process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID,
+  //           cookie: true,
+  //           xfbml: true,
+  //           version: "v10.0", // Use the latest version
+  //         });
+  //       };
 
-        const script = document.createElement("script");
-        script.src = "https://connect.facebook.net/en_US/sdk.js";
-        script.async = true;
-        document.body.appendChild(script);
-      }
-    };
+  //       const script = document.createElement("script");
+  //       script.src = "https://connect.facebook.net/en_US/sdk.js";
+  //       script.async = true;
+  //       document.body.appendChild(script);
+  //     }
+  //   };
 
-    loadFBSDK();
-  }, []);
+  //   loadFBSDK();
+  // }, []);
 
-  const handleFacebookLogin = (data) => {
-    const { id, name, email } = data;
-    if (typeof window !== "undefined") {
-      window.FB.getLoginStatus((response) => {
-        if (response.status === "connected") {
-          signinSocial({
-            type: "facebook",
-            data: { id, name, email },
-          });
-        }
-      });
-      // Avoid calling window.FB.logout() directly if not needed
-    }
-  };
+  // const handleFacebookLogin = (data) => {
+  //   const { id, name, email } = data;
+  //   if (typeof window !== "undefined") {
+  //     window.FB.getLoginStatus((response) => {
+  //       if (response.status === "connected") {
+  //         signinSocial({
+  //           type: "facebook",
+  //           data: { id, name, email },
+  //         });
+  //       }
+  //     });
+  //     // Avoid calling window.FB.logout() directly if not needed
+  //   }
+  // };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
