@@ -59,6 +59,8 @@ export default function Register() {
 
   
   const signinSocial = async ({ type, email, id, name, data }) => {
+    console.log(type,"type")
+    console.log(data,"data")
     if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
