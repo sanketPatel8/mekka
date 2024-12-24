@@ -10,7 +10,6 @@ export const CountryCodeProvider = ({ children }) => {
     useEffect(() => {
         // Fetch the country code based on user's IP
 
-        console.log("hellow country code");
         
         const fetchCountryCode = async () => {
             try {

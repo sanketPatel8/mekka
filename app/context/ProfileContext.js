@@ -14,7 +14,6 @@ export const UserProfileProvider = ({ children }) => {
 
   const { customer } = useAuthContext();
 
-  console.log("Customer:", customer); // Log customer
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -29,10 +28,10 @@ export const UserProfileProvider = ({ children }) => {
       if (response.user && typeof response.user === "object") {
         const userProfile = response.user;
 
-        console.log(userProfile, "userProfile"); // Log user profile
+        // console.log(userProfile, "userProfile"); // Log user profile
         setProfileImage(response?.user?.profile_image);
 
-        console.log("Fetched profile image:", userProfile.profile_image); // Log profile image
+        // console.log("Fetched profile image:", userProfile.profile_image); // Log profile image
       } else {
         console.error("Unexpected response structure:", response);
       }
@@ -46,7 +45,7 @@ export const UserProfileProvider = ({ children }) => {
     } 
     else{
       setProfileImage("");
-      console.log("No customer found");
+      // console.log("No customer found");
     }
   }, [customer]);
 

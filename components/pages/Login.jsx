@@ -99,7 +99,7 @@ export default function Login({
         url: "social_login",
       });
 
-      if (resp.status == "success") {
+      if (resp.Status == 1) {
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
@@ -122,7 +122,9 @@ export default function Login({
         },
         url: "social_login",
       });
-      if (resp.status == "success") {
+      console.log(resp,"resp")
+      if (resp.Status == 1) {
+        
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });

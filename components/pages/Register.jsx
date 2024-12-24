@@ -60,7 +60,6 @@ export default function Register() {
   
   const signinSocial = async ({ type, email, id, name, data }) => {
     console.log(type,"type")
-    console.log(data,"data")
     if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
@@ -136,8 +135,9 @@ export default function Register() {
   
         localStorage.setItem("emailForSignIn", email);
   
+        // Redirect after successful registration
         setTimeout(() => {
-          router.push("/customer/booking");
+          router.push("/verify-email");
         }, 2000);
        
       } else  {
