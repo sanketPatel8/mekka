@@ -115,9 +115,9 @@ export default function Register() {
         },
         url: "social_login",
       });
-      if (resp.Status == 1) {
+      if (resp.Status === "1") {
 
-        console.log("success",resp.status);
+        console.log("success",resp.Status);
         showSuccessToast(translate, "User created successfully");
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
