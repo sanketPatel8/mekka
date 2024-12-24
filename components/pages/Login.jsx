@@ -134,7 +134,7 @@ export default function Login({
         if (redirect == null) {
           setTimeout(() => {
             setLoginPer(true);
-            router.push(path);
+            router.push("/customer/booking");
           }, 1000);
         }
       } else {
