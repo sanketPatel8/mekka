@@ -136,9 +136,8 @@ export default function Register() {
   
         localStorage.setItem("emailForSignIn", email);
   
-        // Redirect after successful registration
         setTimeout(() => {
-          router.push("/verify-email");
+          router.push("/customer/booking");
         }, 2000);
        
       } else  {
