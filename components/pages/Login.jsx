@@ -130,7 +130,7 @@ export default function Login({
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         LoginUpdate();
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
-
+        console.log(redirectpath,"redirect")
         if (redirectpath == null) {
           setTimeout(() => {
             setLoginPer(true);
