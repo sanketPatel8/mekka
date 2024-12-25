@@ -131,7 +131,7 @@ export default function Login({
         LoginUpdate();
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
         console.log(redirectpath,"redirect")
-        if (redirectpath == null) {
+        if (!redirectpath) {
           setTimeout(() => {
             setLoginPer(true);
             router.push("/customer/booking");
