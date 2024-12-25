@@ -77,7 +77,7 @@ export default function Register() {
 
       const resp = await POST.request({
         form: appleData,
-        url: "social_login",
+        url: "social_register",
       });
 
       console.log(resp, "apple response");
@@ -114,7 +114,7 @@ export default function Register() {
           provider_id: id,
           name: name,
         },
-        url: "social_login",
+        url: "social_register",
       });
       console.log(resp, "response");
       if (resp.Status == "1") {
@@ -140,7 +140,16 @@ export default function Register() {
           router.push("/verify-email");
         }, 2000);
        
-      } else  {
+      } else if(resp.Status == "-2"){
+        showErrorToast(translate, "User Already Exists");
+        setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+        });
+      }else{
         showErrorToast(translate, "Invalid Credentials");
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
