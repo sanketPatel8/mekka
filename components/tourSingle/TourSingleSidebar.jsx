@@ -571,15 +571,15 @@ export default function TourSingleSidebar({
 
     if (
       selectDeparture.name === "" &&
-      selectedCheckbox === false &&
-      SidebarData?.tour_details?.flight_included !== "0"
+      selectedCheckbox === false 
+      // SidebarData?.tour_details?.flight_included !== "0"
     ) {
       showErrorToast(translate, "Please Select Departure");
       return;
     } else if (
       selectarrival.name === "" &&
-      selectedCheckbox === false &&
-      SidebarData?.tour_details?.flight_included !== "0"
+      selectedCheckbox === false 
+      // SidebarData?.tour_details?.flight_included !== "0"
     ) {
       showErrorToast(translate, "Please Select Arrival");
       return;
@@ -627,7 +627,12 @@ export default function TourSingleSidebar({
 
   const totalSelected = adultNumber + youthNumber + childrenNumber;
 
-  console.log(SidebarData?.tour_details?.airlines?.flight_amount , 'SelectedAllPrice');
+  console.log(SidebarData?.tour_details?.departures , 'SelectedAllPrice');
+
+  SidebarData?.tour_details?.departures?.map(departure => {
+    console.log(departure);
+  });
+  
   
 
   return (
@@ -902,8 +907,9 @@ export default function TourSingleSidebar({
             {/* <hr /> */}
           </div>
 
-          {SidebarData?.tour_details?.airlines !== null && (
+       
             <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
+            {SidebarData?.tour_details?.airlines !== null && (
               <div>
                 <h5 className="text-18 fw-500 mb-20 mt-20">
                   {translate("Flight Information")}
@@ -937,9 +943,10 @@ export default function TourSingleSidebar({
                   </div>
                 </div>
               </div>
+                  )}
 
               <hr />
-
+              
               <h5 className="text-18 fw-500 mb-10 mt-10">
                 {translate("Departure Information")}
               </h5>
@@ -977,7 +984,7 @@ export default function TourSingleSidebar({
                                   key={i}
                                   onClick={() => {
                                     setselectDeparture((pre) =>
-                                      pre?.name === elm.departure
+                                      pre?.name == elm.departure
                                         ? {}
                                         : {
                                             name: elm.departure,
@@ -1005,7 +1012,7 @@ export default function TourSingleSidebar({
                 </div>
               </div>
             </div>
-          )}
+      
         </div>
 
         <hr />
