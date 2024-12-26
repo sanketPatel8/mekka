@@ -217,6 +217,8 @@ const handleSecondAmountChange = (e) => {
         const asSidebarrData = JSON.parse(sidebardata);
         setLaterPayment(asSidebarrData?.laterPayment);
         setSideBarData(asSidebarrData);
+
+        console.log(laterPayment,"later")
       } catch (error) {
         console.error("Error parsing userData:", error);
       }
@@ -382,7 +384,7 @@ const handleSecondAmountChange = (e) => {
     const agbAcceptance = document.getElementById("agbAcceptance");
     const item5 = document.getElementById("item5");
     setIsLoading(true)
-    if (selectedCheckbox === 0 && laterPayment == 0) {
+    if (selectedCheckbox === 0 &&  (laterPayment == 0 || laterPayment == null)) {
       if (!agbAcceptance?.checked || !item5?.checked) {
         showErrorToast(translate, "Please accept terms and conditions");
         setIsLoading(false);
@@ -406,7 +408,7 @@ const handleSecondAmountChange = (e) => {
       }, 3000);
     }
 
-    if (selectedCheckbox === 1 && laterPayment == 0) {
+    if (selectedCheckbox === 1 &&  (laterPayment == 0 || laterPayment == null)) {
       if (!agbAcceptance.checked || !item5.checked) {
         showErrorToast(translate, "Please accept terms and conditions");
         setIsLoading(false)
@@ -419,7 +421,7 @@ const handleSecondAmountChange = (e) => {
       setAmount(SideBarData?.BookingFild?.SubTotal);
     }
 
-     if (selectedCheckbox === 2  && laterPayment == 0) {
+     if (selectedCheckbox === 2  && (laterPayment == 0 || laterPayment == null)) {
       if (
         !firstAmount ||
         !secondAmount ||
@@ -526,7 +528,7 @@ const handleSecondAmountChange = (e) => {
                     </p>
 
                     {
-                      laterPayment == 0 && (
+                       (laterPayment == 0 || laterPayment == null) && (
 
                         <div className="px-3">
                           <div className="d-flex items-center pointer-check py-3">
@@ -1175,7 +1177,7 @@ const handleSecondAmountChange = (e) => {
                          
 
                               {
-                                laterPayment == 0 ? (selectedCheckbox == 0 ? "Direct Bank Transfer" : "Online") : "Pay Later"
+                                 (laterPayment == 0 || laterPayment == null) ? (selectedCheckbox == 0 ? "Direct Bank Transfer" : "Online") : "Pay Later"
                               }
 
                             

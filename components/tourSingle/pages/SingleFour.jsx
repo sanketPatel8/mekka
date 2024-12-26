@@ -26,6 +26,7 @@ export default function SingleFour({ PAckageData }) {
   useEffect(() => {
     const foundTour = PAckageData?.Tour_List?.find((tour) => tour.id == id);
     setFlightInc(foundTour);
+    console.log(PAckageData?.Tour_Details?.tour_flights,"flight info")
   }, [PAckageData]);
 
   const { translate } = useTranslation();
@@ -91,46 +92,51 @@ export default function SingleFour({ PAckageData }) {
                     </div>
                   </div>
 
-                  <div
-                    className={`accordion__item py-30 border-1-top ${
-                      activeAcorditions.includes("f_Included")
-                        ? ""
-                        : ""
-                    }`}
-                  >
-                    <div
-                      onClick={() =>
-                        setActiveAcorditions((pre) =>
-                          pre.includes("f_Included")
-                            ? [...pre.filter((elm) => elm != "f_Included")]
-                            : [...pre, "f_Included"]
-                        )
-                      }
-                      className="accordion__button d-flex items-center justify-between"
-                    >
-                      <div className="text-30 md:text-20 lh-13 fw-700">
-                        {translate("Flight Information")}
-                      </div>
+                  {
+                    PAckageData?.Tour_Details?.tour_flights !== null ?
 
-                      <div className="accordion__icon size-30 text-24 flex-center">
-                        <i className="icon-chevron-down"></i>
-                        <i className="icon-chevron-up"></i>
-                      </div>
-                    </div>
 
-                    <div
-                      className="accordion__content"
-                      style={
-                        activeAcorditions.includes("f_Included")
-                          ? { maxHeight: "500px" }
-                          : {}
-                      }
-                    >
-                      <div className="pt-20">
-                        <FlightInformation PAckageData={PAckageData} />
-                      </div>
-                    </div>
-                  </div>
+                      (<div
+                        className={`accordion__item py-30 border-1-top ${
+                          activeAcorditions.includes("f_Included")
+                            ? ""
+                            : ""
+                        }`}
+                      >
+                        <div
+                          onClick={() =>
+                            setActiveAcorditions((pre) =>
+                              pre.includes("f_Included")
+                                ? [...pre.filter((elm) => elm != "f_Included")]
+                                : [...pre, "f_Included"]
+                            )
+                          }
+                          className="accordion__button d-flex items-center justify-between"
+                        >
+                          <div className="text-30 md:text-20 lh-13 fw-700">
+                            {translate("Flight Information")}
+                          </div>
+
+                          <div className="accordion__icon size-30 text-24 flex-center">
+                            <i className="icon-chevron-down"></i>
+                            <i className="icon-chevron-up"></i>
+                          </div>
+                        </div>
+
+                        <div
+                          className="accordion__content"
+                          style={
+                            activeAcorditions.includes("f_Included")
+                              ? { maxHeight: "500px" }
+                              : {}
+                          }
+                        >
+                          <div className="pt-20">
+                            {/* <FlightInformation PAckageData={PAckageData} /> */}
+                          </div>
+                        </div>
+                      </div>) : ""
+                  }
 
                   <div
                     className={`accordion__item py-30 border-1-top ${
