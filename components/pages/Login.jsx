@@ -122,15 +122,14 @@ export default function Login({
         },
         url: "social_login",
       });
-      console.log(resp,"resp")
+      console.log(resp, "resp");
       if (resp.Status == 1) {
-        
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         LoginUpdate();
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
-        console.log(redirectpath,"redirect")
+        console.log(redirectpath, "redirect");
         if (!redirectpath) {
           setTimeout(() => {
             setLoginPer(true);
@@ -207,16 +206,16 @@ export default function Login({
   };
 
   const post = (data) => {
-    // const form = document.querySelector("form");
-    // form.classList.remove("was-validated");
-    // setLoading(true);
+
     setIsLoading(true);
     Auth.user(data)
       .then((resp) => {
+        console.log(resp);  
+        
         setIsLoading(false);
-        if (resp.status == "error") {
+        if (resp.Status == "0") {
           showErrorToast(translate, resp.message);
-        } else if (resp.status == "success") {
+        } else if (resp.Status == "1") {
           if (resp.user.user_type == "customer") {
             localStorage.setItem("customer", JSON.stringify(resp));
             localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
@@ -298,7 +297,9 @@ export default function Login({
                   onSubmit={handleLoginSubmit}
                   className={`${
                     bookingPage === true
-                      ? `contactForm  rounded-12 px-60 ${hide === false ? 'py-0' : 'py-60'} md:px-25 md:py-30`
+                      ? `contactForm  rounded-12 px-60 ${
+                          hide === false ? "py-0" : "py-60"
+                        } md:px-25 md:py-30`
                       : " mb-30 contactForm border-1 rounded-12 px-60 py-60 md:px-25 md:py-30 "
                   }`}
                 >
@@ -439,34 +440,38 @@ export default function Login({
                           // </LoginSocialFacebook>
 
                           <LoginSocialFacebook
-                                                    appId={
-                                                      process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
-                                                    }
-                                                    fieldsProfile={
-                                                      "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
-                                                    }
-                                                    scope="email,public_profile"
-                                                    onLoginStart={() => console.log("start")}
-                                                    onResolve={({ provider, data }) => {
-                                                      const { id, name, email } = data;
-                                                      console.log(data);
-                                                      typeof window !== "undefined" ? window.FB.getLoginStatus((response) => {
-                                                        if (response.status === "connected") {
-                                                          signinSocial({
-                                                            type: "facebook",
-                                                            data: { id, name, email },
-                                                          });
-                                                        }
-                                                      }):"";
-                                                      typeof window !== "undefined" ? window.FB.logout() : "";
-                                                    }}
-                                                    onReject={(err) => {
-                                                      console.log(err);
-                                                    }}
-                                                  >
-                                                    <FaFacebookF size={15} className="mx-1" />
-                                                    {translate("Facebook")}
-                                                  </LoginSocialFacebook>
+                            appId={
+                              process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
+                            }
+                            fieldsProfile={
+                              "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
+                            }
+                            scope="email,public_profile"
+                            onLoginStart={() => console.log("start")}
+                            onResolve={({ provider, data }) => {
+                              const { id, name, email } = data;
+                              console.log(data);
+                              typeof window !== "undefined"
+                                ? window.FB.getLoginStatus((response) => {
+                                    if (response.status === "connected") {
+                                      signinSocial({
+                                        type: "facebook",
+                                        data: { id, name, email },
+                                      });
+                                    }
+                                  })
+                                : "";
+                              typeof window !== "undefined"
+                                ? window.FB.logout()
+                                : "";
+                            }}
+                            onReject={(err) => {
+                              console.log(err);
+                            }}
+                          >
+                            <FaFacebookF size={15} className="mx-1" />
+                            {translate("Facebook")}
+                          </LoginSocialFacebook>
                         )) || (
                           <div
                             className="d-flex justify-content-center align-items-center"
