@@ -133,11 +133,12 @@ export default function Header1(payment) {
             </div>
 
             <div className="row items-center">
-              <div className={`${!LoginCheck  ? "col-2" : "col-3"}`}>
+              <div className={`${!LoginCheck  ? "col-2" : "col"}`}>
                 <div
                   className={`${
                     payment.payment === true ? "d-none" : "d-block"
                   }`}
+
                 >
                   <div className="d-flex justify-content-center">
                     <Currency currenyLocale={currenyLocale} />
@@ -145,7 +146,7 @@ export default function Header1(payment) {
                 </div>
               </div>
 
-              <div className={`${!LoginCheck || payment.payment === false ? "col-2 ml-10" : "col-3 ml-10"}`}>
+              <div className={`${!LoginCheck ? "col-2 ml-10" : "col-3 ml-10"}`}>
                 <div className="d-flex justify-content-center">
                   <Language
                     parentClass="headerDropdown"
@@ -154,47 +155,6 @@ export default function Header1(payment) {
                   />
                 </div>
               </div>
-
-              {/* <div className="col-3">
-                <div className="d-flex justify-content-center">
-                  <Link href={LoginCheck ? "" : "/register"} className={`mx-2`}>
-                    {LoginCheck ? (
-                      <DashboardCustomer
-                        onLocaleChange={setLocale}
-                        handleLogoutClick={handleLogoutClick}
-                      />
-                    ) : (
-                      translate("Register")
-                    )}
-                  </Link>
-                </div>
-              </div>
-
-              <div className="col-4">
-                <div className="d-flex justify-content-center">
-                  {LoginCheck !== null && (
-                    <>
-                      {!LoginCheck && (
-                        <button
-                          className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
-                          onClick={handleLoginClick}
-                        >
-                          {translate("Log In")}
-                        </button>
-                      )}
-
-                      {LoginCheck && (
-                        <button
-                          className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
-                          onClick={handleLogoutClick}
-                        >
-                          {translate('Log Out')}
-                        </button>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div> */}
 
               {LoginCheck ? (
                 <>
@@ -220,7 +180,7 @@ export default function Header1(payment) {
                     </div>
                   </div>
 
-                  <div className={`${payment.payment == true ? 'col-4' : "col-6"}`}>
+                  <div className={`col-4`}>
                     <div className="d-flex j  ustify-content-center">
                       <button
                         className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"
