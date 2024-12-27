@@ -133,7 +133,7 @@ export default function Header1(payment) {
             </div>
 
             <div className="row items-center">
-              <div className={`${!LoginCheck  ? "col-2" : "col"}`}>
+              <div className={`${!LoginCheck  ? "col-2" : "col-2"}`}>
                 <div
                   className={`${
                     payment.payment === true ? "d-none" : "d-block"
