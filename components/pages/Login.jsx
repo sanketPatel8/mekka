@@ -78,8 +78,8 @@ export default function Login({
 
   useEffect(() => {
     const redirect = localStorage.getItem("Redirect_Login");
-    console.log(redirect);
     setRedirectPath(redirect);
+    console.log(redirectpath,"redirect")
   }, []);
 
   const signinSocial = async ({ type, email, id, name, data }) => {
