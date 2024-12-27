@@ -2,9 +2,11 @@
 
 import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
-import Register from "@/components/pages/Register";
+// import Register from "@/components/pages/Register";
 import React, { useEffect } from "react";
-
+const RegisterPage = dynamic(() => import('@/components/pages/Register'), {
+  ssr: false 
+});
 export default function page() {
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -15,7 +17,7 @@ export default function page() {
     <>
       <main>
         <Header1 />
-        <Register />
+        <RegisterPage />
         <FooterTwo />
       </main>
     </>
