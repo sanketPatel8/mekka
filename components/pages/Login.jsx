@@ -114,12 +114,6 @@ export default function Login({
         }
 
 
-        // if (redirectpath == null) {
-        //   setTimeout(() => {
-        //     setLoginPer(true);
-        //     router.push(path);
-        //   }, 1000);
-        // }
       }else{
         showErrorToast(translate, "User not found. Please register your account");
         setLogInData({
