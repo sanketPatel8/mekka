@@ -104,11 +104,11 @@ export default function Register() {
   
         setIsChecked(false);
   
-        localStorage.setItem("emailForSignIn", email);
+        // localStorage.setItem("emailForSignIn", email);
   
         // Redirect after successful registration
         setTimeout(() => {
-          router.push("/verify-email");
+          router.push("/login");
         }, 2000);
        
       }
@@ -145,11 +145,11 @@ export default function Register() {
   
         setIsChecked(false);
   
-        localStorage.setItem("emailForSignIn", email);
+        // localStorage.setItem("emailForSignIn", email);
   
         // Redirect after successful registration
         setTimeout(() => {
-          router.push("/verify-email");
+          router.push("/login");
         }, 2000);
        
       } else if(resp.Status == "-2"){
