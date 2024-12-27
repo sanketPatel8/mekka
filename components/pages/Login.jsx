@@ -108,7 +108,7 @@ export default function Login({
         if (!redirectpath) {
           console.log(redirectpath,"redirectpath")
           setTimeout(() => {
-            setLoginPer(true);
+            // setLoginPer(true);
             router.push("/customer/booking");
           }, 1000);
         }
@@ -150,7 +150,7 @@ export default function Login({
         console.log(redirectpath, "redirect");
         if (!redirectpath) {
           setTimeout(() => {
-            setLoginPer(true);
+            // setLoginPer(true);
             router.push("/customer/booking");
           }, 1000);
         }
