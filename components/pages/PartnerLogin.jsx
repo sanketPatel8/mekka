@@ -64,6 +64,10 @@ export default function PartnerLogin({ onLoginSuccess }) {
           setIsLoading(false);
           showErrorToast(translate, "Email or Password is wrong");
         }
+        if (resp.Status == "2") {
+          setIsLoading(false);
+          showErrorToast(translate, "Your account is not approved by the admin");
+        }
 
         
         if (resp.user.user_type == "vendor") {

@@ -729,6 +729,7 @@
 "Call us!" : "Ruf uns an!",
 "Write to us WhatsApp" : "Schreib uns auf WhatsApp",
 "Tour Deleted Successfully" : "Tour erfolgreich gelöscht",
-"Email or Password is wrong" : "Email or Password is wrong",
-"User not found. Please register your account" : "User not found. Please register your account"
+"Email or Password is wrong" : "E-Mail oder Passwort ist falsch",
+"User not found. Please register your account" : "Benutzer nicht gefunden. Bitte registrieren Sie Ihr Konto",
+"Your account is not approved by the admin":"Ihr Konto wurde vom Administrator nicht genehmigt"
 }
