@@ -214,7 +214,7 @@ export default function Login({
         
         setIsLoading(false);
         if (resp.Status == "0") {
-          showErrorToast(translate, resp.message);
+          showErrorToast(translate, "Email or Password is wrong");
         } else if (resp.Status == "1") {
           if (resp.user.user_type == "customer") {
             localStorage.setItem("customer", JSON.stringify(resp));
