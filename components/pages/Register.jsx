@@ -76,7 +76,7 @@ export default function Register() {
         email: decodedToken.email,
         auth_provider: type,
         provider_id: decodedToken.sub,
-        name: name
+        name: ""
       };
 
       console.log(appleData, "apple data");
