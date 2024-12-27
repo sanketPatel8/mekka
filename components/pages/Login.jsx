@@ -105,6 +105,14 @@ export default function Login({
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
 
+        if (!redirectpath) {
+          setTimeout(() => {
+            setLoginPer(true);
+            router.push("/customer/booking");
+          }, 1000);
+        }
+
+
         // if (redirectpath == null) {
         //   setTimeout(() => {
         //     setLoginPer(true);
