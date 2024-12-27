@@ -60,9 +60,9 @@ export default function PartnerLogin({ onLoginSuccess }) {
     Auth.user(data)
       .then((resp) => {
         
-        if (resp.status == "error") {
+        if (resp.Status == "0") {
           setIsLoading(false);
-          showErrorToast(translate, resp.message);
+          showErrorToast(translate, "Email or Password is wrong");
         }
 
         
