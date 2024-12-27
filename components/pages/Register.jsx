@@ -88,7 +88,7 @@ export default function Register() {
 
       console.log(resp, "apple response");
 
-      if (resp.status == "success") {
+      if (resp.Status == "1") {
 
         console.log("success",resp.status);
         showSuccessToast(translate, "User created successfully");
@@ -111,6 +111,12 @@ export default function Register() {
           router.push("/verify-email");
         }, 2000);
        
+      }
+      else if (resp.Status == "-2"){
+        showErrorToast(translate,"Email already exists");
+        
+      }else if(resp.Status == "0"){
+        showErrorToast(translate,"Invalid Credentials")
       }
     } else {
       const resp = await POST.request({
