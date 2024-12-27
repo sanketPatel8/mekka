@@ -8,7 +8,12 @@ import { useEffect, useState } from "react";
 import { FaPersonWalking } from "react-icons/fa6";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaStar } from "react-icons/fa";
-import { faHotel, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHotel,
+  faPlaneArrival,
+  faPlaneDeparture,
+  faQuoteRight,
+} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import AgentDBsideBar from "@/components/dasboard/AgentDBsideBar";
 import Link from "next/link";
@@ -126,7 +131,6 @@ export default function DBListing() {
       setLoading(false);
       setTourList(response.Tours);
       setRange(response.Total_Page);
-    
     } catch (e) {}
   };
 
@@ -160,8 +164,6 @@ export default function DBListing() {
   };
 
   const FetchDeleteTour = async (id) => {
-    
-
     if (id) {
       const confirmResult = window.confirm(
         "Are you sure you want to delete this tour?"
@@ -169,7 +171,7 @@ export default function DBListing() {
       if (confirmResult) {
         const formData = new FormData();
 
-        formData.append("id", id );
+        formData.append("id", id);
         formData.append("vendor_id", user?.user.id);
         setLoading(true);
         POST.request({ form: formData, url: "delete_tour" })
@@ -189,13 +191,11 @@ export default function DBListing() {
         return;
       }
     }
-
-
   };
 
   const HandleDelete = (id) => {
-    FetchDeleteTour(id)
-  }
+    FetchDeleteTour(id);
+  };
 
   return (
     <>
@@ -262,6 +262,11 @@ export default function DBListing() {
                           {elm.departures && (
                             <div className="Location">
                               <span>
+                                <FontAwesomeIcon
+                                  icon={faPlaneDeparture}
+                                  className=" text-accent-1"
+                                  style={{ fontSize: "14px" }}
+                                />
                                 <span style={{ marginLeft: "5px" }}>
                                   {translate("Departure")} :{" "}
                                   {elm.departures.join("   ,  ")}
@@ -269,6 +274,18 @@ export default function DBListing() {
                               </span>
                             </div>
                           )}
+
+                          <div className="Location">
+                            <FontAwesomeIcon
+                              icon={faPlaneArrival}
+                              className=" text-accent-1"
+                              style={{ fontSize: "14px" }}
+                            />
+                            <span>
+                              {" "}
+                              {translate("Arrival")} : {elm?.arrival}
+                            </span>
+                          </div>
 
                           {elm.tour_commission !== null && (
                             <div className="row x-gap-20 y-gap-5 pt-30">
@@ -349,7 +366,10 @@ export default function DBListing() {
 
                           <label className="badge bg-secondary"></label>
                           {elm?.Bookings == 0 ? (
-                            <button className="button -sm -outline-red-3 w-100 -red-3 mb-10"  onClick={(id) => HandleDelete(`${elm?.id}`)} >
+                            <button
+                              className="button -sm -outline-red-3 w-100 -red-3 mb-10"
+                              onClick={(id) => HandleDelete(`${elm?.id}`)}
+                            >
                               <div>{translate("DELETE TOUR")}</div>
                             </button>
                           ) : null}
