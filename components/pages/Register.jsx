@@ -13,22 +13,28 @@ import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 import dynamic from "next/dynamic";
 import { POST } from "@/app/utils/api/post";
+import { jwtDecode } from "jwt-decode";
+import {
+  LoginSocialFacebook,
+  LoginSocialGoogle,
+  LoginSocialApple,
+} from "reactjs-social-login";
 
 export default function Register() {
   const { translate } = useTranslation();
 
-  const LoginSocialFacebook = dynamic(
-    () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
-    { ssr: false }
-  );
-  const LoginSocialGoogle = dynamic(
-    () => import("reactjs-social-login").then((mod) => mod.LoginSocialGoogle),
-    { ssr: false }
-  );
-  const LoginSocialApple = dynamic(
-    () => import("reactjs-social-login").then((mod) => mod.LoginSocialApple),
-    { ssr: false }
-  );
+  // const LoginSocialFacebook = dynamic(
+  //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
+  //   { ssr: false }
+  // );
+  // const LoginSocialGoogle = dynamic(
+  //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialGoogle),
+  //   { ssr: false }
+  // );
+  // const LoginSocialApple = dynamic(
+  //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialApple),
+  //   { ssr: false }
+  // );
   const [RegisterData, setRegisterData] = useState({
     AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
     name: "",
