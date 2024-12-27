@@ -30,7 +30,6 @@ import "react-phone-input-2/lib/style.css";
 import { useCountryCode } from "@/app/context/useCountryCode";
 import { update } from "lodash";
 
-
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -103,79 +102,72 @@ export default function BookingPages({ BookingData }) {
     Modal.setAppElement("#openSignIn");
 
     // Only execute in browser environment
-   
-      // Retrieve and parse the priceObject data from localStorage
-      const savedData = localStorage.getItem("AdultPrice&count");
 
-      const Login = localStorage.getItem("LoginISChacked");
-      const userData = localStorage.getItem("customer");
+    // Retrieve and parse the priceObject data from localStorage
+    const savedData = localStorage.getItem("AdultPrice&count");
 
-      const PackagePrice = localStorage.getItem("SelectedPackageHotelNDFlight");
+    const Login = localStorage.getItem("LoginISChacked");
+    const userData = localStorage.getItem("customer");
 
-      const SidebarData = localStorage.getItem("PackageBookingData");
+    const PackagePrice = localStorage.getItem("SelectedPackageHotelNDFlight");
 
-      const BackAdultData = localStorage.getItem("AllAdultsData");
+    const SidebarData = localStorage.getItem("PackageBookingData");
 
-      const loginStatus = JSON.parse(
-        localStorage.getItem("CustomerLoginCheck")
-      );
-      if (loginStatus && loginStatus !== "undefined") {
-        try {
-          const loginChk = JSON.parse(loginStatus);
-          setLoginCheck(loginChk);
-        } catch (error) {
-          console.error(error);
-        }
+    const BackAdultData = localStorage.getItem("AllAdultsData");
+
+    const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
+    if (loginStatus && loginStatus !== "undefined") {
+      try {
+        const loginChk = JSON.parse(loginStatus);
+        setLoginCheck(loginChk);
+      } catch (error) {
+        console.error(error);
       }
+    }
 
-      // Check if savedData exists and is valid JSON
-      if (savedData && savedData !== "undefined") {
-        try {
-          const parsedData = JSON.parse(savedData);
+    // Check if savedData exists and is valid JSON
+    if (savedData && savedData !== "undefined") {
+      try {
+        const parsedData = JSON.parse(savedData);
 
-          setAlladultsData(parsedData);
+        setAlladultsData(parsedData);
 
-          const adultData = parsedData?.filter(
-            (item) => item.label === "Adult"
-          );
+        const adultData = parsedData?.filter((item) => item.label === "Adult");
 
-          // Filter for Youth
-          const youthData = parsedData?.filter(
-            (item) => item.label === "Child"
-          );
+        // Filter for Youth
+        const youthData = parsedData?.filter((item) => item.label === "Child");
 
-          // Filter for Children
-          const childrenData = parsedData?.filter(
-            (item) => item.label === "Baby"
-          );
+        // Filter for Children
+        const childrenData = parsedData?.filter(
+          (item) => item.label === "Baby"
+        );
 
-          setAdultData(adultData);
-          setChildrendata(youthData);
-          setbabyData(childrenData);
-        } catch (error) {
-          console.error("Error parsing savedData:", error);
-        }
+        setAdultData(adultData);
+        setChildrendata(youthData);
+        setbabyData(childrenData);
+      } catch (error) {
+        console.error("Error parsing savedData:", error);
       }
+    }
 
-      if (BackAdultData && BackAdultData !== "undefined") {
-        try {
-          const AdultD = JSON.parse(BackAdultData);
+    if (BackAdultData && BackAdultData !== "undefined") {
+      try {
+        const AdultD = JSON.parse(BackAdultData);
 
-          
-          // Extract the user object
-          if (AdultD) {
-            setFormValues((prevValues) => {
-              const updatedValues = { ...prevValues };
+        // Extract the user object
+        if (AdultD) {
+          setFormValues((prevValues) => {
+            const updatedValues = { ...prevValues };
 
-              if (!updatedValues["Adult"]) {
-                updatedValues["Adult"] = [];
-              }
-              if (!updatedValues["Adult"][0]) {
-                updatedValues["Adult"][0] = {};
-              }
+            if (!updatedValues["Adult"]) {
+              updatedValues["Adult"] = [];
+            }
+            if (!updatedValues["Adult"][0]) {
+              updatedValues["Adult"][0] = {};
+            }
 
-              AdultD?.Adult?.map(
-                (e, i) =>
+            AdultD?.Adult?.map(
+              (e, i) =>
                 (updatedValues["Adult"][i] = {
                   ...updatedValues["Adult"][i],
                   name: e.name,
@@ -190,10 +182,10 @@ export default function BookingPages({ BookingData }) {
                   street: e.street,
                   zipcode: e.zipcode,
                 })
-              );
+            );
 
-              AdultD?.Child?.map(
-                (e, i) =>
+            AdultD?.Child?.map(
+              (e, i) =>
                 (updatedValues["Child"][i] = {
                   ...updatedValues["Child"][i],
                   name: e.name,
@@ -208,9 +200,9 @@ export default function BookingPages({ BookingData }) {
                   street: e.street,
                   zipcode: e.zipcode,
                 })
-              );
-              AdultD?.Baby?.map(
-                (e, i) =>
+            );
+            AdultD?.Baby?.map(
+              (e, i) =>
                 (updatedValues["Baby"][i] = {
                   ...updatedValues["Baby"][i],
                   name: e.name,
@@ -225,65 +217,61 @@ export default function BookingPages({ BookingData }) {
                   street: e.street,
                   zipcode: e.zipcode,
                 })
-              );
+            );
 
-              return updatedValues;
-            });
-
-          
-          }
-        } catch (error) {
-          console.error("Error parsing userData:", error);
+            return updatedValues;
+          });
         }
+      } catch (error) {
+        console.error("Error parsing userData:", error);
       }
+    }
 
-      if (userData && userData !== "undefined") {
-        try {
-          const userid = JSON.parse(userData);
+    if (userData && userData !== "undefined") {
+      try {
+        const userid = JSON.parse(userData);
 
-          // Extract the user object
-          if (userid && userid.user) {
-            setUserID(userid.user);
-          }
-        } catch (error) {
-          console.error("Error parsing userData:", error);
+        // Extract the user object
+        if (userid && userid.user) {
+          setUserID(userid.user);
         }
+      } catch (error) {
+        console.error("Error parsing userData:", error);
       }
+    }
 
-      if (Login && Login !== "undefined") {
-        try {
-          const asLogin = JSON.parse(Login);
+    if (Login && Login !== "undefined") {
+      try {
+        const asLogin = JSON.parse(Login);
 
-          // Extract the user object
-          if (asLogin && asLogin.user) {
-            setUserID(asLogin.user);
-          }
-        } catch (error) {
-          console.error("Error parsing userData:", error);
+        // Extract the user object
+        if (asLogin && asLogin.user) {
+          setUserID(asLogin.user);
         }
+      } catch (error) {
+        console.error("Error parsing userData:", error);
       }
+    }
 
-      if (PackagePrice && PackagePrice !== "undefined") {
-        try {
-          const parsedPackagePrice = JSON.parse(PackagePrice);
+    if (PackagePrice && PackagePrice !== "undefined") {
+      try {
+        const parsedPackagePrice = JSON.parse(PackagePrice);
 
-          // setPackagePrices(parsedPackagePrice);
-        } catch (error) {
-          console.error("Error parsing savedData:", error);
-        }
+        // setPackagePrices(parsedPackagePrice);
+      } catch (error) {
+        console.error("Error parsing savedData:", error);
       }
+    }
 
-      if (SidebarData && SidebarData !== "undefined") {
-        try {
-          const BookingSideData = JSON.parse(SidebarData);
-          setBookingSideBar(BookingSideData);
-          setPackagePrices(BookingSideData.FlightAndHotel);
-        } catch (error) {
-          console.error("Error parsing savedData:", error);
-        }
+    if (SidebarData && SidebarData !== "undefined") {
+      try {
+        const BookingSideData = JSON.parse(SidebarData);
+        setBookingSideBar(BookingSideData);
+        setPackagePrices(BookingSideData.FlightAndHotel);
+      } catch (error) {
+        console.error("Error parsing savedData:", error);
       }
-
-    
+    }
   }, []);
 
   // for adult prices array
@@ -295,7 +283,7 @@ export default function BookingPages({ BookingData }) {
     localStorage.setItem("setIsOpen", JSON.stringify(true));
   }
 
-  function afterOpenModal() { }
+  function afterOpenModal() {}
 
   function closeModal() {
     setIsOpen(false);
@@ -347,7 +335,6 @@ export default function BookingPages({ BookingData }) {
       price: "",
       title: "",
       additional_services: "",
-    
     }),
     Child: initializeFormValues(Childrendata?.length || 0, {
       name: "",
@@ -367,11 +354,10 @@ export default function BookingPages({ BookingData }) {
       gender: "",
       birthday: "",
       nationality: "",
-      selectedService: "", 
+      selectedService: "",
       additional_services: "",
-
     }),
-    selectedServicePrices: [], 
+    selectedServicePrices: [],
   });
 
   // for profile data
@@ -427,9 +413,6 @@ export default function BookingPages({ BookingData }) {
       value = e.target.e;
     }
 
-    
-
-
     // Update form values
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
@@ -450,8 +433,6 @@ export default function BookingPages({ BookingData }) {
         [name]: value, // Store the value (e.g., phone number)
       };
 
-
-
       if (type === "Adult" && index === 0) {
         setUserData((prevUserData) => ({
           ...prevUserData,
@@ -460,7 +441,6 @@ export default function BookingPages({ BookingData }) {
       }
 
       return updatedValues;
-
     });
   };
 
@@ -538,13 +518,24 @@ export default function BookingPages({ BookingData }) {
     getPriceForadditional(type, i);
   };
 
-  const handleCheckboxChange = (e, type, i, idx, price, order, title, optid, isChecked) => {
+  const handleCheckboxChange = (
+    e,
+    type,
+    i,
+    idx,
+    price,
+    order,
+    title,
+    optid,
+    isChecked
+  ) => {
     const value = `${type}-${i}-${idx}-ad-${optid}-${title}`;
-    console.log(order,"order")
+
+    console.log(order, "order");
     // Update the form values state
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
-  
+
       // Ensure the correct path exists in the state
       if (!updatedValues[type]) {
         updatedValues[type] = [];
@@ -552,68 +543,69 @@ export default function BookingPages({ BookingData }) {
       if (!updatedValues[type][i]) {
         updatedValues[type][i] = {
           selectedServices: [], // Initialize selectedServices array
-          selectedPrices: [], 
+          selectedPrices: [],
           services: [],
         };
       }
-  
-     
+
       if (!updatedValues[type][i].selectedServices) {
-        updatedValues[type][i].selectedServices = []; 
+        updatedValues[type][i].selectedServices = [];
       }
       if (!updatedValues[type][i].selectedPrices) {
-        updatedValues[type][i].selectedPrices = []; 
+        updatedValues[type][i].selectedPrices = [];
       }
       if (!updatedValues[type][i].services) {
-        updatedValues[type][i].services = []; 
+        updatedValues[type][i].services = [];
       }
-  
+
       // Update the selected services and prices based on checkbox state
       const Services = {
         price: price,
         title: title,
         additional_order: order,
         additional_price_id: optid,
-      }
+      };
 
+      console.log(Services , 'services');
+      
 
       if (isChecked) {
-        updatedValues[type][i].selectedServices.push(value); 
+        updatedValues[type][i].selectedServices.push(value);
         updatedValues[type][i].selectedPrices.push(price);
         updatedValues[type][i].services.push(JSON.stringify(Services));
-        // updatedValues[type][i] = {
-        //   ...updatedValues[type][i],
-        //   price: price,
-        //   title: title,
-        //   additional_order: order,
-        //   additional_price_id: optid,
-        // };
+       
       } else {
-        updatedValues[type][i].selectedServices = updatedValues[type][i].selectedServices.filter(item => item !== value); // Remove from selectedServices
-        updatedValues[type][i].selectedPrices = updatedValues[type][i].selectedPrices.filter(item => item !== price); 
-        updatedValues[type][i].services = updatedValues[type][i].services.filter(item => item.price !== price);
+        updatedValues[type][i].selectedServices = updatedValues[type][
+          i
+        ].selectedServices.filter((item) => item !== value); // Remove from selectedServices
+        updatedValues[type][i].selectedPrices = updatedValues[type][
+          i
+        ].selectedPrices.filter((item) => item !== price);
+        updatedValues[type][i].services = updatedValues[type][
+          i
+        ].services.filter((item) => item.price !== price);
       }
 
-
-
-      console.log(order,"order")
+     
       if (type === "Adult" && i === 0) {
         setUserData((prevUserData) => ({
           ...prevUserData,
           selectedService: updatedValues[type][i].selectedServices,
           price: updatedValues[type][i].selectedPrices,
-          title: updatedValues[type][i].services.map(item => item.title).join(", "), // Join titles for display
-          additional_order: updatedValues[type][i].services.map(item => item.order).join(", "), 
-          additional_price_id: updatedValues[type][i].services.map(item => item.id).join(", "), 
-
-         
+          title: updatedValues[type][i].services
+            .map((item) => item.title)
+            .join(", "), // Join titles for display
+          additional_order: updatedValues[type][i].services
+            .map((item) => item.order)
+            .join(", "),
+          additional_price_id: updatedValues[type][i].services
+            .map((item) => item.id)
+            .join(", "),
         }));
       }
 
-  
       return updatedValues;
     });
-
 
     setAdditional((prevAdditional) => {
       const newItem = {
@@ -624,12 +616,17 @@ export default function BookingPages({ BookingData }) {
         order: order || "",
         id: optid || "",
       };
-  
+
       // Remove the item if it exists (for unchecked checkboxes)
       const updatedAdditional = prevAdditional.filter(
-        (item) => !(item.index === newItem.index && item.type === newItem.type && item.id === newItem.id)
+        (item) =>
+          !(
+            item.index === newItem.index &&
+            item.type === newItem.type &&
+            item.id === newItem.id
+          )
       );
-  
+
       // Add the new item if checked
       if (isChecked) {
         return [...updatedAdditional, newItem]; // Add new item if checked
@@ -637,10 +634,10 @@ export default function BookingPages({ BookingData }) {
         return updatedAdditional; // Return updatedAdditional if unchecked
       }
     });
-  
+
     // Recalculate the subtotal after updating the state
     const subtotal = SubtotalPriceWithAdditional(type, i);
-  
+
     // If you need to update another state or trigger a re-render based on the subtotal, do it here
     // setSubtotalState(subtotal); // Example: if you have a state to hold the subtotal
   };
@@ -651,8 +648,6 @@ export default function BookingPages({ BookingData }) {
       e.target.showPicker();
     }
   };
-
-  
 
   const getPriceForadditional = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -665,40 +660,45 @@ export default function BookingPages({ BookingData }) {
   };
 
   const calculateSubtotal = () => {
-  const adultPrices = AlladultsData?.map(item => Number(item.price)) || [];
-  const additionalPrices = formValues.selectedServicePrices || [];
+    const adultPrices = AlladultsData?.map((item) => Number(item.price)) || [];
+    const additionalPrices = formValues.selectedServicePrices || [];
 
-  const totalAdultPrice = adultPrices.reduce((acc, curr) => acc + curr, 0);
-  const totalAdditionalPrice = additionalPrices.reduce((acc, curr) => acc + curr, 0);
+    const totalAdultPrice = adultPrices.reduce((acc, curr) => acc + curr, 0);
+    const totalAdditionalPrice = additionalPrices.reduce(
+      (acc, curr) => acc + curr,
+      0
+    );
 
-  return totalAdultPrice + totalAdditionalPrice + PackagePrices; // Add PackagePrices if applicable
-};
+    return totalAdultPrice + totalAdditionalPrice + PackagePrices; // Add PackagePrices if applicable
+  };
 
-const SubtotalPriceWithAdditional = (type, i) => {
-  // Get the original price for the given type and index
-  const Original = getPriceForType(type, i);
+  const SubtotalPriceWithAdditional = (type, i) => {
+    // Get the original price for the given type and index
+    const Original = getPriceForType(type, i);
 
-  // Log the Additional state for debugging
+    // Log the Additional state for debugging
 
-  // Filter to get the additional prices for the specific type and index
-  const updatePrice = Additional.filter(
-    (item) => item.type === type && item.index === i
-  ).map((item) => item.price);
+    // Filter to get the additional prices for the specific type and index
+    const updatePrice = Additional.filter(
+      (item) => item.type === type && item.index === i
+    ).map((item) => item.price);
 
+    // Get existing items if needed (based on your previous logic)
+    const PrefPrice = existingItemsState;
 
-  // Get existing items if needed (based on your previous logic)
-  const PrefPrice = existingItemsState;
+    // Calculate the total additional price; if no prices are found, default to 0
+    const additionalPrice = updatePrice.reduce(
+      (acc, curr) => acc + (isNaN(Number(curr)) ? 0 : Number(curr)),
+      0
+    );
 
-  // Calculate the total additional price; if no prices are found, default to 0
-  const additionalPrice = updatePrice.reduce((acc, curr) => acc + (isNaN(Number(curr)) ? 0 : Number(curr)), 0);
+    // Calculate the subtotal by combining the original price and the total additional price
+    const conformSubTotal =
+      (isNaN(Number(Original)) ? 0 : Number(Original)) + additionalPrice;
 
-  // Calculate the subtotal by combining the original price and the total additional price
-  const conformSubTotal =
-    (isNaN(Number(Original)) ? 0 : Number(Original)) + additionalPrice;
-
-  // Format and return the subtotal
-  return formatPrice(conformSubTotal);
-};
+    // Format and return the subtotal
+    return formatPrice(conformSubTotal);
+  };
   const getPriceForType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
     const AdditionalPrice = Additional.filter((item) => item.index === idx);
@@ -755,8 +755,8 @@ const SubtotalPriceWithAdditional = (type, i) => {
     HandlePromo === false
       ? PackagePrices + adultadiPrices + adPrice
       : PromoData.total_amount !== undefined
-        ? PromoData.total_amount
-        : PackagePrices + adultadiPrices;
+      ? PromoData.total_amount
+      : PackagePrices + adultadiPrices;
 
   // calling api
 
@@ -863,8 +863,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
   };
 
   useEffect(() => {
-
-    if (LoginCheck === true && newdata === null ) {
+    if (LoginCheck === true && newdata === null) {
       fetchProfile();
     } else {
       const BackAdultData = localStorage.getItem("AllAdultsData");
@@ -876,8 +875,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
           console.log(AdultD, "AdultD");
           // Extract the user object
           if (AdultD) {
-
-            console.log(formValues,"formValues")
+            console.log(formValues, "formValues");
             setFormValues((prevValues) => {
               const updatedValues = { ...prevValues };
 
@@ -890,7 +888,41 @@ const SubtotalPriceWithAdditional = (type, i) => {
 
               AdultD?.Adult?.map((e, i) => {
                 updatedValues["Adult"][i] = {
-                    ...updatedValues["Adult"][i],
+                  ...updatedValues["Adult"][i],
+                  name: e.name,
+                  surname: e.surname,
+                  birthday: e.birthday,
+                  city: e.city,
+                  email: e.email,
+                  gender: e.gender,
+                  houseNumber: e.houseNumber,
+                  mobile: e.mobile,
+                  nationality: e.nationality,
+                  street: e.street,
+                  zipcode: e.zipcode,
+                  services: e.services || [], // Ensure services is set
+                  selectedPrices: e.selectedPrices || [], // Ensure selectedPrices is set
+                  selectedServices: e.selectedServices || [], // Ensure selectedServices is set
+                };
+
+                // Update the selectedServices to reflect the checkbox state
+                if (e.services && e.services.length > 0) {
+                  e.services.forEach((additional) => {
+                    const serviceValue = `Adult-${i}-${additional.additional_order}-ad-${additional.additional_price_id}-${additional.title}`;
+                    updatedValues["Adult"][i].selectedServices.push(
+                      serviceValue
+                    );
+                    updatedValues["Adult"][i].selectedPrices.push(
+                      additional.price
+                    );
+                  });
+                }
+              });
+
+              AdultD?.Child?.map(
+                (e, i) =>
+                  (updatedValues["Child"][i] = {
+                    ...updatedValues["Child"][i],
                     name: e.name,
                     surname: e.surname,
                     birthday: e.birthday,
@@ -902,62 +934,30 @@ const SubtotalPriceWithAdditional = (type, i) => {
                     nationality: e.nationality,
                     street: e.street,
                     zipcode: e.zipcode,
-                    services: e.services || [], // Ensure services is set
-                    selectedPrices: e.selectedPrices || [], // Ensure selectedPrices is set
-                    selectedServices: e.selectedServices || [], // Ensure selectedServices is set
-                };
-    
-                // Update the selectedServices to reflect the checkbox state
-                if (e.services && e.services.length > 0) {
-                    e.services.forEach((additional) => {
-                        const serviceValue = `Adult-${i}-${additional.additional_order}-ad-${additional.additional_price_id}-${additional.title}`;
-                        updatedValues["Adult"][i].selectedServices.push(serviceValue);
-                        updatedValues["Adult"][i].selectedPrices.push(additional.price);
-                    });
-                }
-            });
-
-
-
-              AdultD?.Child?.map(
-                (e, i) =>
-                (updatedValues["Child"][i] = {
-                  ...updatedValues["Child"][i],
-                  name: e.name,
-                  surname: e.surname,
-                  birthday: e.birthday,
-                  city: e.city,
-                  email: e.email,
-                  gender: e.gender,
-                  houseNumber: e.houseNumber,
-                  mobile: e.mobile,
-                  nationality: e.nationality,
-                  street: e.street,
-                  zipcode: e.zipcode,
-                })
+                  })
               );
               AdultD?.Baby?.map(
                 (e, i) =>
-                (updatedValues["Baby"][i] = {
-                  ...updatedValues["Baby"][i],
-                  name: e.name,
-                  surname: e.surname,
-                  birthday: e.birthday,
-                  city: e.city,
-                  email: e.email,
-                  gender: e.gender,
-                  houseNumber: e.houseNumber,
-                  mobile: e.mobile,
-                  nationality: e.nationality,
-                  street: e.street,
-                  zipcode: e.zipcode,
-                })
+                  (updatedValues["Baby"][i] = {
+                    ...updatedValues["Baby"][i],
+                    name: e.name,
+                    surname: e.surname,
+                    birthday: e.birthday,
+                    city: e.city,
+                    email: e.email,
+                    gender: e.gender,
+                    houseNumber: e.houseNumber,
+                    mobile: e.mobile,
+                    nationality: e.nationality,
+                    street: e.street,
+                    zipcode: e.zipcode,
+                  })
               );
 
               return updatedValues;
             });
 
-            console.log(formValues,"formValuesUpdated")
+            console.log(formValues, "formValuesUpdated");
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -1152,9 +1152,9 @@ const SubtotalPriceWithAdditional = (type, i) => {
                 {currentFields?.map((field, index) => {
                   const fieldValue =
                     LoginCheck === true &&
-                      type === "Adult" &&
-                      newdata === null &&
-                      i === 0
+                    type === "Adult" &&
+                    newdata === null &&
+                    i === 0
                       ? userData?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 
@@ -1300,7 +1300,8 @@ const SubtotalPriceWithAdditional = (type, i) => {
                               enableSearch={true}
                             />
                             <label className="phone_lable">
-                              {translate("Phone")}<span className="text-red"> *</span>
+                              {translate("Phone")}
+                              <span className="text-red"> *</span>
                             </label>
                           </>
                         ) : (
@@ -1320,10 +1321,14 @@ const SubtotalPriceWithAdditional = (type, i) => {
                                   ? getTodayDate()
                                   : undefined
                               }
-                              onFocus={field.type === "date"
-                                ? handleDateFocus
-                                : undefined}
-                              onKeyDown={(e) => { field.type == "date" ? e.preventDefault() : "" }}
+                              onFocus={
+                                field.type === "date"
+                                  ? handleDateFocus
+                                  : undefined
+                              }
+                              onKeyDown={(e) => {
+                                field.type == "date" ? e.preventDefault() : "";
+                              }}
                               required
                             />
                             <label className="lh-1 text-16 text-light-1">
@@ -1362,8 +1367,9 @@ const SubtotalPriceWithAdditional = (type, i) => {
                 </div>
 
                 <div
-                  className={`my-3 border_b px-md-40 ${shouldShowAdditionalServices ? "d-block" : "d-none"
-                    }`}
+                  className={`my-3 border_b px-md-40 ${
+                    shouldShowAdditionalServices ? "d-block" : "d-none"
+                  }`}
                 >
                   <h5 className="text-18 fw-500 my-2">
                     {translate("Possible Additional Services Per Person:")}
@@ -1409,7 +1415,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
                             </label>
                           </div>
                         </div> */}
-                                              {/* <div className="form-checkbox">
+                        {/* <div className="form-checkbox">
           <input
             type="checkbox"
             name={`checkboxGroup-${type}-${i}-${idx}`}
@@ -1444,55 +1450,65 @@ const SubtotalPriceWithAdditional = (type, i) => {
                                 {option.title}
                               </span>
         </div> */}
-        <div className="flex items-center">
-
-<div className="form-checkbox flex items-center " >
-      <input
-        type="checkbox"
-        id={`checkbox-${type}-${i}-${idx}`}
-        name={`checkboxGroup-${type}-${i}-${idx}`}
-        checked={formValues[type]?.[i]?.selectedServices?.includes(`${type}-${i}-${idx}-ad-${option.id}-${option.title}`)}
-        onChange={(e) => {
-          const isChecked = e.target.checked;
-          console.log(isChecked)
-          handleCheckboxChange(e, type, i, idx, option.price, option.additional_order, option.title, option.id, isChecked);
-        }}
-      />
-      <label
-                                    htmlFor={`checkbox-${type}-${i}-${idx}`}
-                                    className="form-checkbox__mark"
-                                  >
-                                    <div className="form-checkbox__icon">
-                                      <svg
-                                        width="10"
-                                        height="8"
-                                        viewBox="0 0 10 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                          fill="white"
-                                        />
-                                      </svg>
-                                    </div>
-                                  </label>
-                                  </div>
-                                <label
-                                  htmlFor={`checkbox-${type}-${i}-${idx}`}
-                                  className="lh-16 "
+                        <div className="flex items-center">
+                          <div className="form-checkbox flex items-center ">
+                            <input
+                              type="checkbox"
+                              id={`checkbox-${type}-${i}-${idx}`}
+                              name={`checkboxGroup-${type}-${i}-${idx}`}
+                              checked={formValues[type]?.[
+                                i
+                              ]?.selectedServices?.includes(
+                                `${type}-${i}-${idx}-ad-${option.id}-${option.title}`
+                              )}
+                              onChange={(e) => {
+                                const isChecked = e.target.checked;
+                                
+                                handleCheckboxChange(
+                                  e,
+                                  type,
+                                  i,
+                                  idx,
+                                  option.price,
+                                  option.additinoal_order,
+                                  option.title,
+                                  option.id,
+                                  isChecked
+                                );
+                              }}
+                            />
+                            <label
+                              htmlFor={`checkbox-${type}-${i}-${idx}`}
+                              className="form-checkbox__mark"
+                            >
+                              <div className="form-checkbox__icon">
+                                <svg
+                                  width="10"
+                                  height="8"
+                                  viewBox="0 0 10 8"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
                                 >
-                                  {option.title}
-                                </label>
-        </div>
+                                  <path
+                                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div>
+                            </label>
+                          </div>
+                          <label
+                            htmlFor={`checkbox-${type}-${i}-${idx}`}
+                            className="lh-16 "
+                          >
+                            {option.title}
+                          </label>
+                        </div>
 
-      
-        {/* <label htmlFor={`checkbox-${type}-${i}-${idx}`} className="form-checkbox__mark d-flex items-center">
+                        {/* <label htmlFor={`checkbox-${type}-${i}-${idx}`} className="form-checkbox__mark d-flex items-center">
     
     <div className="text-14 lh-1 ml-10">{option.title}</div>
   </label> */}
-
-
 
                         <div className="text-14">
                           + {formatPrice(option.price)}{" "}
@@ -1519,9 +1535,6 @@ const SubtotalPriceWithAdditional = (type, i) => {
     });
   };
 
-
-
-
   const bookingData = {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
@@ -1545,7 +1558,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
         ? 0
         : BookingSideBar?.Departure?.value
     ),
-    arrival : BookingSideBar?.Arrival?.value, 
+    arrival: BookingSideBar?.Arrival?.value,
     adult_price: JSON.parse(adultData.length === 0 ? 0 : adultData[0]?.default),
     child_price: JSON.parse(
       Childrendata.length === 0 ? 0 : Childrendata[0]?.default
@@ -1558,7 +1571,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
     coupon_percentage: Discount?.percentage || 0,
     mekka_hotel: BookingSideBar.MakkaHotel?.hotel_id,
     madina_hotel: BookingSideBar.MadinaHotel?.hotel_id,
-    flight_id:  BookingSideBar.Airline?.id,
+    flight_id: BookingSideBar.Airline?.id,
     exclude_flight: JSON.parse(ExcludeFlight),
     total_person: adultData.length + Childrendata.length + babyData.length,
     // tax: JSON.parse(formattedTaxAmount),
@@ -1581,7 +1594,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,
           Discount: Discount,
-          Promo: promo
+          Promo: promo,
         };
 
         // Add new data to existing storage object
@@ -1605,11 +1618,9 @@ const SubtotalPriceWithAdditional = (type, i) => {
 
     setIsLoading(true);
 
-  
-      localStorage.setItem("BookingData", JSON.stringify(bookingData));
-      localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
-      localStorage.setItem("AllAdultsData", JSON.stringify(formValues));
-    
+    localStorage.setItem("BookingData", JSON.stringify(bookingData));
+    localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
+    localStorage.setItem("AllAdultsData", JSON.stringify(formValues));
 
     handleUpdateLocalStorage();
 
@@ -1637,9 +1648,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
-
-
-
+  console.log(formValues, "formValues");
 
   return (
     <>
@@ -1740,14 +1749,15 @@ const SubtotalPriceWithAdditional = (type, i) => {
 
                   <div className="px-1">
                     <div
-                      className={`${(selectedCheckbox &&
-                        BookingSideBar?.Airline === null) ||
+                      className={`${
+                        (selectedCheckbox &&
+                          BookingSideBar?.Airline === null) ||
                         BookingSideBar.selectedCheckbox !== false ||
                         BookingData?.Tour_Details?.tour_details
                           ?.flight_included == "0"
-                        ? "d-none"
-                        : "d-block"
-                        }`}
+                          ? "d-none"
+                          : "d-block"
+                      }`}
                     >
                       <div
                         className={`d-flex items-center justify-content-space-arround  `}
@@ -1778,12 +1788,13 @@ const SubtotalPriceWithAdditional = (type, i) => {
                     </div> */}
 
                     <div
-                      className={`${BookingSideBar.selectedCheckbox !== false ||
+                      className={`${
+                        BookingSideBar.selectedCheckbox !== false ||
                         BookingData?.Tour_Details?.tour_details
                           ?.flight_included == "0"
-                        ? "d-none"
-                        : "d-block"
-                        }`}
+                          ? "d-none"
+                          : "d-block"
+                      }`}
                     >
                       <div
                         className={`d-flex items-center justify-content-space-arround `}
@@ -1831,7 +1842,13 @@ const SubtotalPriceWithAdditional = (type, i) => {
                     </div>
 
                     {/* {BookingSideBar?.Airline !== null || BookingSideBar?.Airline !== "" && ( */}
-                    <div className={BookingSideBar?.selectedCheckbox !== true ? 'd-block' : 'd-none'}>
+                    <div
+                      className={
+                        BookingSideBar?.selectedCheckbox !== true
+                          ? "d-block"
+                          : "d-none"
+                      }
+                    >
                       <div className="d-flex items-center justify-content-space-arround">
                         <div className="mr-5">
                           <FaLuggageCart size={25} color="#DAC04F" />
@@ -1852,7 +1869,11 @@ const SubtotalPriceWithAdditional = (type, i) => {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Mekka : ({BookingSideBar?.MakkaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.mekkaHotelStar})</span>
+                        Mekka : ({BookingSideBar?.MakkaHotel?.hotel_name}) -{" "}
+                        <span className="items-cen">
+                          (<FaStar color="#dabf4f" className="" />{" "}
+                          {BookingSideBar?.mekkaHotelStar})
+                        </span>
                       </div>
                     </div>
 
@@ -1861,7 +1882,11 @@ const SubtotalPriceWithAdditional = (type, i) => {
                         <FaHotel size={20} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        Madina : ({BookingSideBar?.MadinaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {BookingSideBar?.MadinaHotlStar})</span>
+                        Madina : ({BookingSideBar?.MadinaHotel?.hotel_name}) -{" "}
+                        <span className="items-cen">
+                          (<FaStar color="#dabf4f" className="" />{" "}
+                          {BookingSideBar?.MadinaHotlStar})
+                        </span>
                       </div>
                     </div>
 
@@ -1889,7 +1914,9 @@ const SubtotalPriceWithAdditional = (type, i) => {
 
                     <div className={discountClass}>
                       <div className={`d-flex items-center justify-between `}>
-                        <div className="fw-500">{translate("Discount")}{" "}{`(${promo})`}</div>
+                        <div className="fw-500">
+                          {translate("Discount")} {`(${promo})`}
+                        </div>
                         <div className="">
                           {" "}
                           - {formatPrice(Discount.Discount)}{" "}
@@ -1935,7 +1962,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
                             type="button"
                             className="button px-40 py-10 -info-2 bg-accent-1 text-white col-2 ml-10 text-end"
                             onClick={handlePromoSubmit}
-                          // style={{ whiteSpace: "nowrap" }}
+                            // style={{ whiteSpace: "nowrap" }}
                           >
                             {translate("Apply")}
                           </button>
@@ -1986,8 +2013,6 @@ const SubtotalPriceWithAdditional = (type, i) => {
           id="signInModal"
         >
           <section className="pb-20">
-
-
             {/* <form
               onSubmit={HandleLoginSubmite}
               className="contactForm border-1  rounded-12 px-40 py-1 "
@@ -2114,7 +2139,7 @@ const SubtotalPriceWithAdditional = (type, i) => {
               sectionClass={` `}
               hide={false}
               path={`/tour`}
-              bookingPage = {true}
+              bookingPage={true}
             />
           </section>
         </Modal>
