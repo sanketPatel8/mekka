@@ -101,6 +101,7 @@ export default function Login({
       if (resp.Status == 1) {
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
+        localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
 
@@ -143,6 +144,7 @@ export default function Login({
       if (resp.Status == 1) {
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
+        localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         LoginUpdate();
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
