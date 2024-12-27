@@ -111,6 +111,15 @@ export default function Login({
         //     router.push(path);
         //   }, 1000);
         // }
+      }else{
+        showErrorToast(translate, "User not found. Please register your account");
+        setLogInData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          email: "",
+          password: "",
+        });
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
+
       }
     } else {
       const resp = await POST.request({
@@ -136,7 +145,15 @@ export default function Login({
             router.push("/customer/booking");
           }, 1000);
         }
-      } else {
+      }else if(Status == 0){
+        showErrorToast(translate, "User not found. Please register your account");
+        setLogInData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          email: "",
+          password: "",
+        });
+      }
+       else {
         showErrorToast(translate, "Invalid Credentials");
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
