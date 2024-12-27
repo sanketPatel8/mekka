@@ -577,7 +577,7 @@ export default function Register() {
                           redirect_uri={typeof window !== "undefined" ? window.location.origin + "/login" : ""}
                           onLoginStart={() => console.log("start apple login")}
                           onResolve={({ provider, data }) => {
-                            console.log(data,"data")
+                            console.log(data?.name,"data")
                             signinSocial({ type: "apple", data: data });
                           }}
                           onReject={(err) => {
