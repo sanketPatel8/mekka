@@ -1296,33 +1296,33 @@ const CustomerDetaTable = () => {
                               <td className="col-4">
                                 {BookingDetails.paymentData?.payment_plan_date_1}
                               </td>
-                              <td className="col-4">
+                              <td className="col-2">
                                 {BookingDetails.paymentData?.payment_plan_1} €
                               </td>
-                              <td className="col-4">
-                                {BookingDetails.paymentData?.paid_date_1}
+                              <td className="col-6">
+                                {BookingDetails.paymentData?.paid_date_1} Via Stripe - {BookingDetails?.paymentData?.payment_intent_id}
                               </td>
                             </tr>
                             <tr className="row">
                               <td className="col-4">
                                 {BookingDetails.paymentData?.payment_plan_date_2}
                               </td>
-                              <td className="col-4">
+                              <td className="col-2">
                                 {BookingDetails.paymentData?.payment_plan_2} €
                               </td>
-                              <td className="col-4">
-                                {BookingDetails.paymentData?.paid_date_2}
+                              <td className="col-6">
+                                {BookingDetails.paymentData?.paid_date_2} {BookingDetails?.paymentData?.payment_note_1}
                               </td>
                             </tr>
                             <tr className="row">
                               <td className="col-4">
                                 {BookingDetails.paymentData?.payment_plan_date_3}
                               </td>
-                              <td className="col-4">
+                              <td className="col-2">
                                 {BookingDetails.paymentData?.payment_plan_3} €
                               </td>
-                              <td className="col-4">
-                                {BookingDetails.paymentData?.paid_date_3}
+                              <td className="col-6">
+                                {BookingDetails.paymentData?.paid_date_3} {BookingDetails?.paymentData?.payment_note_1}
                               </td>
                             </tr>
                           </tbody>
