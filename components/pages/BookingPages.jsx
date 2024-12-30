@@ -1648,7 +1648,7 @@ export default function BookingPages({ BookingData }) {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
-  console.log(formValues, "formValues");
+  console.log(bookingData, "bookingData");
 
   return (
     <>

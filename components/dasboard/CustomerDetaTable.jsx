@@ -113,11 +113,9 @@ const CustomerDetaTable = () => {
     Modal.setAppElement("#CanclePop_up");
     Modal.setAppElement("#upload_file");
     Modal.setAppElement("#editData");
-    Modal.setAppElement("#Adult1Data");
+    Modal.setAppElement("#Adult1Data"); 
+    
   }, []);
-
-
-  
 
   const ColumnReservation_details = [
     ...(BookingDetails?.reservation?.airlines ? [{
@@ -199,7 +197,8 @@ const CustomerDetaTable = () => {
     {
       name: translate("Action"),
       selector: (row) => (
-        <div className="flex_center">
+        <div className={BookingDetails?.reservation?.reservation_status === 'Cancelled' ? "d-none" : "d-block"}>
+          <div className="flex_center">
           <button
             className="button py-10 px-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)}
@@ -215,6 +214,7 @@ const CustomerDetaTable = () => {
           >
             {translate("Document")}
           </button>
+        </div>
         </div>
       ),
       width: "26%", // Set a custom width for the button column
@@ -247,7 +247,8 @@ const CustomerDetaTable = () => {
     {
       name: translate("Action"),
       selector: (row) => (
-        <div className="flex_center">
+        <div className={BookingDetails?.reservation?.reservation_status === 'Cancelled' ? "d-none" : "d-block"}>
+          <div className="flex_center">
           <button
             className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
@@ -261,6 +262,8 @@ const CustomerDetaTable = () => {
             {translate("Document")}
           </button>
         </div>
+        </div>
+        
       ),
       width: "26%", // Set a custom width for the button column
       // Set a custom width for the button column
@@ -287,7 +290,8 @@ const CustomerDetaTable = () => {
     {
       name: translate("Action"),
       selector: (row) => (
-        <div className="flex_center">
+        <div className={BookingDetails?.reservation?.reservation_status === 'Cancelled' ? "d-none" : "d-block"}>
+          <div className="flex_center">
           <button
             className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
             onClick={() => openEditData(row)} // Pass the current row
@@ -301,6 +305,8 @@ const CustomerDetaTable = () => {
             {translate("Document")}
           </button>
         </div>
+        </div>
+        
       ),
       width: "26%", // Set a custom width for the button column
       // Set a custom width for the button column
@@ -332,18 +338,6 @@ const CustomerDetaTable = () => {
     },
   ];
 
-  // const AmountPaid = [
-  //   {
-  //     name: translate("Date"),
-  //     selector: (row) => row?.payment_plan_date_1 || "N/A", // Use null check and fallback
-  //   },
-  //   {
-  //     name: translate("Amount"),
-  //     selector: (row) => row?.payment_plan_1 || 0, // Use null check and fallback
-  //     cell: (row) => formatPrice(row?.payment_plan_1 || 0), // Avoid undefined values in formatPrice
-  //   },
-  // ];
-
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
   }
@@ -369,9 +363,7 @@ const CustomerDetaTable = () => {
   }
 
   function openEditData(row) {
-    
-    console.log("BookingDetails?.adultData" , BookingDetails?.adultData);
-    console.log("row.id" , row.main_person);
+
     setPersonalUserID(row.id);
     
     setEditUserData(row);
@@ -413,14 +405,12 @@ const CustomerDetaTable = () => {
   const [AdditionalService, setAdditionalService] = useState([]);
   const [AdultPrice, setAdultPrice] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
-
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
   const CustomerID = searchParams.get("customerID");
   const TourID = searchParams.get("TourID");
 
   function openUploadFileModal(personId, reservationId) {
-    console.log(personId, "personId");
     setuploadFileisOpen(true);
     setPersonId(personId);
     filterData(personId);
@@ -440,9 +430,9 @@ const CustomerDetaTable = () => {
         response.Bookings.childData,
         response.Bookings.babyData
       );
-      console.log(filterData, "filterData");
+
       const matchedData = filteredData.filter((data) => data.id === personId);
-      console.log(matchedData, "matchedData");
+  
       if (matchedData.length > 0) {
         const docs = matchedData.map((doc) => {
           if (doc.documets.length > 0) {
@@ -451,7 +441,7 @@ const CustomerDetaTable = () => {
               Name: doc.file_url_orginal_name,
               fileLink: doc.full_path,
             }));
-            console.log(docFiles, "docFiles");
+           
             setViewDetails(docFiles);
           } else {
             setViewDetails([]);
@@ -473,53 +463,6 @@ const CustomerDetaTable = () => {
       }
     }
   };
-  //  Create a new object with name and id
-
-  // const filterData = async (personId, reservationId) => {
-  //   const formData = new FormData();
-  //   formData.append("user_id", CustomerID);
-  //   formData.append("id", reservationId);
-
-  //   const response = await POST.request({
-  //     form: formData,
-  //     url: "booking_details",
-  //   });
-
-  //   if (response.Bookings) {
-  //     const filteredData = response.Bookings.adultData.concat(
-  //       response.Bookings.childData,
-  //       response.Bookings.babyData
-  //     );
-
-  //     const matchedData = filteredData.filter((data) => data.id === personId);
-
-  //     if (matchedData.length > 0) {
-  //       const docs = matchedData.map((doc) => {
-  //         if (doc.documets && doc.documets.length > 0) {
-  //           const docFiles = doc.documets.map((doc) => ({
-  //             type: doc.document_type,
-  //             Name: doc.file_url_orginal_name,
-  //             fileLink: doc.full_path,
-  //           }));
-
-  //           setViewDetails(docFiles);
-  //         }
-  //       });
-
-  //       const downloads = matchedData.map((doc) => {
-  //         if (doc.download_documets && doc.download_documets.length > 0) {
-  //           const download = doc.download_documets.map((doc) => ({
-  //             type: doc.document_type,
-  //             Name: doc.file_url_orginal_name,
-  //             fileLink: doc.full_path,
-  //           }));
-
-  //           setDownloadDetails(download);
-  //         }
-  //       });
-  //     }
-  //   }
-  // };
 
   const fetchBookingDetails = async () => {
     setLoading(true)
@@ -615,14 +558,6 @@ const CustomerDetaTable = () => {
           console.error("Error parsing userData:", error);
         }
       }
-      // if (AdultsPrice && AdultsPrice !== "undefined") {
-      //   try {
-      //     const addiPrice = JSON.parse(AdultsPrice);
-      //     setAdultPrice(addiPrice);
-      //   } catch (error) {
-      //     console.error("Error parsing userData:", error);
-      //   }
-      // }
     }
   }, []);
 
@@ -968,19 +903,19 @@ const CustomerDetaTable = () => {
 
   const handlePayment = () => {
     if (PaymentCheckbox == 1) {
-      console.log("payment type 1");
+  
       
       FetchAddperson();
     }
 
     if (PaymentCheckbox == 3) {
-        console.log("payment type 3");
+
         
       FetchAddperson();
     }
 
     if (PaymentCheckbox == 2) {
-      console.log("payment type 2");
+   
       
       setAddPersonAmount(subtotal)
       setShowStripeModal(true);
@@ -1149,7 +1084,7 @@ const CustomerDetaTable = () => {
         reservation_id: BookingDetails.reservation?.id,
       };
       setPaidData(data);
-      console.log(paidData, "paidData");
+      
     }
  
     setShowStripeModal(true);
@@ -1201,10 +1136,10 @@ const CustomerDetaTable = () => {
     }
   }, [RefundData]);
 
-  console.log(CancelStripCommision , "CancelStripCommision");
-  console.log(TotalRefundinCancel , "TotalRefundinCancel");
-  
-  
+
+  const shouldHideButton =
+  BookingDetails?.reservation?.reservation_status === "Payment Completed" &&
+  BookingDetails?.reservation?.paymentType === "3";
   
 
   return (
@@ -1221,6 +1156,7 @@ const CustomerDetaTable = () => {
                 <>
                 
                 <ToastContainer />
+                
                 <h3 className="t_center">
                   {" "}
                   {translate("Booking Number")} :{" "}
@@ -1244,24 +1180,8 @@ const CustomerDetaTable = () => {
                     </p>
                   </div>
                   {BookingDetails?.reservation?.reservation_status != "Cancelled" && (
-                    <div className="col-lg-6 flex small-flex-center">
-                      <div className="">
-                        {/* <button
-               className="button -sm -info-2 bg-accent-1 text-white "
-             
-             > */}
-                        {/* {PdfData !== "undefined" && (
-                          <a
-                            href={PdfData}
-                            target="_blank"
-                            className="button -sm -info-2 bg-accent-1 text-white"
-                          >
-                            {translate("Show Invoice")}
-                          </a>
-                        )}
-           */}
-                        {/* </button> */}
-                      </div>
+                    <div className={`col-lg-6 ${shouldHideButton ? "d-none" : "d-block"}`}>
+                      <div className={` flex small-flex-center `}>
                       
                       <div
                         className={
@@ -1289,6 +1209,7 @@ const CustomerDetaTable = () => {
                           </button>
                         </div>
                       )}
+                    </div>
                     </div>
                   )}
                 </div>
