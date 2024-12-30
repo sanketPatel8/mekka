@@ -27,13 +27,15 @@ export default function Banner() {
                 data-aos-delay=""
                 className="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
               >
-                {translate("Grab up to")}{" "}
-                <span className="text-info-2">{translate("35% off")} </span>
+                {translate("Discover Your")}{" "} 
+                <span className="text-info-2">{translate("Dream Destination")} </span>
                 <br className="lg:hidden sm:hidden xs:hidden" />
-                {translate("on your favorite")}
+                {translate("Top-Rated Tours")}
                 <br className="lg:hidden" />
-                {translate("Destination")}
+                {translate("Everyone’s Talking About!")}
               </h2>
+
+              
 
               {/* <h2 data-aos="fade-up" data-aos-delay="" className="text-40 md:text-30 lh-13 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left" > Grab up to <span className="text-info-2">35% off </span> <br className="lg:d-none sm:d-none xs:d-none" /> on your favorite <br className="lg:d-none" /> Destination </h2> */}
 

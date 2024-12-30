@@ -237,8 +237,7 @@ export default function TourList4({
                           <div
                             className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
                           >
-                                {/* <FaCalendar color="dabf4f" size={17} /> */}
-
+                            {/* <FaCalendar color="dabf4f" size={17} /> */}
                             {elm.date_begin} - {elm.date_end}
                           </div>
                         </div>
@@ -256,37 +255,53 @@ export default function TourList4({
                                   color="#dabf4f"
                                   size={30}
                                 />
-                                <div className=" flex-column " style={{display:"flex"}}>
-                                  <div className="text-12" >
-                                  <span style={{fontWeight:"700"}}>Hotel Mekka : </span>{" "}
-                                {truncateHotelName(
-                                  elm?.tour_hotels?.mekka_hotels[0]?.hotel_name
-                                )}
-                                 {" "}(
-                                {
-                                  elm.tour_hotels?.mekka_hotels[0]?.hotel_stars
-                                }{" "}
-                                <FaStar color="#dabf4f" className="" /> )
+                                <div
+                                  className=" flex-column "
+                                  style={{ display: "flex" }}
+                                >
+                                  <div className="text-12">
+                                    <span style={{ fontWeight: "700" }}>
+                                      Hotel Mekka :{" "}
+                                    </span>{" "}
+                                    <span className="hotel_name">
+                                      {truncateHotelName(
+                                        elm?.tour_hotels?.mekka_hotels[0]
+                                          ?.hotel_name
+                                      )}
+                                    </span>{" "}
+                                    (
+                                    {
+                                      elm.tour_hotels?.mekka_hotels[0]
+                                        ?.hotel_stars
+                                    }{" "}
+                                    <FaStar color="#dabf4f" className="" /> )
                                   </div>
 
-                                  <div className="text-12" >
-                                  <span style={{fontWeight:"700"}}>Hotel Madina : </span>{" "}
-
-                                {truncateHotelName(
-                                  elm?.tour_hotels?.medina_hotels[0]?.hotel_name
-                                )}
-                                 {" "}(
-                                {
-                                  elm.tour_hotels?.medina_hotels[0]?.hotel_stars
-                                }{" "}
-                                <FaStar color="#dabf4f" className="" style={{fontSize:"10px"}} /> )
+                                  <div className="text-12">
+                                    <span style={{ fontWeight: "700" }}>
+                                      Hotel Madina :{" "}
+                                    </span>{" "}
+                                    <span className="hotel_name">
+                                      {truncateHotelName(
+                                        elm?.tour_hotels?.medina_hotels[0]
+                                          ?.hotel_name
+                                      )}
+                                    </span>{" "}
+                                    (
+                                    {
+                                      elm.tour_hotels?.medina_hotels[0]
+                                        ?.hotel_stars
+                                    }{" "}
+                                    <FaStar
+                                      color="#dabf4f"
+                                      className=""
+                                      style={{ fontSize: "10px" }}
+                                    />{" "}
+                                    )
                                   </div>
                                 </div>
-                                
                               </p>
                             )}
-
-                            
                           </div>
 
                           {/* <p className="tourCard__text mt-5 ">
@@ -303,22 +318,29 @@ export default function TourList4({
                         </div>
 
                         <p className="mt-5">
-                        <div className="  d-flex items-center">
-
-                        <MdFlightTakeoff size={22} color="#DAC04F" />
-                          <span className="text-12 ms-2" style={{fontWeight:"700"}}>{translate("Departure")} : </span>
-                          <span className="text-13 ms-2">{elm?.departures}</span>
-                        </div>
-                        <div className="d-flex items-center">
-
-                        <MdFlightLand size={22} color="#DAC04F" />
-                          <span className="text-13 ms-2" style={{fontWeight:"700"}}>{translate("Arrival")} : </span>
-                          <span className="text-13 ms-2">{elm?.arrival}</span>
-                        </div>
-
+                          <div className="  d-flex items-center">
+                            <MdFlightTakeoff size={22} color="#DAC04F" />
+                            <span
+                              className="text-12 ms-2"
+                              style={{ fontWeight: "700" }}
+                            >
+                              {translate("Departure")} :{" "}
+                            </span>
+                            <span className="text-13 ms-2">
+                              {elm?.departures}
+                            </span>
+                          </div>
+                          <div className="d-flex items-center">
+                            <MdFlightLand size={22} color="#DAC04F" />
+                            <span
+                              className="text-13 ms-2"
+                              style={{ fontWeight: "700" }}
+                            >
+                              {translate("Arrival")} :{" "}
+                            </span>
+                            <span className="text-13 ms-2">{elm?.arrival}</span>
+                          </div>
                         </p>
-
-
 
                         {elm?.company_name !== " " &&
                           elm?.company_name !== null && (
@@ -332,19 +354,30 @@ export default function TourList4({
                                 />
                               </div>
                               <div className="text-13 ml-5">
-                                <span className="fw-700">{translate("Organizer")} : </span> 
+                                <span className="fw-700">
+                                  {translate("Organizer")} :{" "}
+                                </span>
                                 {/* {elm?.rating_count}) - */}
                                 {elm?.company_name}
                               </div>
                             </p>
                           )}
 
-                          <div className=" mt-5 ">
-                            <FaPersonWalking color="#3f97ca" size={23}  />
-                            <span className="text-13 ms-2 " style={{color:"#3f97ca",fontWeight:"700"}}>{translate("Distance to the Kaaba")} : </span>
-                            <span className="text-13 ms-2" style={{color:"#3f97ca"}}>{elm?.distance_to_hotel} </span>
-                            
-                          </div>
+                        <div className=" mt-5 ">
+                          <FaPersonWalking color="#3f97ca" size={23} />
+                          <span
+                            className="text-13 ms-2 "
+                            style={{ color: "#3f97ca", fontWeight: "700" }}
+                          >
+                            {translate("Distance to the Kaaba")} :{" "}
+                          </span>
+                          <span
+                            className="text-13 ms-2"
+                            style={{ color: "#3f97ca" }}
+                          >
+                            {elm?.distance_to_hotel}{" "}
+                          </span>
+                        </div>
 
                         {/* <div className="row x-gap-20 y-gap-5 ">
                           <div className="col-auto">

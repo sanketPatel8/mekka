@@ -268,7 +268,7 @@ const page = () => {
       <ToastContainer />
       <Header1 />
       <div className="mt-80 mb-80">
-        <h1 className="text-center my-5">
+        <h1 className="text-center items-pedding">
           {translate("Partner Registration")}{" "}
         </h1>
         <div className="container">
