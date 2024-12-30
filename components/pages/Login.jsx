@@ -149,7 +149,7 @@ export default function Login({
             router.push("/customer/booking");
           }, 1000);
         }
-      }else if(Status == 0){
+      }else if(resp.Status == 0){
         showErrorToast(translate, "User not found. Please register your account");
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
