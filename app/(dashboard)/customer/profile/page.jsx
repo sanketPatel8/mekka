@@ -219,7 +219,7 @@ export default function Profile() {
     const formType = e.target.name;
 
     if (formType === "profile") {
-      if (!name || !surname || !email || !image1) {
+      if (!name || !surname || !email ) {
         showErrorToast(translate, "Please fill all fields");
         return;
       }

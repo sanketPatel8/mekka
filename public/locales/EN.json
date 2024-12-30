@@ -505,7 +505,7 @@
   "Range" : "Range",
   "Price" : "Price",
   "No Tours Available" : "No Tours Available",
-  "results" : "results",
+  "Results" : "Results",
   "including taxes and fee" : "including taxes and fee",
   "Showing results" : "Showing results",
   "Share" : "Share",
@@ -602,7 +602,11 @@
   "Pay Later (using Bank Transfer or clicking on Strip link)" : "Pay Later (using Bank Transfer or clicking on Strip link)",
   "Culture Trip" : "Culture Trip",
   "Call us!" : "Call us!",
-  "Write to us WhatsApp" : "Write to us WhatsApp"
+  "Write to us WhatsApp" : "Write to us WhatsApp",
+  "Cancel Date" : "Cancel Date",
+  "Tour Date" : "Tour Date",
+  "Strip Commision 5%" : "Strip Commision 5%",
+  "Amount Refund - add strip commision" : "Amount Refund - add strip commision"
 
  
   

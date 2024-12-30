@@ -154,7 +154,7 @@ export default function ArticlesThree() {
                 />
 
                 <div className="text-14 text-center mt-20">
-                  {translate("Showing results")} 1 - {range} of {count}
+                  {translate("Total")} - {count}
                 </div>
               </div>
             </div>

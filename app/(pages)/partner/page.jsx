@@ -734,7 +734,7 @@ const page = () => {
                               </svg>
                             </div>
                           </div>
-                          <span className="text-14 lh-12 ml-10">
+                          <span className="text-14 lh-12 ml-10 text-left">
                     {translate(
                       "I have read the" )} <Link href={"/Datenschutz"} className="text-blue" target="_blank">{translate("data protection")}</Link>  {translate("and I accept the")} <Link href={"/Terms-of-Use"} className="text-blue" target="_blank">{translate("conditions.")}</Link>
                     

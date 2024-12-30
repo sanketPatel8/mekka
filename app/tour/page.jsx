@@ -44,8 +44,9 @@ export default function PageData() {
   const [minDistance , setMinDistanse]  = useState(0);
   const [maxValue , setMaxValue]  = useState(0);
   const [minValue , setMinValue]  = useState(0);
+  const [FilterChange, setFilterChange] = useState(false)
 
-
+  
   const route = useRouter();
 
   // page title 
@@ -76,79 +77,38 @@ export default function PageData() {
     });
   };
 
-  const fetchListing = async (pageIndex) => {
-    const formData = new FormData();
-
-    formData.append("start", pageIndex || 0);
-
-    try {
-      const response = await POST.request({
-        form: formData,
-        url: "tourlist",
-      });
-      setTourData(response.Tours);
-      setRange(response.Total_Page);
-      setCount(response.Count);
-      setTourList(true);
-
-      route.push("#redirect");
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const onPageChange = async (pageIndex) => {
+    // Retrieve search parameters
     const tourTypeFromParam = searchParams.get("TourType") || "";
     const typeFromParam = searchParams.get("type") || "";
-
     const tourType = tourTypeFromParam || typeFromParam || "";
-
-    const startDate =
-      searchParams.get("StartDate") === undefined
-        ? ""
-        : searchParams.get("StartDate");
-    const endDate =
-      searchParams.get("enddate") === undefined
-        ? ""
-        : searchParams.get("enddate");
-    const person =
-      searchParams.get("person") === undefined
-        ? ""
-        : searchParams.get("person");
-
-    const HeaderType =
-      searchParams.get("type") === undefined ? "" : searchParams.get("type");
-
+  
+    const startDate = searchParams.get("StartDate") || "";
+    const endDate = searchParams.get("enddate") || "";
+    const person = searchParams.get("person") || "";
+  
+    const headerType = searchParams.get("type") || "";
+  
+    
     if (tourType || startDate || endDate || person) {
-
-      await fetchSearch1Data({
-        pageIndex,
-        tourType,
-        startDate,
-        endDate,
-        person,
-      });
-    } else if (
-      FilterSidebar.selectedTourTypes !== " " ||
-      FilterSidebar.selectedLanguages.length !== 0 ||
-      FilterSidebar.selectedCities.length !== 0 ||
-      FilterSidebar.selectedFeatures.length !== 0 ||
-      FilterSidebar.selectedDurations.length !== 0 ||
-      (FilterPrice[1] !== 0 || FilterPrice[0] !== 0) ||
-      (FilterDistance[1] !== 0 || FilterDistance[0] !== 0)
-    ) {
-    } else {
-      
-      await  fetchListing(pageIndex);
-    }
+      if(FilterChange === false){
+        await fetchSearch1Data({
+          pageIndex,
+          tourType,
+          startDate,
+          endDate,
+          person,
+        });
+      }else{
+        FetchFilterData(pageIndex)
+      }
+    } 
   };
+  
 
   useEffect(() => {
     setActiveIndex(0);
   }, [FilterSidebar]);
-
-  
-  
 
   useEffect(() => {
     FetchTourDataAPi();
@@ -158,7 +118,7 @@ export default function PageData() {
       SearchData.endDate === null &&
       SearchData.person === null
     ) {
-      fetchListing();
+     
     }
   }, []);
 
@@ -189,6 +149,7 @@ export default function PageData() {
         form: formData,
         url: "tourfilter",
       });
+      setFilterChange(true)
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);
@@ -247,8 +208,6 @@ export default function PageData() {
   //   fetchData();
   // }, [FilterSidebar, FilterPrice, FilterDistance, searchParams]); 
   useEffect(() => {
-
-
       if (
         FilterSidebar.selectedTourTypes !== " " ||
         FilterSidebar.selectedLanguages.length !== 0 ||
@@ -273,7 +232,7 @@ export default function PageData() {
     try {
 
       const response = await post("tour_data", sendData);
-      console.log(response, "response");
+   
       setFliterData(response.Data);
       setDistance([response?.Data?.min_km , response?.Data?.max_km])
       setValue([response?.Data?.min_price , response?.Data?.max_price])
@@ -305,6 +264,7 @@ export default function PageData() {
     };
     try {
       const response = await post("search_tour", sendData);
+      setFilterChange(false)
       setTourData(response.Tour_List);
       setRange(response.Total_Page);
       setCount(response.Count);
@@ -316,6 +276,9 @@ export default function PageData() {
       showErrorToast(translate,"An error occurred during registration");
     }
   };
+
+  console.log(FilterChange , 'FilterChange');
+  
 
   useEffect(() => {
 
@@ -337,7 +300,7 @@ export default function PageData() {
       FilterSidebar.selectedDurations.length == 0 ) &&
       (tourType == "" && startDate == "" && endDate == "" && person == "")
     ){
-      fetchListing();
+    
     }
   },[FilterSidebar,searchParams]);
 

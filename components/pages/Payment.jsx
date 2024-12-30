@@ -1376,7 +1376,7 @@ const handleSecondAmountChange = (e) => {
                     <div className="text-start">
                       {" "}
                       {translate("Makka")} :{" "}
-                      ({SideBarData?.MakkaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.mekkaHotelStar})</span> 
+                      {SideBarData?.MakkaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.mekkaHotelStar})</span> 
                     </div>
                   </div>
 
@@ -1389,7 +1389,7 @@ const handleSecondAmountChange = (e) => {
                     <div className="text-start">
                       {" "}
                       {translate("Madina")} :{" "}
-                      ({SideBarData?.MadinaHotel?.hotel_name}) - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.MadinaHotlStar})</span> 
+                      {SideBarData?.MadinaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.MadinaHotlStar})</span> 
                     </div>
                   </div>
 
