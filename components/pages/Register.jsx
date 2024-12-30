@@ -19,9 +19,11 @@ import {
   LoginSocialGoogle,
   LoginSocialApple,
 } from "reactjs-social-login";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
 export default function Register() {
   const { translate } = useTranslation();
+  const { dispatch } = useAuthContext();
 
   // const LoginSocialFacebook = dynamic(
   //   () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
@@ -90,8 +92,12 @@ export default function Register() {
 
       if (resp.Status == "1") {
 
-        console.log("success",resp.status);
         showSuccessToast(translate, "User created successfully");
+        localStorage.setItem("customer", JSON.stringify(resp));
+        localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
+        dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        
+
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -99,6 +105,11 @@ export default function Register() {
           email: "",
           password: "",
         });
+
+        setTimeout(() => {
+          setLoginPer(true);
+          router.push("/customer/booking");
+        }, 1000);
   
         setConfirmpass("");
   
@@ -107,13 +118,46 @@ export default function Register() {
         // localStorage.setItem("emailForSignIn", email);
   
         // Redirect after successful registration
-        setTimeout(() => {
-          router.push("/login");
-        }, 2000);
+        // setTimeout(() => {
+        //   router.push("/login");
+        // }, 2000);
        
       }
       else if (resp.Status == "-2"){
-        showErrorToast(translate,"Email already exists");
+        // showSuccessToast(translate,"Email already exists");
+        // localStorage.setItem("customer", JSON.stringify(resp));
+        // localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
+        // dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        
+
+        // setRegisterData({
+        //   AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+        //   name: "",
+        //   surname: "",
+        //   email: "",
+        //   password: "",
+        // });
+
+        // setTimeout(() => {
+        //   setLoginPer(true);
+        //   router.push("/customer/booking");
+        // }, 1000);
+
+        showErrorToast(translate,"You are already registered with this email please login from login page ");
+      
+        setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+        });
+
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+
+
         
       }else if(resp.Status == "0"){
         showErrorToast(translate,"Invalid Credentials")
@@ -133,6 +177,11 @@ export default function Register() {
 
         console.log("success",resp.Status);
         showSuccessToast(translate, "User created successfully");
+        localStorage.setItem("customer", JSON.stringify(resp));
+        localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
+        dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
+        
+
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -140,6 +189,13 @@ export default function Register() {
           email: "",
           password: "",
         });
+
+        setTimeout(() => {
+          setLoginPer(true);
+          router.push("/customer/booking");
+        }, 1000);
+
+
   
         setConfirmpass("");
   
@@ -148,12 +204,13 @@ export default function Register() {
         // localStorage.setItem("emailForSignIn", email);
   
         // Redirect after successful registration
-        setTimeout(() => {
-          router.push("/login");
-        }, 2000);
+        // setTimeout(() => {
+        //   router.push("/login");
+        // }, 2000);
        
       } else if(resp.Status == "-2"){
-        showErrorToast(translate, "User Already Exists");
+        showErrorToast(translate,"You are already registered with this email please login from login page ");
+      
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -161,6 +218,12 @@ export default function Register() {
           email: "",
           password: "",
         });
+
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+
+
       }else{
         showErrorToast(translate, "Invalid Credentials");
         setRegisterData({
