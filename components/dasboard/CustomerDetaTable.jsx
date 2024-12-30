@@ -1250,7 +1250,7 @@ const CustomerDetaTable = () => {
                className="button -sm -info-2 bg-accent-1 text-white "
              
              > */}
-                        {PdfData !== "undefined" && (
+                        {/* {PdfData !== "undefined" && (
                           <a
                             href={PdfData}
                             target="_blank"
@@ -1259,7 +1259,7 @@ const CustomerDetaTable = () => {
                             {translate("Show Invoice")}
                           </a>
                         )}
-          
+           */}
                         {/* </button> */}
                       </div>
                       
