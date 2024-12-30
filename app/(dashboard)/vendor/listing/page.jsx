@@ -283,13 +283,13 @@ export default function DBListing() {
                             />
                             <span>
                               {" "}
-                              {translate("Arrival")} : {elm?.arrival}
+                              {translate("Arrival")} : {elm?.arrival.join(" , ")}
                             </span>
                           </div>
 
                           {elm.tour_commission !== null && (
-                            <div className="row x-gap-20 y-gap-5 pt-30">
-                              {/* {elm.features?.map((elm2, i2) => ( */}
+                            <div className="row x-gap-20 y-gap-5 ">
+                    
                               <div className="col-auto">
                                 <div className="text-14 ">
                                   {translate("Commision")} :{" "}
@@ -297,11 +297,11 @@ export default function DBListing() {
                                   {elm.commission_type == "1" ? " €" : "%"}
                                 </div>
                               </div>
-                              {/* ))} */}
+                             
                             </div>
                           )}
 
-                          <div className="row x-gap-20 y-gap-5 pt-30">
+                          <div className="row x-gap-20 y-gap-5 ">
                             {elm.features?.map((elm2, i2) => (
                               <div key={i2} className="col-auto">
                                 <div className="text-14 ">{elm2.name}</div>
