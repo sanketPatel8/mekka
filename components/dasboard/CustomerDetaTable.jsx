@@ -1145,7 +1145,11 @@ const CustomerDetaTable = () => {
     if (RefundData?.Refund_Amount) {
       const commission = RefundData?.Refund_Amount * 0.05;
       setCancelStripCommision(commission);
-      setTotalRefundinCancel(RefundData?.Refund_Amount - commission);
+      if(BookingDetails?.reservation?.paymentType === '2'){
+        setTotalRefundinCancel(RefundData?.Refund_Amount - commission);
+      }else{
+        setTotalRefundinCancel(RefundData?.Refund_Amount);
+      }
     }
   }, [RefundData]);
 
@@ -1918,12 +1922,16 @@ const CustomerDetaTable = () => {
                         <td className="px-1 py-2">{translate("Tour Date")}</td>
                         <td className="px-1 py-2">{RefundData?.tour_date}</td>
                       </tr>
-                      <tr>
+
+                      {BookingDetails?.reservation?.paymentType === '2' ?  (
+                        <tr>
                         <td className="px-1 py-2">
                           {translate("Strip Commision 5%")}
                         </td>
                         <td className="px-1 py-2">{CancelStripCommision} €</td>
                       </tr>
+                      ) : "" }
+                      
                       <tr>
                         <td className="px-1 py-2">
                           {translate("Amount Refund - add strip commision")} (

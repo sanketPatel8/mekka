@@ -152,7 +152,6 @@ export default function ArticlesThree() {
                   startParam="start"
                   onPageChange={onPageChange}
                 />
-
                 <div className="text-14 text-center mt-20">
                   {translate("Total")} - {count}
                 </div>
