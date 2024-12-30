@@ -158,7 +158,7 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {TourData?.length == 0 ? 0 : TourData?.length}{" "}
+                  {count}{" "}
                   {translate("results")}
                 </div>
               </div>

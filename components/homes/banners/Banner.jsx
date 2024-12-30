@@ -29,10 +29,10 @@ export default function Banner() {
               >
                 {translate("Discover Your")}{" "} 
                 <span className="text-info-2">{translate("Dream Destination")} </span>
-                <br className="lg:hidden sm:hidden xs:hidden" />
+                {/* <br className="lg:hidden sm:hidden xs:hidden" />
                 {translate("Top-Rated Tours")}
                 <br className="lg:hidden" />
-                {translate("Everyone’s Talking About!")}
+                {translate("Everyone’s Talking About!")} */}
               </h2>
 
               
@@ -44,7 +44,8 @@ export default function Banner() {
                 data-aos-delay=""
                 className="mt-10 text-left md:text-center lg:text-center xl:text-center text-white"
               >
-                {translate("Limited time offer, don't miss the opportunity")}
+                {/* {translate("Limited time offer, don't miss the opportunity")} */}
+                <span>{translate('Top-Rated Tours')}</span><span>{translate("Everyone’s Talking About!")}</span>
               </p>
 
               <div className="mt-30 md:mt-20 text-center text-md-left d-flex justify-content-center justify-content-md-start">
