@@ -731,5 +731,9 @@
 "Tour Deleted Successfully" : "Tour erfolgreich gelöscht",
 "Email or Password is wrong" : "E-Mail oder Passwort ist falsch",
 "User not found. Please register your account" : "Benutzer nicht gefunden. Bitte registrieren Sie Ihr Konto",
-"Your account is not approved by the admin":"Ihr Konto wurde vom Administrator nicht genehmigt"
+"Your account is not approved by the admin":"Ihr Konto wurde vom Administrator nicht genehmigt",
+"Cancel Date" : "Stornierungsdatum",
+"Tour Date" : "Tourdatum",
+"Strip Commision 5%": "Strip-Provision 5%",
+"Amount Refund - add strip commision" : "Betrag Rückerstattung - Stripe-Provision hinzufügen"
 }
