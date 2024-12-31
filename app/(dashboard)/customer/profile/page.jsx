@@ -19,18 +19,6 @@ export default function Profile() {
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [UserProfile, setUserProfile] = useState([]);
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   surname: "",
-  //   email: "",
-  //   image1: "",
-  // });
-  // const [passwordData, setPasswordData] = useState({
-  //   oldPassword: "",
-  //   newPassword: "",
-  //   confirmPassword: "",
-  // });
-
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
@@ -156,47 +144,7 @@ export default function Profile() {
       const blobUrl = URL.createObjectURL(file);
       setFileBlob(blobUrl);
     }
-
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     setFormData((prevData) => ({
-    //       ...prevData,
-    //       image1: reader.result, // Set the uploaded image URL
-    //     }));
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
   };
-
-  //   const fetchUpdateProfile = async (type) => {
-  //     const formDatas = new FormData();
-
-  //     // Append form data fields
-  //     formDatas.append("id", customer?.user?.id);
-  //     formDatas.append("type", "profile");
-  //     formDatas.append("name", name);
-  //     formDatas.append("surname", surname);
-  //     formDatas.append("email", email);
-  //     formDatas.append("image", image1);
-
-  //     setIsLoading(true);
-
-  //     try {
-  //       const response = await POST.request({
-  //         form: formDatas,
-  //         url: "update_profile",
-  //       });
-
-  //       if (response) {
-  //         setIsLoading(false);
-  //         showSuccessToast(response?.message);
-
-  //       }
-  //     } catch (e) {
-  //
-  //       setIsLoading(false);
-  //   };
-  // }
 
   const [someObject, setSomeObject] = useState({ toggle: false });
 
@@ -289,43 +237,6 @@ export default function Profile() {
     // fetchUpdateProfile();
   };
 
-  // const handleChange = (e) => {
-  //   const {  value } = e.target;
-  //   setPasswordData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const fetchUpdatePassword = async (type) => {
-  //   const formDatas = new FormData();
-
-  //
-  //   formDatas.append("id", USerData?.id);
-  //   formDatas.append("type", "change_password");
-  //   formDatas.append("old_password", passwordData?.oldPassword);
-  //   formDatas.append("password", passwordData?.newPassword);
-
-  //   try {
-  //     const response = await POST.request({
-  //       form: formDatas,
-  //       url: "update_profile",
-  //     });
-
-  //     if(response.status === "success"){
-
-  //     showSuccessToast(response?.message);
-
-  //     }else{
-
-  //       showErrorToast(response?.message);
-
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
   const handlePasswordChange = (e) => {
     const { value } = e.target;
     setConfirmPassword(value);
@@ -352,36 +263,7 @@ export default function Profile() {
       setPasswordError("");
     }
   };
-  // const handlePasswordChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setPasswordData((prevData) => ({
-  //     ...prevData,
-  //     [e.target.name]: value,
-  //   }));
-  //   if (value !== passwordData.newPassword) {
-  //     setError("Passwords do not match");
-  //     }else{
-  //       setError("");
-  //     }
-  // }
-  // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-  // const handlePassword = (e) => {
-  //   const {name,value} = e.target;
-  //   setPasswordData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  //   if (!passwordRegex.test(value)) {
-  //     setPasswordError("Password must contain at least 8 characters, including uppercase, lowercase letters, numbers and special characters");
-  //   }  else {
-  //     setPasswordError("");
-  //   }
-  //   if(!value){
-  //     setPasswordError("");
-  //   }
-  // };
-
+ 
   console.log("countryCode", countryCode);
   console.log("Phone", Phone);
 
