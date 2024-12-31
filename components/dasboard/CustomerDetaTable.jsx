@@ -124,10 +124,7 @@ const CustomerDetaTable = () => {
         ]
       : []),
 
-    // {
-    //   name: translate("From"),
-    //   selector: (row) => "aa column rakhva ni che k nai",
-    // },
+    
     ...(BookingDetails?.reservation?.departure_names
       ? [
           {
@@ -136,6 +133,7 @@ const CustomerDetaTable = () => {
           },
         ]
       : []),
+
     ...(BookingDetails?.reservation?.arrival
       ? [
           {
@@ -373,27 +371,21 @@ const CustomerDetaTable = () => {
   function afterOpenModal() {
     // No need to change subtitle color as it's not being used in this context
   }
-
   function openModal() {
     setIsOpen(true);
   }
-
   function closeModal() {
     setIsOpen(false);
   }
-
   function openPaymentModal() {
     setPaymentModalIsOpen(true);
   }
-
   function closePaymentModal() {
     setPaymentModalIsOpen(false);
   }
-
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
   }
-
   function openEditData(row) {
     setPersonalUserID(row.id);
 
@@ -411,21 +403,11 @@ const CustomerDetaTable = () => {
 
     setEditData(true);
   }
-
   function closeEditData() {
     setEditData(false);
   }
-
   function closeAdult1Deta() {
     setAdult1Deta(false);
-  }
-
-  function openInvoice() {
-    setinvoice(true);
-  }
-
-  function closeInvoice() {
-    setinvoice(false);
   }
 
   // for add document row and remove row

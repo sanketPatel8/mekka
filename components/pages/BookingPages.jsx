@@ -226,11 +226,11 @@ export default function BookingPages({ BookingData }) {
         console.error("Error parsing userData:", error);
       }
     }
-
+   
+    
     if (userData && userData !== "undefined") {
       try {
-        const userid = JSON.parse(userData);
-
+        const userid = JSON.parse(userData);        
         // Extract the user object
         if (userid && userid.user) {
           setUserID(userid.user);
@@ -531,8 +531,9 @@ export default function BookingPages({ BookingData }) {
   ) => {
     const value = `${type}-${i}-${idx}-ad-${optid}-${title}`;
 
-    console.log(order, "order");
+
     // Update the form values state
+
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
 
@@ -564,10 +565,7 @@ export default function BookingPages({ BookingData }) {
         title: title,
         additional_order: order,
         additional_price_id: optid,
-      };
-
-      console.log(Services , 'services');
-      
+      }
 
       if (isChecked) {
         updatedValues[type][i].selectedServices.push(value);
@@ -586,8 +584,11 @@ export default function BookingPages({ BookingData }) {
         ].services.filter((item) => item.price !== price);
       }
 
+      // console.log(JSON.stringify(updatedValues[type][i].services) , 'updatedValues[type][i].services');
+      
      
       if (type === "Adult" && i === 0) {
+
         setUserData((prevUserData) => ({
           ...prevUserData,
           selectedService: updatedValues[type][i].selectedServices,
@@ -601,11 +602,15 @@ export default function BookingPages({ BookingData }) {
           additional_price_id: updatedValues[type][i].services
             .map((item) => item.id)
             .join(", "),
+            services : updatedValues[type][i].services
         }));
       }
 
       return updatedValues;
     });
+
+
+    
 
     setAdditional((prevAdditional) => {
       const newItem = {
@@ -872,10 +877,10 @@ export default function BookingPages({ BookingData }) {
         try {
           const AdultD = JSON.parse(BackAdultData);
 
-          console.log(AdultD, "AdultD");
+        
           // Extract the user object
           if (AdultD) {
-            console.log(formValues, "formValues");
+    
             setFormValues((prevValues) => {
               const updatedValues = { ...prevValues };
 
@@ -957,7 +962,7 @@ export default function BookingPages({ BookingData }) {
               return updatedValues;
             });
 
-            console.log(formValues, "formValuesUpdated");
+       
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -1645,10 +1650,9 @@ export default function BookingPages({ BookingData }) {
 
   const { translate } = useTranslation();
 
-  const discountClass =
-    Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
-
-  console.log(bookingData, "bookingData");
+  const discountClass = Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
+  
+  console.log(userData , 'userData');
 
   return (
     <>
