@@ -279,6 +279,7 @@ export default function Profile() {
           url: "remove_profile_image",
         });
         console.log(response, "response");
+        showSuccessToast(translate, response.Message);
       } catch (e) {}
     };
     fetchUpdateProfile();
