@@ -125,6 +125,25 @@ export default function Profile() {
     }
   };
 
+
+  const handleImageremove = () => {
+    const fetchUpdateProfile = async () => {
+      const formDatas = new FormData();
+
+      formDatas.append("id", user?.user.id);
+
+      try {
+        const response = await POST.request({
+          form: formDatas,
+          url: "remove_profile_image",
+        });
+        console.log(response, "response");
+        showSuccessToast(translate, response.Message);
+      } catch (e) {}
+    };
+    fetchUpdateProfile();
+  };
+
   const handleImageChange1 = (e) => {
     const file = e.target.files[0];
     const allowedType = ["image/jpeg", "image/x-png", "image/png"];
@@ -135,8 +154,6 @@ export default function Profile() {
     }
 
   };
-
-
 
   const handleImageChange2 = (event) => {
     const files = event.target.files;
@@ -167,24 +184,6 @@ export default function Profile() {
       setUploadImage(updatedImages);
     });
   };
-  // const dataURItoFile = (dataURI, fileName) => {
-  //   const byteString = atob(dataURI.split(',')[1]);
-  //   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-  //   const ab = new ArrayBuffer(byteString.length);
-  //   for (let i = 0; i < byteString.length; i++) {
-  //     ab[i] = byteString.charCodeAt(i);
-  //   }
-  //   const file = new Blob([ab], { type: mimeString });
-  //   file.name = fileName;
-  //   return file;
-  // };
-
-  // const getFileNameFromBase64 = (base64String) => {
-  //   const decodedString = atob(base64String);
-  //   const fileNameRegex = /filename="(.*)"/;
-  //   const match = decodedString.match(fileNameRegex);
-  //   return match ? match[1] : null;
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -388,6 +387,7 @@ export default function Profile() {
   const handleDeleteImage1 = () => {
     setImage1("");
     setFileBlob({});
+    handleImageremove()
   };
 
   const handleDeleteImage2 = (index, event) => {
@@ -442,7 +442,6 @@ export default function Profile() {
     }
   
   };
-
 
   useEffect(() => {
     if (typeof window !== "undefined") {

@@ -21,7 +21,6 @@ export default function payment() {
     <>
       <main>
         <Header1 payment={true}/>
-        {/* <BookingPages /> */}
         <PaymentPage />
         <FooterTwo />
       </main>

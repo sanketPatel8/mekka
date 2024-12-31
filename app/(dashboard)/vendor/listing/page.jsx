@@ -9,6 +9,7 @@ import { FaPersonWalking } from "react-icons/fa6";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaStar } from "react-icons/fa";
 import {
+  faCalendar,
   faHotel,
   faPlaneArrival,
   faPlaneDeparture,
@@ -283,13 +284,13 @@ export default function DBListing() {
                             />
                             <span>
                               {" "}
-                              {translate("Arrival")} : {elm?.arrival.join(" , ")}
+                              {translate("Arrival")} :{" "}
+                              {elm?.arrival.join(" , ")}
                             </span>
                           </div>
 
                           {elm.tour_commission !== null && (
                             <div className="row x-gap-20 y-gap-5 ">
-                    
                               <div className="col-auto">
                                 <div className="text-14 ">
                                   {translate("Commision")} :{" "}
@@ -297,7 +298,6 @@ export default function DBListing() {
                                   {elm.commission_type == "1" ? " €" : "%"}
                                 </div>
                               </div>
-                             
                             </div>
                           )}
 
@@ -312,7 +312,11 @@ export default function DBListing() {
                           <div className="row x-gap-20 y-gap-5 ">
                             <div className="col-auto">
                               <div className="d-flex text-14 items-center">
-                                <FaCalendar color="dabf4f" size={17} />
+                                <FontAwesomeIcon
+                                  icon={faCalendar}
+                                  className="me-1  text-accent-1"
+                                  style={{ fontSize: "18px" }}
+                                />
                                 <p className="mx-1">
                                   {elm?.date_begin} to {elm?.date_end}
                                 </p>

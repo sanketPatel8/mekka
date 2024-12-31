@@ -112,7 +112,7 @@ export default function Sidebar() {
           <Header setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
-            <h1 className="text-30"> {translate("Dashboard")}</h1>
+            <h1 className="text-30"> {translate("Dashboard")}</h1>  
             {loading ? (
               <div
                 className="d-flex justify-content-center align-items-center"

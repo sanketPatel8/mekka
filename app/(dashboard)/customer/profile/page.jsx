@@ -11,28 +11,14 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css"; 
+import "react-phone-input-2/lib/style.css";
 import { useCountryCode } from "@/app/context/useCountryCode";
 
-
 export default function Profile() {
-
   const { countryCode } = useCountryCode();
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [UserProfile, setUserProfile] = useState([]);
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   surname: "",
-  //   email: "",
-  //   image1: "",
-  // });
-  // const [passwordData, setPasswordData] = useState({
-  //   oldPassword: "",
-  //   newPassword: "",
-  //   confirmPassword: "",
-  // });
-
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
@@ -59,7 +45,7 @@ export default function Profile() {
   }, []);
 
   const handlePhoneChange = (value) => {
-    setPhone(value); 
+    setPhone(value);
   };
 
   // console.log("formData", formData?.image1);
@@ -158,47 +144,7 @@ export default function Profile() {
       const blobUrl = URL.createObjectURL(file);
       setFileBlob(blobUrl);
     }
-
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     setFormData((prevData) => ({
-    //       ...prevData,
-    //       image1: reader.result, // Set the uploaded image URL
-    //     }));
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
   };
-
-  //   const fetchUpdateProfile = async (type) => {
-  //     const formDatas = new FormData();
-
-  //     // Append form data fields
-  //     formDatas.append("id", customer?.user?.id);
-  //     formDatas.append("type", "profile");
-  //     formDatas.append("name", name);
-  //     formDatas.append("surname", surname);
-  //     formDatas.append("email", email);
-  //     formDatas.append("image", image1);
-
-  //     setIsLoading(true);
-
-  //     try {
-  //       const response = await POST.request({
-  //         form: formDatas,
-  //         url: "update_profile",
-  //       });
-
-  //       if (response) {
-  //         setIsLoading(false);
-  //         showSuccessToast(response?.message);
-
-  //       }
-  //     } catch (e) {
-  //
-  //       setIsLoading(false);
-  //   };
-  // }
 
   const [someObject, setSomeObject] = useState({ toggle: false });
 
@@ -219,7 +165,7 @@ export default function Profile() {
     const formType = e.target.name;
 
     if (formType === "profile") {
-      if (!name || !surname || !email ) {
+      if (!name || !surname || !email) {
         showErrorToast(translate, "Please fill all fields");
         return;
       }
@@ -285,48 +231,11 @@ export default function Profile() {
         }
       } else {
         setIsPasswordLoading(false);
-        showErrorToast(translate,"Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
       }
     }
     // fetchUpdateProfile();
   };
-
-  // const handleChange = (e) => {
-  //   const {  value } = e.target;
-  //   setPasswordData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const fetchUpdatePassword = async (type) => {
-  //   const formDatas = new FormData();
-
-  //
-  //   formDatas.append("id", USerData?.id);
-  //   formDatas.append("type", "change_password");
-  //   formDatas.append("old_password", passwordData?.oldPassword);
-  //   formDatas.append("password", passwordData?.newPassword);
-
-  //   try {
-  //     const response = await POST.request({
-  //       form: formDatas,
-  //       url: "update_profile",
-  //     });
-
-  //     if(response.status === "success"){
-
-  //     showSuccessToast(response?.message);
-
-  //     }else{
-
-  //       showErrorToast(response?.message);
-
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
 
   const handlePasswordChange = (e) => {
     const { value } = e.target;
@@ -354,40 +263,28 @@ export default function Profile() {
       setPasswordError("");
     }
   };
-  // const handlePasswordChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setPasswordData((prevData) => ({
-  //     ...prevData,
-  //     [e.target.name]: value,
-  //   }));
-  //   if (value !== passwordData.newPassword) {
-  //     setError("Passwords do not match");
-  //     }else{
-  //       setError("");
-  //     }
-  // }
-  // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+ 
+  console.log("countryCode", countryCode);
+  console.log("Phone", Phone);
 
-  // const handlePassword = (e) => {
-  //   const {name,value} = e.target;
-  //   setPasswordData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  //   if (!passwordRegex.test(value)) {
-  //     setPasswordError("Password must contain at least 8 characters, including uppercase, lowercase letters, numbers and special characters");
-  //   }  else {
-  //     setPasswordError("");
-  //   }
-  //   if(!value){
-  //     setPasswordError("");
-  //   }
-  // };
+  const handleImageremove = (file) => {
+    const fetchUpdateProfile = async () => {
+      const formDatas = new FormData();
 
-  console.log("countryCode" , countryCode);
-  console.log("Phone" , Phone);
-  
-  
+      formDatas.append("id", customer?.user?.id);
+
+      try {
+        const response = await POST.request({
+          form: formDatas,
+          url: "remove_profile_image",
+        });
+        console.log(response, "response");
+        showSuccessToast(translate, response.Message);
+      } catch (e) {}
+    };
+    fetchUpdateProfile();
+  };
+
   const { translate } = useTranslation();
   return (
     <>
@@ -483,7 +380,7 @@ export default function Profile() {
                           <div className="col-md-6">
                             <div className="form-input my-1">
                               <PhoneInput
-                                country={Phone !== "" ? "" : countryCode} 
+                                country={Phone !== "" ? "" : countryCode}
                                 value={Phone}
                                 onChange={handlePhoneChange}
                                 inputProps={{
@@ -491,24 +388,24 @@ export default function Profile() {
                                   required: true,
                                   autoFocus: true,
                                 }}
-                                inputClass='phonenumber_input'
+                                inputClass="phonenumber_input"
                                 containerStyle={{
-                                  width: "100%", 
+                                  width: "100%",
                                   marginBottom: "10px",
-                                  backgroundColor : "white"
+                                  backgroundColor: "white",
                                 }}
                                 inputStyle={{
                                   width: "100%",
-                                  padding: "12px 45px", 
+                                  padding: "12px 45px",
                                   borderRadius: "4px",
                                   border: "1px solid #E7E6E6",
                                   fontSize: "16px",
                                   boxSizing: "border-box",
-                                  borderRadius : "12px",
-                                  backgroundColor : "white"
+                                  borderRadius: "12px",
+                                  backgroundColor: "white",
                                 }}
-                                className = "form-input  "
-                                enableSearch = {true}
+                                className="form-input  "
+                                enableSearch={true}
                               />
                               <label className="phone_lable">
                                 {translate("Phone")}
@@ -537,6 +434,7 @@ export default function Profile() {
                                     onClick={() => {
                                       setImage1("");
                                       setFileBlob({});
+                                      handleImageremove(fileBlob);
                                     }}
                                     className="absoluteIcon1 button -dark-1"
                                   >
