@@ -20,6 +20,7 @@ import {
   LoginSocialApple,
 } from "reactjs-social-login";
 import { useAuthContext } from "@/app/hooks/useAuthContext";
+import { useGlobalState } from "@/app/context/GlobalStateContext";
 
 export default function Register() {
   const { translate } = useTranslation();
@@ -52,6 +53,8 @@ export default function Register() {
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+    const { LoginPer, setLoginPer } = useGlobalState();
+  
 
   const handlePasswordChange = (e) => {
     const { value } = e.target;
