@@ -24,13 +24,13 @@ import { ClipLoader } from "react-spinners";
 import { first, set } from "lodash";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import dynamic from "next/dynamic";
-const StripeformPage = dynamic(() => import('../stripe/stripeform'), {
-  ssr: false 
+const StripeformPage = dynamic(() => import("../stripe/stripeform"), {
+  ssr: false,
 });
 
 export default function Payment() {
   const router = useRouter();
- 
+
   const { translate } = useTranslation();
 
   const [roomType, setRoomType] = useState("");
@@ -62,15 +62,14 @@ export default function Payment() {
   const [payableAmount, setPayableAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(true);
-  const [rawAmount,setRawAmout] = useState("")
-  const [laterPayment,setLaterPayment] = useState("");
-  const [companyCode,setCompanyCode] = useState("");
- 
-useEffect(() => {
-  setCompanyCode(localStorage.getItem("company_code"))
-});
-  
-  
+  const [rawAmount, setRawAmout] = useState("");
+  const [laterPayment, setLaterPayment] = useState("");
+  const [companyCode, setCompanyCode] = useState("");
+
+  useEffect(() => {
+    setCompanyCode(localStorage.getItem("company_code"));
+  });
+
   const dateInputRef = useRef(null);
 
   const handleDateFocus = (e) => {
@@ -96,33 +95,33 @@ useEffect(() => {
   const handleFirstAmountChange = (e) => {
     setIsFocused(true);
     console.log(e.target.value, "firstamount");
-  
+
     // Get the input value
     const inputValue = e.target.value;
-  
+
     // Check if the input is empty or not a number
-    if (inputValue === '' || isNaN(inputValue)) {
+    if (inputValue === "" || isNaN(inputValue)) {
       setRawAmout(""); // Reset rawAmount to an empty string
       setFirstAmount("");
-      setThirdAmount(secondAmount ? secondAmount : 0)
-      setPayableAmount("")
+      setThirdAmount(secondAmount ? secondAmount : 0);
+      setPayableAmount("");
       return; // Exit the function early
     }
-  
+
     const rawAmount = parseFloat(inputValue);
-    console.log(rawAmount,"raw1")
+    console.log(rawAmount, "raw1");
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
-    const second  = secondAmount ? secondAmount : 0;  
+    const second = secondAmount ? secondAmount : 0;
     // if (secondAmount === "") {
     //   setRawAmout(inputValue || 0);
     // } else {
     //   setRawAmout(inputValue + secondAmount || 0);
     // }
     // console.log(rawAmount,"raw2")
-    console.log(parseFloat(rawAmount + second) , "second")
-    console.log(totalAmount , "totalAmount")
+    console.log(parseFloat(rawAmount + second), "second");
+    console.log(totalAmount, "totalAmount");
 
-    if ((rawAmount + second) > totalAmount) {
+    if (rawAmount + second > totalAmount) {
       showErrorToast(translate, "Your amount is higher than total amount");
     } else {
       console.log(rawAmount, "raw");
@@ -136,45 +135,42 @@ useEffect(() => {
     }
   };
 
-const handleSecondAmountChange = (e) => {
-  
+  const handleSecondAmountChange = (e) => {
     const inputValue = e.target.value;
-  
+
     // Check if the input is empty or not a number
-    if (inputValue === '' || isNaN(inputValue)) {
+    if (inputValue === "" || isNaN(inputValue)) {
       setRawAmout(""); // Reset rawAmount to an empty string
-      setSecondAmount(""); // Reset firstAmount as 
-      setThirdAmount(firstAmount ? firstAmount : 0) // Reset firstAmount as well
+      setSecondAmount(""); // Reset firstAmount as
+      setThirdAmount(firstAmount ? firstAmount : 0); // Reset firstAmount as well
 
       return; // Exit the function early
     }
-    
-    const first = firstAmount? firstAmount : 0;
+
+    const first = firstAmount ? firstAmount : 0;
     // if (firstAmount === "") {
     //   setRawAmout(inputValue || 0);
     // } else {
     //   setRawAmout(inputValue + firstAmount || 0);
     // }
-    const rawAmount = parseFloat(e.target.value) ;
+    const rawAmount = parseFloat(e.target.value);
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
-  
-  console.log(rawAmount,"raw2")
-    if ((rawAmount + first) > totalAmount) {
-      showErrorToast(translate,"Your amount is higher than total amount")
 
-
+    console.log(rawAmount, "raw2");
+    if (rawAmount + first > totalAmount) {
+      showErrorToast(translate, "Your amount is higher than total amount");
     } else {
-        setSecondAmount(rawAmount);
-        setThirdAmount(totalAmount - firstAmount - rawAmount);
+      setSecondAmount(rawAmount);
+      setThirdAmount(totalAmount - firstAmount - rawAmount);
     }
-};
+  };
 
   useEffect(() => {
     console.log(paidAmount, "paidAmount");
     if (secondAmount && dateBegin) {
       calculateThirdAmount();
     }
-  }, [secondAmount,dateBegin]);
+  }, [secondAmount, dateBegin]);
 
   const calculateThirdAmount = () => {
     const firstAmountValue = parseFloat(firstAmount);
@@ -211,54 +207,53 @@ const handleSecondAmountChange = (e) => {
 
     setTodayDate(formattedDate);
 
-      const sidebardata = localStorage.getItem("PackageBookingData");
+    const sidebardata = localStorage.getItem("PackageBookingData");
 
+    try {
+      const asSidebarrData = JSON.parse(sidebardata);
+      setLaterPayment(asSidebarrData?.laterPayment);
+      setSideBarData(asSidebarrData);
+
+      console.log(laterPayment, "later");
+    } catch (error) {
+      console.error("Error parsing userData:", error);
+    }
+
+    const GetBookingData = localStorage.getItem("BookingData");
+
+    if (GetBookingData && GetBookingData !== "undefined") {
       try {
-        const asSidebarrData = JSON.parse(sidebardata);
-        setLaterPayment(asSidebarrData?.laterPayment);
-        setSideBarData(asSidebarrData);
-
-        console.log(laterPayment,"later")
+        const PrevBooking = JSON.parse(GetBookingData);
+        setBooking(PrevBooking);
       } catch (error) {
         console.error("Error parsing userData:", error);
       }
+    }
 
-      const GetBookingData = localStorage.getItem("BookingData");
+    const GetAdultsData = localStorage.getItem("previousAdults");
 
-      if (GetBookingData && GetBookingData !== "undefined") {
-        try {
-          const PrevBooking = JSON.parse(GetBookingData);
-          setBooking(PrevBooking);
-        } catch (error) {
-          console.error("Error parsing userData:", error);
-        }
+    if (GetAdultsData && GetAdultsData !== "undefined") {
+      try {
+        const GetPrevAdults = JSON.parse(GetAdultsData);
+        setLocalAdults(GetPrevAdults);
+      } catch (error) {
+        console.error("error");
       }
+    }
 
-      const GetAdultsData = localStorage.getItem("previousAdults");
+    const GetAdditionalServicePerPerson =
+      localStorage.getItem("AdditionalServices");
 
-      if (GetAdultsData && GetAdultsData !== "undefined") {
-        try {
-          const GetPrevAdults = JSON.parse(GetAdultsData);
-          setLocalAdults(GetPrevAdults);
-        } catch (error) {
-          console.error("error");
-        }
+    if (
+      GetAdditionalServicePerPerson &&
+      GetAdditionalServicePerPerson !== "undefined"
+    ) {
+      try {
+        const GetAdditionl = JSON.parse(GetAdditionalServicePerPerson);
+        setGetAdditionals(GetAdditionl);
+      } catch (error) {
+        console.error("error");
       }
-
-      const GetAdditionalServicePerPerson =
-        localStorage.getItem("AdditionalServices");
-
-      if (
-        GetAdditionalServicePerPerson &&
-        GetAdditionalServicePerPerson !== "undefined"
-      ) {
-        try {
-          const GetAdditionl = JSON.parse(GetAdditionalServicePerPerson);
-          setGetAdditionals(GetAdditionl);
-        } catch (error) {
-          console.error("error");
-        }
-      
     }
   }, []);
 
@@ -335,10 +330,15 @@ const handleSecondAmountChange = (e) => {
     [dateEnd]
   );
 
-  const calculateTotalWithFee = (amount) => {
+  const calculateTotalWithFee = (amount, typeofcheck) => {
+    console.log(amount, "typeofcheck");
+
     const feePercentage = 0.03;
-    const fee = amount * feePercentage; 
-    return  fee; 
+    const fee = amount * feePercentage;
+
+    console.log(fee , 'fee');
+    
+    return fee;
   };
 
   const handleEndDateChange = (event) => {
@@ -357,7 +357,6 @@ const handleSecondAmountChange = (e) => {
       }
     };
   }, [handleDateChange]);
-  
 
   const FatchallBooking = async (data) => {
     setIsLoading(true);
@@ -383,8 +382,8 @@ const handleSecondAmountChange = (e) => {
   const handlePayment = () => {
     const agbAcceptance = document.getElementById("agbAcceptance");
     const item5 = document.getElementById("item5");
-    setIsLoading(true)
-    if (selectedCheckbox === 0 &&  (laterPayment == 0 || laterPayment == null)) {
+    setIsLoading(true);
+    if (selectedCheckbox === 0 && (laterPayment == 0 || laterPayment == null)) {
       if (!agbAcceptance?.checked || !item5?.checked) {
         showErrorToast(translate, "Please accept terms and conditions");
         setIsLoading(false);
@@ -394,7 +393,7 @@ const handleSecondAmountChange = (e) => {
       FatchallBooking(newBooking);
       setTimeout(() => {
         router.push("#ref");
-        setIsLoading(false)
+        setIsLoading(false);
 
         setTimeout(() => {
           localStorage.removeItem("AdultPrice&count");
@@ -408,27 +407,21 @@ const handleSecondAmountChange = (e) => {
       }, 3000);
     }
 
-    if (selectedCheckbox === 1 &&  (laterPayment == 0 || laterPayment == null)) {
+    if (selectedCheckbox === 1 && (laterPayment == 0 || laterPayment == null)) {
       if (!agbAcceptance.checked || !item5.checked) {
         showErrorToast(translate, "Please accept terms and conditions");
-        setIsLoading(false)
+        setIsLoading(false);
         return;
       }
       setShowStripeModal(true);
-      setIsLoading(false)
+      setIsLoading(false);
       const newBooking = { ...Booking, paymentType: 2 };
       setBooking(newBooking);
       setAmount(SideBarData?.BookingFild?.SubTotal);
     }
 
-     if (selectedCheckbox === 2  && (laterPayment == 0 || laterPayment == null)) {
-      if (
-        !firstAmount ||
-        !secondAmount ||
-        !seconddate ||
-        !thirdAmount 
-      
-      ) {
+    if (selectedCheckbox === 2 && (laterPayment == 0 || laterPayment == null)) {
+      if (!firstAmount || !secondAmount || !seconddate || !thirdAmount) {
         showErrorToast(translate, "Please fill all the fields");
         setIsLoading(false);
         return;
@@ -438,8 +431,8 @@ const handleSecondAmountChange = (e) => {
         showErrorToast(translate, "Please accept terms and conditions");
         setIsLoading(false);
         return;
-      } 
-      setIsLoading(false)
+      }
+      setIsLoading(false);
 
       setShowStripeModal(true);
 
@@ -457,7 +450,7 @@ const handleSecondAmountChange = (e) => {
       setAmount(firstAmount);
     }
 
-    if(laterPayment == 1){
+    if (laterPayment == 1) {
       if (!agbAcceptance?.checked || !item5?.checked) {
         showErrorToast(translate, "Please accept terms and conditions");
         setIsLoading(false);
@@ -468,7 +461,7 @@ const handleSecondAmountChange = (e) => {
       FatchallBooking(newBooking);
       setTimeout(() => {
         router.push("#ref");
-        setIsLoading(false)
+        setIsLoading(false);
 
         setTimeout(() => {
           localStorage.removeItem("AdultPrice&count");
@@ -481,18 +474,14 @@ const handleSecondAmountChange = (e) => {
         }, 10000);
       }, 3000);
     }
-
-   
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
+    return new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "EUR",
     }).format(amount); // Convert to euros (assuming amount is in cents)
   };
-  
-
 
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
@@ -527,407 +516,412 @@ const handleSecondAmountChange = (e) => {
                       <b> {translate("Payment Methods")}</b>
                     </p>
 
-                    {
-                       (laterPayment == 0 || laterPayment == null) && (
-
-                        <div className="px-3">
-                          <div className="d-flex items-center pointer-check py-3">
-                            <div className="form-checkbox">
-                              <input
-                                type="checkbox"
-                                id="item2"
-                                name="item2"
-                                checked={selectedCheckbox === 0}
-                                onChange={() => handleCheckboxChange(0)}
-                              />
-                              <label
-                                htmlFor="item2"
-                                className="form-checkbox__mark"
-                              >
-                                <div className="form-checkbox__icon">
-                                  <svg
-                                    width="10"
-                                    height="8"
-                                    viewBox="0 0 10 8"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                      fill="white"
-                                    />
-                                  </svg>
-                                </div>
-                              </label>
-                            </div>
-                            <label htmlFor="item2" className="lh-16 ml-15">
-                              {translate(
-                                "Payment in advance. Payment installment is possible. Full Payment (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover) "
-                              )}
+                    {(laterPayment == 0 || laterPayment == null) && (
+                      <div className="px-3">
+                        <div className="d-flex items-center pointer-check py-3">
+                          <div className="form-checkbox">
+                            <input
+                              type="checkbox"
+                              id="item2"
+                              name="item2"
+                              checked={selectedCheckbox === 0}
+                              onChange={() => handleCheckboxChange(0)}
+                            />
+                            <label
+                              htmlFor="item2"
+                              className="form-checkbox__mark"
+                            >
+                              <div className="form-checkbox__icon">
+                                <svg
+                                  width="10"
+                                  height="8"
+                                  viewBox="0 0 10 8"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div>
                             </label>
                           </div>
+                          <label htmlFor="item2" className="lh-16 ml-15">
+                            {translate(
+                              "Payment in advance. Payment installment is possible. Full Payment (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover) "
+                            )}
+                          </label>
+                        </div>
 
-                          <div className="row">
-                            <div className="col-md-6 col-12">
-                              <div
-                                className={`p-2 ${
-                                  selectedOption === "adPay"
-                                    ? "bg_dark"
-                                    : "bg_dark_1"
-                                }`}
-                              >
-                                <p>
-                                  <span>
-                                    <b>Kontoinhaber:</b>
-                                  </span>
-                                  Mekka Booking GmbH
-                                </p>
-                                <p>
-                                  <span>
-                                    <b>IBAN:</b>
-                                  </span>
-                                  DE71 5125 0000 0002 2282 11
-                                </p>
-                                <p>
-                                  <span>
-                                    <b>BIC:</b>
-                                  </span>
-                                  HELADEF1TSK
-                                </p>
-                                <p>
-                                  <span>
-                                    <b>Bank:</b>
-                                  </span>
-                                  Taunus Sparkasse
-                                </p>
-                              </div>
+                        <div className="row">
+                          <div className="col-md-6 col-12">
+                            <div
+                              className={`p-2 ${
+                                selectedOption === "adPay"
+                                  ? "bg_dark"
+                                  : "bg_dark_1"
+                              }`}
+                            >
+                              <p>
+                                <span>
+                                  <b>Kontoinhaber:</b>
+                                </span>
+                                Mekka Booking GmbH
+                              </p>
+                              <p>
+                                <span>
+                                  <b>IBAN:</b>
+                                </span>
+                                DE71 5125 0000 0002 2282 11
+                              </p>
+                              <p>
+                                <span>
+                                  <b>BIC:</b>
+                                </span>
+                                HELADEF1TSK
+                              </p>
+                              <p>
+                                <span>
+                                  <b>Bank:</b>
+                                </span>
+                                Taunus Sparkasse
+                              </p>
                             </div>
-                            <div className="col-md-6 col-12 my-md-0 my-3">
-                              <div className="p-2 border-5 d-inline-block">
-                                <p className="py-2">
+                          </div>
+                          <div className="col-md-6 col-12 my-md-0 my-3">
+                            <div className="p-2 border-5 d-inline-block">
+                              <p className="py-2">
+                                {translate(
+                                  "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
+                                )}
+                              </p>
+                              <p className="text-red">
+                                {translate(
+                                  "Note: Please make the payment within next 7 days. Post that the order will be cancelled."
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="d-flex items-center justify-between py-3">
+                          <div className="row ">
+                            <div className="col-12">
+                              <div className="d-flex items-center pointer-check">
+                                <div className="form-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    id="item4"
+                                    name="item4"
+                                    checked={selectedCheckbox === 1}
+                                    onChange={() => handleCheckboxChange(1)}
+                                  />
+                                  <label
+                                    htmlFor="item4"
+                                    className="form-checkbox__mark"
+                                  >
+                                    <div className="form-checkbox__icon">
+                                      <svg
+                                        width="10"
+                                        height="8"
+                                        viewBox="0 0 10 8"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                          fill="white"
+                                        />
+                                      </svg>
+                                    </div>
+                                  </label>
+                                </div>
+                                <label htmlFor="item4" className="lh-16 ml-15">
                                   {translate(
-                                    "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
+                                    "Full Payment using (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
                                   )}
-                                </p>
-                                <p className="text-red">
-                                  {translate(
-                                    "Note: Please make the payment within next 7 days. Post that the order will be cancelled."
-                                  )}
-                                </p>
+                                </label>
                               </div>
                             </div>
                           </div>
+                        </div>
 
-                          <div className="d-flex items-center justify-between py-3">
-                            <div className="row ">
-                              <div className="col-12">
-                                <div className="d-flex items-center pointer-check">
-                                  <div className="form-checkbox">
-                                    <input
-                                      type="checkbox"
-                                      id="item4"
-                                      name="item4"
-                                      checked={selectedCheckbox === 1}
-                                      onChange={() => handleCheckboxChange(1)}
-                                    />
-                                    <label
-                                      htmlFor="item4"
-                                      className="form-checkbox__mark"
-                                    >
-                                      <div className="form-checkbox__icon">
-                                        <svg
-                                          width="10"
-                                          height="8"
-                                          viewBox="0 0 10 8"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                            fill="white"
-                                          />
-                                        </svg>
-                                      </div>
-                                    </label>
-                                  </div>
-                                  <label htmlFor="item4" className="lh-16 ml-15">
-                                    {translate(
-                                      "Full Payment using (Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
-                                    )}
+                        <div className="d-flex items-center pointer-check py-3">
+                          <div className="form-checkbox">
+                            <input
+                              type="checkbox"
+                              id="installment"
+                              name="installment"
+                              checked={selectedCheckbox === 2}
+                              onChange={() => handleCheckboxChange(2)}
+                            />
+                            <label
+                              htmlFor="installment"
+                              className="form-checkbox__mark"
+                            >
+                              <div className="form-checkbox__icon">
+                                <svg
+                                  width="10"
+                                  height="8"
+                                  viewBox="0 0 10 8"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div>
+                            </label>
+                          </div>
+                          <label htmlFor="installment" className="lh-16 ml-15">
+                            {translate("Click for Installment Payment")}
+                          </label>
+                        </div>
+
+                        {installmentChecked && (
+                          <div className="y-gap-30 contactForm px-20 py-10">
+                            <div className="col-md-12">
+                              <h5 className="text-center">
+                                {translate("Total Amount")} :{" "}
+                                <b>
+                                  {formatCurrency(
+                                    SideBarData?.BookingFild?.SubTotal
+                                  )}
+                                </b>
+                              </h5>
+                            </div>
+
+                            <div className="row my-3">
+                              <div className="col-md-6">
+                                <div className="form-input spacing">
+                                  <input
+                                    type="number"
+                                    required
+                                    value={firstAmount}
+                                    onChange={handleFirstAmountChange}
+                                    placeholder=""
+                                    className="mb-0"
+                                    onKeyDown={(e) => {
+                                      if (!isFocused) return;
+
+                                      if (
+                                        !/^[0-9]+$/.test(e.key) &&
+                                        e.key !== "Backspace" &&
+                                        e.key !== "Tab"
+                                      ) {
+                                        e.preventDefault();
+                                      }
+                                    }}
+                                    onKeyUp={() => setIsFocused(false)}
+                                    onFocus={() => setIsFocused(true)}
+                                    onBlur={() => setIsFocused(false)}
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    1st Amount
+                                    <span className="text-red"> *</span>
+                                  </label>
+                                  <span className="text-mekka ml-10">
+                                    This amount will be done using credit card
+                                    (Stripe)
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="form-input spacing">
+                                  <input
+                                    type="date"
+                                    required
+                                    placeholder=""
+                                    value={dateBegin}
+                                    disabled={true}
+                                    min={minEndDate}
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    1st Date<span className="text-red"> *</span>
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="form-input spacing">
+                                  <input
+                                    type="text"
+                                    required
+                                    value={secondAmount}
+                                    onChange={handleSecondAmountChange}
+                                    placeholder=""
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    2nd Amount
+                                    <span className="text-red"> *</span>
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="form-input spacing">
+                                  <input
+                                    type="date"
+                                    required
+                                    placeholder=""
+                                    // value={formatDateToMMDDYYYY(seconddate)}
+                                    // value={seconddate == "" ? "dd-mm-yyyy" :seconddate }
+                                    value={seconddate}
+                                    onChange={handleDateChange}
+                                    min={minEndDate}
+                                    // max={maxEndDate}
+                                    onFocus={handleDateFocus}
+                                    onKeyDown={(e) => e.preventDefault()}
+                                    ref={dateInputRef}
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    2nd Date<span className="text-red"> *</span>
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="form-input spacing">
+                                  <input
+                                    type="text"
+                                    required
+                                    value={formatCurrency(thirdAmount)}
+                                    disabled={true}
+                                    placeholder=""
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    {translate("3rd Amount")}
+                                    <span className="text-red"> *</span>
+                                  </label>
+                                </div>
+                              </div>
+
+                              <div className="col-md-6">
+                                <div className="form-input spacing">
+                                  <input
+                                    type="date"
+                                    required
+                                    placeholder="3rd Date"
+                                    value={dateEnd}
+                                    max={maxEndDate}
+                                    min={seconddate}
+                                    onFocus={handleDateFocus}
+                                    onKeyDown={(e) => e.preventDefault()}
+                                    disabled={seconddate === "" ? true : false}
+                                    onChange={handleEndDateChange}
+                                  />
+                                  <label className="lh-1 text-16 text-light-1">
+                                    {translate("3rd Date")}
+                                    <span className="text-red"> *</span>
                                   </label>
                                 </div>
                               </div>
                             </div>
                           </div>
+                        )}
 
-                          <div className="d-flex items-center pointer-check py-3">
-                            <div className="form-checkbox">
-                              <input
-                                type="checkbox"
-                                id="installment"
-                                name="installment"
-                                checked={selectedCheckbox === 2}
-                                onChange={() => handleCheckboxChange(2)}
-                              />
-                              <label
-                                htmlFor="installment"
-                                className="form-checkbox__mark"
-                              >
-                                <div className="form-checkbox__icon">
-                                  <svg
-                                    width="10"
-                                    height="8"
-                                    viewBox="0 0 10 8"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                      fill="white"
-                                    />
-                                  </svg>
-                                </div>
-                              </label>
-                            </div>
-                            <label htmlFor="installment" className="lh-16 ml-15">
-                              {translate("Click for Installment Payment")}
+                        <div className="d-flex items-center pointer-check py-3">
+                          <div className="form-checkbox">
+                            <input
+                              type="checkbox"
+                              id="item5"
+                              name="data protection and accept"
+                              // onChange={handleDisabled}
+                            />
+                            <label
+                              htmlFor="item5"
+                              className="form-checkbox__mark"
+                            >
+                              <div className="form-checkbox__icon">
+                                <svg
+                                  width="10"
+                                  height="8"
+                                  viewBox="0 0 10 8"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div>
                             </label>
                           </div>
+                          <label htmlFor="item5" className="lh-16 ml-15">
+                            <span className="text-red">* </span>
+                            {translate(
+                              "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH"
+                            )}
+                          </label>
+                        </div>
 
-                          {installmentChecked && (
-                            <div className="y-gap-30 contactForm px-20 py-10">
-                              <div className="col-md-12">
-                                <h5 className="text-center">
-                                  {translate("Total Amount")} :{" "}
-                                  <b>
-                                    {formatCurrency(
-                                      SideBarData?.BookingFild?.SubTotal
-                                    )}
-                                  </b>
-                                </h5>
+                        <div className="d-flex items-center pointer-check py-3">
+                          <div className="form-checkbox">
+                            <input
+                              type="checkbox"
+                              id="agbAcceptance"
+                              name="agbAcceptance"
+                              // onChange={handleDisabled}
+                            />
+                            <label
+                              htmlFor="agbAcceptance"
+                              className="form-checkbox__mark"
+                            >
+                              <div className="form-checkbox__icon">
+                                <svg
+                                  width="10"
+                                  height="8"
+                                  viewBox="0 0 10 8"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                    fill="white"
+                                  />
+                                </svg>
                               </div>
-
-                              <div className="row my-3">
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input
-                                      type="number"
-                                      required
-                                      value={firstAmount}
-                                      onChange={handleFirstAmountChange}
-                                      placeholder=""
-                                      className="mb-0"
-                                      onKeyDown={(e) => {
-                                        if (!isFocused) return;
-
-                                        if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                          e.preventDefault();
-                                        }
-                                      }}
-                                      onKeyUp={()=>setIsFocused(false)}
-
-                                              onFocus={() => setIsFocused(true)}
-                                              onBlur={() => setIsFocused(false)}
-                                    
-                                    />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      1st Amount<span className="text-red"> *</span>
-                                    </label>
-                                    <span className="text-mekka ml-10">
-                                      This amount will be done using credit card
-                                      (Stripe)
-                                    </span>
-                                  </div>
-                                </div>
-
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input
-                                      type="date"
-                                      required
-                                      placeholder=""
-                                      value={dateBegin}
-                                      disabled={true}
-                                      min={minEndDate}
-                                    />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      1st Date<span className="text-red"> *</span>
-                                    </label>
-                                  </div>
-                                </div>
-
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input
-                                      type="text"
-                                      required
-                                      value={secondAmount}
-                                      onChange={handleSecondAmountChange}
-                                      placeholder=""
-                                    />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      2nd Amount<span className="text-red"> *</span>
-                                    </label>
-                                  </div>
-                                </div>
-
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input
-                                      type="date"
-                                      required
-                                      placeholder=""
-                                      // value={formatDateToMMDDYYYY(seconddate)}
-                                      // value={seconddate == "" ? "dd-mm-yyyy" :seconddate }
-                                      value={seconddate}
-                                      onChange={handleDateChange}
-                                      min={minEndDate}
-                                      // max={maxEndDate}
-                                      onFocus={handleDateFocus}
-                                      onKeyDown={(e) => e.preventDefault()}
-                                      ref={dateInputRef}
-                                    />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      2nd Date<span className="text-red"> *</span>
-                                    </label>
-                                  </div>
-                                </div>
-
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input
-                                      type="text"
-                                      required
-                                      value={formatCurrency(thirdAmount)}
-                                      disabled={true}
-                                      placeholder=""
-                                    />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      {translate("3rd Amount")}
-                                      <span className="text-red"> *</span>
-                                    </label>
-                                  </div>
-                                </div>
-
-                                <div className="col-md-6">
-                                  <div className="form-input spacing">
-                                    <input
-                                      type="date"
-                                      required
-                                      placeholder="3rd Date"
-                                      value={dateEnd}
-                                      max={maxEndDate}
-                                      min={seconddate}
-                                      onFocus={handleDateFocus}
-                                      onKeyDown={(e) => e.preventDefault()}
-                                      disabled={seconddate === "" ? true : false}
-                                      onChange={handleEndDateChange}
-                                    />
-                                    <label className="lh-1 text-16 text-light-1">
-                                      {translate("3rd Date")}
-                                      <span className="text-red"> *</span>
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-
-                          <div className="d-flex items-center pointer-check py-3">
-                            <div className="form-checkbox">
-                              <input
-                                type="checkbox"
-                                id="item5"
-                                name="data protection and accept"
-                                // onChange={handleDisabled}
-                              />
-                              <label
-                                htmlFor="item5"
-                                className="form-checkbox__mark"
-                              >
-                                <div className="form-checkbox__icon">
-                                  <svg
-                                    width="10"
-                                    height="8"
-                                    viewBox="0 0 10 8"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                      fill="white"
-                                    />
-                                  </svg>
-                                </div>
-                              </label>
-                            </div>
-                            <label htmlFor="item5" className="lh-16 ml-15">
-                              <span className="text-red">* </span>
+                            </label>
+                          </div>
+                          <label
+                            htmlFor="agbAcceptance"
+                            className="lh-16 ml-15"
+                          >
+                            <span className="text-red">* </span>
+                            <span>
                               {translate(
-                                "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH"
+                                "I have read the AGB (mekkabooking) and I accept the conditions"
                               )}
-                            </label>
-                          </div>
-
-                          <div className="d-flex items-center pointer-check py-3">
-                            <div className="form-checkbox">
-                              <input
-                                type="checkbox"
-                                id="agbAcceptance"
-                                name="agbAcceptance"
-                                // onChange={handleDisabled}
-                              />
-                              <label
-                                htmlFor="agbAcceptance"
-                                className="form-checkbox__mark"
-                              >
-                                <div className="form-checkbox__icon">
-                                  <svg
-                                    width="10"
-                                    height="8"
-                                    viewBox="0 0 10 8"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                      fill="white"
-                                    />
-                                  </svg>
-                                </div>
-                              </label>
-                            </div>
-                            <label htmlFor="agbAcceptance" className="lh-16 ml-15">
-                              <span className="text-red">* </span>
-                              <span>
-                                {translate(
-                                  "I have read the AGB (mekkabooking) and I accept the conditions"
-                                )}
-                              </span>
-                              {/* {companyCode && translate(`. This trip is operated by ${companyCode}.`)} */}
-                              <span className={companyCode ? "d-none" : "d-block"}>
-                                {translate(
-                                  `This trip is operated by ${companyCode}.`
-                                )}
-                              </span>
-                              {/* {companyCode !== null && (
+                            </span>
+                            {/* {companyCode && translate(`. This trip is operated by ${companyCode}.`)} */}
+                            <span
+                              className={companyCode ? "d-none" : "d-block"}
+                            >
+                              {translate(
+                                `This trip is operated by ${companyCode}.`
+                              )}
+                            </span>
+                            {/* {companyCode !== null && (
                                 <div >
                                   {translate(
                                     `This trip is operated by ${companyCode}.`
                                   )}
                                 </div>
                               )} */}
-                            </label>
-                          </div>
+                          </label>
                         </div>
-                      ) 
-                    }
+                      </div>
+                    )}
 
-                    {
-                      laterPayment == 1 && (
-                        <div className="px-3">
-                          <div className="d-flex items-center pointer-check py-3">
-                            {/* <div className="form-checkbox">
+                    {laterPayment == 1 && (
+                      <div className="px-3">
+                        <div className="d-flex items-center pointer-check py-3">
+                          {/* <div className="form-checkbox">
                               <input
                                 type="checkbox"
                                 id="item2"
@@ -955,153 +949,157 @@ const handleSecondAmountChange = (e) => {
                                 </div>
                               </label>
                             </div> */}
-                            <div className="lh-16 ml-15">
-                              {translate(
-                                "Pay Later (Using Bank Transfer Or Clicking On Stripe Link)"
-                              )}
+                          <div className="lh-16 ml-15">
+                            {translate(
+                              "Pay Later (Using Bank Transfer Or Clicking On Stripe Link)"
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6 col-12">
+                            <div
+                              className={`p-2 ${
+                                selectedOption === "adPay"
+                                  ? "bg_dark"
+                                  : "bg_dark_1"
+                              }`}
+                            >
+                              <p>
+                                <span>
+                                  <b>Kontoinhaber:</b>
+                                </span>
+                                Mekka Booking GmbH
+                              </p>
+                              <p>
+                                <span>
+                                  <b>IBAN:</b>
+                                </span>
+                                DE71 5125 0000 0002 2282 11
+                              </p>
+                              <p>
+                                <span>
+                                  <b>BIC:</b>
+                                </span>
+                                HELADEF1TSK
+                              </p>
+                              <p>
+                                <span>
+                                  <b>Bank:</b>
+                                </span>
+                                Taunus Sparkasse
+                              </p>
                             </div>
                           </div>
-
-                          <div className="row">
-                            <div className="col-md-6 col-12">
-                              <div
-                                className={`p-2 ${
-                                  selectedOption === "adPay"
-                                    ? "bg_dark"
-                                    : "bg_dark_1"
-                                }`}
-                              >
-                                <p>
-                                  <span>
-                                    <b>Kontoinhaber:</b>
-                                  </span>
-                                  Mekka Booking GmbH
-                                </p>
-                                <p>
-                                  <span>
-                                    <b>IBAN:</b>
-                                  </span>
-                                  DE71 5125 0000 0002 2282 11
-                                </p>
-                                <p>
-                                  <span>
-                                    <b>BIC:</b>
-                                  </span>
-                                  HELADEF1TSK
-                                </p>
-                                <p>
-                                  <span>
-                                    <b>Bank:</b>
-                                  </span>
-                                  Taunus Sparkasse
-                                </p>
-                              </div>
-                            </div>
-                            <div className="col-md-6 col-12 my-md-0 my-3">
-                              <div className="p-2 border-5 d-inline-block">
-                                <p className="py-2">
-                                  {translate(
-                                    "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
-                                  )}
-                                </p>
-                                <p className="text-red">
-                                  {translate(
-                                    "Note: Please keep the bank details for your reference.  Make payment upon return of your travel."
-                                  )}
-                                </p>
-                              </div>
+                          <div className="col-md-6 col-12 my-md-0 my-3">
+                            <div className="p-2 border-5 d-inline-block">
+                              <p className="py-2">
+                                {translate(
+                                  "You will get an order number after you completed the reservation. The Order number you will need to enter in the “Purpose Code” when you make the payment via bank. You will also get email with all the detail as well."
+                                )}
+                              </p>
+                              <p className="text-red">
+                                {translate(
+                                  "Note: Please keep the bank details for your reference.  Make payment upon return of your travel."
+                                )}
+                              </p>
                             </div>
                           </div>
+                        </div>
 
-                          <div className="d-flex items-center pointer-check py-3">
-                            <div className="form-checkbox">
-                              <input
-                                type="checkbox"
-                                id="item5"
-                                name="data protection and accept"
-                                // onChange={handleDisabled}
-                              />
-                              <label
-                                htmlFor="item5"
-                                className="form-checkbox__mark"
-                              >
-                                <div className="form-checkbox__icon">
-                                  <svg
-                                    width="10"
-                                    height="8"
-                                    viewBox="0 0 10 8"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                      fill="white"
-                                    />
-                                  </svg>
-                                </div>
-                              </label>
-                            </div>
-                            <label htmlFor="item5" className="lh-16 ml-15">
-                              <span className="text-red">* </span>
-                              {translate(
-                                "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH"
-                              )}
+                        <div className="d-flex items-center pointer-check py-3">
+                          <div className="form-checkbox">
+                            <input
+                              type="checkbox"
+                              id="item5"
+                              name="data protection and accept"
+                              // onChange={handleDisabled}
+                            />
+                            <label
+                              htmlFor="item5"
+                              className="form-checkbox__mark"
+                            >
+                              <div className="form-checkbox__icon">
+                                <svg
+                                  width="10"
+                                  height="8"
+                                  viewBox="0 0 10 8"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div>
                             </label>
                           </div>
+                          <label htmlFor="item5" className="lh-16 ml-15">
+                            <span className="text-red">* </span>
+                            {translate(
+                              "Yes, I declare my consent to the data protection and accept the Declaration of Consent of mekkabooking GmbH"
+                            )}
+                          </label>
+                        </div>
 
-                          <div className="d-flex items-center pointer-check py-3">
-                            <div className="form-checkbox">
-                              <input
-                                type="checkbox"
-                                id="agbAcceptance"
-                                name="agbAcceptance"
-                                // onChange={handleDisabled}
-                              />
-                              <label
-                                htmlFor="agbAcceptance"
-                                className="form-checkbox__mark"
-                              >
-                                <div className="form-checkbox__icon">
-                                  <svg
-                                    width="10"
-                                    height="8"
-                                    viewBox="0 0 10 8"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                      fill="white"
-                                    />
-                                  </svg>
-                                </div>
-                              </label>
-                            </div>
-                            <label htmlFor="agbAcceptance" className="lh-16 ml-15">
-                              <span className="text-red">* </span>
-                              <span>
-                                {translate(
-                                  "I have read the AGB (mekkabooking) and I accept the conditions."
-                                )}
-                              </span>
-                              {/* {companyCode && translate(`. This trip is operated by ${companyCode}.`)} */}
-                              <span className={companyCode ? "d-none" : "d-block"}>
-                                {translate(
-                                  `This trip is operated by ${companyCode}.`
-                                )}
-                              </span>
-                              {/* {companyCode !== null && (
+                        <div className="d-flex items-center pointer-check py-3">
+                          <div className="form-checkbox">
+                            <input
+                              type="checkbox"
+                              id="agbAcceptance"
+                              name="agbAcceptance"
+                              // onChange={handleDisabled}
+                            />
+                            <label
+                              htmlFor="agbAcceptance"
+                              className="form-checkbox__mark"
+                            >
+                              <div className="form-checkbox__icon">
+                                <svg
+                                  width="10"
+                                  height="8"
+                                  viewBox="0 0 10 8"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div>
+                            </label>
+                          </div>
+                          <label
+                            htmlFor="agbAcceptance"
+                            className="lh-16 ml-15"
+                          >
+                            <span className="text-red">* </span>
+                            <span>
+                              {translate(
+                                "I have read the AGB (mekkabooking) and I accept the conditions."
+                              )}
+                            </span>
+                            {/* {companyCode && translate(`. This trip is operated by ${companyCode}.`)} */}
+                            <span
+                              className={companyCode ? "d-none" : "d-block"}
+                            >
+                              {translate(
+                                `This trip is operated by ${companyCode}.`
+                              )}
+                            </span>
+                            {/* {companyCode !== null && (
                                 <div >
                                   {translate(
                                     `This trip is operated by ${companyCode}.`
                                   )}
                                 </div>
                               )} */}
-                            </label>
-                          </div>
+                          </label>
                         </div>
-                      )
-                    }
+                      </div>
+                    )}
                   </div>
                   <div
                     className="border-1 rounded-12 shadow-1 overflow-hidden mt-20"
@@ -1174,13 +1172,11 @@ const handleSecondAmountChange = (e) => {
                         <div className="col-md-3 col-6">
                           <span>{translate("Payment Method")}</span>
                           <div className="text-accent-2">
-                         
-
-                              {
-                                 (laterPayment == 0 || laterPayment == null) ? (selectedCheckbox == 0 ? "Direct Bank Transfer" : "Online") : "Pay Later"
-                              }
-
-                            
+                            {laterPayment == 0 || laterPayment == null
+                              ? selectedCheckbox == 0
+                                ? "Direct Bank Transfer"
+                                : "Online"
+                              : "Pay Later"}
                           </div>
                         </div>
                       </div>
@@ -1221,7 +1217,6 @@ const handleSecondAmountChange = (e) => {
                         </div>
                       </div>
                     </div> */}
-
                   </div>
                 </div>
               )}
@@ -1267,7 +1262,8 @@ const handleSecondAmountChange = (e) => {
                         <FaTelegramPlane size={25} color="#DAC04F" />
                       </div>
                       <div className="text-start">
-                        {translate("Airline")} : {SideBarData?.Airline?.flight_name}
+                        {translate("Airline")} :{" "}
+                        {SideBarData?.Airline?.flight_name}
                       </div>
                     </div>
                     <div className="line mt-5 mb-5"></div>
@@ -1305,15 +1301,15 @@ const handleSecondAmountChange = (e) => {
                   <div className="line mt-5 mb-5"></div>
 
                   <div className="d-flex items-center justify-content-space-arround">
-                      <div className="mr-5">
-                        <MdFlightLand size={25} color="#DAC04F" />
-                      </div>
-                      <div className="text-start">
-                        {translate("Arrival")}: {SideBarData?.Arrival?.name}
-                      </div>
+                    <div className="mr-5">
+                      <MdFlightLand size={25} color="#DAC04F" />
                     </div>
+                    <div className="text-start">
+                      {translate("Arrival")}: {SideBarData?.Arrival?.name}
+                    </div>
+                  </div>
 
-                    <div className="line mt-5 mb-5"></div>
+                  <div className="line mt-5 mb-5"></div>
 
                   <div className="d-flex items-center justify-content-space-arround">
                     <div className="mr-5">
@@ -1376,7 +1372,11 @@ const handleSecondAmountChange = (e) => {
                     <div className="text-start">
                       {" "}
                       {translate("Makka")} :{" "}
-                      {SideBarData?.MakkaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.mekkaHotelStar})</span> 
+                      {SideBarData?.MakkaHotel?.hotel_name} -{" "}
+                      <span className="items-cen">
+                        (<FaStar color="#dabf4f" className="" />{" "}
+                        {SideBarData?.mekkaHotelStar})
+                      </span>
                     </div>
                   </div>
 
@@ -1389,7 +1389,11 @@ const handleSecondAmountChange = (e) => {
                     <div className="text-start">
                       {" "}
                       {translate("Madina")} :{" "}
-                      {SideBarData?.MadinaHotel?.hotel_name} - <span className="items-cen">(<FaStar color="#dabf4f" className="" /> {SideBarData?.MadinaHotlStar})</span> 
+                      {SideBarData?.MadinaHotel?.hotel_name} -{" "}
+                      <span className="items-cen">
+                        (<FaStar color="#dabf4f" className="" />{" "}
+                        {SideBarData?.MadinaHotlStar})
+                      </span>
                     </div>
                   </div>
 
@@ -1418,7 +1422,9 @@ const handleSecondAmountChange = (e) => {
                               <IoIosBed size={20} color="#DAC04F" />
                             </div>
                             <div className="col-6">{e.title}</div>
-                            <div className="col-4">{formatCurrency(e.price)} </div>
+                            <div className="col-4">
+                              {formatCurrency(e.price)}{" "}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -1440,7 +1446,11 @@ const handleSecondAmountChange = (e) => {
                 SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
                   <div className="">
                     <div className={`d-flex items-center justify-between`}>
-                      <div className="fw-500"> {translate("Discount")} {" "} {`(${SideBarData?.BookingFild?.Discount?.coupon_name})`}</div>
+                      <div className="fw-500">
+                        {" "}
+                        {translate("Discount")}{" "}
+                        {`(${SideBarData?.BookingFild?.Discount?.coupon_name})`}
+                      </div>
                       <div className="">
                         -
                         {formatCurrency(
@@ -1448,114 +1458,161 @@ const handleSecondAmountChange = (e) => {
                         )}{" "}
                       </div>
                     </div>
-              
                   </div>
                 ) : null}
-                {
-                  ((selectedCheckbox === 1 ) && !paidAmount) ?( SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
-                    
+                {selectedCheckbox === 1 && !paidAmount ? (
+                  SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
                     <div className="">
                       <div className={`d-flex items-center justify-between`}>
                         <div className="fw-500"> {translate("Amount Due")}</div>
                         <div className="">
-                          
                           {formatCurrency(
-                            SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount 
+                            SideBarData?.BookingFild?.Total -
+                              SideBarData?.BookingFild?.Discount?.Discount
                           )}{" "}
                         </div>
                       </div>
 
-                        <div className="d-flex items-center justify-between">
-                          <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                          {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount ))} </div> */}
-                          <div className=""> 
-                          { formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
-                             </div>
-                        </div>
-
-                        <div className="d-flex items-center justify-between">
-                          <div className="fw-500"> {translate("Amount Payable")}</div>
-                          <div className=""> {formatCurrency((calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount)) + (SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount))} </div>
-                        </div>
-
-                    </div>
-                  ) : <div>
-
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                    <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
-                  </div>
-                  
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"> {translate("Amount Payable")}</div>
-                    <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
-                  </div>
-
-                </div>) : ""
-                    
-  
-                }
-                <div className="">
-
-
-                {
-                       ( selectedCheckbox == 2 && !paidAmount ) &&
-                        (
-                          SideBarData?.BookingFild?.Discount?.Discount &&
-
-                           <div className={`d-flex items-center justify-between`}>
-                        <div className="fw-500"> {translate("Amount Due")}</div>
-                        <div className="">
-                          
-                          {formatCurrency(
-                            SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount 
-                          )}{" "}
-                        </div>
-                      </div>
-                        )
-
-                   
-                      }
-                
-                  {
-                    (payableAmount && selectedCheckbox == 2 && !paidAmount ) && (
-                      <>
-                     
                       <div className="d-flex items-center justify-between">
-                        <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
+                        <div className="fw-500">
+                          {" "}
+                          {translate("Payment Gateway Fees (3%)")}
+                        </div>
+                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount ))} </div> */}
                         <div className="">
-                        {firstAmount > 0 
-            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
-            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+                          {formatCurrency(
+                            calculateTotalWithFee(
+                              SideBarData?.BookingFild?.Total,
+                              2
+                            )
+                          )}
                         </div>
                       </div>
 
-                        <div className="d-flex items-center justify-between">
-                        <div className="fw-500"> {translate("Amount Payable")}</div>
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500">
+                          {" "}
+                          {translate("Amount Payable")}
+                        </div>
                         <div className="">
                           {" "}
-                          {formatCurrency(firstAmount+calculateTotalWithFee(firstAmount))}{" "}
-                        </div>
-                        </div>
-                      
-                      </>
-                    )
-
-                  }
-                  {
-                    paidAmount && (
-                      <div className="d-flex items-center justify-between">
-                        <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
-                        <div className="">
-                        {firstAmount > 0 
-            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
-            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+                          {formatCurrency(
+                            calculateTotalWithFee(
+                              SideBarData?.BookingFild?.Total -
+                                SideBarData?.BookingFild?.Discount?.Discount
+                            ) +
+                              (SideBarData?.BookingFild?.Total -
+                                SideBarData?.BookingFild?.Discount?.Discount),
+                            2
+                          )}{" "}
                         </div>
                       </div>
-                    )
-                  }
+
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500">
+                          {" "}
+                          {translate("Payment Gateway Fees (3%)")}
+                        </div>
+                        <div className="">
+                          {" "}
+                          {formatCurrency(
+                            calculateTotalWithFee(
+                              SideBarData?.BookingFild?.Total,
+                              1
+                            )
+                          )}{" "}
+                        </div>
+                      </div>
+
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500">
+                          {" "}
+                          {translate("Amount Payable")}
+                        </div>
+                        <div className="">
+                          {" "}
+                          {formatCurrency(
+                            calculateTotalWithFee(
+                              SideBarData?.BookingFild?.Total
+                            ) + SideBarData?.BookingFild?.Total
+                          )}{" "}
+                        </div>
+                      </div>
+
+                    </div>
+                  )
+                ) : (
+                  ""
+                )}
+                <div className="">
+                  {selectedCheckbox == 2 &&
+                    !paidAmount &&
+                    SideBarData?.BookingFild?.Discount?.Discount && (
+                      <div className={`d-flex items-center justify-between`}>
+                        <div className="fw-500"> {translate("Amount Due")}</div>
+                        <div className="">
+                          {formatCurrency(
+                            SideBarData?.BookingFild?.Total -
+                              SideBarData?.BookingFild?.Discount?.Discount
+                          )}{" "}
+                        </div>
+                      </div>
+                    )}
+
+                  {payableAmount && selectedCheckbox == 2 && !paidAmount && (
+                    <>
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500">
+                          {" "}
+                          {translate("Payment Gateway Fees (3%)")}
+                        </div>
+                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
+                        <div className="">
+                          {firstAmount > 0
+                            ? formatCurrency(calculateTotalWithFee(firstAmount))
+                            : formatCurrency(
+                                calculateTotalWithFee(
+                                  SideBarData?.BookingFild?.Total
+                                )
+                              )}
+                        </div>
+                      </div>
+
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500">
+                          {" "}
+                          {translate("Amount Payable")}
+                        </div>
+                        <div className="">
+                          {" "}
+                          {formatCurrency(
+                            firstAmount + calculateTotalWithFee(firstAmount)
+                          )}{" "}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {paidAmount && (
+                    <div className="d-flex items-center justify-between">
+                      <div className="fw-500">
+                        {" "}
+                        {translate("Payment Gateway Fees (3%)")}
+                      </div>
+                      {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
+                      <div className="">
+                        {firstAmount > 0
+                          ? formatCurrency(calculateTotalWithFee(firstAmount))
+                          : formatCurrency(
+                              calculateTotalWithFee(
+                                SideBarData?.BookingFild?.Total
+                              )
+                            )}
+                      </div>
+                    </div>
+                  )}
 
                   {paidAmount && (
                     <div className="d-flex items-center justify-between">
@@ -1564,25 +1621,23 @@ const handleSecondAmountChange = (e) => {
                     </div>
                   )}
 
-{
-                  (paidAmount && selectedCheckbox === 1) &&
+                  {paidAmount && selectedCheckbox === 1 && (
                     <div className="d-flex items-center justify-between">
-                    <div className="fw-500"> {translate("Amount Due")}</div>
-                    <div className="">
-                      {" "}
-                      {formatCurrency(0.00)}{" "}
+                      <div className="fw-500"> {translate("Amount Due")}</div>
+                      <div className=""> {formatCurrency(0.0)} </div>
                     </div>
-                  </div>
-                  } 
-                 { selectedCheckbox === 0 &&
-                  <div className="d-flex items-center justify-between">
-                    <div className="fw-500"> {translate("Amount Due")}</div>
-                    <div className="">
-                      {" "}
-                      {formatCurrency(SideBarData?.BookingFild?.SubTotal)}{" "}
+                  )}
+                  {selectedCheckbox === 0 && (
+                    <div className="d-flex items-center justify-between">
+                      <div className="fw-500"> {translate("Amount Due")}</div>
+                      <div className="">
+                        {" "}
+                        {formatCurrency(
+                          SideBarData?.BookingFild?.SubTotal
+                        )}{" "}
+                      </div>
                     </div>
-                  </div>
-                  }
+                  )}
 
                   {installmentChecked === true &&
                     paidAmount &&
@@ -1626,7 +1681,7 @@ const handleSecondAmountChange = (e) => {
       </div>
       {showStripeModal && (
         <StripeformPage
-          amount={amount ? amount : (SideBarData?.BookingFild?.SubTotal)}
+          amount={amount ? amount : SideBarData?.BookingFild?.SubTotal}
           setPaidAmount={setPaidAmount}
           Booking={Booking}
           setReservationID={setReservationID}

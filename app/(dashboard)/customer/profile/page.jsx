@@ -11,12 +11,10 @@ import { showErrorToast, showSuccessToast } from "@/app/utils/tost";
 import { ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css"; 
+import "react-phone-input-2/lib/style.css";
 import { useCountryCode } from "@/app/context/useCountryCode";
 
-
 export default function Profile() {
-
   const { countryCode } = useCountryCode();
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -59,7 +57,7 @@ export default function Profile() {
   }, []);
 
   const handlePhoneChange = (value) => {
-    setPhone(value); 
+    setPhone(value);
   };
 
   // console.log("formData", formData?.image1);
@@ -219,7 +217,7 @@ export default function Profile() {
     const formType = e.target.name;
 
     if (formType === "profile") {
-      if (!name || !surname || !email ) {
+      if (!name || !surname || !email) {
         showErrorToast(translate, "Please fill all fields");
         return;
       }
@@ -285,7 +283,7 @@ export default function Profile() {
         }
       } else {
         setIsPasswordLoading(false);
-        showErrorToast(translate,"Please fill all fields");
+        showErrorToast(translate, "Please fill all fields");
       }
     }
     // fetchUpdateProfile();
@@ -384,10 +382,26 @@ export default function Profile() {
   //   }
   // };
 
-  console.log("countryCode" , countryCode);
-  console.log("Phone" , Phone);
-  
-  
+  console.log("countryCode", countryCode);
+  console.log("Phone", Phone);
+
+  const handleImageremove = (file) => {
+    const fetchUpdateProfile = async () => {
+      const formDatas = new FormData();
+
+      formDatas.append("id", customer?.user?.id);
+
+      try {
+        const response = await POST.request({
+          form: formDatas,
+          url: "remove_profile_image",
+        });
+        console.log(response, "response");
+      } catch (e) {}
+    };
+    fetchUpdateProfile();
+  };
+
   const { translate } = useTranslation();
   return (
     <>
@@ -483,7 +497,7 @@ export default function Profile() {
                           <div className="col-md-6">
                             <div className="form-input my-1">
                               <PhoneInput
-                                country={Phone !== "" ? "" : countryCode} 
+                                country={Phone !== "" ? "" : countryCode}
                                 value={Phone}
                                 onChange={handlePhoneChange}
                                 inputProps={{
@@ -491,24 +505,24 @@ export default function Profile() {
                                   required: true,
                                   autoFocus: true,
                                 }}
-                                inputClass='phonenumber_input'
+                                inputClass="phonenumber_input"
                                 containerStyle={{
-                                  width: "100%", 
+                                  width: "100%",
                                   marginBottom: "10px",
-                                  backgroundColor : "white"
+                                  backgroundColor: "white",
                                 }}
                                 inputStyle={{
                                   width: "100%",
-                                  padding: "12px 45px", 
+                                  padding: "12px 45px",
                                   borderRadius: "4px",
                                   border: "1px solid #E7E6E6",
                                   fontSize: "16px",
                                   boxSizing: "border-box",
-                                  borderRadius : "12px",
-                                  backgroundColor : "white"
+                                  borderRadius: "12px",
+                                  backgroundColor: "white",
                                 }}
-                                className = "form-input  "
-                                enableSearch = {true}
+                                className="form-input  "
+                                enableSearch={true}
                               />
                               <label className="phone_lable">
                                 {translate("Phone")}
@@ -537,6 +551,7 @@ export default function Profile() {
                                     onClick={() => {
                                       setImage1("");
                                       setFileBlob({});
+                                      handleImageremove(fileBlob);
                                     }}
                                     className="absoluteIcon1 button -dark-1"
                                   >
