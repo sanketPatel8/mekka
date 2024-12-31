@@ -129,7 +129,7 @@ export default function DbBooking() {
         selector: (row) => (
           <Link href={`/vendor/edit-booking/${row.BookingId}`}>
             <button
-              className="button -md  -accent-1 bg-info-2 text-white my-2 col-5 mx-1"
+              className={`button -md  -accent-1 bg-info-2 text-white my-2 col-5 mx-1 ${row.Status == 'Cancelled' ? 'd-none' : "d-block"}`}
               style={{ width: "fit-content", padding: "5px 16px" }}
             >
               {translate("Edit")}
