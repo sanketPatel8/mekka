@@ -68,6 +68,9 @@ export default function Payment() {
  
 useEffect(() => {
   setCompanyCode(localStorage.getItem("company_code"))
+
+  console.log(payableAmount,"payable");
+  console.log(paidAmount,"paidAmount")
 });
   
   
@@ -1465,9 +1468,8 @@ const handleSecondAmountChange = (e) => {
                         </div>
                       </div>
 
-                        <div className="d-flex items-center justify-between">
+                        <div className="d-flex items-center justify-between paymentGateway">
                           <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                          {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount ))} </div> */}
                           <div className=""> 
                           { formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
                              </div>
@@ -1481,7 +1483,7 @@ const handleSecondAmountChange = (e) => {
                     </div>
                   ) : <div>
 
-                  <div className="d-flex items-center justify-between">
+                  <div className="d-flex items-center justify-between  paymentGateway">
                     <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
                     <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
                   </div>
@@ -1495,6 +1497,25 @@ const handleSecondAmountChange = (e) => {
                     
   
                 }
+
+                {/* {
+                  ((selectedCheckbox === 2 ) && payableAmount) ?( SideBarData?.BookingFild?.Discount?.Discount !== undefined ? (
+                    
+                    <div>
+
+                    <div className="d-flex items-center justify-between">
+                      <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
+                      <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
+                    </div>
+                    
+                    <div className="d-flex items-center justify-between">
+                      <div className="fw-500"> {translate("Amount Payable")}</div>
+                      <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
+                    </div>
+  
+                  </div>)
+                  : "") :""
+                } */}
                 <div className="">
 
 
@@ -1516,14 +1537,14 @@ const handleSecondAmountChange = (e) => {
 
                    
                       }
+
                 
                   {
-                    (payableAmount && selectedCheckbox == 2 && !paidAmount ) && (
+                    (payableAmount && selectedCheckbox == 2 ) && (
                       <>
                      
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
                         <div className="">
                         {firstAmount > 0 
             ? formatCurrency(calculateTotalWithFee(firstAmount)) 
@@ -1544,14 +1565,11 @@ const handleSecondAmountChange = (e) => {
 
                   }
                   {
-                    paidAmount && (
+                    (paidAmount && selectedCheckbox === 1) && (
                       <div className="d-flex items-center justify-between">
                         <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
-                        {/* <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.SubTotal))} </div> */}
                         <div className="">
-                        {firstAmount > 0 
-            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
-            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+                        {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
                         </div>
                       </div>
                     )
