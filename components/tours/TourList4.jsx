@@ -20,6 +20,7 @@ import Link from "next/link";
 import { useCurrency } from "@/app/context/currencyContext";
 
 export default function TourList4({
+  filterType,
   TourData,
   FliterData,
   count,
@@ -128,6 +129,7 @@ export default function TourList4({
                         setFilterPrice={setFilterPrice}
                         setFilterDistance={setFilterDistance}
                         FilterDistance={FilterDistance}
+                        filterType={filterType}
                       />
                     </div>
                   </div>
@@ -149,6 +151,7 @@ export default function TourList4({
                   setFilterPrice={setFilterPrice}
                   setFilterDistance={setFilterDistance}
                   FilterDistance={FilterDistance}
+                  filterType={filterType}
                 />
               </div>
             )}
