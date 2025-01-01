@@ -16,17 +16,17 @@ const HeaderMenu = ({ translate }) => {
           </Link>
         </div>
         <div>
-          <Link href="/tour?Filtertype=Umrah" className={pathname === "/tour" && searchParams.get("Filtertype") === "Umrah" ? "active tab-font-12" : "tab-font-12"}>
+          <Link href="/tour?Umrahtype=Umrah" className={pathname === "/tour" && searchParams.get("Umrahtype") === "Umrah" ? "active tab-font-12" : "tab-font-12"}>
             {translate("Umrah")}
           </Link>
         </div>
         <div>
-          <Link href="/tour?Filtertype=Hajj" className={pathname === "/tour" && searchParams.get("Filtertype") === "Hajj" ? "active tab-font-12" : "tab-font-12"}>
+          <Link href="/tour?Hajjtype=Hajj" className={pathname === "/tour" && searchParams.get("Hajjtype") === "Hajj" ? "active tab-font-12" : "tab-font-12"}>
             {translate("Hajj")}
           </Link>
         </div>
         <div>
-          <Link href="/tour?Filtertype=Culture Trip" className={pathname === "/tour" && searchParams.get("Filtertype") === "Culture Trip" ? "active tab-font-12" : "tab-font-12"}>
+          <Link href="/tour?Culturetype=Culture Trip" className={pathname === "/tour" && searchParams.get("Culturetype") === "Culture Trip" ? "active tab-font-12" : "tab-font-12"}>
             {translate("Culture Trip")}
           </Link>
         </div>

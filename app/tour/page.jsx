@@ -14,7 +14,9 @@ import { useTranslation } from "../context/TranslationContext";
 export default function PageData() {
   const searchParams = useSearchParams();
 
-  const filterType = searchParams.get("Filtertype");
+  const filterUmrah = searchParams.get("Umrahtype");
+  const filterHajj = searchParams.get("Hajjtype");
+  const filterCulture = searchParams.get("Culturetype");
 
   const tourType = searchParams.get("TourType") || "";
   const startDate = searchParams.get("StartDate") || "";
@@ -22,14 +24,14 @@ export default function PageData() {
   const person = searchParams.get("person") || "";
 
   const { translate } = useTranslation();
-
+  
   const [count, setCount] = useState(0);
   const [FliterData, setFliterData] = useState([]);
   const [Route, setRoute] = useState("");
   const [TourData, setTourData] = useState([]);
   const [LanActives, setLanActives] = useState([]);
   const [FilterSidebar, setFilterSidebar] = useState({
-    selectedTourTypes: '' ,
+    selectedTourTypes: "",
     selectedLanguages: [],
     selectedCities: [],
     // selectedRatings: [],
@@ -56,12 +58,15 @@ export default function PageData() {
   // page title
 
   useEffect(() => {
+    const firstNonNull = filterUmrah || filterHajj || filterCulture || null;
+  
+    console.log(firstNonNull , 'firstNonNull');
+    
     setFilterSidebar((prevState) => ({
       ...prevState, // Copy the previous state
-      selectedTourTypes: filterType, // Set the new value for selectedTourTypes
+      selectedTourTypes: firstNonNull, // Store the first non-null value
     }));
-  }, [filterType])
-  
+  }, [filterUmrah, filterHajj, filterCulture]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -102,7 +107,7 @@ export default function PageData() {
     const headerType = searchParams.get("type") || "";
 
     if (tourType || startDate || endDate || person) {
-      if (FilterChange === false) {        
+      if (FilterChange === false) {
         await fetchSearch1Data({
           pageIndex,
           tourType,
@@ -168,10 +173,9 @@ export default function PageData() {
   };
 
   useEffect(() => {
-    if (filterType || FilterSidebar || FilterPrice || FilterDistance ) {
+    if (FilterSidebar || FilterPrice || FilterDistance) {
       FetchFilterData();
     } else {
-      
       fetchSearch1Data({
         tourType,
         startDate,
@@ -183,7 +187,6 @@ export default function PageData() {
     FilterSidebar,
     FilterPrice,
     FilterDistance,
-    filterType,
     tourType,
     startDate,
     endDate,
@@ -289,15 +292,13 @@ export default function PageData() {
 
     if (tourType || startDate || endDate || person) {
       console.log("search tour 3");
-      
+
       fetchSearch1Data({ tourType, startDate, endDate, person });
       route.push("#redirect");
-
     }
   }, [searchParams]);
 
-  console.log(FilterSidebar?.selectedTourTypes , 'selectedTourTypes');
-  
+  // console.log(FilterSidebar?.selectedTourTypes , 'selectedTourTypes');
 
   return (
     <>
@@ -325,7 +326,7 @@ export default function PageData() {
             setFilterPrice={setFilterPrice}
             setFilterDistance={setFilterDistance}
             FilterDistance={FilterDistance}
-            filterType={filterType}
+            // filterType={filterType}
           />
         </div>
         <FooterTwo />
