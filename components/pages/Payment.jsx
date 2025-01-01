@@ -1475,10 +1475,10 @@ const handleSecondAmountChange = (e) => {
                              </div>
                         </div>
 
-                        <div className="d-flex items-center justify-between">
+                        {/* <div className="d-flex items-center justify-between">
                           <div className="fw-500"> {translate("Amount Payable")}</div>
                           <div className=""> {formatCurrency((calculateTotalWithFee(SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount)) + (SideBarData?.BookingFild?.Total - SideBarData?.BookingFild?.Discount?.Discount))} </div>
-                        </div>
+                        </div> */}
 
                     </div>
                   ) : <div>
@@ -1488,10 +1488,10 @@ const handleSecondAmountChange = (e) => {
                     <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))} </div>
                   </div>
                   
-                  <div className="d-flex items-center justify-between">
+                  {/* <div className="d-flex items-center justify-between">
                     <div className="fw-500"> {translate("Amount Payable")}</div>
                     <div className=""> {formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total) + SideBarData?.BookingFild?.Total)} </div>
-                  </div>
+                  </div> */}
 
                 </div>) : ""
                     
@@ -1540,7 +1540,7 @@ const handleSecondAmountChange = (e) => {
 
                 
                   {
-                    (payableAmount && selectedCheckbox == 2 ) && (
+                    ((payableAmount !== paidAmount) && selectedCheckbox == 2 ) && (
                       <>
                      
                       <div className="d-flex items-center justify-between">
@@ -1564,6 +1564,26 @@ const handleSecondAmountChange = (e) => {
                     )
 
                   }
+                  {
+                    ((payableAmount === paidAmount) && selectedCheckbox == 2 ) && (
+                      <>
+                     
+                      <div className="d-flex items-center justify-between">
+                        <div className="fw-500"> {translate("Payment Gateway Fees (3%)")}</div>
+                        <div className="">
+                        {firstAmount > 0 
+            ? formatCurrency(calculateTotalWithFee(firstAmount)) 
+            : formatCurrency(calculateTotalWithFee(SideBarData?.BookingFild?.Total))}
+                        </div>
+                      </div>
+
+                       
+                      
+                      </>
+                    )
+
+                  }
+
                   {
                     (paidAmount && selectedCheckbox === 1) && (
                       <div className="d-flex items-center justify-between">
