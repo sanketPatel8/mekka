@@ -588,8 +588,13 @@ export default function Register() {
                             "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                           }
                           scope="email,public_profile"
-                          onLoginStart={() => console.log("start")}
-                          onResolve={({ provider, data }) => {
+                          onLoginStart={() =>
+                            setSocialLoginLoading({
+                              google: false,
+                              facebook: true,
+                              apple: false,
+                            })
+                          }                          onResolve={({ provider, data }) => {
                             const { id, name, email } = data;
                             console.log(data);
                             typeof window !== "undefined" ? window.FB.getLoginStatus((response) => {
@@ -635,8 +640,13 @@ export default function Register() {
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || ""
                           }
                           redirect_uri={typeof window !== "undefined" ? window.location.origin + "/login" : ""}
-                          onLoginStart={() => console.log("start")}
-                          scope="openid profile email"
+                          onLoginStart={() =>
+                            setSocialLoginLoading({
+                              google: true,
+                              facebook: false,
+                              apple: false,
+                            })
+                          }                          scope="openid profile email"
                           discoveryDocs="claims_supported"
                           access_type="online"
                           onResolve={({ provider, data }) => {
@@ -683,8 +693,13 @@ export default function Register() {
                           }
                           scope={"name email"}
                           redirect_uri={typeof window !== "undefined" ? window.location.origin + "/login" : ""}
-                          onLoginStart={() => console.log("start apple login")}
-                          onResolve={({ provider, data }) => {
+                          onLoginStart={() =>
+                            setSocialLoginLoading({
+                              google: false,
+                              facebook: false,
+                              apple: true,
+                            })
+                          }                          onResolve={({ provider, data }) => {
                             console.log(data?.name,"data")
                             signinSocial({ type: "apple", data: data });
                           }}
