@@ -376,7 +376,7 @@ export default function Register() {
     try {
       setIsLoading(true);
       const response = await post("register", RegisterData);
-      if(response.status === "success"){
+      if(response.status === "1"){
         setIsLoading(false)
         showSuccessToast(translate, "User created successfully");
         // Clear the form and set email in local storage
@@ -394,14 +394,26 @@ export default function Register() {
   
         localStorage.setItem("emailForSignIn", RegisterData.email);
   
-        // Redirect after successful registration
         setTimeout(() => {
           router.push("/verify-email");
         }, 2000);
+      }else if(response.status === "0"){
+        setIsLoading(false)
+        showErrorToast(translate, "Email already Exist");
+        setRegisterData({
+          AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+        });
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+
       }
      
     } catch (error) {
-      // Handle errors from the API
       if (
         error.response &&
         error.response.data &&
