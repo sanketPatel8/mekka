@@ -54,6 +54,11 @@ export default function Register() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
     const { LoginPer, setLoginPer } = useGlobalState();
+    const [socialLoginLoading, setSocialLoginLoading] = useState({
+      google: false,
+      facebook: false,
+      apple: false,
+    });
   
 
   const handlePasswordChange = (e) => {
@@ -99,7 +104,8 @@ export default function Register() {
         localStorage.setItem("customer", JSON.stringify(resp));
         localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-        
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
+
 
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -147,7 +153,8 @@ export default function Register() {
         // }, 1000);
 
         showErrorToast(translate,"You are already registered with this email please login from login page ");
-      
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
+
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -164,6 +171,8 @@ export default function Register() {
         
       }else if(resp.Status == "0"){
         showErrorToast(translate,"Invalid Credentials")
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
+
       }
     } else {
       const resp = await POST.request({
@@ -183,7 +192,8 @@ export default function Register() {
         localStorage.setItem("customer", JSON.stringify(resp));
         localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
-        
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
+
 
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -213,7 +223,8 @@ export default function Register() {
        
       } else if(resp.Status == "-2"){
         showErrorToast(translate,"You are already registered with this email please login from login page ");
-      
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
+
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -229,6 +240,8 @@ export default function Register() {
 
       }else{
         showErrorToast(translate, "Invalid Credentials");
+        setSocialLoginLoading({ google: false, facebook: false, apple: false });
+
         setRegisterData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           name: "",
@@ -565,6 +578,8 @@ export default function Register() {
                         type="button"
                         className="button -md -outline-blue-1 text-blue-1 col-12"
                       >
+                        {(!socialLoginLoading?.facebook && (
+
                         <LoginSocialFacebook
                           appId={
                             process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
@@ -594,6 +609,14 @@ export default function Register() {
                           <FaFacebookF size={15} className="mx-1" />
                           {translate("Facebook")}
                         </LoginSocialFacebook>
+                        )) || (
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ height: "30px", width: "100%" }}
+                          >
+                            <ClipLoader color="#1967D2" size={30} />
+                          </div>
+                        )}
                       </button>
                     </div>
 
@@ -602,6 +625,8 @@ export default function Register() {
                         type="button"
                         className="button -md -outline-red-1 text-red-1 col-12"
                       >
+                       {(!socialLoginLoading?.google && (
+
                         <LoginSocialGoogle
                           client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
@@ -630,6 +655,15 @@ export default function Register() {
                           <FaGoogle size={15} className="mx-1" />
                           {translate("Google")}
                         </LoginSocialGoogle>
+                          )) || (
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              style={{ height: "30px", width: "100%" }}
+                            >
+                              <ClipLoader color="#D93025" size={30} />
+                            </div>
+                          )}
+                        
                       </button>
                       
                     </div>
@@ -641,6 +675,8 @@ export default function Register() {
                         type="button"
                         className="button -md -outline-dark-1 text-dark-1 col-12"
                       >
+                       {(!socialLoginLoading?.apple && (
+
                         <LoginSocialApple
                           client_id={
                             process.env.NEXT_PUBLIC_APPLE_CLIENT_ID || ""
@@ -659,6 +695,15 @@ export default function Register() {
                           <FaApple size={15} className="mx-1" />
                           {translate("Sign up With Apple")}
                         </LoginSocialApple>
+                      )) || (
+                        <div
+                          className="d-flex justify-content-center align-items-center"
+                          style={{ height: "30px", width: "100%" }}
+                        >
+                          <ClipLoader color="#000000" size={30} />
+                        </div>
+                      )}
+                        
                       </button>
                     </div>
                   </div>
