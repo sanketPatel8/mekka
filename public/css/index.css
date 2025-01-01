@@ -146,6 +146,23 @@
   z-index: 9999;
 }
 
+.sliSubTitle{
+  font-size: 35px;
+  color: white;
+  font-weight: 700;
+}
+.sliTitle{
+  font-size: 55px;
+  color: #DAC04F;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+.sliTitle2{
+  font-size: 35px;
+  color: white;
+  font-weight: 700;
+}
+
 .text_50 {
   font-size: 5vw;
   color: #dac04f;

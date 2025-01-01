@@ -19,48 +19,47 @@ const slides = [
   {
     id: 1,
     imageSrc: "/img/hero/7/pxfuel 1.jpg",
-    subtitle: "the independent",
-    title: "comparison portal, find cheap, offers & save",
+    subtitle: "auf mekkabooking.com findest du nahezu alle",
+    title: "Umrah Angebote aus Deutschland",
+    title2: "von nahezu allen Anbietern",
   },
   {
     id: 2,
     imageSrc: "/img/hero/7/image 2.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages",
+    subtitle: "jetzt deine Umrah Reise",
+    title: "suchen, vergleichen & abfliegen",
+    title2: "auf mekkabooking.com",
   },
   {
     id: 3,
     imageSrc: "/img/hero/7/image 3.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages",
+    subtitle: "plane deine Umrah jetzt mit mekkabooking",
+    title: "Erlebe eine außergewöhnliche Reise",
+    title2: "intensiv & ganz sicher unvergesslich",
   },
-  {
-    id: 4,
-    imageSrc: "/img/hero/7/image 4.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages",
-  },
-  {
-    id: 5,
-    imageSrc: "/img/hero/7/image 1.jpg",
-    subtitle:
-      "Search, compare and book 15,000+ multiday tours all over the world.",
-    title: "Tours and Trip packages",
-  },
+  // {
+  //   id: 4,
+  //   imageSrc: "/img/hero/7/image 4.jpg",
+  //   subtitle:
+  //     "Search, compare and book 15,000+ multiday tours all over the world.",
+  //   title: "Tours and Trip packages",
+  //   title2: "",
+  // },
+  // {
+  //   id: 5,
+  //   imageSrc: "/img/hero/7/image 1.jpg",
+  //   subtitle:
+  //     "Search, compare and book 15,000+ multiday tours all over the world.",
+  //   title: "Tours and Trip packages",
+  //   title2: "",
+  // },
 ];
 
 export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
 
-  const {
-    location,
-    calender,
-    tourType,
-  } = useGlobalState();
+  const { location, calender, tourType } = useGlobalState();
 
   useEffect(() => {
     setCurrentActiveDD("");
@@ -85,7 +84,7 @@ export default function Hero7() {
     };
   }, []);
 
-  const { translate } = useTranslation()
+  const { translate } = useTranslation();
 
   return (
     <>
@@ -97,7 +96,7 @@ export default function Hero7() {
             <Swiper
               className="w-100"
               modules={[Navigation, Autoplay]}
-              autoplay={{ delay: 6000, disableOnInteraction: false }}
+              // autoplay={{ delay: 6000, disableOnInteraction: false }}
               navigation={{
                 prevEl: ".js-sliderHero-prev",
                 nextEl: ".js-sliderHero-next",
@@ -128,11 +127,12 @@ export default function Hero7() {
                     />
                   </div>
 
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-lg-8 col-md-10">
-                        <div className="hero__content">
-                          <h1
+                  <div className="bg-color">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-12 col-md-10">
+                          <div className="hero__content">
+                            {/* <h1
                             data-aos="fade-up"
                             data-aos-delay="100"
                             className="hero__subtitle text-white mb-5 md:mb-5"
@@ -148,6 +148,13 @@ export default function Hero7() {
                             <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
                               {translate(elm.title)}
                             </h2>
+                          </div> */}
+
+                            <div className="slicontent">
+                              <p className="sliSubTitle">{elm.subtitle}</p>
+                              <h1 className="sliTitle">{elm.title}</h1>
+                              <p className="sliTitle2">{elm.title2}</p>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -174,7 +181,6 @@ export default function Hero7() {
             ref={dropDownContainer}
             className="searchForm -type-1 shadow-1 rounded-200"
           >
-            
             <HeroSearch CustomClass="rounded-200" />
           </div>
         </div>

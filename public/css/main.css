@@ -3407,6 +3407,10 @@ h6 {
   z-index: -1;
 }
 
+.bg-color{
+  background-color: rgba(0, 0, 0, 0.465);
+}
+
 @media (max-width: 991px) {
   .hero.-type-1 .hero__bg {
     right: 0;
@@ -4149,8 +4153,8 @@ h6 {
 }
 
 .hero.-type-7 .hero__content {
-  padding-top: 210px;
-  padding-bottom: 210px;
+  padding-top: 250px;
+  padding-bottom: 250px;
   padding-left: 100px;
 }
 
