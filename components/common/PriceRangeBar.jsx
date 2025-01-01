@@ -40,7 +40,7 @@ export default function PriceRangeBar({ Distance, FilterDistance , setDistance ,
 
   const {translate} = useTranslation();
 
-  console.log(displayValue , "displayValue");
+
   
 
   return (
