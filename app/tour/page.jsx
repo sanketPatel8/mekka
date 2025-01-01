@@ -29,7 +29,7 @@ export default function PageData() {
   const [TourData, setTourData] = useState([]);
   const [LanActives, setLanActives] = useState([]);
   const [FilterSidebar, setFilterSidebar] = useState({
-    selectedTourTypes: " ",
+    selectedTourTypes: '' ,
     selectedLanguages: [],
     selectedCities: [],
     // selectedRatings: [],
@@ -54,6 +54,14 @@ export default function PageData() {
   const route = useRouter();
 
   // page title
+
+  useEffect(() => {
+    setFilterSidebar((prevState) => ({
+      ...prevState, // Copy the previous state
+      selectedTourTypes: filterType, // Set the new value for selectedTourTypes
+    }));
+  }, [filterType])
+  
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -94,9 +102,7 @@ export default function PageData() {
     const headerType = searchParams.get("type") || "";
 
     if (tourType || startDate || endDate || person) {
-      if (FilterChange === false) {
-        console.log("search tour 1");
-        
+      if (FilterChange === false) {        
         await fetchSearch1Data({
           pageIndex,
           tourType,
@@ -124,8 +130,6 @@ export default function PageData() {
     ) {
     }
   }, []);
-
-  const isMounted = useRef(false);
 
   const FetchFilterData = async (pageIndex) => {
     const formData = new FormData();
@@ -167,7 +171,6 @@ export default function PageData() {
     if (filterType || FilterSidebar || FilterPrice || FilterDistance ) {
       FetchFilterData();
     } else {
-      console.log("search tour 2");
       
       fetchSearch1Data({
         tourType,
@@ -292,6 +295,9 @@ export default function PageData() {
 
     }
   }, [searchParams]);
+
+  console.log(FilterSidebar?.selectedTourTypes , 'selectedTourTypes');
+  
 
   return (
     <>

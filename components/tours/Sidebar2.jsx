@@ -145,7 +145,9 @@ export default function Sidebar2({
                               <div className="form-radio d-flex items-center">
                                 <label
                                   className={`radio d-flex items-center ${
-                                    filterType === elm ? "active" : ""
+                                    FilterSidebar?.selectedTourTypes === elm
+                                      ? "active"
+                                      : ""
                                   }`}
                                 >
                                   <input
@@ -154,10 +156,7 @@ export default function Sidebar2({
                                     name="selectedTourTypes"
                                     value={elm}
                                     checked={
-                                      elm === filterType
-                                        ? true // Checked if first item matches filterType
-                                        : FilterSidebar?.selectedTourTypes ===
-                                          elm
+                                      FilterSidebar?.selectedTourTypes === elm
                                     }
                                     onChange={() =>
                                       handleChange("selectedTourTypes", elm)
