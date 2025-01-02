@@ -468,7 +468,12 @@ export default function Login({
                               "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                             }
                             scope="email,public_profile"
-                            onLoginStart={() => console.log("start")}
+                            onLoginStart={setSocialLoginLoading({
+                                google: false,
+                                facebook: true,
+                                apple: false,
+                              })
+                            }
                             onResolve={({ provider, data }) => {
                               const { id, name, email } = data;
                           
