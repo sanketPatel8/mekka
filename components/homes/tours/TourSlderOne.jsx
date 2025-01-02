@@ -34,7 +34,7 @@ export default function TourSlderOne() {
       if (response) {
         setTopTranding(response.Tours);
 
-        console.log(TopTranding.length, "TopTranding");
+
       } else {
         console.error("Tours data is undefined in the response.");
       }

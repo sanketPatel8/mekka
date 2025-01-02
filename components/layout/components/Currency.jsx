@@ -43,7 +43,7 @@ export default function Currency({ parentClass, currencyLocale }) {
         className="headerDropdown__button"
         onClick={() => {
           setCurrentdd((pre) => (pre == "currency" ? "" : "currency"));
-          console.log(currentdd, "currentdd");
+       
         }}
       >
         {currency == "EURO" ? "EURO" : "USD"}

@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const showSuccessToast = (translate,messageKey) => {
 
-  console.log("translate in tost file " , translate);
+
   
   const message = translate(messageKey);
 

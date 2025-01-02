@@ -91,7 +91,7 @@ const page = () => {
   };
 
   const handleRadioChange = (event) => {
-    console.log(event.target.value);
+
     setRadioValue(event.target.value);
   };
 
@@ -177,7 +177,7 @@ const page = () => {
     }
 
     const tempErrors = validate();
-    console.log(tempErrors);
+
 
     if (Object.keys(tempErrors).length > 0) {
       setErrors(tempErrors);
@@ -222,32 +222,14 @@ const page = () => {
         showSuccessToast(translate, "User created successfully");
         router.push("/thank-you");
       } else if (response.status === "error") {
-        console.log("error");
+        console.error("error");
         setIsLoading(false);
         showErrorToast(translate, "Email already exists");
       }
 
-      // if(response.error){
-      //   console.log("error1")
-      //   showErrorToast(response.message);
-      // }
-
-      // if(!response){
-      //   console.log("error2")
-      //   showErrorToast("Something went wrong");
-      // }
-
-      // if(response.status == "error"){
-      //   console.log("error3")
-      //   showErrorToast("Unauthorized");
-      // }
-
-      // if(!response){
-      //   console.log("error4")
-      //   showErrorToast("Unauthorized");
-      // }
+     
     } catch (err) {
-      console.log("error5");
+      console.error("error5");
       setIsLoading(false);
       showErrorToast(translate, "Something went wrong");
     }
@@ -261,7 +243,7 @@ const page = () => {
     setMobile(e);
   };
 
-  console.log("country code " , countryCode);
+
   
   return (
     <>

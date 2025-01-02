@@ -48,12 +48,12 @@ export default function DbBooking() {
       setIsLoading(false);
       setBookingsCustomer(response?.Bookings);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
   useEffect(() => {
-    console.log("First Time Data Load ");
+
 
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("customer");
@@ -96,10 +96,6 @@ export default function DbBooking() {
   useEffect(() => {
     if (UserID !== null) fetchListing(UserID?.id);
   }, [UserID]);
-
-  console.log("UserID", UserID);
-
-  console.log("BookingsCustomer", BookingsCustomer);
 
   useEffect(() => {
     if (BookingsCustomer && BookingsCustomer.length === 0) {

@@ -86,16 +86,16 @@ function ResetPassword({params}) {
         formData.append("id", encryptedId );
 
         const response = await POST.request({form:formData, url:"reset_password"})
-        console.log(response, 'response')
+     
         if(response){
             showSuccessToast(translate, "Password reset successfully");
             setPassword("");
             setConfirmPassword("");
             if(response.user_type === "vendor"){
-                console.log("hi")
+              
                 router.push("/partner-login");
             }else if(response.user_type === "customer"){
-                console.log("hello")
+             
                 router.push("/login");
             }
         }

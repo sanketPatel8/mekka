@@ -21,7 +21,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hi")
+  
 
     if(name == "" || phone == "" || email == "" || message == ""){
       showErrorToast(translate, "All fields are required")

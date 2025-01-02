@@ -63,9 +63,9 @@ export default function Register() {
 
   const handlePasswordChange = (e) => {
     const { value } = e.target;
-    console.log(value, "value");
+  
     setConfirmpass(value);
-    console.log(RegisterData.password);
+
     if (value !== RegisterData.password) {
       setError("Passwords do not match");
     } else {
@@ -75,12 +75,12 @@ export default function Register() {
 
   
   const signinSocial = async ({ type, email, id, name, data }) => {
-    console.log(type,"type")
+  
     if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
 
-      console.log(decodedToken, "decoded token");
+     
 
       const appleData = {
         email: decodedToken.email,
@@ -89,14 +89,14 @@ export default function Register() {
         name: ""
       };
 
-      console.log(appleData, "apple data");
+
 
       const resp = await POST.request({
         form: appleData,
         url: "social_register",
       });
 
-      console.log(resp, "apple response");
+   
 
       if (resp.Status == "1") {
 
@@ -184,10 +184,10 @@ export default function Register() {
         },
         url: "social_register",
       });
-      console.log(resp, "response");
+   
       if (resp.Status == "1") {
 
-        console.log("success",resp.Status);
+      
         showSuccessToast(translate, "User created successfully");
         localStorage.setItem("customer", JSON.stringify(resp));
         localStorage.setItem("CustomerLoginCheck", JSON.stringify(true));
@@ -608,7 +608,7 @@ export default function Register() {
                             })
                           }                          onResolve={({ provider, data }) => {
                             const { id, name, email } = data;
-                            console.log(data);
+                       
                             typeof window !== "undefined" ? window.FB.getLoginStatus((response) => {
                               if (response.status === "connected") {
                                 signinSocial({
@@ -620,7 +620,7 @@ export default function Register() {
                             typeof window !== "undefined" ? window.FB.logout() : "";
                           }}
                           onReject={(err) => {
-                            console.log(err);
+                            console.error(err);
                           }}
                         >
                           <FaFacebookF size={15} className="mx-1" />
@@ -671,7 +671,7 @@ export default function Register() {
                             });
                           }}
                           onReject={(err) => {
-                            console.log(err);
+                            console.error(err);
                           }}
                         >
                           <FaGoogle size={15} className="mx-1" />
@@ -712,11 +712,11 @@ export default function Register() {
                               apple: true,
                             })
                           }                          onResolve={({ provider, data }) => {
-                            console.log(data?.name,"data")
+                        
                             signinSocial({ type: "apple", data: data });
                           }}
                           onReject={(err) => {
-                            console.log(err);
+                            console.error(err);
                           }}
                         >
                           <FaApple size={15} className="mx-1" />

@@ -106,7 +106,7 @@ export default function Login({
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
 
         if (!redirectpath) {
-          console.log(redirectpath,"redirectpath")
+      
           setTimeout(() => {
             setLoginPer(true);
             router.push("/customer/booking");
@@ -134,7 +134,7 @@ export default function Login({
         },
         url: "social_login",
       });
-      console.log(resp, "resp");
+  
       if (resp.Status == 1) {
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
@@ -142,7 +142,7 @@ export default function Login({
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         LoginUpdate();
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
-        console.log(redirectpath, "redirect");
+      
         if (!redirectpath) {
           setTimeout(() => {
             setLoginPer(true);
@@ -231,7 +231,7 @@ export default function Login({
     setIsLoading(true);
     Auth.user(data)
       .then((resp) => {
-        console.log(resp);  
+    
         
         setIsLoading(false);
         if (resp.Status == "0") {
@@ -471,7 +471,7 @@ export default function Login({
                             onLoginStart={() => console.log("start")}
                             onResolve={({ provider, data }) => {
                               const { id, name, email } = data;
-                              console.log(data);
+                          
                               typeof window !== "undefined"
                                 ? window.FB.getLoginStatus((response) => {
                                     if (response.status === "connected") {
@@ -487,7 +487,7 @@ export default function Login({
                                 : "";
                             }}
                             onReject={(err) => {
-                              console.log(err);
+                              console.error(err);
                             }}
                           >
                             <FaFacebookF size={15} className="mx-1" />

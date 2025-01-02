@@ -47,7 +47,7 @@ export default function FooterTwo() {
     formData.append("email", email);
 
     const response = await POST.request({ form: formData, url: "newsemail" });
-    console.log(response)
+   
 
     if (response.status === "1") {
       showSuccessToast(translate, "Email successfully added");

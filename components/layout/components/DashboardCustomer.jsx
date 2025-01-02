@@ -28,7 +28,7 @@ export default function DashboardCustomer({
 
 
   const handleOptionChange = (option) => {
-    console.log("Option changed:", option); // Example logging
+
   };
 
   

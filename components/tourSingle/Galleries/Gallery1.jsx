@@ -12,7 +12,7 @@ export default function Gallery1({ PAckageData }) {
 
   useEffect(() => {
     // Log to ensure PAckageData has the right structure
-    console.log("PAckageData", PAckageData);
+   
     setImages(PAckageData?.Tour_Details?.tour_details?.tour_image || []);
   }, [PAckageData]);
 
@@ -24,7 +24,7 @@ export default function Gallery1({ PAckageData }) {
   ];
 
   const openLightBox = () => {
-    console.log("Button clicked, setting lightbox active.");
+  
     setActiveLightBox(true); // This should update state
   };
 

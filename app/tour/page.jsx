@@ -106,7 +106,7 @@ export default function PageData() {
 
     if (tourType || startDate || endDate || person) {
       if (FilterChange === false) {
-        console.log("search 1");
+       
         
         await fetchSearch1Data({
           pageIndex,
@@ -255,7 +255,7 @@ export default function PageData() {
     });
 
     if (tourType || startDate || endDate || person) {
-      console.log("search 3");
+
 
       fetchSearch1Data({ tourType, startDate, endDate, person });
       route.push("#redirect");
@@ -263,7 +263,7 @@ export default function PageData() {
     }
   }, [searchParams]);
 
-  // console.log(FilterSidebar?.selectedTourTypes , 'selectedTourTypes');
+ 
 
   return (
     <>

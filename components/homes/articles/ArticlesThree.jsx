@@ -19,7 +19,7 @@ export default function ArticlesThree() {
 
       try {
         const response = await post("travel_articles", sendData);
-        console.log("response" , response);
+     
         
         setArticalDAta(response.Travel_Articles);
       } catch (error) {

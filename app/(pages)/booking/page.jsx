@@ -48,7 +48,7 @@ export default function page() {
     FetchBookingData();
   }, [Tourid]);
 
-  // console.log(BookingData?.Tour_Details?.addtional_price);
+
 
   return (
     <>

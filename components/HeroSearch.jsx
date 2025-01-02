@@ -32,7 +32,7 @@ const HeroSearch = ({ CustomClass }) => {
   const handleDateChange = (newDates) => {
     setDates(newDates);
     const formattedDates = newDates.map((date) => date.format("DD.MM.YYYY"));
-    console.log("formattedDates", formattedDates);
+  
   };
 
   const closeDropdown = () => setCurrentActiveDD("");

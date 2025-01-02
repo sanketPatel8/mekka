@@ -54,7 +54,7 @@ export default function TourSliderTwo({setLength}) {
     }
   };
 
-  console.log(ShowSlide,"ShowSlide");
+
 
   const { translate } = useTranslation();
   const {formatPrice} = useCurrency()

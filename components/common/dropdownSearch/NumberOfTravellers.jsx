@@ -8,7 +8,7 @@ const options = ["Adult", "child", "baby"];
 export default function NumberOfTravellers({ active, setTourType }) {
   const { counts , setCounts } = useGlobalState();
   useEffect(() => {
-    // console.log("Initial counts state:", counts);
+   
   }, []);
  
   const decr = (type) => {

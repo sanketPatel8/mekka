@@ -10,7 +10,7 @@ export default function Banner() {
   const { translate } = useTranslation();
   const [Length, setLength] = useState(0)
 
-  console.log("Length" , Length); 
+ 
   
   return (
     <section className="cta -type-3">

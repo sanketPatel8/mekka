@@ -48,7 +48,7 @@ export default function HeaderSerch({ white }) {
 
         try {
           const response = await post("search_tour", sendData);
-          console.log("search response was:", response);
+      
           setSearchData(response.Tour_List);
           setShowSearchbar(true);
           setDdActive(true);

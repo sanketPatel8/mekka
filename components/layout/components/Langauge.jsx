@@ -6,7 +6,7 @@ const currencies = ["DE", "EN"];
 export default function Language({ parentClass, onLocaleChange, locale }) {
   const [currentdd, setCurrentdd] = useState("");
   // const [selectedCurrency, setSelectedCurrency] = useState(locale );
-  // console.log(selectedCurrency, "selectedCurrency");
+
   const dropDownContainer = useRef();
   useEffect(() => {
     const handleClick = (event) => {
