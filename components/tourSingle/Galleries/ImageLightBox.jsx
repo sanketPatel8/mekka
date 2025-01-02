@@ -15,7 +15,7 @@ export default function ImageLightBox({
     return null;
   }
 
-  console.log("activeLightBox for light box:", activeLightBox);
+ 
 
   // Auto-close modal when clicking outside of the image
   useEffect(() => {

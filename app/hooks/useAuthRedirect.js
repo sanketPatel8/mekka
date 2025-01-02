@@ -20,7 +20,7 @@ function Useauthredirect() {
         }
 
         if (authContext.user === null ) {
-            console.log(authContext.user , "user not found")
+          
             window.location.href = "/partner-login";
           }
           

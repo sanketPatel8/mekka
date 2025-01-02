@@ -584,7 +584,7 @@ export default function BookingPages({ BookingData }) {
         ].services.filter((item) => item.price !== price);
       }
 
-      // console.log(JSON.stringify(updatedValues[type][i].services) , 'updatedValues[type][i].services');
+      
       
      
       if (type === "Adult" && i === 0) {
@@ -1652,7 +1652,7 @@ export default function BookingPages({ BookingData }) {
 
   const discountClass = Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
   
-  console.log(userData , 'userData');
+
 
   return (
     <>

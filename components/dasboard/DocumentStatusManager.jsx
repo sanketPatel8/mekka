@@ -96,7 +96,7 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
     formData.append("status", selectedOption.value);
 
     const response = await POST.request({ form: formData, url: "changeBookingStatus" });
-    console.log(response)
+   
     if(response){
       toast.success("Status Updated Successfully");
     }

@@ -627,10 +627,10 @@ export default function TourSingleSidebar({
 
   const totalSelected = adultNumber + youthNumber + childrenNumber;
 
-  console.log(SidebarData?.tour_details?.departures , 'SelectedAllPrice');
+  
 
   SidebarData?.tour_details?.departures?.map(departure => {
-    console.log(departure);
+
   });
   
   

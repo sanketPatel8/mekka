@@ -25,7 +25,7 @@ export default function Sidebar() {
   }, []);
 
   const company_id = user === null ? 0 : user?.user.company_id;
-  console.log(company_id, "company_id");
+
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -34,7 +34,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     const key = searchParams.get("key"); // Get the 'key' parameter from the URL
-    console.log(key,"key")
+
     if (key) {
       fetchUser(key); // Pass key to fetchUser 
     }else{

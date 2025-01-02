@@ -86,7 +86,7 @@ export default function CheckoutForm({
     return fee; // Return the calculated fee
   };
   const calculateTotalWithFee = (amount) => {
-    console.log(amount)
+   
     const feePercentage = 0.03;
     const fee = amount * feePercentage; 
     return  fee; 
@@ -136,7 +136,7 @@ export default function CheckoutForm({
       amount_paid: (amount- totalAmount),
       stripe_fees : totalAmount
     };
-    console.log(newBooking, "newBooking");
+
     try {
       const response = await post("addbooking", newBooking);
       if (response) {
@@ -146,7 +146,7 @@ export default function CheckoutForm({
         setBookingStage(2);
         setReservationID(response.reservationNumber);
         setPaidAmount(amount);
-        console.log(setPaidAmount, "setPaidAmount");
+
         setTimeout(() => {
           localStorage.removeItem("AdultPrice&count");
           localStorage.removeItem("SelectedPackageHotelNDFlight");
@@ -246,7 +246,7 @@ export default function CheckoutForm({
     setIsProcessing(true);
 
     if (amount) {
-      console.log("hi")
+   
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -254,15 +254,15 @@ export default function CheckoutForm({
         },
         redirect: "if_required",
       });
-      if (error) console.log(error);
+      if (error) console.error(error);
       if (
         error &&
         (error.type === "card_error" || error.type === "validation_error")
       ) {
         showErrorToast(translate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        console.log(paymentIntent, "paymentIntent");
-        console.log(paymentIntent.id, "paymentIntent.id");
+       
+      
         const newAmount = paymentIntent.amount / 100;
         addBooking(paymentIntent.id, newAmount);
       }
@@ -275,21 +275,20 @@ export default function CheckoutForm({
         },
         redirect: "if_required",
       });
-      if (error) console.log(error);
+      if (error) console.error(error);
       if (
         error &&
         (error.type === "card_error" || error.type === "validation_error")
       ) {
         showErrorToast(tarnslate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        console.log(paymentIntent, "paymentIntent");
-        console.log(paymentIntent.id, "paymentIntent.id");
+      
         const newAmount = paymentIntent.amount / 100;
         FetchAddperson();
       }
     }
     if (payableAmount) {
-      console.log("hello")
+    
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -297,15 +296,14 @@ export default function CheckoutForm({
         },
         redirect: "if_required",
       });
-      if (error) console.log(error);
+      if (error) console.error(error);
       if (
         error &&
         (error.type === "card_error" || error.type === "validation_error")
       ) {
         showErrorToast(tarnslate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        console.log(paymentIntent, "paymentIntent");
-        console.log(paymentIntent.id, "paymentIntent.id");
+      
         const newAmount = paymentIntent.amount / 100;
         InstallmentPaid();
       }

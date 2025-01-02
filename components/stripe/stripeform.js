@@ -10,7 +10,7 @@ const CheckoutFormPage = dynamic(() => import('./checkoutform'), {
 });
 function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPersonAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
 
-  console.log(AddPersonAmount, 'Addperson')
+
 
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
@@ -31,7 +31,7 @@ function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPerso
     
       const newAmount = parseInt(amount) * 100; // Convert to cents
       const totalAmount = calculateTotalWithFee(newAmount); // Calculate total with fee
-      console.log(totalAmount, 'totalAmount')
+     
       const data = {
         "amount": Math.round(totalAmount),
         "currency": 'EUR',
@@ -56,11 +56,11 @@ function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPerso
       };
     
       const parsedAmount = parseEuroAmount(payableAmount);
-      console.log(parsedAmount) 
+
       const newAmount = parsedAmount * 100;
 
       const totalAmount = calculateTotalWithFee(newAmount); 
-      console.log(totalAmount, 'totalAmount')
+ 
       const data = {
         "amount": Math.round(totalAmount),
         "currency": 'EUR',
@@ -81,7 +81,7 @@ function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPerso
     } else if(AddPersonAmount){
       const newAmount = parseInt(AddPersonAmount) * 100; // Convert to cents
       const totalAmount = calculateTotalWithFee(newAmount); // Calculate total with fee
-      console.log(totalAmount, 'totalAmount')
+ 
       const data = {
         "amount": Math.round(totalAmount),
         "currency": 'EUR',

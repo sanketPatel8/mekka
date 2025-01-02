@@ -14,7 +14,7 @@ const RoadMap = ({ PAckageData, hotelData, isLoading, setisLoading }) => {
   //   setMainHotelData(PAckageData?.Tour_Details?.tour_hotels)
   // }, [PAckageData])
 
-  console.log("hotelData", hotelData);
+
 
   const { translate } = useTranslation();
 

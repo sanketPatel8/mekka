@@ -26,7 +26,7 @@ export default function SingleFour({ PAckageData }) {
   useEffect(() => {
     const foundTour = PAckageData?.Tour_List?.find((tour) => tour.id == id);
     setFlightInc(foundTour);
-    console.log(PAckageData?.Tour_Details?.tour_flights, "flight info");
+   
   }, [PAckageData]);
 
   const { translate } = useTranslation();

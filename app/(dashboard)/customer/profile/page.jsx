@@ -48,11 +48,11 @@ export default function Profile() {
     setPhone(value);
   };
 
-  // console.log("formData", formData?.image1);
+
 
   const { user, customer } = useAuthContext();
 
-  // console.log("customer", customer);
+
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -264,8 +264,7 @@ export default function Profile() {
     }
   };
  
-  console.log("countryCode", countryCode);
-  console.log("Phone", Phone);
+
 
   const handleImageremove = (file) => {
     const fetchUpdateProfile = async () => {
@@ -278,7 +277,7 @@ export default function Profile() {
           form: formDatas,
           url: "remove_profile_image",
         });
-        console.log(response, "response");
+      
         showSuccessToast(translate, response.Message);
       } catch (e) {}
     };

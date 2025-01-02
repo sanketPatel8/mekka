@@ -19,7 +19,7 @@ const LanguageSwitcher = () => {
           includedLanguages: 'en,de',
           layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
         }, 'google_translate_element');
-        console.log('Google Translate initialized successfully.');
+ 
       } catch (error) {
         console.error('Error initializing Google Translate:', error);
       }

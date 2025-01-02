@@ -20,7 +20,7 @@ export default function Page({ params }) {
   const [descLang, setDescLang] = useState('');
 
   const fetchData = async (locale) => {
-    console.log(locale)
+   
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       lang: locale,
@@ -32,14 +32,14 @@ export default function Page({ params }) {
       setBlogData(response.Blog_Details);
       if (locale == 'EN') {
 
-        console.log(locale)
+    
         setHeaderLang(response.Blog_Details.headOneEn);
         setDescLang(response.Blog_Details.headOneTextEn);
-        console.log(headerLang, descLang)
+    
       } else {
         setHeaderLang(response.Blog_Details.headOne);
         setDescLang(response.Blog_Details.headOneText);
-        console.log(headerLang, descLang)
+      
       }
     } catch (error) {
       console.error("Error caught:", error);
@@ -50,8 +50,6 @@ export default function Page({ params }) {
   
   useEffect(() => {
     if (Lang) {
-      console.log("Fetching data for language:", Lang);
-
       fetchData(Lang);
     }
   }, [Lang]);

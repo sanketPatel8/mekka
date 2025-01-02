@@ -29,7 +29,7 @@ export default function Currency({ parentClass }) {
   }, []);
 
   const handleCurrencyChange = (currency) => {
-    console.log("hi")
+ 
     setCurrency(currency);
     setIsOpen(false);
   };

@@ -26,7 +26,7 @@ export const CurrencyProvider = ({ children }) => {
   }
 
   const formatPrice = (price) => {
-    // console.log("price" , price);
+
 
     if (currency === "EURO") {
     

@@ -69,8 +69,7 @@ export default function Payment() {
 useEffect(() => {
   setCompanyCode(localStorage.getItem("company_code"))
 
-  console.log(payableAmount,"payable");
-  console.log(paidAmount,"paidAmount")
+ 
 });
   
   
@@ -98,7 +97,7 @@ useEffect(() => {
 
   const handleFirstAmountChange = (e) => {
     setIsFocused(true);
-    console.log(e.target.value, "firstamount");
+
   
     // Get the input value
     const inputValue = e.target.value;
@@ -113,7 +112,7 @@ useEffect(() => {
     }
   
     const rawAmount = parseFloat(inputValue);
-    console.log(rawAmount,"raw1")
+ 
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
     const second  = secondAmount ? secondAmount : 0;  
     // if (secondAmount === "") {
@@ -121,14 +120,12 @@ useEffect(() => {
     // } else {
     //   setRawAmout(inputValue + secondAmount || 0);
     // }
-    // console.log(rawAmount,"raw2")
-    console.log(parseFloat(rawAmount + second) , "second")
-    console.log(totalAmount , "totalAmount")
+   
 
     if ((rawAmount + second) > totalAmount) {
       showErrorToast(translate, "Your amount is higher than total amount");
     } else {
-      console.log(rawAmount, "raw");
+    
       setFirstAmount(rawAmount);
       setThirdAmount(totalAmount - (rawAmount - secondAmount));
       if (rawAmount > 0) {
@@ -161,7 +158,7 @@ const handleSecondAmountChange = (e) => {
     const rawAmount = parseFloat(e.target.value) ;
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
   
-  console.log(rawAmount,"raw2")
+ 
     if ((rawAmount + first) > totalAmount) {
       showErrorToast(translate,"Your amount is higher than total amount")
 
@@ -173,7 +170,7 @@ const handleSecondAmountChange = (e) => {
 };
 
   useEffect(() => {
-    console.log(paidAmount, "paidAmount");
+  
     if (secondAmount && dateBegin) {
       calculateThirdAmount();
     }
@@ -184,13 +181,13 @@ const handleSecondAmountChange = (e) => {
     const secondAmountValue = parseFloat(secondAmount);
 
     const totalAmount = SideBarData?.BookingFild?.SubTotal;
-    console.log(totalAmount, "totalAmount");
+
     const total = firstAmountValue + secondAmountValue;
-    console.log(total, "total");
+  
 
     if (total < totalAmount) {
       const thirdAmountValue = parseFloat(totalAmount - total).toFixed(2);
-      console.log(thirdAmountValue, "thirdAmountValue");
+     
       setThirdAmount(thirdAmountValue);
     } else {
       setThirdAmount(0);
@@ -221,7 +218,7 @@ const handleSecondAmountChange = (e) => {
         setLaterPayment(asSidebarrData?.laterPayment);
         setSideBarData(asSidebarrData);
 
-        console.log(laterPayment,"later")
+    
       } catch (error) {
         console.error("Error parsing userData:", error);
       }
@@ -303,7 +300,7 @@ const handleSecondAmountChange = (e) => {
 
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
 
-          console.log("sixDaysBeforeString", sixDaysBeforeString);
+    
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
