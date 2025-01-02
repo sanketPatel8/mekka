@@ -118,7 +118,7 @@ export default function DbBooking({ params }) {
       {
         name: translate("Additional Services"),
         selector: (row) =>
-          row?.extra_data,
+          row?.extra_data?.title == 'undefined' || row?.extra_data?.title == null ? "no services" : row?.extra_data?.title ,
         width: "16%",
       },
 
@@ -139,7 +139,7 @@ export default function DbBooking({ params }) {
             </button>
           </div>
         ),
-        width: "15%",
+        width: "20%",
       },
     ];
 
@@ -206,6 +206,7 @@ export default function DbBooking({ params }) {
             {translate("Download")}
           </a>
         ),
+        width: "20%"
       },
     ];
 

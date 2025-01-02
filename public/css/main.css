@@ -3408,7 +3408,11 @@ h6 {
 }
 
 .bg-color{
-  background-color: rgba(0, 0, 0, 0.465);
+ background: linear-gradient(
+  to bottom, 
+  rgba(255, 255, 255, 0.4), 
+  rgba(0, 0, 0, 0.4)        
+);
 }
 
 @media (max-width: 991px) {

@@ -198,7 +198,7 @@ const CustomerDetaTable = () => {
     {
       name: translate("Additional Services"),
       selector: (row) =>
-        row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
+        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null ? 'no services' : row?.extra_data?.title, // Return null if the length is 0
       // width: "10%",
     },
     {
@@ -254,7 +254,7 @@ const CustomerDetaTable = () => {
     {
       name: translate("Additional Services"),
       selector: (row) =>
-        row?.extra_data?.title == "undefined" ? 0 : row?.extra_data?.title, // Return null if the length is 0
+        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null ? 'no services' : row?.extra_data?.title, // Return null if the length is 0
       width: "150px",
     },
     {

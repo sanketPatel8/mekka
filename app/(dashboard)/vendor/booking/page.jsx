@@ -45,13 +45,6 @@ export default function DbBooking() {
     setTabs(tabContent);
 
     const BookingsData = [
-      // {
-      //   name: translate("Id"),
-      //   selector: (row) => row.BookingId,
-      //   sortable: true,
-      //   width:"5%",
-        
-      // },
       {
         name: translate("Booking No."),
         selector: (row) => row.BookingNo,
@@ -136,7 +129,7 @@ export default function DbBooking() {
             </button>
           </Link>
         ),
-        width:"10%"
+        width:"20%"
       },
     ];
 

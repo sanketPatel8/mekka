@@ -18,25 +18,27 @@ import { useTranslation } from "@/app/context/TranslationContext";
 const slides = [
   {
     id: 1,
-    imageSrc: "/img/hero/7/pxfuel 1.jpg",
-    subtitle: "auf mekkabooking.com findest du nahezu alle",
-    title: "Umrah Angebote aus Deutschland",
-    title2: "von nahezu allen Anbietern",
+    imageSrc: "/img/hero/7/slide2.png",
+    subtitle: "plane deine Umrah jetzt mit mekkabooking",
+    title: "Erlebe eine außergewöhnliche Reise",
+    title2: "intensiv & ganz sicher unvergesslich",
   },
   {
     id: 2,
-    imageSrc: "/img/hero/7/image 2.jpg",
+    imageSrc: "/img/hero/7/slide3.png",
     subtitle: "jetzt deine Umrah Reise",
     title: "suchen, vergleichen & abfliegen",
     title2: "auf mekkabooking.com",
   },
   {
     id: 3,
-    imageSrc: "/img/hero/7/image 3.jpg",
-    subtitle: "plane deine Umrah jetzt mit mekkabooking",
-    title: "Erlebe eine außergewöhnliche Reise",
-    title2: "intensiv & ganz sicher unvergesslich",
+    imageSrc: "/img/hero/7/slide1.png",
+    subtitle: "auf mekkabooking.com findest du nahezu alle",
+    title: "Umrah Angebote aus Deutschland",
+    title2: "von nahezu allen Anbietern",
   },
+  
+ 
   // {
   //   id: 4,
   //   imageSrc: "/img/hero/7/image 4.jpg",
@@ -152,7 +154,7 @@ export default function Hero7() {
 
                             <div className="slicontent">
                               <p className="sliSubTitle">{elm.subtitle}</p>
-                              <h1 className="sliTitle">{elm.title}</h1>
+                              <h1 className={`sliTitle ${elm.id == '2' ? "slider-slide-2-heading-change" : ""}`}>{elm.title}</h1>
                               <p className="sliTitle2">{elm.title2}</p>
                             </div>
                           </div>
