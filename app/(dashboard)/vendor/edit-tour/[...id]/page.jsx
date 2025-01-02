@@ -656,9 +656,7 @@ export default function EditTour() {
       setUncheckedIds((prev) => prev.filter((uncheckedId) => uncheckedId !== serviceId)); // Remove from unchecked array
     }
 
-    console.log(uncheckedIds, "uncheckedIds");
 
-    console.log(services, "services");
   };
 
   const handlePriceChange = (event, id) => {
@@ -735,7 +733,6 @@ export default function EditTour() {
 
   const handleRemoveDepartureRow = (index) => {
     const id = departureRows[index].id;
-    console.log(id, "id");
     if (departureRows.length === 1) {
       return;
     }
@@ -750,7 +747,6 @@ export default function EditTour() {
 
   const handleRemoveArrivalRow = (index) => {
     const id = arrivalrow[index].arrival_id;
-    console.log(id, "id");
 
     if (arrivalrow.length === 1) {
       return;
@@ -1050,8 +1046,7 @@ export default function EditTour() {
       const { dayData, description } = day;
       return !dayData || !description;
     });
-        console.log(hasEmptyDayOrDescription, "hasEmptyDayOrDescription");
-    console.log(route_data, "route_data");
+        
     if (hasEmptyDayOrDescription || route_data.length !== totalDays) {
       showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
       setLoading(false);
@@ -1160,8 +1155,6 @@ export default function EditTour() {
       id: departure.id ? departure.id : "",
     }));
 
-    console.log(uncheckedIds, "uncheckedIds");
-
 
     const formData = new FormData();
 
@@ -1237,7 +1230,6 @@ export default function EditTour() {
     return `${year}-${month}-${day}`;
   };
   
-  console.log(uncheckedIds);
   return (
     <>
       <ToastContainer />

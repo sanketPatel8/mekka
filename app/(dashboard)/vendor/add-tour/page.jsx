@@ -189,86 +189,19 @@ export default function AddTour() {
   };
 
   const handleFocus = (e) => {};
-  // const handleStartDateKeyDown = (e) => {
-  //   const inputValue = e.target.value;
-  //   const dateParts = inputValue.split('-');
-  //   console.log(dateParts,"dateParts")
-  //   const selectedDate = getTodayDate();
-  //   console.log(selectedDate,"selectedDate")
-  //   setDateBegin(inputValue);
-  //   const nextDay = new Date(selectedDate);
-  //   nextDay.setDate(nextDay.getDate() + 1);
-  //   setMinDate(nextDay.toISOString().split("T")[0]);
-
-  // //   if (!/[\d-]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-  // //     e.preventDefault();
-  // //     return;
-  // // }
-  // //     if (dateParts.length === 3) {
-  // //       console.log("date")
-  // //       const year = dateParts[0];
-  // //       console.log(year,"year")
-  // //       if (year.length < 4) {
-  // //         return; // Allow typing in the year part
-  // //       }else{
-  // //         console.log("else part")
-  // //           // Check if the year is greater than 2023
-  // //           if (parseInt(year) <= 2023) {
-  // //             console.error("Year must be greater than 2023");
-  // //             setDateBegin("");
-  // //             return; // Exit if the year is invalid
-  // //           }
-
-  // //           const minDate = getTodayDate();
-  // //           console.log(minDate, "minDate");
-  // //           console.log(selectedDate < minDate, "selectedDate < minDate");
-
-  // //           if (selectedDate < minDate) {
-  // //             setDateBegin(minDate);
-  // //             setMinDate(minDate);
-  // //           } else {
-
-  // //           }
-  // //         }
-  // //     }
-
-  // };
-  // const handleEndDateKeyDown = (e) => {
-  //   const inputValue = e.target.value;
-  //   const dateParts = inputValue.split('-');
-  //   console.log(dateParts,"dateParts")
-
-  //   setDateEnd(inputValue);
-
-  // };
+  
 
   const handleEndDateChange = (e) => {
     const inputValue = e.target.value;
     setDateEnd(inputValue);
 
-    // if (dateParts.length === 3) {
-    //   const day = dateParts[0];
-    //   const month = dateParts[1];
-    //   const year = dateParts[2];
-
-    //   const selectedDate = new Date(`${year}-${month}-${day}`);
-    //   const dateBegin = new Date(date_begin);
-
-    //   if (dateBegin && selectedDate < dateBegin) {
-    //     setDateEnd(dateBegin);
-    //   } else {
-    //     setDateEnd(inputValue);
-    //   }
-    // } else {
-    //   setDateEnd(inputValue);
-    // }
+   
   };
 
   const handleStartDateBlur = () => {
     const [day, month, year] = date_begin.split("-");
     if (day && month && year) {
       const formattedDate = formatDateToMMDDYYYY(`${year}-${month}-${day}`);
-      console.log(formattedDate, "formattedDate");
       setStartDate(formattedDate);
     }
   };
@@ -621,7 +554,6 @@ export default function AddTour() {
   };
 
   const handleDepartureChange = (value, index) => {
-    console.log(value);
 
     if (!value) return;
     const selectedOption = departures.find(
@@ -633,7 +565,6 @@ export default function AddTour() {
       departure_id: selectedOption?.id || "",
     };
 
-    console.log(departureData, "departureData");
 
     const newRows = [...departureRows];
     newRows[index] = departureData;
@@ -641,12 +572,10 @@ export default function AddTour() {
   };
 
   const handleArrivalchange = (value, index) => {
-    console.log(value, "value");
 
     if (!value) return;
     const selectedOption = Arrival.find((option) => option.id === value.value);
 
-    console.log("selectedOption", selectedOption);
 
     const ArrivalData = {
       ...arrivalrow[index],
@@ -654,18 +583,15 @@ export default function AddTour() {
       name: selectedOption?.arrival || "",
     };
 
-    console.log("ArrivalData", ArrivalData);
 
     const newRows = [...arrivalrow];
     newRows[index] = ArrivalData;
-    console.log("newRows", newRows);
 
     setArrivalrow(newRows);
   };
 
   const ArrivalidArray = arrivalrow.map((item) => item?.arrival_id);
 
-  console.log("idArray", ArrivalidArray.join(", "));
 
   const selectRef = useRef(null);
 
@@ -870,10 +796,7 @@ export default function AddTour() {
       description: day.description,
     }));
 
-    // const image2File = document.querySelector('input[name="image2"]').files;
-
-    // const image2FileArray = Object.entries(image2File).map(([key, value]) => value);
-    // console.log(image2FileArray,"image2FileArray")
+  
 
     const formData = new FormData();
 
@@ -902,7 +825,6 @@ export default function AddTour() {
     // image2FileArray.forEach((file, index) => {
     //   formData.append(`tour_image[${index}]`, file);
     // });
-    console.log(selectedFiles, "selectedFiles");
     selectedFiles.forEach((file, index) => {
       formData.append(`tour_image[${index}]`, file);
     });

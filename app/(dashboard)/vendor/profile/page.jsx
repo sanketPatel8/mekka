@@ -137,7 +137,6 @@ export default function Profile() {
           form: formDatas,
           url: "remove_profile_image",
         });
-        console.log(response, "response");
         showSuccessToast(translate, response.Message);
       } catch (e) {}
     };
@@ -193,8 +192,6 @@ export default function Profile() {
     const formType = e.target.name;
 
     if(formType === "profile"){
-      console.log(image2, "image2")
-      console.log(uploadImage, "uploadImage")
       if (
     
         !info ||
@@ -230,11 +227,9 @@ export default function Profile() {
     }
 
     const image2File = document.querySelector('input[name="image2"]').files;
-    console.log(image2File, "image2File");
     const image2FileArray = Object.entries(image2File).map(
       ([key, value]) => value
     );
-    console.log(image2FileArray);
     switch (formType) {
       case "profile":
         formData.append("id", user?.user.id);
@@ -290,7 +285,6 @@ export default function Profile() {
         formData.append("password", password);
         break;
       default:
-        console.log("Invalid form type");
         return;
     }
 
@@ -305,7 +299,6 @@ export default function Profile() {
 
       
       const url = `update_profile`;
-      console.log(name);
       setIsLoading(true);
       const response = await POST.request({
         form: formData,
@@ -376,7 +369,6 @@ export default function Profile() {
 
   const HandleCountryChange = (newValue, actionMeta) => {
     setSelectedCountry(newValue);
-    console.log(newValue);
   };
 
   const handleInputChange = (setter) => (e) => {
@@ -414,13 +406,10 @@ export default function Profile() {
       const newCompanyDocument = companyData.company_document.filter(
         (document) => document !== companyData.company_document[index]
       );
-      console.log(newCompanyDocument, "newCompanyDocument");
       setCompanyData({ ...companyData, company_document: newCompanyDocument });
-      console.log(companyData.company_document, "companyData.company_document");
       if(companyData.company_document.length == 0){
         setImage2([]);
       }
-      console.log(image2, "image2");
       showSuccessToast(translate , "Image removed successfully");
       setTimeout(() => {
         fetchProfile();
@@ -433,9 +422,7 @@ export default function Profile() {
     // setImage2(newImages);
     event.preventDefault();
 
-    console.log(uploadImage , "uploadImage")
     if(uploadImage.length > 0){
-      console.log("uploadimage")
       const newImages = [...uploadImage];
       newImages.splice(index, 1);
       setUploadImage(newImages);

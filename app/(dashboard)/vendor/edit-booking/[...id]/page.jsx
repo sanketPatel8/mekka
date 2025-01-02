@@ -169,7 +169,6 @@ export default function DbBooking({ params }) {
       { name: translate("Baby"), selector: (row) => row.baby },
       { name: translate("Total"), selector: (row) => row.total },
     ];
-    console.log(bookings,"booking");
 
     setReservationHeader(ColumnReservation_details);
 
@@ -593,7 +592,6 @@ export default function DbBooking({ params }) {
       };
     });
 
-    console.log(documentData)
 
     formData.append("documents_data", JSON.stringify(documentData));
     setIsLoading(true);
