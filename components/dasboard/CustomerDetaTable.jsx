@@ -897,6 +897,15 @@ const CustomerDetaTable = () => {
         closeModal();
         handleClose();
         fetchBookingDetails();
+        setAddpersonData({
+          name: "",
+          surname: "",
+          gender: "male",
+          birthDate: "",
+          nationality: "",
+          roomType: "1",
+        })
+        setRadioValue({})
       }
     } catch (e) {
       console.error(e);
@@ -1092,7 +1101,11 @@ const CustomerDetaTable = () => {
   const today = new Date();
 
   // Format the date in German format (dd.mm.yyyy)
-  const formattedDate = today.toLocaleDateString("de-DE");
+  const formattedDate = new Intl.DateTimeFormat("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(today);
 
   const fatchRefund = async () => {
     setIsLoading(true);
