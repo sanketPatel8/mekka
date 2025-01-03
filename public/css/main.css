@@ -3407,13 +3407,13 @@ h6 {
   z-index: -1;
 }
 
-.bg-color{
+/* .bg-color{
  background: linear-gradient(
   to bottom, 
   rgba(255, 255, 255, 0.4), 
   rgba(0, 0, 0, 0.4)        
 );
-}
+} */
 
 @media (max-width: 991px) {
   .hero.-type-1 .hero__bg {
