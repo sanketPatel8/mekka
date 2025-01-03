@@ -19,23 +19,23 @@ const slides = [
   {
     id: 1,
     imageSrc: "/img/hero/7/slide2.png",
-    subtitle: "plane deine Umrah jetzt mit mekkabooking",
-    title: "Erlebe eine außergewöhnliche Reise",
-    title2: "intensiv & ganz sicher unvergesslich",
+    subtitle: "plan your Umrah now with mekkabooking",
+    title: "Experience an extraordinary journey",
+    title2: "intense & certainly unforgettable",
   },
   {
     id: 2,
     imageSrc: "/img/hero/7/slide3.png",
-    subtitle: "jetzt deine Umrah Reise",
-    title: "suchen, vergleichen & abfliegen",
-    title2: "auf mekkabooking.com",
+    subtitle: "now your Umrah journey",
+    title: "search, compare and fly",
+    title2: "on mekkabooking.com",
   },
   {
     id: 3,
     imageSrc: "/img/hero/7/slide1.png",
-    subtitle: "auf mekkabooking.com findest du nahezu alle",
-    title: "Umrah Angebote aus Deutschland",
-    title2: "von nahezu allen Anbietern",
+    subtitle: "on mekkabooking.com you can find almost all",
+    title: "Umrah offers from Germany",
+    title2: "from almost all providers",
   },
   
  
@@ -98,7 +98,7 @@ export default function Hero7() {
             <Swiper
               className="w-100"
               modules={[Navigation, Autoplay]}
-              // autoplay={{ delay: 6000, disableOnInteraction: false }}
+              autoplay={{ delay: 6000, disableOnInteraction: false }}
               navigation={{
                 prevEl: ".js-sliderHero-prev",
                 nextEl: ".js-sliderHero-next",
@@ -153,9 +153,9 @@ export default function Hero7() {
                           </div> */}
 
                             <div className="slicontent">
-                              <p className="sliSubTitle">{elm.subtitle}</p>
-                              <h1 className={`sliTitle ${elm.id == '2' ? "slider-slide-2-heading-change" : ""}`}>{elm.title}</h1>
-                              <p className="sliTitle2">{elm.title2}</p>
+                              <p className="sliSubTitle">{translate(elm.subtitle)}</p>
+                              <h1 className={`sliTitle ${elm.id == '2' ? "slider-slide-2-heading-change" : ""}`}>{translate(elm.title)}</h1>
+                              <p className="sliTitle2">{translate(elm.title2)}</p>
                             </div>
                           </div>
                         </div>
