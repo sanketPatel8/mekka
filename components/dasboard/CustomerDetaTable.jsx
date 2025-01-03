@@ -220,14 +220,14 @@ const CustomerDetaTable = () => {
             <button
               className="button py-10 px-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
               onClick={() => openEditData(row)}
-              style={{ width: "fit-content" }}
+              
             >
               {translate("Edit")}
             </button>
             <button
-              className="button  py-10 px-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 ms-2 text-end"
+              className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
               onClick={() => openUploadFileModal(row.id, Tourid)}
-              style={{ width: "fit-content" }}
+             
             >
               {translate("Document")}
             </button>
