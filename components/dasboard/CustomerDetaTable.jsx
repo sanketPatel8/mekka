@@ -924,7 +924,7 @@ const CustomerDetaTable = () => {
 
     if (PaymentCheckbox == 1) {
       FetchAddperson();
-      console.log(RadioValue.title == undefined ? " " : RadioValue.title, "RadioValue");
+      
     }
 
     if (PaymentCheckbox == 3) {
