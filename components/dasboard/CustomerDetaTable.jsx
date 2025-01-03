@@ -124,7 +124,6 @@ const CustomerDetaTable = () => {
         ]
       : []),
 
-    
     ...(BookingDetails?.reservation?.departure_names
       ? [
           {
@@ -198,7 +197,9 @@ const CustomerDetaTable = () => {
     {
       name: translate("Additional Services"),
       selector: (row) =>
-        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null ? 'no services' : row?.extra_data?.title, // Return null if the length is 0
+        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null
+          ? "no services"
+          : row?.extra_data?.title, // Return null if the length is 0
       // width: "10%",
     },
     {
@@ -220,21 +221,19 @@ const CustomerDetaTable = () => {
             <button
               className="button py-10 px-10 -info-2 f12 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
               onClick={() => openEditData(row)}
-              
             >
               {translate("Edit")}
             </button>
             <button
               className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
               onClick={() => openUploadFileModal(row.id, Tourid)}
-             
             >
               {translate("Document")}
             </button>
           </div>
         </div>
       ),
-      width: "30%", 
+      width: "30%",
     },
   ];
 
@@ -254,7 +253,9 @@ const CustomerDetaTable = () => {
     {
       name: translate("Additional Services"),
       selector: (row) =>
-        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null ? 'no services' : row?.extra_data?.title, // Return null if the length is 0
+        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null
+          ? "no services"
+          : row?.extra_data?.title, // Return null if the length is 0
       width: "150px",
     },
     {
@@ -335,7 +336,7 @@ const CustomerDetaTable = () => {
           </div>
         </div>
       ),
-      width: "30%", 
+      width: "30%",
     },
   ];
 
@@ -863,6 +864,8 @@ const CustomerDetaTable = () => {
     };
   }, [handleDateChange]);
 
+  const [PersonData, setPersonData] = useState()
+
   const FetchAddperson = async () => {
     setIsLoading(true);
     const formData = new FormData();
@@ -881,10 +884,14 @@ const CustomerDetaTable = () => {
         ? "child"
         : "baby"
     );
-    formData.append("title", RadioValue.title);
-    formData.append("price", RadioValue.price);
-    formData.append("additional_order", RadioValue.order);
+    formData.append("title", RadioValue.title == undefined ? " " : RadioValue.title);
+    formData.append("price", RadioValue.price == undefined ? " " : RadioValue.price);
+    formData.append("additional_order", RadioValue.order == undefined ? " " : RadioValue.order);
+   
     formData.append("total", subtotal);
+
+
+   
 
     try {
       const response = await POST.request({
@@ -904,8 +911,8 @@ const CustomerDetaTable = () => {
           birthDate: "",
           nationality: "",
           roomType: "1",
-        })
-        setRadioValue({})
+        });
+        setRadioValue({});
       }
     } catch (e) {
       console.error(e);
@@ -913,8 +920,11 @@ const CustomerDetaTable = () => {
   };
 
   const handlePayment = () => {
+ 
+
     if (PaymentCheckbox == 1) {
       FetchAddperson();
+      console.log(RadioValue.title == undefined ? " " : RadioValue.title, "RadioValue");
     }
 
     if (PaymentCheckbox == 3) {
@@ -1139,9 +1149,9 @@ const CustomerDetaTable = () => {
     if (RefundData?.Refund_Amount) {
       const commission = RefundData?.Refund_Amount * 0.05;
       setCancelStripCommision(commission);
-      if(BookingDetails?.reservation?.paymentType === '2'){
+      if (BookingDetails?.reservation?.paymentType === "2") {
         setTotalRefundinCancel(RefundData?.Refund_Amount - commission);
-      }else{
+      } else {
         setTotalRefundinCancel(RefundData?.Refund_Amount);
       }
     }
@@ -1324,9 +1334,10 @@ const CustomerDetaTable = () => {
                       </td>
                       <td className="col-6">
                         <p>
-                        {BookingDetails?.paymentData?.payment_note_1 !== null
-                          ? BookingDetails?.paymentData?.payment_note_1
-                          : ""}  Via Stripe -{" "}
+                          {BookingDetails?.paymentData?.payment_note_1 !== null
+                            ? BookingDetails?.paymentData?.payment_note_1
+                            : ""}{" "}
+                          Via Stripe -{" "}
                           {BookingDetails?.paymentData?.payment_intent_id}
                         </p>
                       </td>
@@ -1917,15 +1928,19 @@ const CustomerDetaTable = () => {
                         <td className="px-1 py-2">{RefundData?.tour_date}</td>
                       </tr>
 
-                      {BookingDetails?.reservation?.paymentType === '2' ?  (
+                      {BookingDetails?.reservation?.paymentType === "2" ? (
                         <tr>
-                        <td className="px-1 py-2">
-                          {translate("Strip Commision 5%")}
-                        </td>
-                        <td className="px-1 py-2">{CancelStripCommision} €</td>
-                      </tr>
-                      ) : "" }
-                      
+                          <td className="px-1 py-2">
+                            {translate("Strip Commision 5%")}
+                          </td>
+                          <td className="px-1 py-2">
+                            {CancelStripCommision} €
+                          </td>
+                        </tr>
+                      ) : (
+                        ""
+                      )}
+
                       <tr>
                         <td className="px-1 py-2">
                           {translate("Amount Refund - add strip commision")} (
