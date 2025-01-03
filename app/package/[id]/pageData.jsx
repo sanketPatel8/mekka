@@ -41,7 +41,7 @@ export default function PageData() {
         error.response.data &&
         error.response.data.message
       ) {
-        showErrorToast("Please verify your email");
+        showErrorToast("DataBase Error");
       } else {
         showErrorToast("An error occurred during registration.");
       }
