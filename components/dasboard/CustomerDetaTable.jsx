@@ -322,7 +322,7 @@ const CustomerDetaTable = () => {
         >
           <div className="flex_center">
             <button
-              className="button px-20 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
+              className="button px-10 py-10 -info-2 bg-accent-1 text-white col-5 my-2 mx-2 text-end"
               onClick={() => openEditData(row)} // Pass the current row
             >
               {translate("Edit")}
