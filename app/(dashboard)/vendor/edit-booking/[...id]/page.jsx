@@ -118,7 +118,7 @@ export default function DbBooking({ params }) {
       {
         name: translate("Additional Services"),
         selector: (row) =>
-          row?.extra_data?.title == 'undefined' || row?.extra_data?.title == null ? "no services" : row?.extra_data?.title ,
+          row?.extra_data == 'undefined' || row?.extra_data == null || row?.extra_data == ' ' ? "no services" : row?.extra_data ,
         width: "16%",
       },
 
@@ -428,8 +428,9 @@ export default function DbBooking({ params }) {
           country: child.countryName,
           Nationality: child.personNationality,
           price: child.child_price,
-          extra_data: `${child.extra_data === null ? "" :`${child.extra_data.additional_order } Bed-Room` } `
+          extra_data: `${child.extra_data === null ? "" :`${child.extra_data.title }` } `
         }));
+        
         setChildBookings(children);
       }
 
