@@ -159,7 +159,7 @@ export default function PageData() {
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);
-      route.push("#redirect");
+      document.querySelector("#redirect").scrollIntoView({block:'start',inline:'end',behavior: "smooth"});
     } catch (e) {
       console.error(e);
     }
@@ -226,7 +226,7 @@ export default function PageData() {
       setRange(response.Total_Page);
       setCount(response.Count);
       setRoute("search data");
-      route.push("#redirect");
+      document.querySelector("#redirect").scrollIntoView({block:'start',inline:'end',behavior: "smooth"});
     } catch (error) {
       console.error("Error caught:", error);
 
@@ -258,7 +258,7 @@ export default function PageData() {
 
 
       fetchSearch1Data({ tourType, startDate, endDate, person });
-      route.push("#redirect");
+      document.querySelector("#redirect").scrollIntoView({block:'start',inline:'end',behavior: "smooth"});
       
     }
   }, [searchParams]);
@@ -270,7 +270,7 @@ export default function PageData() {
       <main>
         <Header1 />
         <Hero1 />
-        <div className="mt-50">
+        <div className="mt-50" id="redirect" >
           <TourList4
             TourData={TourData}
             FliterData={FliterData}

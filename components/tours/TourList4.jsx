@@ -91,7 +91,7 @@ export default function TourList4({
   const { translate } = useTranslation();
 
   return (
-    <section className="layout-pb-xl">
+    <section className="layout-pb-xl" >
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">

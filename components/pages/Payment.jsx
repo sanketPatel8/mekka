@@ -393,7 +393,8 @@ const handleSecondAmountChange = (e) => {
       const newBooking = { ...Booking, paymentType: 1 };
       FatchallBooking(newBooking);
       setTimeout(() => {
-        router.push("#ref");
+        // router.push("#ref");
+        document.querySelector("#ref").scrollIntoView({block:'start',inline:'start',behavior: "smooth"});
         setIsLoading(false)
 
         setTimeout(() => {
@@ -468,6 +469,7 @@ const handleSecondAmountChange = (e) => {
       FatchallBooking(newBooking);
       setTimeout(() => {
         router.push("#ref");
+        document.querySelector("#ref").scrollIntoView({block:'start',inline:'start',behavior: "smooth"});
         setIsLoading(false)
 
         setTimeout(() => {
@@ -497,9 +499,9 @@ const handleSecondAmountChange = (e) => {
   return (
     <section className="layout-pt-md layout-pb-lg mt-header">
       <ToastContainer />
-      <div className="container">
+      <div className="container"  >
         <div className="row">
-          <div className="col-lg-8 px-0 col-11 mx-auto">
+          <div className="col-lg-8 px-0 col-11 mx-auto" id="ref" >
             <h2
               className={`text-30 md:text-24 fw-700 bg-Primary ${
                 bookingStage === 2 ? "d-none" : "d-block"
@@ -521,7 +523,7 @@ const handleSecondAmountChange = (e) => {
                 <div>
                   <div
                     className="border-1 rounded-12 shadow-1 overflow-hidden"
-                    id="ref"
+                    
                   >
                     <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
                       <b> {translate("Payment Methods")}</b>
@@ -1105,7 +1107,7 @@ const handleSecondAmountChange = (e) => {
                   </div>
                   <div
                     className="border-1 rounded-12 shadow-1 overflow-hidden mt-20"
-                    id="ref"
+                    
                   >
                     <p className="text-center py-3 bg-color-accent-1 bg-accent-1">
                       <b> {translate("Cancellation Rules")}</b>

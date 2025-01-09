@@ -26,7 +26,7 @@ const HeaderMenu = ({ translate }) => {
           </Link>
         </div>
         <div>
-          <Link href="/tour?Culturetype=Culture Trip" className={pathname === "/tour" && searchParams.get("Culturetype") === "Culture Trip" ? "active tab-font-12" : "tab-font-12"}>
+          <Link href="/tour?Culturetype=Culture Trip" className={pathname === "/tour" && searchParams.get("Culturetype") === "Culture Trip" ? "active tab-font-12 text-nowrap" : "tab-font-12 text-nowrap"}>
             {translate("Culture Trip")}
           </Link>
         </div>

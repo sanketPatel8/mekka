@@ -59,7 +59,7 @@ export default function Hero1({}) {
                 data-aos-delay="300"
                 className="mt-60 md:mt-35"
               >
-                <div className="searchForm -type-1 " id="redirect">
+                <div className="searchForm -type-1 " >
                   <HeroSearch />
                 </div>
               </div>

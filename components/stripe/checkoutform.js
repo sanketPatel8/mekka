@@ -142,7 +142,8 @@ export default function CheckoutForm({
       if (response) {
         showSuccessToast(translate, "Booking successful");
         handleClose();
-        router.push("#ref");
+        // router.push("#ref");
+        document.querySelector("#ref").scrollIntoView({block:'start',inline:'start',behavior: "smooth"});
         setBookingStage(2);
         setReservationID(response.reservationNumber);
         setPaidAmount(amount);

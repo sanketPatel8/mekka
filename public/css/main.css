@@ -3530,6 +3530,14 @@ h6 {
   grid-template-columns: 1fr 630px;
 }
 
+#redirect{
+  scroll-margin-block: 10rem;
+}
+
+#ref{
+  scroll-margin-block: 10rem;
+}
+
 @media (max-width: 1199px) {
   .hero.-type-2 .hero__slide {
     grid-template-columns: 1fr 480px;
