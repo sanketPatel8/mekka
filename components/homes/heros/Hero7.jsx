@@ -14,6 +14,7 @@ import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
 import HeroSearch from "@/components/HeroSearch";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { POST } from "@/app/utils/api/post";
 
 const slides = [
   {
@@ -60,8 +61,9 @@ const slides = [
 export default function Hero7() {
   const router = useRouter();
   const [currentActiveDD, setCurrentActiveDD] = useState("");
-
+  const [sliderData, setSliderData] = useState([]);
   const { location, calender, tourType } = useGlobalState();
+  const [autoplayDelay, setAutoplayDelay] = useState(6000); 
 
   useEffect(() => {
     setCurrentActiveDD("");
@@ -84,7 +86,28 @@ export default function Hero7() {
     return () => {
       document.removeEventListener("click", handleClick);
     };
+
+  
   }, []);
+
+  useEffect(() => {
+    fetchSlider()
+  },[])
+
+  const fetchSlider = async() => {
+    
+    const response = await POST.request({url:"home_slider"});
+
+    console.log(response);
+
+    const firstSlideSpeed = response.Data[0]?.speed > 0  ? response.Data[0]?.speed : 6000; // Default to 6000 if speed is not provided
+    setAutoplayDelay(firstSlideSpeed);
+
+
+    setSliderData(response.Data);
+
+
+  }
 
   const { translate } = useTranslation();
 
@@ -98,7 +121,7 @@ export default function Hero7() {
             <Swiper
               className="w-100"
               modules={[Navigation, Autoplay]}
-              autoplay={{ delay: 6000, disableOnInteraction: false }}
+              autoplay={{ delay: autoplayDelay, disableOnInteraction: false }}
               navigation={{
                 prevEl: ".js-sliderHero-prev",
                 nextEl: ".js-sliderHero-next",
@@ -118,13 +141,13 @@ export default function Hero7() {
                 },
               }}
             >
-              {slides.map((elm, i) => (
-                <SwiperSlide key={i}>
+              {sliderData.map((elm, i) => (
+                <SwiperSlide key={elm.id}>
                   <div className="hero__bg">
                     <Image
                       width={1920}
                       height={160}
-                      src={elm.imageSrc}
+                      src={elm.file_path}
                       alt="background"
                     />
                   </div>
@@ -134,28 +157,10 @@ export default function Hero7() {
                       <div className="row">
                         <div className="col-lg-12 col-md-10">
                           <div className="hero__content">
-                            {/* <h1
-                            data-aos="fade-up"
-                            data-aos-delay="100"
-                            className="hero__subtitle text-white mb-5 md:mb-5"
-                          >
-                            {translate(elm.subtitle)}
-                          </h1>
-
-                          <div
-                            data-aos="fade-up"
-                            data-aos-delay="300"
-                            className="hero__title text--color-accent-1"
-                          >
-                            <h2 className="text_50 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left">
-                              {translate(elm.title)}
-                            </h2>
-                          </div> */}
-
                             <div className="slicontent">
-                              <p className="sliSubTitle">{translate(elm.subtitle)}</p>
-                              <h1 className={`sliTitle ${elm.id == '2' ? "slider-slide-2-heading-change" : ""}`}>{translate(elm.title)}</h1>
-                              <p className="sliTitle2">{translate(elm.title2)}</p>
+                              <p className="sliSubTitle">{translate(elm.sub_headline)}</p>
+                              <h1 className={`sliTitle ${elm.id == '2' ? "slider-slide-2-heading-change" : ""}`}>{translate(elm.headline)}</h1>
+                              <p className="sliTitle2">{translate(elm .title2)}</p>
                             </div>
                           </div>
                         </div>
@@ -164,6 +169,7 @@ export default function Hero7() {
                   </div>
                 </SwiperSlide>
               ))}
+
             </Swiper>
           </div>
 
