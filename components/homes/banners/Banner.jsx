@@ -2,14 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TourSliderTwo from "../tours/TourSliderTwo";
 import { useTranslation } from "@/app/context/TranslationContext";
+import { POST } from "@/app/utils/api/post";
 
 export default function Banner() {
   const { translate } = useTranslation();
-  const [Length, setLength] = useState(0)
+  const [Length, setLength] = useState(0);
 
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    fetchText();
+  },[])
+
+  const fetchText = async() => {
+    const response = await POST.request({url:"offer_text"});
+    setTitle(response.Data.title);
+    setDescription(response.Data.text)
+  }
  
   
   return (
@@ -27,8 +40,8 @@ export default function Banner() {
                 data-aos-delay=""
                 className="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
               >
-                {translate("Discover Your")}{" "} 
-                <span className="text-info-2">{translate("Dream Destination")} </span>
+                {title}{" "} 
+                
                 {/* <br className="lg:hidden sm:hidden xs:hidden" />
                 {translate("Top-Rated Tours")}
                 <br className="lg:hidden" />
@@ -45,7 +58,7 @@ export default function Banner() {
                 className="mt-10 text-left md:text-center lg:text-center xl:text-center text-white"
               >
                 {/* {translate("Limited time offer, don't miss the opportunity")} */}
-                <span>{translate('Top-Rated Tours')}</span><span>{translate("Everyone’s Talking About!")}</span>
+                <span>{description}</span>
               </p>
 
               <div className="mt-30 md:mt-20 text-center text-md-left d-flex justify-content-center justify-content-md-start">
