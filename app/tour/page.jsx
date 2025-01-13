@@ -17,6 +17,7 @@ export default function PageData() {
   const filterUmrah = searchParams.get("Umrahtype");
   const filterHajj = searchParams.get("Hajjtype");
   const filterCulture = searchParams.get("Culturetype");
+  const FilterAll = searchParams.get("allType");
 
   const tourType = searchParams.get("TourType") || "";
   const startDate = searchParams.get("StartDate") || "";
@@ -58,13 +59,14 @@ export default function PageData() {
   // page title
 
   useEffect(() => {
-    const firstNonNull = filterUmrah || filterHajj || filterCulture || null;
-    
+    const firstNonNull =
+      filterUmrah || filterHajj || filterCulture || FilterAll || null;
+
     setFilterSidebar((prevState) => ({
       ...prevState, // Copy the previous state
       selectedTourTypes: firstNonNull, // Store the first non-null value
     }));
-  }, [filterUmrah, filterHajj, filterCulture]);
+  }, [filterUmrah, filterHajj, filterCulture, FilterAll]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -106,8 +108,6 @@ export default function PageData() {
 
     if (tourType || startDate || endDate || person) {
       if (FilterChange === false) {
-       
-        
         await fetchSearch1Data({
           pageIndex,
           tourType,
@@ -159,7 +159,9 @@ export default function PageData() {
       setTourData(response.Tours);
       setRange(response.Total_Page);
       setCount(response.Count);
-      document.querySelector("#redirect").scrollIntoView({block:'start',inline:'end',behavior: "smooth"});
+      document
+        .querySelector("#redirect")
+        .scrollIntoView({ block: "start", inline: "end", behavior: "smooth" });
     } catch (e) {
       console.error(e);
     }
@@ -167,11 +169,13 @@ export default function PageData() {
 
   useEffect(() => {
     if (FilterSidebar || FilterPrice || FilterDistance) {
-      if(FilterSidebar?.selectedTourTypes !== null && FilterSidebar?.selectedTourTypes !== '' ){
+      if (
+        FilterSidebar?.selectedTourTypes !== null &&
+        FilterSidebar?.selectedTourTypes !== ""
+      ) {
         FetchFilterData();
       }
-  
-    } 
+    }
   }, [
     FilterSidebar,
     FilterPrice,
@@ -226,7 +230,9 @@ export default function PageData() {
       setRange(response.Total_Page);
       setCount(response.Count);
       setRoute("search data");
-      document.querySelector("#redirect").scrollIntoView({block:'start',inline:'end',behavior: "smooth"});
+      document
+        .querySelector("#redirect")
+        .scrollIntoView({ block: "start", inline: "end", behavior: "smooth" });
     } catch (error) {
       console.error("Error caught:", error);
 
@@ -255,22 +261,19 @@ export default function PageData() {
     });
 
     if (tourType || startDate || endDate || person) {
-
-
       fetchSearch1Data({ tourType, startDate, endDate, person });
-      document.querySelector("#redirect").scrollIntoView({block:'start',inline:'end',behavior: "smooth"});
-      
+      document
+        .querySelector("#redirect")
+        .scrollIntoView({ block: "start", inline: "end", behavior: "smooth" });
     }
   }, [searchParams]);
-
- 
 
   return (
     <>
       <main>
         <Header1 />
         <Hero1 />
-        <div className="mt-50" id="redirect" >
+        <div className="mt-50" id="redirect">
           <TourList4
             TourData={TourData}
             FliterData={FliterData}

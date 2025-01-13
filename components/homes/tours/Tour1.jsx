@@ -54,7 +54,7 @@ export default function Tour1() {
 
             <div className="col-auto">
               <Link
-                href={"/tour"}
+                href={"/tour?allType=All"}
                 data-aos="fade-left"
                 data-aos-delay=""
                 className="buttonArrow d-flex items-center "
@@ -73,7 +73,9 @@ export default function Tour1() {
             {LatestPackage?.Tours?.length > 0 && (
               <div
                 className={`${
-                  LatestPackage.Tours.length <= 2 ? "d-flex flex-wrap" : "row mx-auto"
+                  LatestPackage.Tours.length <= 2
+                    ? "d-flex flex-wrap"
+                    : "row mx-auto"
                 }`}
               >
                 {LatestPackage?.Tours?.slice(0, 8)?.map((elm, i) => (
@@ -147,18 +149,18 @@ export default function Tour1() {
                               <div className="text-14 ml-5">
                                 <span className="fw-500">{elm?.rating}</span>
                                 {/* {elm?.rating_count}) -{" "} */}
-                               <div className="items-center">
-                               <PiBuildingApartmentFill
-                                  color="#dabf4f"
-                                  className=""
-                                  size={20}
-                                />{" "}
-                                <span>
-                                  {elm?.company_name == null
-                                    ? "  "
-                                    : elm?.company_name}{" "}
-                                </span>
-                               </div>
+                                <div className="items-center">
+                                  <PiBuildingApartmentFill
+                                    color="#dabf4f"
+                                    className=""
+                                    size={20}
+                                  />{" "}
+                                  <span>
+                                    {elm?.company_name == null
+                                      ? "  "
+                                      : elm?.company_name}{" "}
+                                  </span>
+                                </div>
                               </div>
                             )}
                           </div>
@@ -179,7 +181,6 @@ export default function Tour1() {
                               elm.tour_price == "0" ? "d-none" : "d-block"
                             }`}
                           >
-                     
                             <span className="text-16 fw-500">
                               {formatPrice(elm.tour_price)}
                             </span>
