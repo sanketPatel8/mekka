@@ -241,18 +241,15 @@ export default function PageData() {
   };
 
   useEffect(() => {
-    // Get both parameters (TourType and Type)
     const tourTypeFromParam = searchParams.get("TourType") || "";
     const typeFromParam = searchParams.get("type") || "";
 
-    // Choose the appropriate value for tourType
     const tourType = tourTypeFromParam || typeFromParam || "";
 
     const startDate = searchParams.get("StartDate") || "";
     const endDate = searchParams.get("EndDate") || "";
     const person = searchParams.get("person") || "";
 
-    // Set the search data state
     setSearchData({
       tourType,
       startDate,
