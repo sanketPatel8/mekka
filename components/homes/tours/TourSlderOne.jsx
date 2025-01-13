@@ -33,8 +33,6 @@ export default function TourSlderOne() {
       const response = await post("top_trending", sendData);
       if (response) {
         setTopTranding(response.Tours);
-
-
       } else {
         console.error("Tours data is undefined in the response.");
       }
@@ -73,7 +71,7 @@ export default function TourSlderOne() {
 
             <div className="col-auto">
               <Link
-                href={"/tour"}
+                href={"/tour?allType=All"}
                 data-aos="fade-right"
                 data-aos-delay=""
                 className="buttonArrow d-flex items-center "
@@ -222,7 +220,6 @@ export default function TourSlderOne() {
                                   elm.tour_price == "0" ? "d-none" : "d-block"
                                 }`}
                               >
-                           
                                 <span className="text-16 fw-500">
                                   {formatPrice(elm.tour_price)}
                                 </span>

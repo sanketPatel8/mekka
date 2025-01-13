@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -16,15 +16,14 @@ export default function Banner() {
 
   useEffect(() => {
     fetchText();
-  },[])
+  }, []);
 
-  const fetchText = async() => {
-    const response = await POST.request({url:"offer_text"});
+  const fetchText = async () => {
+    const response = await POST.request({ url: "offer_text" });
     setTitle(response.Data.title);
-    setDescription(response.Data.text)
-  }
- 
-  
+    setDescription(response.Data.text);
+  };
+
   return (
     <section className="cta -type-3">
       <div className="cta__bg">
@@ -40,15 +39,12 @@ export default function Banner() {
                 data-aos-delay=""
                 className="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
               >
-                {title}{" "} 
-                
+                {title}{" "}
                 {/* <br className="lg:hidden sm:hidden xs:hidden" />
                 {translate("Top-Rated Tours")}
                 <br className="lg:hidden" />
                 {translate("Everyone’s Talking About!")} */}
               </h2>
-
-              
 
               {/* <h2 data-aos="fade-up" data-aos-delay="" className="text-40 md:text-30 lh-13 text-xs-center text-sm-left text-md-left text-lg-left text-xl-left" > Grab up to <span className="text-info-2">35% off </span> <br className="lg:d-none sm:d-none xs:d-none" /> on your favorite <br className="lg:d-none" /> Destination </h2> */}
 
@@ -67,7 +63,7 @@ export default function Banner() {
                   data-aos-delay=""
                   className="button -md -info-2 bg- -info-2 text-white border-1 "
                 >
-                  <Link href="/tour">
+                  <Link href="/tour?allType=All">
                     {translate("Book Now")}
                     {/* <i className="icon-arrow-top-right ml-10 text-16 text-white"></i> */}
                   </Link>
@@ -75,8 +71,8 @@ export default function Banner() {
               </div>
             </div>
           </div>
-          <div className={`${Length <= 1 ? 'col-md-4' : 'col-md-7'}`}>
-            <TourSliderTwo  setLength={setLength}/>
+          <div className={`${Length <= 1 ? "col-md-4" : "col-md-7"}`}>
+            <TourSliderTwo setLength={setLength} />
           </div>
         </div>
       </div>
