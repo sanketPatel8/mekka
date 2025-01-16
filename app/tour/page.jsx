@@ -133,7 +133,12 @@ export default function PageData() {
     const formData = new FormData();
 
     formData.append("start", pageIndex || 0);
-    formData.append("type", FilterSidebar?.selectedTourTypes);
+    formData.append(
+      "type",
+      tourType !== "" && FilterSidebar?.selectedTourTypes === null
+        ? tourType
+        : FilterSidebar?.selectedTourTypes
+    );
     formData.append("language", FilterSidebar.selectedLanguages?.join(","));
     formData.append("departure", FilterSidebar.selectedCities?.join(", "));
     ``;
@@ -169,11 +174,15 @@ export default function PageData() {
 
   useEffect(() => {
     if (FilterSidebar || FilterPrice || FilterDistance) {
-      if (
-        FilterSidebar?.selectedTourTypes !== null &&
-        FilterSidebar?.selectedTourTypes !== ""
-      ) {
+      if (SearchCheck === true) {
         FetchFilterData();
+      } else {
+        if (
+          FilterSidebar?.selectedTourTypes !== null &&
+          FilterSidebar?.selectedTourTypes !== ""
+        ) {
+          FetchFilterData();
+        }
       }
     }
   }, [
@@ -259,6 +268,7 @@ export default function PageData() {
 
     if (tourType || startDate || endDate || person) {
       fetchSearch1Data({ tourType, startDate, endDate, person });
+
       document
         .querySelector("#redirect")
         .scrollIntoView({ block: "start", inline: "end", behavior: "smooth" });
