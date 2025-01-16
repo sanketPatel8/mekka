@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
 
@@ -6,7 +6,8 @@ const TranslationContext = createContext();
 
 export const TranslationProvider = ({ children }) => {
   const [locale, setLocale] = useState(() => {
-    const savedLocale = typeof window != 'undefined' ? localStorage.getItem("locale") : '';
+    const savedLocale =
+      typeof window != "undefined" ? localStorage.getItem("locale") : "";
     return savedLocale || "DE";
   });
   const [translations, setTranslations] = useState({});
@@ -15,7 +16,7 @@ export const TranslationProvider = ({ children }) => {
     localStorage.setItem("locale", locale);
 
     // Fetch the translation file for the current locale
-    fetch(`/locales/${locale}.json`)
+    fetch(`/locales/${locale.toLowerCase()}.json`)
       .then((response) => response.json())
       .then((data) => setTranslations(data))
       .catch((error) => console.error("Error fetching translations:", error));
