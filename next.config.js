@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["xcoder.a2hosted.com"],
+    domains: ["admin.mekkabooking.com"],
   },
   reactStrictMode: false,
 };
