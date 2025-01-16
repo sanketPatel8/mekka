@@ -423,42 +423,10 @@ export default function Login({
                       >
                         {/* <FaFacebookF size={15} className="mx-1" />
                          {translate("Facebook")} */}
+                        
 
                         {(!socialLoginLoading?.facebook && (
-                          // <LoginSocialFacebook
-                          //   appId={
-                          //     process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
-                          //   }
-                          //   fieldsProfile="id,name,email"
-                          //   scope="email"
-                          //   onLoginStart={() =>
-                          //     setSocialLoginLoading({
-                          //       google: false,
-                          //       facebook: true,
-                          //       apple: false,
-                          //     })
-                          //   }
-                          //   onResolve={({ provider, data }) =>
-                          //     handleFacebookLogin(data)
-                          //   }
-                          //   onLoginSuccess={() =>
-                          //     setSocialLoginLoading({
-                          //       google: false,
-                          //       facebook: false,
-                          //       apple: false,
-                          //     })
-                          //   }
-                          //   onReject={(err) =>
-                          //     setSocialLoginLoading({
-                          //       google: false,
-                          //       facebook: false,
-                          //       apple: false,
-                          //     })
-                          //   }
-                          // >
-                          //   <FaFacebookF size={15} className="mx-1" />
-                          //   {translate("Facebook")}
-                          // </LoginSocialFacebook>
+                        
 
                           <LoginSocialFacebook
                             appId={
@@ -468,13 +436,10 @@ export default function Login({
                               "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
                             }
                             scope="email,public_profile"
-                            onLoginStart={setSocialLoginLoading({
-                                google: false,
-                                facebook: true,
-                                apple: false,
-                              })
-                            }
-                            onResolve={({ provider, data }) => {
+                            onLoginStart={() => {
+                              setSocialLoginLoading((prev) => ({ ...prev, facebook: true }));
+                            }}
+                             onResolve={({ provider, data }) => {
                               const { id, name, email } = data;
                           
                               typeof window !== "undefined"
@@ -492,8 +457,22 @@ export default function Login({
                                 : "";
                             }}
                             onReject={(err) => {
-                              console.error(err);
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              });
+
                             }}
+
+                            onLoginSuccess={() => {
+                              setSocialLoginLoading({
+                                google: false,
+                                facebook: false,
+                                apple: false,
+                              });
+                            }}
+
                           >
                             <FaFacebookF size={15} className="mx-1" />
                             {translate("Facebook")}
@@ -514,8 +493,7 @@ export default function Login({
                         className="button -md -outline-red-1 text-red-1 col-12"
                         style={{ height: "60px" }}
                       >
-                        {/* <FaGoogle size={15} className="mx-1" />
-                          {translate("Google")} */}
+                     
                         {(!socialLoginLoading?.google && (
                           <LoginSocialGoogle
                             client_id={
