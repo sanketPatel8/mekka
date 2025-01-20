@@ -226,11 +226,10 @@ export default function BookingPages({ BookingData }) {
         console.error("Error parsing userData:", error);
       }
     }
-   
-    
+
     if (userData && userData !== "undefined") {
       try {
-        const userid = JSON.parse(userData);        
+        const userid = JSON.parse(userData);
         // Extract the user object
         if (userid && userid.user) {
           setUserID(userid.user);
@@ -444,80 +443,6 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const handleRadioChange = (e, type, i, idx, price, order, title, optid) => {
-    const selectedValue = e.target.value;
-
-    setFormValues((prevValues) => {
-      const updatedValues = { ...prevValues };
-
-      // Ensure the correct path exists in the state
-      if (!updatedValues[type]) {
-        updatedValues[type] = [];
-      }
-      if (!updatedValues[type][i]) {
-        updatedValues[type][i] = {};
-      }
-
-      // Update the form values with the new radio button selection
-      updatedValues[type][i] = {
-        ...updatedValues[type][i],
-        selectedService: selectedValue,
-        price: price,
-        title: title,
-        additional_order: order,
-        additional_price_id: optid,
-      };
-
-      // Optional: Update userData if type is 'Adult' and index is 0
-      if (type === "Adult" && i === 0) {
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          selectedService: selectedValue,
-          price: price,
-          title: title,
-          additional_order: order,
-          additional_price_id: optid,
-        }));
-      }
-
-      return updatedValues;
-    });
-
-    setAdditional((prevAdditional) => {
-      const newItem = {
-        type: type || "",
-        price: price || "",
-        title: title || "",
-        index: i !== undefined ? i : 0,
-        order: order || "",
-        id: optid || "",
-      };
-
-      // Find all existing items with the same index and type
-      const existingItems = prevAdditional.filter(
-        (item) => item.index === newItem.index && item.type === newItem.type
-      );
-
-      // Set existing items in a separate state to access outside of this function
-      if (existingItems.length > 0) {
-        setExistingItemsState(existingItems); // Store the matching items
-      }
-
-      // Filter and update state
-      const updatedAdditional = prevAdditional.filter(
-        (item) => !(item.index === newItem.index && item.type === newItem.type)
-      );
-
-      return [...updatedAdditional, newItem];
-    });
-
-    if (HandlePromo == true) {
-      handlePromoremove();
-    }
-
-    getPriceForadditional(type, i);
-  };
-
   const handleCheckboxChange = (
     e,
     type,
@@ -530,7 +455,6 @@ export default function BookingPages({ BookingData }) {
     isChecked
   ) => {
     const value = `${type}-${i}-${idx}-ad-${optid}-${title}`;
-
 
     // Update the form values state
 
@@ -565,30 +489,41 @@ export default function BookingPages({ BookingData }) {
         title: title,
         additional_order: order,
         additional_price_id: optid,
-      }
+      };
+
+      // if (isChecked) {
+      //   updatedValues[type][i].selectedServices.push(value);
+      //   updatedValues[type][i].selectedPrices.push(price);
+      //   updatedValues[type][i].services.push(JSON.stringify(Services));
+      // } else {
+      //   updatedValues[type][i].selectedServices = updatedValues[type][
+      //     i
+      //   ].selectedServices.filter((item) => item !== value);
+      //   updatedValues[type][i].selectedPrices = updatedValues[type][
+      //     i
+      //   ].selectedPrices.filter((item) => item !== price);
+      //   updatedValues[type][i].services = updatedValues[type][
+      //     i
+      //   ].services.filter((item) => item.price !== price);
+      // }
 
       if (isChecked) {
         updatedValues[type][i].selectedServices.push(value);
         updatedValues[type][i].selectedPrices.push(price);
         updatedValues[type][i].services.push(JSON.stringify(Services));
-       
       } else {
         updatedValues[type][i].selectedServices = updatedValues[type][
           i
-        ].selectedServices.filter((item) => item !== value); // Remove from selectedServices
+        ].selectedServices.filter((item) => item !== value);
         updatedValues[type][i].selectedPrices = updatedValues[type][
           i
         ].selectedPrices.filter((item) => item !== price);
         updatedValues[type][i].services = updatedValues[type][
           i
-        ].services.filter((item) => item.price !== price);
+        ].services.filter((item) => item !== JSON.stringify(Services));
       }
 
-      
-      
-     
       if (type === "Adult" && i === 0) {
-
         setUserData((prevUserData) => ({
           ...prevUserData,
           selectedService: updatedValues[type][i].selectedServices,
@@ -602,15 +537,12 @@ export default function BookingPages({ BookingData }) {
           additional_price_id: updatedValues[type][i].services
             .map((item) => item.id)
             .join(", "),
-            services : updatedValues[type][i].services
+          services: updatedValues[type][i].services,
         }));
       }
 
       return updatedValues;
     });
-
-
-    
 
     setAdditional((prevAdditional) => {
       const newItem = {
@@ -652,29 +584,6 @@ export default function BookingPages({ BookingData }) {
     if (e.target === document.activeElement) {
       e.target.showPicker();
     }
-  };
-
-  const getPriceForadditional = (type, idx) => {
-    const personPrice = AlladultsData?.filter((item) => item.label === type);
-    const AdditionalPrice = Additional.filter((item) => item.index === idx);
-
-    if (!personPrice) {
-      return 0; // Default value if no price is found
-    }
-    return Number(personPrice[idx]?.price); // Ensure price is a number
-  };
-
-  const calculateSubtotal = () => {
-    const adultPrices = AlladultsData?.map((item) => Number(item.price)) || [];
-    const additionalPrices = formValues.selectedServicePrices || [];
-
-    const totalAdultPrice = adultPrices.reduce((acc, curr) => acc + curr, 0);
-    const totalAdditionalPrice = additionalPrices.reduce(
-      (acc, curr) => acc + curr,
-      0
-    );
-
-    return totalAdultPrice + totalAdditionalPrice + PackagePrices; // Add PackagePrices if applicable
   };
 
   const SubtotalPriceWithAdditional = (type, i) => {
@@ -877,10 +786,8 @@ export default function BookingPages({ BookingData }) {
         try {
           const AdultD = JSON.parse(BackAdultData);
 
-        
           // Extract the user object
           if (AdultD) {
-    
             setFormValues((prevValues) => {
               const updatedValues = { ...prevValues };
 
@@ -961,8 +868,6 @@ export default function BookingPages({ BookingData }) {
 
               return updatedValues;
             });
-
-       
           }
         } catch (error) {
           console.error("Error parsing userData:", error);
@@ -1468,7 +1373,7 @@ export default function BookingPages({ BookingData }) {
                               )}
                               onChange={(e) => {
                                 const isChecked = e.target.checked;
-                                
+
                                 handleCheckboxChange(
                                   e,
                                   type,
@@ -1650,9 +1555,10 @@ export default function BookingPages({ BookingData }) {
 
   const { translate } = useTranslation();
 
-  const discountClass = Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
-  
+  const discountClass =
+    Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
+  console.log(formValues, "formValues");
 
   return (
     <>

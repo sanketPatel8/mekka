@@ -91,7 +91,7 @@ export default function TourList4({
   const { translate } = useTranslation();
 
   return (
-    <section className="layout-pb-xl" >
+    <section className="layout-pb-xl">
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-lg-4">
@@ -161,8 +161,7 @@ export default function TourList4({
             <div className="row y-gap-5 justify-between">
               <div className="col-auto">
                 <div>
-                  {count}{" "}
-                  {count <= 1 ? "Result" : translate("Results")}
+                  {count} {count <= 1 ? "Result" : translate("Results")}
                 </div>
               </div>
 
@@ -230,6 +229,13 @@ export default function TourList4({
                         >
                           {translate("Direct Flight")}
                         </button>
+                        <div
+                          className={`tourCard__favorite pay-later-badge ${
+                            elm.later_payment == 1 ? "d-block" : "d-none"
+                          }`}
+                        >
+                          Pay Latter
+                        </div>
                       </div>
                       <div className="tourCard__content">
                         <div className="d-flex gap-2 items-center">
