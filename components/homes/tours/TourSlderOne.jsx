@@ -148,6 +148,13 @@ export default function TourSlderOne() {
                             >
                               {translate("Direct Flight")}
                             </button>
+                            <div
+                              className={`tourCard__favorite pay-later-badge ${
+                                elm.late_payment == 1 ? "d-block" : "d-none"
+                              }`}
+                            >
+                              Pay Latter
+                            </div>
                           </div>
 
                           <div className="tourCard__content px-10 pt-10">
