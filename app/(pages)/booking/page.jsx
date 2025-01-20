@@ -8,8 +8,8 @@ import FooterTwo from "@/components/layout/footers/FooterTwo";
 import Header1 from "@/components/layout/header/Header1";
 import dynamic from "next/dynamic";
 // import BookingPages from "@/components/pages/BookingPages";
-const BookingPage = dynamic(() => import("@/components/pages/BookingPages"), {
-  ssr: false,
+const BookingPage = dynamic(() => import('@/components/pages/BookingPages'), {
+  ssr: false 
 });
 import Head from "next/head";
 import { useSearchParams } from "next/navigation";
@@ -18,14 +18,16 @@ import React, { useEffect, useState } from "react";
 export default function page() {
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
-  const { translate } = useTranslation();
+  const {translate} = useTranslation();
   const [BookingData, setBookingData] = useState({});
 
-  // page title
+    // page title 
 
-  useEffect(() => {
-    document.title = "New Booking - MekkaBooking";
-  }, []);
+    useEffect(() => {
+     
+        document.title = "New Booking - MekkaBooking";
+    
+    }, []);
 
   const FetchBookingData = async () => {
     const sendData = {
@@ -45,6 +47,8 @@ export default function page() {
   useEffect(() => {
     FetchBookingData();
   }, [Tourid]);
+
+
 
   return (
     <>

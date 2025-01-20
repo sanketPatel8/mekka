@@ -146,18 +146,18 @@
   z-index: 9999;
 }
 
-.sliSubTitle {
+.sliSubTitle{
   font-size: 35px;
   color: white;
   font-weight: 700;
 }
-.sliTitle {
+.sliTitle{
   font-size: 55px;
-  color: #dac04f;
+  color: #DAC04F;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
-.sliTitle2 {
+.sliTitle2{
   font-size: 35px;
   color: white;
   font-weight: 700;
@@ -568,34 +568,34 @@ input[type="number"]::-webkit-inner-spin-button {
   width: 100%;
   padding: 12px 45px;
   border-radius: 12px;
-  border: 1px solid #e7e6e6;
+  border: 1px solid #E7E6E6;
   font-size: 16px;
   box-sizing: border-box;
 }
 
-.phone_lable {
+.phone_lable{
   position: absolute !important;
   top: -15px !important;
   left: 25px !important;
   z-index: 300;
 }
 
-.phonenumber_input {
+.phonenumber_input{
   height: 30px;
   border-radius: 12px !important;
 }
 
-.react-tel-input .country-list .search-box {
+.react-tel-input .country-list .search-box{
   height: 40px;
 }
 
-.react-tel-input .country-list .search-box {
+.react-tel-input .country-list .search-box{
   width: 200px;
 }
 
-.react-tel-input .country-list .search {
+.react-tel-input .country-list .search{
   /* padding: 0px 0px !important; */
-  display: flex;
+  display: flex; 
   align-items: center;
 }
 
@@ -605,18 +605,17 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: white;
 }
 
-.react-tel-input .flag-dropdown.open {
+.react-tel-input .flag-dropdown.open{
   border-top-left-radius: 12px !important;
   border-bottom-left-radius: 12px !important;
   z-index: 100 !important;
 }
-.react-tel-input .flag-dropdown.open .selected-flag {
+.react-tel-input .flag-dropdown.open .selected-flag{
   border-top-left-radius: 12px !important;
   border-bottom-left-radius: 12px !important;
 }
 
-.react-tel-input .selected-flag:hover,
-.react-tel-input .selected-flag:focus {
+.react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus{
   border-top-left-radius: 12px !important;
   border-bottom-left-radius: 12px !important;
 }
@@ -625,12 +624,12 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 20px;
 }
 
-.text-orange {
+.text-orange{
   color: orange;
 }
 
-.text-mekka {
-  color: #4f7ea3;
+.text-mekka{
+  color: #4F7EA3;
 }
 
 /* .fw_400{
@@ -646,59 +645,53 @@ input[type="number"]::-webkit-inner-spin-button {
   line-height: 36px;
 } */
 
-.cursor-pointer {
+.cursor-pointer{
   cursor: pointer;
 }
 
-@media (max-width: 786px) {
+@media(max-width:786px){
   .profile_img {
     object-fit: cover;
     height: 45px !important;
     border: 1px solid black;
   }
 
-  .f12 {
-    font-size: 12px !important;
+  .f12{
+    font-size: 12px!important;
   }
 
-  .header-none {
+  .header-none{
     display: none !important;
   }
+  
 }
 
-.text-blue {
-  color: #4f7ea3;
+.text-blue{
+  color: #4F7EA3;
 }
 
-.border-2 {
+.border-2{
   border: 2px solid red;
 }
 
-.model-height-90 {
+.model-height-90{
   height: 70vh !important;
 }
 
-.text-nowrap {
+.text-nowrap{
   text-wrap: nowrap;
 }
 
-.items-pedding {
+.items-pedding{
   padding: 25px 0px !important;
 }
 
-.slider-slide-2-heading-change {
-  color: #0595d0;
+.slider-slide-2-heading-change{
+  color: #0595D0;
 }
 
 @media (min-width: 1200px) and (max-width: 1400px) {
   .hotel_name {
     font-size: 10px !important;
   }
-}
-
-/* latest update tour pay latter badge  */
-
-.pay-later-badge {
-  left: 0 !important;
-  text-align: center !important;
 }

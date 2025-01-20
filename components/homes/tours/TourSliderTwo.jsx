@@ -16,11 +16,12 @@ import { showErrorToast } from "@/app/utils/tost";
 import { useCurrency } from "@/app/context/currencyContext";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 
-export default function TourSliderTwo({ setLength }) {
+export default function TourSliderTwo({setLength}) {
   const [showSwiper, setShowSwiper] = useState(false);
   const [BestSellerData, setBestSellerData] = useState([]);
   const [ShowSlide, setShowSlide] = useState(0);
   const [sliderLength, setSliderLength] = useState(0);
+
 
   useEffect(() => {
     setShowSwiper(true);
@@ -53,8 +54,10 @@ export default function TourSliderTwo({ setLength }) {
     }
   };
 
+
+
   const { translate } = useTranslation();
-  const { formatPrice } = useCurrency();
+  const {formatPrice} = useCurrency()
 
   return (
     <section className="relative">
@@ -129,13 +132,6 @@ export default function TourSliderTwo({ setLength }) {
                           >
                             {translate("Direct Flight")}
                           </button>
-                          <div
-                            className={`tourCard__favorite pay-later-badge ${
-                              elm.later_payment == 1 ? "d-block" : "d-none"
-                            }`}
-                          >
-                            Pay Latter
-                          </div>
                         </div>
 
                         <div className="tourCard__content px-10 pt-10">
@@ -149,10 +145,10 @@ export default function TourSliderTwo({ setLength }) {
                           </div>
 
                           <div
-                            className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
-                          >
-                            {elm.date_begin} - {elm.date_end}
-                          </div>
+                          className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
+                        >
+                          {elm.date_begin} - {elm.date_end}
+                        </div>
 
                           <h3
                             className={`tourCard__title text-16 fw-500 mt-5 ${
@@ -170,23 +166,23 @@ export default function TourSliderTwo({ setLength }) {
                                 {/* <Stars star={elm?.rating_count} font={12} /> */}
                               </div>
                               {elm?.company_name && (
-                                <div className="text-14 ml-5">
-                                  <span className="fw-500">{elm?.rating}</span>
-                                  {/* {elm?.rating_count}) -{" "} */}
-                                  <div className="items-center">
-                                    <PiBuildingApartmentFill
-                                      color="#dabf4f"
-                                      className=""
-                                      size={20}
-                                    />{" "}
-                                    <span>
-                                      {elm?.company_name == null
-                                        ? "  "
-                                        : elm?.company_name}{" "}
-                                    </span>
-                                  </div>
-                                </div>
-                              )}
+                              <div className="text-14 ml-5">
+                                <span className="fw-500">{elm?.rating}</span>
+                                {/* {elm?.rating_count}) -{" "} */}
+                               <div className="items-center">
+                               <PiBuildingApartmentFill
+                                  color="#dabf4f"
+                                  className=""
+                                  size={20}
+                                />{" "}
+                                <span>
+                                  {elm?.company_name == null
+                                    ? "  "
+                                    : elm?.company_name}{" "}
+                                </span>
+                               </div>
+                              </div>
+                            )}
                             </div>
                           </div>
 
@@ -205,8 +201,9 @@ export default function TourSliderTwo({ setLength }) {
                                 elm.tour_price == "0" ? "d-none" : "d-block"
                               }`}
                             >
+                             
                               <span className="text-16 fw-500">
-                                {formatPrice(elm.tour_price)}
+                                {formatPrice(elm.tour_price)} 
                               </span>
                             </div>
                           </div>
@@ -219,7 +216,7 @@ export default function TourSliderTwo({ setLength }) {
             </div>
           </div>
 
-          {sliderLength > 2 && (
+          { sliderLength > 2 && (
             <div className="navAbsolute">
               <button className="navAbsolute__button bg-white js-slider1-prev prev">
                 <i className="icon-arrow-left text-14"></i>
