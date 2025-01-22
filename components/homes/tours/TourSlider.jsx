@@ -1,86 +1,59 @@
 "use client";
 
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { useEffect, useState } from "react";
-import { FaPersonWalking } from "react-icons/fa6";
-import Stars from "@/components/common/Stars";
 import { tourData } from "@/data/tours";
 import Image from "next/image";
+import Stars from "../common/Stars";
 import Link from "next/link";
-import "@/public/css/index.css";
-import { post } from "@/app/utils/api";
 import { useTranslation } from "@/app/context/TranslationContext";
-import { showErrorToast } from "@/app/utils/tost";
+import { post } from "@/app/utils/api";
+import { useEffect, useState } from "react";
+import { FaPersonWalking } from "react-icons/fa6";
 import { useCurrency } from "@/app/context/currencyContext";
-import { PiBuildingApartmentFill } from "react-icons/pi";
 
-export default function TourSliderTwo({ setLength }) {
-  const [showSwiper, setShowSwiper] = useState(false);
-  const [BestSellerData, setBestSellerData] = useState([]);
-  const [ShowSlide, setShowSlide] = useState(0);
-  const [sliderLength, setSliderLength] = useState(0);
-
-  useEffect(() => {
-    setShowSwiper(true);
-    HandleLoginSubmite();
-  }, []);
-
-  useEffect(() => {
-    setLength(BestSellerData.length);
-  }, [BestSellerData]);
-
-  const HandleLoginSubmite = async (e) => {
-    const BookingLoginData = { AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY };
-    try {
-      const response = await post("best_seller_tour", BookingLoginData);
-      const maxSlide = response?.Tours?.length >= 2 ? 2 : 1;
-      setShowSlide(maxSlide);
-      setBestSellerData(response?.Tours);
-      setSliderLength(response?.Tours?.length);
-    } catch (error) {
-      console.error("Error:", error); // Log the full error for debugging
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        showErrorToast("DataBase Error");
-      } else {
-        showErrorToast("An error occurred during registration.");
-      }
-    }
-  };
-
+export default function TourSlider({ PAckageData }) {
   const { translate } = useTranslation();
   const { formatPrice } = useCurrency();
+  const [slibleTourSlider, setslibleTourSlider] = useState([]);
+
+  useEffect(() => {
+    setslibleTourSlider(PAckageData?.Tour_List);
+  }, [PAckageData]);
 
   return (
-    <section className="relative">
-      <div className="sectionBg -w-1530 rounded-12 "></div>
-
+    <section className="">
       <div className="container">
-        <div className="row justify-between items-end "></div>
-
-        <div className="relative pt-50 sm:pt-20">
-          <div className="overflow-hidden pb-30 js-section-slider">
+        <div className="row">
+          <div className="col-auto">
+            {slibleTourSlider?.length !== 0 && slibleTourSlider && (
+              <h2 className="text-30">
+                {" "}
+                {translate("You might also like...")}
+              </h2>
+            )}
+          </div>
+        </div>
+        {slibleTourSlider?.length !== 0 && slibleTourSlider && (
+          <div className="relative py-40 sm:pt-20">
             <div
-              data-aos="fade-up"
-              data-aos-delay=""
-              className="swiper-wrapper "
+              className="overflow-hidden pb-5 js-section-slider"
+              data-gap="30"
+              data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1"
+              data-nav-prev="js-slider1-prev"
+              data-nav-next="js-slider1-next"
             >
-              {showSwiper && ShowSlide !== 0 && (
+              <div className="swiper-wrapper">
                 <Swiper
                   spaceBetween={30}
-                  className="w-50"
+                  className="w-100"
                   pagination={{
                     el: ".pbutton1",
                     clickable: true,
                   }}
                   navigation={{
-                    prevEl: ".prev",
-                    nextEl: ".next",
+                    prevEl: ".js-slider10-prev",
+                    nextEl: ".js-slider10-next",
                   }}
                   modules={[Navigation, Pagination]}
                   breakpoints={{
@@ -88,17 +61,17 @@ export default function TourSliderTwo({ setLength }) {
                       slidesPerView: 1,
                     },
                     768: {
-                      slidesPerView: 1,
+                      slidesPerView: 2,
                     },
                     1024: {
-                      slidesPerView: ShowSlide,
+                      slidesPerView: 3,
                     },
                     1200: {
-                      slidesPerView: ShowSlide,
+                      slidesPerView: 4,
                     },
                   }}
                 >
-                  {BestSellerData.map((elm, i) => (
+                  {slibleTourSlider?.map((elm, i) => (
                     <SwiperSlide key={i}>
                       <Link
                         href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
@@ -110,8 +83,8 @@ export default function TourSliderTwo({ setLength }) {
                               width={421}
                               height={301}
                               src={
-                                elm.tour_image
-                                  ? elm.tour_image
+                                elm?.tour_image
+                                  ? elm?.tour_image
                                   : "/img/404/imgnotFound.png"
                               }
                               alt="image"
@@ -130,7 +103,7 @@ export default function TourSliderTwo({ setLength }) {
                             {translate("Direct Flight")}
                           </button>
                           <div
-                            className={`tourCard__favorite pay-later-badge ${
+                            className={`Pay later ${
                               elm.later_payment == 1 ? "d-block" : "d-none"
                             }`}
                           >
@@ -154,11 +127,7 @@ export default function TourSliderTwo({ setLength }) {
                             {elm.date_begin} - {elm.date_end}
                           </div>
 
-                          <h3
-                            className={`tourCard__title text-16 fw-500 mt-5 ${
-                              elm.type & elm.name ? "d-none" : "d-block"
-                            }`}
-                          >
+                          <h3 className="tourCard__title text-16 fw-500 mt-5">
                             <span>
                               {elm.type} - {elm.name}
                             </span>
@@ -215,22 +184,21 @@ export default function TourSliderTwo({ setLength }) {
                     </SwiperSlide>
                   ))}
                 </Swiper>
-              )}
+              </div>
             </div>
+            {slibleTourSlider?.length > 4 && (
+              <div className="navAbsolute dis_none">
+                <button className="navAbsolute__button bg-white js-slider10-prev">
+                  <i className="icon-arrow-left text-14"></i>
+                </button>
+
+                <button className="navAbsolute__button bg-white js-slider10-next">
+                  <i className="icon-arrow-right text-14"></i>
+                </button>
+              </div>
+            )}
           </div>
-
-          {sliderLength > 2 && (
-            <div className="navAbsolute">
-              <button className="navAbsolute__button bg-white js-slider1-prev prev">
-                <i className="icon-arrow-left text-14"></i>
-              </button>
-
-              <button className="navAbsolute__button bg-white js-slider1-next next">
-                <i className="icon-arrow-right text-14"></i>
-              </button>
-            </div>
-          )}
-        </div>
+        )}
       </div>
     </section>
   );

@@ -107,7 +107,7 @@ export default function TourSlider({ PAckageData }) {
                               elm.later_payment == 1 ? "d-block" : "d-none"
                             }`}
                           >
-                            Pay Latter
+                            {translate("Pay Later")}
                           </div>
                         </div>
 

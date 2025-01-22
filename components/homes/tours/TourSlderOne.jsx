@@ -153,7 +153,7 @@ export default function TourSlderOne() {
                                 elm.late_payment == 1 ? "d-block" : "d-none"
                               }`}
                             >
-                              Pay Latter
+                              {translate("Pay Later")}
                             </div>
                           </div>
 
