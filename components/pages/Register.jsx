@@ -620,7 +620,11 @@ export default function Register() {
                             typeof window !== "undefined" ? window.FB.logout() : "";
                           }}
                           onReject={(err) => {
-                            console.error(err);
+                            setSocialLoginLoading({
+                              google: false,
+                              facebook: false,
+                              apple: false,
+                            });
                           }}
                         >
                           <FaFacebookF size={15} className="mx-1" />
@@ -671,9 +675,12 @@ export default function Register() {
                             });
                           }}
                           onReject={(err) => {
-                            console.error(err);
-                          }}
-                        >
+                            setSocialLoginLoading({
+                              google: false,
+                              facebook: false,
+                              apple: false,
+                            });
+                          }}                        >
                           <FaGoogle size={15} className="mx-1" />
                           {translate("Google")}
                         </LoginSocialGoogle>
@@ -716,9 +723,12 @@ export default function Register() {
                             signinSocial({ type: "apple", data: data });
                           }}
                           onReject={(err) => {
-                            console.error(err);
-                          }}
-                        >
+                            setSocialLoginLoading({
+                              google: false,
+                              facebook: false,
+                              apple: false,
+                            });
+                          }}                        >
                           <FaApple size={15} className="mx-1" />
                           {translate("Sign up With Apple")}
                         </LoginSocialApple>
