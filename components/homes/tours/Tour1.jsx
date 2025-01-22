@@ -117,7 +117,7 @@ export default function Tour1() {
                           {translate("Direct Flight")}
                         </button>
                         <div
-                          className={`Pay later ${
+                          className={`tourCard__favorite pay-later-badge ${
                             elm.later_payment == 1 ? "d-block" : "d-none"
                           }`}
                         >
