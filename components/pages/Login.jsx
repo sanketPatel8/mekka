@@ -158,7 +158,7 @@ export default function Login({
         });
       }
        else {
-        showErrorToast(translate, "Invalid Credentials");
+        showErrorToast(translate, "Invalid Response");
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           email: "",
