@@ -340,6 +340,16 @@ const CustomerDetaTable = () => {
     },
   ];
 
+  const ServicesColumn = [
+    {
+      name: translate("Name"),
+      selector: (row) => row.personName,
+      width: "100px",
+    },
+    { name: translate("Services"), selector: (row) => row.personSurName },
+    { name: translate("Amount"), selector: (row) => row.gender },
+  ];
+
   const Total = [
     {
       name: translate("Subtotal"),
@@ -864,7 +874,7 @@ const CustomerDetaTable = () => {
     };
   }, [handleDateChange]);
 
-  const [PersonData, setPersonData] = useState()
+  const [PersonData, setPersonData] = useState();
 
   const FetchAddperson = async () => {
     setIsLoading(true);
@@ -884,14 +894,20 @@ const CustomerDetaTable = () => {
         ? "child"
         : "baby"
     );
-    formData.append("title", RadioValue.title == undefined ? " " : RadioValue.title);
-    formData.append("price", RadioValue.price == undefined ? " " : RadioValue.price);
-    formData.append("additional_order", RadioValue.order == undefined ? " " : RadioValue.order);
-   
+    formData.append(
+      "title",
+      RadioValue.title == undefined ? " " : RadioValue.title
+    );
+    formData.append(
+      "price",
+      RadioValue.price == undefined ? " " : RadioValue.price
+    );
+    formData.append(
+      "additional_order",
+      RadioValue.order == undefined ? " " : RadioValue.order
+    );
+
     formData.append("total", subtotal);
-
-
-   
 
     try {
       const response = await POST.request({
@@ -920,11 +936,8 @@ const CustomerDetaTable = () => {
   };
 
   const handlePayment = () => {
- 
-
     if (PaymentCheckbox == 1) {
       FetchAddperson();
-      
     }
 
     if (PaymentCheckbox == 3) {
@@ -1298,7 +1311,17 @@ const CustomerDetaTable = () => {
           />
 
           <br />
+          {/* Baby Data Table */}
+          <DataTable
+            title={translate("Services Per Person")}
+            columns={ServicesColumn}
+            data={
+              BookingDetails?.babyData?.length ? BookingDetails.babyData : []
+            } // Change data dynamically
+            highlightOnHover
+          />
 
+          <br />
           {/* <DataTable
                     title={translate("AmountPaid")}
                     columns={AmountPaid}
