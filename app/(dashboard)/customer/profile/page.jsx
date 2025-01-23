@@ -48,11 +48,7 @@ export default function Profile() {
     setPhone(value);
   };
 
-
-
   const { user, customer } = useAuthContext();
-
-
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -263,8 +259,6 @@ export default function Profile() {
       setPasswordError("");
     }
   };
- 
-
 
   const handleImageremove = (file) => {
     const fetchUpdateProfile = async () => {
@@ -277,7 +271,7 @@ export default function Profile() {
           form: formDatas,
           url: "remove_profile_image",
         });
-      
+
         showSuccessToast(translate, response.Message);
       } catch (e) {}
     };
@@ -369,6 +363,7 @@ export default function Profile() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                disabled
                               />
                               <label className="lh-1 text-16 text-light-1">
                                 {translate("Email")}
