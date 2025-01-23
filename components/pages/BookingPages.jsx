@@ -116,6 +116,7 @@ export default function BookingPages({ BookingData }) {
     const BackAdultData = localStorage.getItem("AllAdultsData");
 
     const loginStatus = JSON.parse(localStorage.getItem("CustomerLoginCheck"));
+
     if (loginStatus && loginStatus !== "undefined") {
       try {
         const loginChk = JSON.parse(loginStatus);
@@ -124,7 +125,6 @@ export default function BookingPages({ BookingData }) {
         console.error(error);
       }
     }
-
     // Check if savedData exists and is valid JSON
     if (savedData && savedData !== "undefined") {
       try {
