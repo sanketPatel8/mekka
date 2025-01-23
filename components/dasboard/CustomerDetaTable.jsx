@@ -551,11 +551,7 @@ const CustomerDetaTable = () => {
           date: response.Bookings.paymentData.payment_plan_date_2,
           amount: response.Bookings.paymentData.payment_plan_2,
           paidDate: response.Bookings.paymentData.paid_date_2,
-<<<<<<< Updated upstream
-          paidMethod:  response.Bookings.paymentData.payment_intent_id[1] ? `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[1]}` :"",
-=======
-          paidMethod: `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[1]}`,
->>>>>>> Stashed changes
+          paidMethod:  `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[1]}`,
         },
         {
           date: response.Bookings.paymentData.payment_plan_date_3,
