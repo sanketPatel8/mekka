@@ -436,12 +436,15 @@ export default function Login({
                             appId={
                               process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
                             }
-                            fieldsProfile={"id,first_name,last_name,email,picture"}
+                            fieldsProfile="id,first_name,last_name,email,picture"
                             scope="email,public_profile"
                             onLoginStart={() => {
                               setSocialLoginLoading((prev) => ({ ...prev, facebook: true }));
                             }}
                              onResolve={({ provider, data }) => {
+
+                              console.log(data.id,"id")
+                              console.log(data)
                               const { id, first_name, last_name, email } = data;
                               const name = `${first_name} ${last_name}`;
 
