@@ -333,9 +333,9 @@ export default function TourList4({
                               className="text-12 ms-2"
                               style={{ fontWeight: "700" }}
                             >
-                              {translate("Departure")} :{" "}
+                              {translate("Departure")} :
                             </span>
-                            <span className="text-13 ms-2">
+                            <span className="text-13 ms-1">
                               {elm?.departures}
                             </span>
                           </div>
@@ -347,7 +347,7 @@ export default function TourList4({
                             >
                               {translate("Arrival")} :{" "}
                             </span>
-                            <span className="text-13 ms-2">{elm?.arrival}</span>
+                            <span className="text-13 ms-1">{elm?.arrival}</span>
                           </div>
                         </p>
 
@@ -381,7 +381,7 @@ export default function TourList4({
                             {translate("Distance to the Kaaba")} :{" "}
                           </span>
                           <span
-                            className="text-13 ms-2"
+                            className="text-13 ms-1"
                             style={{ color: "#3f97ca" }}
                           >
                             {elm?.distance_to_hotel}{" "}
