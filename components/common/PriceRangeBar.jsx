@@ -18,30 +18,30 @@ const theme = createTheme({
   },
 });
 
-export default function PriceRangeBar({ Distance, FilterDistance , setDistance , FliterData , setFilterDistance }) {
+export default function PriceRangeBar({
+  Distance,
+  FilterDistance,
+  setDistance,
+  FliterData,
+  setFilterDistance,
+}) {
   // const {Distance, setDistance} = useGlobalState()
 
   const max_dist = Number(FliterData.max_km);
   const min_dist = Number(FliterData.min_km);
 
   const handleChange = (event, newValue) => {
-    
     setFilterDistance(newValue);
-    setDisplayValue(newValue)
-
+    setDisplayValue(newValue);
   };
 
-  const [displayValue, setDisplayValue] = useState([0 , 0]);
+  const [displayValue, setDisplayValue] = useState([0, 0]);
 
   useEffect(() => {
-    setDisplayValue([min_dist , max_dist ])
-  }, [max_dist , min_dist])
-  
+    setDisplayValue([min_dist, max_dist]);
+  }, [max_dist, min_dist]);
 
-  const {translate} = useTranslation();
-
-
-  
+  const { translate } = useTranslation();
 
   return (
     <>
@@ -62,10 +62,18 @@ export default function PriceRangeBar({ Distance, FilterDistance , setDistance ,
 
         <div className="d-flex justify-between mt-20">
           <div className="">
-            <span className="">{translate('Range')}: </span>
-            <span className="fw-500 js-lower">{displayValue[0]} m</span>
+            <span className="">{translate("Range")}: </span>
+            <span className="fw-500 js-lower">
+              {displayValue[0] >= 1000
+                ? `${(displayValue[0] / 1000).toFixed(2)} km`
+                : `${displayValue[0]} m`}
+            </span>
             <span> - </span>
-            <span className="fw-500 js-upper">{displayValue[1]} m</span>
+            <span className="fw-500 js-upper">
+              {displayValue[1] >= 1000
+                ? `${(displayValue[1] / 1000).toFixed(2)} km`
+                : `${displayValue[1]} m`}
+            </span>
           </div>
         </div>
       </div>
