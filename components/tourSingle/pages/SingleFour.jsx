@@ -26,7 +26,6 @@ export default function SingleFour({ PAckageData }) {
   useEffect(() => {
     const foundTour = PAckageData?.Tour_List?.find((tour) => tour.id == id);
     setFlightInc(foundTour);
-   
   }, [PAckageData]);
 
   const { translate } = useTranslation();
@@ -128,7 +127,7 @@ export default function SingleFour({ PAckageData }) {
                         }
                       >
                         <div className="pt-20">
-                          {/* <FlightInformation PAckageData={PAckageData} /> */}
+                          <FlightInformation PAckageData={PAckageData} />
                         </div>
                       </div>
                     </div>
