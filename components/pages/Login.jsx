@@ -82,6 +82,10 @@ export default function Login({
   }, []);
 
   const signinSocial = async ({ type, email, id, name, data }) => {
+
+    console.log(id,"id");
+    console.log(email,"email");
+    console.log(name,"name")
     if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
@@ -432,16 +436,15 @@ export default function Login({
                             appId={
                               process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
                             }
-                            fieldsProfile={
-                              "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
-                            }
+                            fieldsProfile={"id,first_name,last_name,email,picture"}
                             scope="email,public_profile"
                             onLoginStart={() => {
                               setSocialLoginLoading((prev) => ({ ...prev, facebook: true }));
                             }}
                              onResolve={({ provider, data }) => {
-                              const { id, name, email } = data;
-                          
+                              const { id, first_name, last_name, email } = data;
+                              const name = `${first_name} ${last_name}`;
+
                               typeof window !== "undefined"
                                 ? window.FB.getLoginStatus((response) => {
                                     if (response.status === "connected") {
