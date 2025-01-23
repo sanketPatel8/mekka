@@ -1110,6 +1110,8 @@ const CustomerDetaTable = () => {
         payment_plan: 3,
         plan_date: getTodayDate(),
         reservation_id: BookingDetails.reservation?.id,
+        transaction_id: pendingPaymentValue.transaction_id,
+
       };
       setPaidData(data);
     }
