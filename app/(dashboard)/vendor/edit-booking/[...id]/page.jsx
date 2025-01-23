@@ -81,7 +81,7 @@ export default function DbBooking({ params }) {
 
   useEffect(() => {
     const formatTotal = (value) => `${value} €`;
- 
+
     const vendorDocuments = [
       { value: "Visa", label: translate("Visa") },
       {
@@ -110,20 +110,12 @@ export default function DbBooking({ params }) {
         width: "12%",
       },
 
- 
       { name: translate("DOB"), selector: (row) => row.DOB, width: "15%" },
       {
         name: translate("Nationality"),
         selector: (row) => row.Nationality,
         width: "15%",
       },
-      {
-        name: translate("Additional Services"),
-        selector: (row) =>
-          row?.extra_data == 'undefined' || row?.extra_data == null || row?.extra_data == ' ' ? "no services" : row?.extra_data ,
-        width: "16%",
-      },
-
       {
         name: translate("Total"),
         selector: (row) => formatTotal(row.price),
@@ -145,33 +137,43 @@ export default function DbBooking({ params }) {
       },
     ];
 
-    
     const serviceTable = [
       // { name: translate("id"), selector: (row) => row.id, width: "10%" },
-      { name: translate("Name"), selector: (row) => row.name},
-      { name: translate("Services"), selector: (row) => row.services},
-      { name: translate("Amount"), selector: (row) => row.amount},
-      
+      { name: translate("Name"), selector: (row) => row.name },
+      { name: translate("Services"), selector: (row) => row.services },
+      { name: translate("Amount"), selector: (row) => row.amount },
     ];
 
-    setServiceHeaders(serviceTable)
+    setServiceHeaders(serviceTable);
 
     setAdultHeaders(columnAdu_1);
 
     const ColumnReservation_details = [
-      ...(bookings?.reservation?.airlines ? [{
-        name: translate("Airline"),
-        selector: (row) => (bookings?.reservation?.airlines),
-      }] : []),
-      ...(bookings?.reservation?.departure_names ? [{
-        name: translate("Departure"),
-        selector: (row) => (bookings?.reservation?.departure_names),
-      }] : []),
-      ...(bookings?.reservation?.arrival ? [{
-        name: translate("Arrival"),
-        selector: (row) => (bookings?.reservation?.arrival),
-      }] : []),
-          
+      ...(bookings?.reservation?.airlines
+        ? [
+            {
+              name: translate("Airline"),
+              selector: (row) => bookings?.reservation?.airlines,
+            },
+          ]
+        : []),
+      ...(bookings?.reservation?.departure_names
+        ? [
+            {
+              name: translate("Departure"),
+              selector: (row) => bookings?.reservation?.departure_names,
+            },
+          ]
+        : []),
+      ...(bookings?.reservation?.arrival
+        ? [
+            {
+              name: translate("Arrival"),
+              selector: (row) => bookings?.reservation?.arrival,
+            },
+          ]
+        : []),
+
       // { name: translate("Arrival"), selector: (row) => row.arrival },
       { name: translate("Departure Date"), selector: (row) => row.date_begin },
       { name: translate("Return Date"), selector: (row) => row.date_end },
@@ -211,36 +213,37 @@ export default function DbBooking({ params }) {
       {
         name: translate("Action"),
         selector: (row) => (
-          <a href={row.fileLink} target="_blank"
+          <a
+            href={row.fileLink}
+            target="_blank"
             className="button -sm -accent-1 bg-info-2 text-white my-2"
-            
           >
             {translate("Download")}
           </a>
         ),
-        width: "20%"
+        width: "20%",
       },
     ];
 
     setDownloadData(DownloadData);
 
     const Total = [
-      { name: translate("Total"), selector: (row) => row.Total, width:"20%" },
+      { name: translate("Total"), selector: (row) => row.Total, width: "20%" },
       {
         name: translate("Mekka fees"),
-        selector: (row) => row.Mekka_fees ,
+        selector: (row) => row.Mekka_fees,
       },
       {
         name: translate("Subtotal"),
         selector: (row) => row.Subtotal,
       },
       // { name: translate("Tax"), selector: (row) => formatTotal(row.Total) },
-     
+
       // {
       //   name: translate("Discount"),
       //   selector: (row) => row.Discount ,
       // },
-      
+
       {
         name: translate("Amount Paid"),
         selector: (row) => row.Amount_Paid,
@@ -252,9 +255,9 @@ export default function DbBooking({ params }) {
     ];
 
     setTotalHeaders(Total);
-  }, [translate,bookings]);
+  }, [translate, bookings]);
 
-  const [rows, setRows] = useState([{ document: "", type: null }]); 
+  const [rows, setRows] = useState([{ document: "", type: null }]);
 
   const addRow = () => {
     setRows([...rows, { document: "", type: null }]);
@@ -390,8 +393,6 @@ export default function DbBooking({ params }) {
     }
 
     if (response.Bookings) {
-
-
       if (response.Bookings.adultData.length > 0) {
         const adults = response.Bookings.adultData.map((adult) => ({
           id: adult.id,
@@ -400,18 +401,21 @@ export default function DbBooking({ params }) {
           DOB: adult.personBirthDay,
           Nationality: adult.personNationality,
           price: adult.adult_price,
-          extra_data: `${adult.extra_data === null ? "" :`${adult.extra_data.additional_order } Bed-Room` } `
+          extra_data: `${
+            adult.extra_data === null
+              ? ""
+              : `${adult.extra_data.additional_order} Bed-Room`
+          } `,
         }));
 
         setAdultBookings(adults);
       }
 
-      if(response.Bookings.extraServices.length > 0){
+      if (response.Bookings.extraServices.length > 0) {
         const services = response.Bookings.extraServices.map((service) => ({
           name: `${service.name} ${service.surname}`,
-          services :  service.title,
-          amount : service.price
-          
+          services: service.title,
+          amount: service.price,
         }));
 
         setServiceData(services);
@@ -422,12 +426,8 @@ export default function DbBooking({ params }) {
           airlines: response.Bookings.reservation.airlines,
           // From: response.Bookings.reservation.from,
           // To: response.Bookings.reservation.to,
-          date_begin: 
-            response.Bookings.reservation.date_begin
-          ,
-          date_end: 
-            response.Bookings.reservation.date_end
-          ,
+          date_begin: response.Bookings.reservation.date_begin,
+          date_end: response.Bookings.reservation.date_end,
           Mekka_hotel: response.Bookings.reservation.mekka_hotel,
           Madina_hotel: response.Bookings.reservation.madina_hotel,
           adult: response.Bookings.reservation.adults,
@@ -437,9 +437,7 @@ export default function DbBooking({ params }) {
         };
 
         setReservationData(reservation);
-        setBookingDate(
-        response.Bookings.reservation.created_at
-        );
+        setBookingDate(response.Bookings.reservation.created_at);
         setBookingStatus(response.Bookings.reservation.reservation_status);
       }
 
@@ -452,9 +450,11 @@ export default function DbBooking({ params }) {
           country: child.countryName,
           Nationality: child.personNationality,
           price: child.child_price,
-          extra_data: `${child.extra_data === null ? "" :`${child.extra_data.title }` } `
+          extra_data: `${
+            child.extra_data === null ? "" : `${child.extra_data.title}`
+          } `,
         }));
-        
+
         setChildBookings(children);
       }
 
@@ -467,7 +467,11 @@ export default function DbBooking({ params }) {
           country: baby.countryName,
           Nationality: baby.personNationality,
           price: baby.baby_price,
-          extra_data: `${baby.extra_data === null ? "" :`${baby.extra_data.additional_order } Bed-Room` } `
+          extra_data: `${
+            baby.extra_data === null
+              ? ""
+              : `${baby.extra_data.additional_order} Bed-Room`
+          } `,
         }));
         setBabyBookings(babies);
       }
@@ -479,15 +483,14 @@ export default function DbBooking({ params }) {
           Amount_Paid: `${response.Bookings.reservation.amount_paid} €`,
           Total: `${response.Bookings.reservation.subtotal} €`,
           Amount_Due: `${response.Bookings.reservation.amount_due} €`,
-          Mekka_fees : `${response.Bookings.reservation.commission_amount}`
+          Mekka_fees: `${response.Bookings.reservation.commission_amount}`,
         };
 
         setTotalData(total);
       }
     }
   };
-  const {handleRedirect} = Useauthredirect();
-
+  const { handleRedirect } = Useauthredirect();
 
   useEffect(() => {
     handleRedirect();
@@ -514,8 +517,6 @@ export default function DbBooking({ params }) {
     };
     xhr.send();
   };
-
-  
 
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
@@ -617,7 +618,6 @@ export default function DbBooking({ params }) {
       };
     });
 
-
     formData.append("documents_data", JSON.stringify(documentData));
     setIsLoading(true);
     const response = await POST.request({
@@ -626,16 +626,14 @@ export default function DbBooking({ params }) {
     });
     if (response.Status == 1) {
       setIsLoading(false);
-      showSuccessToast(translate,"Document Uploaded Successfully");
+      showSuccessToast(translate, "Document Uploaded Successfully");
       setuploadFileisOpen(false);
       setRows([{ document: "", type: null }]);
-    }else{
+    } else {
       setIsLoading(false);
-      showErrorToast(translate,"Document Upload Failed");
+      showErrorToast(translate, "Document Upload Failed");
       setRows([{ document: "", type: null }]);
-
     }
- 
   };
 
   return (
@@ -682,7 +680,8 @@ export default function DbBooking({ params }) {
                 />
 
                 <div className="text-center pt-30">
-                  © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
+                  © {translate("Copyright MekkaBooking.com")}{" "}
+                  {new Date().getFullYear()}
                 </div>
               </>
             )}
@@ -816,15 +815,16 @@ export default function DbBooking({ params }) {
                             type="submit"
                             onClick={handleDocumentSubmit}
                           >
-                             {isLoading ? <div
+                            {isLoading ? (
+                              <div
                                 className="d-flex justify-content-center align-items-center"
                                 style={{ height: "30px", width: "100%" }}
                               >
                                 <ClipLoader color="#ffffff" size={30} />
                               </div>
-                              :
-                              translate("SUBMIT") 
-                              }
+                            ) : (
+                              translate("SUBMIT")
+                            )}
                           </button>
                           <button
                             className="button -sm -info-2 bg-accent-1 text-dark my-4 mx-md-3 mx-2"
