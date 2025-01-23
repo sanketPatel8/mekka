@@ -5822,7 +5822,7 @@ h6 {
 .sidebar.-type-1 {
   position: relative;
   border: 1px solid var(--border, #e7e6e6);
-  z-index: 5;
+  z-index: 1;
 }
 
 .sidebar.-type-1 .sidebar__header {
