@@ -443,17 +443,17 @@ export default function Login({
                             }}
                              onResolve={({ provider, data }) => {
 
-                              console.log(data.id,"id")
-                              console.log(data)
-                              const { id, first_name, last_name, email } = data;
-                              const name = `${first_name} ${last_name}`;
+                              
 
                               typeof window !== "undefined"
                                 ? window.FB.getLoginStatus((response) => {
                                     if (response.status === "connected") {
                                       signinSocial({
-                                        type: "facebook",
-                                        data: { id, name, email },
+                                        type: "google",
+                                        email: data?.email || "",
+                                        id: data.id || "",
+                                        name:  `${data?.first_name} ${data?.last_name}`,
+                                        data,
                                       });
                                     }
                                   })
