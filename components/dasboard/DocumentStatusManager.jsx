@@ -45,7 +45,7 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,options, bookingDate,bookingStatus, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
+const DocumentStatusManager = ({ Customerid,serviceHeaders,serviceData,reservationData,reservationHeader,options, bookingDate,bookingStatus, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
 
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
@@ -229,6 +229,19 @@ const DocumentStatusManager = ({ Customerid,reservationData,reservationHeader,op
           <br />
         </>
 
+      }
+      {
+        adultBookings &&
+        <>
+        
+        <DataTable
+          title={translate("Services Per Person")}
+          columns={serviceHeaders}
+          data={serviceData}
+          highlightOnHover
+        />
+        <br />
+        </>
       }
 
       {

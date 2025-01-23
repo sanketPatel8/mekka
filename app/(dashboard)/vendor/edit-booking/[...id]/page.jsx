@@ -54,9 +54,11 @@ export default function DbBooking({ params }) {
   const [reservationData, setReservationData] = useState({});
   const [totalData, setTotalData] = useState([]);
   const [totalHeaders, setTotalHeaders] = useState([]);
+  const [serviceHeaders, setServiceHeaders] = useState([]);
   const [adultBookings, setAdultBookings] = useState([]);
   const [childBookings, setChildBookings] = useState([]);
   const [babyBookings, setBabyBookings] = useState([]);
+  const [serviceData, setServiceData] = useState([]);
   const [adultHeaders, setAdultHeaders] = useState([]);
   const [image1, setImage1] = useState("");
   const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
@@ -142,6 +144,17 @@ export default function DbBooking({ params }) {
         width: "20%",
       },
     ];
+
+    
+    const serviceTable = [
+      // { name: translate("id"), selector: (row) => row.id, width: "10%" },
+      { name: translate("Name"), selector: (row) => row.name},
+      { name: translate("Services"), selector: (row) => row.services},
+      { name: translate("Amount"), selector: (row) => row.amount},
+      
+    ];
+
+    setServiceHeaders(serviceTable)
 
     setAdultHeaders(columnAdu_1);
 
@@ -391,6 +404,17 @@ export default function DbBooking({ params }) {
         }));
 
         setAdultBookings(adults);
+      }
+
+      if(response.Bookings.extraServices.length > 0){
+        const services = response.Bookings.extraServices.map((service) => ({
+          name: `${service.name} ${service.surname}`,
+          services :  service.title,
+          amount : service.price
+          
+        }));
+
+        setServiceData(services);
       }
 
       if (response.Bookings.reservation) {
@@ -653,6 +677,8 @@ export default function DbBooking({ params }) {
                   uploadFileisOpen={uploadFileisOpen}
                   totalData={totalData}
                   totalHeaders={totalHeaders}
+                  serviceData={serviceData}
+                  serviceHeaders={serviceHeaders}
                 />
 
                 <div className="text-center pt-30">
