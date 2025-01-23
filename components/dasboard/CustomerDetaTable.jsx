@@ -195,14 +195,6 @@ const CustomerDetaTable = () => {
       // width: "10%"
     },
     {
-      name: translate("Additional Services"),
-      selector: (row) =>
-        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null
-          ? "no services"
-          : row?.extra_data?.title, // Return null if the length is 0
-      // width: "10%",
-    },
-    {
       name: translate("Total"),
       selector: (row) => `${row.adult_price} €`,
       // width: "15%"
@@ -250,14 +242,7 @@ const CustomerDetaTable = () => {
       name: translate("Nationality"),
       selector: (row) => row.personNationality,
     },
-    {
-      name: translate("Additional Services"),
-      selector: (row) =>
-        row?.extra_data?.title == "undefined" || row?.extra_data?.title == null
-          ? "no services"
-          : row?.extra_data?.title, // Return null if the length is 0
-      width: "150px",
-    },
+
     {
       name: translate("Total"),
       selector: (row) => `${row.child_price} €`,
@@ -343,11 +328,19 @@ const CustomerDetaTable = () => {
   const ServicesColumn = [
     {
       name: translate("Name"),
-      selector: (row) => row.personName,
-      width: "100px",
+      selector: (row) => `${row.name} ${row.surname}`,
+      width: "300px",
     },
-    { name: translate("Services"), selector: (row) => row.personSurName },
-    { name: translate("Amount"), selector: (row) => row.gender },
+    {
+      name: translate("Services"),
+      selector: (row) => row.title,
+      width: "300px",
+    },
+    {
+      name: translate("Amount"),
+      selector: (row) =>
+        row.price == 0 ? "inclusive in package" : `${row.price}`,
+    },
   ];
 
   const Total = [
@@ -1176,6 +1169,8 @@ const CustomerDetaTable = () => {
     BookingDetails?.reservation?.reservation_status === "Payment Completed" &&
     BookingDetails?.reservation?.paymentType === "3";
 
+  console.log(BookingDetails?.extraServices, "BookingDetails?.extraServices");
+
   return (
     <div>
       {loading ? (
@@ -1317,9 +1312,8 @@ const CustomerDetaTable = () => {
           <DataTable
             title={translate("Services Per Person")}
             columns={ServicesColumn}
-            data={
-              BookingDetails?.babyData?.length ? BookingDetails.babyData : []
-            } // Change data dynamically
+            data={BookingDetails?.extraServices} // Change data dynamically
+            pagination
             highlightOnHover
           />
 
@@ -1381,6 +1375,10 @@ const CustomerDetaTable = () => {
                         {BookingDetails?.paymentData?.payment_note_2 !== null
                           ? BookingDetails?.paymentData?.payment_note_2
                           : ""}
+                        {BookingDetails.paymentData?.paid_date_2 != null
+                          ? `Via Stripe -
+                        ${BookingDetails?.paymentData?.payment_intent_id}`
+                          : ""}
                       </td>
                     </tr>
                     <tr className="row">
@@ -1396,6 +1394,10 @@ const CustomerDetaTable = () => {
                       <td className="col-6">
                         {BookingDetails?.paymentData?.payment_note_3 !== null
                           ? BookingDetails?.paymentData?.payment_note_3
+                          : ""}
+                        {BookingDetails.paymentData?.paid_date_3 != null
+                          ? ` Via Stripe -
+                        ${BookingDetails?.paymentData?.payment_intent_id} `
                           : ""}
                       </td>
                     </tr>
