@@ -56,7 +56,6 @@ const CustomerDetaTable = () => {
   const [Nationality, setNationality] = useState("");
   const [From, setFrom] = useState("Frankfurt(FRA)");
   const [installmentChecked, setInstallmentChecked] = useState(false);
-
   const [editCustomerData, setEditCustomerData] = useState({
     name: "",
     surname: "",
@@ -92,7 +91,6 @@ const CustomerDetaTable = () => {
   const [loading, setLoading] = useState(false);
   const [AddPersonAmount, setAddPersonAmount] = useState("");
   const [PandingAmount, setPandingAmount] = useState("");
-
   const [pendingPaymentValue, setPendingPaymentValue] = useState({
     firstAmount: "",
     firstDate: "",
@@ -103,6 +101,10 @@ const CustomerDetaTable = () => {
     id: "",
     transaction_id: "",
   });
+  const [GetHotelData, setGetHotelData] = useState(null);
+  const [GetFlightData, setGetFlightData] = useState(null);
+  const [AddpersonTotal, setAddpersonTotal] = useState(null);
+
   const router = useRouter();
   const { formatPrice } = useCurrency();
 
@@ -522,6 +524,8 @@ const CustomerDetaTable = () => {
       });
       setLoading(false);
       setBookingDetails(response?.Bookings);
+      setGetFlightData(response?.Bookings?.flightInfo);
+      setGetHotelData(response?.Bookings?.hotelInfo);
       if (response?.Bookings?.paymentData) {
         setPendingPaymentValue({
           firstAmount: response.Bookings.paymentData.payment_plan_1 || "", // Default to empty if null/undefined
@@ -855,16 +859,6 @@ const CustomerDetaTable = () => {
     setMinEndDate(todayString);
   }, [BookingDetails?.reservation?.date_begin]);
 
-  const handleCheckboxChange = (index) => {
-    // setPaymentCheckbox(index);
-
-    if (index === 3) {
-      setInstallmentChecked(true);
-    } else {
-      setInstallmentChecked(false);
-    }
-  };
-
   useEffect(() => {
     if (secondAmount) {
       calculateThirdAmount();
@@ -1155,7 +1149,7 @@ const CustomerDetaTable = () => {
         payment_plan: 3,
         plan_date: getTodayDate(),
         reservation_id: BookingDetails.reservation?.id,
-        // transaction_id: pendingPaymentValue.transaction_id,
+        transaction_id: pendingPaymentValue.transaction_id,
 
       };
       setPaidData(data);
@@ -1221,7 +1215,21 @@ const CustomerDetaTable = () => {
     BookingDetails?.reservation?.reservation_status === "Payment Completed" &&
     BookingDetails?.reservation?.paymentType === "3";
 
-  console.log(BookingDetails?.extraServices, "BookingDetails?.extraServices");
+  useEffect(() => {
+    if (GetHotelData !== null || GetFlightData !== null) {
+      const ConvertHotelData = Object?.values(GetHotelData);
+      const HotelPrices = ConvertHotelData.map((hotel) =>
+        parseFloat(hotel.hotel_price)
+      );
+      const FlightPrices = GetFlightData.map((Flight) =>
+        parseFloat(Flight.flight_amount)
+      );
+      const ConformPrice = HotelPrices[0] + HotelPrices[1] + FlightPrices[0];
+      console.log(ConformPrice);
+
+      setAddpersonTotal(ConformPrice);
+    }
+  }, [GetHotelData, GetFlightData]);
 
   return (
     <div>
@@ -1714,7 +1722,8 @@ const CustomerDetaTable = () => {
                   </button>
 
                   <h6 className="booking-form-price col-4 mx-4">
-                    {translate("Subtotal")}:<span>{formatPrice(subtotal)}</span>
+                    {translate("Subtotal")}:
+                    <span>{formatPrice(subtotal + AddpersonTotal)}</span>
                   </h6>
                 </div>
               </div>
@@ -1950,7 +1959,7 @@ const CustomerDetaTable = () => {
 
                       <tr>
                         <td className="px-1 py-2">
-                          {translate("Amount Refund - add strip commision")} (
+                          {translate("Total Refund Amount")} (
                           {RefundData?.percentage}%)
                         </td>
                         <td className="px-1 py-2">{TotalRefundinCancel} €</td>
