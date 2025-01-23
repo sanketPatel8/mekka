@@ -59,7 +59,7 @@ export default function CheckoutForm({
   const {formatPrice} = useCurrency();
   const stripe = useStripe();
   const { translate } = useTranslation();
-
+  console.log(paidData,"paid")
   const elements = useElements();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -207,11 +207,13 @@ export default function CheckoutForm({
       console.error(e);
     }
   };
-  const InstallmentPaid = async () => {
+  const InstallmentPaid = async (transactionId) => {
+    console.log(transactionId)
+    
     const formData = new FormData();
 
     formData.append("reservation_id", paidData.reservation_id);
-    formData.append("transaction_id", paidData.transaction_id);
+    formData.append("transaction_id", transactionId);
     formData.append("plan_id", paidData.plan_id);
     formData.append("payment_plan", paidData.payment_plan);
     formData.append("plan_date", paidData.plan_date);
@@ -304,9 +306,9 @@ export default function CheckoutForm({
       ) {
         showErrorToast(tarnslate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      
+        console.log(paymentIntent.id,"id")
         const newAmount = paymentIntent.amount / 100;
-        InstallmentPaid();
+        InstallmentPaid(paymentIntent.id);
       }
     }
 

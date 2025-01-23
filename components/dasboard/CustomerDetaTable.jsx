@@ -71,6 +71,7 @@ const CustomerDetaTable = () => {
   const [PersonalUserID, setPersonalUserID] = useState(0);
   const [UploadDocID, setUploadDocID] = useState({});
   const [BookingDetails, setBookingDetails] = useState([]);
+  const [PaymentColumns, setPaymentColumns] = useState([]);
   const [PaymentCheckbox, setPaymentCheckbox] = useState(0);
   const [viewData, setViewData] = useState([]);
   const [downloadData, setDownloadData] = useState([]);
@@ -113,6 +114,32 @@ const CustomerDetaTable = () => {
     Modal.setAppElement("#editData");
     Modal.setAppElement("#Adult1Data");
   }, []);
+
+  const paymentColumn = [
+    {
+      name: translate("Date"),
+      selector: (row) => ` ${row.date}`,
+      sortable: true,
+    },
+    {
+      name: translate("Amount"),
+      selector: (row) => `${row.amount} €`,
+      sortable: true,
+    },
+    {
+      name: translate("Paid Date"),
+      selector: (row) => row.paidDate,
+      sortable: true,
+    },
+    {
+      name: translate("Paid Method"),
+      selector: (row) => row.paidMethod,
+      sortable: true,
+    },
+  ];
+
+  
+
 
   const ColumnReservation_details = [
     ...(BookingDetails?.reservation?.airlines
@@ -420,6 +447,7 @@ const CustomerDetaTable = () => {
   const [personId, setPersonId] = useState(0);
   const [AdditionalService, setAdditionalService] = useState([]);
   const [AdultPrice, setAdultPrice] = useState([]);
+  const [PaymentData, setPaymentData] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const searchParams = useSearchParams();
   const Tourid = searchParams.get("id");
@@ -508,6 +536,30 @@ const CustomerDetaTable = () => {
       } else {
         console.warn("paymentData not found in response");
       }
+
+      const paymentDetails = [
+        {
+          date:response.Bookings.paymentData.payment_plan_date_1 ,
+          amount: response.Bookings.paymentData.payment_plan_1,
+          paidDate: response.Bookings.paymentData.paid_date_1,
+          paidMethod: `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[0]}`,
+        },
+        {
+          date: response.Bookings.paymentData.payment_plan_date_2,
+          amount: response.Bookings.paymentData.payment_plan_2,
+          paidDate: response.Bookings.paymentData.paid_date_2,
+          paidMethod:  `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[1]}`,
+        },
+        {
+          date: response.Bookings.paymentData.payment_plan_date_3,
+          amount: response.Bookings.paymentData.payment_plan_3,
+          paidDate: response.Bookings.paymentData.paid_date_3,
+          paidMethod: `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[2]}`,
+        },
+      ];
+
+      setPaymentData(paymentDetails)
+
 
       const FileDeta = [
         { name: translate("Document Type"), selector: (row) => row.type },
@@ -1093,7 +1145,7 @@ const CustomerDetaTable = () => {
         payment_plan: 2,
         plan_date: getTodayDate(),
         reservation_id: BookingDetails.reservation?.id,
-        transaction_id: pendingPaymentValue.transaction_id,
+        // transaction_id: pendingPaymentValue.transaction_id,
       };
 
       setPaidData(data);
@@ -1103,7 +1155,7 @@ const CustomerDetaTable = () => {
         payment_plan: 3,
         plan_date: getTodayDate(),
         reservation_id: BookingDetails.reservation?.id,
-        transaction_id: pendingPaymentValue.transaction_id,
+        // transaction_id: pendingPaymentValue.transaction_id,
 
       };
       setPaidData(data);
@@ -1326,85 +1378,13 @@ const CustomerDetaTable = () => {
                   /> */}
 
           {BookingDetails?.reservation?.paymentType === "3" && (
-            <div className="row bg-white mx-0">
-              <div className="col-12 row">
-                <p className="pt-10 pb-0 table-font-20 ">
-                  {translate("Payment Information")}
-                </p>
-                <table className="table bg-light col-12">
-                  <thead>
-                    <tr className="row">
-                      <th className="col-2 pb-1">{translate("Date")}</th>
-                      <th className="col-2 pb-1">{translate("Amount")}</th>
-                      <th className="col-2 pb-1">{translate("Paid Date")}</th>
-                      <th className="col-4 pb-1">{translate("Paid Method")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="row">
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.payment_plan_date_1}
-                      </td>
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.payment_plan_1} €
-                      </td>
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.paid_date_1}
-                      </td>
-                      <td className="col-6">
-                        <p>
-                          {BookingDetails?.paymentData?.payment_note_1 !== null
-                            ? BookingDetails?.paymentData?.payment_note_1
-                            : ""}{" "}
-                          Via Stripe -{" "}
-                          {BookingDetails?.paymentData?.payment_intent_id}
-                        </p>
-                      </td>
-                    </tr>
-                    <tr className="row">
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.payment_plan_date_2}
-                      </td>
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.payment_plan_2} €
-                      </td>
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.paid_date_2}
-                      </td>
-                      <td className="col-6">
-                        {BookingDetails?.paymentData?.payment_note_2 !== null
-                          ? BookingDetails?.paymentData?.payment_note_2
-                          : ""}
-                        {BookingDetails.paymentData?.paid_date_2 != null
-                          ? `Via Stripe -
-                        ${BookingDetails?.paymentData?.payment_intent_id}`
-                          : ""}
-                      </td>
-                    </tr>
-                    <tr className="row">
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.payment_plan_date_3}
-                      </td>
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.payment_plan_3} €
-                      </td>
-                      <td className="col-2">
-                        {BookingDetails.paymentData?.paid_date_3}
-                      </td>
-                      <td className="col-6">
-                        {BookingDetails?.paymentData?.payment_note_3 !== null
-                          ? BookingDetails?.paymentData?.payment_note_3
-                          : ""}
-                        {BookingDetails.paymentData?.paid_date_3 != null
-                          ? ` Via Stripe -
-                        ${BookingDetails?.paymentData?.payment_intent_id} `
-                          : ""}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            
+            <DataTable
+              title={translate("Payment Information")}
+              columns={paymentColumn}
+              data={PaymentData}
+              highlightOnHover
+            />
           )}
 
           <br />
