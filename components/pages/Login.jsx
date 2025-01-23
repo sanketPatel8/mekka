@@ -449,7 +449,7 @@ export default function Login({
                                 ? window.FB.getLoginStatus((response) => {
                                     if (response.status === "connected") {
                                       signinSocial({
-                                        type: "google",
+                                        type: "facebook",
                                         email: data?.email || "",
                                         id: data.id || "",
                                         name:  `${data?.first_name} ${data?.last_name}`,
