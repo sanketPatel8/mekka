@@ -982,11 +982,12 @@ export default function EditTour() {
     } else if (activeTab === "Overview") {
       return editorState !== EditorState.createEmpty();
     } else if (activeTab === "Itinerary") {
-      const isValidItinerary = route_data.length === totalDays && route_data.every(route =>
-        route.dayData && route.description && route.day
-      );
+      // const isValidItinerary = route_data.length === totalDays && route_data.every(route =>
+      //   route.dayData && route.description && route.day
+      // );
 
-      return isValidItinerary;
+      // return isValidItinerary;
+      return true;
     } else if (activeTab === "Flight Hotel And Visa") {
       return (
         mekkaRows.every(
@@ -2095,7 +2096,7 @@ export default function EditTour() {
                                     <div className="form-input my-1">
                                       <input
                                         type="text"
-                                        required
+                                        
                                         value={
                                           route_data.find(
                                             (day) => day.day === dayNumber
@@ -2112,7 +2113,7 @@ export default function EditTour() {
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Day")} {dayNumber}{" "}
-                                        <span className="text-red">*</span>
+                                        
                                       </label>
                                     </div>
                                   </div>
@@ -2120,7 +2121,7 @@ export default function EditTour() {
                                     <div className="form-input my-1">
                                       <textarea
                                         type="text"
-                                        required
+                                        
                                         rows="2"
                                         cols="80"
                                         value={
@@ -2140,7 +2141,7 @@ export default function EditTour() {
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Description")}{" "}
-                                        <span className="text-red">*</span>
+                                        
                                       </label>
                                     </div>
                                   </div>

@@ -231,7 +231,7 @@ const DocumentStatusManager = ({ Customerid,serviceHeaders,serviceData,reservati
 
       }
       {
-        adultBookings &&
+        serviceData.length > 0 &&
         <>
         
         <DataTable

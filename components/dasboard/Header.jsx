@@ -6,14 +6,16 @@ import { useEffect, useState } from "react";
 import Language from "../layout/components/Langauge";
 import { useTranslation } from "@/app/context/TranslationContext";
 import Currency from "../layout/components/Currency";
+import { PiBuildingApartmentFill } from "react-icons/pi";
+import { useAuthContext } from "@/app/hooks/useAuthContext";
 
-export default function Header({ setSideBarOpen }) {
+export default function Header({ setSideBarOpen, vendorHeader }) {
   // const { handleRedirect } = Useauthredirect();
   // useEffect(() => {
   //   handleRedirect();
   // }, []);
   const [locale, setLocale] = useState("DE"); // default locale
-
+  const {user} = useAuthContext();
   useEffect(() => {
     const cookies = document.cookie.split(";").reduce((acc, cookie) => {
       const [key, value] = cookie.split("=");
@@ -48,6 +50,16 @@ export default function Header({ setSideBarOpen }) {
       </div>
 
       <div>
+        {user?.user?.agency_name && 
+        <div className="flex align-items-center" style={{gap:"0.5rem"}}>
+          <PiBuildingApartmentFill
+            color="#dabf4f"
+            className=""
+            size={20}
+          />
+          <div className="">{user?.user?.agency_name}</div>
+        </div>
+        }
         <div>
           <Language
             parentClass="headerDropdown"

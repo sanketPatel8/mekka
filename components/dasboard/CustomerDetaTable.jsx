@@ -784,7 +784,7 @@ const CustomerDetaTable = () => {
     } else {
       setSubtotal(0); // Reset subtotal if conditions aren't met
     }
-  }, [AdultPrice, AddpersonData, selectedOptions]); // Dependency array
+  }, [AdultPrice, AddpersonData, selectedOptions]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -916,23 +916,29 @@ const CustomerDetaTable = () => {
   const [ServicePrice, setServicePrice] = useState();
 
   useEffect(() => {
+  
+
+    console.log(selectedOptions,"selected")
     const serviceTitle = selectedOptions.map((option) => {
       return option.title; // Or convert to number if necessary
     });
-
+  
     const ServiceOrder = selectedOptions.map((option) => {
       return option.addition_order; // Or convert to number if necessary
     });
-
+  
     const ServicePrice = selectedOptions.map((option) => {
       return option.price; // Or convert to number if necessary
     });
+  
+    console.log(ServicePrice)
     setServiceTitle(serviceTitle);
     setServiceOrder(ServiceOrder);
     setServicePrice(ServicePrice);
+  
+
   }, [selectedOptions]);
 
-  console.log(ServiceTitle, ServiceOrder, ServicePrice);
 
   const FetchAddperson = async () => {
     setIsLoading(true);
@@ -953,7 +959,7 @@ const CustomerDetaTable = () => {
         : "baby"
     );
     formData.append("title", ServiceTitle);
-    formData.append("price", ServicePrice);
+    formData.append("price", ServicePrice || "");
     formData.append("additional_order", ServiceOrder);
 
     formData.append("total", subtotal);
@@ -978,6 +984,8 @@ const CustomerDetaTable = () => {
           roomType: "1",
         });
         setRadioValue({});
+        setSelectedOptions([]);
+
       }
     } catch (e) {
       console.error(e);
