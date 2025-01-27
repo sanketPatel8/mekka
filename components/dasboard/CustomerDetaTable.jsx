@@ -367,7 +367,7 @@ const CustomerDetaTable = () => {
     {
       name: translate("Amount"),
       selector: (row) =>
-        row.price == 0 ? "inclusive in package" : `${row.price}`,
+        row.price == 0 ? "inclusive in package" : `${row.price} €`,
     },
   ];
 
@@ -928,15 +928,15 @@ const CustomerDetaTable = () => {
 
   useEffect(() => {
     const serviceTitle = selectedOptions.map((option) => {
-      return option.title; // Or convert to number if necessary
+      return option.title; 
     });
 
     const ServiceOrder = selectedOptions.map((option) => {
-      return option.addition_order; // Or convert to number if necessary
+      return option.addition_order; 
     });
 
     const ServicePrice = selectedOptions.map((option) => {
-      return option.price; // Or convert to number if necessary
+      return option.price ; 
     });
 
     setServiceTitle(serviceTitle);
@@ -1411,11 +1411,10 @@ const CustomerDetaTable = () => {
           />
 
           <br />
-          {/* Baby Data Table */}
           <DataTable
             title={translate("Services Per Person")}
             columns={ServicesColumn}
-            data={BookingDetails?.extraServices} // Change data dynamically
+            data={BookingDetails?.extraServices} 
             pagination
             highlightOnHover
           />
