@@ -2019,13 +2019,14 @@ const CustomerDetaTable = () => {
                 )}
 
                 <hr />
-
-                <p>
-                  <span className="text-red">*</span>
-                  {translate(
-                    "Amount will be credited within 7 days in your bank account"
-                  )}
-                </p>
+                {BookingDetails?.reservation?.paymentType != "4" && (
+                  <p>
+                    <span className="text-red">*</span>
+                    {translate(
+                      "Amount will be credited within 7 days in your bank account"
+                    )}
+                  </p>
+                )}
 
                 <div
                   className="border-1 rounded-12 shadow-1 overflow-hidden mt-20 mb-20"
