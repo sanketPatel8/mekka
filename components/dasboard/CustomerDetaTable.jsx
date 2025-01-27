@@ -550,7 +550,6 @@ const CustomerDetaTable = () => {
               ? " "
               : `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[0]}`
           }`,
-
         },
         {
           date: response.Bookings.paymentData.payment_plan_date_2,
@@ -928,15 +927,15 @@ const CustomerDetaTable = () => {
 
   useEffect(() => {
     const serviceTitle = selectedOptions.map((option) => {
-      return option.title; 
+      return option.title;
     });
 
     const ServiceOrder = selectedOptions.map((option) => {
-      return option.addition_order; 
+      return option.addition_order;
     });
 
     const ServicePrice = selectedOptions.map((option) => {
-      return option.price ; 
+      return option.price;
     });
 
     setServiceTitle(serviceTitle);
@@ -966,7 +965,7 @@ const CustomerDetaTable = () => {
     // formData.append("price", ServicePrice || "");
     // formData.append("additional_order", ServiceOrder);
 
-    formData.append("services", selectedOptions);
+    formData.append("services", JSON.stringify(selectedOptions));
     formData.append("total", subtotal);
 
     try {
@@ -1414,7 +1413,7 @@ const CustomerDetaTable = () => {
           <DataTable
             title={translate("Services Per Person")}
             columns={ServicesColumn}
-            data={BookingDetails?.extraServices} 
+            data={BookingDetails?.extraServices}
             pagination
             highlightOnHover
           />
