@@ -545,7 +545,12 @@ const CustomerDetaTable = () => {
           date: response.Bookings.paymentData.payment_plan_date_1,
           amount: response.Bookings.paymentData.payment_plan_1,
           paidDate: response.Bookings.paymentData.paid_date_1,
-          paidMethod: `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[0]}`,
+          paidMethod: ` ${
+            response.Bookings.paymentData.payment_intent_id[0] == undefined
+              ? " "
+              : `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[0]}`
+          }`,
+
         },
         {
           date: response.Bookings.paymentData.payment_plan_date_2,
