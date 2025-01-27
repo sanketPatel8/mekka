@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Header from "@/components/dasboard/Header";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { tourDataTwoOne } from "@/data/tours";
@@ -19,6 +18,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { POST } from "@/app/utils/api/post";
 import { ClipLoader } from "react-spinners";
 import { PiBuildingApartmentFill } from "react-icons/pi";
+import CustomerHeader from "@/components/dasboard/CustomerHeader";
 
 const tabs = ["Approved", "Pending", "Cancelled"];
 
@@ -117,7 +117,7 @@ export default function DbBooking() {
       <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 
       <div className="dashboard__content">
-        <Header setSideBarOpen={setSideBarOpen} />
+        <CustomerHeader setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
           <h1 className="text-30">{translate("My Booking")}</h1>

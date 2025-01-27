@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import Header from "@/components/dasboard/Header";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { useSearchParams } from "next/navigation";
 import { POST } from "@/app/utils/api/post";
 import { useTranslation } from "@/app/context/TranslationContext";
+import CustomerHeader from "@/components/dasboard/CustomerHeader";
 
 // Dynamically import CustomerDetaTable with client-side only rendering
 const CustomerDetaTable = dynamic(
@@ -54,7 +54,7 @@ export default function CustomerDb() {
       <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 
       <div className="dashboard__content">
-        <Header setSideBarOpen={setSideBarOpen} />
+        <CustomerHeader setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content_content">
           <CustomerDetaTable />

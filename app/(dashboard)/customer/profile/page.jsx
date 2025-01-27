@@ -1,6 +1,5 @@
 "use client";
 
-import Header from "@/components/dasboard/Header";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
@@ -13,6 +12,7 @@ import { ClipLoader } from "react-spinners";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useCountryCode } from "@/app/context/useCountryCode";
+import CustomerHeader from "@/components/dasboard/CustomerHeader";
 
 export default function Profile() {
   const { countryCode } = useCountryCode();
@@ -290,7 +290,7 @@ export default function Profile() {
         <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 
         <div className="dashboard__content">
-          <Header setSideBarOpen={setSideBarOpen} />
+          <CustomerHeader setSideBarOpen={setSideBarOpen} />
 
           <div className="dashboard__content_content">
             {loading ? (
