@@ -551,13 +551,15 @@ const CustomerDetaTable = () => {
           date: response.Bookings.paymentData.payment_plan_date_2,
           amount: response.Bookings.paymentData.payment_plan_2,
           paidDate: response.Bookings.paymentData.paid_date_2,
-          paidMethod:  `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[1]}`,
+          paidMethod: `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[1]}`,
         },
         {
           date: response.Bookings.paymentData.payment_plan_date_3,
           amount: response.Bookings.paymentData.payment_plan_3,
           paidDate: response.Bookings.paymentData.paid_date_3,
-          paidMethod: response.Bookings.paymentData.payment_intent_id[2] ? `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[2]}` : "",
+          paidMethod: response.Bookings.paymentData.payment_intent_id[2]
+            ? `Via Stripe - ${response.Bookings.paymentData.payment_intent_id[2]}`
+            : "",
         },
       ];
 
@@ -916,29 +918,26 @@ const CustomerDetaTable = () => {
   const [ServicePrice, setServicePrice] = useState();
 
   useEffect(() => {
-  
-
-    console.log(selectedOptions,"selected")
+    console.log(selectedOptions, "selected");
     const serviceTitle = selectedOptions.map((option) => {
       return option.title; // Or convert to number if necessary
     });
-  
+
     const ServiceOrder = selectedOptions.map((option) => {
       return option.addition_order; // Or convert to number if necessary
     });
-  
+
     const ServicePrice = selectedOptions.map((option) => {
       return option.price; // Or convert to number if necessary
     });
-  
-    console.log(ServicePrice)
+
+    console.log(ServicePrice);
     setServiceTitle(serviceTitle);
     setServiceOrder(ServiceOrder);
     setServicePrice(ServicePrice);
-  
-
   }, [selectedOptions]);
 
+  console.log(selectedOptions, "selectedOptions latest");
 
   const FetchAddperson = async () => {
     setIsLoading(true);
@@ -958,10 +957,11 @@ const CustomerDetaTable = () => {
         ? "child"
         : "baby"
     );
-    formData.append("title", ServiceTitle);
-    formData.append("price", ServicePrice || "");
-    formData.append("additional_order", ServiceOrder);
+    // formData.append("title", ServiceTitle);
+    // formData.append("price", ServicePrice || "");
+    // formData.append("additional_order", ServiceOrder);
 
+    formData.append("services", selectedOptions);
     formData.append("total", subtotal);
 
     try {
@@ -985,7 +985,6 @@ const CustomerDetaTable = () => {
         });
         setRadioValue({});
         setSelectedOptions([]);
-
       }
     } catch (e) {
       console.error(e);
