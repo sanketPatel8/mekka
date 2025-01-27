@@ -1262,7 +1262,7 @@ const CustomerDetaTable = () => {
         {
           title: option.title,
           price: option.price,
-          addition_order: option.additinoal_order,
+          additional_order: option.additinoal_order,
         },
       ]);
     } else {
