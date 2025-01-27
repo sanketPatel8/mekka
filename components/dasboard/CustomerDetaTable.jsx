@@ -1961,7 +1961,7 @@ const CustomerDetaTable = () => {
                     <thead>
                       <tr>
                         <th scope="col" className="px-1 py-2">
-                          <b>Type of fee</b>
+                          <b>Item Details</b>
                         </th>
                         <th
                           scope="col"
