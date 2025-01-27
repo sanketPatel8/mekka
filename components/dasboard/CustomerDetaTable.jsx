@@ -780,8 +780,6 @@ const CustomerDetaTable = () => {
         return total + Number(current.price); // Convert price to number
       }, 0);
 
-      console.log("Total Price:", totalPrice);
-
       setSubtotal(total + totalPrice);
     } else {
       setSubtotal(0); // Reset subtotal if conditions aren't met
@@ -810,6 +808,7 @@ const CustomerDetaTable = () => {
   };
 
   const handleAddPersong = () => {
+    alert("add person");
     if (
       AddpersonData.name !== "" ||
       AddpersonData.surname !== "" ||
@@ -918,7 +917,6 @@ const CustomerDetaTable = () => {
   const [ServicePrice, setServicePrice] = useState();
 
   useEffect(() => {
-    console.log(selectedOptions, "selected");
     const serviceTitle = selectedOptions.map((option) => {
       return option.title; // Or convert to number if necessary
     });
@@ -931,7 +929,6 @@ const CustomerDetaTable = () => {
       return option.price; // Or convert to number if necessary
     });
 
-    console.log(ServicePrice);
     setServiceTitle(serviceTitle);
     setServiceOrder(ServiceOrder);
     setServicePrice(ServicePrice);
@@ -991,12 +988,20 @@ const CustomerDetaTable = () => {
     }
   };
 
+  console.log(PaymentCheckbox, "PaymentCheckbox");
+
   const handlePayment = () => {
     if (PaymentCheckbox == 1) {
+      console.log("fatch add person");
+
       FetchAddperson();
     }
 
     if (PaymentCheckbox == 3) {
+      FetchAddperson();
+    }
+
+    if (PaymentCheckbox == 4) {
       FetchAddperson();
     }
 
@@ -1241,7 +1246,6 @@ const CustomerDetaTable = () => {
         parseFloat(Flight.flight_amount)
       );
       const ConformPrice = HotelPrices[0] + HotelPrices[1] + FlightPrices[0];
-      console.log(ConformPrice);
 
       setAddpersonTotal(ConformPrice);
     }
@@ -1265,8 +1269,6 @@ const CustomerDetaTable = () => {
       );
     }
   };
-
-  console.log(selectedOptions);
 
   return (
     <div>
@@ -1587,50 +1589,6 @@ const CustomerDetaTable = () => {
                         </h5>
 
                         <div>
-                          {/* {AddpersonDetails?.addtional_price?.map(
-                            (option, idx) => (
-                              <div
-                                key={option.id}
-                                className="d-flex items-center justify-between radio_hight"
-                              >
-                                <div className="d-flex items-center">
-                                  <div className="form-radio d-flex items-center">
-                                    <label className="radio d-flex items-center">
-                                      <input
-                                        type="radio"
-                                        name={`radioGroup-${idx}`} // Group radio by idx for unique selection within the same service
-                                        value={`${idx}-ad-${option.id}-${option.title}`} // Unique value for the radio
-                                        // Check if the current option matches the stored value in RadioValue
-                                        checked={
-                                          RadioValue.selectedValue ===
-                                          `${idx}-ad-${option.id}-${option.title}`
-                                        }
-                                        onChange={(e) =>
-                                          handleRadioChange(
-                                            e,
-                                            idx,
-                                            option.price,
-                                            option.additinoal_order,
-                                            option.title,
-                                            option.id
-                                          )
-                                        }
-                                      />
-                                      <span className="radio__mark">
-                                        <span className="radio__icon"></span>
-                                      </span>
-                                      <span className="text-14 lh-1 ml-10">
-                                        {option.title}
-                                      </span>
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="text-14">
-                                  + {formatPrice(option.price)}
-                                </div>
-                              </div>
-                            )
-                          )} */}
                           {AddpersonDetails?.addtional_price?.map(
                             (option, idx) => (
                               <div
