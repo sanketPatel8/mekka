@@ -95,80 +95,129 @@ useEffect(() => {
     }
   };
 
-  const handleFirstAmountChange = (e) => {
-    setIsFocused(true);
+//   const handleFirstAmountChange = (e) => {
+//     setIsFocused(true);
 
   
-    // Get the input value
-    const inputValue = e.target.value;
+//     const inputValue = e.target.value;
   
-    // Check if the input is empty or not a number
-    if (inputValue === '' || isNaN(inputValue)) {
-      setRawAmout(""); // Reset rawAmount to an empty string
-      setFirstAmount("");
-      setThirdAmount(secondAmount ? secondAmount : 0)
-      setPayableAmount("")
-      return; // Exit the function early
-    }
+//     if (inputValue === '' || isNaN(inputValue)) {
+//       setRawAmout(""); 
+//       setFirstAmount("");
+//       setThirdAmount(secondAmount ? secondAmount : 0)
+//       setPayableAmount("")
+//       return; 
+//     }
   
-    const rawAmount = parseFloat(inputValue);
+//     const rawAmount = parseFloat(inputValue);
  
-    const totalAmount = SideBarData?.BookingFild?.SubTotal;
-    const second  = secondAmount ? secondAmount : 0;  
-    // if (secondAmount === "") {
-    //   setRawAmout(inputValue || 0);
-    // } else {
-    //   setRawAmout(inputValue + secondAmount || 0);
-    // }
+//     const totalAmount = SideBarData?.BookingFild?.SubTotal;
+//     const second  = secondAmount ? secondAmount : 0;  
+   
    
 
-    if ((rawAmount + second) > totalAmount) {
-      showErrorToast(translate, "Your amount is higher than total amount");
-    } else {
+//     if ((rawAmount + second) > totalAmount) {
+//       showErrorToast(translate, "Your amount is higher than total amount");
+//     } else {
     
-      setFirstAmount(rawAmount);
-      setThirdAmount(totalAmount - (rawAmount - secondAmount));
-      if (rawAmount > 0) {
-        const fees = calculateTotalWithFee(rawAmount);
-        const amountPayable = rawAmount + fees;
-        setPayableAmount(amountPayable);
-      }
-    }
-  };
+//       setFirstAmount(rawAmount);
+//       setThirdAmount(totalAmount - (rawAmount - secondAmount));
+//       if (rawAmount > 0) {
+//         const fees = calculateTotalWithFee(rawAmount);
+//         const amountPayable = rawAmount + fees;
+//         setPayableAmount(amountPayable);
+//       }
+//     }
+//   };
 
-const handleSecondAmountChange = (e) => {
+// const handleSecondAmountChange = (e) => {
   
-    const inputValue = e.target.value;
+//     const inputValue = e.target.value;
   
-    // Check if the input is empty or not a number
-    if (inputValue === '' || isNaN(inputValue)) {
-      setRawAmout(""); // Reset rawAmount to an empty string
-      setSecondAmount(""); // Reset firstAmount as 
-      setThirdAmount(firstAmount ? firstAmount : 0) // Reset firstAmount as well
+//     if (inputValue === '' || isNaN(inputValue)) {
+//       setRawAmout(""); 
+//       setSecondAmount("");  
+//       setThirdAmount(firstAmount ? firstAmount : 0) 
 
-      return; // Exit the function early
-    }
+//       return; 
+//     }
     
-    const first = firstAmount? firstAmount : 0;
-    // if (firstAmount === "") {
-    //   setRawAmout(inputValue || 0);
-    // } else {
-    //   setRawAmout(inputValue + firstAmount || 0);
-    // }
-    const rawAmount = parseFloat(e.target.value) ;
-    const totalAmount = SideBarData?.BookingFild?.SubTotal;
+//     const first = firstAmount? firstAmount : 0;
+   
+//     const rawAmount = parseFloat(e.target.value) ;
+//     const totalAmount = SideBarData?.BookingFild?.SubTotal;
   
  
-    if ((rawAmount + first) > totalAmount) {
-      showErrorToast(translate,"Your amount is higher than total amount")
+//     if ((rawAmount + first) > totalAmount) {
+//       showErrorToast(translate,"Your amount is higher than total amount")
 
 
-    } else {
-        setSecondAmount(rawAmount);
-        setThirdAmount(totalAmount - firstAmount - rawAmount);
-    }
+//     } else {
+//         setSecondAmount(rawAmount);
+//         setThirdAmount(totalAmount - firstAmount - rawAmount);
+//     }
+// };
+const handleFirstAmountChange = (e) => {
+  setIsFocused(true);
+  const inputValue = e.target.value;
+
+  if (inputValue === '' || isNaN(inputValue)) {
+      setRawAmout("");
+      setFirstAmount("");
+      setThirdAmount(secondAmount ? secondAmount : 0);
+      setPayableAmount("");
+      return;
+  }
+
+  const rawAmount = parseFloat(inputValue);
+  const totalAmount = SideBarData?.BookingFild?.SubTotal;
+  const second = secondAmount ? secondAmount : 0;
+
+  if ((rawAmount + second) > totalAmount) {
+      showErrorToast(translate, "Your amount is higher than total amount");
+  } else {
+      setFirstAmount(rawAmount);
+      recalculateAmounts(rawAmount, second);
+  }
 };
 
+const handleSecondAmountChange = (e) => {
+  const inputValue = e.target.value;
+
+  if (inputValue === '' || isNaN(inputValue)) {
+      setRawAmout("");
+      setSecondAmount("");
+      setThirdAmount(firstAmount ? firstAmount : 0);
+      return;
+  }
+
+  const rawAmount = parseFloat(inputValue);
+  const totalAmount = SideBarData?.BookingFild?.SubTotal;
+  const first = firstAmount ? firstAmount : 0;
+
+  if ((rawAmount + first) > totalAmount) {
+      showErrorToast(translate, "Your amount is higher than total amount");
+  } else {
+      setSecondAmount(rawAmount);
+      recalculateAmounts(first, rawAmount);
+  }
+};
+
+const recalculateAmounts = (first, second) => {
+  const totalAmount = SideBarData?.BookingFild?.SubTotal;
+  const total = first + second;
+
+  if (total < totalAmount) {
+      const thirdAmountValue = parseFloat(totalAmount - total).toFixed(2);
+      setThirdAmount(thirdAmountValue);
+  } else {
+      setThirdAmount(0);
+  }
+
+  if (total === totalAmount) {
+      setThirdAmount(0);
+  }
+};
   useEffect(() => {
   
     if (secondAmount && dateBegin) {
