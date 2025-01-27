@@ -934,8 +934,6 @@ const CustomerDetaTable = () => {
     setServicePrice(ServicePrice);
   }, [selectedOptions]);
 
-  console.log(selectedOptions, "selectedOptions latest");
-
   const FetchAddperson = async () => {
     setIsLoading(true);
     const formData = new FormData();
@@ -988,12 +986,8 @@ const CustomerDetaTable = () => {
     }
   };
 
-  console.log(PaymentCheckbox, "PaymentCheckbox");
-
   const handlePayment = () => {
     if (PaymentCheckbox == 1) {
-      console.log("fatch add person");
-
       FetchAddperson();
     }
 
