@@ -239,6 +239,7 @@
   "Customer Name": "Kundenname",
   "Total (€) ": "Gesamt (€)",
   "Paid (€) ": "Bezahlt (€)",
+  "Due (€)" : "Fällig (€)",
   "Date ": "Datum",
   "Transaction ID ": "Transaktions-ID",
   "Full Name": "Vollständiger Name",
@@ -747,5 +748,15 @@
 "Umrah offers from Germany" : "Umrah Angebote aus Deutschland",
 "from almost all providers" : "von nahezu allen Anbietern",
 "Total Refund Amount" : "Gesamtbetrag der Rückerstattung",
-"Services Per Person":"Leistungen pro Person"
+"Services Per Person":"Leistungen pro Person",
+"Search all columns":"Alle Spalten durchsuchen",
+"Clear":"Klar",
+"DELETE TOUR" : "TOUR LÖSCHEN",
+"Agent Commission" : "Agentenkommission",
+"Departure Date" : "Abreisedatum",
+"Return Date" : "Rückgabedatum",
+"Booking Number" : "Buchungsnummer",
+"Mekka fees" : "Mekka-Gebühren",
+"Services" : "Dienstleistungen",
+"Amount" : "Menge"
 }

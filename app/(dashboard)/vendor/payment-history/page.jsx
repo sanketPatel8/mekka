@@ -111,7 +111,7 @@ export default function DBListing() {
         // width: "10%",
       },
       {
-        name: translate("Due (€) "),
+        name: translate("Due (€)"),
         selector: (row) => row.pending_payment,
         sortable: true,
         // width: "10%",
@@ -264,7 +264,7 @@ export default function DBListing() {
 
               <div className="rounded-12 bg-white shadow-2 px-40 pt-40 pb-30 md:px-20 md:pt-20 md:pb-20 mt-60 md:mt-30">
                 <DataTable
-                  title="Payment Data"
+                  title={translate("Payment Data")}
                   columns={VendorBookings}
                   data={payment}
                   highlightOnHover
@@ -274,7 +274,7 @@ export default function DBListing() {
                     <div className="d-flex items-center border-1 px-3 py-2 rounded">
                       <input
                         type="text"
-                        placeholder="Search all columns"
+                        placeholder={translate("Search all columns")}
                         value={filterText}
                         className="ml-10 "
                         onChange={handleFilterChange}
@@ -282,7 +282,7 @@ export default function DBListing() {
                       <span className="form-input m-0 ">
                         <input type="text" required />
                       </span>
-                      <button onClick={handleClear}>Clear</button>
+                      <button onClick={handleClear}>{translate("Clear")}</button>
                     </div>
                   }                  
                 />

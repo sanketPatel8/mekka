@@ -721,7 +721,7 @@ export default function Profile() {
                         Commision && 
 
                       <div className="com-12 mb-30">
-                        <p>Agent Commission : {Commision} %</p>
+                        <p>{translate("Agent Commission")} : {Commision} %</p>
                       </div>
                       }
 

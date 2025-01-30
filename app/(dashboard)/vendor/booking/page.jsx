@@ -360,7 +360,7 @@ export default function DbBooking() {
                     <div className="d-flex items-center border-1 px-lg-3 py-lg-2 rounded">
                       <input
                         type="text"
-                        placeholder="Search all columns"
+                        placeholder={translate("Search all columns")} 
                         value={filterText}
                         className="ml-10 "
                         onChange={(e) => setFilterText(e.target.value)}
@@ -368,7 +368,7 @@ export default function DbBooking() {
                       <span className="form-input m-0 ">
                         <input type="text" required />
                       </span>
-                      <button onClick={handleClear}>Clear</button>
+                      <button onClick={handleClear}>{translate("Clear")}</button>
                     </div>
                   }
                 />

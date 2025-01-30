@@ -64,7 +64,7 @@ const AgentDBsideBar = ({ setSideBarOpen }) => {
         id: 1,
         href: "/",
         iconClass: "icon-home text-26",
-        label: "Go To Home",
+        label: translate("Go To Home"),
       },
       { id: 7, iconClass: "icon-logout text-26", label: translate("Logout") , href : "/" },
     ];
