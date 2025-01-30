@@ -239,7 +239,6 @@
   "Customer Name": "Kundenname",
   "Total (€) ": "Gesamt (€)",
   "Paid (€) ": "Bezahlt (€)",
-  "Due (€)" : "Fällig (€)",
   "Date ": "Datum",
   "Transaction ID ": "Transaktions-ID",
   "Full Name": "Vollständiger Name",
@@ -749,8 +748,6 @@
 "from almost all providers" : "von nahezu allen Anbietern",
 "Total Refund Amount" : "Gesamtbetrag der Rückerstattung",
 "Services Per Person":"Leistungen pro Person",
-<<<<<<< Updated upstream
-=======
 "Payment in advance. Payment installment is possible. Full Payment (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)" : "Bezahlung per Vorkasse. Ratenzahlung ist möglich. Vollständige Zahlung (mit Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)",
 "Payment Gateway Fees (3%)" : "Zahlungsgateway-Gebühren (3%)",
 "Booking" : "Buchung",
@@ -778,22 +775,13 @@
 "Item Details" : "Artikel details",
 "Fee" : "Gebühr",
 "Due (€)" : "Fällig (€)",
->>>>>>> Stashed changes
 "Search all columns":"Alle Spalten durchsuchen",
 "Clear":"Klar",
 "DELETE TOUR" : "TOUR LÖSCHEN",
 "Agent Commission" : "Agentenkommission",
-<<<<<<< Updated upstream
-"Departure Date" : "Abreisedatum",
-=======
->>>>>>> Stashed changes
 "Return Date" : "Rückgabedatum",
 "Booking Number" : "Buchungsnummer",
 "Mekka fees" : "Mekka-Gebühren",
 "Services" : "Dienstleistungen",
 "Amount" : "Menge"
-<<<<<<< Updated upstream
-}
-=======
 } 
->>>>>>> Stashed changes
