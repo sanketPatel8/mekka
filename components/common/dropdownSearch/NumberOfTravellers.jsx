@@ -1,9 +1,10 @@
 "use client";
 
 import { useGlobalState } from "@/app/context/GlobalStateContext";
+import { useTranslation } from "@/app/context/TranslationContext";
 import React, { useState, useEffect } from "react";
 
-const options = ["Adult", "child", "baby"];
+const options = ["Adult", "Child", "Baby"];
 
 export default function NumberOfTravellers({ active, setTourType }) {
   const { counts , setCounts } = useGlobalState();
@@ -25,6 +26,8 @@ export default function NumberOfTravellers({ active, setTourType }) {
     }));
   };
 
+  const {translate} = useTranslation()
+
   return (
     <div
       className={`searchFormItemDropdown -tour-type ${
@@ -34,15 +37,15 @@ export default function NumberOfTravellers({ active, setTourType }) {
       data-x-toggle="is-active"
     >
       <div className="searchFormItemDropdown__container">
-        <div className="searchFormItemDropdown__list sroll-bar-1">
+        <div className="searchFormItemDropdown__list ">
           {options.map((elm, i) => (
             <div
               onClick={() => setTourType((pre) => (pre === elm ? "" : elm))}
               key={i}
               className="searchFormItemDropdown__item"
             >
-              <div className="membar_name_count scroll-bar-1">
-                <span className="js-select-control-choice">{elm}</span>
+              <div className="membar_name_count ">
+                <span className="js-select-control-choice">{translate(elm)}</span>
                 <span className="member_choose_counter">
                   <button
                     type="button"

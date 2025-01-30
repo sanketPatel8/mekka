@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link"; // Ensure Link is imported
 import Image from "next/image";
 import { useUserProfile } from "@/app/context/ProfileContext";
+import { useTranslation } from "@/app/context/TranslationContext";
 
 const options = [
   { name: "Booking", path: "/customer/booking" },
@@ -18,6 +19,7 @@ export default function DashboardCustomer({
   handleLogoutClick,
   
 }) {
+  const {translate} = useTranslation()
   const [currentOption, setCurrentOption] = useState("Dashboard");
   const dropDownContainer = useRef();
   const { currency, setCurrency } = useCurrency();
@@ -97,7 +99,7 @@ export default function DashboardCustomer({
                     handleButtonClick(option); // Handle navigation or logout
                   }}
                 >
-                  {option.name}
+                  {translate(option.name)}
                 </button>
               ))}
             </div>

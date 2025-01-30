@@ -186,7 +186,7 @@ export default function DbBooking() {
                           className="px-1 text-accent-1"
                         />
                         &nbsp; <span> 
-                          {elm?.mekkahotel?.hotel_name}  ({elm?.mekkahotel?.hotel_stars}{" "}Star
+                          {elm?.mekkahotel?.hotel_name}  ({elm?.mekkahotel?.hotel_stars}{" "} {translate("Star")}
                           )</span>
                       </p>
                       <p className="tourCard__text mt-5 items-center d-flex text-wrap">
@@ -199,7 +199,7 @@ export default function DbBooking() {
                           color="#dabf4f"
                           className="mx-1  mb-1"
                         /> */}
-                        Star
+                        {translate("Star")}
                         )
                       </p>
                       {/* <p className="tourCard__text mt-5">

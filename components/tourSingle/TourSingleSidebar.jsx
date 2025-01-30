@@ -511,16 +511,16 @@ export default function TourSingleSidebar({
     JSON.parse(total) +
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    Number(SidebarData?.tour_details?.airlines?.flight_amount ?? '0');
+    Number(SidebarData?.tour_details?.airlines?.flight_amount ?? "0");
 
-    // Number(SidebarData?.tour_details?.airlines?.flight_amount !== null || SidebarData?.tour_details?.airlines?.flight_amount !== undefined ?  SidebarData?.tour_details?.airlines?.flight_amount : '0');
+  // Number(SidebarData?.tour_details?.airlines?.flight_amount !== null || SidebarData?.tour_details?.airlines?.flight_amount !== undefined ?  SidebarData?.tour_details?.airlines?.flight_amount : '0');
 
   const FlightAndHotelPrice =
     JSON.parse(selectedmekkaHotelPrice) +
     JSON.parse(selectedMadinaHotelPrice) +
-    Number(SidebarData?.tour_details?.airlines?.flight_amount ?? '0');
+    Number(SidebarData?.tour_details?.airlines?.flight_amount ?? "0");
 
-    // Number(SidebarData?.tour_details?.airlines?.flight_amount !== null || SidebarData?.tour_details?.airlines?.flight_amount !== undefined ? SidebarData?.tour_details?.airlines?.flight_amount : '0');
+  // Number(SidebarData?.tour_details?.airlines?.flight_amount !== null || SidebarData?.tour_details?.airlines?.flight_amount !== undefined ? SidebarData?.tour_details?.airlines?.flight_amount : '0');
 
   const mekkaHotel = JSON.parse(HotelSelect.mekka);
   const madinaHotel = JSON.parse(HotelSelect.madina);
@@ -571,14 +571,14 @@ export default function TourSingleSidebar({
 
     if (
       selectDeparture.name === "" &&
-      selectedCheckbox === false 
+      selectedCheckbox === false
       // SidebarData?.tour_details?.flight_included !== "0"
     ) {
       showErrorToast(translate, "Please Select Departure");
       return;
     } else if (
       selectarrival.name === "" &&
-      selectedCheckbox === false 
+      selectedCheckbox === false
       // SidebarData?.tour_details?.flight_included !== "0"
     ) {
       showErrorToast(translate, "Please Select Arrival");
@@ -627,13 +627,7 @@ export default function TourSingleSidebar({
 
   const totalSelected = adultNumber + youthNumber + childrenNumber;
 
-  
-
-  SidebarData?.tour_details?.departures?.map(departure => {
-
-  });
-  
-  
+  SidebarData?.tour_details?.departures?.map((departure) => {});
 
   return (
     <>
@@ -789,14 +783,14 @@ export default function TourSingleSidebar({
                       </span>
                       <span className="text-14 lh-1 ml-10">
                         {elm.hotel_name != null ? elm.hotel_name : "not found"}{" "}
-                        ({elm.hotel_stars} star)
+                        ({elm.hotel_stars} {translate("Star")})
                       </span>
                     </label>
                   </div>
                 </div>
                 <div className="text-14">
                   {elm.hotel_price == "0.00"
-                    ? "Inclusive Price"
+                    ? "Inclusive"
                     : formatPrice(elm.hotel_price)}
                 </div>
               </div>
@@ -834,14 +828,14 @@ export default function TourSingleSidebar({
                       </span>
                       <span className="text-14 lh-1 ml-10">
                         {elm.hotel_name != null ? elm.hotel_name : "not found"}{" "}
-                        ({elm.hotel_stars} star)
+                        ({elm.hotel_stars} {translate("Star")})
                       </span>
                     </label>
                   </div>
                 </div>
                 <div className="text-14">
                   {elm.hotel_price == "0.00"
-                    ? " Inclusive Price"
+                    ? " Inclusive"
                     : formatPrice(elm.hotel_price)}
                 </div>
               </div>
@@ -907,8 +901,7 @@ export default function TourSingleSidebar({
             {/* <hr /> */}
           </div>
 
-       
-            <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
+          <div className={` ${selectedCheckbox ? "d-none" : "d-block"}`}>
             {SidebarData?.tour_details?.airlines !== null && (
               <div>
                 <h5 className="text-18 fw-500 mb-20 mt-20">
@@ -936,83 +929,82 @@ export default function TourSingleSidebar({
                   <div className="text-14">
                     {SidebarData?.tour_details?.airlines?.flight_amount ===
                     "0.00"
-                      ? "Inclusive Package"
+                      ? "Inclusive"
                       : formatPrice(
                           SidebarData?.tour_details?.airlines?.flight_amount
                         )}
                   </div>
                 </div>
               </div>
-                  )}
+            )}
 
-              <hr />
-              
-              <h5 className="text-18 fw-500 mb-10 mt-10">
-                {translate("Departure Information")}
-              </h5>
-              <div className="searchForm -type-1 -sidebar mt-20">
-                <div className="searchForm__form">
+            <hr />
+
+            <h5 className="text-18 fw-500 mb-10 mt-10">
+              {translate("Departure Information")}
+            </h5>
+            <div className="searchForm -type-1 -sidebar mt-20">
+              <div className="searchForm__form">
+                <div
+                  className="searchFormItem js-select-control js-form-dd"
+                  ref={departureDropdownRef}
+                >
                   <div
-                    className="searchFormItem js-select-control js-form-dd"
-                    ref={departureDropdownRef}
+                    className="searchFormItem__button"
+                    onClick={toggleDepartureDropdown}
                   >
-                    <div
-                      className="searchFormItem__button"
-                      onClick={toggleDepartureDropdown}
-                    >
-                      <div className="searchFormItem__content">
-                        <h5>{translate("Departure")}</h5>
-                        <div className={`js-select-control-chosen`}>
-                          {selectDeparture?.name
-                            ? selectDeparture?.name
-                            : translate("Departure")}
-                        </div>
-                      </div>
-                      <div className="searchFormItem__icon_chevron">
-                        <i className="icon-chevron-down d-flex text-18"></i>
+                    <div className="searchFormItem__content">
+                      <h5>{translate("Departure")}</h5>
+                      <div className={`js-select-control-chosen`}>
+                        {selectDeparture?.name
+                          ? selectDeparture?.name
+                          : translate("Departure")}
                       </div>
                     </div>
-                    {dropdownActive && (
-                      <div
-                        className={`searchFormItemDropdown -tour-type is-active`}
-                      >
-                        <div className="searchFormItemDropdown__container">
-                          <div className="searchFormItemDropdown__list sroll-bar-1">
-                            {SidebarData?.tour_details?.departures?.map(
-                              (elm, i) => (
-                                <div
-                                  key={i}
-                                  onClick={() => {
-                                    setselectDeparture((pre) =>
-                                      pre?.name == elm.departure
-                                        ? {}
-                                        : {
-                                            name: elm.departure,
-                                            value: elm.id,
-                                            price: elm.price,
-                                          }
-                                    );
-                                    setDropdownActive(false); // Close dropdown after selection
-                                  }}
-                                  className="searchFormItemDropdown__item"
-                                >
-                                  <button className="js-select-control-button">
-                                    <span className="js-select-control-choice">
-                                      {elm.departure || "No Departure"}
-                                    </span>
-                                  </button>
-                                </div>
-                              )
-                            )}
-                          </div>
+                    <div className="searchFormItem__icon_chevron">
+                      <i className="icon-chevron-down d-flex text-18"></i>
+                    </div>
+                  </div>
+                  {dropdownActive && (
+                    <div
+                      className={`searchFormItemDropdown -tour-type is-active`}
+                    >
+                      <div className="searchFormItemDropdown__container">
+                        <div className="searchFormItemDropdown__list sroll-bar-1">
+                          {SidebarData?.tour_details?.departures?.map(
+                            (elm, i) => (
+                              <div
+                                key={i}
+                                onClick={() => {
+                                  setselectDeparture((pre) =>
+                                    pre?.name == elm.departure
+                                      ? {}
+                                      : {
+                                          name: elm.departure,
+                                          value: elm.id,
+                                          price: elm.price,
+                                        }
+                                  );
+                                  setDropdownActive(false); // Close dropdown after selection
+                                }}
+                                className="searchFormItemDropdown__item"
+                              >
+                                <button className="js-select-control-button">
+                                  <span className="js-select-control-choice">
+                                    {elm.departure || "No Departure"}
+                                  </span>
+                                </button>
+                              </div>
+                            )
+                          )}
                         </div>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-      
+          </div>
         </div>
 
         <hr />

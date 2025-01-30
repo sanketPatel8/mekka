@@ -101,10 +101,10 @@ export default function ArticlesThree() {
                   {/* <div className="blogCard__badge">{elm.slug}</div> */}
                   <div className="blogCard__badge">
                     {elm.type === "1"
-                      ? "Hajj"
+                      ? translate("Hajj")
                       : elm.type === "2"
-                      ? "Umrah"
-                      : "Cultural Trips"}
+                      ? translate("Umrah")
+                      : translate("Cultural Trips")}
                   </div>
                 </div>
 

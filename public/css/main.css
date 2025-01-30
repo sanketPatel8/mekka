@@ -4837,7 +4837,7 @@ h6 {
 .searchForm.-type-1
   .searchFormItemDropdown.-tour-type
   .searchFormItemDropdown__container {
-  width: 347px;
+  width: 350px;
   max-width: calc(100vw - 14px);
   padding: 20px;
 }
@@ -4853,10 +4853,9 @@ h6 {
 .searchForm.-type-1
   .searchFormItemDropdown.-tour-type
   .searchFormItemDropdown__list {
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  height: 120px;
+  height: 200px;
 }
 
 .searchForm.-type-1

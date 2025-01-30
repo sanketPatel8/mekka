@@ -191,7 +191,7 @@ const CustomerDetaTable = () => {
     // { name: "Gender", selector: (row) => row.gender },
     { name: translate("DOB"), selector: (row) => row.birthday },
     { name: translate("Nationality"), selector: (row) => row.nationality },
-    { name: translate("House No."), selector: (row) => row.houseNumber },
+    { name: translate("House No"), selector: (row) => row.houseNumber },
     { name: translate("Zip Code"), selector: (row) => row.plz },
     { name: translate("Street"), selector: (row) => row.street },
   ];
@@ -1534,7 +1534,7 @@ const CustomerDetaTable = () => {
                           required
                         />
                         <label className="lh-1 text-16 text-light-1">
-                          {translate("Birth Date")}
+                          {translate("Birthday Date")}
                         </label>
                       </div>
                     </div>
@@ -1558,7 +1558,7 @@ const CustomerDetaTable = () => {
                         </select>
 
                         <label className="lh-1 text-16 text-light-1 dd_l_top10">
-                          {translate("Nationality ")}
+                          {translate("Nationality")}
                         </label>
                       </div>
                     </div>
@@ -1658,7 +1658,7 @@ const CustomerDetaTable = () => {
                         <div className="d-flex items-center pointer-check py-3">
                           <label htmlFor="1" className="lh-16 ">
                             {translate(
-                              "Please make payment on following bank detail."
+                              "Please make payment on following bank detail"
                             )}
                           </label>
                         </div>
@@ -1735,7 +1735,7 @@ const CustomerDetaTable = () => {
                         <div className="d-flex items-center pointer-check py-3">
                           <label htmlFor="3" className="lh-16">
                             {translate(
-                              "Your amount will be added to the last installment amount."
+                              "Your amount will be added to the last installment amount"
                             )}
                           </label>
                         </div>
@@ -1961,14 +1961,14 @@ const CustomerDetaTable = () => {
                     <thead>
                       <tr>
                         <th scope="col" className="px-1 py-2">
-                          <b>Item Details</b>
+                          <b>{translate("Item Details")}</b>
                         </th>
                         <th
                           scope="col"
                           className="px-1 py-2"
                           style={{ width: "40%" }}
                         >
-                          <b>Fee </b>
+                          <b>{translate("Fee")} </b>
                         </th>
                       </tr>
                     </thead>

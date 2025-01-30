@@ -22,8 +22,8 @@ export const GlobalStateProvider = ({ children }) => {
   ]);
   const [counts, setCounts] = useState({
     Adult: 0,
-    child: 0,
-    baby: 0,
+    Child: 0,
+    Baby: 0,
   });
 
   const [prices, setPrices] = useState({
