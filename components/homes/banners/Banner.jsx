@@ -14,15 +14,15 @@ export default function Banner() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  useEffect(() => {
-    fetchText();
-  }, []);
+  // useEffect(() => {
+  //   fetchText();
+  // }, []);
 
-  const fetchText = async () => {
-    const response = await POST.request({ url: "offer_text" });
-    setTitle(response.Data.title);
-    setDescription(response.Data.text);
-  };
+  // const fetchText = async () => {
+  //   const response = await POST.request({ url: "offer_text" });
+  //   setTitle(response.Data.title);
+  //   setDescription(response.Data.text);
+  // };
 
   return (
     <section className="cta -type-3">
@@ -39,7 +39,8 @@ export default function Banner() {
                 data-aos-delay=""
                 className="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
               >
-                {title}{" "}
+                {/* {title}{" "} */}
+                {translate("Discover Your Dream Destination")}
                 {/* <br className="lg:hidden sm:hidden xs:hidden" />
                 {translate("Top-Rated Tours")}
                 <br className="lg:hidden" />
@@ -54,7 +55,7 @@ export default function Banner() {
                 className="mt-10 text-left md:text-center lg:text-center xl:text-center text-white"
               >
                 {/* {translate("Limited time offer, don't miss the opportunity")} */}
-                <span>{description}</span>
+                <span>{translate("Top-Rated ToursEveryone’s Talking About!")}</span>
               </p>
 
               <div className="mt-30 md:mt-20 text-center text-md-left d-flex justify-content-center justify-content-md-start">
