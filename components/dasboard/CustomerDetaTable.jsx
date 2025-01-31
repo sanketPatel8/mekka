@@ -367,7 +367,7 @@ const CustomerDetaTable = () => {
     {
       name: translate("Amount"),
       selector: (row) =>
-        row.price == 0 ? translate("Inclusive") : `${row.price} €`,
+        row.price == 0 ? translate("inclusive") : `${row.price} €`,
     },
   ];
 

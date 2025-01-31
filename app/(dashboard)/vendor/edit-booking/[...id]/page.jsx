@@ -141,7 +141,11 @@ export default function DbBooking({ params }) {
       // { name: translate("id"), selector: (row) => row.id, width: "10%" },
       { name: translate("Name"), selector: (row) => row.name },
       { name: translate("Services"), selector: (row) => row.services },
-      { name: translate("Amount"), selector: (row) => row.amount },
+      { name: translate("Amount"),
+        selector: (row) =>
+          row.price == 0 ? translate("inclusive") : `${row.price} €`,
+      },
+       
     ];
 
     setServiceHeaders(serviceTable);
