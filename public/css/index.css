@@ -281,6 +281,18 @@
     /* align-items: center; */
     padding: 1rem 0rem;
   }
+  .sliSubTitle {
+    font-size: 20px;
+  }
+  .sliTitle {
+    font-size: 30px;
+  }
+  .sliTitle2 {
+    font-size: 20px;
+  }
+  .searchForm.-type-1 .searchFormItemDropdown.-location {
+    width: 100%;
+  }
 }
 
 hr {
