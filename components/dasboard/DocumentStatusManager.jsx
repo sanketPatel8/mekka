@@ -45,36 +45,47 @@ const customStyles = {
   },
 };
 
-const DocumentStatusManager = ({ Customerid,serviceHeaders,serviceData,reservationData,reservationHeader,options, bookingDate,bookingStatus, totalHeaders,totalData, bookings,adultHeaders,adultBookings,uploadFileisOpen,childBookings,babyBookings, setuploadFileisOpen }) => {
-
+const DocumentStatusManager = ({
+  Customerid,
+  serviceHeaders,
+  serviceData,
+  reservationData,
+  reservationHeader,
+  options,
+  bookingDate,
+  bookingStatus,
+  totalHeaders,
+  totalData,
+  bookings,
+  adultHeaders,
+  adultBookings,
+  uploadFileisOpen,
+  childBookings,
+  babyBookings,
+  setuploadFileisOpen,
+}) => {
   const [invoice, setinvoice] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
   const reservationDataArray = [reservationData];
   const totalDataArray = [totalData];
-  const {translate} = useTranslation();
+  const { translate } = useTranslation();
 
   // Function to set selected time
   const handleSelectTime = (time) => {
     setSelectedTime(time);
   };
 
-
-
- 
-
-  
-
   function closeUploadFileModal() {
     setuploadFileisOpen(false);
   }
-  const openInvoice = async() => {
+  const openInvoice = async () => {
     const formData = new FormData();
     formData.append("reservation_id", Customerid?.id);
-    const response = await POST.request({form:formData, url: "sendInvoice"});
-    if(response){
-      toast.success(response.Message)
+    const response = await POST.request({ form: formData, url: "sendInvoice" });
+    if (response) {
+      toast.success(response.Message);
     }
-  }
+  };
 
   function closeInvoice() {
     setinvoice(false);
@@ -85,26 +96,23 @@ const DocumentStatusManager = ({ Customerid,serviceHeaders,serviceData,reservati
   const [status, setStatus] = useState(null); // Initialize status as null or an object from your options array
   const [Document, setDocument] = useState(null); // Initialize status as null or an object from your options array
 
-
-
-
-
-  const handleChange = async(selectedOption) => {
+  const handleChange = async (selectedOption) => {
     setStatus(selectedOption);
     const formData = new FormData();
     formData.append("reservation_id", Customerid.id);
     formData.append("status", selectedOption.value);
 
-    const response = await POST.request({ form: formData, url: "changeBookingStatus" });
-   
-    if(response){
+    const response = await POST.request({
+      form: formData,
+      url: "changeBookingStatus",
+    });
+
+    if (response) {
       toast.success("Status Updated Successfully");
     }
   };
 
-
-
-  // for add document row and remove row 
+  // for add document row and remove row
 
   // const [uploadFileisOpen, setuploadFileisOpen] = useState(false);
   const [rows, setRows] = useState([{ id: 1, image: "", document: null }]); // State to manage rows
@@ -143,13 +151,22 @@ const DocumentStatusManager = ({ Customerid,serviceHeaders,serviceData,reservati
 
   return (
     <div>
-      <ToastContainer/>
-       <h1 className="text-30"> {translate("Booking Number") } : {bookings?.reservation?.reservationNumber}</h1>
+      <ToastContainer />
+      <h1 className="text-30">
+        {" "}
+        {translate("Booking Number")} :{" "}
+        {bookings?.reservation?.reservationNumber}
+      </h1>
       <div className="row px-0 pb-10 mt-20">
         <div className="col-lg-6">
-          <p className="t_center"> {translate("Booking Date") } : {bookingDate}</p>
-          <p className="t_center"> {translate("Booking Status") } : {bookingStatus}</p>
-         
+          <p className="t_center">
+            {" "}
+            {translate("Booking Date")} : {bookingDate}
+          </p>
+          <p className="t_center">
+            {" "}
+            {translate("Booking Status")} : {bookingStatus}
+          </p>
         </div>
 
         <div className="col-lg-6 flex small-flex-center items-center">
@@ -182,84 +199,76 @@ const DocumentStatusManager = ({ Customerid,serviceHeaders,serviceData,reservati
         
         </>
       } */}
-      {
-        reservationData && 
+      {reservationData && (
         <>
-        <DataTable
-          title={translate("Reservation Details")}
-          columns={reservationHeader}
-          data={reservationDataArray}
-          highlightOnHover
-        />
-        <br />
-        </>
-      }
-
-      {
-        adultBookings &&
-        <>
-        
-        <DataTable
-          title={translate("Adult")}
-          columns={adultHeaders}
-          data={adultBookings}
-          highlightOnHover
-        />
-        <br />
-        </>
-      }
-
-      {
-        childBookings &&
-        <>
-        <DataTable
-          title={translate("Children")}
-          columns={adultHeaders}
-          data={childBookings}
-          highlightOnHover
-        />
-        <br />
-        </>
-      }
-
-      {
-        babyBookings &&
-        <>
-          <DataTable title="Baby" columns={adultHeaders} data={babyBookings} highlightOnHover />
+          <DataTable
+            title={translate("Reservation Details")}
+            columns={reservationHeader}
+            data={reservationDataArray}
+            highlightOnHover
+          />
           <br />
         </>
+      )}
 
-      }
-      {
-        serviceData.length > 0 &&
+      {adultBookings && (
         <>
-        
-        <DataTable
-          title={translate("Services Per Person")}
-          columns={serviceHeaders}
-          data={serviceData}
-          highlightOnHover
-        />
-        <br />
+          <DataTable
+            title={translate("Adult")}
+            columns={adultHeaders}
+            data={adultBookings}
+            highlightOnHover
+          />
+          <br />
         </>
-      }
+      )}
 
-      {
-        totalData && 
+      {childBookings && (
         <>
-        
-        <DataTable
-          title={translate("Total")}
-          columns={totalHeaders}
-          data={totalDataArray}
-          highlightOnHover
-        />
-        <br />
+          <DataTable
+            title={translate("Children")}
+            columns={adultHeaders}
+            data={childBookings}
+            highlightOnHover
+          />
+          <br />
         </>
-      }
-     
+      )}
 
-     
+      {babyBookings && (
+        <>
+          <DataTable
+            title="Baby"
+            columns={adultHeaders}
+            data={babyBookings}
+            highlightOnHover
+          />
+          <br />
+        </>
+      )}
+      {serviceData.length > 0 && (
+        <>
+          <DataTable
+            title={translate("Services Per Person")}
+            columns={serviceHeaders}
+            data={serviceData}
+            highlightOnHover
+          />
+          <br />
+        </>
+      )}
+
+      {totalData && (
+        <>
+          <DataTable
+            title={translate("Total")}
+            columns={totalHeaders}
+            data={totalDataArray}
+            highlightOnHover
+          />
+          <br />
+        </>
+      )}
 
       <div id="invoice">
         <Modal
@@ -269,7 +278,7 @@ const DocumentStatusManager = ({ Customerid,serviceHeaders,serviceData,reservati
           contentLabel="Pending Payment Modal"
         >
           <div className="d-flex justify-content-between" id="modelopen">
-            <h2 className="px-20"> {translate("Invoice") }</h2>
+            <h2 className="px-20"> {translate("Invoice")}</h2>
             <button onClick={closeInvoice}>
               <IoClose size={25} />
             </button>
