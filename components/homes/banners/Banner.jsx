@@ -14,15 +14,38 @@ export default function Banner() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  // useEffect(() => {
-  //   fetchText();
-  // }, []);
+  const [CurrentLang, setCurrentLang] = useState("DE");
 
-  // const fetchText = async () => {
-  //   const response = await POST.request({ url: "offer_text" });
-  //   setTitle(response.Data.title);
-  //   setDescription(response.Data.text);
-  // };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const lang = localStorage.getItem("locale");
+
+      if (lang && lang !== "undefined") {
+        try {
+          const currentlang = lang;
+
+          setCurrentLang(currentlang);
+        } catch (error) {
+          console.error("Error parsing userData:", error);
+        }
+      }
+    }
+  });
+
+  useEffect(() => {
+    fetchText();
+  }, [CurrentLang]);
+
+  const fetchText = async () => {
+    const response = await POST.request({ url: "offer_text" });
+    if (CurrentLang == "DE") {
+      setTitle(response.Data.g_title);
+      setDescription(response.Data.g_text);
+    } else {
+      setTitle(response.Data.title);
+      setDescription(response.Data.text);
+    }
+  };
 
   return (
     <section className="cta -type-3">
@@ -39,8 +62,7 @@ export default function Banner() {
                 data-aos-delay=""
                 className="text-40 md:text-30 lh-13 text-left md:text-center lg:text-center xl:text-center text-white"
               >
-                {/* {title}{" "} */}
-                {translate("Discover Your Dream Destination")}
+                {title} {/* {translate("Discover Your Dream Destination")} */}
                 {/* <br className="lg:hidden sm:hidden xs:hidden" />
                 {translate("Top-Rated Tours")}
                 <br className="lg:hidden" />
@@ -55,7 +77,10 @@ export default function Banner() {
                 className="mt-10 text-left md:text-center lg:text-center xl:text-center text-white"
               >
                 {/* {translate("Limited time offer, don't miss the opportunity")} */}
-                <span>{translate("Top-Rated ToursEveryone’s Talking About!")}</span>
+                <span>
+                  {/* {translate("Top-Rated ToursEveryone’s Talking About!")} */}
+                  {description}
+                </span>
               </p>
 
               <div className="mt-30 md:mt-20 text-center text-md-left d-flex justify-content-center justify-content-md-start">
