@@ -121,13 +121,15 @@ export default function ArticlesThree() {
                       alt="image"
                       className="img-ratio rounded-12"
                     />
+                    
                     <div className="blogCard__badge">
-                      {elm.type === "1"
-                        ? "Hajj"
-                        : elm.type === "2"
-                        ? "Umrah"
-                        : "Cultural Trips"}
-                    </div>
+                    {elm.type === "1"
+                      ? translate("Hajj")
+                      : elm.type === "2"
+                      ? translate("Umrah")
+                      : translate("Cultural Trips")}
+                  </div>
+
                   </div>
 
                   <div className="blogCard__content mt-30">

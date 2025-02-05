@@ -61,6 +61,13 @@ export default function TourList4({
     }
   }, [TourData]);
 
+  const roundDistance = (distance) => {
+    if (distance < 5) {
+      return `${Math.floor(distance)} m`;
+    }
+    return `${Math.round(distance / 10) * 10} m`;
+  };
+
   // for pagination
 
   const dropDownContainer = useRef(null);
@@ -384,8 +391,8 @@ export default function TourList4({
                             className="text-13 ms-1"
                             style={{ color: "#3f97ca" }}
                           >
-                            {elm?.distance_to_hotel}{" "}
-                          </span>
+                              {roundDistance(parseInt(elm?.distance_to_hotel))} 
+                                </span>
                         </div>
 
                         {/* <div className="row x-gap-20 y-gap-5 ">
