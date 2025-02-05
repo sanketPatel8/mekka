@@ -27,6 +27,14 @@ export default function TourSliderTwo({ setLength }) {
     HandleLoginSubmite();
   }, []);
 
+  const roundDistance = (distance) => {
+    if (distance < 5) {
+      return `${Math.floor(distance)} m`;
+    }
+    return `${Math.round(distance / 10) * 10} m`;
+  };
+  
+
   useEffect(() => {
     setLength(BestSellerData.length);
   }, [BestSellerData]);
@@ -145,7 +153,8 @@ export default function TourSliderTwo({ setLength }) {
                             }`}
                           >
                             <FaPersonWalking color="white" size={18} />
-                            Zu Kaaba {elm.distance_to_hotel}
+                            Zu Kaaba {roundDistance(parseInt(elm?.distance_to_hotel))} 
+
                           </div>
 
                           <div

@@ -24,6 +24,13 @@ export default function TourSlderOne() {
     fetchData();
   }, []);
 
+  const roundDistance = (distance) => {
+    if (distance < 5) {
+      return `${Math.floor(distance)} m`;
+    }
+    return `${Math.round(distance / 10) * 10} m`;
+  };
+  
   const fetchData = async (id) => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -164,7 +171,7 @@ export default function TourSlderOne() {
                               }`}
                             >
                               <FaPersonWalking color="white" size={18} />
-                              Zu Kaaba {elm.distance_to_hotel}
+                              Zu Kaaba {roundDistance(parseInt(elm?.distance_to_hotel))} 
                             </div>
 
                             <div

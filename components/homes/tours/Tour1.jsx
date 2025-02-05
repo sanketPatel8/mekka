@@ -14,7 +14,13 @@ import { PiBuildingApartmentFill } from "react-icons/pi";
 export default function Tour1() {
   const [LatestPackage, setLatestPackage] = useState([]);
   const { formatPrice } = useCurrency();
-
+  const roundDistance = (distance) => {
+    if (distance < 5) {
+      return `${Math.floor(distance)} m`;
+    }
+    return `${Math.round(distance / 10) * 10} m`;
+  };
+  
   useEffect(() => {
     const fetchData = async (id) => {
       const sendData = {
@@ -132,7 +138,7 @@ export default function Tour1() {
                           }`}
                         >
                           <FaPersonWalking color="white" size={18} />
-                          Zu Kaaba {elm.distance_to_hotel}
+                          Zu Kaaba {roundDistance(parseInt(elm?.distance_to_hotel))} 
                         </div>
 
                         <div
