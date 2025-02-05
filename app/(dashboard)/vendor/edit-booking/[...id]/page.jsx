@@ -419,7 +419,7 @@ export default function DbBooking({ params }) {
         const services = response.Bookings.extraServices.map((service) => ({
           name: `${service.name} ${service.surname}`,
           services: service.title,
-          amount: `${service.price} €`,
+          amount: `${service.price}`,
         }));
 
         setServiceData(services);
