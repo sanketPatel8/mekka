@@ -654,6 +654,9 @@
 "Mekka fees" : "Mekka fees",
 "Services" : "Services",
 "Amount" : "Amount",
- "inclusive" : "Inclusive"
+ "inclusive" : "Inclusive",
+ "Document Type" : "Document Type",
+ "Document Name" : "Document Name"
+ 
 
 }
