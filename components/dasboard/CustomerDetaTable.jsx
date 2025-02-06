@@ -578,9 +578,9 @@ const CustomerDetaTable = () => {
       const FileDeta = [
         { name: translate("Document Type"), selector: (row) => row.type },
 
-        { name: "Document Name", selector: (row) => row.Name },
+        { name: translate("Document Name"), selector: (row) => row.Name },
         {
-          name: "Action",
+          name: translate("Action"),
           selector: (row) => (
             <Link
               href={row.fileLink}
