@@ -684,17 +684,25 @@ const CustomerDetaTable = () => {
     }
   };
 
-  const convertGermanToISO = (germanDate) => {
-    if (!germanDate) return ""; // Return empty if no date is provided
-    const parts = germanDate.split(".");
-    if (parts.length !== 3) {
-        console.error("Invalid date format:", germanDate);
-        return ""; // Return empty if the format is invalid
-    }
-    const [day, month, year] = parts;
-    return `${year}-${month}-${day}`; // Return in ISO format
-};
+  const convertDotToDashDate = (dateString) => {
 
+    console.log(dateString,"dash string")
+    if (!dateString) return "";
+    // Split the date string by "."
+    const [day, month, year] = dateString.split(".");
+    // Return the date in "DD-MM-YYYY" format
+    const days =  `${day}-${month}-${year}`;
+    console.log(days,"day1")
+    return `${year}-${month}-${day}`;
+  };
+  
+
+  const convertGermanToISO = (germanDate) => {
+    console.log(germanDate,"german")
+    if (!germanDate) return "";
+    const [day, month, year] = germanDate.split(".");
+    return `${day}.${month}.${year}`; // Return in German format
+  };
 
   // Function to convert ISO date (YYYY-MM-DD) to German format (DD.MM.YYYY)
   const convertISOToGerman = (isoDate) => {
@@ -711,7 +719,7 @@ const CustomerDetaTable = () => {
     formData.append("reservation_person_id", PersonalUserID);
     formData.append("name", editCustomerData.name);
     formData.append("surname", editCustomerData.surname);
-    formData.append("birthday", convertGermanToISO(editCustomerData.birthday));
+    formData.append("birthday", convertDotToDashDate(editCustomerData.birthday));
     formData.append("gender", editCustomerData.gender);
     formData.append("nationality", editCustomerData.nationality);
     formData.append("main_person", editCustomerData.id);
@@ -845,14 +853,30 @@ const CustomerDetaTable = () => {
     const todayString = today.toISOString().split("T")[0];
     if (BookingDetails?.reservation?.date_begin) {
       const startDateString = BookingDetails?.reservation?.date_begin;
+      console.log(startDateString,"start date")
       if (startDateString) {
         try {
-          const startDate = new Date(startDateString);
+          const [day, month, year] = startDateString.split('.').map(Number);
 
-          const sixDaysBefore = new Date(
-            startDate.getTime() - 5 * 24 * 60 * 60 * 1000
-          );
+          // Create a new Date object (months are 0-indexed in JavaScript)
+          const startDate = new Date(year, month - 1, day); // month - 1 because months are 0-indexed
+  
+          // Check if the date is valid
+          if (isNaN(startDate.getTime())) {
+              throw new Error("Invalid start date");
+          }
+  
+          // Calculate six days before
+          const sixDaysBefore = new Date(startDate.getTime() - 5 * 24 * 60 * 60 * 1000);
+          
+          // Check if sixDaysBefore is valid
+          if (isNaN(sixDaysBefore.getTime())) {
+              throw new Error("Invalid date for sixDaysBefore");
+          }
+  
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
+  
+        console.log("Six Days Before String:", sixDaysBeforeString); // Log the result
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
@@ -2363,17 +2387,19 @@ const CustomerDetaTable = () => {
                           <input
                             type="date"
                             required
-                            value={convertGermanToISO(
-                              editCustomerData.birthday
-                            )} // Convert German date to ISO for input
+                            value={convertDotToDashDate(
+                              editCustomerData.birthday)
+                            } // Convert German date to ISO for input
                             onChange={(e) => {
-                              const isoDate = e.target.value; // Get the ISO format date
+                              const newDate = e.target.value; // Get the new date input
+                              // Convert back to "DD.MM.YYYY" format before saving
+                              const [day, month, year] = newDate.split("-");
                               setEditCustomerData({
                                 ...editCustomerData,
-                                birthday: convertISOToGerman(isoDate), // Convert back to German format for storing
+                                birthday: `${year}.${month}.${day}`, // Save in the original format
                               });
                             }}
-                            max={getTodayDate()}
+                                                      max={getTodayDate()}
                             onFocus={handleDateFocus}
                             onKeyDown={(e) => e.preventDefault()}
                           />
