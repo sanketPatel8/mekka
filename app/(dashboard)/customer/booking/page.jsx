@@ -6,12 +6,18 @@ import CustomerDBsideBar from "@/components/dasboard/CustomerDBsideBar";
 import { tourDataTwoOne } from "@/data/tours";
 import { FaCalendar } from "react-icons/fa";
 import { FaPersonWalking } from "react-icons/fa6";
-import { MdFlightTakeoff } from 'react-icons/md';
+import { MdFlightTakeoff } from "react-icons/md";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GiAirplaneArrival } from "react-icons/gi";
 import { FaStar } from "react-icons/fa";
 import { MdFlightLand } from "react-icons/md";
-import { faCalendar, faHotel, faPlaneArrival, faPlaneDeparture, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendar,
+  faHotel,
+  faPlaneArrival,
+  faPlaneDeparture,
+  faQuoteRight,
+} from "@fortawesome/free-solid-svg-icons";
 import Stars from "@/components/common/Stars";
 import Link from "next/link";
 import { useTranslation } from "@/app/context/TranslationContext";
@@ -53,8 +59,6 @@ export default function DbBooking() {
   };
 
   useEffect(() => {
-
-
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("customer");
 
@@ -111,8 +115,9 @@ export default function DbBooking() {
 
   return (
     <div
-      className={`dashboard ${sideBarOpen ? "-is-sidebar-visible" : ""
-        } js-dashboard`}
+      className={`dashboard ${
+        sideBarOpen ? "-is-sidebar-visible" : ""
+      } js-dashboard`}
     >
       <CustomerDBsideBar setSideBarOpen={setSideBarOpen} />
 
@@ -133,13 +138,13 @@ export default function DbBooking() {
             ) : BookingsCustomer && BookingsCustomer.length === 0 ? (
               <div className="d-flex justify-content-center align-items-center">
                 <p>
-                  {translate('No bookings available')}{" "}
+                  {translate("No bookings available")}{" "}
                   <Link href="/tour" className="text-blue">
                     <b>
-                      <i>{translate('Click here')}</i>
+                      <i>{translate("Click here")}</i>
                     </b>
                   </Link>{" "}
-                  {translate('to book your first tour')}.
+                  {translate("to book your first tour")}.
                 </p>
               </div>
             ) : (
@@ -150,7 +155,6 @@ export default function DbBooking() {
                       <Image
                         width={420}
                         height={390}
-                        
                         src={
                           elm?.tour_details?.tour_image
                             ? elm?.tour_details?.tour_image
@@ -159,12 +163,13 @@ export default function DbBooking() {
                         alt="image"
                       />
                       <button
-                        className={`tourCard__favorite ${elm?.tour_details?.flight_included == "0"
+                        className={`tourCard__favorite ${
+                          elm?.tour_details?.flight_included == "0"
                             ? "d-none"
                             : "d-block"
-                          }`}
+                        }`}
                       >
-                        {translate('Direct Flight')}
+                        {translate("Direct Flight")}
                       </button>
                     </div>
 
@@ -185,22 +190,24 @@ export default function DbBooking() {
                           icon={faHotel}
                           className="px-1 text-accent-1"
                         />
-                        &nbsp; <span> 
-                          {elm?.mekkahotel?.hotel_name}  ({elm?.mekkahotel?.hotel_stars}{" "} {translate("Star")}
-                          )</span>
+                        &nbsp;{" "}
+                        <span>
+                          {elm?.mekkahotel?.hotel_name} (
+                          {elm?.mekkahotel?.hotel_stars} {translate("Star")})
+                        </span>
                       </p>
                       <p className="tourCard__text mt-5 items-center d-flex text-wrap">
-                      <FontAwesomeIcon
+                        <FontAwesomeIcon
                           icon={faHotel}
                           className="px-1 text-accent-1"
                         />
-                        {elm?.madinahotel?.hotel_name} ({elm?.madinahotel?.hotel_stars}{" "}
+                        {elm?.madinahotel?.hotel_name} (
+                        {elm?.madinahotel?.hotel_stars}{" "}
                         {/* <FaStar
                           color="#dabf4f"
                           className="mx-1  mb-1"
                         /> */}
-                        {translate("Star")}
-                        )
+                        {translate("Star")})
                       </p>
                       {/* <p className="tourCard__text mt-5">
                         <FontAwesomeIcon
@@ -210,55 +217,68 @@ export default function DbBooking() {
                         {elm?.tour_details?.type}
                       </p> */}
 
-                      {elm?.tour_details?.company_code !== null || elm?.tour_details?.company_code !== " " && (
-                        <div className="d-flex items-center mt-5">
-                          <div className="d-flex items-center x-gap-5">
-                            {/* <Stars
+                      {elm?.tour_details?.company_code !== null ||
+                        (elm?.tour_details?.company_code !== " " && (
+                          <div className="d-flex items-center mt-5">
+                            <div className="d-flex items-center x-gap-5">
+                              {/* <Stars
                             star={elm?.tour_details?.rating_count}
                             font={12}
                           /> */}
-                            <PiBuildingApartmentFill
-                              color="#dabf4f"
-                              className=""
-                              size={25}
-                            />
+                              <PiBuildingApartmentFill
+                                color="#dabf4f"
+                                className=""
+                                size={25}
+                              />
+                            </div>
+
+                            <div className="text-14 ml-10">
+                              {elm?.tour_details?.company_code}
+                            </div>
                           </div>
+                        ))}
 
-                          <div className="text-14 ml-10">
-                            {elm?.tour_details?.company_code}
-                          </div>
-                        </div>
-                      )}
-
-                      {elm?.tour_details?.departures !== ""  && (
+                      {elm?.arrival !== "" && (
                         <div className="Location">
-                          <FontAwesomeIcon icon={faPlaneArrival}
-                          className=" text-accent-1"
-                          style={{fontSize: "14px"}}
-                        />
-                          <span> {translate('Arrival')} : {elm?.arrival}</span>
-                        </div>
-                      )}
-                      {elm?.tour_details?.departures !== ""  && (
-                        <div className="Location">
-                          <FontAwesomeIcon icon={faPlaneDeparture}
-                          className=" text-accent-1"
-                          style={{fontSize: "14px"}}
-                        />
-                          <span> {translate('Departure')} : {elm?.tour_details?.departures}</span>
+                          <FontAwesomeIcon
+                            icon={faPlaneArrival}
+                            className=" text-accent-1"
+                            style={{ fontSize: "14px" }}
+                          />
+                          <span>
+                            {" "}
+                            {translate("Arrival")} : {elm?.arrival}
+                          </span>
                         </div>
                       )}
 
+                      {elm?.tour_details?.departures !== "" && (
+                        <div className="Location">
+                          <FontAwesomeIcon
+                            icon={faPlaneDeparture}
+                            className=" text-accent-1"
+                            style={{ fontSize: "14px" }}
+                          />
+                          <span>
+                            {" "}
+                            {translate("Departure")} :{" "}
+                            {elm?.tour_details?.departures}
+                          </span>
+                        </div>
+                      )}
 
                       <div className="row x-gap-20 y-gap-5 ">
-                      
                         <div className="text-14 items-center">
-                        <FontAwesomeIcon icon={faCalendar}
-                          className="me-1  text-accent-1"
-                          style={{fontSize: "18px"}}
-                        />
-                         <span> {elm?.tour_details?.date_begin} -{" "}
-                         {elm?.tour_details?.date_end}</span>
+                          <FontAwesomeIcon
+                            icon={faCalendar}
+                            className="me-1  text-accent-1"
+                            style={{ fontSize: "18px" }}
+                          />
+                          <span>
+                            {" "}
+                            {elm?.tour_details?.date_begin} -{" "}
+                            {elm?.tour_details?.date_end}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -270,8 +290,8 @@ export default function DbBooking() {
                             elm.reservation_status === "In Progress"
                               ? "text-orange"
                               : elm.reservation_status === "Cancelled"
-                                ? "text-red"
-                                : "text-green"
+                              ? "text-red"
+                              : "text-green"
                           }
                         >
                           <b>{elm.reservation_status}</b>
@@ -282,12 +302,14 @@ export default function DbBooking() {
                         </div>
 
                         <p className="text-center">
-                          {translate('Booking No')} : {elm.reservationNumber}
+                          {translate("Booking No")} : {elm.reservationNumber}
                         </p>
                         <p className="text-center">
                           {translate("Total")} : {elm?.total} €
                         </p>
-                        <p className="text-center">{translate('Due')} : {elm.due_payment} € </p>
+                        <p className="text-center">
+                          {translate("Due")} : {elm.due_payment} €{" "}
+                        </p>
                       </div>
 
                       <label className="badge bg-secondary"></label>
@@ -307,7 +329,8 @@ export default function DbBooking() {
           </div>
 
           <div className="text-center pt-30">
-            © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
+            © {translate("Copyright MekkaBooking.com")}{" "}
+            {new Date().getFullYear()}
           </div>
         </div>
       </div>

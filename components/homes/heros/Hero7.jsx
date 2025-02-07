@@ -122,13 +122,13 @@ export default function Hero7() {
                   <div className="hero__bg">
                     <Image
                       width={1920}
-                      height={160}
+                      height={1080}
                       src={elm.imageSrc}
                       alt="background"
                     />
                   </div>
 
-                  <div className="bg-color">
+                  <div className="bg-color h-1080">
                     <div className="container">
                       <div className="row">
                         <div className="col-lg-12 col-md-10">

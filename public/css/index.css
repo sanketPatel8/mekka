@@ -305,6 +305,10 @@ hr {
   align-items: center;
 }
 
+.h-1080 {
+  height: 1080px !important;
+}
+
 /* styles.css */
 @media (max-width: 767.98px) {
   .sidebar-hidden-on-small {
