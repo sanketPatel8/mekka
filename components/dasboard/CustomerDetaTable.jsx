@@ -685,10 +685,16 @@ const CustomerDetaTable = () => {
   };
 
   const convertGermanToISO = (germanDate) => {
-    if (!germanDate) return "";
-    const [day, month, year] = germanDate.split(".");
+    if (!germanDate) return ""; // Return empty if no date is provided
+    const parts = germanDate.split(".");
+    if (parts.length !== 3) {
+        console.error("Invalid date format:", germanDate);
+        return ""; // Return empty if the format is invalid
+    }
+    const [day, month, year] = parts;
     return `${year}-${month}-${day}`; // Return in ISO format
-  };
+};
+
 
   // Function to convert ISO date (YYYY-MM-DD) to German format (DD.MM.YYYY)
   const convertISOToGerman = (isoDate) => {
