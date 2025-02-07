@@ -87,6 +87,8 @@ export default function BookingPages({ BookingData }) {
   const [BookingSideBar, setBookingSideBar] = useState({});
   const newdata = localStorage.getItem("getUserData");
 
+  // console.log(newdata, "newdata");
+
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
     localStorage.setItem(
@@ -288,16 +290,6 @@ export default function BookingPages({ BookingData }) {
     setIsOpen(false);
   }
 
-  // useEffect(()=>{
-  //   const open = typeof window !== "undefined" && localStorage.getItem("setIsOpen");
-
-  //   if(open === false ){
-  //     closeModal();
-  //   }
-  // },[setIsOpen])
-
-  // for promocode
-
   const [promo, setpromo] = useState("");
   const [PromoData, setPromoData] = useState({});
   const [ShowPhoneError, setShowPhoneError] = useState("");
@@ -310,7 +302,7 @@ export default function BookingPages({ BookingData }) {
 
   const initializeFormValues = (count, defaultValues) => {
     if (count === 0) {
-      return []; // If count is 0, return an empty array
+      return [];
     }
     return Array.from({ length: count }, () => ({ ...defaultValues }));
   };
@@ -359,7 +351,6 @@ export default function BookingPages({ BookingData }) {
     selectedServicePrices: [],
   });
 
-  // for profile data
   const [userData, setUserData] = useState({
     name: "",
     surname: "",
@@ -381,7 +372,6 @@ export default function BookingPages({ BookingData }) {
   });
 
   const [Additional, setAdditional] = useState([]);
-  // for form validation
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [PhoneValid, setPhoneValid] = useState(false);
@@ -572,11 +562,7 @@ export default function BookingPages({ BookingData }) {
       }
     });
 
-    // Recalculate the subtotal after updating the state
     const subtotal = SubtotalPriceWithAdditional(type, i);
-
-    // If you need to update another state or trigger a re-render based on the subtotal, do it here
-    // setSubtotalState(subtotal); // Example: if you have a state to hold the subtotal
   };
 
   const handleDateFocus = (e) => {
@@ -779,101 +765,131 @@ export default function BookingPages({ BookingData }) {
   useEffect(() => {
     if (LoginCheck === true && newdata === null) {
       fetchProfile();
-    } else {
-      const BackAdultData = localStorage.getItem("AllAdultsData");
+      return;
+    }
 
+    const BackAdultData = localStorage.getItem("AllAdultsData");
+    const LoginAdultData = localStorage.getItem("LoginUserData");
+
+    let parsedAdultData = null;
+    let parsedLoginData = null;
+
+    try {
       if (BackAdultData && BackAdultData !== "undefined") {
-        try {
-          const AdultD = JSON.parse(BackAdultData);
+        parsedAdultData = JSON.parse(BackAdultData);
+      }
+      if (LoginAdultData && LoginAdultData !== "undefined") {
+        parsedLoginData = JSON.parse(LoginAdultData);
+      }
+    } catch (error) {
+      console.error("Error parsing userData:", error);
+      return;
+    }
 
-          // Extract the user object
-          if (AdultD) {
-            setFormValues((prevValues) => {
-              const updatedValues = { ...prevValues };
+    // Convert LoginAdultData to an array if it's an object
+    const LoginAdultArray = Array.isArray(parsedLoginData)
+      ? parsedLoginData
+      : [parsedLoginData];
 
-              if (!updatedValues["Adult"]) {
-                updatedValues["Adult"] = [];
-              }
-              if (!updatedValues["Adult"][0]) {
-                updatedValues["Adult"][0] = {};
-              }
+    if (!parsedAdultData && !parsedLoginData) return;
 
-              AdultD?.Adult?.map((e, i) => {
-                updatedValues["Adult"][i] = {
-                  ...updatedValues["Adult"][i],
-                  name: e.name,
-                  surname: e.surname,
-                  birthday: e.birthday,
-                  city: e.city,
-                  email: e.email,
-                  gender: e.gender,
-                  houseNumber: e.houseNumber,
-                  mobile: e.mobile,
-                  nationality: e.nationality,
-                  street: e.street,
-                  zipcode: e.zipcode,
-                  services: e.services || [], // Ensure services is set
-                  selectedPrices: e.selectedPrices || [], // Ensure selectedPrices is set
-                  selectedServices: e.selectedServices || [], // Ensure selectedServices is set
-                };
+    setFormValues((prevValues) => {
+      const updatedValues = { ...prevValues };
 
-                // Update the selectedServices to reflect the checkbox state
-                if (e.services && e.services.length > 0) {
-                  e.services.forEach((additional) => {
-                    const serviceValue = `Adult-${i}-${additional.additional_order}-ad-${additional.additional_price_id}-${additional.title}`;
-                    updatedValues["Adult"][i].selectedServices.push(
-                      serviceValue
-                    );
-                    updatedValues["Adult"][i].selectedPrices.push(
-                      additional.price
-                    );
-                  });
-                }
-              });
+      if (!updatedValues["Adult"]) updatedValues["Adult"] = [];
 
-              AdultD?.Child?.map(
-                (e, i) =>
-                  (updatedValues["Child"][i] = {
-                    ...updatedValues["Child"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
-              );
-              AdultD?.Baby?.map(
-                (e, i) =>
-                  (updatedValues["Baby"][i] = {
-                    ...updatedValues["Baby"][i],
-                    name: e.name,
-                    surname: e.surname,
-                    birthday: e.birthday,
-                    city: e.city,
-                    email: e.email,
-                    gender: e.gender,
-                    houseNumber: e.houseNumber,
-                    mobile: e.mobile,
-                    nationality: e.nationality,
-                    street: e.street,
-                    zipcode: e.zipcode,
-                  })
-              );
+      // If user is logged in, prioritize setting data from LoginAdultData
+      if (LoginCheck === true && parsedLoginData) {
+        LoginAdultArray.forEach((e, i) => {
+          updatedValues["Adult"][i] = {
+            ...updatedValues["Adult"][i],
+            name: e.name,
+            surname: e.surname,
+            birthday: e.birthday,
+            city: e.city,
+            email: e.email,
+            gender: e.gender,
+            houseNumber: e.houseNumber,
+            mobile: e.mobile,
+            nationality: e.nationality,
+            street: e.street,
+            zipcode: e.zipcode,
+            services: e.services || [],
+            selectedPrices: e.selectedPrices || [],
+            selectedServices: e.selectedServices || [],
+          };
+        });
+      }
+      // If user is not logged in, use BackAdultData
+      else if (parsedAdultData) {
+        parsedAdultData?.Adult?.forEach((e, i) => {
+          updatedValues["Adult"][i] = {
+            ...updatedValues["Adult"][i],
+            name: e.name,
+            surname: e.surname,
+            birthday: e.birthday,
+            city: e.city,
+            email: e.email,
+            gender: e.gender,
+            houseNumber: e.houseNumber,
+            mobile: e.mobile,
+            nationality: e.nationality,
+            street: e.street,
+            zipcode: e.zipcode,
+            services: e.services || [],
+            selectedPrices: e.selectedPrices || [],
+            selectedServices: e.selectedServices || [],
+          };
 
-              return updatedValues;
+          // Ensure services-related selections are updated
+          if (e.services?.length > 0) {
+            e.services.forEach((additional) => {
+              const serviceValue = `Adult-${i}-${additional.additional_order}-ad-${additional.additional_price_id}-${additional.title}`;
+              updatedValues["Adult"][i].selectedServices.push(serviceValue);
+              updatedValues["Adult"][i].selectedPrices.push(additional.price);
             });
           }
-        } catch (error) {
-          console.error("Error parsing userData:", error);
-        }
+        });
+
+        parsedAdultData?.Child?.forEach((e, i) => {
+          updatedValues["Child"] = updatedValues["Child"] || [];
+          updatedValues["Child"][i] = {
+            ...updatedValues["Child"][i],
+            name: e.name,
+            surname: e.surname,
+            birthday: e.birthday,
+            city: e.city,
+            email: e.email,
+            gender: e.gender,
+            houseNumber: e.houseNumber,
+            mobile: e.mobile,
+            nationality: e.nationality,
+            street: e.street,
+            zipcode: e.zipcode,
+          };
+        });
+
+        parsedAdultData?.Baby?.forEach((e, i) => {
+          updatedValues["Baby"] = updatedValues["Baby"] || [];
+          updatedValues["Baby"][i] = {
+            ...updatedValues["Baby"][i],
+            name: e.name,
+            surname: e.surname,
+            birthday: e.birthday,
+            city: e.city,
+            email: e.email,
+            gender: e.gender,
+            houseNumber: e.houseNumber,
+            mobile: e.mobile,
+            nationality: e.nationality,
+            street: e.street,
+            zipcode: e.zipcode,
+          };
+        });
       }
-    }
+
+      return updatedValues;
+    });
   }, [LoginCheck, newdata]);
 
   const getTodayDate = () => {
@@ -1531,20 +1547,13 @@ export default function BookingPages({ BookingData }) {
     localStorage.setItem("BookingData", JSON.stringify(bookingData));
     localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
     localStorage.setItem("AllAdultsData", JSON.stringify(formValues));
-
+    localStorage.setItem("LoginUserData", JSON.stringify(userData));
     handleUpdateLocalStorage();
 
-    // Assuming this code is inside an event handler or a function
-
-    // Use setTimeout to simulate a delay (e.g., for a loading spinner)
     setTimeout(() => {
       setIsLoading(false);
-      router.push("/payment"); // Always navigate to the payment page
+      router.push("/payment");
     }, 2000);
-
-    // If you want to handle loading state after navigation, consider removing loading state only if needed
-    // For instance, you can keep setIsLoading(false) if you need it before navigating
-    // setIsLoading(false);
   };
 
   const handleExternalButtonClick = () => {
@@ -1558,7 +1567,7 @@ export default function BookingPages({ BookingData }) {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
-  console.log(formValues, "formValues");
+  // console.log(formValues, "formValues");
 
   return (
     <>
