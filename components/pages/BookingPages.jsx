@@ -87,6 +87,14 @@ export default function BookingPages({ BookingData }) {
   const [BookingSideBar, setBookingSideBar] = useState({});
   const newdata = localStorage.getItem("getUserData");
 
+  const taxRate = 0.19;
+
+  const [totalSum, setTotalSum] = useState(0);
+  const [taxAmount, setTaxAmount] = useState(0);
+  const [formattedTaxAmount, setFormattedTaxAmount] = useState("0.00");
+  const [TotalPaidAmount, setTotalPaidAmount] = useState("0.00");
+  const [SubTotal, setSubTotal] = useState(0);
+
   // console.log(newdata, "newdata");
 
   useEffect(() => {
@@ -599,6 +607,7 @@ export default function BookingPages({ BookingData }) {
     // Format and return the subtotal
     return formatPrice(conformSubTotal);
   };
+
   const getPriceForType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
     const AdditionalPrice = Additional.filter((item) => item.index === idx);
@@ -651,12 +660,12 @@ export default function BookingPages({ BookingData }) {
     0
   );
 
-  const totalSum =
-    HandlePromo === false
-      ? PackagePrices + adultadiPrices + adPrice
-      : PromoData.total_amount !== undefined
-      ? PromoData.total_amount
-      : PackagePrices + adultadiPrices;
+  // const totalSum =
+  //   HandlePromo === false
+  //     ? PackagePrices + adultadiPrices + adPrice
+  //     : PromoData.total_amount !== undefined
+  //     ? PromoData.total_amount
+  //     : PackagePrices + adultadiPrices;
 
   // calling api
 
@@ -732,15 +741,39 @@ export default function BookingPages({ BookingData }) {
     return response.user ? [response.user] : [];
   };
 
-  const taxRate = 0.19;
+  // const taxRate = 0.19;
 
-  const taxAmount = JSON.parse(totalSum) * taxRate;
+  // const taxAmount = JSON.parse(totalSum) * taxRate;
 
-  const totalWithTax = JSON.parse(totalSum);
+  // const totalWithTax = JSON.parse(totalSum);
 
-  const formattedTaxAmount = taxAmount.toFixed(2);
+  // const formattedTaxAmount = taxAmount.toFixed(2);
 
-  const TotalPaidAmount = totalWithTax.toFixed(2);
+  // const TotalPaidAmount = totalWithTax.toFixed(2);
+
+  useEffect(() => {
+    // Ensure the values are always numbers
+    const calculatedTotalSum = Number(
+      HandlePromo === false
+        ? PackagePrices + adultadiPrices + adPrice
+        : PromoData?.total_amount !== undefined
+        ? PromoData.total_amount
+        : PackagePrices + adultadiPrices
+    );
+
+    // Check if it's a valid number before setting state
+    if (!isNaN(calculatedTotalSum)) {
+      setTotalSum(calculatedTotalSum);
+
+      // Calculate tax
+      const calculatedTax = calculatedTotalSum * taxRate;
+      setTaxAmount(calculatedTax);
+      setFormattedTaxAmount(calculatedTax.toFixed(2));
+      setTotalPaidAmount(calculatedTotalSum.toFixed(2));
+    } else {
+      console.error("Invalid totalSum value:", calculatedTotalSum);
+    }
+  }, [PackagePrices, adultadiPrices, adPrice, HandlePromo, PromoData]);
 
   // for form sunmiter button onclick event
 
@@ -770,9 +803,20 @@ export default function BookingPages({ BookingData }) {
 
     const BackAdultData = localStorage.getItem("AllAdultsData");
     const LoginAdultData = localStorage.getItem("LoginUserData");
+    const PrevTotal = localStorage.getItem("BookingTotal");
 
     let parsedAdultData = null;
     let parsedLoginData = null;
+
+    if (PrevTotal && PrevTotal !== "undefined") {
+      const PreTotal = JSON.parse(PrevTotal);
+      console.log(PreTotal, "PreTotal");
+
+      setTotalPaidAmount(PreTotal.GrandTotal);
+      setDiscount(PreTotal.Discount);
+      setpromo(PreTotal.Discount.coupon_name);
+      setHandlePromo(true);
+    }
 
     try {
       if (BackAdultData && BackAdultData !== "undefined") {
@@ -1539,6 +1583,17 @@ export default function BookingPages({ BookingData }) {
     }
   };
 
+  useEffect(() => {
+    const calculatedSubTotal =
+      Number(PackagePrices) + Number(adultadiPrices) + Number(adPrice);
+    setSubTotal(calculatedSubTotal);
+  }, [PackagePrices, adultadiPrices, adPrice]);
+
+  const BookingTotal = {
+    Discount: Discount,
+    GrandTotal: TotalPaidAmount,
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -1548,6 +1603,8 @@ export default function BookingPages({ BookingData }) {
     localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
     localStorage.setItem("AllAdultsData", JSON.stringify(formValues));
     localStorage.setItem("LoginUserData", JSON.stringify(userData));
+    localStorage.setItem("BookingTotal", JSON.stringify(BookingTotal));
+
     handleUpdateLocalStorage();
 
     setTimeout(() => {
@@ -1823,18 +1880,13 @@ export default function BookingPages({ BookingData }) {
                   <div className="">
                     <div className="d-flex items-center justify-between">
                       <div className="fw-500">{translate("Subtotal")}</div>
-                      <div className="">
-                        {" "}
-                        {formatPrice(
-                          PackagePrices + adultadiPrices + adPrice
-                        )}{" "}
-                      </div>
+                      <div className=""> {formatPrice(SubTotal)} </div>
                     </div>
 
                     <div className={discountClass}>
                       <div className={`d-flex items-center justify-between `}>
                         <div className="fw-500">
-                          {translate("Discount")} {`(${promo})`}
+                          {translate("Discount")} {`(${Discount.coupon_name})`}
                         </div>
                         <div className="">
                           {" "}

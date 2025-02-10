@@ -602,6 +602,8 @@ export default function TourSingleSidebar({
       localStorage.removeItem("AllAdultsData");
       localStorage.removeItem("BookingData");
       localStorage.removeItem("getUserData");
+      localStorage.removeItem("LoginUserData");
+      localStorage.removeItem("BookingTotal");
     }
   };
 
