@@ -28,14 +28,13 @@ const customStyles = {
     // borderRadius: '10px',
     width: "100%", // Adjust width as needed
     maxWidth: "600px", // Adjust max-width as needed
-    height: "75vh", 
+    height: "75vh",
     overflowY: "auto",
     backgroundColor: "#fff",
   },
 };
 
 export default function CheckoutForm({
-  
   reservation_id,
   subtotal,
   AddpersonData,
@@ -53,13 +52,15 @@ export default function CheckoutForm({
   amount = 0,
   payableAmount = 0,
   AddPersonAmount = 0,
+  AddpersonselectedOptions,
 }) {
-
   const { dispatch, customer } = useAuthContext();
-  const {formatPrice} = useCurrency();
+  const { formatPrice } = useCurrency();
   const stripe = useStripe();
   const { translate } = useTranslation();
-  console.log(paidData,"paid")
+  console.log(paidData, "paid");
+  console.log(AddpersonselectedOptions, "selectedOptions for checkout form");
+
   const elements = useElements();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -67,74 +68,86 @@ export default function CheckoutForm({
   const [cardDetails, setCardDetails] = useState({});
   const calculateFeeFromPayableAmount = (payableAmount) => {
     // Ensure payableAmount is a string
-    const amountString = typeof payableAmount === 'string' ? payableAmount : payableAmount.toString();
-    
+    const amountString =
+      typeof payableAmount === "string"
+        ? payableAmount
+        : payableAmount.toString();
+
     // Check if the amountString contains a period
     let numericAmount;
-    if (amountString.includes('.')) {
+    if (amountString.includes(".")) {
       // Format: "40.000,00"
-      numericAmount = parseFloat(amountString.replace('.', '').replace(',', '.'));
+      numericAmount = parseFloat(
+        amountString.replace(".", "").replace(",", ".")
+      );
     } else {
       // Format: "500,00"
-      numericAmount = parseFloat(amountString.replace(',', '.'));
+      numericAmount = parseFloat(amountString.replace(",", "."));
     }
-  
+
     // Calculate the fee (3%)
     const feePercentage = 0.03;
     const fee = numericAmount * feePercentage;
-  
+
     return fee; // Return the calculated fee
   };
   const calculateTotalWithFee = (amount) => {
-   
     const feePercentage = 0.03;
-    const fee = amount * feePercentage; 
-    return  fee; 
+    const fee = amount * feePercentage;
+    return fee;
   };
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
+    return new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "EUR",
     }).format(amount); // Convert to euros (assuming amount is in cents)
   };
 
-  const formatPayable  = (amountString) => {
+  const formatPayable = (amountString) => {
     let numericAmount;
 
-    if (amountString.includes('.')) {
+    if (amountString.includes(".")) {
       // Format: "40.000,00"
-      numericAmount = parseFloat(amountString.replace('.', '').replace(',', '.'));
+      numericAmount = parseFloat(
+        amountString.replace(".", "").replace(",", ".")
+      );
     } else {
       // Format: "500,00"
-      numericAmount = parseFloat(amountString.replace(',', '.'));
+      numericAmount = parseFloat(amountString.replace(",", "."));
     }
     return numericAmount;
-  }
+  };
   const parseAmount = (amountString) => {
     // Ensure amountString is a string
-    const str = typeof amountString === 'string' ? amountString : amountString.toString();
-  
+    const str =
+      typeof amountString === "string" ? amountString : amountString.toString();
+
     // Check if the amountString contains a period
-    if (str.includes('.')) {
+    if (str.includes(".")) {
       // Format: "40.000,00"
-      return parseFloat(str.replace('.', '').replace(',', '.'));
+      return parseFloat(str.replace(".", "").replace(",", "."));
     } else {
       // Format: "500,00"
-      return parseFloat(str.replace(',', '.'));
+      return parseFloat(str.replace(",", "."));
     }
   };
-  const totalAmount = (amount === 0 ? calculateFeeFromPayableAmount(payableAmount) : calculateTotalWithFee(amount));
-  const payable = ((amount === 0 ? parseAmount(payableAmount) : amount) / 100) + (totalAmount / 100);
+  const totalAmount =
+    amount === 0
+      ? calculateFeeFromPayableAmount(payableAmount)
+      : calculateTotalWithFee(amount);
+  const payable =
+    (amount === 0 ? parseAmount(payableAmount) : amount) / 100 +
+    totalAmount / 100;
 
   const AddPersonTotal = calculateTotalWithFee(AddPersonAmount);
-  const PayablePersonAmount = AddPersonAmount + AddPersonTotal
+  const PayablePersonAmount = AddPersonAmount + AddPersonTotal;
 
   const addBooking = async (transactionId, amount) => {
     const newBooking = {
       ...Booking,
       transaction_id: transactionId,
-      amount_paid: (amount- totalAmount),
-      stripe_fees : totalAmount
+      amount_paid: amount - totalAmount,
+      stripe_fees: totalAmount,
     };
 
     try {
@@ -143,7 +156,11 @@ export default function CheckoutForm({
         showSuccessToast(translate, "Booking successful");
         handleClose();
         // router.push("#ref");
-        document.querySelector("#ref").scrollIntoView({block:'start',inline:'start',behavior: "smooth"});
+        document.querySelector("#ref").scrollIntoView({
+          block: "start",
+          inline: "start",
+          behavior: "smooth",
+        });
         setBookingStage(2);
         setReservationID(response.reservationNumber);
         setPaidAmount(amount);
@@ -181,9 +198,10 @@ export default function CheckoutForm({
         ? "child"
         : "baby"
     );
-    formData.append("title", RadioValue.title);
-    formData.append("price", RadioValue.price);
-    formData.append("additional_order", RadioValue.order);
+    // formData.append("title", RadioValue.title);
+    // formData.append("price", RadioValue.price);
+    // formData.append("additional_order", RadioValue.order);
+    formData.append("services", JSON.stringify(AddpersonselectedOptions));
     formData.append("total", subtotal);
 
     try {
@@ -198,18 +216,16 @@ export default function CheckoutForm({
         setTimeout(() => {
           // window.location.reload();
         }, 1500);
-       
-        
       } else {
-        showErrorToast(translate , "Person was not added");
+        showErrorToast(translate, "Person was not added");
       }
     } catch (e) {
       console.error(e);
     }
   };
   const InstallmentPaid = async (transactionId) => {
-    console.log(transactionId)
-    
+    console.log(transactionId);
+
     const formData = new FormData();
 
     formData.append("reservation_id", paidData.reservation_id);
@@ -230,10 +246,8 @@ export default function CheckoutForm({
         handleClose();
         closePaymentModal();
         fetchBookingDetails();
-       
-        
       } else {
-        showErrorToast(translate , "Payment failed");
+        showErrorToast(translate, "Payment failed");
       }
     } catch (e) {
       console.error(e);
@@ -249,7 +263,6 @@ export default function CheckoutForm({
     setIsProcessing(true);
 
     if (amount) {
-   
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -264,8 +277,6 @@ export default function CheckoutForm({
       ) {
         showErrorToast(translate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-       
-      
         const newAmount = paymentIntent.amount / 100;
         addBooking(paymentIntent.id, newAmount);
       }
@@ -285,13 +296,11 @@ export default function CheckoutForm({
       ) {
         showErrorToast(tarnslate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      
         const newAmount = paymentIntent.amount / 100;
         FetchAddperson();
       }
     }
     if (payableAmount) {
-    
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -306,17 +315,14 @@ export default function CheckoutForm({
       ) {
         showErrorToast(tarnslate, "Payment already succeeded");
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        console.log(paymentIntent.id,"id")
+        console.log(paymentIntent.id, "id");
         const newAmount = paymentIntent.amount / 100;
         InstallmentPaid(paymentIntent.id);
       }
     }
 
-
-
     setIsProcessing(false);
   };
-
 
   return (
     <Modal
@@ -328,38 +334,45 @@ export default function CheckoutForm({
       <button onClick={handleClose}>
         <IoClose size={20} />
       </button>
-      {(AddPersonAmount !== 0 && AddPersonAmount) ? (
-  <>
-    <h5 className="mt-2">
-      {translate("Total Amount")}: <span className="fw_400">{formatCurrency(AddPersonAmount)}</span>
-    </h5>
-    <h5>
-      {translate("Payment Gateway Fees (3%)")}: <span className="fw_400">{formatCurrency(AddPersonTotal)}</span>
-    </h5>
-    <h5>
-      {translate("Amount Payable")}: <span className="fw_400">{formatCurrency(PayablePersonAmount)}</span>
-    </h5>
-  </>
-  
-) : 
+      {AddPersonAmount !== 0 && AddPersonAmount ? (
+        <>
+          <h5 className="mt-2">
+            {translate("Total Amount")}:{" "}
+            <span className="fw_400">{formatCurrency(AddPersonAmount)}</span>
+          </h5>
+          <h5>
+            {translate("Payment Gateway Fees (3%)")}:{" "}
+            <span className="fw_400">{formatCurrency(AddPersonTotal)}</span>
+          </h5>
+          <h5>
+            {translate("Amount Payable")}:{" "}
+            <span className="fw_400">
+              {formatCurrency(PayablePersonAmount)}
+            </span>
+          </h5>
+        </>
+      ) : (
+        <>
+          <h5 className="mt-2">
+            {translate("Total Amount")}:{" "}
+            <span className="fw_400">
+              {payableAmount !== 0
+                ? `${payableAmount} €`
+                : formatCurrency(amount)}
+            </span>
+          </h5>
+          <h5>
+            {translate("Payment Gateway Fees (3%)")}:{" "}
+            <span className="fw_400">{formatCurrency(totalAmount)}</span>
+          </h5>
+          <h5>
+            {translate("Amount Payable")}:{" "}
+            <span className="fw_400">{formatCurrency(payable * 100)}</span>
+          </h5>
+        </>
+      )}
 
-
-
-    <>
-      <h5 className="mt-2">
-        {translate("Total Amount")}: <span className="fw_400">{payableAmount !== 0 ? `${payableAmount} €` : formatCurrency(amount)}</span>
-      </h5>
-      <h5>
-        {translate("Payment Gateway Fees (3%)")}: <span className="fw_400">{formatCurrency(totalAmount)}</span>
-      </h5>
-      <h5>
-        {translate("Amount Payable")}: <span className="fw_400">{formatCurrency(payable * 100)}</span>
-      </h5>
-    </>
-
-} 
-
-      <hr/>
+      <hr />
       <form
         className="position-relative"
         id="payment-form"

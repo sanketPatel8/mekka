@@ -685,20 +685,18 @@ const CustomerDetaTable = () => {
   };
 
   const convertDotToDashDate = (dateString) => {
-
-    console.log(dateString,"dash string")
+    console.log(dateString, "dash string");
     if (!dateString) return "";
     // Split the date string by "."
     const [day, month, year] = dateString.split(".");
     // Return the date in "DD-MM-YYYY" format
-    const days =  `${day}-${month}-${year}`;
-    console.log(days,"day1")
+    const days = `${day}-${month}-${year}`;
+    console.log(days, "day1");
     return `${year}-${month}-${day}`;
   };
-  
 
   const convertGermanToISO = (germanDate) => {
-    console.log(germanDate,"german")
+    console.log(germanDate, "german");
     if (!germanDate) return "";
     const [day, month, year] = germanDate.split(".");
     return `${day}.${month}.${year}`; // Return in German format
@@ -719,7 +717,10 @@ const CustomerDetaTable = () => {
     formData.append("reservation_person_id", PersonalUserID);
     formData.append("name", editCustomerData.name);
     formData.append("surname", editCustomerData.surname);
-    formData.append("birthday", convertDotToDashDate(editCustomerData.birthday));
+    formData.append(
+      "birthday",
+      convertDotToDashDate(editCustomerData.birthday)
+    );
     formData.append("gender", editCustomerData.gender);
     formData.append("nationality", editCustomerData.nationality);
     formData.append("main_person", editCustomerData.id);
@@ -853,30 +854,32 @@ const CustomerDetaTable = () => {
     const todayString = today.toISOString().split("T")[0];
     if (BookingDetails?.reservation?.date_begin) {
       const startDateString = BookingDetails?.reservation?.date_begin;
-      console.log(startDateString,"start date")
+      console.log(startDateString, "start date");
       if (startDateString) {
         try {
-          const [day, month, year] = startDateString.split('.').map(Number);
+          const [day, month, year] = startDateString.split(".").map(Number);
 
           // Create a new Date object (months are 0-indexed in JavaScript)
           const startDate = new Date(year, month - 1, day); // month - 1 because months are 0-indexed
-  
+
           // Check if the date is valid
           if (isNaN(startDate.getTime())) {
-              throw new Error("Invalid start date");
+            throw new Error("Invalid start date");
           }
-  
+
           // Calculate six days before
-          const sixDaysBefore = new Date(startDate.getTime() - 5 * 24 * 60 * 60 * 1000);
-          
+          const sixDaysBefore = new Date(
+            startDate.getTime() - 5 * 24 * 60 * 60 * 1000
+          );
+
           // Check if sixDaysBefore is valid
           if (isNaN(sixDaysBefore.getTime())) {
-              throw new Error("Invalid date for sixDaysBefore");
+            throw new Error("Invalid date for sixDaysBefore");
           }
-  
+
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
-  
-        console.log("Six Days Before String:", sixDaysBeforeString); // Log the result
+
+          console.log("Six Days Before String:", sixDaysBeforeString); // Log the result
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
@@ -1302,6 +1305,8 @@ const CustomerDetaTable = () => {
       );
     }
   };
+
+  console.log(selectedOptions, "select service for add person ");
 
   return (
     <div>
@@ -2388,8 +2393,8 @@ const CustomerDetaTable = () => {
                             type="date"
                             required
                             value={convertDotToDashDate(
-                              editCustomerData.birthday)
-                            } // Convert German date to ISO for input
+                              editCustomerData.birthday
+                            )} // Convert German date to ISO for input
                             onChange={(e) => {
                               const newDate = e.target.value; // Get the new date input
                               // Convert back to "DD.MM.YYYY" format before saving
@@ -2399,7 +2404,7 @@ const CustomerDetaTable = () => {
                                 birthday: `${year}.${month}.${day}`, // Save in the original format
                               });
                             }}
-                                                      max={getTodayDate()}
+                            max={getTodayDate()}
                             onFocus={handleDateFocus}
                             onKeyDown={(e) => e.preventDefault()}
                           />
@@ -2665,6 +2670,7 @@ const CustomerDetaTable = () => {
               reservation_id={BookingDetails.reservation?.id}
               subtotal={subtotal}
               PandingAmount={PandingAmount}
+              AddpersonselectedOptions={selectedOptions}
             />
           )}
         </>

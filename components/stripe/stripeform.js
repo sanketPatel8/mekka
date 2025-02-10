@@ -1,46 +1,63 @@
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import axios from 'axios';
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 // import CheckoutForm from './checkoutform';
-import { useCurrency } from '@/app/context/currencyContext';
-import dynamic from 'next/dynamic';
-const CheckoutFormPage = dynamic(() => import('./checkoutform'), {
-  ssr: false 
+import { useCurrency } from "@/app/context/currencyContext";
+import dynamic from "next/dynamic";
+const CheckoutFormPage = dynamic(() => import("./checkoutform"), {
+  ssr: false,
 });
-function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPersonAmount,fetchBookingDetails,closePaymentModal ,showStripeModal,paidData, subtotal ,  handleClose, amount, setPaidAmount,  setPaymentStatus,stripePromise,Booking,setBookingStage,setReservationID , reservation_id , AddpersonData }) {
-
-
-
+function Stripeform({
+  RadioValue,
+  closeModal,
+  PandingAmount,
+  payableAmount,
+  AddPersonAmount,
+  fetchBookingDetails,
+  closePaymentModal,
+  showStripeModal,
+  paidData,
+  subtotal,
+  handleClose,
+  amount,
+  setPaidAmount,
+  setPaymentStatus,
+  stripePromise,
+  Booking,
+  setBookingStage,
+  setReservationID,
+  reservation_id,
+  AddpersonData,
+  AddpersonselectedOptions,
+}) {
   const [newStripePromise, setNewStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
-  const {currency} = useCurrency();
+  const { currency } = useCurrency();
 
   const calculateTotalWithFee = (amount) => {
     const feePercentage = 0.03;
-    const fee = amount * feePercentage; 
-    return amount + fee; 
+    const fee = amount * feePercentage;
+    return amount + fee;
   };
   const getClientSecret = async () => {
     const api = axios.create({
-      baseURL: 'https://api.stripe.com/v1/',
+      baseURL: "https://api.stripe.com/v1/",
     });
 
     if (amount) {
-
-    
       const newAmount = parseInt(amount) * 100; // Convert to cents
       const totalAmount = calculateTotalWithFee(newAmount); // Calculate total with fee
-     
-      const data = {
-        "amount": Math.round(totalAmount),
-        "currency": 'EUR',
-        "payment_method_types[0]": 'card',
-      }
 
-      const res = await api.post('payment_intents', data, {
+      const data = {
+        amount: Math.round(totalAmount),
+        currency: "EUR",
+        "payment_method_types[0]": "card",
+      };
+
+      const res = await api.post("payment_intents", data, {
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
+          "Content-type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`,
         },
       });
@@ -48,28 +65,30 @@ function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPerso
       if (res && res.data) {
         setClientSecret(res.data.client_secret);
       }
-    } else if(payableAmount){
+    } else if (payableAmount) {
       const parseEuroAmount = (amountString) => {
         // Remove the thousands separator and replace the decimal separator
-        const normalizedAmount = amountString.replace(/\./g, '').replace(',', '.');
+        const normalizedAmount = amountString
+          .replace(/\./g, "")
+          .replace(",", ".");
         return parseFloat(normalizedAmount); // Convert to float
       };
-    
+
       const parsedAmount = parseEuroAmount(payableAmount);
 
       const newAmount = parsedAmount * 100;
 
-      const totalAmount = calculateTotalWithFee(newAmount); 
- 
-      const data = {
-        "amount": Math.round(totalAmount),
-        "currency": 'EUR',
-        "payment_method_types[0]": 'card',
-      }
+      const totalAmount = calculateTotalWithFee(newAmount);
 
-      const res = await api.post('payment_intents', data, {
+      const data = {
+        amount: Math.round(totalAmount),
+        currency: "EUR",
+        "payment_method_types[0]": "card",
+      };
+
+      const res = await api.post("payment_intents", data, {
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
+          "Content-type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`,
         },
       });
@@ -77,20 +96,19 @@ function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPerso
       if (res && res.data) {
         setClientSecret(res.data.client_secret);
       }
-
-    } else if(AddPersonAmount){
+    } else if (AddPersonAmount) {
       const newAmount = parseInt(AddPersonAmount) * 100; // Convert to cents
       const totalAmount = calculateTotalWithFee(newAmount); // Calculate total with fee
- 
-      const data = {
-        "amount": Math.round(totalAmount),
-        "currency": 'EUR',
-        "payment_method_types[0]": 'card',
-      }
 
-      const res = await api.post('payment_intents', data, {
+      const data = {
+        amount: Math.round(totalAmount),
+        currency: "EUR",
+        "payment_method_types[0]": "card",
+      };
+
+      const res = await api.post("payment_intents", data, {
         headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
+          "Content-type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`,
         },
       });
@@ -98,45 +116,54 @@ function Stripeform({RadioValue, closeModal,PandingAmount,payableAmount,AddPerso
       if (res && res.data) {
         setClientSecret(res.data.client_secret);
       }
-
-      
-    }else{
+    } else {
       setClientSecret("");
     }
-  }
+  };
 
   useEffect(() => {
-
-    !stripePromise && setNewStripePromise(loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY));
+    !stripePromise &&
+      setNewStripePromise(
+        loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+      );
   }, [stripePromise]);
 
   useEffect(() => {
     getClientSecret();
-  }, [])
+  }, []);
+
+  console.log(AddpersonselectedOptions, "selectedOptions for stripe form");
+
   return (
-    clientSecret && <Elements stripe={stripePromise || newStripePromise} options={{ clientSecret }}>
-      <CheckoutFormPage
-        handleClose={handleClose}
-        showStripeModal={showStripeModal}
-        Booking={Booking}
-        setBookingStage={setBookingStage}
-        setReservationID={setReservationID}
-        setPaidAmount={setPaidAmount}
-        AddpersonData={AddpersonData}
-        reservation_id={reservation_id}
-        RadioValue={RadioValue}
-        subtotal={subtotal}
-        closeModal={closeModal}
-        paidData = {paidData}
-        closePaymentModal = {closePaymentModal}
-        fetchBookingDetails={fetchBookingDetails}
-        amount = {amount}
-        payableAmount = {payableAmount}
-        AddPersonAmount = {AddPersonAmount}
-        PandingAmount={PandingAmount}
-      />
-    </Elements>
-  )
+    clientSecret && (
+      <Elements
+        stripe={stripePromise || newStripePromise}
+        options={{ clientSecret }}
+      >
+        <CheckoutFormPage
+          handleClose={handleClose}
+          showStripeModal={showStripeModal}
+          Booking={Booking}
+          setBookingStage={setBookingStage}
+          setReservationID={setReservationID}
+          setPaidAmount={setPaidAmount}
+          AddpersonData={AddpersonData}
+          reservation_id={reservation_id}
+          RadioValue={RadioValue}
+          subtotal={subtotal}
+          closeModal={closeModal}
+          paidData={paidData}
+          closePaymentModal={closePaymentModal}
+          fetchBookingDetails={fetchBookingDetails}
+          amount={amount}
+          payableAmount={payableAmount}
+          AddPersonAmount={AddPersonAmount}
+          PandingAmount={PandingAmount}
+          AddpersonselectedOptions={AddpersonselectedOptions}
+        />
+      </Elements>
+    )
+  );
 }
 
-export default Stripeform
+export default Stripeform;
