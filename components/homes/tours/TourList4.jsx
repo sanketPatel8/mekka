@@ -351,8 +351,8 @@ export default function TourList4({
                           </div>
                         </p>
 
-                        {elm?.company_name !== " " &&
-                          elm?.company_name !== null && (
+                        {elm?.company_code !== " " &&
+                          elm?.company_code !== null && (
                             <p className="d-flex items-center mt-5">
                               <div className="d-flex items-center x-gap-5">
                                 {/* <Stars star={elm?.rating_count} font={12} /> */}
@@ -367,7 +367,7 @@ export default function TourList4({
                                   {translate("Organizer")} :{" "}
                                 </span>
                                 {/* {elm?.rating_count}) - */}
-                                {elm?.company_name}
+                                {elm?.company_code}
                               </div>
                             </p>
                           )}

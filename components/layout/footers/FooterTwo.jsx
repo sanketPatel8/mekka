@@ -47,7 +47,6 @@ export default function FooterTwo() {
     formData.append("email", email);
 
     const response = await POST.request({ form: formData, url: "newsemail" });
-   
 
     if (response.status === "1") {
       showSuccessToast(translate, "Email successfully added");
@@ -61,12 +60,12 @@ export default function FooterTwo() {
     <footer className="footer -type-1 -dark bg-info-2 text-white">
       <div className="footer__main">
         <div className="footer__bg">
-          <Image
+          {/* <Image
             width="1800"
             height="627"
             src="/img/footer/1/bg.svg"
             alt="image"
-          />
+          /> */}
         </div>
 
         <div className="container">

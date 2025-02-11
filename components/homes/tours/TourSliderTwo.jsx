@@ -33,7 +33,6 @@ export default function TourSliderTwo({ setLength }) {
     }
     return `${Math.round(distance / 10) * 10} m`;
   };
-  
 
   useEffect(() => {
     setLength(BestSellerData.length);
@@ -68,7 +67,7 @@ export default function TourSliderTwo({ setLength }) {
     <section className="relative">
       <div className="sectionBg -w-1530 rounded-12 "></div>
 
-      <div className="container">
+      <div className="">
         <div className="row justify-between items-end "></div>
 
         <div className="relative pt-50 sm:pt-20">
@@ -153,8 +152,8 @@ export default function TourSliderTwo({ setLength }) {
                             }`}
                           >
                             <FaPersonWalking color="white" size={18} />
-                            Zu Kaaba {roundDistance(parseInt(elm?.distance_to_hotel))} 
-
+                            Zu Kaaba{" "}
+                            {roundDistance(parseInt(elm?.distance_to_hotel))}
                           </div>
 
                           <div
@@ -178,7 +177,7 @@ export default function TourSliderTwo({ setLength }) {
                               <div className="d-flex items-center x-gap-5">
                                 {/* <Stars star={elm?.rating_count} font={12} /> */}
                               </div>
-                              {elm?.company_name && (
+                              {elm?.company_code && (
                                 <div className="text-14 ml-5">
                                   <span className="fw-500">{elm?.rating}</span>
                                   {/* {elm?.rating_count}) -{" "} */}
@@ -189,9 +188,9 @@ export default function TourSliderTwo({ setLength }) {
                                       size={20}
                                     />{" "}
                                     <span>
-                                      {elm?.company_name == null
+                                      {elm?.company_code == null
                                         ? "  "
-                                        : elm?.company_name}{" "}
+                                        : elm?.company_code}{" "}
                                     </span>
                                   </div>
                                 </div>

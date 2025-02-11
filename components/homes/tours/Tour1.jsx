@@ -20,7 +20,7 @@ export default function Tour1() {
     }
     return `${Math.round(distance / 10) * 10} m`;
   };
-  
+
   useEffect(() => {
     const fetchData = async (id) => {
       const sendData = {
@@ -48,7 +48,7 @@ export default function Tour1() {
       {LatestPackage?.Tours?.length !== 0 && (
         <div className="container">
           <div className="row justify-between items-end y-gap-10">
-            <div className="col-auto">
+            <div className="col-lg-auto col-md-12 col-12">
               <h2
                 data-aos="fade-right"
                 data-aos-delay=""
@@ -58,7 +58,7 @@ export default function Tour1() {
               </h2>
             </div>
 
-            <div className="col-auto">
+            <div className="col-lg-auto col-md-12 col-12 sm-see-all-set">
               <Link
                 href={"/tour?allType=All"}
                 data-aos="fade-left"
@@ -74,14 +74,14 @@ export default function Tour1() {
           <div
             data-aos="fade-up"
             data-aos-delay=""
-            className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300"
+            className="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300 px-0"
           >
             {LatestPackage?.Tours?.length > 0 && (
               <div
                 className={`${
                   LatestPackage.Tours.length <= 2
-                    ? "d-flex flex-wrap"
-                    : "row mx-auto"
+                    ? "d-flex flex-wrap gap-1-rem"
+                    : "row mx-auto gap-1-rem"
                 }`}
               >
                 {LatestPackage?.Tours?.slice(0, 8)?.map((elm, i) => (
@@ -89,13 +89,13 @@ export default function Tour1() {
                     key={i}
                     className={`${
                       LatestPackage.Tours.length <= 2
-                        ? "col-lg-3 col-md-6 d-flex flex-column my-2"
-                        : "col-lg-3 col-md-6 my-2"
+                        ? "col-lg-3 col-md-6 col-12 d-flex flex-column my-2 "
+                        : "col-lg-3 col-md-6 my-2 mx-0 px-0"
                     }`}
                   >
                     <Link
                       href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
-                      className="tourCard -type-1 py-10 px-10 border-1 rounded-12 mx-2 -hover-shadow"
+                      className="tourCard -type-1 py-10 px-10 border-1 rounded-12 -hover-shadow"
                     >
                       <div className="tourCard__header">
                         <div className="tourCard__image ratio ratio-28:20">
@@ -138,7 +138,8 @@ export default function Tour1() {
                           }`}
                         >
                           <FaPersonWalking color="white" size={18} />
-                          Zu Kaaba {roundDistance(parseInt(elm?.distance_to_hotel))} 
+                          Zu Kaaba{" "}
+                          {roundDistance(parseInt(elm?.distance_to_hotel))}
                         </div>
 
                         <div
@@ -158,7 +159,7 @@ export default function Tour1() {
                             <div className="d-flex items-center x-gap-5">
                               {/* <Stars star={elm?.rating_count} font={12} /> */}
                             </div>
-                            {elm?.company_name && (
+                            {elm?.company_code && (
                               <div className="text-14 ml-5">
                                 <span className="fw-500">{elm?.rating}</span>
                                 {/* {elm?.rating_count}) -{" "} */}
@@ -169,9 +170,9 @@ export default function Tour1() {
                                     size={20}
                                   />{" "}
                                   <span>
-                                    {elm?.company_name == null
+                                    {elm?.company_code == null
                                       ? "  "
-                                      : elm?.company_name}{" "}
+                                      : elm?.company_code}{" "}
                                   </span>
                                 </div>
                               </div>

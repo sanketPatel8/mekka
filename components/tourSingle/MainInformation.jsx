@@ -94,11 +94,11 @@ export default function MainInformation({ PAckageData }) {
           <div className="row x-gap-20 y-gap-20 items-center pt-20">
             <div className="col-auto mr-10 px-0">
               <div className="d-flex items-center">
-              {InformationData?.Tour_Details?.tour_details?.company_code !== "" && InformationData?.Tour_Details?.tour_details?.company_name !== null && (
+              {InformationData?.Tour_Details?.tour_details?.company_code !== "" && InformationData?.Tour_Details?.tour_details?.company_code !== null && (
       
                 <div className="d-flex items-center x-gap-5 mx-2">
                 <PiBuildingApartmentFill   color="#dabf4f" className="" size={25} /> <span>
-                {InformationData?.Tour_Details?.tour_details?.company_name}
+                {InformationData?.Tour_Details?.tour_details?.company_code}
                 </span>
                 </div>
               

@@ -30,7 +30,7 @@ export default function TourSlderOne() {
     }
     return `${Math.round(distance / 10) * 10} m`;
   };
-  
+
   const fetchData = async (id) => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -66,7 +66,7 @@ export default function TourSlderOne() {
       {TopTranding.length !== 0 && (
         <div className="container">
           <div className="row justify-between items-end y-gap-10">
-            <div className="col-auto">
+            <div className="col-lg-auto col-md-12 col-12">
               <h2
                 data-aos="fade-up"
                 data-aos-delay=""
@@ -76,7 +76,7 @@ export default function TourSlderOne() {
               </h2>
             </div>
 
-            <div className="col-auto">
+            <div className="col-lg-auto col-md-12 col-12 sm-see-all-set">
               <Link
                 href={"/tour?allType=All"}
                 data-aos="fade-right"
@@ -171,7 +171,8 @@ export default function TourSlderOne() {
                               }`}
                             >
                               <FaPersonWalking color="white" size={18} />
-                              Zu Kaaba {roundDistance(parseInt(elm?.distance_to_hotel))} 
+                              Zu Kaaba{" "}
+                              {roundDistance(parseInt(elm?.distance_to_hotel))}
                             </div>
 
                             <div
@@ -196,7 +197,7 @@ export default function TourSlderOne() {
                                 <div className="d-flex items-center x-gap-5">
                                   {/* <Stars star={elm?.rating_count} font={12} /> */}
                                 </div>
-                                {elm?.company_name && (
+                                {elm?.company_code && (
                                   <div className="text-14 ml-5">
                                     <span className="fw-500">
                                       {elm?.rating}
@@ -209,9 +210,9 @@ export default function TourSlderOne() {
                                         size={20}
                                       />{" "}
                                       <span>
-                                        {elm?.company_name == null
+                                        {elm?.company_code == null
                                           ? "  "
-                                          : elm?.company_name}{" "}
+                                          : elm?.company_code}{" "}
                                       </span>
                                     </div>
                                   </div>
