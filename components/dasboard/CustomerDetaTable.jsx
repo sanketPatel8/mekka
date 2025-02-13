@@ -685,18 +685,16 @@ const CustomerDetaTable = () => {
   };
 
   const convertDotToDashDate = (dateString) => {
-    console.log(dateString, "dash string");
     if (!dateString) return "";
     // Split the date string by "."
     const [day, month, year] = dateString.split(".");
     // Return the date in "DD-MM-YYYY" format
     const days = `${day}-${month}-${year}`;
-    console.log(days, "day1");
+
     return `${year}-${month}-${day}`;
   };
 
   const convertGermanToISO = (germanDate) => {
-    console.log(germanDate, "german");
     if (!germanDate) return "";
     const [day, month, year] = germanDate.split(".");
     return `${day}.${month}.${year}`; // Return in German format
@@ -854,7 +852,7 @@ const CustomerDetaTable = () => {
     const todayString = today.toISOString().split("T")[0];
     if (BookingDetails?.reservation?.date_begin) {
       const startDateString = BookingDetails?.reservation?.date_begin;
-      console.log(startDateString, "start date");
+
       if (startDateString) {
         try {
           const [day, month, year] = startDateString.split(".").map(Number);
@@ -878,8 +876,6 @@ const CustomerDetaTable = () => {
           }
 
           const sixDaysBeforeString = sixDaysBefore.toISOString().split("T")[0];
-
-          console.log("Six Days Before String:", sixDaysBeforeString); // Log the result
 
           if (sixDaysBeforeString > todayString) {
             setDateEnd(sixDaysBeforeString);
@@ -1186,12 +1182,16 @@ const CustomerDetaTable = () => {
   const stripeModalClose = () => {
     setShowStripeModal(false);
   };
-  const HandleInstallmentPay = (payable) => {
+
+  const HandleInstallmentPay = (payable, type) => {
     setAmount(payable);
+
+    console.log(pendingPaymentValue, "pendingPaymentValue");
+    console.log(type, "installment number");
 
     setPandingAmount(payable);
 
-    if (payable === pendingPaymentValue.secondAmount) {
+    if (payable === pendingPaymentValue.secondAmount && type == "2") {
       const data = {
         plan_id: pendingPaymentValue.id,
         payment_plan: 2,
@@ -1199,6 +1199,7 @@ const CustomerDetaTable = () => {
         reservation_id: BookingDetails.reservation?.id,
         // transaction_id: pendingPaymentValue.transaction_id,
       };
+      console.log("payment 2");
 
       setPaidData(data);
     } else {
@@ -1210,6 +1211,7 @@ const CustomerDetaTable = () => {
         transaction_id: pendingPaymentValue.transaction_id,
       };
       setPaidData(data);
+      console.log("payment 3");
     }
 
     setShowStripeModal(true);
@@ -1278,7 +1280,7 @@ const CustomerDetaTable = () => {
       const HotelPrices = ConvertHotelData.map((hotel) =>
         parseFloat(hotel.hotel_price)
       );
-      const FlightPrices = GetFlightData.map((Flight) =>
+      const FlightPrices = GetFlightData?.map((Flight) =>
         parseFloat(Flight.flight_amount)
       );
       const ConformPrice = HotelPrices[0] + HotelPrices[1] + FlightPrices[0];
@@ -1305,8 +1307,6 @@ const CustomerDetaTable = () => {
       );
     }
   };
-
-  console.log(selectedOptions, "select service for add person ");
 
   return (
     <div>
@@ -1905,7 +1905,8 @@ const CustomerDetaTable = () => {
                       BookingDetails?.paymentData?.type_payment_2 == 1
                         ? stripeModalClose()
                         : HandleInstallmentPay(
-                            pendingPaymentValue.secondAmount
+                            pendingPaymentValue.secondAmount,
+                            2
                           );
                     }}
                     disabled={BookingDetails?.paymentData?.type_payment_2 === 1}
@@ -1955,7 +1956,10 @@ const CustomerDetaTable = () => {
                     onClick={() => {
                       BookingDetails?.paymentData?.type_payment_3 == 1
                         ? stripeModalClose()
-                        : HandleInstallmentPay(pendingPaymentValue.thirdAmount);
+                        : HandleInstallmentPay(
+                            pendingPaymentValue.thirdAmount,
+                            3
+                          );
                     }}
                     disabled={BookingDetails?.paymentData?.type_payment_3 === 1}
                   >
