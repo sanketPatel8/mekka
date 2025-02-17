@@ -370,6 +370,8 @@ export default function Payment() {
   );
 
   const calculateTotalWithFee = (amount) => {
+    console.log(amount, "amount");
+
     const feePercentage = 0.03;
     const fee = amount * feePercentage;
     return fee;
@@ -589,7 +591,8 @@ export default function Payment() {
                             </label>
                           </div>
                           <label htmlFor="item2" className="lh-16 ml-15">
-                            {translate("Payment in advance. Payment installment is possible. Full Payment (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
+                            {translate(
+                              "Payment in advance. Payment installment is possible. Full Payment (using Visa, Mastercard, American Express, Japan Credit Bureau (JCB), Discover)"
                             )}
                           </label>
                         </div>
@@ -764,7 +767,9 @@ export default function Payment() {
                                     <span className="text-red"> *</span>
                                   </label>
                                   <span className="text-mekka ml-10">
-                                    {translate("This amount will be done using credit card (Stripe)")}
+                                    {translate(
+                                      "This amount will be done using credit card (Stripe)"
+                                    )}
                                   </span>
                                 </div>
                               </div>
@@ -780,7 +785,8 @@ export default function Payment() {
                                     min={minEndDate}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
-                                    {translate("1st Date")}<span className="text-red"> *</span>
+                                    {translate("1st Date")}
+                                    <span className="text-red"> *</span>
                                   </label>
                                 </div>
                               </div>
@@ -818,7 +824,8 @@ export default function Payment() {
                                     ref={dateInputRef}
                                   />
                                   <label className="lh-1 text-16 text-light-1">
-                                    {translate("2nd Date")}<span className="text-red"> *</span>
+                                    {translate("2nd Date")}
+                                    <span className="text-red"> *</span>
                                   </label>
                                 </div>
                               </div>
@@ -1208,11 +1215,13 @@ export default function Payment() {
                         <div className="col-md-3 col-6">
                           <span>{translate("Payment Method")}</span>
                           <div className="text-accent-2">
-                            {translate(laterPayment == 0 || laterPayment == null
-                              ? selectedCheckbox == 0
-                                ? "Direct Bank Transfer"
-                                : "Online"
-                              : "Pay Later")}
+                            {translate(
+                              laterPayment == 0 || laterPayment == null
+                                ? selectedCheckbox == 0
+                                  ? "Direct Bank Transfer"
+                                  : "Online"
+                                : "Pay Later"
+                            )}
                           </div>
                         </div>
                       </div>
@@ -1517,7 +1526,8 @@ export default function Payment() {
                         <div className="">
                           {formatCurrency(
                             calculateTotalWithFee(
-                              SideBarData?.BookingFild?.Total
+                              SideBarData?.BookingFild?.Total -
+                                SideBarData?.BookingFild?.Discount?.Discount
                             )
                           )}
                         </div>

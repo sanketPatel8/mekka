@@ -81,7 +81,7 @@ export default function Tour1() {
                 className={`${
                   LatestPackage.Tours.length <= 2
                     ? "d-flex flex-wrap gap-1-rem"
-                    : "row mx-auto gap-1-rem"
+                    : "row mx-auto"
                 }`}
               >
                 {LatestPackage?.Tours?.slice(0, 8)?.map((elm, i) => (
@@ -90,12 +90,12 @@ export default function Tour1() {
                     className={`${
                       LatestPackage.Tours.length <= 2
                         ? "col-lg-3 col-md-6 col-12 d-flex flex-column my-2 "
-                        : "col-lg-3 col-md-6 my-2 mx-0 px-0"
+                        : "col-lg-3 col-md-6 col-12 my-2 px-0"
                     }`}
                   >
                     <Link
                       href={`/package/${elm?.slug}?id=${elm?.id}&name=${elm?.slug}`}
-                      className="tourCard -type-1 py-10 px-10 border-1 rounded-12 -hover-shadow"
+                      className="tourCard -type-1 py-10 mx-lg-2 mx-md-0 mx-0 px-10 border-1 rounded-12 -hover-shadow"
                     >
                       <div className="tourCard__header">
                         <div className="tourCard__image ratio ratio-28:20">
