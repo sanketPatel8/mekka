@@ -381,17 +381,16 @@ export default function BookingPages({ BookingData }) {
 
   const [Additional, setAdditional] = useState([]);
 
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [PhoneValid, setPhoneValid] = useState(false);
+  // const [isFormValid, setIsFormValid] = useState(false);
 
-  useEffect(() => {
-    // Extract form values and validate
-    const allValues = Object.values(formValues).flat();
-    const isValid = validateForm(
-      allValues.map((field) => Object.values(field)).flat()
-    );
-    setIsFormValid(isValid);
-  }, [formValues]);
+  // useEffect(() => {
+  //   // Extract form values and validate
+  //   const allValues = Object.values(formValues).flat();
+  //   const isValid = validateForm(
+  //     allValues.map((field) => Object.values(field)).flat()
+  //   );
+  //   setIsFormValid(isValid);
+  // }, [formValues]);
 
   const getdefaultPriceforType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -581,10 +580,7 @@ export default function BookingPages({ BookingData }) {
   };
 
   const SubtotalPriceWithAdditional = (type, i) => {
-    // Get the original price for the given type and index
     const Original = getPriceForType(type, i);
-
-    // Log the Additional state for debugging
 
     // Filter to get the additional prices for the specific type and index
     const updatePrice = Additional.filter(
@@ -670,11 +666,13 @@ export default function BookingPages({ BookingData }) {
   // calling api
 
   // Function to fetch and apply promo code
+
   const FetchPromoApi = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       coupon_code: promo,
       total_amount: PackagePrices + adultadiPrices + adPrice, // Calculate total
+      email: formValues.Adult[0]?.email,
     };
 
     try {
@@ -741,16 +739,6 @@ export default function BookingPages({ BookingData }) {
     return response.user ? [response.user] : [];
   };
 
-  // const taxRate = 0.19;
-
-  // const taxAmount = JSON.parse(totalSum) * taxRate;
-
-  // const totalWithTax = JSON.parse(totalSum);
-
-  // const formattedTaxAmount = taxAmount.toFixed(2);
-
-  // const TotalPaidAmount = totalWithTax.toFixed(2);
-
   useEffect(() => {
     // Ensure the values are always numbers
     const calculatedTotalSum = Number(
@@ -769,11 +757,25 @@ export default function BookingPages({ BookingData }) {
       const calculatedTax = calculatedTotalSum * taxRate;
       setTaxAmount(calculatedTax);
       setFormattedTaxAmount(calculatedTax.toFixed(2));
-      setTotalPaidAmount(calculatedTotalSum.toFixed(2));
+
+      if (Object.keys(Discount).length > 0) {
+        setTotalPaidAmount(Discount?.total_amount);
+      } else {
+        setTotalPaidAmount(calculatedTotalSum.toFixed(2));
+      }
     } else {
       console.error("Invalid totalSum value:", calculatedTotalSum);
     }
-  }, [PackagePrices, adultadiPrices, adPrice, HandlePromo, PromoData]);
+  }, [
+    PackagePrices,
+    adultadiPrices,
+    adPrice,
+    HandlePromo,
+    PromoData,
+    Discount,
+  ]);
+
+  console.log(Discount, "Discount");
 
   // for form sunmiter button onclick event
 
@@ -788,6 +790,7 @@ export default function BookingPages({ BookingData }) {
       setHandlePromo(false); // Remove the promo
       showSuccessToast(translate, "Promo removed successfully");
       setDiscount(0); // Reset the discount
+      setTotalPaidAmount(SubTotal);
     } else {
       showErrorToast(translate, "No promo to remove");
     }
@@ -803,19 +806,31 @@ export default function BookingPages({ BookingData }) {
 
     const BackAdultData = localStorage.getItem("AllAdultsData");
     const LoginAdultData = localStorage.getItem("LoginUserData");
-    const PrevTotal = localStorage.getItem("BookingTotal");
+    const PrevTotal = JSON.parse(localStorage.getItem("BookingTotal"));
+    const PrevService = JSON.parse(localStorage.getItem("AdditionalServices"));
 
     let parsedAdultData = null;
     let parsedLoginData = null;
 
-    if (PrevTotal && PrevTotal !== "undefined") {
-      const PreTotal = JSON.parse(PrevTotal);
-      console.log(PreTotal, "PreTotal");
+    //   const PreTotal = JSON.parse(PrevTotal);
+    //   console.log(PreTotal, "PreTotal");
 
-      setTotalPaidAmount(PreTotal.GrandTotal);
-      setDiscount(PreTotal.Discount);
-      setpromo(PreTotal.Discount.coupon_name);
+    // setTotalPaidAmount(0);
+    // setDiscount(0);
+    // setpromo(0);
+    // setHandlePromo(true);
+    // setSubTotal(0);
+
+    if (
+      PrevTotal &&
+      PrevTotal !== "undefined" &&
+      Object.keys(PrevTotal.Discount).length > 0
+    ) {
+      setDiscount(PrevTotal.Discount);
+      setTotalPaidAmount();
+      setShowbtnName(true);
       setHandlePromo(true);
+      setpromo(PrevTotal?.Discount?.coupon_name);
     }
 
     try {
@@ -824,6 +839,9 @@ export default function BookingPages({ BookingData }) {
       }
       if (LoginAdultData && LoginAdultData !== "undefined") {
         parsedLoginData = JSON.parse(LoginAdultData);
+      }
+      if (PrevService && PrevService !== "undefined") {
+        setAdditional(PrevService);
       }
     } catch (error) {
       console.error("Error parsing userData:", error);
