@@ -80,22 +80,15 @@ export default function BookingPages({ BookingData }) {
   const [Discount, setDiscount] = useState({});
   const [HandlePromo, setHandlePromo] = useState(false);
   const [ShowbtnName, setShowbtnName] = useState(false);
-
   const [PackagePrices, setPackagePrices] = useState(0);
-  const [BookingApiData, setBookingApiData] = useState({});
-
   const [BookingSideBar, setBookingSideBar] = useState({});
   const newdata = localStorage.getItem("getUserData");
-
   const taxRate = 0.19;
-
   const [totalSum, setTotalSum] = useState(0);
   const [taxAmount, setTaxAmount] = useState(0);
   const [formattedTaxAmount, setFormattedTaxAmount] = useState("0.00");
   const [TotalPaidAmount, setTotalPaidAmount] = useState("0.00");
   const [SubTotal, setSubTotal] = useState(0);
-
-  // console.log(newdata, "newdata");
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
@@ -314,7 +307,6 @@ export default function BookingPages({ BookingData }) {
     }
     return Array.from({ length: count }, () => ({ ...defaultValues }));
   };
-  const [AllAdultsData, setAllAdultsData] = useState([]);
 
   const [formValues, setFormValues] = useState({
     Adult: initializeFormValues(adultData?.length || 0, {
@@ -381,17 +373,6 @@ export default function BookingPages({ BookingData }) {
 
   const [Additional, setAdditional] = useState([]);
 
-  // const [isFormValid, setIsFormValid] = useState(false);
-
-  // useEffect(() => {
-  //   // Extract form values and validate
-  //   const allValues = Object.values(formValues).flat();
-  //   const isValid = validateForm(
-  //     allValues.map((field) => Object.values(field)).flat()
-  //   );
-  //   setIsFormValid(isValid);
-  // }, [formValues]);
-
   const getdefaultPriceforType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
 
@@ -400,6 +381,50 @@ export default function BookingPages({ BookingData }) {
     }
     return formatPrice(Number(personPrice[idx]?.default)); // Ensure price is a number
   };
+
+  // const handleInputChange = (type, index, e, ftype) => {
+  //   let { name, value } = e.target;
+
+  //   if (ftype === "phone" && name === "mobile") {
+  //     // Perform any validation or formatting here if needed
+  //     value = e.target.e;
+  //   }
+
+  //   // Update form values
+  //   setFormValues((prevValues) => {
+  //     const updatedValues = { ...prevValues };
+
+  //     console.log(updatedValues, "updatedValues");
+
+  //     // Ensure type array exists
+  //     if (!updatedValues[type]) {
+  //       updatedValues[type] = [];
+  //     }
+
+  //     // Ensure object exists for the specific index
+  //     if (!updatedValues[type][index]) {
+  //       updatedValues[type][index] = {};
+  //     }
+
+  //     // Store the validated value (including mobile number)
+  //     updatedValues[type][index] = {
+  //       ...updatedValues[type][index],
+  //       [name]: value, // Store the value (e.g., phone number)
+  //     };
+
+  //     if (type === "Adult" && index === 0) {
+  //       // Reset Adult[0] if the conditions don't match
+  //       updatedValues.Adult[0] = {
+  //         ...updatedValues.Adult[0],
+  //         [name]: value,
+  //       };
+  //     } else {
+  //       updatedValues.Adult[0] = {}; // Reset Adult[0] if not matching condition
+  //     }
+
+  //     return updatedValues;
+  //   });
+  // };
 
   const handleInputChange = (type, index, e, ftype) => {
     let { name, value } = e.target;
@@ -412,6 +437,8 @@ export default function BookingPages({ BookingData }) {
     // Update form values
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
+
+      console.log(updatedValues, "updatedValues");
 
       // Ensure type array exists
       if (!updatedValues[type]) {
@@ -429,11 +456,14 @@ export default function BookingPages({ BookingData }) {
         [name]: value, // Store the value (e.g., phone number)
       };
 
-      if (type === "Adult" && index === 0) {
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          [name]: value,
-        }));
+      // If LoginCheck is true, update Adult[0] with a default object and the new value
+      if (LoginCheck === true && type === "Adult" && index === 0) {
+        updatedValues.Adult[0] = {
+          ...updatedValues.Adult[0], // Preserve any existing values in Adult[0]
+          [name]: value, // Update the specific field
+        };
+      } else {
+        updatedValues.Adult[0] = {}; // Reset Adult[0] if conditions aren't met
       }
 
       return updatedValues;
@@ -487,22 +517,6 @@ export default function BookingPages({ BookingData }) {
         additional_order: order,
         additional_price_id: optid,
       };
-
-      // if (isChecked) {
-      //   updatedValues[type][i].selectedServices.push(value);
-      //   updatedValues[type][i].selectedPrices.push(price);
-      //   updatedValues[type][i].services.push(JSON.stringify(Services));
-      // } else {
-      //   updatedValues[type][i].selectedServices = updatedValues[type][
-      //     i
-      //   ].selectedServices.filter((item) => item !== value);
-      //   updatedValues[type][i].selectedPrices = updatedValues[type][
-      //     i
-      //   ].selectedPrices.filter((item) => item !== price);
-      //   updatedValues[type][i].services = updatedValues[type][
-      //     i
-      //   ].services.filter((item) => item.price !== price);
-      // }
 
       if (isChecked) {
         updatedValues[type][i].selectedServices.push(value);
@@ -582,25 +596,20 @@ export default function BookingPages({ BookingData }) {
   const SubtotalPriceWithAdditional = (type, i) => {
     const Original = getPriceForType(type, i);
 
-    // Filter to get the additional prices for the specific type and index
     const updatePrice = Additional.filter(
       (item) => item.type === type && item.index === i
     ).map((item) => item.price);
 
-    // Get existing items if needed (based on your previous logic)
     const PrefPrice = existingItemsState;
 
-    // Calculate the total additional price; if no prices are found, default to 0
     const additionalPrice = updatePrice.reduce(
       (acc, curr) => acc + (isNaN(Number(curr)) ? 0 : Number(curr)),
       0
     );
 
-    // Calculate the subtotal by combining the original price and the total additional price
     const conformSubTotal =
       (isNaN(Number(Original)) ? 0 : Number(Original)) + additionalPrice;
 
-    // Format and return the subtotal
     return formatPrice(conformSubTotal);
   };
 
@@ -614,64 +623,20 @@ export default function BookingPages({ BookingData }) {
     return Number(personPrice[idx]?.price); // Ensure price is a number
   };
 
-  const validateForm = () => {
-    const validateGroup = (group, checkFirstOnly = false) => {
-      if (group.length === 0) return false; // Ensure group has at least one item
-
-      if (checkFirstOnly) {
-        // Only validate the first item in the group
-        const firstItem = group[0]; // Assuming group is an array
-        if (!firstItem) return false; // Ensure firstItem is not undefined or null
-
-        return Object.values(firstItem).every((value) => value !== "");
-      } else {
-        // Validate all items in the group
-        return group.every((item) => {
-          return Object.values(item).every((value) => value !== "");
-        });
-      }
-    };
-
-    if (LoginCheck === true) {
-      // Validate only the first entry of the Adult group
-      return validateGroup(formValues.Adult, true); // Validate first form for Adult
-    } else {
-      // Validate all groups: Adult, Child, and Baby
-      return (
-        validateGroup(formValues.Adult) &&
-        validateGroup(formValues.Child) &&
-        validateGroup(formValues.Baby)
-      );
-    }
-  };
-
   const adultadiPrices = foundPrices
     ?.map((price) => Number(price))
     ?.reduce((acc, curr) => acc + curr, 0);
-
-  // allPrice
 
   const adPrice = Additional.map((item) => Number(item.price)).reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     0
   );
 
-  // const totalSum =
-  //   HandlePromo === false
-  //     ? PackagePrices + adultadiPrices + adPrice
-  //     : PromoData.total_amount !== undefined
-  //     ? PromoData.total_amount
-  //     : PackagePrices + adultadiPrices;
-
-  // calling api
-
-  // Function to fetch and apply promo code
-
   const FetchPromoApi = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       coupon_code: promo,
-      total_amount: PackagePrices + adultadiPrices + adPrice, // Calculate total
+      total_amount: PackagePrices + adultadiPrices + adPrice,
       email: formValues.Adult[0]?.email,
     };
 
@@ -679,18 +644,18 @@ export default function BookingPages({ BookingData }) {
       const PromoResponse = await post("check_coupon", sendData);
 
       if (PromoResponse.Status !== "0") {
-        setShowbtnName(true); // Show the button for removing the promo
+        setShowbtnName(true);
         showSuccessToast(translate, "Promo code applied successfully");
-        setDiscount(PromoResponse); // Apply the discount
-        setHandlePromo(true); // Promo applied
+        setDiscount(PromoResponse);
+        setHandlePromo(true);
       } else {
-        setShowbtnName(false); // Hide the remove button
+        setShowbtnName(false);
         showErrorToast(translate, "Invalid promo code");
-        setHandlePromo(false); // Promo failed
-        setDiscount(0); // Reset discount
+        setHandlePromo(false);
+        setDiscount(0);
       }
 
-      setPromoData(PromoResponse); // Store promo data for later use
+      setPromoData(PromoResponse);
       return PromoResponse;
     } catch (error) {
       console.error("Error caught:", error);
@@ -710,10 +675,12 @@ export default function BookingPages({ BookingData }) {
     // Handle case where response.user is a single object
     if (response.user && typeof response.user === "object") {
       const userProfile = response.user;
+
       if (newdata === null) {
-        setUserData({
-          name: userProfile.name || "",
+        // Create an object from userProfile data without "name"
+        const profileData = {
           surname: userProfile.surname || "",
+          name: userProfile.name || "",
           email: userProfile.email || "",
           mobile: userProfile.mobile || "",
           city: userProfile.city || "",
@@ -727,10 +694,14 @@ export default function BookingPages({ BookingData }) {
           selectedService: userProfile.selectedService || "",
           price: userProfile.price || "",
           title: userProfile.title || "",
-          additional_order: userProfile.additional_order || "",
-          additional_price_id: userProfile.additional_price_id || "",
-          address: userProfile.address || "",
-        });
+          additional_services: userProfile.additional_order || "", // Assuming additional_order should map to additional_services
+        };
+
+        // Push profileData to formValues.Adult array
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          Adult: [...prevValues.Adult, profileData],
+        }));
       }
     } else {
       console.error("Unexpected response structure:", response);
@@ -775,8 +746,6 @@ export default function BookingPages({ BookingData }) {
     Discount,
   ]);
 
-  console.log(Discount, "Discount");
-
   // for form sunmiter button onclick event
 
   const handlePromoSubmit = async () => {
@@ -809,17 +778,13 @@ export default function BookingPages({ BookingData }) {
     const PrevTotal = JSON.parse(localStorage.getItem("BookingTotal"));
     const PrevService = JSON.parse(localStorage.getItem("AdditionalServices"));
 
+    console.log(JSON.parse(LoginAdultData), "LoginAdultData");
+    console.log(JSON.parse(BackAdultData), "BackAdultData");
+
+    // setUserData(JSON.parse(LoginAdultData));
+
     let parsedAdultData = null;
     let parsedLoginData = null;
-
-    //   const PreTotal = JSON.parse(PrevTotal);
-    //   console.log(PreTotal, "PreTotal");
-
-    // setTotalPaidAmount(0);
-    // setDiscount(0);
-    // setpromo(0);
-    // setHandlePromo(true);
-    // setSubTotal(0);
 
     if (
       PrevTotal &&
@@ -837,9 +802,6 @@ export default function BookingPages({ BookingData }) {
       if (BackAdultData && BackAdultData !== "undefined") {
         parsedAdultData = JSON.parse(BackAdultData);
       }
-      if (LoginAdultData && LoginAdultData !== "undefined") {
-        parsedLoginData = JSON.parse(LoginAdultData);
-      }
       if (PrevService && PrevService !== "undefined") {
         setAdditional(PrevService);
       }
@@ -848,107 +810,79 @@ export default function BookingPages({ BookingData }) {
       return;
     }
 
-    // Convert LoginAdultData to an array if it's an object
-    const LoginAdultArray = Array.isArray(parsedLoginData)
-      ? parsedLoginData
-      : [parsedLoginData];
-
-    if (!parsedAdultData && !parsedLoginData) return;
+    // If no BackAdultData, return early
+    if (!parsedAdultData) return;
 
     setFormValues((prevValues) => {
       const updatedValues = { ...prevValues };
 
       if (!updatedValues["Adult"]) updatedValues["Adult"] = [];
 
-      // If user is logged in, prioritize setting data from LoginAdultData
-      if (LoginCheck === true && parsedLoginData) {
-        LoginAdultArray.forEach((e, i) => {
-          updatedValues["Adult"][i] = {
-            ...updatedValues["Adult"][i],
-            name: e.name,
-            surname: e.surname,
-            birthday: e.birthday,
-            city: e.city,
-            email: e.email,
-            gender: e.gender,
-            houseNumber: e.houseNumber,
-            mobile: e.mobile,
-            nationality: e.nationality,
-            street: e.street,
-            zipcode: e.zipcode,
-            services: e.services || [],
-            selectedPrices: e.selectedPrices || [],
-            selectedServices: e.selectedServices || [],
-          };
-        });
-      }
-      // If user is not logged in, use BackAdultData
-      else if (parsedAdultData) {
-        parsedAdultData?.Adult?.forEach((e, i) => {
-          updatedValues["Adult"][i] = {
-            ...updatedValues["Adult"][i],
-            name: e.name,
-            surname: e.surname,
-            birthday: e.birthday,
-            city: e.city,
-            email: e.email,
-            gender: e.gender,
-            houseNumber: e.houseNumber,
-            mobile: e.mobile,
-            nationality: e.nationality,
-            street: e.street,
-            zipcode: e.zipcode,
-            services: e.services || [],
-            selectedPrices: e.selectedPrices || [],
-            selectedServices: e.selectedServices || [],
-          };
+      // Use BackAdultData for setting values
+      parsedAdultData?.Adult?.forEach((e, i) => {
+        updatedValues["Adult"][i] = {
+          ...updatedValues["Adult"][i],
+          name: e.name,
+          surname: e.surname,
+          birthday: e.birthday,
+          city: e.city,
+          email: e.email,
+          gender: e.gender,
+          houseNumber: e.houseNumber,
+          mobile: e.mobile,
+          nationality: e.nationality,
+          street: e.street,
+          zipcode: e.zipcode,
+          services: e.services || [],
+          selectedPrices: e.selectedPrices || [],
+          selectedServices: e.selectedServices || [],
+        };
 
-          // Ensure services-related selections are updated
-          if (e.services?.length > 0) {
-            e.services.forEach((additional) => {
-              const serviceValue = `Adult-${i}-${additional.additional_order}-ad-${additional.additional_price_id}-${additional.title}`;
-              updatedValues["Adult"][i].selectedServices.push(serviceValue);
-              updatedValues["Adult"][i].selectedPrices.push(additional.price);
-            });
-          }
-        });
+        // Ensure services-related selections are updated
+        if (e.services?.length > 0) {
+          e.services.forEach((additional) => {
+            const serviceValue = `Adult-${i}-${additional.additional_order}-ad-${additional.additional_price_id}-${additional.title}`;
+            updatedValues["Adult"][i].selectedServices.push(serviceValue);
+            updatedValues["Adult"][i].selectedPrices.push(additional.price);
+          });
+        }
+      });
 
-        parsedAdultData?.Child?.forEach((e, i) => {
-          updatedValues["Child"] = updatedValues["Child"] || [];
-          updatedValues["Child"][i] = {
-            ...updatedValues["Child"][i],
-            name: e.name,
-            surname: e.surname,
-            birthday: e.birthday,
-            city: e.city,
-            email: e.email,
-            gender: e.gender,
-            houseNumber: e.houseNumber,
-            mobile: e.mobile,
-            nationality: e.nationality,
-            street: e.street,
-            zipcode: e.zipcode,
-          };
-        });
+      parsedAdultData?.Child?.forEach((e, i) => {
+        updatedValues["Child"] = updatedValues["Child"] || [];
+        updatedValues["Child"][i] = {
+          ...updatedValues["Child"][i],
+          name: e.name,
+          surname: e.surname,
+          birthday: e.birthday,
+          city: e.city,
+          email: e.email,
+          gender: e.gender,
+          houseNumber: e.houseNumber,
+          mobile: e.mobile,
+          nationality: e.nationality,
+          street: e.street,
+          zipcode: e.zipcode,
+        };
+      });
 
-        parsedAdultData?.Baby?.forEach((e, i) => {
-          updatedValues["Baby"] = updatedValues["Baby"] || [];
-          updatedValues["Baby"][i] = {
-            ...updatedValues["Baby"][i],
-            name: e.name,
-            surname: e.surname,
-            birthday: e.birthday,
-            city: e.city,
-            email: e.email,
-            gender: e.gender,
-            houseNumber: e.houseNumber,
-            mobile: e.mobile,
-            nationality: e.nationality,
-            street: e.street,
-            zipcode: e.zipcode,
-          };
-        });
-      }
+      parsedAdultData?.Baby?.forEach((e, i) => {
+        updatedValues["Baby"] = updatedValues["Baby"] || [];
+        updatedValues["Baby"][i] = {
+          ...updatedValues["Baby"][i],
+          name: e.name,
+          surname: e.surname,
+          birthday: e.birthday,
+          city: e.city,
+          email: e.email,
+          gender: e.gender,
+          houseNumber: e.houseNumber,
+          mobile: e.mobile,
+          nationality: e.nationality,
+          street: e.street,
+          zipcode: e.zipcode,
+        };
+      });
 
       return updatedValues;
     });
@@ -970,7 +904,6 @@ export default function BookingPages({ BookingData }) {
           label: translate("Name"),
           type: "text",
           name: "name",
-          value: userData?.name || "mallika",
         },
         {
           label: translate("Surname"),
@@ -1088,8 +1021,6 @@ export default function BookingPages({ BookingData }) {
       ],
     };
 
-    // for price
-
     const PrpersonPrice = AlladultsData?.filter((item) => item.label === type);
 
     let resultPrice;
@@ -1108,8 +1039,6 @@ export default function BookingPages({ BookingData }) {
       const currentFields = isExtraAdult
         ? fields.adultFieldsForExtraAdults
         : fields[type] || [];
-
-      const isFormPrefilled = LoginCheck && i === 0;
 
       return (
         <div key={`${type}-${i}`} className="row">
@@ -1143,7 +1072,7 @@ export default function BookingPages({ BookingData }) {
                     type === "Adult" &&
                     newdata === null &&
                     i === 0
-                      ? userData?.[field.name]
+                      ? formValues[type]?.[i]?.[field.name]
                       : formValues[type]?.[i]?.[field.name];
 
                   return (
@@ -1368,76 +1297,6 @@ export default function BookingPages({ BookingData }) {
                         key={option.id}
                         className="d-flex items-center justify-between radio_hight"
                       >
-                        {/* <div className="d-flex items-center">
-                          <div className="form-radio d-flex items-center">
-                            <label className="radio d-flex items-center">
-                              <input
-                                type="radio"
-                                name={`radioGroup-${type}-${i}`}
-                                value={`${type}-${i}-${idx}-ad-${option.id}-${option.title}`}
-                                checked={
-                                  formValues[type]?.[i]?.selectedService ==
-                                  `${type}-${i}-${idx}-ad-${option.id}-${option.title}`
-                                }
-                                // const handleRadioChange = (e, type, i , idx ,  price, order, title, optid) => {
-                                onChange={(e) =>
-                                  handleRadioChange(
-                                    e,
-                                    type,
-                                    i,
-                                    idx,
-                                    option.price,
-                                    option.additinoal_order,
-                                    option.title,
-                                    option.id
-                                  )
-                                } // Ensure type and index are correctly passed
-                              />
-
-                              <span className="radio__mark">
-                                <span className="radio__icon"></span>
-                              </span>
-                              <span className="text-14 lh-1 ml-10">
-                                {option.title}
-                              </span>
-                            </label>
-                          </div>
-                        </div> */}
-                        {/* <div className="form-checkbox">
-          <input
-            type="checkbox"
-            name={`checkboxGroup-${type}-${i}-${idx}`}
-            id={`checkbox-${type}-${i}-${idx}`}
-            checked={formValues[type]?.[i]?.selectedServices?.includes(`${type}-${i}-${idx}-ad-${option.id}-${option.title}`)}
-            onChange={(e) => {
-              const isChecked = e.target.checked;
-              handleCheckboxChange(e, type, i, idx, option.price, option.additinoal_order, option.title, option.id, isChecked);
-            }}
-          
-          />
-          <label htmlFor={`checkbox-${type}-${i}-${idx}`} className="form-checkbox__mark">
-            <div className="form-checkbox__icon">
-              <svg
-                width="10"
-                height="8"
-                viewBox="0 0 10 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                  fill="white"
-                />
-              </svg>
-
-            </div>
-            
-          </label>
-
-          <span className="text-14 lh-1 ml-10">
-                                {option.title}
-                              </span>
-        </div> */}
                         <div className="flex items-center">
                           <div className="form-checkbox flex items-center ">
                             <input
@@ -1494,7 +1353,7 @@ export default function BookingPages({ BookingData }) {
                         </div>
 
                         {/* <label htmlFor={`checkbox-${type}-${i}-${idx}`} className="form-checkbox__mark d-flex items-center">
-    
+
     <div className="text-14 lh-1 ml-10">{option.title}</div>
   </label> */}
 
@@ -1527,10 +1386,7 @@ export default function BookingPages({ BookingData }) {
     AccessKey: "Mekka@24",
     user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
     tour_id: JSON.parse(TourId),
-    person:
-      LoginCheck == true
-        ? JSON.stringify(userData)
-        : JSON.stringify(formValues.Adult[0]),
+    person: JSON.stringify(formValues.Adult[0]),
     ...(formValues.Adult.slice(1).length !== 0 && {
       adult: JSON.stringify(formValues.Adult.slice(1)),
     }),
@@ -1564,10 +1420,6 @@ export default function BookingPages({ BookingData }) {
     total_person: adultData.length + Childrendata.length + babyData.length,
     // tax: JSON.parse(formattedTaxAmount),
   };
-
-  useEffect(() => {
-    setAllAdultsData(formValues);
-  }, []);
 
   const handleUpdateLocalStorage = () => {
     const SidebarData = localStorage.getItem("PackageBookingData");
@@ -1620,7 +1472,7 @@ export default function BookingPages({ BookingData }) {
     localStorage.setItem("BookingData", JSON.stringify(bookingData));
     localStorage.setItem("AdditionalServices", JSON.stringify(Additional));
     localStorage.setItem("AllAdultsData", JSON.stringify(formValues));
-    localStorage.setItem("LoginUserData", JSON.stringify(userData));
+    // localStorage.setItem("LoginUserData", JSON.stringify(userData));
     localStorage.setItem("BookingTotal", JSON.stringify(BookingTotal));
 
     handleUpdateLocalStorage();
@@ -1642,12 +1494,8 @@ export default function BookingPages({ BookingData }) {
   const discountClass =
     Object.keys(Discount).length === 0 || Discount == 0 ? "d-none" : "d-block";
 
-  // console.log(formValues, "formValues");
-
   return (
     <>
-      {/* sidebarr no aa badhi data static che to ane jyare page refrash thay tyare kai rite jato na re evu store karavi sakay  */}
-
       <section className="layout-pt-md layout-pb-lg mt-header">
         <ToastContainer />
         <div className="container">
