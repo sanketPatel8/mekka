@@ -604,6 +604,7 @@ export default function TourSingleSidebar({
       localStorage.removeItem("getUserData");
       localStorage.removeItem("LoginUserData");
       localStorage.removeItem("BookingTotal");
+      localStorage.removeItem("AdditionalServices");
     }
   };
 

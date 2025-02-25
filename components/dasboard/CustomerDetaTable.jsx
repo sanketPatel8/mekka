@@ -1278,10 +1278,10 @@ const CustomerDetaTable = () => {
     if (GetHotelData !== null || GetFlightData !== null) {
       const ConvertHotelData = Object?.values(GetHotelData);
       const HotelPrices = ConvertHotelData.map((hotel) =>
-        parseFloat(hotel.hotel_price)
+        parseFloat(hotel?.hotel_price)
       );
       const FlightPrices = GetFlightData?.map((Flight) =>
-        parseFloat(Flight.flight_amount)
+        parseFloat(Flight?.flight_amount)
       );
       const ConformPrice = HotelPrices[0] + HotelPrices[1] + FlightPrices[0];
 
@@ -1307,6 +1307,8 @@ const CustomerDetaTable = () => {
       );
     }
   };
+
+  console.log(selectedOptions, "selectedOptions");
 
   return (
     <div>
