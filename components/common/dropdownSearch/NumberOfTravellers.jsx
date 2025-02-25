@@ -48,7 +48,7 @@ export default function NumberOfTravellers({ active, setTourType }) {
                     <span>
                       {translate(
                         elm === "Child"
-                          ? "Childs"
+                          ? "Children"
                           : elm === "Baby"
                           ? "Babies"
                           : "Adult"

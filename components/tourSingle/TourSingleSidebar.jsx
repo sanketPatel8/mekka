@@ -666,7 +666,7 @@ export default function TourSingleSidebar({
                   {group.price_type == "1"
                     ? `${translate("Adult")} 18+ ${translate("Years")}`
                     : group.price_type == "2"
-                    ? `${translate("Childs")} 13-17 ${translate("Years")}`
+                    ? `${translate("Children")} 13-17 ${translate("Years")}`
                     : `${translate("Babies")} 0-12 ${translate("Years")}`}
                   <span className="fw-500">
                     {""} {formatPrice((group.price * count).toFixed(2))}
