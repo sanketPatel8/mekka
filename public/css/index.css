@@ -313,6 +313,12 @@ hr {
   min-height: 500px;
 }
 
+.Taveler-col {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+}
+
 /* styles.css */
 @media (max-width: 767.98px) {
   .sidebar-hidden-on-small {

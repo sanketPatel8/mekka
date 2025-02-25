@@ -43,8 +43,25 @@ export default function NumberOfTravellers({ active, setTourType }) {
               className="searchFormItemDropdown__item"
             >
               <div className="membar_name_count row">
-                <span className="js-select-control-choice col-md-4">
-                  {translate(elm)}
+                <span className="js-select-control-choice col-md-6">
+                  <div className="Taveler-col">
+                    <span>
+                      {translate(
+                        elm === "Child"
+                          ? "Childs"
+                          : elm === "Baby"
+                          ? "Babies"
+                          : "Adult"
+                      )}
+                    </span>
+                    <span className="text-red">
+                      {elm === "Child"
+                        ? "(up to 11 years)"
+                        : elm === "Baby"
+                        ? "(0 - 23 months)"
+                        : ""}
+                    </span>
+                  </div>
                 </span>
                 <span className="member_choose_counter col-md-6">
                   <button
