@@ -244,8 +244,10 @@
   "Initiated By": "Initiated By",
   "Bookings": "Bookings",
   "Direct Flight": "Direct Flight",
-  "Passenger": "Passenger",
-  "Start of trip to end of trip": "Start of trip to end of trip",
+  "Number of Travelers": "Number of Travelers",
+  "Traveler" : "Traveler",
+  "Travel Period": "Travel Period",
+  "Select Desired Date" : "Select Desired Date" ,
   "Proceed to Payment": "Proceed to Payment",
 
   "Offered Languages": "Offered Languages",

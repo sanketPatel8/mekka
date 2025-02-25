@@ -155,7 +155,7 @@ const HeroSearch = ({ CustomClass }) => {
               <i className="text-20 icon-calendar"></i>
             </div>
             <div className="searchFormItem__content">
-              <h5>{translate("Start of trip to end of trip")}</h5>
+              <h5>{translate("Travel Period")}</h5>
               <div>
                 <span className="js-first-date">
                   <Calender dates={dates} onDateChange={handleDateChange} />
@@ -175,9 +175,9 @@ const HeroSearch = ({ CustomClass }) => {
               <i className="text-20 icon-flag"></i>
             </div>
             <div className="searchFormItem__content">
-              <h5>{translate("Passenger")}</h5>
+              <h5>{translate("Number of Travelers")}</h5>
               <div className="js-select-control-chosen">
-                {translate("Passenger")} {person ? person : translate("person")}
+                {translate("Traveler")} {person ? person : translate("0")}
               </div>
             </div>
           </div>

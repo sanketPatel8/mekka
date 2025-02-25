@@ -248,8 +248,10 @@
   "Initiated By": "Eingeführt von",
   "Bookings": "Buchungen",
   "Direct Flight": "Direktflug",
-  "Passenger": "Passagier",
-  "Start of trip to end of trip": "Reisebeginn bis Reiseende",
+  "Number of Travelers": "Anzahl Reisende",
+  "Traveler" : "Reisende",
+  "Travel Period": "Reisezeitraum",
+  "Select Desired Date" : "Gewünschtes Datum auswählen",
   "Proceed to Payment": "Weiter zur Zahlung",
   "Offered Languages": "Angebotene Sprachen",
   "Max Luggage Per Person": "Maximales Gepäck pro Person",
@@ -512,8 +514,8 @@
   "Copy" : "Kopie",
   "Seats available" : "Sitzplätze vorhanden",
   "End Date" : "Enddatum",
-  "Child" : "Kind",
-  "Baby" : "Baby",
+  "Child" : "Kinder",
+  "Baby" : "Babys",
   "Is Also The Contact Person For The Reservation." : "Ist auch Ansprechpartner für die Reservierung.",
 
   
