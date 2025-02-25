@@ -7,11 +7,9 @@ import React, { useState, useEffect } from "react";
 const options = ["Adult", "Child", "Baby"];
 
 export default function NumberOfTravellers({ active, setTourType }) {
-  const { counts , setCounts } = useGlobalState();
-  useEffect(() => {
-   
-  }, []);
- 
+  const { counts, setCounts } = useGlobalState();
+  useEffect(() => {}, []);
+
   const decr = (type) => {
     setCounts((prevCounts) => ({
       ...prevCounts,
@@ -26,7 +24,7 @@ export default function NumberOfTravellers({ active, setTourType }) {
     }));
   };
 
-  const {translate} = useTranslation()
+  const { translate } = useTranslation();
 
   return (
     <div
@@ -44,9 +42,11 @@ export default function NumberOfTravellers({ active, setTourType }) {
               key={i}
               className="searchFormItemDropdown__item"
             >
-              <div className="membar_name_count ">
-                <span className="js-select-control-choice">{translate(elm)}</span>
-                <span className="member_choose_counter">
+              <div className="membar_name_count row">
+                <span className="js-select-control-choice col-md-4">
+                  {translate(elm)}
+                </span>
+                <span className="member_choose_counter col-md-6">
                   <button
                     type="button"
                     onClick={(e) => {

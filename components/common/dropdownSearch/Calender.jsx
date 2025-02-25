@@ -13,7 +13,7 @@ export default function Calender() {
     setFormattedDates(formattedDates); // Store the formatted dates globally
   };
 
-  const { translate } = useTranslation()
+  const { translate } = useTranslation();
 
   return (
     <DatePicker
@@ -23,11 +23,11 @@ export default function Calender() {
       offsetY={10}
       range
       rangeHover
-      format="YYYY.MM.DD"
+      format="DD.MM.YYYY"
       inputClass="custom_input-picker"
       containerClassName="custom_container-picker"
       placeholder={translate("Please Select Your Date")}
-      minDate={new Date()} 
+      minDate={new Date()}
     />
   );
 }

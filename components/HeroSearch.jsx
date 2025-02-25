@@ -17,22 +17,21 @@ const HeroSearch = ({ CustomClass }) => {
     new DateObject().setDay(14).add(1, "month"),
   ]);
   const [tourMambar, setTourMambar] = useState("");
-  const [Tours, setTours] = useState([])
+  const [Tours, setTours] = useState([]);
   const router = useRouter();
   const dropDownContainer = useRef(null);
 
   const { location, setLocation, calender, counts } = useGlobalState();
-  
+
   // Handle undefined calendar values gracefully
   const startDate = calender?.[0] ? calender[0].format("DD.MM.YYYY") : "";
   const endDate = calender?.[1] ? calender[1].format("DD.MM.YYYY") : "";
-  const [startDateFormat, setStartDateFormat] = useState("")
-  const [endDateFormat, setEndDateFormat] = useState("")
+  const [startDateFormat, setStartDateFormat] = useState("");
+  const [endDateFormat, setEndDateFormat] = useState("");
 
   const handleDateChange = (newDates) => {
     setDates(newDates);
     const formattedDates = newDates.map((date) => date.format("DD.MM.YYYY"));
-  
   };
 
   const closeDropdown = () => setCurrentActiveDD("");
@@ -55,25 +54,22 @@ const HeroSearch = ({ CustomClass }) => {
 
   const accessdata = async () => {
     // setIsLoading(true);
-    const url = "tour_data"
+    const url = "tour_data";
 
     try {
-      const response = await POST.request({ url: url })
+      const response = await POST.request({ url: url });
       // setIsLoading(false);
       if (response.Data) {
-       
-        setTours(response.Data.tour_type)
-        
+        setTours(response.Data.tour_type);
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-    accessdata()
-  }, [])
-  
+    accessdata();
+  }, []);
 
   const handleLocationChange = () => {
     setCurrentActiveDD((prev) => (prev === "location" ? "" : "location"));
@@ -97,25 +93,28 @@ const HeroSearch = ({ CustomClass }) => {
     closeDropdown();
   };
 
-  
-
-  const person = Object.values(counts).reduce((total, count) => total + count, 0);
-  
-
+  const person = Object.values(counts).reduce(
+    (total, count) => total + count,
+    0
+  );
 
   const handleSearch = () => {
     // Constructing query parameters
 
-    const formattedStartDate = calender?.[0] ? calender[0].format("YYYY-MM-DD") : "";
-    const formattedEndDate = calender?.[1] ? calender[1].format("YYYY-MM-DD") : "";
-  
+    const formattedStartDate = calender?.[0]
+      ? calender[0].format("YYYY-MM-DD")
+      : "";
+    const formattedEndDate = calender?.[1]
+      ? calender[1].format("YYYY-MM-DD")
+      : "";
+
     const queryParams = [];
     if (location) queryParams.push(`TourType=${location}`);
     if (formattedStartDate) queryParams.push(`StartDate=${formattedStartDate}`);
     if (formattedEndDate) queryParams.push(`EndDate=${formattedEndDate}`);
-      if (person) queryParams.push(`person=${person}`);
+    if (person) queryParams.push(`person=${person}`);
 
-    const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+    const queryString = queryParams.length ? `?${queryParams.join("&")}` : "";
 
     return queryString;
   };
@@ -124,14 +123,19 @@ const HeroSearch = ({ CustomClass }) => {
     <div ref={dropDownContainer}>
       <div className="searchForm__form">
         <div className="searchFormItem js-select-control js-form-dd">
-          <div className="searchFormItem__button" onClick={handleLocationChange}>
+          <div
+            className="searchFormItem__button"
+            onClick={handleLocationChange}
+          >
             <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
               <i className="text-20 icon-pin"></i>
             </div>
             <div className="searchFormItem__content">
               <h5>{translate("Tour Type")}</h5>
               <div className="js-select-control-chosen">
-                {translate(location) ? translate(location) : translate("Search Destinations")}
+                {translate(location)
+                  ? translate(location)
+                  : translate("Search Destinations")}
               </div>
             </div>
           </div>
@@ -143,7 +147,10 @@ const HeroSearch = ({ CustomClass }) => {
         </div>
 
         <div className="searchFormItem js-select-control js-form-dd js-calendar">
-          <div className="searchFormItem__button" onClick={handleCalenderChange}>
+          <div
+            className="searchFormItem__button"
+            onClick={handleCalenderChange}
+          >
             <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
               <i className="text-20 icon-calendar"></i>
             </div>
@@ -160,7 +167,10 @@ const HeroSearch = ({ CustomClass }) => {
         </div>
 
         <div className="searchFormItem js-select-control js-form-dd">
-          <div className="searchFormItem__button" onClick={handleTourTypeChange}>
+          <div
+            className="searchFormItem__button"
+            onClick={handleTourTypeChange}
+          >
             <div className="searchFormItem__icon size-50 rounded-full border-1 flex-center">
               <i className="text-20 icon-flag"></i>
             </div>
@@ -177,13 +187,12 @@ const HeroSearch = ({ CustomClass }) => {
           />
         </div>
 
-        <Link
-          href={`/tour/${handleSearch()}`}
-          className="searchForm__button"
-        >
-          <button className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}>
+        <Link href={`/tour/${handleSearch()}`} className="searchForm__button">
+          <button
+            className={`button -info-2 bg-accent-1 ${CustomClass} text-white`}
+          >
             <i className="icon-search text-16 mr-10"></i>
-            {translate('Search')}
+            {translate("Search")}
           </button>
         </Link>
       </div>

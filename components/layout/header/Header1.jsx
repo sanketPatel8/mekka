@@ -21,13 +21,12 @@ export default function Header1(payment) {
   const [addClass, setAddClass] = useState(false);
   const [LoginCheck, setLoginCheck] = useState(false);
   const { dispatch } = useAuthContext();
- 
+
   const handleLogoutClick = () => {
-  
-      localStorage.removeItem("token");
-      localStorage.removeItem("customer");
-      localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
-    
+    localStorage.removeItem("token");
+    localStorage.removeItem("customer");
+    localStorage.setItem("CustomerLoginCheck", JSON.stringify(false));
+
     dispatch({ type: "LOGOUT_CUSTOMER" });
 
     setLoginCheck(false);
@@ -54,17 +53,16 @@ export default function Header1(payment) {
     }
 
     // Get the login status from localStorage
- 
-      const loginStatus = localStorage.getItem("CustomerLoginCheck");
 
-      if (loginStatus !== null && loginStatus !== "undefined") {
-        try {
-          setLoginCheck(JSON.parse(loginStatus));
-        } catch (error) {
-          console.error("Error parsing login status:", error);
-        }
+    const loginStatus = localStorage.getItem("CustomerLoginCheck");
+
+    if (loginStatus !== null && loginStatus !== "undefined") {
+      try {
+        setLoginCheck(JSON.parse(loginStatus));
+      } catch (error) {
+        console.error("Error parsing login status:", error);
       }
-    
+    }
   }, []);
 
   const { translate } = useTranslation(locale);
@@ -97,8 +95,7 @@ export default function Header1(payment) {
           </Link>
 
           <div className="header__logo">
-            
-          <HeaderMenu translate={translate}  />
+            <HeaderMenu translate={translate} />
           </div>
 
           <div className="headerMobile__right">
@@ -133,7 +130,7 @@ export default function Header1(payment) {
             </div>
 
             <div className="row items-center">
-              <div className={`${!LoginCheck  ? "col-2" : "col-2"}`}>
+              {/* <div className={`${!LoginCheck  ? "col-2" : "col-2"}`}>
                 <div
                   className={`${
                     payment.payment === true ? "d-none" : "d-block"
@@ -144,7 +141,7 @@ export default function Header1(payment) {
                     <Currency currenyLocale={currenyLocale} />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className={`${!LoginCheck ? "col-2 ml-10" : "col-3 ml-10"}`}>
                 <div className="d-flex justify-content-center">
@@ -158,9 +155,7 @@ export default function Header1(payment) {
 
               {LoginCheck ? (
                 <>
-                  {/* Reverse order for when logged in */}
-
-                  <div className="col-4">
+                  <div className="col-6">
                     <div className="d-flex justify-content-center">
                       <DashboardCustomer
                         onLocaleChange={setLocale}
@@ -171,7 +166,6 @@ export default function Header1(payment) {
                 </>
               ) : (
                 <>
-                  {/* Default order for when not logged in */}
                   <div className="col-3">
                     <div className="d-flex justify-content-center">
                       <Link href="/register" className={`mx-2`}>
@@ -204,6 +198,7 @@ export default function Header1(payment) {
           </div>
         </div>
       </header>
+
       <MobileMenu
         setMobileMenuOpen={setMobileMenuOpen}
         mobileMenuOpen={mobileMenuOpen}

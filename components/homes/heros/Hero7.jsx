@@ -18,7 +18,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 const slides = [
   {
     id: 1,
-    imageSrc: "/img/hero/7/slide2.png",
+    imageSrc: "/img/hero/7/slide1.png",
     subtitle: "plan your Umrah now with mekkabooking",
     title: "Experience an extraordinary journey",
     title2: "intense & certainly unforgettable",
@@ -32,28 +32,11 @@ const slides = [
   },
   {
     id: 3,
-    imageSrc: "/img/hero/7/slide1.png",
+    imageSrc: "/img/hero/7/slide2.png",
     subtitle: "on mekkabooking.com you can find almost all",
     title: "Umrah offers from Germany",
     title2: "from almost all providers",
   },
-
-  // {
-  //   id: 4,
-  //   imageSrc: "/img/hero/7/image 4.jpg",
-  //   subtitle:
-  //     "Search, compare and book 15,000+ multiday tours all over the world.",
-  //   title: "Tours and Trip packages",
-  //   title2: "",
-  // },
-  // {
-  //   id: 5,
-  //   imageSrc: "/img/hero/7/image 1.jpg",
-  //   subtitle:
-  //     "Search, compare and book 15,000+ multiday tours all over the world.",
-  //   title: "Tours and Trip packages",
-  //   title2: "",
-  // },
 ];
 
 export default function Hero7() {
