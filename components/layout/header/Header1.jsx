@@ -174,7 +174,7 @@ export default function Header1(payment) {
                     </div>
                   </div>
 
-                  <div className={`col-4`}>
+                  <div className={`col-6`}>
                     <div className="d-flex j  ustify-content-center">
                       <button
                         className="button -sm -info-2 bg-accent-1 rounded-200 text-white ml-10"

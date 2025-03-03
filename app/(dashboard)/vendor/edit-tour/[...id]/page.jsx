@@ -30,6 +30,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
 import { update } from "lodash";
+import Select from "react-select";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -52,7 +53,7 @@ export default function EditTour() {
   const params = useParams();
   const id = params.id[0];
   const [tourDetails, setTourDetails] = useState({});
-  const [Arrival, setArrival] = useState([])
+  const [Arrival, setArrival] = useState([]);
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [SelectedTour, setSelectedTour] = useState({ value: "", label: "" });
   const [name, setName] = useState("");
@@ -80,17 +81,11 @@ export default function EditTour() {
   const [departureRows, setDepartureRows] = useState([
     { departure_id: "", price: "", id: "" },
   ]);
-  const [arrivalrow, setArrivalrow] = useState([
-    { arrival_id: "",name:"" },
-  ]);
+  const [arrivalrow, setArrivalrow] = useState([{ arrival_id: "", name: "" }]);
   const [isChecked, setIsChecked] = useState(false);
 
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
-    { id: 1, title: "1-bed room", price: "", checked: false },
-    { id: 2, title: "2-bed room", price: "", checked: false },
-    { id: 3, title: "3-bed room", price: "", checked: false },
-    { id: 4, title: "4-bed room", price: "", checked: false },
     { id: 5, title: "Breakfast", price: "", checked: false },
     { id: 6, title: "Dinner", price: "", checked: false },
     { id: 7, title: "Sahour", price: "", checked: false },
@@ -124,6 +119,7 @@ export default function EditTour() {
   const [mekkaHotel, setMekkaHotel] = useState([]);
   const [madinaHotel, setMadinaHotel] = useState([]);
   const [departures, setDepartures] = useState([]);
+  const [BedRoomData, setBedRoomData] = useState([]);
   const [startDate, setStartDate] = useState("");
 
   const [flightDetails, setFlightDetails] = useState([]);
@@ -146,8 +142,19 @@ export default function EditTour() {
   const [isFocused, setIsFocused] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uncheckedIds, setUncheckedIds] = useState([]);
-  const [DeletedDeparture , setDeletedDeparture] = useState([])
-  const [DeletedArrival , setDeletedArrival] = useState([])
+  const [DeletedDeparture, setDeletedDeparture] = useState([]);
+  const [DeletedArrival, setDeletedArrival] = useState([]);
+  const bedroomOptions = [
+    { value: "1-Bed-room", label: "1 Bedroom" },
+    { value: "2-Bed-room", label: "2 Bedroom" },
+    { value: "3-Bed-room", label: "3 Bedroom" },
+    { value: "4-Bed-room", label: "4 Bedroom" },
+  ];
+
+  const [bedroomRows, setBedroomRows] = useState([
+    { id: "0", bedroom_name: null, bedroom_capacity: "" },
+  ]);
+  const [RemoveBed, setRemoveBed] = useState([]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -163,14 +170,13 @@ export default function EditTour() {
     formData.append("id", id);
     const response = await POST.request({ form: formData, url: "tourdetails" });
     if (response) {
-    
-
       setTourInformation(response.Tour_Details.details.tour_info);
       setTourDetails(response.Tour_Details.details);
       setAdditionalServices(response.Tour_Details.addition_service || "");
       setFlightData(response.Tour_Details.flight_data);
       setDepartureDetails(response.Tour_Details.departure_data);
       setHotelData(response.Tour_Details.hotel_data);
+      setBedRoomData(response.Tour_Details.room_data);
       setTourInclude(response.Tour_Details.details.tour_included || "");
       setAdultPrice(JSON.parse(response.Tour_Details.adult_price[0].price));
       setChildPrice(JSON.parse(response.Tour_Details.child_price[0].price));
@@ -192,7 +198,7 @@ export default function EditTour() {
         setlanguagesData(response.Data.languages);
         setIncludedData(response.Data.amenities);
         setDepartures(response.Data.departure);
-        setArrival(response.Data.arrival)
+        setArrival(response.Data.arrival);
       }
     } catch (error) {
       console.error(error);
@@ -223,12 +229,10 @@ export default function EditTour() {
   const handleStartDateChange = (e) => {
     const [day, month, year] = e.target.value.split("-");
     if (day && month && year) {
-
       const selectedDate = new Date(e.target.value);
       const today = new Date();
 
       const min_date = new Date(today.toISOString().split("T")[0]);
-
 
       if (selectedDate < min_date) {
         setDateBegin(min_date);
@@ -243,9 +247,8 @@ export default function EditTour() {
 
       const newTotalDays = calculateDaysBetweenDates(e.target.value, date_end);
       if (newTotalDays < route_data.length) {
-          setRouteData(route_data.slice(0, newTotalDays));
+        setRouteData(route_data.slice(0, newTotalDays));
       }
-
     }
   };
 
@@ -266,9 +269,12 @@ export default function EditTour() {
       } else {
         setDateEnd(e.target.value);
 
-        const newTotalDays = calculateDaysBetweenDates(date_begin, e.target.value);
+        const newTotalDays = calculateDaysBetweenDates(
+          date_begin,
+          e.target.value
+        );
         if (newTotalDays < route_data.length) {
-            setRouteData(route_data.slice(0, newTotalDays));
+          setRouteData(route_data.slice(0, newTotalDays));
         }
       }
     }
@@ -364,16 +370,14 @@ export default function EditTour() {
   }, [departureDetails]);
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       setIsFocused(false);
     });
-  }, [isFocused])
-
+  }, [isFocused]);
 
   useEffect(() => {
     if (tourDetails) {
       setSelectedTour({ value: tourDetails.type, label: tourDetails.type });
-
 
       if (tourDetails.tour_image) {
         setImage2(tourDetails.tour_image || []);
@@ -426,13 +430,10 @@ export default function EditTour() {
       nextDay.setDate(nextDay.getDate() + 1);
       setMinDate(nextDay.toISOString().split("T")[0]);
     }
-
-
-  }, [tourDetails])
+  }, [tourDetails]);
 
   useEffect(() => {
     if (flightData) {
-     
       if (flightData.length > 0) {
         const updatedFlight = flightData.map((flight) => {
           const foundFlight = flightDetails.find(
@@ -497,7 +498,7 @@ export default function EditTour() {
     }
   }, []);
   useEffect(() => {
-    if (arrival_data.length>0) {
+    if (arrival_data.length > 0) {
       const updatedArrival = arrival_data.map((arrival) => {
         return {
           arrival_id: arrival.arrival_id,
@@ -505,9 +506,21 @@ export default function EditTour() {
         };
       });
       setArrivalrow(updatedArrival);
-    }    
-     
+    }
   }, [arrival_data]);
+  useEffect(() => {
+    console.log(BedRoomData, "BedRoomData");
+    const updateBed = BedRoomData.map((bed) => {
+      return {
+        id: bed.id,
+        bedroom_name: bed.rooms,
+        bedroom_capacity: bed.capacity,
+      };
+    });
+    setBedroomRows(updateBed);
+  }, [BedRoomData]);
+
+  console.log(bedroomRows, "bedroomRows");
 
   const onEditorStateChange = (newEditorState) => {
     const editorContent = newEditorState.getCurrentContent();
@@ -538,10 +551,8 @@ export default function EditTour() {
         fetchTour(id);
       } else {
         showErrorToast(translate, "Something went wrong");
-
       }
     } else {
-
       const newImagesCopy = [...newImages];
       newImagesCopy.splice(index - image2.length, 1);
       setNewImages(newImagesCopy);
@@ -550,7 +561,6 @@ export default function EditTour() {
       setUploadedImage(uploadedImagesCopy);
     }
   };
-
 
   const handleTabClick = (tab, index) => {
     if (index < activeTabIndex) {
@@ -579,7 +589,6 @@ export default function EditTour() {
     return daysDiff + 1; // Include the start day
   };
 
-
   const handleNextTab = () => {
     if (isCurrentTabValid()) {
       const nextTabIndex = activeTabIndex + 1;
@@ -589,10 +598,12 @@ export default function EditTour() {
         setEnabledTabs((prevEnabledTabs) => [...prevEnabledTabs, nextTabIndex]);
       }
     } else {
-
-      showErrorToast(translate, "Please fill in all required fields before proceeding");
+      showErrorToast(
+        translate,
+        "Please fill in all required fields before proceeding"
+      );
     }
-  }
+  };
   const handleDayDescriptionChange = (dayNumber, dayData, description) => {
     setRouteData((prevData) => {
       const newData = [...prevData];
@@ -637,26 +648,26 @@ export default function EditTour() {
 
   const handleCheckboxChange = (event, id) => {
     const isChecked = event.target.checked;
-  
+
     const updatedServices = services.map((service) =>
       service.id === id
         ? { ...service, checked: isChecked }
-        : { ...service, checked: service.checked } 
-      );
-  
-      const serviceId = services.find((service) => service.id === id).service_id;
-    
+        : { ...service, checked: service.checked }
+    );
+
+    const serviceId = services.find((service) => service.id === id).service_id;
+
     // Update services state
     setServices(updatedServices);
-  
+
     // Update unchecked IDs state
     if (!isChecked) {
-      setUncheckedIds((prev) => [...prev, serviceId]); 
+      setUncheckedIds((prev) => [...prev, serviceId]);
     } else {
-      setUncheckedIds((prev) => prev.filter((uncheckedId) => uncheckedId !== serviceId)); // Remove from unchecked array
+      setUncheckedIds((prev) =>
+        prev.filter((uncheckedId) => uncheckedId !== serviceId)
+      ); // Remove from unchecked array
     }
-
-
   };
 
   const handlePriceChange = (event, id) => {
@@ -691,7 +702,6 @@ export default function EditTour() {
     Promise.all(promises).then(() => {
       setNewImages(uploadedImagesCopy);
       setNewImageIndex(newImageIndex + files.length);
-
     });
   };
 
@@ -699,9 +709,27 @@ export default function EditTour() {
     setSelectedTour(newValue);
   };
 
-  const handleRadioChange = (event) => {
-    setRadioValue(event.target.value);
+  const handleBedroomChange = (selectedOption, index) => {
+    console.log(selectedOption, "selectedOption");
+
+    setBedroomRows((prevRows) => {
+      const newRows = [...prevRows];
+      newRows[index].bedroom_name = selectedOption ? selectedOption.value : "";
+      return newRows;
+    });
   };
+
+  const handleCapacityChange = (e, index) => {
+    setBedroomRows((prevRows) => {
+      const newRows = [...prevRows];
+      newRows[index].bedroom_capacity = e.target.value;
+      return newRows;
+    });
+  };
+
+  // const handleRadioChange = (event) => {
+  //   setRadioValue(event.target.value);
+  // };
 
   const options = tourType.map((type) => ({
     value: type,
@@ -715,7 +743,7 @@ export default function EditTour() {
   const ArrivalOption = Arrival?.map((arr) => ({
     value: arr.id,
     label: `${arr.arrival}`,
-  }))
+  }));
 
   const handleAddDepartureRow = () => {
     setDepartureRows([
@@ -725,11 +753,23 @@ export default function EditTour() {
   };
 
   const handleAddArrivalRow = () => {
-    setArrivalrow([
-      ...arrivalrow,
-      { arrival_id: "",name:"" },
+    setArrivalrow([...arrivalrow, { arrival_id: "", name: "" }]);
+  };
+
+  const handleAddBedroomRow = () => {
+    setBedroomRows([
+      ...bedroomRows,
+      { id: "0", bedroom_name: "", bedroom_capacity: "" },
     ]);
   };
+
+  const handleRemoveBedroomRow = (index, data) => {
+    console.log(data, "data");
+    RemoveBed.push(data.id);
+    setBedroomRows(bedroomRows.filter((_, i) => i !== index));
+  };
+
+  console.log(RemoveBed, "RemoveBed");
 
   const handleRemoveDepartureRow = (index) => {
     const id = departureRows[index].id;
@@ -845,7 +885,6 @@ export default function EditTour() {
   };
 
   const handleArrivalchange = (value, index) => {
-
     if (!value) return;
     const selectedOption = Arrival.find((option) => option.id === value.value);
 
@@ -855,16 +894,11 @@ export default function EditTour() {
       name: selectedOption?.arrival || "",
     };
 
-
     const newRows = [...arrivalrow];
     newRows[index] = ArrivalData;
 
     setArrivalrow(newRows);
-
   };
-
-  
-  
 
   const handleMadinaChange = (value, index) => {
     if (!value) return;
@@ -913,35 +947,6 @@ export default function EditTour() {
     }
   }, []);
 
-  const handleFlightChange = (e, index, field) => {
-    const { value } = e.target;
-    const newRows = [...flightRow];
-    newRows[index][field] = value;
-    setFlightRow(newRows);
-  };
-
-  const HandleAddFlightRow = () => {
-    setFlightRow([
-      ...flightRow,
-      {
-        flight_id: " ",
-        flight_amount: " ",
-        no_of_stop: " ",
-        luggage: "",
-        id: "",
-      },
-    ]);
-  };
-
-  const HandleRemoveFlightRow = (index) => {
-    if (flightRow.length === 1) {
-      return;
-    }
-    const newRows = [...flightRow];
-    newRows.splice(index, 1);
-    setFlightRow(newRows);
-  };
-
   const handleInputChange = (setter) => (e) => {
     const { value } = e.target;
     if (e.target.type === "date") {
@@ -964,17 +969,16 @@ export default function EditTour() {
         date_end &&
         selectRef.current.value &&
         departureRows.length > 0 &&
+        bedroomRows.length > 0 &&
+        bedroomRows.every((bed) => bed.bedroom_capacity && bed.bedroom_name) &&
         departureRows.every(
           (departure) => departure.departure_id && departure.price
         ) &&
-        (image2.length > 0 || Object.keys(uploadedImage).some((key) => uploadedImage[key])) &&
+        (image2.length > 0 ||
+          Object.keys(uploadedImage).some((key) => uploadedImage[key])) &&
         arrivalrow.length > 0 &&
-        arrivalrow.every(
-          (arrival) => arrival.arrival_id && arrival.name
-        )
-
-
-      )
+        arrivalrow.every((arrival) => arrival.arrival_id && arrival.name)
+      );
     } else if (activeTab === "Pricing") {
       return adult_price >= 0 && child_price >= 0 && baby_price >= 0;
     } else if (activeTab === "Included") {
@@ -1023,8 +1027,26 @@ export default function EditTour() {
     setLoading(true);
     const totalDays = calculateDaysBetweenDates(date_begin, date_end);
 
-    if (!date_begin || !date_end || !name || !capacity || departureRows.length == 0 || (image2.length == 0 && newImages.length == 0) || !selectRef.current.value || baby_price < 0 || adult_price < 0 || child_price < 0 || arrivalrow.length == 0 || arrivalrow.some((arrival) => !arrival.arrival_id || !arrival.name)) {
-      showErrorToast(translate, "Please fill in all required fields before proceeding");
+    if (
+      !date_begin ||
+      !date_end ||
+      !name ||
+      !capacity ||
+      departureRows.length == 0 ||
+      (image2.length == 0 && newImages.length == 0) ||
+      BedRoomData == 0 ||
+      bedroomRows.some((bed) => !bed.bedroom_capacity || !bed.bedroom_name) ||
+      !selectRef.current.value ||
+      baby_price < 0 ||
+      adult_price < 0 ||
+      child_price < 0 ||
+      arrivalrow.length == 0 ||
+      arrivalrow.some((arrival) => !arrival.arrival_id || !arrival.name)
+    ) {
+      showErrorToast(
+        translate,
+        "Please fill in all required fields before proceeding"
+      );
       setLoading(false);
       return;
     }
@@ -1035,25 +1057,28 @@ export default function EditTour() {
     //   return;
     // }
 
-
-
-    if (calculateDaysBetweenDates(date_begin, date_end) !== totalDays) {
-      showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
-      setLoading(false);
-      return;
-    }
+    // if (calculateDaysBetweenDates(date_begin, date_end) !== totalDays) {
+    //   showErrorToast(
+    //     translate,
+    //     "Please fill in all day and description fields in the itinerary"
+    //   );
+    //   setLoading(false);
+    //   return;
+    // }
 
     const hasEmptyDayOrDescription = route_data.some((day) => {
       const { dayData, description } = day;
       return !dayData || !description;
     });
-        
-    if (hasEmptyDayOrDescription || route_data.length !== totalDays) {
-      showErrorToast(translate, "Please fill in all day and description fields in the itinerary");
-      setLoading(false);
-      return;
-    }
 
+    // if (hasEmptyDayOrDescription || route_data.length !== totalDays) {
+    //   showErrorToast(
+    //     translate,
+    //     "Please fill in all day and description fields in the itinerary"
+    //   );
+    //   setLoading(false);
+    //   return;
+    // }
 
     const end_date = formatDateToMMDDYYYY(date_end);
     const start_date = formatDateToMMDDYYYY(date_begin);
@@ -1091,13 +1116,18 @@ export default function EditTour() {
       id: flight.id ? flight.id : 0,
     }));
 
+    const BadData = bedroomRows.map((bed) => ({
+      id: bed.id,
+      rooms: bed.bedroom_name,
+      capacity: bed.bedroom_capacity,
+    }));
+
     const arrivalData = arrivalrow.map((arrival) => ({
-      arrival_id: arrival.arrival_id ? arrival.arrival_id : '',
-      name: arrival.name ? arrival.name : '',
+      arrival_id: arrival.arrival_id ? arrival.arrival_id : "",
+      name: arrival.name ? arrival.name : "",
+    }));
 
-    }))
-
-    const ArrivalidArray = arrivalrow.map(item => item?.arrival_id);
+    const ArrivalidArray = arrivalrow.map((item) => item?.arrival_id);
 
     if (
       !mekkaData.some(
@@ -1106,21 +1136,23 @@ export default function EditTour() {
       !madinaData.some(
         (madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info
       ) &&
-       !flightData.some(
-          (flight) =>
-            flight.flight_id &&
-            flight.flight_amount &&
-            flight.no_of_stop &&
-            flight.luggage
-        )
-         &&
+      !BedRoomData.some((bed) => bed.bedroom_name && bed.bedroom_capacity) &&
+      !flightData.some(
+        (flight) =>
+          flight.flight_id &&
+          flight.flight_amount &&
+          flight.no_of_stop &&
+          flight.luggage
+      ) &&
       !flightInformation
     ) {
       setLoading(false);
-      showErrorToast(translate, "Please fill in all required fields before proceeding");
+      showErrorToast(
+        translate,
+        "Please fill in all required fields before proceeding"
+      );
       return;
     }
-
 
     const hotel_data = [...mekkaData, ...madinaData];
 
@@ -1146,16 +1178,15 @@ export default function EditTour() {
 
     const tourInfo = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-    const image2FileArray = Object.entries(uploadedImage).map(([key, value]) => value);
-
-
+    const image2FileArray = Object.entries(uploadedImage).map(
+      ([key, value]) => value
+    );
 
     const departureData = departureRows.map((departure) => ({
       departure_id: departure.departure_id ? departure.departure_id : "",
       price: departure.price ? departure.price : "",
       id: departure.id ? departure.id : "",
     }));
-
 
     const formData = new FormData();
 
@@ -1174,21 +1205,17 @@ export default function EditTour() {
     formData.append("flight_info", flightInformation);
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
-    formData.append(
-      "flight_data",
-       JSON.stringify(flight_data)
-    );
+    formData.append("flight_data", JSON.stringify(flight_data));
+    formData.append("room_data", JSON.stringify(BadData));
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
-    // formData.append(
-    //   0
-    // );
     formData.append("user_id", user?.user.id);
     formData.append("company_id", user?.user.company_id);
     formData.append("tour_id", id);
     formData.append("arrival", ArrivalidArray);
-    formData.append("deleted_services", uncheckedIds.join(',') || "");
-    formData.append("deleted_departure", DeletedDeparture.join(',') || "");
-    formData.append("deleted_arrival", DeletedArrival.join(',') || "");
+    formData.append("deleted_services", uncheckedIds.join(",") || "");
+    formData.append("deleted_departure", DeletedDeparture.join(",") || "");
+    formData.append("deleted_arrival", DeletedArrival.join(",") || "");
+    formData.append("deleted_rooms", RemoveBed.join(",") || "");
 
     if (image2FileArray.length === 0) {
       formData.append("tour_image", "");
@@ -1221,6 +1248,7 @@ export default function EditTour() {
       console.error(error);
     }
   };
+
   const formatDateToDDMMYYYY = (date) => {
     const [year, month, day] = date.split("-");
     return `${day}-${month}-${year}`;
@@ -1230,13 +1258,14 @@ export default function EditTour() {
     const [day, month, year] = date.split("-");
     return `${year}-${month}-${day}`;
   };
-  
+
   return (
     <>
       <ToastContainer />
       <div
-        className={`dashboard overflow-hidden ${sideBarOpen ? "-is-sidebar-visible" : ""
-          } js-dashboard `}
+        className={`dashboard overflow-hidden ${
+          sideBarOpen ? "-is-sidebar-visible" : ""
+        } js-dashboard `}
       >
         <AgentDBsideBar setSideBarOpen={setSideBarOpen} />
 
@@ -1252,8 +1281,9 @@ export default function EditTour() {
                   {tabs.map((elm, i) => (
                     <div key={elm} className="col-auto">
                       <button
-                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${activeTab == elm ? "is-tab-el-active" : ""
-                          }`}
+                        className={`tabs__button text-20 lh-12 fw-500 pb-15 lg:pb-0 js-tabs-button ${
+                          activeTab == elm ? "is-tab-el-active" : ""
+                        }`}
                         onClick={() => isNextClicked && handleTabClick(elm, i)}
                         disabled={
                           i > activeTabIndex && !enabledTabs.includes(i)
@@ -1270,8 +1300,9 @@ export default function EditTour() {
                     <div className="col-xl-12 col-lg-12">
                       <div className="tabs__content js-tabs-content">
                         <div
-                          className={`tabs__pane  ${activeTab == "Content" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab == "Content" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
@@ -1332,7 +1363,11 @@ export default function EditTour() {
                                       onChange={handleInputChange(setCapacity)}
                                       onKeyDown={(e) => {
                                         setIsFocused(true);
-                                        if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                        if (
+                                          !/^[0-9]+$/.test(e.key) &&
+                                          e.key !== "Backspace" &&
+                                          e.key !== "Tab"
+                                        ) {
                                           e.preventDefault();
                                         }
                                       }}
@@ -1358,7 +1393,8 @@ export default function EditTour() {
                                       min={minEndDate}
                                       onBlur={handleStartDateBlur}
                                       onChange={handleStartDateChange}
-                                      onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
+                                      onFocus={handleDateFocus}
+                                      onKeyDown={(e) => e.preventDefault()}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("Start Date of Tour") ||
@@ -1378,7 +1414,8 @@ export default function EditTour() {
                                       pattern="\d{2}-\d{2}-\d{4}"
                                       onBlur={handleEndDateBlur}
                                       onChange={handleEndDateChange}
-                                      onFocus={handleDateFocus} onKeyDown={(e) => e.preventDefault()}
+                                      onFocus={handleDateFocus}
+                                      onKeyDown={(e) => e.preventDefault()}
                                     />
                                     <label className="lh-1 text-16 text-light-1">
                                       {translate("End Date of Tour") ||
@@ -1419,6 +1456,160 @@ export default function EditTour() {
                                       <span className="text-red">*</span>
                                     </label>
                                   </div>
+                                </div>
+                                <div>
+                                  <h6>{translate("Bedroom Details")}</h6>
+                                  <ul>
+                                    {bedroomRows.map((row, index) => (
+                                      <li key={index}>
+                                        <div className="row items-center">
+                                          <div className="col-lg-8">
+                                            <div className="row items-center">
+                                              <div className="col-lg-6 ">
+                                                <Select
+                                                  value={bedroomOptions.find(
+                                                    (option) =>
+                                                      option.value ===
+                                                      row.bedroom_name
+                                                  )}
+                                                  onChange={(value) =>
+                                                    handleBedroomChange(
+                                                      value,
+                                                      index
+                                                    )
+                                                  }
+                                                  options={bedroomOptions}
+                                                  classNamePrefix="react-select"
+                                                  isClearable
+                                                  placeholder={translate(
+                                                    "Select Bedroom Name (Required)"
+                                                  )}
+                                                />
+                                              </div>
+
+                                              <div className="col-lg-6 ">
+                                                <div className="form-input my-1">
+                                                  <input
+                                                    type="number"
+                                                    min={1}
+                                                    required
+                                                    value={row.bedroom_capacity}
+                                                    onChange={(e) =>
+                                                      handleCapacityChange(
+                                                        e,
+                                                        index
+                                                      )
+                                                    }
+                                                    onKeyDown={(e) => {
+                                                      if (!isFocused) return;
+
+                                                      if (
+                                                        !/^[0-9]+$/.test(
+                                                          e.key
+                                                        ) &&
+                                                        e.key !== "Backspace" &&
+                                                        e.key !== "Tab"
+                                                      ) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
+                                                    onKeyUp={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                    onFocus={() =>
+                                                      setIsFocused(true)
+                                                    }
+                                                    onBlur={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                  />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {translate(
+                                                      "Enter Bedroom Capacity"
+                                                    )}
+                                                    <span className="text-red">
+                                                      *
+                                                    </span>
+                                                  </label>
+                                                </div>
+                                                {/* <div className="form-input my-1">
+                                                  <input
+                                                    type="number"
+                                                    min={1}
+                                                    required
+                                                    value={capacity}
+                                                    onChange={handleInputChange(
+                                                      setCapacity
+                                                    )}
+                                                    onKeyDown={(e) => {
+                                                      setIsFocused(true);
+                                                      if (
+                                                        !/^[0-9]+$/.test(
+                                                          e.key
+                                                        ) &&
+                                                        e.key !== "Backspace" &&
+                                                        e.key !== "Tab"
+                                                      ) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
+                                                    onKeyUp={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                    onFocus={() =>
+                                                      setIsFocused(true)
+                                                    }
+                                                    onBlur={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                  />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {translate(
+                                                      "Seat Availibility"
+                                                    ) ||
+                                                      "Find Latest Packages"}{" "}
+                                                    <span className="text-red">
+                                                      *
+                                                    </span>
+                                                  </label>
+                                                </div> */}
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div className="col-2 d-flex">
+                                            <button
+                                              type="button"
+                                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                              onClick={handleAddBedroomRow}
+                                              style={{
+                                                height: "fit-content",
+                                              }}
+                                            >
+                                              +
+                                            </button>
+                                            {index > 0 && (
+                                              <button
+                                                type="button"
+                                                className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                                style={{
+                                                  height: "fit-content",
+                                                }}
+                                                onClick={() =>
+                                                  handleRemoveBedroomRow(
+                                                    index,
+                                                    row
+                                                  )
+                                                }
+                                              >
+                                                -
+                                              </button>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
                                 </div>
                                 <div className="col-md-12">
                                   <h6> {translate("Departure")}</h6>
@@ -1502,8 +1693,12 @@ export default function EditTour() {
                                                   <button
                                                     type="button"
                                                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                                    onClick={handleAddDepartureRow}
-                                                    style={{ height: "fit-content" }}
+                                                    onClick={
+                                                      handleAddDepartureRow
+                                                    }
+                                                    style={{
+                                                      height: "fit-content",
+                                                    }}
                                                   >
                                                     +
                                                   </button>
@@ -1534,12 +1729,8 @@ export default function EditTour() {
                                   </ul>
                                 </div>
                                 <div className="col-md-12">
-                                  <h6>
-                                    {" "}
-                                    {translate("Arrival")}
-                                  </h6>
+                                  <h6> {translate("Arrival")}</h6>
                                   <ul className="">
-
                                     {arrivalrow.map((row, index) => (
                                       <li key={index}>
                                         <div className=" row">
@@ -1547,16 +1738,34 @@ export default function EditTour() {
                                             <div className="row">
                                               <div className="col-md-8 form-input spacing d-flex flex-column align-items-center">
                                                 <CreatableSelect
-                                                  value={arrivalrow[index]?.name ? { value: arrivalrow[index].arrival_id, label: arrivalrow[index].name } : null}
+                                                  value={
+                                                    arrivalrow[index]?.name
+                                                      ? {
+                                                          value:
+                                                            arrivalrow[index]
+                                                              .arrival_id,
+                                                          label:
+                                                            arrivalrow[index]
+                                                              .name,
+                                                        }
+                                                      : null
+                                                  }
                                                   onChange={(value) =>
-                                                    handleArrivalchange(value, index)
+                                                    handleArrivalchange(
+                                                      value,
+                                                      index
+                                                    )
                                                   }
                                                   options={ArrivalOption}
                                                   className="custom-select Hotel-Madina-dd"
-                                                  placeholder={`${translate("Select Arrival (Required)")}`}
+                                                  placeholder={`${translate(
+                                                    "Select Arrival (Required)"
+                                                  )}`}
                                                   classNamePrefix="react-select"
                                                   isClearable
-                                                  formatCreateLabel={(inputValue) =>
+                                                  formatCreateLabel={(
+                                                    inputValue
+                                                  ) =>
                                                     `Not Found: "${inputValue}"`
                                                   }
                                                 />
@@ -1592,9 +1801,12 @@ export default function EditTour() {
                                                   <button
                                                     type="button"
                                                     className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
-                                                    onClick={handleAddArrivalRow}
-                                                    style={{ height: "fit-content" }}
-
+                                                    onClick={
+                                                      handleAddArrivalRow
+                                                    }
+                                                    style={{
+                                                      height: "fit-content",
+                                                    }}
                                                   >
                                                     +
                                                   </button>
@@ -1602,10 +1814,13 @@ export default function EditTour() {
                                                     <button
                                                       type="button"
                                                       className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                                      style={{ height: "fit-content" }}
-
+                                                      style={{
+                                                        height: "fit-content",
+                                                      }}
                                                       onClick={() =>
-                                                        handleRemoveArrivalRow(index)
+                                                        handleRemoveArrivalRow(
+                                                          index
+                                                        )
                                                       }
                                                     >
                                                       -
@@ -1613,18 +1828,13 @@ export default function EditTour() {
                                                   )}
                                                 </div>
                                               </div>
-
                                             </div>
                                           </div>
-
-
-
 
                                           <hr />
                                         </div>
                                       </li>
                                     ))}
-
                                   </ul>
                                 </div>
                               </div>
@@ -1637,27 +1847,32 @@ export default function EditTour() {
                                 </h4>
 
                                 <div className="row x-gap-20 y-gap-20">
-                                  {[...image2, ...newImages].map((image, index) => (
-                                    <div className="col-auto my-2" key={index}>
-                                      <div className="relative">
-                                        <Image
-                                          width={200}
-                                          height={200}
-                                          src={image}
-                                          alt={`image-${index}`}
-                                          className="size-200 rounded-12 object-cover"
-                                        />
-                                        <button
-                                          onClick={(e) =>
-                                            handleDeleteImage2(index, e)
-                                          }
-                                          className="absoluteIcon1 button -dark-1"
-                                        >
-                                          <i className="icon-delete text-18"></i>
-                                        </button>
+                                  {[...image2, ...newImages].map(
+                                    (image, index) => (
+                                      <div
+                                        className="col-auto my-2"
+                                        key={index}
+                                      >
+                                        <div className="relative">
+                                          <Image
+                                            width={200}
+                                            height={200}
+                                            src={image}
+                                            alt={`image-${index}`}
+                                            className="size-200 rounded-12 object-cover"
+                                          />
+                                          <button
+                                            onClick={(e) =>
+                                              handleDeleteImage2(index, e)
+                                            }
+                                            className="absoluteIcon1 button -dark-1"
+                                          >
+                                            <i className="icon-delete text-18"></i>
+                                          </button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  ))}
+                                    )
+                                  )}
 
                                   <div className="col-auto my-2">
                                     <label
@@ -1698,7 +1913,6 @@ export default function EditTour() {
                           </div>
                           {activeTabIndex < tabs.length - 1 && (
                             <div className="d-flex">
-
                               <button
                                 className="button -sm -info-2 bg-accent-1 text-white  mt-4 me-2"
                                 onClick={handleNextTab}
@@ -1722,14 +1936,13 @@ export default function EditTour() {
                                 )}
                               </button>
                             </div>
-
-
                           )}
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab === "Pricing" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab === "Pricing" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="contactForm row y-gap-30 items-center ">
@@ -1742,7 +1955,11 @@ export default function EditTour() {
                                     onChange={handleInputChange(setAdultPrice)}
                                     onKeyDown={(e) => {
                                       setIsFocused(true);
-                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                      if (
+                                        !/^[0-9]+$/.test(e.key) &&
+                                        e.key !== "Backspace" &&
+                                        e.key !== "Tab"
+                                      ) {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1766,7 +1983,11 @@ export default function EditTour() {
                                     onChange={handleInputChange(setChildPrice)}
                                     onKeyDown={(e) => {
                                       setIsFocused(true);
-                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                      if (
+                                        !/^[0-9]+$/.test(e.key) &&
+                                        e.key !== "Backspace" &&
+                                        e.key !== "Tab"
+                                      ) {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1790,7 +2011,11 @@ export default function EditTour() {
                                     onChange={handleInputChange(setBabyPrice)}
                                     onKeyDown={(e) => {
                                       setIsFocused(true);
-                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                      if (
+                                        !/^[0-9]+$/.test(e.key) &&
+                                        e.key !== "Backspace" &&
+                                        e.key !== "Tab"
+                                      ) {
                                         e.preventDefault();
                                       }
                                     }}
@@ -1830,48 +2055,72 @@ export default function EditTour() {
                               </div>
 
                               {services.map((service) => (
-                                  <div key={service.id} className="contactForm row y-gap-30 items-center pt-lg-0 pt-10">
-                                    <div className="col-lg-4">
-                                      <div className="d-flex items-center pointer-check">
-                                        <div className="form-checkbox">
-                                          <input
-                                            type="checkbox"
-                                            id={`service-${service.id}`}
-                                            checked={service.checked || false}
-                                            onChange={(event) => handleCheckboxChange(event, service.id)}
-                                          />
-                                          <label htmlFor={`service-${service.id}`} className="form-checkbox__mark">
-                                            <div className="form-checkbox__icon">
-                                              <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z" fill="white" />
-                                              </svg>
-                                            </div>
-                                          </label>
-                                        </div>
-                                        <label htmlFor={`service-${service.id}`} className="lh-16 ml-15 my-2">
-                                          {translate(service.title)}
+                                <div
+                                  key={service.id}
+                                  className="contactForm row y-gap-30 items-center pt-lg-0 pt-10"
+                                >
+                                  <div className="col-lg-4">
+                                    <div className="d-flex items-center pointer-check">
+                                      <div className="form-checkbox">
+                                        <input
+                                          type="checkbox"
+                                          id={`service-${service.id}`}
+                                          checked={service.checked || false}
+                                          onChange={(event) =>
+                                            handleCheckboxChange(
+                                              event,
+                                              service.id
+                                            )
+                                          }
+                                        />
+                                        <label
+                                          htmlFor={`service-${service.id}`}
+                                          className="form-checkbox__mark"
+                                        >
+                                          <div className="form-checkbox__icon">
+                                            <svg
+                                              width="10"
+                                              height="8"
+                                              viewBox="0 0 10 8"
+                                              fill="none"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <path
+                                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                                fill="white"
+                                              />
+                                            </svg>
+                                          </div>
+                                        </label>
+                                      </div>
+                                      <label
+                                        htmlFor={`service-${service.id}`}
+                                        className="lh-16 ml-15 my-2"
+                                      >
+                                        {translate(service.title)}
+                                      </label>
+                                    </div>
+                                  </div>
+                                  {service.checked && (
+                                    <div className="col-lg-6">
+                                      <div className="form-input my-1">
+                                        <input
+                                          type="number"
+                                          id={`service-${service.id}`}
+                                          value={service.price}
+                                          onChange={(event) =>
+                                            handlePriceChange(event, service.id)
+                                          }
+                                          required
+                                        />
+                                        <label className="lh-1 text-16 text-light-1">
+                                          {translate("Price")}
                                         </label>
                                       </div>
                                     </div>
-                                    {service.checked && (
-                                      <div className="col-lg-6">
-                                        <div className="form-input my-1">
-                                          <input
-                                            type="number"
-                                            id={`service-${service.id}`}
-                                            value={service.price}
-                                            onChange={(event) => handlePriceChange(event, service.id)}
-                                            required
-                                          />
-                                          <label className="lh-1 text-16 text-light-1">
-                                            {translate("Price")}
-                                          </label>
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                ))}
-                              
+                                  )}
+                                </div>
+                              ))}
                             </div>
                           </div>
                           <div className=" flex_start">
@@ -1914,8 +2163,9 @@ export default function EditTour() {
                         </div>
 
                         <div
-                          className={`tabs__pane ${activeTab == "Included" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane ${
+                            activeTab == "Included" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="row  y-gap-30 contactForm px-lg-20 px-0">
                             {included.map((item, index) => (
@@ -1934,9 +2184,9 @@ export default function EditTour() {
                                               included.map((includedItem) =>
                                                 includedItem.id === item.id
                                                   ? {
-                                                    ...includedItem,
-                                                    checked: e.target.checked,
-                                                  }
+                                                      ...includedItem,
+                                                      checked: e.target.checked,
+                                                    }
                                                   : includedItem
                                               );
                                             setIncluded(updatedIncluded);
@@ -2015,8 +2265,9 @@ export default function EditTour() {
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab == "Overview" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab == "Overview" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="y-gap-30 contactForm px-lg-20 px-0 ">
                             {typeof window != "undefined" && (
@@ -2080,8 +2331,9 @@ export default function EditTour() {
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab == "Itinerary" ? "is-tab-el-active" : ""
-                            }`}
+                          className={`tabs__pane  ${
+                            activeTab == "Itinerary" ? "is-tab-el-active" : ""
+                          }`}
                         >
                           <div className="form_2">
                             <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
@@ -2096,7 +2348,6 @@ export default function EditTour() {
                                     <div className="form-input my-1">
                                       <input
                                         type="text"
-                                        
                                         value={
                                           route_data.find(
                                             (day) => day.day === dayNumber
@@ -2113,7 +2364,6 @@ export default function EditTour() {
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Day")} {dayNumber}{" "}
-                                        
                                       </label>
                                     </div>
                                   </div>
@@ -2121,7 +2371,6 @@ export default function EditTour() {
                                     <div className="form-input my-1">
                                       <textarea
                                         type="text"
-                                        
                                         rows="2"
                                         cols="80"
                                         value={
@@ -2141,7 +2390,6 @@ export default function EditTour() {
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Description")}{" "}
-                                        
                                       </label>
                                     </div>
                                   </div>
@@ -2189,10 +2437,11 @@ export default function EditTour() {
                         </div>
 
                         <div
-                          className={`tabs__pane  ${activeTab == "Flight Hotel And Visa"
+                          className={`tabs__pane  ${
+                            activeTab == "Flight Hotel And Visa"
                               ? "is-tab-el-active"
                               : ""
-                            }`}
+                          }`}
                         >
                           <div className=" y-gap-30 contactForm px-lg-20 px-0 ">
                             <div className="d-flex item-center  border-1 px-3 mb-4 justify-content-between">
@@ -2297,13 +2546,23 @@ export default function EditTour() {
                                                 }
                                                 onKeyDown={(e) => {
                                                   setIsFocused(true);
-                                                  if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
                                                     e.preventDefault();
                                                   }
                                                 }}
-                                                onKeyUp={() => setIsFocused(false)}
-                                                onFocus={() => setIsFocused(true)}
-                                                onBlur={() => setIsFocused(false)}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
@@ -2428,13 +2687,23 @@ export default function EditTour() {
                                                 }
                                                 onKeyDown={(e) => {
                                                   setIsFocused(true);
-                                                  if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
                                                     e.preventDefault();
                                                   }
                                                 }}
-                                                onKeyUp={() => setIsFocused(false)}
-                                                onFocus={() => setIsFocused(true)}
-                                                onBlur={() => setIsFocused(false)}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
                                               />
                                               <label className="lh-1 text-16 text-light-1">
                                                 {" "}
@@ -2643,169 +2912,181 @@ export default function EditTour() {
                                 </div>
                               </div>
                             </div> */}
-                           
-                                <div className="d-flex item-center justify-content-between pt-10">
-                                  <h6> {translate("Add Flight Details")}</h6>
-                                </div>
-                                <div className="form_2">
-                                  <div className=" y-gap-30 contactForm py-20 ">
-                                    {flightRow.map((row, index) => {
-                                      return (
+
+                            <div className="d-flex item-center justify-content-between pt-10">
+                              <h6> {translate("Add Flight Details")}</h6>
+                            </div>
+                            <div className="form_2">
+                              <div className=" y-gap-30 contactForm py-20 ">
+                                {flightRow.map((row, index) => {
+                                  return (
+                                    <div className="row">
+                                      <div className="col-md-9">
                                         <div className="row">
-                                          <div className="col-md-9">
-                                            <div className="row">
-                                              <div className="col-md-6">
-                                                <CreatableSelect
-                                                  value={{
-                                                    value: flightRow[index].id,
-                                                    label:
-                                                      flightRow[index]
-                                                        .flight_name,
-                                                  }}
-                                                  onChange={(value) =>
-                                                    handleFlightSelectChange(
-                                                      value,
+                                          <div className="col-md-6">
+                                            <CreatableSelect
+                                              value={{
+                                                value: flightRow[index].id,
+                                                label:
+                                                  flightRow[index].flight_name,
+                                              }}
+                                              onChange={(value) =>
+                                                handleFlightSelectChange(
+                                                  value,
+                                                  index
+                                                )
+                                              }
+                                              options={ChooseFlight}
+                                              className="custom-select Flight-selected-dd"
+                                              placeholder={`${translate(
+                                                "Select Flight"
+                                              )}`}
+                                              classNamePrefix="react-select"
+                                              isClearable
+                                              formatCreateLabel={(inputValue) =>
+                                                `Not Found: "${inputValue}"`
+                                              }
+                                            />
+                                          </div>
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                required
+                                                value={
+                                                  flightRow[index].flight_amount
+                                                }
+                                                onChange={(e) =>
+                                                  setFlightRow((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[
                                                       index
-                                                    )
+                                                    ].flight_amount =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                                onKeyDown={(e) => {
+                                                  setIsFocused(true);
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
+                                                    e.preventDefault();
                                                   }
-                                                  options={ChooseFlight}
-                                                  className="custom-select Flight-selected-dd"
-                                                  placeholder={`${translate(
-                                                    "Select Flight"
-                                                  )}`}
-                                                  classNamePrefix="react-select"
-                                                  isClearable
-                                                  formatCreateLabel={(
-                                                    inputValue
-                                                  ) =>
-                                                    `Not Found: "${inputValue}"`
-                                                  }
-                                                />
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input
-                                                    type="number"
-                                                    required
-                                                    value={
-                                                      flightRow[index]
-                                                        .flight_amount
-                                                    }
-                                                    onChange={(e) =>
-                                                      setFlightRow(
-                                                        (prevRows) => {
-                                                          const newRows = [
-                                                            ...prevRows,
-                                                          ];
-                                                          newRows[
-                                                            index
-                                                          ].flight_amount =
-                                                            e.target.value;
-                                                          return newRows;
-                                                        }
-                                                      )
-                                                    }
-                                                    onKeyDown={(e) => {
-                                                      setIsFocused(true);
-                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                                        e.preventDefault();
-                                                      }
-                                                    }}
-                                                    onKeyUp={() => setIsFocused(false)}
-                                                    onFocus={() => setIsFocused(true)}
-                                                    onBlur={() => setIsFocused(false)}
-                                                  />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {" "}
-                                                    {translate(
-                                                      "Flight Amount"
-                                                    ) || "Find Latest Packages"}
-                                                  </label>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input
-                                                    type="number"
-                                                    required
-                                                    value={
-                                                      flightRow[index]
-                                                        .no_of_stop
-                                                    }
-                                                    onChange={(e) =>
-                                                      setFlightRow(
-                                                        (prevRows) => {
-                                                          const newRows = [
-                                                            ...prevRows,
-                                                          ];
-                                                          newRows[
-                                                            index
-                                                          ].no_of_stop =
-                                                            e.target.value;
-                                                          return newRows;
-                                                        }
-                                                      )
-                                                    }
-                                                    onKeyDown={(e) => {
-                                                      setIsFocused(true);
-                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                                        e.preventDefault();
-                                                      }
-                                                    }}
-                                                    onKeyUp={() => setIsFocused(false)}
-                                                    onFocus={() => setIsFocused(true)}
-                                                    onBlur={() => setIsFocused(false)}
-                                                  />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {" "}
-                                                    {translate(
-                                                      "No of Flight Stops"
-                                                    ) || "Find Latest Packages"}
-                                                  </label>
-                                                </div>
-                                              </div>
-                                              <div className="col-md-6">
-                                                <div className="form-input spacing">
-                                                  <input
-                                                    type="number"
-                                                    required
-                                                    value={
-                                                      flightRow[index].luggage
-                                                    }
-                                                    onChange={(e) =>
-                                                      setFlightRow(
-                                                        (prevRows) => {
-                                                          const newRows = [
-                                                            ...prevRows,
-                                                          ];
-                                                          newRows[
-                                                            index
-                                                          ].luggage =
-                                                            e.target.value;
-                                                          return newRows;
-                                                        }
-                                                      )
-                                                    }
-                                                    onKeyDown={(e) => {
-                                                      setIsFocused(true);
-                                                      if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Tab') {
-                                                        e.preventDefault();
-                                                      }
-                                                    }}
-                                                    onKeyUp={() => setIsFocused(false)}
-                                                    onFocus={() => setIsFocused(true)}
-                                                    onBlur={() => setIsFocused(false)}
-                                                  />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {" "}
-                                                    {translate("Luggage") ||
-                                                      "Find Latest Packages"}
-                                                  </label>
-                                                </div>
-                                              </div>
+                                                }}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Flight Amount") ||
+                                                  "Find Latest Packages"}
+                                              </label>
                                             </div>
                                           </div>
-                                          {/* <div className="col-md-2 col-lg-auto col-12 d-flex">
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                required
+                                                value={
+                                                  flightRow[index].no_of_stop
+                                                }
+                                                onChange={(e) =>
+                                                  setFlightRow((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].no_of_stop =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                                onKeyDown={(e) => {
+                                                  setIsFocused(true);
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
+                                                    e.preventDefault();
+                                                  }
+                                                }}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate(
+                                                  "No of Flight Stops"
+                                                ) || "Find Latest Packages"}
+                                              </label>
+                                            </div>
+                                          </div>
+                                          <div className="col-md-6">
+                                            <div className="form-input spacing">
+                                              <input
+                                                type="number"
+                                                required
+                                                value={flightRow[index].luggage}
+                                                onChange={(e) =>
+                                                  setFlightRow((prevRows) => {
+                                                    const newRows = [
+                                                      ...prevRows,
+                                                    ];
+                                                    newRows[index].luggage =
+                                                      e.target.value;
+                                                    return newRows;
+                                                  })
+                                                }
+                                                onKeyDown={(e) => {
+                                                  setIsFocused(true);
+                                                  if (
+                                                    !/^[0-9]+$/.test(e.key) &&
+                                                    e.key !== "Backspace" &&
+                                                    e.key !== "Tab"
+                                                  ) {
+                                                    e.preventDefault();
+                                                  }
+                                                }}
+                                                onKeyUp={() =>
+                                                  setIsFocused(false)
+                                                }
+                                                onFocus={() =>
+                                                  setIsFocused(true)
+                                                }
+                                                onBlur={() =>
+                                                  setIsFocused(false)
+                                                }
+                                              />
+                                              <label className="lh-1 text-16 text-light-1">
+                                                {" "}
+                                                {translate("Luggage") ||
+                                                  "Find Latest Packages"}
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      {/* <div className="col-md-2 col-lg-auto col-12 d-flex">
                                             <button
                                               type="button"
                                               className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
@@ -2829,12 +3110,11 @@ export default function EditTour() {
                                               </button>
                                             )}
                                           </div> */}
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
                           </div>
                           <div className=" flex_start">
                             {activeTabIndex > 0 && (
@@ -2861,7 +3141,6 @@ export default function EditTour() {
                                 translate("Save Details")
                               )}
                             </button>
-
                           </div>
                         </div>
                       </div>
@@ -2872,7 +3151,8 @@ export default function EditTour() {
             </div>
 
             <div className="text-center pt-30">
-              © {translate("Copyright MekkaBooking.com")} {new Date().getFullYear()}
+              © {translate("Copyright MekkaBooking.com")}{" "}
+              {new Date().getFullYear()}
             </div>
           </div>
         </div>

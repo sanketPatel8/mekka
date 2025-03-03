@@ -78,6 +78,7 @@ export default function BookingPages({ BookingData }) {
   const [AlladultsData, setAlladultsData] = useState([]);
   const [AdditionalServices, setAdditionalServices] = useState([]);
   const [existingItemsState, setExistingItemsState] = useState([]);
+  const [RoomData, setRoomData] = useState([]);
   const [Discount, setDiscount] = useState({});
   const [HandlePromo, setHandlePromo] = useState(false);
   const [ShowbtnName, setShowbtnName] = useState(false);
@@ -93,6 +94,7 @@ export default function BookingPages({ BookingData }) {
 
   useEffect(() => {
     setAdditionalServices(BookingData?.Tour_Details?.addtional_price);
+    setRoomData(BookingData?.Tour_Details?.tour_rooms);
     localStorage.setItem(
       "additionalfordashboard",
       JSON.stringify(BookingData?.Tour_Details?.addtional_price)
@@ -418,6 +420,7 @@ export default function BookingPages({ BookingData }) {
       title: "",
       additional_services: "",
       services: [],
+      tour_room_id: "",
     }),
     Child: initializeFormValues(Childrendata?.length || 0, {
       name: "",
@@ -431,6 +434,7 @@ export default function BookingPages({ BookingData }) {
       additional_order: "",
       additional_price_id: "",
       services: [],
+      tour_room_id: "",
     }),
     Baby: initializeFormValues(babyData.length || 0, {
       name: "",
@@ -463,6 +467,7 @@ export default function BookingPages({ BookingData }) {
     additional_order: "",
     additional_price_id: "",
     services: [],
+    tour_room_id: "",
   });
 
   const handleInputChange = (type, index, e, ftype) => {
@@ -649,6 +654,40 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  const handleRoomSelection = (category, index, roomId) => {
+    if (LoginCheck === true && category == "Adult" && index == 0) {
+      console.log("condition was true");
+
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        tour_room_id: roomId,
+      }));
+    } else {
+      setFormValues((prevValues) => {
+        const updatedValues = { ...prevValues };
+
+        if (!updatedValues[category]) return updatedValues;
+
+        if (!Array.isArray(updatedValues[category]))
+          updatedValues[category] = [];
+
+        if (!updatedValues[category][index]) {
+          updatedValues[category][index] = {
+            tour_room_id: "",
+          };
+        }
+
+        // Update the `tour_room_id` for the selected person
+        updatedValues[category] = updatedValues[category].map((item, i) =>
+          i === index ? { ...item, tour_room_id: roomId } : item
+        );
+
+        return updatedValues;
+      });
+    }
+  };
+
+  console.log(formValues, "formValues");
   console.log(userData, "userData");
 
   const fetchProfile = async () => {
@@ -827,350 +866,6 @@ export default function BookingPages({ BookingData }) {
       }
 
     const shouldShowAdditionalServices = type !== "Baby";
-
-    // return Array.from({ length: count })?.map((_, i) => {
-    //   const isExtraAdult = type === "Adult" && i >= 1;
-    //   const currentFields = isExtraAdult
-    //     ? fields.adultFieldsForExtraAdults
-    //     : fields[type] || [];
-
-    //   return (
-    //     <div key={`${type}-${i}`} className="row">
-    //       <div className="form_1 mx-auto">
-    //         <div className="px-50 py-5 yellow_bg">
-    //           <p>
-    //             <span>
-    //               <FaUser />
-    //             </span>
-    //             <span>
-    //               <b>{`${i + 1}. ${translate(
-    //                 type.charAt(0).toUpperCase() + type.slice(1)
-    //               )} ${translate("Information")}`}</b>
-    //             </span>
-    //           </p>
-    //           <p>
-    //             <span>
-    //               <MdError />
-    //             </span>
-    //             <span>
-    //               {translate("Is Also The Contact Person For The Reservation.")}
-    //             </span>
-    //           </p>
-    //         </div>
-
-    //         <div className="y-gap-30 contactForm px-20 py-20">
-    //           <div className="my-3 row">
-    //             {currentFields?.map((field, index) => {
-    //               const fieldValue =
-    //                 LoginCheck === true &&
-    //                 type === "Adult" &&
-    //                 newdata === null &&
-    //                 i === 0
-    //                   ? userData?.[field.name]
-    //                   : formValues[type]?.[i]?.[field.name];
-
-    //               return (
-    //                 <div key={index} className="col-md-6">
-    //                   <div className="form-input my-1">
-    //                     {/* {field.type === "select" ? (
-    //                       <>
-    //                         <select
-    //                           name={field.name}
-    //                           value={fieldValue || ""}
-    //                           onChange={(e) =>
-    //                             handleInputChange(type, i, e, field.type)
-    //                           }
-    //                           required
-    //                           className="form-control"
-    //                         >
-    //                           <option value="" disabled>
-    //                             {field.label}
-    //                           </option>
-    //                           {field.options?.map((option, optIndex) => (
-    //                             <option
-    //                               key={optIndex}
-    //                               value={option.toLowerCase()}
-    //                             >
-    //                               {option}
-    //                             </option>
-    //                           ))}
-    //                         </select>
-
-    //                         <label className="lh-1 text-16 text-light-1 dd_l_top10">
-    //                           {
-    //                             // fieldValue
-    //                             //   ? `${field.label}: ${
-    //                             //       fieldValue.charAt(0).toUpperCase() +
-    //                             //       fieldValue.slice(1)
-    //                             //     }`
-    //                             //   :
-    //                             field.label
-    //                           }{" "}
-    //                           <span className="text-red">*</span>
-    //                         </label>
-    //                       </>
-    //                     ) : (
-    //                       <>
-    //                         <input
-    //                           type={field.type}
-    //                           name={field.name}
-    //                           value={fieldValue || ""}
-    //                           onChange={(e) =>
-    //                             handleInputChange(type, i, e, field.type)
-    //                           }
-    //                           maxLength={
-    //                             field.type == "number" ? 15 : undefined
-    //                           }
-    //                           max={
-    //                             field.type == "date"
-    //                               ? getTodayDate()
-    //                               : undefined
-    //                           }
-    //                           required
-    //                         />
-
-    //                         <label className="lh-1 text-16 text-light-1">
-    //                           {field.label === "Phone" ? (
-    //                             <>
-    //                               {field.label}
-    //                               {ShowPhoneError && (
-    //                                 <span style={{ color: "red" }}>
-    //                                   {ShowPhoneError}
-    //                                 </span>
-    //                               )}
-    //                             </>
-    //                           ) : (
-    //                             field.label
-    //                           )}{" "}
-    //                           <span className="text-red">*</span>
-    //                         </label>
-    //                       </>
-    //                     )} */}
-    //                     {field.type === "select" ? (
-    //                       <>
-    //                         <select
-    //                           name={field.name}
-    //                           value={fieldValue || ""}
-    //                           onChange={(e) =>
-    //                             handleInputChange(type, i, e, field.type)
-    //                           }
-    //                           required
-    //                           className="form-control"
-    //                         >
-    //                           <option value="" disabled>
-    //                             {field.label}
-    //                           </option>
-    //                           {field.options?.map((option, optIndex) => (
-    //                             <option
-    //                               key={optIndex}
-    //                               value={option.toLowerCase()}
-    //                             >
-    //                               {option}
-    //                             </option>
-    //                           ))}
-    //                         </select>
-
-    //                         <label className="lh-1 text-16 text-light-1 dd_l_top10">
-    //                           {field.label} <span className="text-red">*</span>
-    //                         </label>
-    //                       </>
-    //                     ) : field.type === "number" ? (
-    //                       <>
-    //                         <PhoneInput
-    //                           country={countryCode}
-    //                           value={fieldValue}
-    //                           onChange={(e) =>
-    //                             handleInputChange(
-    //                               type,
-    //                               i,
-    //                               { target: { name: "mobile", e } },
-    //                               "phone"
-    //                             )
-    //                           }
-    //                           inputProps={{
-    //                             name: "mobile",
-    //                             required: true,
-    //                             autoFocus: true,
-    //                           }}
-    //                           inputClass="phonenumber_input"
-    //                           containerStyle={{
-    //                             width: "100%",
-    //                             marginBottom: "10px",
-    //                             backgroundColor: "white",
-    //                           }}
-    //                           inputStyle={{
-    //                             width: "100%",
-    //                             padding: "12px 45px",
-    //                             borderRadius: "4px",
-    //                             border: "1px solid #E7E6E6",
-    //                             fontSize: "16px",
-    //                             boxSizing: "border-box",
-    //                             backgroundColor: "white",
-    //                           }}
-    //                           className="form-input"
-    //                           enableSearch={true}
-    //                         />
-    //                         <label className="phone_lable">
-    //                           {translate("Phone")}
-    //                           <span className="text-red"> *</span>
-    //                         </label>
-    //                       </>
-    //                     ) : (
-    //                       <>
-    //                         <input
-    //                           type={field.type}
-    //                           name={field.name}
-    //                           value={fieldValue || ""}
-    //                           onChange={(e) =>
-    //                             handleInputChange(type, i, e, field.type)
-    //                           }
-    //                           maxLength={
-    //                             field.type === "number" ? 15 : undefined
-    //                           }
-    //                           max={
-    //                             field.type === "date"
-    //                               ? getTodayDate()
-    //                               : undefined
-    //                           }
-    //                           onFocus={
-    //                             field.type === "date"
-    //                               ? handleDateFocus
-    //                               : undefined
-    //                           }
-    //                           onKeyDown={(e) => {
-    //                             field.type == "date" ? e.preventDefault() : "";
-    //                           }}
-    //                           required
-    //                         />
-    //                         <label className="lh-1 text-16 text-light-1">
-    //                           {field.label === "Phone" ? (
-    //                             <>
-    //                               {field.label}
-    //                               {ShowPhoneError && (
-    //                                 <span style={{ color: "red" }}>
-    //                                   {ShowPhoneError}
-    //                                 </span>
-    //                               )}
-    //                             </>
-    //                           ) : (
-    //                             field.label
-    //                           )}{" "}
-    //                           <span className="text-red">*</span>
-    //                         </label>
-    //                       </>
-    //                     )}
-    //                   </div>
-    //                 </div>
-    //               );
-    //             })}
-
-    //             <div className="col-12">
-    //               <div className="row y-gap-20 items-center justify-between">
-    //                 <div className="col-12 tb-border">
-    //                   <div className="text-14">
-    //                     <p className="d-flex justify-content-between">
-    //                       <span>{translate("Tour Price Per Person")}</span>
-    //                       <span>{`${getdefaultPriceforType(type, i)} `}</span>
-    //                     </p>
-    //                   </div>
-    //                 </div>
-    //               </div>
-    //             </div>
-
-    //             <div
-    //               className={`my-3 border_b px-md-40 ${
-    //                 shouldShowAdditionalServices ? "d-block" : "d-none"
-    //               }`}
-    //             >
-    //               <h5 className="text-18 fw-500 my-2">
-    //                 {translate("Possible Additional Services Per Person:")}
-    //               </h5>
-    //               <div>
-    //                 {AdditionalServices?.map((option, idx) => {
-    //                   const checkboxName = `checkboxGroup-${type}-${i}-${idx}`;
-
-    //                   // Get selected services from formValues
-    //                   const selectedServicesArray =
-    //                     LoginCheck === true && type === "Adult" && i === 0
-    //                       ? userData?.selectedServices || [] // Use `userData` for first Adult
-    //                       : formValues?.[type]?.[i]?.selectedServices || [];
-
-    //                   // ✅ Check if this option is selected
-    //                   const isChecked =
-    //                     newdata === null
-    //                       ? selectedServicesArray.includes(checkboxName) // ✅ If `newdata` is null, keep all checkboxes unchecked (user decides)
-    //                       : selectedServicesArray.includes(checkboxName);
-
-    //                   return (
-    //                     <div
-    //                       key={option.id}
-    //                       className="d-flex items-center justify-between radio_hight"
-    //                     >
-    //                       <div className="flex items-center">
-    //                         <div className="form-checkbox flex items-center">
-    //                           <input
-    //                             type="checkbox"
-    //                             id={checkboxName}
-    //                             name={checkboxName}
-    //                             checked={isChecked} // ✅ Corrected checked state
-    //                             // disabled={newdata !== null}
-    //                             onChange={(e) =>
-    //                               handleCheckboxChange(
-    //                                 e.target.checked,
-    //                                 type,
-    //                                 i,
-    //                                 option,
-    //                                 checkboxName
-    //                               )
-    //                             }
-    //                           />
-    //                           <label
-    //                             htmlFor={checkboxName}
-    //                             className="form-checkbox__mark"
-    //                           >
-    //                             <div className="form-checkbox__icon">
-    //                               <svg
-    //                                 width="10"
-    //                                 height="8"
-    //                                 viewBox="0 0 10 8"
-    //                                 fill="none"
-    //                               >
-    //                                 <path
-    //                                   d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-    //                                   fill="white"
-    //                                 />
-    //                               </svg>
-    //                             </div>
-    //                           </label>
-    //                         </div>
-    //                         <label htmlFor={checkboxName} className="lh-16">
-    //                           {option.title}
-    //                         </label>
-    //                       </div>
-    //                       <div className="text-14">
-    //                         + {formatPrice(option.price)}
-    //                       </div>
-    //                     </div>
-    //                   );
-    //                 })}
-    //               </div>
-    //             </div>
-
-    //             <div className="mt-3 col-md-12">
-    //               <h5 className="booking-form-price">
-    //                 {translate("Subtotal")}{" "}
-    //                 <span>{`${SubtotalPriceWithAdditional(type, i)} `}</span>
-    //               </h5>
-    //               <p className="text-right">
-    //                 {translate("Including Taxes And Fee")}
-    //               </p>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-    // });
 
     return Array.from({ length: count })?.map((_, i) => {
       const isExtraAdult = type === "Adult" && i >= 1;
@@ -1353,6 +1048,47 @@ export default function BookingPages({ BookingData }) {
                   <h5 className="text-18 fw-500 my-2">
                     {translate("Possible Additional Services Per Person:")}
                   </h5>
+                  <div>
+                    {RoomData?.map((e, ind) => {
+                      return (
+                        <div
+                          className="d-flex item-center justify-content-between"
+                          key={ind}
+                        >
+                          <div className="d-flex items-center mx-2">
+                            <div className="form-radio d-flex items-center">
+                              <label className="radio d-flex items-center lts-gap-10">
+                                <input
+                                  type="radio"
+                                  name={`roomSelection-${type}-${i}`}
+                                  value={e.rooms}
+                                  checked={
+                                    LoginCheck === true &&
+                                    type === "Adult" &&
+                                    i === 0
+                                      ? userData.tour_room_id === e.id
+                                      : formValues[type]?.[i]?.tour_room_id ===
+                                        e.id
+                                  }
+                                  onChange={() =>
+                                    handleRoomSelection(type, i, e.id)
+                                  }
+                                />
+                                <span className="radio__mark">
+                                  <span className="radio__icon"></span>
+                                </span>
+                                <span className="text-14 lh-16 lts-bk-lable">
+                                  {e.rooms}
+                                </span>
+                              </label>
+                            </div>
+                          </div>
+                          <p>Capacity : {e.capacity}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <hr />
                   <div>
                     {AdditionalServices?.map((option, idx) => {
                       const checkboxName = `checkboxGroup-${type}-${i}-${idx}`;
@@ -1569,62 +1305,6 @@ export default function BookingPages({ BookingData }) {
         Child: updatedChildData, // Ensure Child data (including services) is updated
       };
     });
-
-    // setFormValues((prevValues) => {
-    //   const updatedValues = { ...prevValues };
-
-    //   if (!updatedValues["Adult"]) updatedValues["Adult"] = [];
-
-    //   // Set all fields from `parsedAdultData` to `Adult[0]`
-    //   updatedValues["Adult"][0] = {
-    //     ...(updatedValues["Adult"][0] || {}), // Preserve existing fields if needed
-    //     ...parsedAdultData,
-    //   };
-
-    //   if (!updatedValues["Child"]) {
-    //     updatedValues["Child"] = initializeFormValues(
-    //       parsedAdultData?.Child?.length || 0,
-    //       {
-    //         name: "",
-    //         surname: "",
-    //         gender: "",
-    //         birthday: "",
-    //         nationality: "",
-    //         services: [],
-    //         selectedServices: [],
-    //       }
-    //     );
-    //   }
-
-    //   parsedAdultData?.Child?.forEach((e, i) => {
-    //     updatedValues["Child"][i] = {
-    //       ...(updatedValues["Child"][i] || {}),
-    //       ...e,
-    //     };
-    //   });
-
-    //   if (!updatedValues["Baby"]) {
-    //     updatedValues["Baby"] = initializeFormValues(
-    //       parsedAdultData?.Baby?.length || 0,
-    //       {
-    //         name: "",
-    //         surname: "",
-    //         gender: "",
-    //         birthday: "",
-    //         nationality: "",
-    //       }
-    //     );
-    //   }
-
-    //   parsedAdultData?.Baby?.forEach((e, i) => {
-    //     updatedValues["Baby"][i] = {
-    //       ...(updatedValues["Baby"][i] || {}),
-    //       ...e,
-    //     };
-    //   });
-
-    //   return updatedValues;
-    // });
   }, [LoginCheck, newdata]);
 
   const getTodayDate = () => {

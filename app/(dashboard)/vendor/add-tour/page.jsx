@@ -24,6 +24,7 @@ import VendorFooter from "@/components/dasboard/VendorFooter";
 import { useRouter } from "next/navigation";
 import Useauthredirect from "@/app/hooks/useAuthRedirect";
 import { set } from "draft-js/lib/DefaultDraftBlockRenderMap";
+import Select from "react-select";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -97,10 +98,6 @@ export default function AddTour() {
   const [isChecked, setIsChecked] = useState(false);
   const [price, setPrice] = useState("123");
   const [services, setServices] = useState([
-    { id: 1, title: "1-bed room", price: "", checked: false },
-    { id: 2, title: "2-bed room", price: "", checked: false },
-    { id: 3, title: "3-bed room", price: "", checked: false },
-    { id: 4, title: "4-bed room", price: "", checked: false },
     { id: 5, title: "Breakfast", price: "", checked: false },
     { id: 6, title: "Dinner", price: "", checked: false },
     { id: 7, title: "Sahour", price: "", checked: false },
@@ -153,6 +150,46 @@ export default function AddTour() {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
 
+  const bedroomOptions = [
+    { value: "1-Bed-room", label: "1 Bedroom" },
+    { value: "2-Bed-room", label: "2 Bedroom" },
+    { value: "3-Bed-room", label: "3 Bedroom" },
+    { value: "4-Bed-room", label: "4 Bedroom" },
+  ];
+
+  const [bedroomRows, setBedroomRows] = useState([
+    { id: null, bedroom_name: null, bedroom_capacity: "" },
+  ]);
+
+  const handleBedroomChange = (selectedOption, index) => {
+    console.log(selectedOption, "selectedOption");
+
+    setBedroomRows((prevRows) => {
+      const newRows = [...prevRows];
+      newRows[index].bedroom_name = selectedOption ? selectedOption.value : "";
+      return newRows;
+    });
+  };
+
+  const handleCapacityChange = (e, index) => {
+    setBedroomRows((prevRows) => {
+      const newRows = [...prevRows];
+      newRows[index].bedroom_capacity = e.target.value;
+      return newRows;
+    });
+  };
+
+  const handleAddBedroomRow = () => {
+    setBedroomRows([
+      ...bedroomRows,
+      { id: null, bedroom_name: "", bedroom_capacity: "" },
+    ]);
+  };
+
+  const handleRemoveBedroomRow = (index) => {
+    setBedroomRows(bedroomRows.filter((_, i) => i !== index));
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       document.title = "Add Tour - MekkaBooking";
@@ -189,13 +226,10 @@ export default function AddTour() {
   };
 
   const handleFocus = (e) => {};
-  
 
   const handleEndDateChange = (e) => {
     const inputValue = e.target.value;
     setDateEnd(inputValue);
-
-   
   };
 
   const handleStartDateBlur = () => {
@@ -554,7 +588,6 @@ export default function AddTour() {
   };
 
   const handleDepartureChange = (value, index) => {
-
     if (!value) return;
     const selectedOption = departures.find(
       (option) => option.id === value.value
@@ -565,24 +598,20 @@ export default function AddTour() {
       departure_id: selectedOption?.id || "",
     };
 
-
     const newRows = [...departureRows];
     newRows[index] = departureData;
     setDepartureRows(newRows);
   };
 
   const handleArrivalchange = (value, index) => {
-
     if (!value) return;
     const selectedOption = Arrival.find((option) => option.id === value.value);
-
 
     const ArrivalData = {
       ...arrivalrow[index],
       arrival_id: selectedOption?.id || "",
       name: selectedOption?.arrival || "",
     };
-
 
     const newRows = [...arrivalrow];
     newRows[index] = ArrivalData;
@@ -591,7 +620,6 @@ export default function AddTour() {
   };
 
   const ArrivalidArray = arrivalrow.map((item) => item?.arrival_id);
-
 
   const selectRef = useRef(null);
 
@@ -606,29 +634,6 @@ export default function AddTour() {
       });
     }
   }, []);
-
-  const handleFlightChange = (e, index, field) => {
-    const { value } = e.target;
-    const newRows = [...flightRow];
-    newRows[index][field] = value;
-    setFlightRow(newRows);
-  };
-
-  const HandleAddFlightRow = () => {
-    setFlightRow([
-      ...flightRow,
-      { flight_id: " ", flight_amount: " ", no_of_stop: " ", luggage: "" },
-    ]);
-  };
-
-  const HandleRemoveFlightRow = (index) => {
-    if (flightRow.length === 1) {
-      return;
-    }
-    const newRows = [...flightRow];
-    newRows.splice(index, 1);
-    setFlightRow(newRows);
-  };
 
   const handleFlightSelectChange = (value, index) => {
     const newRows = [...flightRow];
@@ -675,7 +680,9 @@ export default function AddTour() {
         selectRef.current.value &&
         image2.length > 0 &&
         departureRows.length > 0 &&
-        departureRows.every((departure) => departure.departure_id)
+        departureRows.every((departure) => departure.departure_id) &&
+        bedroomRows.length > 0 &&
+        bedroomRows.every((bed) => bed.bedroom_name)
       );
     } else if (activeTab === "Pricing") {
       return adult_price && child_price && baby_price;
@@ -690,7 +697,7 @@ export default function AddTour() {
       //     (route) => route.dayData && route.description && route.day
       //   );
 
-      // return isValidItinerary; 
+      // return isValidItinerary;
       return true;
     } else if (activeTab === "Flight Hotel And Visa") {
       return (
@@ -727,6 +734,11 @@ export default function AddTour() {
 
     const languageString = languageValues.join(",");
 
+    const BedRoomData = bedroomRows.map((bed) => ({
+      rooms: bed.bedroom_name ? bed.bedroom_name : "",
+      capacity: bed.bedroom_capacity ? bed.bedroom_capacity : "",
+    }));
+
     const mekkaData = mekkaRows.map((mekka) => ({
       hotel_type: 1,
       hotel_name: mekka.hotel_name ? mekka.hotel_name : "",
@@ -762,6 +774,7 @@ export default function AddTour() {
       !madinaData.some(
         (madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info
       ) ||
+      !BedRoomData.some((bed) => bed.rooms && bed.capacity) ||
       !flightData.some(
         (flight) =>
           flight.flight_id &&
@@ -797,8 +810,6 @@ export default function AddTour() {
       description: day.description,
     }));
 
-  
-
     const formData = new FormData();
 
     formData.append("type", SelectedTour.value);
@@ -818,6 +829,7 @@ export default function AddTour() {
     formData.append("route_data", JSON.stringify(newRouteData));
     formData.append("hotel_data", JSON.stringify(hotel_data));
     formData.append("flight_data", JSON.stringify(flightData));
+    formData.append("room_data", JSON.stringify(BedRoomData));
     formData.append("visa_processing", radioValueVisa === "Yes" ? 1 : 0);
     formData.append("flight_exclude", 0);
     formData.append("user_id", user?.user.id);
@@ -1100,6 +1112,117 @@ export default function AddTour() {
                                       <span className="text-red">*</span>
                                     </label>
                                   </div>
+                                </div>
+                                <div>
+                                  <h6>{translate("Bedroom Details")}</h6>
+                                  <ul>
+                                    {bedroomRows.map((row, index) => (
+                                      <li key={index}>
+                                        <div className="row items-center">
+                                          <div className="col-lg-8">
+                                            <div className="row items-center">
+                                              <div className="col-lg-6 ">
+                                                <Select
+                                                  value={bedroomOptions.find(
+                                                    (option) =>
+                                                      option.value ===
+                                                      row.bedroom_name
+                                                  )}
+                                                  onChange={(value) =>
+                                                    handleBedroomChange(
+                                                      value,
+                                                      index
+                                                    )
+                                                  }
+                                                  options={bedroomOptions}
+                                                  classNamePrefix="react-select"
+                                                  isClearable
+                                                  placeholder={translate(
+                                                    "Select Bedroom Name (Required)"
+                                                  )}
+                                                />
+                                              </div>
+
+                                              <div className="col-lg-6 ">
+                                                <div className="form-input my-1">
+                                                  <input
+                                                    type="number"
+                                                    min={1}
+                                                    ref={numberInputRef1}
+                                                    required
+                                                    value={row.bedroom_capacity}
+                                                    onChange={(e) =>
+                                                      handleCapacityChange(
+                                                        e,
+                                                        index
+                                                      )
+                                                    }
+                                                    onKeyDown={(e) => {
+                                                      if (!isFocused) return;
+
+                                                      if (
+                                                        !/^[0-9]+$/.test(
+                                                          e.key
+                                                        ) &&
+                                                        e.key !== "Backspace" &&
+                                                        e.key !== "Tab"
+                                                      ) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
+                                                    onKeyUp={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                    onFocus={() =>
+                                                      setIsFocused(true)
+                                                    }
+                                                    onBlur={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                  />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {translate(
+                                                      "Enter Bedroom Capacity"
+                                                    )}
+                                                    <span className="text-red">
+                                                      *
+                                                    </span>
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div className="col-2 d-flex">
+                                            <button
+                                              type="button"
+                                              className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                              onClick={handleAddBedroomRow}
+                                              style={{
+                                                height: "fit-content",
+                                              }}
+                                            >
+                                              +
+                                            </button>
+                                            {index > 0 && (
+                                              <button
+                                                type="button"
+                                                className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
+                                                style={{
+                                                  height: "fit-content",
+                                                }}
+                                                onClick={() =>
+                                                  handleRemoveBedroomRow(index)
+                                                }
+                                              >
+                                                -
+                                              </button>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
                                 </div>
                                 <div className="col-md-12">
                                   <h6> {translate("Departure")}</h6>
@@ -1538,7 +1661,7 @@ export default function AddTour() {
                                         htmlFor={`service-${service.id}`}
                                         className="lh-16 ml-15 my-2"
                                       >
-                                        {translate(service.title) }
+                                        {translate(service.title)}
                                       </label>
                                     </div>
                                   </div>
@@ -1747,7 +1870,6 @@ export default function AddTour() {
                                     <div className="form-input my-1">
                                       <input
                                         type="text"
-                                        
                                         value={
                                           route_data.find(
                                             (day) => day.day === dayNumber
@@ -1766,7 +1888,6 @@ export default function AddTour() {
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Day")} {dayNumber}{" "}
-                                        
                                       </label>
                                     </div>
                                   </div>
@@ -1774,7 +1895,6 @@ export default function AddTour() {
                                     <div className="form-input my-1">
                                       <textarea
                                         type="text"
-                                        
                                         rows="2"
                                         cols="80"
                                         value={
@@ -1794,7 +1914,6 @@ export default function AddTour() {
                                       />
                                       <label className="lh-1 text-16 text-light-1">
                                         {translate("Description")}{" "}
-                                        
                                       </label>
                                     </div>
                                   </div>
@@ -2512,7 +2631,6 @@ export default function AddTour() {
           </div>
         </div>
       </div>
-      
     </>
   );
 }

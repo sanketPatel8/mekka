@@ -295,6 +295,14 @@
   }
 }
 
+.lts-gap-10 {
+  gap: 15px !important;
+}
+
+.lts-bk-lable {
+  font-size: 15px;
+}
+
 hr {
   color: gray;
 }
