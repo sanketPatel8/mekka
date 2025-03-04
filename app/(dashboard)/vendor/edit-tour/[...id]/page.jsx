@@ -161,10 +161,12 @@ export default function EditTour() {
       document.title = "Edit Tour - MekkaBooking";
     }
   }, []);
+
   const options2 = mekkaHotel.map((hotel) => ({
     value: hotel.id,
     label: `${hotel.hotel_name} (${hotel.hotel_stars} Star)`,
   }));
+
   const fetchTour = async (id) => {
     const formData = new FormData();
     formData.append("id", id);
@@ -327,6 +329,7 @@ export default function EditTour() {
       setEditorState(editorState);
     }
   }, [tourInformation]);
+
   useEffect(() => {
     const updatedIncluded = includedData.map((item) => {
       const isChecked = tourInclude.split(",").includes(item.id);
@@ -354,6 +357,7 @@ export default function EditTour() {
     });
     setServices(updatedServices);
   }, [additionalServices]);
+
   useEffect(() => {
     if (departureDetails) {
       const updatedDepartures = departureDetails.map((departure) => {
@@ -497,6 +501,7 @@ export default function EditTour() {
       setDaysCount(daysDifference + 1);
     }
   }, []);
+
   useEffect(() => {
     if (arrival_data.length > 0) {
       const updatedArrival = arrival_data.map((arrival) => {
@@ -508,8 +513,8 @@ export default function EditTour() {
       setArrivalrow(updatedArrival);
     }
   }, [arrival_data]);
+
   useEffect(() => {
-    console.log(BedRoomData, "BedRoomData");
     const updateBed = BedRoomData.map((bed) => {
       return {
         id: bed.id,
@@ -517,10 +522,11 @@ export default function EditTour() {
         bedroom_capacity: bed.capacity,
       };
     });
-    setBedroomRows(updateBed);
+    if (BedRoomData.length != 0) {
+      setBedroomRows(updateBed);
+    } else {
+    }
   }, [BedRoomData]);
-
-  console.log(bedroomRows, "bedroomRows");
 
   const onEditorStateChange = (newEditorState) => {
     const editorContent = newEditorState.getCurrentContent();
@@ -710,26 +716,29 @@ export default function EditTour() {
   };
 
   const handleBedroomChange = (selectedOption, index) => {
-    console.log(selectedOption, "selectedOption");
-
-    setBedroomRows((prevRows) => {
-      const newRows = [...prevRows];
-      newRows[index].bedroom_name = selectedOption ? selectedOption.value : "";
-      return newRows;
-    });
+    setBedroomRows((prevRows) =>
+      prevRows.map((row, i) =>
+        i === index
+          ? { ...row, bedroom_name: selectedOption?.value || "" }
+          : row
+      )
+    );
   };
 
   const handleCapacityChange = (e, index) => {
-    setBedroomRows((prevRows) => {
-      const newRows = [...prevRows];
-      newRows[index].bedroom_capacity = e.target.value;
-      return newRows;
-    });
-  };
+    const { value } = e.target;
 
-  // const handleRadioChange = (event) => {
-  //   setRadioValue(event.target.value);
-  // };
+    setBedroomRows((prevRows) =>
+      prevRows.map((row, i) =>
+        i === index
+          ? {
+              ...row,
+              bedroom_capacity: value || "", // Ensures empty string if value is falsy
+            }
+          : row
+      )
+    );
+  };
 
   const options = tourType.map((type) => ({
     value: type,
@@ -764,12 +773,9 @@ export default function EditTour() {
   };
 
   const handleRemoveBedroomRow = (index, data) => {
-    console.log(data, "data");
     RemoveBed.push(data.id);
     setBedroomRows(bedroomRows.filter((_, i) => i !== index));
   };
-
-  console.log(RemoveBed, "RemoveBed");
 
   const handleRemoveDepartureRow = (index) => {
     const id = departureRows[index].id;
@@ -1026,6 +1032,7 @@ export default function EditTour() {
 
     setLoading(true);
     const totalDays = calculateDaysBetweenDates(date_begin, date_end);
+    console.log(BedRoomData, "BedRoomData");
 
     if (
       !date_begin ||
@@ -1034,7 +1041,7 @@ export default function EditTour() {
       !capacity ||
       departureRows.length == 0 ||
       (image2.length == 0 && newImages.length == 0) ||
-      BedRoomData == 0 ||
+      // BedRoomData == 0 ||
       bedroomRows.some((bed) => !bed.bedroom_capacity || !bed.bedroom_name) ||
       !selectRef.current.value ||
       baby_price < 0 ||
@@ -1095,6 +1102,7 @@ export default function EditTour() {
       hotel_info: mekka.hotel_info,
       id: mekka.id ? mekka.id : 0,
     }));
+
     // const arrivalData = arrivalrow.map((arrival) => ({
     //   arrival: arrival.arrival_id ? arrival.arrival_id : "",
     // }));
@@ -1493,7 +1501,9 @@ export default function EditTour() {
                                                     type="number"
                                                     min={1}
                                                     required
-                                                    value={row.bedroom_capacity}
+                                                    value={
+                                                      row.bedroom_capacity || ""
+                                                    }
                                                     onChange={(e) =>
                                                       handleCapacityChange(
                                                         e,
@@ -1532,47 +1542,6 @@ export default function EditTour() {
                                                     </span>
                                                   </label>
                                                 </div>
-                                                {/* <div className="form-input my-1">
-                                                  <input
-                                                    type="number"
-                                                    min={1}
-                                                    required
-                                                    value={capacity}
-                                                    onChange={handleInputChange(
-                                                      setCapacity
-                                                    )}
-                                                    onKeyDown={(e) => {
-                                                      setIsFocused(true);
-                                                      if (
-                                                        !/^[0-9]+$/.test(
-                                                          e.key
-                                                        ) &&
-                                                        e.key !== "Backspace" &&
-                                                        e.key !== "Tab"
-                                                      ) {
-                                                        e.preventDefault();
-                                                      }
-                                                    }}
-                                                    onKeyUp={() =>
-                                                      setIsFocused(false)
-                                                    }
-                                                    onFocus={() =>
-                                                      setIsFocused(true)
-                                                    }
-                                                    onBlur={() =>
-                                                      setIsFocused(false)
-                                                    }
-                                                  />
-                                                  <label className="lh-1 text-16 text-light-1">
-                                                    {translate(
-                                                      "Seat Availibility"
-                                                    ) ||
-                                                      "Find Latest Packages"}{" "}
-                                                    <span className="text-red">
-                                                      *
-                                                    </span>
-                                                  </label>
-                                                </div> */}
                                               </div>
                                             </div>
                                           </div>
@@ -1582,29 +1551,28 @@ export default function EditTour() {
                                               type="button"
                                               className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
                                               onClick={handleAddBedroomRow}
-                                              style={{
-                                                height: "fit-content",
-                                              }}
+                                              style={{ height: "fit-content" }}
                                             >
                                               +
                                             </button>
-                                            {index > 0 && (
-                                              <button
-                                                type="button"
-                                                className={`button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3`}
-                                                style={{
-                                                  height: "fit-content",
-                                                }}
-                                                onClick={() =>
-                                                  handleRemoveBedroomRow(
-                                                    index,
-                                                    row
-                                                  )
-                                                }
-                                              >
-                                                -
-                                              </button>
-                                            )}
+                                            {bedroomRows.length > 0 &&
+                                              index > 0 && (
+                                                <button
+                                                  type="button"
+                                                  className="button -sm -info-2 bg-accent-1 text-white col-lg-3 my-4 text-40 mx-1 mx-md-3"
+                                                  style={{
+                                                    height: "fit-content",
+                                                  }}
+                                                  onClick={() =>
+                                                    handleRemoveBedroomRow(
+                                                      index,
+                                                      row
+                                                    )
+                                                  }
+                                                >
+                                                  -
+                                                </button>
+                                              )}
                                           </div>
                                         </div>
                                       </li>

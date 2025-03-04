@@ -231,7 +231,11 @@ export default function DBListing() {
                   )}
                   {tourList?.map((elm, i) => (
                     <div className="col-lg-12 mb-15" key={i}>
-                      <div className="tourCard -type-2 bg-white">
+                      <div
+                        className={`tourCard -type-2 bg-white ${
+                          elm.company_id === "0" ? "pointer-none" : ""
+                        }`}
+                      >
                         <div className="tourCard__image">
                           <Image
                             width={420}
@@ -371,14 +375,21 @@ export default function DBListing() {
                           <label className="badge bg-secondary"></label>
                           {elm?.Bookings == 0 ? (
                             <button
-                              className="button -sm -outline-red-3 w-100 -red-3 mb-10"
+                              className={`button -sm -outline-red-3 w-100 -red-3 mb-10 ${
+                                elm.company_id === "0" ? "d-none" : "d-block"
+                              }`}
                               onClick={(id) => HandleDelete(`${elm?.id}`)}
                             >
                               <div>{translate("DELETE TOUR")}</div>
                             </button>
                           ) : null}
 
-                          <Link href={`/vendor/edit-tour/${elm.id}`}>
+                          <Link
+                            href={`/vendor/edit-tour/${elm.id}`}
+                            className={`${
+                              elm.company_id === "0" ? "d-none" : "d-block"
+                            }`}
+                          >
                             <button className="button -sm -outline-accent-1 w-100 text-accent-1">
                               <div>{translate("EDIT TOUR")}</div>
                             </button>

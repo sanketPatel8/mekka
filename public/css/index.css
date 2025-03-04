@@ -295,6 +295,10 @@
   }
 }
 
+.pointer-none {
+  pointer-events: none !important;
+}
+
 .lts-gap-10 {
   gap: 15px !important;
 }
