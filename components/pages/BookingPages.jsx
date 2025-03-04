@@ -420,7 +420,7 @@ export default function BookingPages({ BookingData }) {
       title: "",
       additional_services: "",
       services: [],
-      tour_room_id: "",
+      tour_room_id: "0",
     }),
     Child: initializeFormValues(Childrendata?.length || 0, {
       name: "",
@@ -434,7 +434,7 @@ export default function BookingPages({ BookingData }) {
       additional_order: "",
       additional_price_id: "",
       services: [],
-      tour_room_id: "",
+      tour_room_id: "0",
     }),
     Baby: initializeFormValues(babyData.length || 0, {
       name: "",
@@ -442,8 +442,6 @@ export default function BookingPages({ BookingData }) {
       gender: "",
       birthday: "",
       nationality: "",
-      selectedService: "",
-      additional_services: "",
     }),
     selectedServicePrices: [],
   });
@@ -467,8 +465,55 @@ export default function BookingPages({ BookingData }) {
     additional_order: "",
     additional_price_id: "",
     services: [],
-    tour_room_id: "",
+    tour_room_id: "0",
   });
+
+  useEffect(() => {
+    setFormValues({
+      Adult: initializeFormValues(adultData?.length || 0, {
+        name: "",
+        surname: "",
+        email: "",
+        mobile: "",
+        city: "",
+        gender: "",
+        birthday: "",
+        nationality: "",
+        houseNumber: "",
+        zipcode: "",
+        street: "",
+        from: "",
+        selectedService: [],
+        price: "",
+        title: "",
+        additional_services: "",
+        services: [],
+        tour_room_id: "0",
+      }),
+      Child: initializeFormValues(Childrendata?.length || 0, {
+        name: "",
+        surname: "",
+        gender: "",
+        birthday: "",
+        nationality: "",
+        selectedService: [],
+        price: "",
+        title: "",
+        additional_order: "",
+        additional_price_id: "",
+        services: [],
+        tour_room_id: "0",
+      }),
+      Baby: initializeFormValues(babyData?.length || 0, {
+        name: "",
+        surname: "",
+        gender: "",
+        birthday: "",
+        nationality: "",
+      }),
+      selectedServicePrices: [],
+    });
+  }, [adultData, Childrendata, babyData]);
 
   const handleInputChange = (type, index, e, ftype) => {
     let { name, value } = e.target;
@@ -1046,7 +1091,7 @@ export default function BookingPages({ BookingData }) {
                   }`}
                 >
                   <h5 className="text-18 fw-500 my-2">
-                    {translate("Possible Additional Services Per Person:")}
+                    {translate("Selecte Bed-Room Per Person")}
                   </h5>
                   <div>
                     {RoomData?.map((e, ind) => {
@@ -1089,6 +1134,9 @@ export default function BookingPages({ BookingData }) {
                     })}
                   </div>
                   <hr />
+                  <h5 className="text-18 fw-500 my-2">
+                    {translate("Possible Additional Services Per Person:")}
+                  </h5>
                   <div>
                     {AdditionalServices?.map((option, idx) => {
                       const checkboxName = `checkboxGroup-${type}-${i}-${idx}`;

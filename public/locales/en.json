@@ -56,7 +56,7 @@
   "Steps to reserve": "Steps to reserve",
   "Adult information": "Adult information",
   "Is Also The Contact Person For The Reservation": "Is Also The Contact Person For The Reservation",
-  "Name": "Name",
+  "Name": "Vorname",
   "Surname": "Surname",
   "Email": "Email",
   "Phone": "Phone",
@@ -471,7 +471,7 @@
   "Performance cookies collect information about how our websites are used in order to improve their attractiveness, content and functionality. These cookies help us, for example, to determine whether and which subpages of our website are visited and which content users are particularly interested in. We record the number of accesses to a page, the number of subpages accessed, the time spent on our website, the order of the pages visited, which search terms led our users to us, the country, region and, if applicable, the city from which access is made, and the proportion of mobile devices that access our websites. The IP address of a computer transmitted for technical reasons is automatically anonymized and does not allow us to draw any conclusions about the individual user.": "Performance cookies collect information about how our websites are used in order to improve their attractiveness, content and functionality. These cookies help us, for example, to determine whether and which subpages of our website are visited and which content users are particularly interested in. We record the number of accesses to a page, the number of subpages accessed, the time spent on our website, the order of the pages visited, which search terms led our users to us, the country, region and, if applicable, the city from which access is made, and the proportion of mobile devices that access our websites. The IP address of a computer transmitted for technical reasons is automatically anonymized and does not allow us to draw any conclusions about the individual user.",
 
   "Login": "Login",
-  "Sign Up": "Sign Up",
+  "Sign Up!": "Sign Up!",
   "Partners": "Partners",
   "Partners Login": "Partners Login",
   "My Account": "My Account",
@@ -555,7 +555,7 @@
   "Agency" : "Agency",
   "State" : "State",
   "Zip Code" : "Zip Code",
-  "E-Mail Address" : "E-Mail Address",
+  "E-Mail Adress" : "E-Mail Adress",
   "Phone Number" : "Phone Number",
   "Submit" : "Submit",
   "Don't Have An Account?" : "Don't Have An Account?",
@@ -658,7 +658,12 @@
 "Amount" : "Amount",
  "inclusive" : "Inclusive",
  "Document Type" : "Document Type",
- "Document Name" : "Document Name"
+ "Document Name" : "Document Name",
+ "OR" : "OR",
+ "Select Country *" : "Select Country",
+ "I accept the terms of use and the privacy and cookie statement of mekkabooking. Are you an agency or mosque?" : "I accept the terms of use and the privacy and cookie statement of mekkabooking. Are you an agency or mosque?",
+ "Apply for partnership here!" : "Apply for partnership here!",
+ "Selecte Bed-Room Per Person" : "Selecte Bed-Room Per Person"
  
 
 }

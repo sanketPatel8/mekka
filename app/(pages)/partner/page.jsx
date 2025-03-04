@@ -17,7 +17,7 @@ import { ClipLoader } from "react-spinners";
 import { set } from "lodash";
 import Link from "next/link";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css"; 
+import "react-phone-input-2/lib/style.css";
 import { useCountryCode } from "@/app/context/useCountryCode";
 
 const page = () => {
@@ -91,7 +91,6 @@ const page = () => {
   };
 
   const handleRadioChange = (event) => {
-
     setRadioValue(event.target.value);
   };
 
@@ -103,11 +102,11 @@ const page = () => {
   const handlePasswordChange = (e) => {
     const { value } = e.target;
     setConfirmPassword(value);
-    if(!password){
+    if (!password) {
       setError(`${translate("Please enter password first")}`);
-    }else if (password && value !== password) {
+    } else if (password && value !== password) {
       setError(`${translate("Passwords do not match")}`);
-    } else if(password && value === password) {
+    } else if (password && value === password) {
       setError("");
     }
   };
@@ -118,9 +117,11 @@ const page = () => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
     if (!passwordRegex.test(passwordValue)) {
-      setPasswordError( `${translate(
-        "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
-      )}`);
+      setPasswordError(
+        `${translate(
+          "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
+        )}`
+      );
     } else {
       setPasswordError("");
     }
@@ -147,7 +148,9 @@ const page = () => {
         password
       )
     ) {
-      tempErrors.password = `${translate("At least 8 characters include uppercase and lowercase letters, numbers and special characters")}`;
+      tempErrors.password = `${translate(
+        "At least 8 characters include uppercase and lowercase letters, numbers and special characters"
+      )}`;
     }
     return tempErrors;
   };
@@ -170,14 +173,13 @@ const page = () => {
       !SelectedCountry ||
       !company_email ||
       !company_mobile ||
-      !agreeToTerms 
+      !agreeToTerms
     ) {
-      showErrorToast(translate,"Please fill all the fields");
+      showErrorToast(translate, "Please fill all the fields");
       return;
     }
 
     const tempErrors = validate();
-
 
     if (Object.keys(tempErrors).length > 0) {
       setErrors(tempErrors);
@@ -185,7 +187,7 @@ const page = () => {
       return;
     }
 
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       showErrorToast(translate, "Passwords do not match");
       return;
     }
@@ -226,8 +228,6 @@ const page = () => {
         setIsLoading(false);
         showErrorToast(translate, "Email already exists");
       }
-
-     
     } catch (err) {
       console.error("error5");
       setIsLoading(false);
@@ -235,16 +235,12 @@ const page = () => {
     }
   };
   const handleCompanyMobileNumberChange = (e) => {
-    
     setCompanyMobile(e);
   };
   const handleMobileNumberChange = (e) => {
-    
     setMobile(e);
   };
 
-
-  
   return (
     <>
       <ToastContainer />
@@ -272,6 +268,24 @@ const page = () => {
                             <input
                               type="radio"
                               name="radioGroup"
+                              value="travel_agency"
+                              checked={radioValue === "travel_agency"}
+                              onChange={handleRadioChange}
+                            />
+                            <span className="radio__mark">
+                              <span className="radio__icon"></span>
+                            </span>
+                            {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
+                          </label>
+                        </div>
+                        <div className="ml-10">{translate("Agency")}</div>
+                      </div>
+                      <div className="d-flex items-center mx-2">
+                        <div className="form-radio d-flex items-center">
+                          <label className="radio">
+                            <input
+                              type="radio"
+                              name="radioGroup"
                               value="mosque"
                               checked={radioValue === "mosque"}
                               onChange={handleRadioChange}
@@ -283,26 +297,6 @@ const page = () => {
                           </label>
                         </div>
                         <div className="ml-10">{translate("Mosque")}</div>
-                      </div>
-                      <div className="d-flex items-center mx-2">
-                        <div className="form-radio d-flex items-center">
-                          <label className="radio">
-                            <input
-                              type="radio"
-                              name="radioGroup"
-                              value="travel_agency"
-                              checked={radioValue === "travel_agency"}
-                              onChange={handleRadioChange}
-                            />
-                            <span className="radio__mark">
-                              <span className="radio__icon"></span>
-                            </span>
-                            {/* <span className="text-14 lh-1 ml-10">Item 1</span> */}
-                          </label>
-                        </div>
-                        <div className="ml-10">
-                          {translate("Agency")}
-                        </div>
                       </div>
                     </div>
                     <div className="row my-3">
@@ -330,74 +324,6 @@ const page = () => {
                           />
                           <label className="lh-1 text-16 text-light-1">
                             {translate("State")}{" "}
-                            <span className="text-red font_11">*</span>
-                          </label>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        {/* <div>
-                          <div className="">
-                            <select id="my-select"  value={zipcode} onChange={handleInputChange(setZipcode)} className="form-control">
-                              {options.map((option, index) => (
-                                <option key={index} value={option.value}>
-                                  {option.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div> */}
-                        <div className="form-input spacing">
-                          <input
-                            type="text"
-                            required
-                            value={zipcode}
-                            onChange={handleInputChange(setZipcode)}
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {translate("Zip Code")}{" "}
-                            <span className="text-red font_11">*</span>
-                          </label>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
-                          <CreatableSelect
-                            value={SelectedCountry}
-                            onChange={HandleCountryChange}
-                            options={countries.map((country) => ({
-                              value: country.name,
-                              label: country.name,
-                            }))}
-                            className="custom-select"
-                            placeholder={`${translate("Select Country (Required)")}`}
-                            classNamePrefix="react-select"
-                            isClearable
-                            formatCreateLabel={(inputValue) =>
-                              `Create custom gender: "${inputValue}"`
-                            }
-                            styles={{
-                              option: (provided) => ({
-                                ...provided,
-                                textAlign: "left", // Align option text to the right
-                              }),
-                              singleValue: (provided) => ({
-                                ...provided,
-                                textAlign: "left", // Align selected value text to the right
-                              }),
-                            }}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="form-input spacing">
-                          <input
-                            type="text"
-                            required
-                            value={city}
-                            onChange={handleInputChange(setCity)}
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {translate("City")}{" "}
                             <span className="text-red font_11">*</span>
                           </label>
                         </div>
@@ -431,24 +357,71 @@ const page = () => {
                         </div>
                       </div>
                       <div className="col-md-6">
+                        {/* <div>
+                          <div className="">
+                            <select id="my-select"  value={zipcode} onChange={handleInputChange(setZipcode)} className="form-control">
+                              {options.map((option, index) => (
+                                <option key={index} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div> */}
                         <div className="form-input spacing">
                           <input
-                            type="email"
+                            type="text"
                             required
-                            value={company_email}
-                            className="mb-1"
-                            onChange={handleInputChange(setCompanyEmail)}
+                            value={zipcode}
+                            onChange={handleInputChange(setZipcode)}
                           />
                           <label className="lh-1 text-16 text-light-1">
-                            {translate("E-Mail Address")}{" "}
+                            {translate("Zip Code")}{" "}
                             <span className="text-red font_11">*</span>
                           </label>
-                          {errors.company_email && (
-                            <span className="text-red font_11">
-                              {" "}
-                              {errors.company_email}
-                            </span>
-                          )}
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-input spacing">
+                          <input
+                            type="text"
+                            required
+                            value={city}
+                            onChange={handleInputChange(setCity)}
+                          />
+                          <label className="lh-1 text-16 text-light-1">
+                            {translate("City")}{" "}
+                            <span className="text-red font_11">*</span>
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-input my-1 d-flex flex-column align-items-center add-tour-type">
+                          <CreatableSelect
+                            value={SelectedCountry}
+                            onChange={HandleCountryChange}
+                            options={countries.map((country) => ({
+                              value: country.name,
+                              label: country.name,
+                            }))}
+                            className="custom-select"
+                            placeholder={`${translate("Select Country")} *`}
+                            classNamePrefix="react-select"
+                            isClearable
+                            formatCreateLabel={(inputValue) =>
+                              `Create custom Country: "${inputValue}"`
+                            }
+                            styles={{
+                              option: (provided) => ({
+                                ...provided,
+                                textAlign: "left", // Align option text to the right
+                              }),
+                              singleValue: (provided) => ({
+                                ...provided,
+                                textAlign: "left", // Align selected value text to the right
+                              }),
+                            }}
+                          />
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -463,42 +436,64 @@ const page = () => {
                             value={company_mobile}
                             onChange={handleCompanyMobileNumberChange}
                           /> */}
-                           <PhoneInput
-                                country={company_mobile !== "" ? "" : countryCode} 
-                                value={company_mobile}
-                                onChange={handleCompanyMobileNumberChange}
-                                inputProps={{
-                                  name: "phone",
-                                  required: true,
-                                  autoFocus: true,
-                                }}
-                                inputClass='phonenumber_input'
-                                containerStyle={{
-                                  width: "100%", 
-                                  marginBottom: "10px",
-                                  backgroundColor : "white"
-                                }}
-                                inputStyle={{
-                                  width: "100%",
-                                  padding: "12px 45px", 
-                                  borderRadius: "4px",
-                                  border: "1px solid #E7E6E6",
-                                  fontSize: "16px",
-                                  boxSizing: "border-box",
-                                  borderRadius : "12px",
-                                  backgroundColor : "white"
-                                }}
-                                className = "form-input  "
-                                enableSearch = {true}
-                              />
+                          <PhoneInput
+                            country={company_mobile !== "" ? "" : countryCode}
+                            value={company_mobile}
+                            onChange={handleCompanyMobileNumberChange}
+                            inputProps={{
+                              name: "phone",
+                              required: true,
+                              autoFocus: true,
+                            }}
+                            inputClass="phonenumber_input"
+                            containerStyle={{
+                              width: "100%",
+                              marginBottom: "10px",
+                              backgroundColor: "white",
+                            }}
+                            inputStyle={{
+                              width: "100%",
+                              padding: "12px 45px",
+                              borderRadius: "4px",
+                              border: "1px solid #E7E6E6",
+                              fontSize: "16px",
+                              boxSizing: "border-box",
+                              borderRadius: "12px",
+                              backgroundColor: "white",
+                            }}
+                            className="form-input  "
+                            enableSearch={true}
+                          />
                           {/* <label className="lh-1 text-16 text-light-1">
                             {translate("Phone Number")}{" "}
                             <span className="text-red font_11">*</span>
                           </label> */}
-                           <label className="phone_lable">
-                                {translate("Phone Number")}<span className="text-red font_11">*</span>
-                                {/* <span className="text_red">{PhoneError}</span> */}
-                              </label>
+                          <label className="phone_lable">
+                            {translate("Phone Number")}
+                            <span className="text-red font_11">*</span>
+                            {/* <span className="text_red">{PhoneError}</span> */}
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-input spacing">
+                          <input
+                            type="email"
+                            required
+                            value={company_email}
+                            className="mb-1"
+                            onChange={handleInputChange(setCompanyEmail)}
+                          />
+                          <label className="lh-1 text-16 text-light-1">
+                            {translate("E-Mail Adress")}{" "}
+                            <span className="text-red font_11">*</span>
+                          </label>
+                          {errors.company_email && (
+                            <span className="text-red font_11">
+                              {" "}
+                              {errors.company_email}
+                            </span>
+                          )}
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -563,27 +558,6 @@ const page = () => {
                         </div>
                       </div>
                       <div className="col-md-6">
-                        <div className="form-input spacing">
-                          <input
-                            type="text"
-                            required
-                            value={email}
-                            className="mb-1"
-                            onChange={handleInputChange(setEmail)}
-                          />
-                          <label className="lh-1 text-16 text-light-1">
-                            {translate("Email Address")}{" "}
-                            <span className="text-red font_11">*</span>
-                          </label>
-                          {errors.email && (
-                            <span className="text-red font_11">
-                              {" "}
-                              {errors.email}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="col-md-6">
                         {/* <div className="form-input spacing">
                           <input
                             type="text"
@@ -597,7 +571,7 @@ const page = () => {
                             <span className="text-red font_11">*</span>
                           </label>
                         </div> */}
-                         <div className="form-input spacing">
+                        <div className="form-input spacing">
                           {/* <input
                             type="text"
                             min={0}
@@ -608,42 +582,64 @@ const page = () => {
                             value={company_mobile}
                             onChange={handleCompanyMobileNumberChange}
                           /> */}
-                           <PhoneInput
-                                country={mobile !== "" ? "" : countryCode} 
-                                value={mobile}
-                                onChange={handleMobileNumberChange}
-                                inputProps={{
-                                  name: "phone",
-                                  required: true,
-                                  autoFocus: true,
-                                }}
-                                inputClass='phonenumber_input'
-                                containerStyle={{
-                                  width: "100%", 
-                                  marginBottom: "10px",
-                                  backgroundColor : "white"
-                                }}
-                                inputStyle={{
-                                  width: "100%",
-                                  padding: "12px 45px", 
-                                  borderRadius: "4px",
-                                  border: "1px solid #E7E6E6",
-                                  fontSize: "16px",
-                                  boxSizing: "border-box",
-                                  borderRadius : "12px",
-                                  backgroundColor : "white"
-                                }}
-                                className = "form-input  "
-                                enableSearch = {true}
-                              />
+                          <PhoneInput
+                            country={mobile !== "" ? "" : countryCode}
+                            value={mobile}
+                            onChange={handleMobileNumberChange}
+                            inputProps={{
+                              name: "phone",
+                              required: true,
+                              autoFocus: true,
+                            }}
+                            inputClass="phonenumber_input"
+                            containerStyle={{
+                              width: "100%",
+                              marginBottom: "10px",
+                              backgroundColor: "white",
+                            }}
+                            inputStyle={{
+                              width: "100%",
+                              padding: "12px 45px",
+                              borderRadius: "4px",
+                              border: "1px solid #E7E6E6",
+                              fontSize: "16px",
+                              boxSizing: "border-box",
+                              borderRadius: "12px",
+                              backgroundColor: "white",
+                            }}
+                            className="form-input  "
+                            enableSearch={true}
+                          />
                           {/* <label className="lh-1 text-16 text-light-1">
                             {translate("Phone Number")}{" "}
                             <span className="text-red font_11">*</span>
                           </label> */}
-                           <label className="phone_lable">
-                                {translate("Phone Number")}<span className="text-red font_11">*</span>
-                                {/* <span className="text_red">{PhoneError}</span> */}
-                              </label>
+                          <label className="phone_lable">
+                            {translate("Phone Number")}
+                            <span className="text-red font_11">*</span>
+                            {/* <span className="text_red">{PhoneError}</span> */}
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-input spacing">
+                          <input
+                            type="text"
+                            required
+                            value={email}
+                            className="mb-1"
+                            onChange={handleInputChange(setEmail)}
+                          />
+                          <label className="lh-1 text-16 text-light-1">
+                            {translate("Email Adresse")}{" "}
+                            <span className="text-red font_11">*</span>
+                          </label>
+                          {errors.email && (
+                            <span className="text-red font_11">
+                              {" "}
+                              {errors.email}
+                            </span>
+                          )}
                         </div>
                       </div>
                       <div className="col-md-12">
@@ -717,10 +713,23 @@ const page = () => {
                             </div>
                           </div>
                           <span className="text-14 lh-12 ml-10 text-left">
-                    {translate(
-                      "I have read the" )} <Link href={"/Datenschutz"} className="text-blue" target="_blank">{translate("data protection")}</Link>  {translate("and I accept the")} <Link href={"/Terms-of-Use"} className="text-blue" target="_blank">{translate("conditions.")}</Link>
-                    
-                  </span>
+                            {translate("I have read the")}{" "}
+                            <Link
+                              href={"/Datenschutz"}
+                              className="text-blue"
+                              target="_blank"
+                            >
+                              {translate("data protection")}
+                            </Link>{" "}
+                            {translate("and I accept the")}{" "}
+                            <Link
+                              href={"/Terms-of-Use"}
+                              className="text-blue"
+                              target="_blank"
+                            >
+                              {translate("Terms")}
+                            </Link>
+                          </span>
                         </label>
                       </div>
                     </div>

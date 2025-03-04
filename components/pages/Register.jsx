@@ -270,51 +270,6 @@ export default function Register() {
     setConfirmpass(e.target.value);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if(!RegisterData.name || !RegisterData.surname || !RegisterData.email || !RegisterData.password || !confirm_pass || isChecked === false){
-  //     showErrorToast("Please fill all fields");
-  //     return;
-  //   }
-  //   if(!passwordRegex.test(RegisterData.password)){
-  //     if (RegisterData.password === confirm_pass) {
-  //       try {
-  //         const response = await post("register", RegisterData);
-  //         showSuccessToast(response.message);
-  //       } catch (error) {
-  //         if (
-  //           error.response &&
-  //           error.response.data &&
-  //           error.response.data.message
-  //         ) {
-  //           showErrorToast(error.response.data.message);
-  //           setTimeout(() => {
-  //             router.push("/verify-email");
-  //           }, 2000);
-  //         } else {
-  //           showErrorToast("An error occurred during registration.");
-  //         }
-  //       }
-  //       setRegisterData({
-  //         name: "",
-  //         surname: "",
-  //         email: "",
-  //         password: "",
-  //       });
-
-  //       setConfirmpass("");
-  //       setIsChecked(false);
-  //       localStorage.setItem("emailForSignIn", RegisterData.email);
-
-  //     } else {
-  //       showErrorToast("password dose not match");
-  //     }
-  //   }else{
-  //     showErrorToast('Please Fill Proper Password')
-  //   }
-
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -569,7 +524,7 @@ export default function Register() {
               </button>
 
               <div className="relative line mt-50 mb-30">
-                <div className="line__word fw-500">OR</div>
+                <div className="line__word fw-500">{translate("OR")}</div>
               </div>
 
               <div className="row y-gap-15">

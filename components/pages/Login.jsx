@@ -82,10 +82,9 @@ export default function Login({
   }, []);
 
   const signinSocial = async ({ type, email, id, name, data }) => {
-
-    console.log(id,"id");
-    console.log(email,"email");
-    console.log(name,"name")
+    console.log(id, "id");
+    console.log(email, "email");
+    console.log(name, "name");
     if (type === "apple") {
       const token = data.authorization.id_token;
       const decodedToken = jwtDecode(token);
@@ -110,23 +109,22 @@ export default function Login({
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
 
         if (!redirectpath) {
-      
           setTimeout(() => {
             setLoginPer(true);
             router.push("/customer/booking");
           }, 1000);
         }
-
-
-      }else{
-        showErrorToast(translate, "User not found. Please register your account");
+      } else {
+        showErrorToast(
+          translate,
+          "User not found. Please register your account"
+        );
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           email: "",
           password: "",
         });
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
-
       }
     } else {
       const resp = await POST.request({
@@ -138,7 +136,7 @@ export default function Login({
         },
         url: "social_login",
       });
-  
+
       if (resp.Status == 1) {
         showSuccessToast(translate, "Successfully logged in");
         localStorage.setItem("customer", JSON.stringify(resp));
@@ -146,22 +144,24 @@ export default function Login({
         dispatch({ type: "LOGIN_CUSTOMER", payload: resp });
         LoginUpdate();
         setSocialLoginLoading({ google: false, facebook: false, apple: false });
-      
+
         if (!redirectpath) {
           setTimeout(() => {
             setLoginPer(true);
             router.push("/customer/booking");
           }, 1000);
         }
-      }else if(resp.Status == 0){
-        showErrorToast(translate, "User not found. Please register your account");
+      } else if (resp.Status == 0) {
+        showErrorToast(
+          translate,
+          "User not found. Please register your account"
+        );
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
           email: "",
           password: "",
         });
-      }
-       else {
+      } else {
         showErrorToast(translate, "Invalid Response");
         setLogInData({
           AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -231,12 +231,9 @@ export default function Login({
   };
 
   const post = (data) => {
-
     setIsLoading(true);
     Auth.user(data)
       .then((resp) => {
-    
-        
         setIsLoading(false);
         if (resp.Status == "0") {
           showErrorToast(translate, "Email or Password is wrong");
@@ -312,7 +309,7 @@ export default function Login({
                       {translate("Don't Have An Account?")}
                       <Link href="/register" className="text-accent-1">
                         {" "}
-                        {translate("Sign Up")}!
+                        {translate("Sign Up!")}
                       </Link>
                     </div>
                   </div>
@@ -415,7 +412,7 @@ export default function Login({
                   </div>
 
                   <div className="relative line mt-50 mb-30">
-                    <div className="line__word fw-500">OR</div>
+                    <div className="line__word fw-500">{translate("OR")}</div>
                   </div>
 
                   <div className="row y-gap-15">
@@ -427,11 +424,8 @@ export default function Login({
                       >
                         {/* <FaFacebookF size={15} className="mx-1" />
                          {translate("Facebook")} */}
-                        
 
                         {(!socialLoginLoading?.facebook && (
-                        
-
                           <LoginSocialFacebook
                             appId={
                               process.env.NEXT_PUBLIC_REACT_APP_FB_APP_ID || ""
@@ -439,12 +433,12 @@ export default function Login({
                             fieldsProfile="id,first_name,last_name,email,picture"
                             scope="email,public_profile"
                             onLoginStart={() => {
-                              setSocialLoginLoading((prev) => ({ ...prev, facebook: true }));
+                              setSocialLoginLoading((prev) => ({
+                                ...prev,
+                                facebook: true,
+                              }));
                             }}
-                             onResolve={({ provider, data }) => {
-
-                              
-
+                            onResolve={({ provider, data }) => {
                               typeof window !== "undefined"
                                 ? window.FB.getLoginStatus((response) => {
                                     if (response.status === "connected") {
@@ -452,7 +446,7 @@ export default function Login({
                                         type: "facebook",
                                         email: data?.email || "",
                                         id: data.id || "",
-                                        name:  `${data?.first_name} ${data?.last_name}`,
+                                        name: `${data?.first_name} ${data?.last_name}`,
                                         data,
                                       });
                                     }
@@ -468,9 +462,7 @@ export default function Login({
                                 facebook: false,
                                 apple: false,
                               });
-
                             }}
-
                             onLoginSuccess={() => {
                               setSocialLoginLoading({
                                 google: false,
@@ -478,7 +470,6 @@ export default function Login({
                                 apple: false,
                               });
                             }}
-
                           >
                             <FaFacebookF size={15} className="mx-1" />
                             {translate("Facebook")}
@@ -499,7 +490,6 @@ export default function Login({
                         className="button -md -outline-red-1 text-red-1 col-12"
                         style={{ height: "60px" }}
                       >
-                     
                         {(!socialLoginLoading?.google && (
                           <LoginSocialGoogle
                             client_id={
@@ -556,12 +546,6 @@ export default function Login({
                           </div>
                         )}
                       </div>
-                      {/* <button
-                    type="button"
-                    className="button -md -outline-red-1 text-red-1 col-12"
-                  >
-                    {translate("Google")}
-                  </button> */}
                     </div>
                   </div>
                   <br />
@@ -619,6 +603,18 @@ export default function Login({
                           </div>
                         )}
                       </button>
+                      <p className="mt-20 text-center">
+                        {translate(
+                          "I accept the terms of use and the privacy and cookie statement of mekkabooking. Are you an agency or mosque?"
+                        )}{" "}
+                        <Link
+                          href="/partner"
+                          className="text-blue"
+                          target="_blank"
+                        >
+                          {translate("Apply for partnership here!")}
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 </form>
