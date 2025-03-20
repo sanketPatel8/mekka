@@ -12,7 +12,7 @@ const apiRequest = async (method, url, data = null) => {
     const formData = new FormData();
 
     // Add default language parameter
-    formData.append("language", lang);
+    formData.append("language", lang == "DE" ? "de" : lang == "EN" ? "en" : "");
 
     // If data is provided, append it to formData
     if (data) {

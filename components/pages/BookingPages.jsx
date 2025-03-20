@@ -312,6 +312,7 @@ export default function BookingPages({ BookingData }) {
   };
 
   const [Additional, setAdditional] = useState([]);
+  const [RoomPrice, setRoomPrice] = useState([]);
 
   const getdefaultPriceforType = (type, idx) => {
     const personPrice = AlladultsData?.filter((item) => item.label === type);
@@ -336,6 +337,12 @@ export default function BookingPages({ BookingData }) {
       (item) => item.type === type && item.index === i
     ).map((item) => item.price);
 
+    const PrAduRomm = RoomPrice.filter(
+      (item) => item.category === type && item.index === i
+    ).map((item) => Number(item.price) || 0);
+
+    console.log(PrAduRomm, "PrAduRomm");
+
     const PrefPrice = existingItemsState;
 
     const additionalPrice = updatePrice.reduce(
@@ -343,8 +350,15 @@ export default function BookingPages({ BookingData }) {
       0
     );
 
+    const addiroom = PrAduRomm.reduce(
+      (acc, curr) => acc + (isNaN(Number(curr)) ? 0 : Number(curr)),
+      0
+    );
+
     const conformSubTotal =
-      (isNaN(Number(Original)) ? 0 : Number(Original)) + additionalPrice;
+      (isNaN(Number(Original)) ? 0 : Number(Original)) +
+      additionalPrice +
+      addiroom;
 
     return formatPrice(conformSubTotal);
   };
@@ -368,11 +382,18 @@ export default function BookingPages({ BookingData }) {
     0
   );
 
+  const AddRoomPrice = RoomPrice.map((item) => Number(item.price)).reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+
+  console.log(AddRoomPrice, "AddRoomPrice");
+
   const FetchPromoApi = async () => {
     const sendData = {
       AccessKey: process.env.NEXT_PUBLIC_ACCESS_KEY,
       coupon_code: promo,
-      total_amount: PackagePrices + adultadiPrices + adPrice,
+      total_amount: PackagePrices + adultadiPrices + adPrice + AddRoomPrice,
       email: LoginCheck === true ? userData.email : formValues.Adult[0]?.email,
       user_id: LoginCheck === true ? (UserID.id !== null ? UserID.id : 0) : 0,
     };
@@ -699,6 +720,42 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
+  // const handleRoomSelection = (category, index, roomId, price) => {
+  //   if (LoginCheck === true && category === "Adult" && index === 0) {
+  //     console.log("Condition was true");
+
+  //     setUserData((prevUserData) => ({
+  //       ...prevUserData,
+  //       tour_room_id: roomId,
+  //       room_price: price,
+  //     }));
+  //   } else {
+  //     setFormValues((prevValues) => {
+  //       const updatedValues = { ...prevValues };
+
+  //       // Ensure category exists as an array
+  //       if (!Array.isArray(updatedValues[category])) {
+  //         updatedValues[category] = [];
+  //       }
+
+  //       // Ensure the specific index exists
+  //       updatedValues[category] = updatedValues[category].map((item, i) =>
+  //         i === index ? { tour_room_id: roomId, room_price: price } : item
+  //       );
+
+  //       // If the index does not exist, create a new entry
+  //       if (!updatedValues[category][index]) {
+  //         updatedValues[category][index] = {
+  //           tour_room_id: roomId,
+  //           room_price: price,
+  //         };
+  //       }
+
+  //       return updatedValues;
+  //     });
+  //   }
+  // };
+
   const handleRoomSelection = (category, index, roomId, price) => {
     if (LoginCheck === true && category === "Adult" && index === 0) {
       console.log("Condition was true");
@@ -706,7 +763,6 @@ export default function BookingPages({ BookingData }) {
       setUserData((prevUserData) => ({
         ...prevUserData,
         tour_room_id: roomId,
-        room_price: price,
       }));
     } else {
       setFormValues((prevValues) => {
@@ -717,26 +773,44 @@ export default function BookingPages({ BookingData }) {
           updatedValues[category] = [];
         }
 
-        // Ensure the specific index exists
+        // Ensure the specific index exists and remove room_price
         updatedValues[category] = updatedValues[category].map((item, i) =>
-          i === index ? { tour_room_id: roomId, room_price: price } : item
+          i === index ? { tour_room_id: roomId } : item
         );
 
-        // If the index does not exist, create a new entry
+        // If the index does not exist, create a new entry without room_price
         if (!updatedValues[category][index]) {
           updatedValues[category][index] = {
             tour_room_id: roomId,
-            room_price: price,
           };
         }
 
         return updatedValues;
       });
     }
+    setRoomPrice((prevRoomPrice) => {
+      const updatedRoomPrice = [...prevRoomPrice];
+
+      // Check if the index already exists in the array
+      // const existingIndex = updatedRoomPrice.findIndex(
+      //   (item) => item.index === index
+      // );
+
+      updatedRoomPrice.push({ index, price, category });
+
+      // if (existingIndex !== -1) {
+      //   // Update existing entry
+      // } else {
+      //   // Add new entry
+      // }
+
+      return updatedRoomPrice;
+    });
   };
 
   console.log(formValues, "formValues");
   console.log(userData, "userData");
+  console.log(RoomPrice, "RoomPrice");
 
   const fetchProfile = async () => {
     const url = "my_profile";
@@ -1136,7 +1210,11 @@ export default function BookingPages({ BookingData }) {
                               </label>
                             </div>
                           </div>
-                          <p>+ {formatPrice(e.room_price)}</p>
+                          <p>
+                            {e.room_price == "0"
+                              ? "inclusive"
+                              : `+ ${formatPrice(e.room_price)}`}
+                          </p>
                         </div>
                       );
                     })}
@@ -1236,7 +1314,7 @@ export default function BookingPages({ BookingData }) {
     // Ensure the values are always numbers
     const calculatedTotalSum = Number(
       HandlePromo === false
-        ? PackagePrices + adultadiPrices + adPrice
+        ? PackagePrices + adultadiPrices + adPrice + AddRoomPrice
         : PromoData?.total_amount !== undefined
         ? PromoData.total_amount
         : PackagePrices + adultadiPrices
@@ -1263,6 +1341,7 @@ export default function BookingPages({ BookingData }) {
     PackagePrices,
     adultadiPrices,
     adPrice,
+    AddRoomPrice,
     HandlePromo,
     PromoData,
     Discount,
@@ -1402,7 +1481,7 @@ export default function BookingPages({ BookingData }) {
       Childrendata.length === 0 ? 0 : Childrendata[0]?.default
     ),
     baby_price: JSON.parse(babyData.length === 0 ? 0 : babyData[0]?.default),
-    total: JSON.parse(PackagePrices + adultadiPrices + adPrice), // old value :- totalSum
+    total: JSON.parse(PackagePrices + adultadiPrices + adPrice + AddRoomPrice), // old value :- totalSum
     amount_paid: 0, // OLD VALUE :- JSON.parse(TotalPaidAmount)
     coupon_name: Discount?.coupon_name || "",
     coupon_amount: Discount?.Discount || 0,
@@ -1423,7 +1502,7 @@ export default function BookingPages({ BookingData }) {
 
         // New price object to add
         const newPrice = {
-          Total: PackagePrices + adultadiPrices + adPrice,
+          Total: PackagePrices + adultadiPrices + adPrice + AddRoomPrice,
           SubTotal: totalSum,
           Tax: formattedTaxAmount,
           Amount_Paid: TotalPaidAmount,
@@ -1449,9 +1528,14 @@ export default function BookingPages({ BookingData }) {
 
   useEffect(() => {
     const calculatedSubTotal =
-      Number(PackagePrices) + Number(adultadiPrices) + Number(adPrice);
+      Number(PackagePrices) +
+      Number(adultadiPrices) +
+      Number(adPrice) +
+      Number(AddRoomPrice);
+
+      
     setSubTotal(calculatedSubTotal);
-  }, [PackagePrices, adultadiPrices, adPrice]);
+  }, [PackagePrices, adultadiPrices, adPrice, AddRoomPrice]);
 
   const BookingTotal = {
     Discount: Discount,

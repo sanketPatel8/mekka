@@ -58,7 +58,10 @@ export const POST = {
     if (formData) {
       formData.append("AccessKey", process.env.NEXT_PUBLIC_ACCESS_KEY);
       if (url !== "tourfilter") {
-        formData.append("language", lang);
+        formData.append(
+          "language",
+          lang == "DE" ? "de" : lang == "EN" ? "en" : ""
+        );
       }
     }
     try {
