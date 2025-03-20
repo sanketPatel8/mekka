@@ -152,7 +152,7 @@ export default function EditTour() {
   ];
 
   const [bedroomRows, setBedroomRows] = useState([
-    { id: "0", bedroom_name: null, bedroom_capacity: "" },
+    { id: "0", bedroom_name: null, bedroom_capacity: "", room_price: "" },
   ]);
   const [RemoveBed, setRemoveBed] = useState([]);
 
@@ -520,6 +520,7 @@ export default function EditTour() {
         id: bed.id,
         bedroom_name: bed.rooms,
         bedroom_capacity: bed.capacity,
+        room_price: bed.room_price,
       };
     });
     if (BedRoomData.length != 0) {
@@ -740,6 +741,21 @@ export default function EditTour() {
     );
   };
 
+  const handleBedPriceChange = (e, index) => {
+    const { value } = e.target;
+
+    setBedroomRows((prevRows) =>
+      prevRows.map((row, i) =>
+        i === index
+          ? {
+              ...row,
+              room_price: value || "", // Ensures empty string if value is falsy
+            }
+          : row
+      )
+    );
+  };
+
   const options = tourType.map((type) => ({
     value: type,
     label: `${type}`,
@@ -768,7 +784,7 @@ export default function EditTour() {
   const handleAddBedroomRow = () => {
     setBedroomRows([
       ...bedroomRows,
-      { id: "0", bedroom_name: "", bedroom_capacity: "" },
+      { id: "0", bedroom_name: "", bedroom_capacity: "", room_price: "" },
     ]);
   };
 
@@ -976,7 +992,9 @@ export default function EditTour() {
         selectRef.current.value &&
         departureRows.length > 0 &&
         bedroomRows.length > 0 &&
-        bedroomRows.every((bed) => bed.bedroom_capacity && bed.bedroom_name) &&
+        bedroomRows.every(
+          (bed) => bed.bedroom_capacity && bed.bedroom_name && bed.room_price
+        ) &&
         departureRows.every(
           (departure) => departure.departure_id && departure.price
         ) &&
@@ -1042,7 +1060,9 @@ export default function EditTour() {
       departureRows.length == 0 ||
       (image2.length == 0 && newImages.length == 0) ||
       // BedRoomData == 0 ||
-      bedroomRows.some((bed) => !bed.bedroom_capacity || !bed.bedroom_name) ||
+      bedroomRows.some(
+        (bed) => !bed.bedroom_capacity || !bed.bedroom_name || !bed.room_price
+      ) ||
       !selectRef.current.value ||
       baby_price < 0 ||
       adult_price < 0 ||
@@ -1128,6 +1148,7 @@ export default function EditTour() {
       id: bed.id,
       rooms: bed.bedroom_name,
       capacity: bed.bedroom_capacity,
+      room_price: bed.room_price,
     }));
 
     const arrivalData = arrivalrow.map((arrival) => ({
@@ -1144,7 +1165,9 @@ export default function EditTour() {
       !madinaData.some(
         (madina) => madina.hotel_name && madina.hotel_price && madina.hotel_info
       ) &&
-      !BedRoomData.some((bed) => bed.bedroom_name && bed.bedroom_capacity) &&
+      !BedRoomData.some(
+        (bed) => bed.bedroom_name && bed.bedroom_capacity && bed.room_price
+      ) &&
       !flightData.some(
         (flight) =>
           flight.flight_id &&
@@ -1473,7 +1496,7 @@ export default function EditTour() {
                                         <div className="row items-center">
                                           <div className="col-lg-8">
                                             <div className="row items-center">
-                                              <div className="col-lg-6 ">
+                                              <div className="col-lg-5 ">
                                                 <Select
                                                   value={bedroomOptions.find(
                                                     (option) =>
@@ -1495,7 +1518,7 @@ export default function EditTour() {
                                                 />
                                               </div>
 
-                                              <div className="col-lg-6 ">
+                                              <div className="col-lg-4 ">
                                                 <div className="form-input my-1">
                                                   <input
                                                     type="number"
@@ -1535,8 +1558,53 @@ export default function EditTour() {
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {translate(
-                                                      "Enter Bedroom Capacity"
+                                                      "Enter Capacity"
                                                     )}
+                                                    <span className="text-red">
+                                                      *
+                                                    </span>
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-lg-3 ">
+                                                <div className="form-input my-1">
+                                                  <input
+                                                    type="number"
+                                                    min={1}
+                                                    required
+                                                    value={row.room_price || ""}
+                                                    onChange={(e) =>
+                                                      handleBedPriceChange(
+                                                        e,
+                                                        index
+                                                      )
+                                                    }
+                                                    onKeyDown={(e) => {
+                                                      if (!isFocused) return;
+
+                                                      if (
+                                                        !/^[0-9]+$/.test(
+                                                          e.key
+                                                        ) &&
+                                                        e.key !== "Backspace" &&
+                                                        e.key !== "Tab"
+                                                      ) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
+                                                    onKeyUp={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                    onFocus={() =>
+                                                      setIsFocused(true)
+                                                    }
+                                                    onBlur={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                  />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {translate("Enter Price")}
                                                     <span className="text-red">
                                                       *
                                                     </span>

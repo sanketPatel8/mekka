@@ -14,6 +14,7 @@ import { showErrorToast } from "@/app/utils/tost";
 import { post } from "@/app/utils/api";
 import { useCurrency } from "@/app/context/currencyContext";
 import { PiBuildingApartmentFill } from "react-icons/pi";
+import TooltipText from "@/components/common/TooltipText";
 
 export default function TourSlderOne() {
   const [showSwiper, setShowSwiper] = useState(false);
@@ -180,6 +181,12 @@ export default function TourSlderOne() {
                             >
                               {elm.date_begin} - {elm.date_end}
                             </div>
+
+                            {elm.color && elm.highlight !== null && (
+                              <div className="">
+                                <TooltipText elm={elm} />
+                              </div>
+                            )}
 
                             <h3
                               className={`tourCard__title text-16 fw-500 mt-5 ${

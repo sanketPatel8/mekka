@@ -11,6 +11,7 @@ import { post } from "@/app/utils/api";
 import { useEffect, useState } from "react";
 import { FaPersonWalking } from "react-icons/fa6";
 import { useCurrency } from "@/app/context/currencyContext";
+import TooltipText from "../common/TooltipText";
 
 export default function TourSlider({ PAckageData }) {
   const { translate } = useTranslation();
@@ -126,6 +127,12 @@ export default function TourSlider({ PAckageData }) {
                           >
                             {elm.date_begin} - {elm.date_end}
                           </div>
+
+                          {elm.color && elm.highlight !== null && (
+                            <div className="">
+                              <TooltipText elm={elm} />
+                            </div>
+                          )}
 
                           <h3 className="tourCard__title text-16 fw-500 mt-5">
                             <span>

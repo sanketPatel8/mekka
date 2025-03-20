@@ -233,7 +233,7 @@ export default function DBListing() {
                     <div className="col-lg-12 mb-15" key={i}>
                       <div
                         className={`tourCard -type-2 bg-white ${
-                          elm.company_id === "0" ? "pointer-none" : ""
+                          elm.parent_id !== "0" ? "pointer-none" : ""
                         }`}
                       >
                         <div className="tourCard__image">

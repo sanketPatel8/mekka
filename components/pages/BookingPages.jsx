@@ -699,33 +699,36 @@ export default function BookingPages({ BookingData }) {
     });
   };
 
-  const handleRoomSelection = (category, index, roomId) => {
-    if (LoginCheck === true && category == "Adult" && index == 0) {
-      console.log("condition was true");
+  const handleRoomSelection = (category, index, roomId, price) => {
+    if (LoginCheck === true && category === "Adult" && index === 0) {
+      console.log("Condition was true");
 
       setUserData((prevUserData) => ({
         ...prevUserData,
         tour_room_id: roomId,
+        room_price: price,
       }));
     } else {
       setFormValues((prevValues) => {
         const updatedValues = { ...prevValues };
 
-        if (!updatedValues[category]) return updatedValues;
-
-        if (!Array.isArray(updatedValues[category]))
+        // Ensure category exists as an array
+        if (!Array.isArray(updatedValues[category])) {
           updatedValues[category] = [];
-
-        if (!updatedValues[category][index]) {
-          updatedValues[category][index] = {
-            tour_room_id: "",
-          };
         }
 
-        // Update the `tour_room_id` for the selected person
+        // Ensure the specific index exists
         updatedValues[category] = updatedValues[category].map((item, i) =>
-          i === index ? { ...item, tour_room_id: roomId } : item
+          i === index ? { tour_room_id: roomId, room_price: price } : item
         );
+
+        // If the index does not exist, create a new entry
+        if (!updatedValues[category][index]) {
+          updatedValues[category][index] = {
+            tour_room_id: roomId,
+            room_price: price,
+          };
+        }
 
         return updatedValues;
       });
@@ -1116,19 +1119,24 @@ export default function BookingPages({ BookingData }) {
                                         e.id
                                   }
                                   onChange={() =>
-                                    handleRoomSelection(type, i, e.id)
+                                    handleRoomSelection(
+                                      type,
+                                      i,
+                                      e.id,
+                                      e.room_price
+                                    )
                                   }
                                 />
                                 <span className="radio__mark">
                                   <span className="radio__icon"></span>
                                 </span>
                                 <span className="text-14 lh-16 lts-bk-lable">
-                                  {e.rooms}
+                                  {e.rooms} ({e.capacity})
                                 </span>
                               </label>
                             </div>
                           </div>
-                          <p>Capacity : {e.capacity}</p>
+                          <p>+ {formatPrice(e.room_price)}</p>
                         </div>
                       );
                     })}
@@ -1195,7 +1203,9 @@ export default function BookingPages({ BookingData }) {
                             </label>
                           </div>
                           <div className="text-14">
-                            + {formatPrice(option.price)}
+                            {option.price == "0"
+                              ? "Inclusive"
+                              : `+ ${formatPrice(option.price)}`}
                           </div>
                         </div>
                       );

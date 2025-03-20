@@ -18,6 +18,7 @@ import { useTranslation } from "@/app/context/TranslationContext";
 import { ClipLoader } from "react-spinners";
 import Link from "next/link";
 import { useCurrency } from "@/app/context/currencyContext";
+import TooltipText from "../common/TooltipText";
 
 export default function TourList4({
   filterType,
@@ -245,16 +246,19 @@ export default function TourList4({
                         </div>
                       </div>
                       <div className="tourCard__content">
-                        <div className="d-flex gap-2 items-center">
-                          {/* <div className="tourCard__location border_yellow mx-2">
-                            <FaPersonWalking color="white" size={18} />
-                            zu Kaaba {elm?.distance_to_hotel}
-                          </div> */}
+                        <div className="d-flex gap-3 items-center">
                           <div
                             className={`tourCard__location d-flex items-center text-13 text-light-2 border_yellow px-2 my-2 `}
                           >
                             {/* <FaCalendar color="dabf4f" size={17} /> */}
                             {elm.date_begin} - {elm.date_end}
+                          </div>
+                          <div>
+                            {elm.color && elm.highlight !== null && (
+                              <div className="">
+                                <TooltipText elm={elm} />
+                              </div>
+                            )}
                           </div>
                         </div>
                         <h3 className="tourCard__title fw-700 mt-5">
@@ -391,8 +395,8 @@ export default function TourList4({
                             className="text-13 ms-1"
                             style={{ color: "#3f97ca" }}
                           >
-                              {roundDistance(parseInt(elm?.distance_to_hotel))} 
-                                </span>
+                            {roundDistance(parseInt(elm?.distance_to_hotel))}
+                          </span>
                         </div>
 
                         {/* <div className="row x-gap-20 y-gap-5 ">

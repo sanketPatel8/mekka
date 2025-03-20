@@ -18,6 +18,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslation } from "@/app/context/TranslationContext";
 import Modal from "react-modal";
 import { IoClose } from "react-icons/io5";
+import TooltipText from "../common/TooltipText";
 
 export default function MainInformation({ PAckageData }) {
   const { translate } = useTranslation();
@@ -53,7 +54,7 @@ export default function MainInformation({ PAckageData }) {
   };
 
   // Define the URL you want to share
-  const shareUrl = `https://mekkabooking.vercel.app/package/${name}?id=${id}&name=${name}`; // Change this to your actual URL
+  const shareUrl = `https://${process.env.PUBLIC_URL}/package/${name}?id=${id}&name=${name}`; // Change this to your actual URL
 
   useEffect(() => {
     setInformationData(PAckageData);
@@ -85,25 +86,45 @@ export default function MainInformation({ PAckageData }) {
     <>
       <div className="row y-gap-20 justify-between items-end">
         <div className="col-auto">
-          <h2 className="text-40 sm:text-30 lh-14 mt-20">
-            {InformationData?.Tour_Details?.tour_details?.type} -{" "}
-            {InformationData?.Tour_Details?.tour_details?.name}
-          </h2>
+          <div className="d-flex x-gap-20  items-center">
+            <h2 className="text-40 sm:text-30 lh-14 mt-20">
+              {InformationData?.Tour_Details?.tour_details?.type} -{" "}
+              {InformationData?.Tour_Details?.tour_details?.name}
+            </h2>
+            <div>
+              {InformationData?.Tour_Details?.tour_details.color &&
+                InformationData?.Tour_Details?.tour_details.highlight !==
+                  null && (
+                  <div className="mt-25">
+                    <TooltipText
+                      elm={InformationData?.Tour_Details?.tour_details}
+                    />
+                  </div>
+                )}
+            </div>
+          </div>
 
-  
           <div className="row x-gap-20 y-gap-20 items-center pt-20">
             <div className="col-auto mr-10 px-0">
               <div className="d-flex items-center">
-              {InformationData?.Tour_Details?.tour_details?.company_code !== "" && InformationData?.Tour_Details?.tour_details?.company_code !== null && (
-      
-                <div className="d-flex items-center x-gap-5 mx-2">
-                <PiBuildingApartmentFill   color="#dabf4f" className="" size={25} /> <span>
-                {InformationData?.Tour_Details?.tour_details?.company_code}
-                </span>
-                </div>
-              
-               
-    )}
+                {InformationData?.Tour_Details?.tour_details?.company_code !==
+                  "" &&
+                  InformationData?.Tour_Details?.tour_details?.company_code !==
+                    null && (
+                    <div className="d-flex items-center x-gap-5 mx-2">
+                      <PiBuildingApartmentFill
+                        color="#dabf4f"
+                        className=""
+                        size={25}
+                      />{" "}
+                      <span>
+                        {
+                          InformationData?.Tour_Details?.tour_details
+                            ?.company_code
+                        }
+                      </span>
+                    </div>
+                  )}
               </div>
             </div>
 
@@ -150,7 +171,7 @@ export default function MainInformation({ PAckageData }) {
             <div className="">
               <button className=" d-flex items-center " onClick={openInvoice}>
                 <i className="icon-share flex-center text-16 mr-10"></i>
-                {translate('Share')}
+                {translate("Share")}
               </button>
             </div>
           </div>
@@ -164,7 +185,7 @@ export default function MainInformation({ PAckageData }) {
             contentLabel="Pending Payment Modal"
           >
             <div className="d-flex justify-content-between" id="modelopen">
-              <h2 className="px-20"> {translate('Share This Package')}</h2>
+              <h2 className="px-20"> {translate("Share This Package")}</h2>
               <button onClick={closeInvoice}>
                 <IoClose size={25} />
               </button>
@@ -215,7 +236,7 @@ export default function MainInformation({ PAckageData }) {
                       className="button -sm -info-2 bg-accent-1 text-white "
                       onClick={handleCopyClick}
                     >
-                      {translate('Copy')}
+                      {translate("Copy")}
                     </button>
                   </div>
                   <p>

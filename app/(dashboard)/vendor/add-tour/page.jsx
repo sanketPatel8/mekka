@@ -158,7 +158,7 @@ export default function AddTour() {
   ];
 
   const [bedroomRows, setBedroomRows] = useState([
-    { id: null, bedroom_name: null, bedroom_capacity: "" },
+    { id: null, bedroom_name: null, bedroom_capacity: "", room_price: "" },
   ]);
 
   const handleBedroomChange = (selectedOption, index) => {
@@ -179,10 +179,18 @@ export default function AddTour() {
     });
   };
 
+  const handleBedPriceChange = (e, index) => {
+    setBedroomRows((prevRows) => {
+      const newRows = [...prevRows];
+      newRows[index].room_price = e.target.value;
+      return newRows;
+    });
+  };
+
   const handleAddBedroomRow = () => {
     setBedroomRows([
       ...bedroomRows,
-      { id: null, bedroom_name: "", bedroom_capacity: "" },
+      { id: null, bedroom_name: "", bedroom_capacity: "", room_price: "" },
     ]);
   };
 
@@ -737,6 +745,7 @@ export default function AddTour() {
     const BedRoomData = bedroomRows.map((bed) => ({
       rooms: bed.bedroom_name ? bed.bedroom_name : "",
       capacity: bed.bedroom_capacity ? bed.bedroom_capacity : "",
+      room_price: bed.room_price ? bed.room_price : "",
     }));
 
     const mekkaData = mekkaRows.map((mekka) => ({
@@ -1121,7 +1130,7 @@ export default function AddTour() {
                                         <div className="row items-center">
                                           <div className="col-lg-8">
                                             <div className="row items-center">
-                                              <div className="col-lg-6 ">
+                                              <div className="col-lg-5">
                                                 <Select
                                                   value={bedroomOptions.find(
                                                     (option) =>
@@ -1143,7 +1152,7 @@ export default function AddTour() {
                                                 />
                                               </div>
 
-                                              <div className="col-lg-6 ">
+                                              <div className="col-lg-4">
                                                 <div className="form-input my-1">
                                                   <input
                                                     type="number"
@@ -1182,8 +1191,54 @@ export default function AddTour() {
                                                   />
                                                   <label className="lh-1 text-16 text-light-1">
                                                     {translate(
-                                                      "Enter Bedroom Capacity"
+                                                      "Enter Capacity"
                                                     )}
+                                                    <span className="text-red">
+                                                      *
+                                                    </span>
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div className="col-lg-3">
+                                                <div className="form-input my-1">
+                                                  <input
+                                                    type="number"
+                                                    min={1}
+                                                    ref={numberInputRef1}
+                                                    required
+                                                    value={row.room_price}
+                                                    onChange={(e) =>
+                                                      handleBedPriceChange(
+                                                        e,
+                                                        index
+                                                      )
+                                                    }
+                                                    onKeyDown={(e) => {
+                                                      if (!isFocused) return;
+
+                                                      if (
+                                                        !/^[0-9]+$/.test(
+                                                          e.key
+                                                        ) &&
+                                                        e.key !== "Backspace" &&
+                                                        e.key !== "Tab"
+                                                      ) {
+                                                        e.preventDefault();
+                                                      }
+                                                    }}
+                                                    onKeyUp={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                    onFocus={() =>
+                                                      setIsFocused(true)
+                                                    }
+                                                    onBlur={() =>
+                                                      setIsFocused(false)
+                                                    }
+                                                  />
+                                                  <label className="lh-1 text-16 text-light-1">
+                                                    {translate("Enter Price")}
                                                     <span className="text-red">
                                                       *
                                                     </span>
