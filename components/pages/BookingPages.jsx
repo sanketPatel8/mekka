@@ -1281,7 +1281,7 @@ export default function BookingPages({ BookingData }) {
                             </label>
                           </div>
                           <div className="text-14">
-                            {option.price == "0"
+                            {option.price == "0.00"
                               ? "Inclusive"
                               : `+ ${formatPrice(option.price)}`}
                           </div>
@@ -1533,7 +1533,6 @@ export default function BookingPages({ BookingData }) {
       Number(adPrice) +
       Number(AddRoomPrice);
 
-      
     setSubTotal(calculatedSubTotal);
   }, [PackagePrices, adultadiPrices, adPrice, AddRoomPrice]);
 

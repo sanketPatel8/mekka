@@ -87,7 +87,7 @@ export default function MainInformation({ PAckageData }) {
       <div className="row y-gap-20 justify-between items-end">
         <div className="col-auto">
           <div className="d-flex x-gap-20  items-center">
-            <h2 className="text-40 sm:text-30 lh-14 mt-20">
+            <h2 className="text-30 sm:text-30 lh-14 mt-20">
               {InformationData?.Tour_Details?.tour_details?.type} -{" "}
               {InformationData?.Tour_Details?.tour_details?.name}
             </h2>
@@ -98,6 +98,7 @@ export default function MainInformation({ PAckageData }) {
                   <div className="mt-25">
                     <TooltipText
                       elm={InformationData?.Tour_Details?.tour_details}
+                      page="Package"
                     />
                   </div>
                 )}
